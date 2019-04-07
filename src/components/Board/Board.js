@@ -1,25 +1,12 @@
 import React, { Component } from 'react';
 import './Board.css';
+import Square from '../Square/Square';
 
 class Board extends Component {
   render() {
     return (
       <div className="Board">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG" />
+        {[...Array(90)].map(() => <Square />)}
       </div>
     );
   }
