@@ -1,0 +1,10 @@
+.Board {
+  display: grid;
+  grid-template-rows: repeat(10, 50px);
+  grid-template-columns: repeat(9, 50px);
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
