@@ -6,14 +6,24 @@ import Square from '../Square/Square';
 import Piece from '../Piece/Piece';
 
 class Board extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      pieces: [
+        [<Piece />].concat([...Array(8)]),
+      ].concat([...Array(8)].map(() => [...Array(9)])),
+    };
+  }
+
   render() {
-    const showImg = (i) => [0, 1, 8, 9].includes(~~(i / 9));
-    const keyFn = (i) => `square_${i}`;
+    const { pieces } = this.state;
+    const keyFn = (i, j) => `square_${j}_${i}`;
 
     return (
       <div className="Board">
-        {[...Array(90)].map((_, i) => (
-          <Square key={keyFn(i)} piece={showImg(i) ? <Piece /> : null} />
+        {pieces.map((row, i) => (
+          row.map((p, j) => <Square key={keyFn(i, j)} piece={p} />)
         ))}
       </div>
     );
