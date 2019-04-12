@@ -17,6 +17,7 @@
     "max-len": ["error", { "code": 80 }],
     "max-statements": ["error", { "max": 7 }],
     "quote-props": ["error", "consistent-as-needed"],
+    "react/prefer-stateless-function": "off",
     "require-jsdoc": "off",
     "sort-keys": "error",
     "space-before-function-paren": ["error", "never"]
