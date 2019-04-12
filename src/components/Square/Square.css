@@ -1,15 +1,12 @@
 .Square {
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/6/66/Xiangqi-_md.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  display: flex;
+  justify-content: center;
 }
 
 .Piece {
-  background-image:url("https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Xiangqi_black_side_General.svg/50px-Xiangqi_black_side_General.svg.png");
-  background-size: 80% 80%;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 100%;
-  height: 100%;
+  pointer-events: none;
+  max-height:80%;
+  max-width:80%;
+  display:block;
+  margin:auto;
 }
