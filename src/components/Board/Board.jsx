@@ -13,17 +13,21 @@ class Board extends Component {
       pieces: [
         [<Piece />].concat([...Array(8)]),
       ].concat([...Array(8)].map(() => [...Array(9)])),
+      selected: null,
     };
   }
 
   render() {
-    const { pieces } = this.state;
+    const { pieces, selected } = this.state;
     const keyFn = (i, j) => `square_${j}_${i}`;
+    const selectedFn = (i, j) => selected === [i, j];
 
     return (
       <div className="Board">
         {pieces.map((row, i) => (
-          row.map((p, j) => <Square key={keyFn(i, j)} piece={p} />)
+          row.map((p, j) => (
+            <Square key={keyFn(i, j)} piece={p} selected={selectedFn(i, j)} />
+          ))
         ))}
       </div>
     );
