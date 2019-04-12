@@ -5,7 +5,7 @@ class Square extends Component {
   render() {
     return (
       <div className="Square">
-        <img className="Piece" src={this.props.pieceImgSrc} />
+        {this.props.piece}
       </div>
     );
   }
