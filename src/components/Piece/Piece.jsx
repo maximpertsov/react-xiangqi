@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import redGeneralIcon from './50px-Xiangqi_black_side_General.svg.png';
 
 const Wrapper = styled.img`
   pointer-events: none;
@@ -16,13 +15,8 @@ const Piece = ({ name, icon }) => (
 );
 
 Piece.propTypes = {
-  icon: PropTypes.string,
-  name: PropTypes.string,
-};
-
-Piece.defaultProps = {
-  icon: redGeneralIcon,
-  name: 'Red General',
+  icon: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default Piece;
