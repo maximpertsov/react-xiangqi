@@ -24,15 +24,15 @@ class Board extends Component {
     this.state = {
       pieces: [
         [<Piece />].concat([...Array(8)]),
-      ].concat([...Array(8)].map(() => [...Array(9)])),
-      selected: null,
+      ].concat([...Array(9)].map(() => [...Array(9)])),
+      selected: [0, 0],
     };
   }
 
   render() {
     const { pieces, selected } = this.state;
     const keyFn = (i, j) => `square_${j}_${i}`;
-    const selectedFn = (i, j) => selected === [i, j];
+    const selectedFn = (i, j) => selected[0] === i && selected[1] === j;
 
     return (
       <Wrapper className="Board">
