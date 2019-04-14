@@ -1,9 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 import redGeneralIcon from './50px-Xiangqi_black_side_General.svg.png';
 
+const Wrapper = styled.img`
+  pointer-events: none;
+  max-height:80%;
+  max-width:80%;
+  display:block;
+  margin:auto;
+`;
+
 const Piece = ({ name, icon }) => (
-  <img className="Piece" alt={name} src={icon} />
+  <Wrapper className="Piece" alt={name} src={icon} />
 );
 
 Piece.propTypes = {

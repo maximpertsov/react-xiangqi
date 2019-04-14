@@ -1,9 +1,21 @@
 /* eslint no-bitwise: ["error", { "allow": ["~"] }] */
 
 import React, { Component } from 'react';
-import './Board.css';
+import styled from '@emotion/styled';
 import Square from '../Square/Square';
 import Piece from '../Piece/Piece';
+import boardImg from './board-1000px.svg.png';
+
+const Wrapper = styled.div`
+  background-image: url(${boardImg});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: grid;
+  grid-template-rows: repeat(10, 60px);
+  grid-template-columns: repeat(9, 60px);
+  justify-content: center;
+`;
 
 class Board extends Component {
   constructor(props) {
@@ -23,13 +35,13 @@ class Board extends Component {
     const selectedFn = (i, j) => selected === [i, j];
 
     return (
-      <div className="Board">
+      <Wrapper className="Board">
         {pieces.map((row, i) => (
           row.map((p, j) => (
             <Square key={keyFn(i, j)} piece={p} selected={selectedFn(i, j)} />
           ))
         ))}
-      </div>
+      </Wrapper>
     );
   }
 }
