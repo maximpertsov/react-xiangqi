@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
 import Square from '../Square/Square';
-import Piece from '../Piece/Piece';
+import { Piece, BlackGeneral } from '../Piece/Piece';
 
 import boardImg from './board-1000px.svg.png';
 import blackAdvisorImg from '../Piece/black-advisor-50px.svg.png';
@@ -16,7 +16,6 @@ import blackHorseImg from '../Piece/black-horse-50px.svg.png';
 import redHorseImg from '../Piece/red-horse-50px.svg.png';
 import blackElephantImg from '../Piece/black-elephant-50px.svg.png';
 import redElephantImg from '../Piece/red-elephant-50px.svg.png';
-import blackGeneralImg from '../Piece/black-general-50px.svg.png';
 import redGeneralImg from '../Piece/red-general-50px.svg.png';
 import blackSoldierImg from '../Piece/black-soldier-50px.svg.png';
 import redSoldierImg from '../Piece/red-soldier-50px.svg.png';
@@ -44,7 +43,7 @@ class Board extends Component {
     pieces[0][1] = <Piece icon={blackHorseImg} name="black horse" />;
     pieces[0][2] = <Piece icon={blackElephantImg} name="black elephant" />;
     pieces[0][3] = <Piece icon={blackAdvisorImg} name="black advisor" />;
-    pieces[0][4] = <Piece icon={blackGeneralImg} name="black general" />;
+    pieces[0][4] = <BlackGeneral />;
     pieces[0][5] = <Piece icon={blackAdvisorImg} name="black advisor" />;
     pieces[0][6] = <Piece icon={blackElephantImg} name="black elephant" />;
     pieces[0][7] = <Piece icon={blackHorseImg} name="black horse" />;
