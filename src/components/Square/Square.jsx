@@ -18,18 +18,16 @@ const Wrapper = styled.div(
 class Square extends Component {
   constructor(props) {
     super(props);
-    this.state = { selected: false };
-
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
-    this.setState((state) => ({ selected: !state.selected }));
+    const { cellName, handleClick } = this.props;
+    handleClick(cellName);
   }
 
   render() {
-    const { piece } = this.props;
-    const { selected } = this.state;
+    const { piece, selected } = this.props;
     return (
       <Wrapper
         className="Square"
@@ -43,8 +41,10 @@ class Square extends Component {
 }
 
 Square.propTypes = {
+  cellName: PropTypes.string.isRequired,
+  handleClick: PropTypes.func.isRequired,
   piece: PropTypes.element.isRequired,
-  // selected: PropTypes.bool.isRequired,
+  selected: PropTypes.bool.isRequired,
 };
 
 export default Square;

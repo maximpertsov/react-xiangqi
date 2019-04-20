@@ -1,9 +1,8 @@
-/* eslint no-bitwise: ["error", { "allow": ["~"] }] */
-
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
 import Square from '../Square/Square';
 import layout from '../Piece/utils';
+import { cellID } from './utils';
 
 import boardImg from './board-1000px.svg.png';
 
@@ -22,22 +21,32 @@ class Board extends Component {
   constructor(props) {
     super(props);
 
+    this.handleClick = this.handleClick.bind(this);
+
     this.state = {
       pieces: layout,
-      selected: [0, 0],
+      selected: null,
     };
+  }
+
+  handleClick(cellName) {
+    this.setState({ selected: cellName });
   }
 
   render() {
     const { pieces, selected } = this.state;
-    const keyFn = (i, j) => `square_${j}_${i}`;
-    const selectedFn = (i, j) => selected[0] === i && selected[1] === j;
 
     return (
       <Wrapper className="Board">
         {pieces.map((row, i) => (
           row.map((p, j) => (
-            <Square key={keyFn(i, j)} piece={p} selected={selectedFn(i, j)} />
+            <Square
+              key={cellID(i, j)}
+              cellName={cellID(i, j)}
+              piece={p}
+              selected={selected === cellID(i, j)}
+              handleClick={this.handleClick}
+            />
           ))
         ))}
       </Wrapper>
