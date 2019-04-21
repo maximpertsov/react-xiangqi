@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import Square from '../Square/Square';
 import layout from '../Piece/utils';
@@ -21,12 +22,15 @@ const Wrapper = styled.div`
 class Board extends Component {
   constructor(props) {
     super(props);
+    const { redPlayer, blackPlayer } = this.props;
 
     this.handleSelect = this.handleSelect.bind(this);
     this.handleMove = this.handleMove.bind(this);
 
     this.state = {
       pieces: layout,
+      players: [redPlayer, blackPlayer],
+      currentPlayerIdx: 0,
       selectedCol: null,
       selectedRow: null,
     };
@@ -71,5 +75,10 @@ class Board extends Component {
     );
   }
 }
+
+Board.propTypes = {
+  blackPlayer: PropTypes.element.isRequired,
+  redPlayer: PropTypes.element.isRequired,
+};
 
 export default Board;
