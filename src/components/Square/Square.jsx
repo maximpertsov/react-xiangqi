@@ -43,8 +43,12 @@ class Square extends Component {
 Square.propTypes = {
   cellName: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
-  piece: PropTypes.element.isRequired,
+  piece: PropTypes.element,
   selected: PropTypes.bool.isRequired,
+};
+
+Square.defaultProps = {
+  piece: undefined,
 };
 
 export default Square;
