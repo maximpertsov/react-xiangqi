@@ -1,16 +1,19 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import styled from '@emotion/styled';
 import Board from './components/Board/Board';
+import Player from './components/Player/Player';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Board />
-      </div>
-    );
-  }
-}
+const Wrapper = styled.div`
+  text-align: center;
+`;
+
+export const App = () => (
+  <Wrapper className="App">
+    <Board
+      redPlayer={<Player color="red" />}
+      blackPlayer={<Player color="black" />}
+    />
+  </Wrapper>
+);
 
 export default App;
