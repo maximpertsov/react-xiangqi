@@ -38,10 +38,13 @@ class Square extends Component {
 
   handleClick() {
     const {
-      piece, row, col, handleSelect,
+      piece, row, col, selectedRow, selectedCol, handleMove, handleSelect,
     } = this.props;
     if (piece !== undefined) {
       handleSelect(row, col);
+    } else if (selectedRow !== null && selectedCol !== null) {
+      handleMove(selectedRow, selectedCol, row, col);
+      handleSelect(null, null);
     } else {
       handleSelect(null, null);
     }
@@ -66,6 +69,7 @@ class Square extends Component {
 Square.propTypes = {
   col: PropTypes.number.isRequired,
   handleSelect: PropTypes.func.isRequired,
+  handleMove: PropTypes.func.isRequired,
   piece: PropTypes.element,
   row: PropTypes.number.isRequired,
   selectedCol: PropTypes.number.isRequired,

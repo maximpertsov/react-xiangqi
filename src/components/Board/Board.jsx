@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
+import update from 'immutability-helper';
 import Square from '../Square/Square';
 import layout from '../Piece/utils';
 import { cellID } from './utils';
@@ -22,6 +23,7 @@ class Board extends Component {
     super(props);
 
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleMove = this.handleMove.bind(this);
 
     this.state = {
       pieces: layout,
@@ -32,6 +34,16 @@ class Board extends Component {
 
   handleSelect(row, col) {
     this.setState({ selectedCol: col, selectedRow: row });
+  }
+
+  handleMove(prevRow, prevCol, nextRow, nextCol) {
+    this.setState((prevState) => ({
+      pieces: update(update([...prevState.pieces], {
+        [nextRow]: { [nextCol]: { $set: prevState.pieces[prevRow][prevCol] } },
+      }), {
+        [prevRow]: { [prevCol]: { $set: undefined } },
+      }),
+    }));
   }
 
   render() {
@@ -50,6 +62,7 @@ class Board extends Component {
               piece={p}
               selectedRow={selectedRow}
               selectedCol={selectedCol}
+              handleMove={this.handleMove}
               handleSelect={this.handleSelect}
             />
           ))
