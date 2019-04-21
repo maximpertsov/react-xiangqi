@@ -13,54 +13,64 @@ const Wrapper = styled.img`
   margin:auto;
 `;
 
-export const Piece = ({ name, icon }) => (
-  <Wrapper className="Piece" alt={name} src={icon} />
-);
+export const Piece = ({ color, type, icon }) => {
+  const alt = `${color} ${type}`;
+  return (
+    <Wrapper
+      className="Piece"
+      color={color}
+      type={type}
+      alt={alt}
+      src={icon}
+    />
+  );
+};
 
 export const BlackGeneral = () => (
-  <Piece icon={images.blackGeneral} name="black general" />
+  <Piece icon={images.blackGeneral} color="black" type="general" />
 );
 export const BlackAdvisor = () => (
-  <Piece icon={images.blackAdvisor} name="black advisor" />
+  <Piece icon={images.blackAdvisor} color="black" type="advisor" />
 );
 export const BlackElephant = () => (
-  <Piece icon={images.blackElephant} name="black elephant" />
+  <Piece icon={images.blackElephant} color="black" type="elephant" />
 );
 export const BlackHorse = () => (
-  <Piece icon={images.blackHorse} name="black horse" />
+  <Piece icon={images.blackHorse} color="black" type="horse" />
 );
 export const BlackChariot = () => (
-  <Piece icon={images.blackChariot} name="black chariot" />
+  <Piece icon={images.blackChariot} color="black" type="chariot" />
 );
 export const BlackCannon = () => (
-  <Piece icon={images.blackCannon} name="black cannon" />
+  <Piece icon={images.blackCannon} color="black" type="cannon" />
 );
 export const BlackSoldier = () => (
-  <Piece icon={images.blackSoldier} name="black soldier" />
+  <Piece icon={images.blackSoldier} color="black" type="soldier" />
 );
 export const RedGeneral = () => (
-  <Piece icon={images.redGeneral} name="red general" />
+  <Piece icon={images.redGeneral} color="red" type="general" />
 );
 export const RedAdvisor = () => (
-  <Piece icon={images.redAdvisor} name="red advisor" />
+  <Piece icon={images.redAdvisor} color="red" type="advisor" />
 );
 export const RedElephant = () => (
-  <Piece icon={images.redElephant} name="red elephant" />
+  <Piece icon={images.redElephant} color="red" type="elephant" />
 );
 export const RedHorse = () => (
-  <Piece icon={images.redHorse} name="red horse" />
+  <Piece icon={images.redHorse} color="red" type="horse" />
 );
 export const RedChariot = () => (
-  <Piece icon={images.redChariot} name="red chariot" />
+  <Piece icon={images.redChariot} color="red" type="chariot" />
 );
 export const RedCannon = () => (
-  <Piece icon={images.redCannon} name="red cannon" />
+  <Piece icon={images.redCannon} color="red" type="cannon" />
 );
 export const RedSoldier = () => (
-  <Piece icon={images.redSoldier} name="red soldier" />
+  <Piece icon={images.redSoldier} color="red" type="soldier" />
 );
 
 Piece.propTypes = {
+  color: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
