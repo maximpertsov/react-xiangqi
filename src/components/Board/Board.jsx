@@ -43,7 +43,7 @@ class Board extends Component {
             <Square
               key={cellID(i, j)}
               piece={p}
-              selected={selectedPiece === p}
+              selectedPiece={selectedPiece}
               handleClick={this.handleClick}
             />
           ))

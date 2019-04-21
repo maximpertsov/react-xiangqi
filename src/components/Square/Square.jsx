@@ -19,6 +19,19 @@ class Square extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      selected: false,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { piece, selectedPiece } = nextProps;
+
+    if (piece === selectedPiece) {
+      this.setState((prevState) => ({ selected: !prevState.selected }));
+    } else {
+      this.setState({ selected: false });
+    }
   }
 
   handleClick() {
@@ -31,7 +44,9 @@ class Square extends Component {
   }
 
   render() {
-    const { piece, selected } = this.props;
+    const { piece } = this.props;
+    const { selected } = this.state;
+
     return (
       <Wrapper
         className="Square"
@@ -47,7 +62,7 @@ class Square extends Component {
 Square.propTypes = {
   handleClick: PropTypes.func.isRequired,
   piece: PropTypes.element,
-  selected: PropTypes.bool.isRequired,
+  selectedPiece: PropTypes.element.isRequired,
 };
 
 Square.defaultProps = {
