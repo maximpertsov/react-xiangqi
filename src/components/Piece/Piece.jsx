@@ -5,6 +5,8 @@ import * as images from './images';
 
 const Wrapper = styled.img`
   pointer-events: none;
+  user-select: none;
+  -moz-user-select: none;
   max-height:80%;
   max-width:80%;
   display:block;
