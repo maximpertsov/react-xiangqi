@@ -68,8 +68,8 @@ class Square extends Component {
 
 Square.propTypes = {
   col: PropTypes.number.isRequired,
-  handleSelect: PropTypes.func.isRequired,
   handleMove: PropTypes.func.isRequired,
+  handleSelect: PropTypes.func.isRequired,
   piece: PropTypes.element,
   row: PropTypes.number.isRequired,
   selectedCol: PropTypes.number.isRequired,
