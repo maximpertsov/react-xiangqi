@@ -22,8 +22,12 @@ class Square extends Component {
   }
 
   handleClick() {
-    const { cellName, handleClick } = this.props;
-    handleClick(cellName);
+    const { piece, cellName, handleClick } = this.props;
+    if (piece !== undefined) {
+      handleClick(cellName);
+    } else {
+      handleClick(null);
+    }
   }
 
   render() {
