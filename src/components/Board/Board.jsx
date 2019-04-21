@@ -21,20 +21,23 @@ class Board extends Component {
   constructor(props) {
     super(props);
 
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
 
     this.state = {
       pieces: layout,
-      selectedPiece: null,
+      selectedCol: null,
+      selectedRow: null,
     };
   }
 
-  handleClick(piece) {
-    this.setState({ selectedPiece: piece });
+  handleSelect(row, col) {
+    this.setState({ selectedCol: col, selectedRow: row });
   }
 
   render() {
-    const { pieces, selectedPiece } = this.state;
+    const {
+      pieces, selectedRow, selectedCol,
+    } = this.state;
 
     return (
       <Wrapper className="Board">
@@ -42,9 +45,12 @@ class Board extends Component {
           row.map((p, j) => (
             <Square
               key={cellID(i, j)}
+              row={i}
+              col={j}
               piece={p}
-              selectedPiece={selectedPiece}
-              handleClick={this.handleClick}
+              selectedRow={selectedRow}
+              selectedCol={selectedCol}
+              handleSelect={this.handleSelect}
             />
           ))
         ))}

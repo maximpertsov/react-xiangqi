@@ -25,9 +25,11 @@ class Square extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { piece, selectedPiece } = nextProps;
+    const {
+      piece, row, col, selectedRow, selectedCol,
+    } = nextProps;
 
-    if (piece === selectedPiece) {
+    if (piece !== undefined && row === selectedRow && col === selectedCol) {
       this.setState((prevState) => ({ selected: !prevState.selected }));
     } else {
       this.setState({ selected: false });
@@ -35,11 +37,13 @@ class Square extends Component {
   }
 
   handleClick() {
-    const { piece, handleClick } = this.props;
+    const {
+      piece, row, col, handleSelect,
+    } = this.props;
     if (piece !== undefined) {
-      handleClick(piece);
+      handleSelect(row, col);
     } else {
-      handleClick(null);
+      handleSelect(null, null);
     }
   }
 
@@ -60,9 +64,12 @@ class Square extends Component {
 }
 
 Square.propTypes = {
-  handleClick: PropTypes.func.isRequired,
+  col: PropTypes.number.isRequired,
+  handleSelect: PropTypes.func.isRequired,
   piece: PropTypes.element,
-  selectedPiece: PropTypes.element.isRequired,
+  row: PropTypes.number.isRequired,
+  selectedCol: PropTypes.number.isRequired,
+  selectedRow: PropTypes.number.isRequired,
 };
 
 Square.defaultProps = {
