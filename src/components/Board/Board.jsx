@@ -25,16 +25,23 @@ class Board extends Component {
 
     this.state = {
       pieces: layout,
-      selected: null,
+      selected: {},
     };
   }
 
   handleClick(cellName) {
-    this.setState({ selected: cellName });
+    this.setState(() => ({
+      selected: {
+        [cellName]: cellName,
+      },
+    }));
   }
 
   render() {
     const { pieces, selected } = this.state;
+    const isSelected = (i, j) => (
+      Object.prototype.hasOwnProperty.call(selected, cellID(i, j))
+    );
 
     return (
       <Wrapper className="Board">
@@ -44,7 +51,7 @@ class Board extends Component {
               key={cellID(i, j)}
               cellName={cellID(i, j)}
               piece={p}
-              selected={selected === cellID(i, j)}
+              selected={isSelected(i, j)}
               handleClick={this.handleClick}
             />
           ))
