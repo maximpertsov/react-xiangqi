@@ -25,16 +25,16 @@ class Board extends Component {
 
     this.state = {
       pieces: layout,
-      selected: null,
+      selectedPiece: null,
     };
   }
 
-  handleClick(cellName) {
-    this.setState({ selected: cellName });
+  handleClick(piece) {
+    this.setState({ selectedPiece: piece });
   }
 
   render() {
-    const { pieces, selected } = this.state;
+    const { pieces, selectedPiece } = this.state;
 
     return (
       <Wrapper className="Board">
@@ -42,9 +42,8 @@ class Board extends Component {
           row.map((p, j) => (
             <Square
               key={cellID(i, j)}
-              cellName={cellID(i, j)}
               piece={p}
-              selected={selected === cellID(i, j)}
+              selected={selectedPiece === p}
               handleClick={this.handleClick}
             />
           ))

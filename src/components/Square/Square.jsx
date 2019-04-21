@@ -22,9 +22,9 @@ class Square extends Component {
   }
 
   handleClick() {
-    const { piece, cellName, handleClick } = this.props;
+    const { piece, handleClick } = this.props;
     if (piece !== undefined) {
-      handleClick(cellName);
+      handleClick(piece);
     } else {
       handleClick(null);
     }
@@ -45,7 +45,6 @@ class Square extends Component {
 }
 
 Square.propTypes = {
-  cellName: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
   piece: PropTypes.element,
   selected: PropTypes.bool.isRequired,
