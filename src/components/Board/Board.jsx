@@ -48,6 +48,7 @@ class Board extends Component {
         [prevRow]: { [prevCol]: { $set: undefined } },
       }),
     }));
+    this.handleSelect(null, null);
   }
 
   render() {

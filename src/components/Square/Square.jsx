@@ -26,10 +26,10 @@ class Square extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {
-      piece, row, col, selectedRow, selectedCol,
+      row, col, selectedRow, selectedCol,
     } = nextProps;
 
-    if (piece !== undefined && row === selectedRow && col === selectedCol) {
+    if (this.isOccupied() && row === selectedRow && col === selectedCol) {
       this.setState((prevState) => ({ selected: !prevState.selected }));
     } else {
       this.setState({ selected: false });
@@ -38,16 +38,23 @@ class Square extends Component {
 
   handleClick() {
     const {
-      piece, row, col, selectedRow, selectedCol, handleMove, handleSelect,
+      row, col, selectedRow, selectedCol, handleMove, handleSelect,
     } = this.props;
-    if (piece !== undefined) {
-      handleSelect(row, col);
-    } else if (selectedRow !== null && selectedCol !== null) {
-      handleMove(selectedRow, selectedCol, row, col);
-      handleSelect(null, null);
-    } else {
-      handleSelect(null, null);
-    }
+    const { selected } = this.state;
+    if (this.isOccupied() && selected) handleSelect(null, null);
+    else if (this.isOccupied()) handleSelect(row, col);
+    else if (this.anySelected()) handleMove(selectedRow, selectedCol, row, col);
+    else handleSelect(null, null);
+  }
+
+  isOccupied() {
+    const { piece } = this.props;
+    return piece !== undefined;
+  }
+
+  anySelected() {
+    const { selectedRow, selectedCol } = this.props;
+    return selectedRow !== null && selectedCol !== null;
   }
 
   render() {
@@ -72,12 +79,14 @@ Square.propTypes = {
   handleSelect: PropTypes.func.isRequired,
   piece: PropTypes.element,
   row: PropTypes.number.isRequired,
-  selectedCol: PropTypes.number.isRequired,
-  selectedRow: PropTypes.number.isRequired,
+  selectedCol: PropTypes.number,
+  selectedRow: PropTypes.number,
 };
 
 Square.defaultProps = {
   piece: undefined,
+  selectedCol: null,
+  selectedRow: null,
 };
 
 export default Square;
