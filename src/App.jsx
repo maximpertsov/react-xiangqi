@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   text-align: center;
 `;
 
-export const App = () => (
+const App = () => (
   <Wrapper className="App">
     <Board
       redPlayer={<Player color="red" />}
