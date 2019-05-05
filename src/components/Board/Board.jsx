@@ -41,6 +41,13 @@ class Board extends Component {
     return players[activePlayerIdx];
   }
 
+  changePlayer() {
+    const { players } = this.state;
+    this.setState((prevState) => ({
+      activePlayerIdx: (prevState.activePlayerIdx + 1) % players.length,
+    }));
+  }
+
   handleSelect(row, col) {
     this.setState({ selectedCol: col, selectedRow: row });
   }
@@ -54,6 +61,7 @@ class Board extends Component {
       }),
     }));
     this.handleSelect(null, null);
+    this.changePlayer();
   }
 
   render() {
