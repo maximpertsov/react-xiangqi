@@ -28,12 +28,17 @@ class Board extends Component {
     this.handleMove = this.handleMove.bind(this);
 
     this.state = {
+      activePlayerIdx: 0,
       pieces: layout,
       players: [redPlayer, blackPlayer],
-      currentPlayerIdx: 0,
       selectedCol: null,
       selectedRow: null,
     };
+  }
+
+  activePlayer() {
+    const { players, activePlayerIdx } = this.state;
+    return players[activePlayerIdx];
   }
 
   handleSelect(row, col) {
@@ -56,23 +61,41 @@ class Board extends Component {
       pieces, selectedRow, selectedCol,
     } = this.state;
 
+    const { redPlayer, blackPlayer } = this.props;
+    const { color } = this.activePlayer().props;
+
+    // TODO: move this to another component
+    const matchInfo = (
+      <div>
+        <p>
+          { `${redPlayer.props.name} [red] vs ${blackPlayer.props.name} [black]` }
+        </p>
+        <p>
+          { `${color}'s turn` }
+        </p>
+      </div>
+    );
+
     return (
-      <Wrapper className="Board">
-        {pieces.map((row, i) => (
-          row.map((p, j) => (
-            <Square
-              key={cellID(i, j)}
-              row={i}
-              col={j}
-              piece={p}
-              selectedRow={selectedRow}
-              selectedCol={selectedCol}
-              handleMove={this.handleMove}
-              handleSelect={this.handleSelect}
-            />
-          ))
-        ))}
-      </Wrapper>
+      <div>
+        { matchInfo }
+        <Wrapper className="Board">
+          {pieces.map((row, i) => (
+            row.map((p, j) => (
+              <Square
+                key={cellID(i, j)}
+                row={i}
+                col={j}
+                piece={p}
+                selectedRow={selectedRow}
+                selectedCol={selectedCol}
+                handleMove={this.handleMove}
+                handleSelect={this.handleSelect}
+              />
+            ))
+          ))}
+        </Wrapper>
+      </div>
     );
   }
 }
