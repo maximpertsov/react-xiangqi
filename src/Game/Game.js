@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Board from './components/Board/Board';
-import Player from './components/Player/Player';
+import Board from './Board/Board';
+import Player from './Player/Player';
 
 const Wrapper = styled.div`
   text-align: center;
 `;
 
-export const App = () => (
-  <Wrapper className="App">
+const Game = () => (
+  <Wrapper className="Game">
     <Board
       redPlayer={<Player color="red" />}
       blackPlayer={<Player color="black" />}
@@ -16,4 +16,4 @@ export const App = () => (
   </Wrapper>
 );
 
-export default App;
+export default Game;
