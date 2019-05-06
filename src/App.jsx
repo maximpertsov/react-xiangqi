@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Board from './components/Board/Board';
-import Player from './components/Player/Player';
+import Board from './Game/Board/Board';
+import Player from './Game/Player/Player';
 
 const Wrapper = styled.div`
   text-align: center;
