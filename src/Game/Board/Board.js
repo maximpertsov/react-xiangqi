@@ -22,30 +22,15 @@ const Wrapper = styled.div`
 class Board extends Component {
   constructor(props) {
     super(props);
-    const { redPlayer, blackPlayer } = this.props;
 
     this.handleSelect = this.handleSelect.bind(this);
     this.handleMove = this.handleMove.bind(this);
 
     this.state = {
-      activePlayerIdx: 0,
       pieces: layout,
-      players: [redPlayer, blackPlayer],
       selectedCol: null,
       selectedRow: null,
     };
-  }
-
-  activePlayer() {
-    const { players, activePlayerIdx } = this.state;
-    return players[activePlayerIdx];
-  }
-
-  changePlayer() {
-    const { players } = this.state;
-    this.setState((prevState) => ({
-      activePlayerIdx: (prevState.activePlayerIdx + 1) % players.length,
-    }));
   }
 
   handleSelect(row, col) {
@@ -53,6 +38,7 @@ class Board extends Component {
   }
 
   handleMove(prevRow, prevCol, nextRow, nextCol) {
+    const { changePlayer } = this.props;
     this.setState((prevState) => ({
       pieces: update(update([...prevState.pieces], {
         [nextRow]: { [nextCol]: { $set: prevState.pieces[prevRow][prevCol] } },
@@ -61,7 +47,7 @@ class Board extends Component {
       }),
     }));
     this.handleSelect(null, null);
-    this.changePlayer();
+    changePlayer();
   }
 
   render() {
@@ -69,8 +55,8 @@ class Board extends Component {
       pieces, selectedRow, selectedCol,
     } = this.state;
 
-    const { redPlayer, blackPlayer } = this.props;
-    const { color } = this.activePlayer().props;
+    const { redPlayer, blackPlayer, activePlayer } = this.props;
+    const { color } = activePlayer().props;
 
     // TODO: move this to another component
     const matchInfo = (
@@ -111,6 +97,8 @@ class Board extends Component {
 Board.propTypes = {
   blackPlayer: PropTypes.element.isRequired,
   redPlayer: PropTypes.element.isRequired,
+  activePlayer: PropTypes.func.isRequired,
+  changePlayer: PropTypes.func.isRequired,
 };
 
 export default Board;

@@ -26,11 +26,13 @@ class Game extends Component {
     };
   }
 
+  // TODO: create PlayerManager class?
   activePlayer() {
     const { players, activePlayerIdx } = this.state;
     return players[activePlayerIdx];
   }
 
+  // TODO: create PlayerManager class?
   changePlayer() {
     const { players } = this.state;
     this.setState((prevState) => ({
@@ -45,6 +47,8 @@ class Game extends Component {
         <Board
           redPlayer={players[0]}
           blackPlayer={players[1]}
+          activePlayer={this.activePlayer}
+          changePlayer={this.changePlayer}
         />
       </Wrapper>
     );
