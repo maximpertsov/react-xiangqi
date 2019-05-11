@@ -5,7 +5,10 @@
   "dependencies": {
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10",
+    "axios": "^0.18.0",
+    "es6-promise": "^4.2.6",
     "immutability-helper": "^3.0.0",
+    "isomorphic-fetch": "^2.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8"

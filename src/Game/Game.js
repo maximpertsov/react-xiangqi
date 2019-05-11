@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Board from './Board/Board';
-import Player from './Player/Player';
-
-const redPlayer = <Player color="red" />;
-
-const blackPlayer = <Player color="black" />;
+import GameInfo from './GameInfo';
+import { getGame } from '../client';
 
 const Wrapper = styled.div`
   text-align: center;
@@ -15,15 +11,20 @@ const Wrapper = styled.div`
 class Game extends Component {
   constructor(props) {
     super(props);
-    const { players } = this.props;
 
     this.activePlayer = this.activePlayer.bind(this);
     this.changePlayer = this.changePlayer.bind(this);
 
     this.state = {
       activePlayerIdx: 0,
-      players,
+      players: [],
     };
+  }
+
+  componentDidMount() {
+    getGame(1).then((data) => {
+      this.setState({ players: data.players });
+    });
   }
 
   // TODO: create PlayerManager class?
@@ -45,22 +46,16 @@ class Game extends Component {
     return (
       <Wrapper className="Game">
         <Board
+          changePlayer={this.changePlayer}
+        />
+        <GameInfo
           redPlayer={players[0]}
           blackPlayer={players[1]}
           activePlayer={this.activePlayer}
-          changePlayer={this.changePlayer}
         />
       </Wrapper>
     );
   }
 }
-
-Game.propTypes = {
-  players: PropTypes.arrayOf(PropTypes.element),
-};
-
-Game.defaultProps = {
-  players: [redPlayer, blackPlayer],
-};
 
 export default Game;

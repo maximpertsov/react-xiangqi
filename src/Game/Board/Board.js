@@ -55,49 +55,28 @@ class Board extends Component {
       pieces, selectedRow, selectedCol,
     } = this.state;
 
-    const { redPlayer, blackPlayer, activePlayer } = this.props;
-    const { color } = activePlayer().props;
-
-    // TODO: move this to another component
-    const matchInfo = (
-      <div>
-        <p>
-          { `${redPlayer.props.name} [red] vs ${blackPlayer.props.name} [black]` }
-        </p>
-        <p>
-          { `${color}'s turn` }
-        </p>
-      </div>
-    );
-
     return (
-      <div>
-        { matchInfo }
-        <Wrapper className="Board">
-          {pieces.map((row, i) => (
-            row.map((p, j) => (
-              <Square
-                key={cellID(i, j)}
-                row={i}
-                col={j}
-                piece={p}
-                selectedRow={selectedRow}
-                selectedCol={selectedCol}
-                handleMove={this.handleMove}
-                handleSelect={this.handleSelect}
-              />
-            ))
-          ))}
-        </Wrapper>
-      </div>
+      <Wrapper className="Board">
+        {pieces.map((row, i) => (
+          row.map((p, j) => (
+            <Square
+              key={cellID(i, j)}
+              row={i}
+              col={j}
+              piece={p}
+              selectedRow={selectedRow}
+              selectedCol={selectedCol}
+              handleMove={this.handleMove}
+              handleSelect={this.handleSelect}
+            />
+          ))
+        ))}
+      </Wrapper>
     );
   }
 }
 
 Board.propTypes = {
-  blackPlayer: PropTypes.element.isRequired,
-  redPlayer: PropTypes.element.isRequired,
-  activePlayer: PropTypes.func.isRequired,
   changePlayer: PropTypes.func.isRequired,
 };
 
