@@ -45,13 +45,13 @@ class Game extends Component {
     const { players } = this.state;
     return (
       <Wrapper className="Game">
+        <Board
+          changePlayer={this.changePlayer}
+        />
         <GameInfo
           redPlayer={players[0]}
           blackPlayer={players[1]}
           activePlayer={this.activePlayer}
-        />
-        <Board
-          changePlayer={this.changePlayer}
         />
       </Wrapper>
     );
