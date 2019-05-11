@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Board from './Board/Board';
 import Player from './Player/Player';
+import { getGame } from '../client';
 
 const redPlayer = <Player color="red" />;
 
@@ -24,6 +25,15 @@ class Game extends Component {
       activePlayerIdx: 0,
       players,
     };
+  }
+
+  componentDidMount() {
+    getGame(1).then((data) => {
+      const players = data.players.map(
+        (player) => <Player name={player.name} color={player.color} />,
+      );
+      this.setState({ players });
+    });
   }
 
   // TODO: create PlayerManager class?
