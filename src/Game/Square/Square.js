@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { Piece, sourcePropType } from '../Piece/Piece';
 
 const Wrapper = styled.div(
   {
@@ -36,6 +37,13 @@ class Square extends Component {
     }
   }
 
+  getPiece() {
+    if (!this.isOccupied()) return undefined;
+    const { pieceData } = this.props;
+    const { icon, color, type } = pieceData;
+    return (<Piece icon={icon} color={color} type={type} />);
+  }
+
   handleClick() {
     const {
       row, col, selectedRow, selectedCol, handleMove, handleSelect,
@@ -48,8 +56,8 @@ class Square extends Component {
   }
 
   isOccupied() {
-    const { piece } = this.props;
-    return piece !== undefined;
+    const { pieceData } = this.props;
+    return pieceData !== undefined;
   }
 
   anySelected() {
@@ -58,7 +66,6 @@ class Square extends Component {
   }
 
   render() {
-    const { piece } = this.props;
     const { selected } = this.state;
 
     return (
@@ -67,7 +74,7 @@ class Square extends Component {
         onClick={this.handleClick}
         selected={selected}
       >
-        {piece}
+        {this.getPiece()}
       </Wrapper>
     );
   }
@@ -77,14 +84,18 @@ Square.propTypes = {
   col: PropTypes.number.isRequired,
   handleMove: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
-  piece: PropTypes.element,
+  pieceData: PropTypes.shape({
+    color: PropTypes.string,
+    icon: sourcePropType,
+    type: PropTypes.string,
+  }),
   row: PropTypes.number.isRequired,
   selectedCol: PropTypes.number,
   selectedRow: PropTypes.number,
 };
 
 Square.defaultProps = {
-  piece: undefined,
+  pieceData: undefined,
   selectedCol: null,
   selectedRow: null,
 };

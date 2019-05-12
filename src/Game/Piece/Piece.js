@@ -59,50 +59,7 @@ const pieceTypeData = {
 
 export const getPieceData = (code) => pieceTypeData[code];
 
-export const BlackGeneral = () => (
-  <Piece icon={images.blackGeneral} color="black" type="general" />
-);
-export const BlackAdvisor = () => (
-  <Piece icon={images.blackAdvisor} color="black" type="advisor" />
-);
-export const BlackElephant = () => (
-  <Piece icon={images.blackElephant} color="black" type="elephant" />
-);
-export const BlackHorse = () => (
-  <Piece icon={images.blackHorse} color="black" type="horse" />
-);
-export const BlackChariot = () => (
-  <Piece icon={images.blackChariot} color="black" type="chariot" />
-);
-export const BlackCannon = () => (
-  <Piece icon={images.blackCannon} color="black" type="cannon" />
-);
-export const BlackSoldier = () => (
-  <Piece icon={images.blackSoldier} color="black" type="soldier" />
-);
-export const RedGeneral = () => (
-  <Piece icon={images.redGeneral} color="red" type="general" />
-);
-export const RedAdvisor = () => (
-  <Piece icon={images.redAdvisor} color="red" type="advisor" />
-);
-export const RedElephant = () => (
-  <Piece icon={images.redElephant} color="red" type="elephant" />
-);
-export const RedHorse = () => (
-  <Piece icon={images.redHorse} color="red" type="horse" />
-);
-export const RedChariot = () => (
-  <Piece icon={images.redChariot} color="red" type="chariot" />
-);
-export const RedCannon = () => (
-  <Piece icon={images.redCannon} color="red" type="cannon" />
-);
-export const RedSoldier = () => (
-  <Piece icon={images.redSoldier} color="red" type="soldier" />
-);
-
-const sourcePropType = PropTypes.oneOfType([
+export const sourcePropType = PropTypes.oneOfType([
   PropTypes.shape({
     uri: PropTypes.string,
     headers: PropTypes.objectOf(PropTypes.string),
