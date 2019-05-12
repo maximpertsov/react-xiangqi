@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import Square from '../Square/Square';
-import layout from '../Piece/utils';
 import { cellID } from './utils';
 import { getInitialPosition } from '../../client';
 import { getPiece } from '../Piece/Piece';
@@ -30,7 +29,7 @@ class Board extends Component {
     this.handleMove = this.handleMove.bind(this);
 
     this.state = {
-      pieces: layout,
+      pieces: [...Array(10)].map(() => [...Array(9)]),
       selectedCol: null,
       selectedRow: null,
     };
