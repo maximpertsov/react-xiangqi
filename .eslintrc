@@ -18,6 +18,7 @@
     "max-statements": ["error", { "max": 7 }],
     "quote-props": ["error", "consistent-as-needed"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/no-array-index-key": "off",
     "require-jsdoc": "off",
     "sort-keys": "off",
     "space-before-function-paren": ["error", "never"]

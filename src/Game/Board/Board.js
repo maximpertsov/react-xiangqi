@@ -21,6 +21,11 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
+const RANKS = 10;
+const FILES = 9;
+
+const toSlot = (rank, file) => rank * FILES + file;
+
 class Board extends Component {
   constructor(props) {
     super(props);
@@ -29,9 +34,8 @@ class Board extends Component {
     this.handleMove = this.handleMove.bind(this);
 
     this.state = {
-      pieces: [...Array(10)].map(() => [...Array(9)]),
-      selectedCol: null,
-      selectedRow: null,
+      pieces: [...Array(RANKS * FILES)],
+      selectedSlot: null,
     };
   }
 
@@ -41,52 +45,44 @@ class Board extends Component {
         data.pieces.forEach((piece) => {
           this.setState((prevState) => ({
             pieces: update(prevState.pieces, {
-              [piece.rank]: {
-                [piece.file]: { $set: piece.code },
-              },
+              [toSlot(piece.rank, piece.file)]: { $set: piece.code },
             }),
           }));
         });
       });
   }
 
-  handleSelect(row, col) {
-    this.setState({ selectedCol: col, selectedRow: row });
+  handleSelect(slot) {
+    this.setState({ selectedSlot: slot });
   }
 
-  handleMove(prevRow, prevCol, nextRow, nextCol) {
+  handleMove(prevSlot, nextSlot) {
     const { changePlayer } = this.props;
     this.setState((prevState) => ({
       pieces: update(update([...prevState.pieces], {
-        [nextRow]: { [nextCol]: { $set: prevState.pieces[prevRow][prevCol] } },
+        [nextSlot]: { $set: prevState.pieces[prevSlot] },
       }), {
-        [prevRow]: { [prevCol]: { $set: undefined } },
+        [prevSlot]: { $set: undefined },
       }),
     }));
-    this.handleSelect(null, null);
+    this.handleSelect(null);
     changePlayer();
   }
 
   render() {
-    const {
-      pieces, selectedRow, selectedCol,
-    } = this.state;
+    const { pieces, selectedSlot } = this.state;
 
     return (
       <Wrapper className="Board">
-        {pieces.map((row, i) => (
-          row.map((pieceCode, j) => (
-            <Square
-              key={cellID(i, j)}
-              row={i}
-              col={j}
-              piece={getPiece(pieceCode)}
-              selectedRow={selectedRow}
-              selectedCol={selectedCol}
-              handleMove={this.handleMove}
-              handleSelect={this.handleSelect}
-            />
-          ))
+        {pieces.map((pieceCode, i) => (
+          <Square
+            key={i}
+            slot={i}
+            piece={getPiece(pieceCode)}
+            selectedSlot={selectedSlot}
+            handleMove={this.handleMove}
+            handleSelect={this.handleSelect}
+          />
         ))}
       </Wrapper>
     );

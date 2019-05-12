@@ -25,11 +25,9 @@ class Square extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {
-      row, col, selectedRow, selectedCol,
-    } = nextProps;
+    const { slot, selectedSlot } = nextProps;
 
-    if (this.isOccupied() && row === selectedRow && col === selectedCol) {
+    if (this.isOccupied() && slot === selectedSlot) {
       this.setState((prevState) => ({ selected: !prevState.selected }));
     } else {
       this.setState({ selected: false });
@@ -44,13 +42,13 @@ class Square extends Component {
 
   handleClick() {
     const {
-      row, col, selectedRow, selectedCol, handleMove, handleSelect,
+      slot, selectedSlot, handleMove, handleSelect,
     } = this.props;
     const { selected } = this.state;
-    if (this.isOccupied() && selected) handleSelect(null, null);
-    else if (this.isOccupied()) handleSelect(row, col);
-    else if (this.anySelected()) handleMove(selectedRow, selectedCol, row, col);
-    else handleSelect(null, null);
+    if (this.isOccupied() && selected) handleSelect(null);
+    else if (this.isOccupied()) handleSelect(selected);
+    else if (this.anySelected()) handleMove(selectedSlot, slot);
+    else handleSelect(null);
   }
 
   isOccupied() {
@@ -59,8 +57,8 @@ class Square extends Component {
   }
 
   anySelected() {
-    const { selectedRow, selectedCol } = this.props;
-    return selectedRow !== null && selectedCol !== null;
+    const { selectedSlot } = this.props;
+    return selectedSlot !== null;
   }
 
   render() {
@@ -79,19 +77,16 @@ class Square extends Component {
 }
 
 Square.propTypes = {
-  col: PropTypes.number.isRequired,
   handleMove: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
   piece: PropTypes.element,
-  row: PropTypes.number.isRequired,
-  selectedCol: PropTypes.number,
-  selectedRow: PropTypes.number,
+  slot: PropTypes.number.isRequired,
+  selectedSlot: PropTypes.number,
 };
 
 Square.defaultProps = {
   piece: undefined,
-  selectedCol: null,
-  selectedRow: null,
+  selectedSlot: null,
 };
 
 export default Square;
