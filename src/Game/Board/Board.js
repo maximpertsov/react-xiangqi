@@ -42,8 +42,8 @@ class Board extends Component {
         data.pieces.forEach((piece) => {
           this.setState((prevState) => ({
             pieces: update(prevState.pieces, {
-              [piece.position[0]]: {
-                [piece.position[1]]: { $set: piece.piece },
+              [piece.rank]: {
+                [piece.file]: { $set: piece.code },
               },
             }),
           }));
