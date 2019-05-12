@@ -15,4 +15,14 @@ export async function getGame(gameId) {
   }
 }
 
+export async function getInitialPosition() {
+  try {
+    const response = await axios.get('initial-position');
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default {};
