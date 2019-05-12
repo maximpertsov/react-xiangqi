@@ -36,6 +36,12 @@ class Square extends Component {
     }
   }
 
+  getPiece() {
+    if (!this.isOccupied()) return (<div />);
+    const { piece } = this.props;
+    return piece;
+  }
+
   handleClick() {
     const {
       row, col, selectedRow, selectedCol, handleMove, handleSelect,
@@ -58,7 +64,6 @@ class Square extends Component {
   }
 
   render() {
-    const { piece } = this.props;
     const { selected } = this.state;
 
     return (
@@ -67,7 +72,7 @@ class Square extends Component {
         onClick={this.handleClick}
         selected={selected}
       >
-        {piece}
+        {this.getPiece()}
       </Wrapper>
     );
   }

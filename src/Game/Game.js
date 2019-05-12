@@ -41,18 +41,27 @@ class Game extends Component {
     }));
   }
 
-  render() {
+  gameInfoOrLoading() {
     const { players } = this.state;
+    if (players.length === 0) {
+      return (<div><p>Loading...</p></div>);
+    }
+    return (
+      <GameInfo
+        redPlayer={players[0]}
+        blackPlayer={players[1]}
+        activePlayer={this.activePlayer}
+      />
+    );
+  }
+
+  render() {
     return (
       <Wrapper className="Game">
         <Board
           changePlayer={this.changePlayer}
         />
-        <GameInfo
-          redPlayer={players[0]}
-          blackPlayer={players[1]}
-          activePlayer={this.activePlayer}
-        />
+        { this.gameInfoOrLoading() }
       </Wrapper>
     );
   }
