@@ -1,4 +1,4 @@
-import { getPieceData } from './Piece';
+import { getPiece } from './Piece';
 
 const layout = [
   'rheakaehr',
@@ -12,6 +12,6 @@ const layout = [
   ' C     C ',
   '         ',
   'RHEAKAEHR',
-].map((row) => row.split('').map((ch) => getPieceData(ch)));
+].map((row) => row.split('').map((ch) => getPiece(ch)));
 
 export default layout;

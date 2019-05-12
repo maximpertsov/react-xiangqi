@@ -28,36 +28,36 @@ export const Piece = ({ color, type, icon }) => {
 
 const pieceTypeData = {
   k:
-     { icon: images.blackGeneral, color: 'black', type: 'general' },
+  <Piece icon={images.blackGeneral} color="black" type="general" />,
   a:
-     { icon: images.blackAdvisor, color: 'black', type: 'advisor' },
+  <Piece icon={images.blackAdvisor} color="black" type="advisor" />,
   e:
-     { icon: images.blackElephant, color: 'black', type: 'elephant' },
+  <Piece icon={images.blackElephant} color="black" type="elephant" />,
   h:
-     { icon: images.blackHorse, color: 'black', type: 'horse' },
+  <Piece icon={images.blackHorse} color="black" type="horse" />,
   r:
-     { icon: images.blackChariot, color: 'black', type: 'chariot' },
+  <Piece icon={images.blackChariot} color="black" type="chariot" />,
   c:
-     { icon: images.blackCannon, color: 'black', type: 'cannon' },
+  <Piece icon={images.blackCannon} color="black" type="cannon" />,
   p:
-     { icon: images.blackSoldier, color: 'black', type: 'soldier' },
+  <Piece icon={images.blackSoldier} color="black" type="soldier" />,
   K:
-     { icon: images.redGeneral, color: 'red', type: 'general' },
+  <Piece icon={images.redGeneral} color="red" type="general" />,
   A:
-     { icon: images.redAdvisor, color: 'red', type: 'advisor' },
+  <Piece icon={images.redAdvisor} color="red" type="advisor" />,
   E:
-     { icon: images.redElephant, color: 'red', type: 'elephant' },
+  <Piece icon={images.redElephant} color="red" type="elephant" />,
   H:
-     { icon: images.redHorse, color: 'red', type: 'horse' },
+  <Piece icon={images.redHorse} color="red" type="horse" />,
   R:
-     { icon: images.redChariot, color: 'red', type: 'chariot' },
+  <Piece icon={images.redChariot} color="red" type="chariot" />,
   C:
-     { icon: images.redCannon, color: 'red', type: 'cannon' },
+  <Piece icon={images.redCannon} color="red" type="cannon" />,
   P:
-      { icon: images.redSoldier, color: 'red', type: 'soldier' },
+  <Piece icon={images.redSoldier} color="red" type="soldier" />,
 };
 
-export const getPieceData = (code) => pieceTypeData[code];
+export const getPiece = (code) => pieceTypeData[code];
 
 export const sourcePropType = PropTypes.oneOfType([
   PropTypes.shape({
