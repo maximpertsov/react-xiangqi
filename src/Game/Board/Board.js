@@ -63,7 +63,6 @@ class Board extends Component {
               key={cellID(i, j)}
               row={i}
               col={j}
-              piece={p}
               pieceData={p}
               selectedRow={selectedRow}
               selectedCol={selectedCol}
