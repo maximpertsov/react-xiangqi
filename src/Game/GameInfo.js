@@ -2,9 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const GameInfo = ({ activePlayer, redPlayer, blackPlayer }) => {
-  if (redPlayer === undefined || blackPlayer === undefined) {
-    return (<div><p>Loading...</p></div>);
-  }
   const { color } = activePlayer();
   return (
     <div>
