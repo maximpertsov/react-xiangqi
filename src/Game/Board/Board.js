@@ -64,6 +64,7 @@ class Board extends Component {
               row={i}
               col={j}
               piece={p}
+              pieceData={p}
               selectedRow={selectedRow}
               selectedCol={selectedCol}
               handleMove={this.handleMove}

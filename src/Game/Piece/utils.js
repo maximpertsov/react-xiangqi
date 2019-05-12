@@ -4,6 +4,20 @@ import * as pieces from './Piece';
 
 const layout = [...Array(10)].map(() => [...Array(9)]);
 
+const layout2 = [
+  'rheakaehr',
+  '         ',
+  ' c     c ',
+  'p p p p p',
+  '         ',
+  // ~~~~~~~~
+  '         ',
+  'P P P P P',
+  ' C     C ',
+  '         ',
+  'RHEAKAEHR',
+].map((row) => row.split(''));
+
 // board layout
 // black back row
 layout[0][0] = <pieces.BlackChariot />;
