@@ -69,22 +69,24 @@ export const RedSoldier = () => (
   <Piece icon={images.redSoldier} color="red" type="soldier" />
 );
 
-Piece.propTypes = {
-  color: PropTypes.string.isRequired,
-  icon: PropTypes.oneOfType([
+const sourcePropType = PropTypes.oneOfType([
+  PropTypes.shape({
+    uri: PropTypes.string,
+    headers: PropTypes.objectOf(PropTypes.string),
+  }),
+  PropTypes.number,
+  PropTypes.arrayOf(
     PropTypes.shape({
       uri: PropTypes.string,
+      width: PropTypes.number,
+      height: PropTypes.number,
       headers: PropTypes.objectOf(PropTypes.string),
     }),
-    PropTypes.number,
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        uri: PropTypes.string,
-        width: PropTypes.number,
-        height: PropTypes.number,
-        headers: PropTypes.objectOf(PropTypes.string),
-      }),
-    ),
-  ]).isRequired,
+  ),
+]);
+
+Piece.propTypes = {
+  color: PropTypes.string.isRequired,
+  icon: sourcePropType.isRequired,
   type: PropTypes.string.isRequired,
 };

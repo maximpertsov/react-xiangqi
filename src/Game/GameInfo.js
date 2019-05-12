@@ -15,15 +15,15 @@ const GameInfo = ({ activePlayer, redPlayer, blackPlayer }) => {
   );
 };
 
-const playerShape = PropTypes.shape({
+const playerPropType = PropTypes.shape({
   color: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
 });
 
 GameInfo.propTypes = {
   activePlayer: PropTypes.func.isRequired,
-  blackPlayer: playerShape.isRequired,
-  redPlayer: playerShape.isRequired,
+  blackPlayer: playerPropType.isRequired,
+  redPlayer: playerPropType.isRequired,
 };
 
 export default GameInfo;
