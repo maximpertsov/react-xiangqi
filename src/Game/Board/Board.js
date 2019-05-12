@@ -5,6 +5,9 @@ import update from 'immutability-helper';
 import Square from '../Square/Square';
 import layout from '../Piece/utils';
 import { cellID } from './utils';
+import { getInitialPosition } from '../../client';
+import { getPiece } from '../Piece/Piece';
+
 
 import boardImg from './board-1000px.svg.png';
 
@@ -33,6 +36,21 @@ class Board extends Component {
     };
   }
 
+  componentDidMount() {
+    getInitialPosition()
+      .then((data) => {
+        data.pieces.forEach((piece) => {
+          this.setState((prevState) => ({
+            pieces: update(prevState.pieces, {
+              [piece.position[0]]: {
+                [piece.position[1]]: { $set: piece.piece },
+              },
+            }),
+          }));
+        });
+      });
+  }
+
   handleSelect(row, col) {
     this.setState({ selectedCol: col, selectedRow: row });
   }
@@ -58,12 +76,12 @@ class Board extends Component {
     return (
       <Wrapper className="Board">
         {pieces.map((row, i) => (
-          row.map((p, j) => (
+          row.map((pieceCode, j) => (
             <Square
               key={cellID(i, j)}
               row={i}
               col={j}
-              piece={p}
+              piece={getPiece(pieceCode)}
               selectedRow={selectedRow}
               selectedCol={selectedCol}
               handleMove={this.handleMove}
