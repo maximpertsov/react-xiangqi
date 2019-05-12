@@ -71,6 +71,20 @@ export const RedSoldier = () => (
 
 Piece.propTypes = {
   color: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.oneOfType([
+    PropTypes.shape({
+      uri: PropTypes.string,
+      headers: PropTypes.objectOf(PropTypes.string),
+    }),
+    PropTypes.number,
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        uri: PropTypes.string,
+        width: PropTypes.number,
+        height: PropTypes.number,
+        headers: PropTypes.objectOf(PropTypes.string),
+      }),
+    ),
+  ]).isRequired,
   type: PropTypes.string.isRequired,
 };

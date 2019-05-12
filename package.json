@@ -6,6 +6,7 @@
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10",
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "es6-promise": "^4.2.6",
     "immutability-helper": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",
@@ -29,10 +30,10 @@
     "not op_mini all"
   ],
   "jest": {
-      "moduleNameMapper": {
-	  "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetsTransformer.js",
-	  "\\.(css|less)$": "<rootDir>/assetsTransformer.js"
-      }
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetsTransformer.js",
+      "\\.(css|less)$": "<rootDir>/assetsTransformer.js"
+    }
   },
   "devDependencies": {
     "@babel/preset-env": "^7.4.4",
