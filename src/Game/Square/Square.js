@@ -46,7 +46,7 @@ class Square extends Component {
     } = this.props;
     const { selected } = this.state;
     if (this.isOccupied() && selected) handleSelect(null);
-    else if (this.isOccupied()) handleSelect(selected);
+    else if (this.isOccupied()) handleSelect(slot);
     else if (this.anySelected()) handleMove(selectedSlot, slot);
     else handleSelect(null);
   }
