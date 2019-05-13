@@ -34,7 +34,9 @@ class Board extends Component {
 
     this.state = {
       pieces: [...Array(RANKS * FILES)],
+      legalMoves: [...Array(RANKS * FILES)].map(() => []),
       selectedSlot: null,
+      destinationSlots: [],
     };
   }
 
@@ -55,6 +57,12 @@ class Board extends Component {
     this.setState({ selectedSlot: slot });
   }
 
+  handleDestinationSlots(slot) {
+    this.setState((prevState) => ({
+      destinationSlots: prevState.legalMoves[slot],
+    }));
+  }
+
   handleMove(prevSlot, nextSlot) {
     const { changePlayer } = this.props;
     this.setState((prevState) => ({
@@ -69,7 +77,7 @@ class Board extends Component {
   }
 
   render() {
-    const { pieces, selectedSlot } = this.state;
+    const { pieces, selectedSlot, destinationSlots } = this.state;
 
     return (
       <Wrapper className="Board">
@@ -79,6 +87,7 @@ class Board extends Component {
             slot={i}
             piece={getPiece(pieceCode)}
             selectedSlot={selectedSlot}
+            destinationSlots={destinationSlots}
             handleMove={this.handleMove}
             handleSelect={this.handleSelect}
           />

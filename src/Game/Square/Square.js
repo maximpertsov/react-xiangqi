@@ -15,12 +15,24 @@ const Wrapper = styled.div(
   }),
 );
 
+const Dot = styled.div`
+  width:50%;
+  height:50%;
+  color:#fff;
+  text-align:center;
+  line-height:0;
+  padding:25% 0;
+  border-radius:50%;
+  background:rgba(152, 251, 152, 0.3)
+`;
+
 class Square extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
       selected: false,
+      targeted: true,
     };
   }
 
@@ -35,9 +47,12 @@ class Square extends Component {
   }
 
   getPiece() {
-    if (!this.isOccupied()) return (<div />);
+    const { targeted } = this.state;
     const { piece } = this.props;
-    return piece;
+
+    if (this.isOccupied()) return piece;
+    if (targeted) return (<Dot />);
+    return (<div />);
   }
 
   handleClick() {
@@ -62,7 +77,7 @@ class Square extends Component {
   }
 
   render() {
-    const { selected } = this.state;
+    const { selected, targeted } = this.state;
 
     return (
       <Wrapper
