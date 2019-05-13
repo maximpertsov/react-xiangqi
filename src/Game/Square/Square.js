@@ -19,9 +19,9 @@ const Dot = styled.div`
   width:50%;
   height:50%;
   color:#fff;
-  text-align:center;
-  line-height:0;
-  padding:25% 0;
+  position:relative;
+  top:50%;
+  transform:translateY(-50%);
   border-radius:50%;
   background:rgba(152, 251, 152, 0.3)
 `;

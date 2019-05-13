@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://eb37a7da-f9f6-4bf0-afe8-a11e008e42aa.mock.pstmn.io';
+const BASE_URL = 'http://localhost:8000';
 
 axios.defaults.baseURL = `${BASE_URL}/api/`;
 axios.defaults.timeout = 1000;
