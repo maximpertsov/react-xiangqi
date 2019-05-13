@@ -32,7 +32,6 @@ class Square extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.state = {
       selected: false,
-      targeted: true,
     };
   }
 
@@ -47,11 +46,10 @@ class Square extends Component {
   }
 
   getPiece() {
-    const { targeted } = this.state;
-    const { piece } = this.props;
+    const { slot, piece, targets } = this.props;
 
     if (this.isOccupied()) return piece;
-    if (targeted) return (<Dot />);
+    if (targets.includes(slot)) return (<Dot />);
     return (<div />);
   }
 
@@ -77,7 +75,7 @@ class Square extends Component {
   }
 
   render() {
-    const { selected, targeted } = this.state;
+    const { selected } = this.state;
 
     return (
       <Wrapper
@@ -97,6 +95,7 @@ Square.propTypes = {
   piece: PropTypes.element,
   slot: PropTypes.number.isRequired,
   selectedSlot: PropTypes.number,
+  targets: PropTypes.arrayOf(PropTypes.number).isRequired
 };
 
 Square.defaultProps = {
