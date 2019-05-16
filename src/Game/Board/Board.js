@@ -23,8 +23,6 @@ const Wrapper = styled.div`
 const RANKS = 10;
 const FILES = 9;
 
-const toSlot = (rank, file) => rank * FILES + file;
-
 class Board extends Component {
   constructor(props) {
     super(props);
@@ -40,14 +38,21 @@ class Board extends Component {
   }
 
   componentDidMount() {
+    this.fetchBoard();
+  }
+
+  fetchBoard() {
     getInitialPosition()
       .then((data) => {
-        data.pieces.forEach((piece) => {
-          this.setState((prevState) => ({
-            pieces: update(prevState.pieces, {
-              [toSlot(piece.rank, piece.file)]: { $set: piece.code },
-            }),
-          }));
+        const { board } = data;
+        board.forEach((square, i) => {
+          if (square !== null) {
+            this.setState((prevState) => ({
+              pieces: update(prevState.pieces, {
+                [i]: { $set: square },
+              }),
+            }));
+          }
         });
       });
   }
