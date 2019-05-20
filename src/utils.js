@@ -1,7 +1,7 @@
 function fromFenRow(row) {
   return row.split('').reduce((acc, ch) => {
     const val = +ch;
-    const newItems = Number.isNaN(val) ? [ch] : [...Array(val).fill(null)];
+    const newItems = Number.isNaN(val) ? [ch] : Array(val).fill(null);
     return acc.concat(newItems);
   }, []);
 }

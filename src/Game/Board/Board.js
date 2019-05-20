@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import Square from '../Square/Square';
+import { fromFen } from '../../utils';
 import { getInitialPosition } from '../../client';
 import { getPiece } from '../Piece/Piece';
 
@@ -42,19 +43,10 @@ class Board extends Component {
   }
 
   fetchBoard() {
-    getInitialPosition()
-      .then((data) => {
-        const { board } = data;
-        board.forEach((square, i) => {
-          if (square !== null) {
-            this.setState((prevState) => ({
-              pieces: update(prevState.pieces, {
-                [i]: { $set: square },
-              }),
-            }));
-          }
-        });
-      });
+    getInitialPosition().then((data) => {
+      const { fen } = data;
+      this.setState({ pieces: fromFen(fen) });
+    });
   }
 
   handleSelect(slot) {
