@@ -7,7 +7,7 @@ function fromFenRow(row) {
 }
 
 export function fromFen(fen) {
-  return fen.split('/').map((row) => fromFenRow(row));
+  return fen.split('/').reduce((acc, row) => acc.concat(fromFenRow(row)));
 }
 
 export default {};
