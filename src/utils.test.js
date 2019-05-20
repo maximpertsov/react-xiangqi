@@ -1,7 +1,21 @@
-import { fromFen } from './utils';
+import {
+  fromFen, getIndex, getRank, getFile,
+} from './utils';
 
-const RANKS = 10;
-const FILES = 9;
+test('convert rank-file to index', () => {
+  expect(getIndex(0, 0)).toBe(0);
+  expect(getIndex(5, 3)).toBe(48);
+});
+
+test('convert index to rank', () => {
+  expect(getRank(0)).toBe(0);
+  expect(getRank(48)).toBe(5);
+});
+
+test('convert index to file', () => {
+  expect(getFile(0)).toBe(0);
+  expect(getFile(48)).toBe(3);
+});
 
 test('converts FEN string to an array', () => {
   const fen = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
@@ -18,7 +32,7 @@ test('converts FEN string to an array', () => {
     'R', 'H', 'E', 'A', 'K', 'A', 'E', 'H', 'R',
   ];
   const actual = fromFen(fen);
-  for (let i = 0; i < RANKS * FILES; i++) {
+  for (let i = 0; i < 90; i++) {
     expect(actual[i]).toBe(expected[i]);
   }
 });
