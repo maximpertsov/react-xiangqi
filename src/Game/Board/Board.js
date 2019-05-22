@@ -32,7 +32,7 @@ class Board extends Component {
     this.handleMove = this.handleMove.bind(this);
 
     this.state = {
-      pieces: [...Array(RANKS * FILES)],
+      pieces: null,
       legalMoves: [...Array(RANKS * FILES)].map(() => [50]),
       selectedSlot: null,
     };
@@ -70,6 +70,9 @@ class Board extends Component {
   render() {
     const { pieces, selectedSlot, legalMoves } = this.state;
     const targets = (selectedSlot === null) ? [] : legalMoves[selectedSlot];
+
+    // TODO Add loading spinner
+    if (pieces === null) return (<div>Loading...</div>);
 
     return (
       <Wrapper className="Board">
