@@ -42,18 +42,20 @@ function sameElements(actual, expected) {
   expect(expected).toEqual(expect.arrayContaining(actual));
 }
 
+const Slots = (...rankFiles) => rankFiles.map((rf) => getIndex(...rf));
+
 test('finds all legal moves', () => {
   const fen = '4k4/9/9/9/pp7/1p7/9/9/9/4K4';
   const actual = legalMoves(fromFen(fen));
   const expected = {};
-  expected[getIndex(4, 0)] = [getIndex(5, 0)];
-  expected[getIndex(4, 1)] = [];
-  expected[getIndex(5, 1)] = [getIndex(6, 1), getIndex(5, 2), getIndex(5, 0)];
+  expected[getIndex(4, 0)] = Slots([5, 0]);
+  expected[getIndex(4, 1)] = Slots();
+  expected[getIndex(5, 1)] = Slots([6, 1], [5, 2], [5, 0]);
   for (let i = 0; i < 90; i++) {
     if (Object.hasOwnProperty.call(expected, i)) {
       sameElements(actual[i], expected[i]);
     } else {
-      sameElements(actual[i], []);
+      sameElements(actual[i], Slots());
     }
   }
 });
