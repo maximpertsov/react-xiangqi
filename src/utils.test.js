@@ -44,14 +44,19 @@ function sameElements(actual, expected) {
 
 const Slots = (...rankFiles) => rankFiles.map((rf) => getIndex(...rf));
 
-test('finds all legal moves', () => {
-  const fen = '4k4/9/9/9/pp7/1p7/9/9/9/4K4';
+const legalMoveTests = [
+  [
+    '4k4/9/9/9/pp7/1p7/9/9/9/4K4',
+    {
+      [getIndex(4, 0)]: Slots([5, 0]),
+      [getIndex(4, 1)]: Slots(),
+      [getIndex(5, 1)]: Slots([6, 1], [5, 2], [5, 0]),
+    },
+  ],
+];
+
+test.each(legalMoveTests)('finds all legal moves for %i', (fen, expected) => {
   const actual = legalMoves(fromFen(fen));
-  const expected = {
-    [getIndex(4, 0)]: Slots([5, 0]),
-    [getIndex(4, 1)]: Slots(),
-    [getIndex(5, 1)]: Slots([6, 1], [5, 2], [5, 0]),
-  };
   for (let i = 0; i < 90; i++) {
     if (Object.hasOwnProperty.call(expected, i)) {
       sameElements(actual[i], expected[i]);
