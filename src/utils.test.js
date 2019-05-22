@@ -37,18 +37,23 @@ test('converts FEN string to an array', () => {
   }
 });
 
+function sameElements(actual, expected) {
+  expect(actual).toEqual(expect.arrayContaining(expected));
+  expect(expected).toEqual(expect.arrayContaining(actual));
+}
+
 test('finds all legal moves', () => {
-  const fen = '9/9/9/9/1p7/1p7/9/9/9/9';
+  const fen = '4k4/9/9/9/pp7/1p7/9/9/9/4K4';
   const actual = legalMoves(fromFen(fen));
   const expected = {};
+  expected[getIndex(4, 0)] = [getIndex(5, 0)];
   expected[getIndex(4, 1)] = [];
-  expected[getIndex(5, 1)] = [getIndex(6, 1), getIndex(5, 0), getIndex(5, 2)];
+  expected[getIndex(5, 1)] = [getIndex(6, 1), getIndex(5, 2), getIndex(5, 0)];
   for (let i = 0; i < 90; i++) {
     if (Object.hasOwnProperty.call(expected, i)) {
-      console.log(getRank(i), getFile(i), actual[i], expected[i]);
-      expect(actual[i]).toStrictEqual(expected[i]);
+      sameElements(actual[i], expected[i]);
     } else {
-      expect(actual[i]).toStrictEqual([]);
+      sameElements(actual[i], []);
     }
   }
 });
