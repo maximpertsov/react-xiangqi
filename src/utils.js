@@ -36,9 +36,9 @@ function getNextRank(board, idx) {
 
 function isBeyondRiver(board, idx) {
   const code = board[idx];
-  const nextRank = getNextRank(board, idx);
-  if (isBlack(code)) return nextRank > RED_RIVER_BANK;
-  if (isRed(code)) return nextRank < BLACK_RIVER_BANK;
+  const rank = getRank(idx);
+  if (isBlack(code)) return rank >= RED_RIVER_BANK;
+  if (isRed(code)) return rank <= BLACK_RIVER_BANK;
   return false;
 }
 

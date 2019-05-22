@@ -1,5 +1,5 @@
 import {
-  fromFen, getIndex, getRank, getFile, legalMoves
+  fromFen, getIndex, getRank, getFile, legalMoves,
 } from './utils';
 
 test('convert rank-file to index', () => {
@@ -38,12 +38,14 @@ test('converts FEN string to an array', () => {
 });
 
 test('finds all legal moves', () => {
-  const fen = '9/9/9/9/1p7/9/9/9/9/9';
+  const fen = '9/9/9/9/1p7/1p7/9/9/9/9';
   const actual = legalMoves(fromFen(fen));
   const expected = {};
-  expected[getIndex(4, 1)] = [getIndex(5, 1)];
+  expected[getIndex(4, 1)] = [];
+  expected[getIndex(5, 1)] = [getIndex(6, 1), getIndex(5, 0), getIndex(5, 2)];
   for (let i = 0; i < 90; i++) {
     if (Object.hasOwnProperty.call(expected, i)) {
+      console.log(getRank(i), getFile(i), actual[i], expected[i]);
       expect(actual[i]).toStrictEqual(expected[i]);
     } else {
       expect(actual[i]).toStrictEqual([]);
