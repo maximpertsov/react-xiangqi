@@ -29,7 +29,6 @@ export function fromFen(fen) {
 function getNextRank(board, idx) {
   const code = board[idx];
   const rank = getRank(idx);
-  // TODO should bound enforcement be here?
   if (isBlack(code)) return Math.min(rank + 1, RANKS - 1);
   if (isRed(code)) return Math.max(rank - 1, 0);
   return rank;
@@ -38,8 +37,8 @@ function getNextRank(board, idx) {
 function isBeyondRiver(board, idx) {
   const code = board[idx];
   const nextRank = getNextRank(board, idx);
-  if (isBlack(code)) return nextRank > BLACK_RIVER_BANK;
-  if (isRed(code)) return nextRank > RED_RIVER_BANK;
+  if (isBlack(code)) return nextRank > RED_RIVER_BANK;
+  if (isRed(code)) return nextRank < BLACK_RIVER_BANK;
   return false;
 }
 
@@ -59,7 +58,8 @@ function legalPawnMoves(board, idx) {
   const result = [];
   const rank = getRank(idx);
   const file = getFile(idx);
-  addIfUniversallyLegal(result, board, idx, getIndex(getNextRank(idx), file));
+  const nextRank = getNextRank(board, idx);
+  addIfUniversallyLegal(result, board, idx, getIndex(nextRank, file));
   if (isBeyondRiver(board, idx)) {
     addIfUniversallyLegal(result, board, idx, getIndex(rank, file - 1));
     addIfUniversallyLegal(result, board, idx, getIndex(rank, file + 1));
@@ -69,8 +69,8 @@ function legalPawnMoves(board, idx) {
 
 
 export function legalMoves(board) {
-  board.map((code, idx) => {
-    if (code === 'p' || code === 'P') return legalPawnMoves(board, idx);
+  return board.map((code, idx, b) => {
+    if (code === 'p' || code === 'P') return legalPawnMoves(b, idx);
     return [];
   });
 }
