@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import Square from '../Square/Square';
-import { fromFen } from '../../utils';
+import { fromFen, legalMoves } from '../../utils';
 import { getInitialPosition } from '../../client';
 import { getPiece } from '../Piece/Piece';
 
@@ -21,9 +21,6 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const RANKS = 10;
-const FILES = 9;
-
 class Board extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +30,7 @@ class Board extends Component {
 
     this.state = {
       pieces: null,
-      legalMoves: [...Array(RANKS * FILES)].map(() => [50]),
+      moves: null,
       selectedSlot: null,
     };
   }
@@ -45,12 +42,18 @@ class Board extends Component {
   fetchBoard() {
     getInitialPosition().then((data) => {
       const { fen } = data;
-      this.setState({ pieces: fromFen(fen) });
+      const pieces = fromFen(fen);
+      this.setState({ pieces, moves: legalMoves(pieces) });
     });
   }
 
   handleSelect(slot) {
     this.setState({ selectedSlot: slot });
+  }
+
+  updateLegalMoves() {
+    const { pieces } = this.state;
+    this.setState({ moves: legalMoves(pieces) });
   }
 
   handleMove(prevSlot, nextSlot) {
@@ -64,12 +67,13 @@ class Board extends Component {
     }));
     this.handleSelect(null);
     changePlayer();
+    this.updateLegalMoves();
   }
 
 
   render() {
-    const { pieces, selectedSlot, legalMoves } = this.state;
-    const targets = (selectedSlot === null) ? [] : legalMoves[selectedSlot];
+    const { pieces, selectedSlot, moves } = this.state;
+    const targets = (selectedSlot === null) ? [] : moves[selectedSlot];
 
     // TODO Add loading spinner
     if (pieces === null) return (<div>Loading...</div>);
