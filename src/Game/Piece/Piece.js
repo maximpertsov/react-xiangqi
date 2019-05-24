@@ -26,7 +26,7 @@ export const Piece = ({ color, type, icon }) => {
   );
 };
 
-const pieceTypeData = {
+const pieceType = {
   k:
   <Piece icon={images.blackGeneral} color="black" type="general" />,
   a:
@@ -57,7 +57,7 @@ const pieceTypeData = {
   <Piece icon={images.redSoldier} color="red" type="soldier" />,
 };
 
-export const getPiece = (code) => pieceTypeData[code];
+export const getPiece = (code) => pieceType[code];
 
 export const sourcePropType = PropTypes.oneOfType([
   PropTypes.shape({

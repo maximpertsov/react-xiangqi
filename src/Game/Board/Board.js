@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import Square from '../Square/Square';
-import { cellID } from './utils';
+import { fromFen, legalMoves } from '../../utils';
 import { getInitialPosition } from '../../client';
 import { getPiece } from '../Piece/Piece';
 
@@ -29,64 +29,67 @@ class Board extends Component {
     this.handleMove = this.handleMove.bind(this);
 
     this.state = {
-      pieces: [...Array(10)].map(() => [...Array(9)]),
-      selectedCol: null,
-      selectedRow: null,
+      pieces: null,
+      moves: null,
+      selectedSlot: null,
     };
   }
 
   componentDidMount() {
-    getInitialPosition()
-      .then((data) => {
-        data.pieces.forEach((piece) => {
-          this.setState((prevState) => ({
-            pieces: update(prevState.pieces, {
-              [piece.rank]: {
-                [piece.file]: { $set: piece.code },
-              },
-            }),
-          }));
-        });
-      });
+    this.fetchBoard();
   }
 
-  handleSelect(row, col) {
-    this.setState({ selectedCol: col, selectedRow: row });
+  fetchBoard() {
+    getInitialPosition().then((data) => {
+      const { fen } = data;
+      const pieces = fromFen(fen);
+      this.setState({ pieces, moves: legalMoves(pieces) });
+    });
   }
 
-  handleMove(prevRow, prevCol, nextRow, nextCol) {
+  handleSelect(slot) {
+    this.setState({ selectedSlot: slot });
+  }
+
+  updateLegalMoves() {
+    const { pieces } = this.state;
+    this.setState({ moves: legalMoves(pieces) });
+  }
+
+  handleMove(prevSlot, nextSlot) {
     const { changePlayer } = this.props;
     this.setState((prevState) => ({
       pieces: update(update([...prevState.pieces], {
-        [nextRow]: { [nextCol]: { $set: prevState.pieces[prevRow][prevCol] } },
+        [nextSlot]: { $set: prevState.pieces[prevSlot] },
       }), {
-        [prevRow]: { [prevCol]: { $set: undefined } },
+        [prevSlot]: { $set: undefined },
       }),
     }));
-    this.handleSelect(null, null);
+    this.handleSelect(null);
     changePlayer();
+    this.updateLegalMoves();
   }
 
+
   render() {
-    const {
-      pieces, selectedRow, selectedCol,
-    } = this.state;
+    const { pieces, selectedSlot, moves } = this.state;
+    const targets = (selectedSlot === null) ? [] : moves[selectedSlot];
+
+    // TODO Add loading spinner
+    if (pieces === null) return (<div>Loading...</div>);
 
     return (
       <Wrapper className="Board">
-        {pieces.map((row, i) => (
-          row.map((pieceCode, j) => (
-            <Square
-              key={cellID(i, j)}
-              row={i}
-              col={j}
-              piece={getPiece(pieceCode)}
-              selectedRow={selectedRow}
-              selectedCol={selectedCol}
-              handleMove={this.handleMove}
-              handleSelect={this.handleSelect}
-            />
-          ))
+        {pieces.map((pieceCode, i) => (
+          <Square
+            key={i}
+            slot={i}
+            piece={getPiece(pieceCode)}
+            selectedSlot={selectedSlot}
+            targets={targets}
+            handleMove={this.handleMove}
+            handleSelect={this.handleSelect}
+          />
         ))}
       </Wrapper>
     );

@@ -15,6 +15,17 @@ const Wrapper = styled.div(
   }),
 );
 
+const Dot = styled.div`
+  width:50%;
+  height:50%;
+  color:#fff;
+  position:relative;
+  top:50%;
+  transform:translateY(-50%);
+  border-radius:50%;
+  background:rgba(152, 251, 152, 0.3)
+`;
+
 class Square extends Component {
   constructor(props) {
     super(props);
@@ -25,11 +36,9 @@ class Square extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {
-      row, col, selectedRow, selectedCol,
-    } = nextProps;
+    const { slot, selectedSlot } = nextProps;
 
-    if (this.isOccupied() && row === selectedRow && col === selectedCol) {
+    if (this.isOccupied() && slot === selectedSlot) {
       this.setState((prevState) => ({ selected: !prevState.selected }));
     } else {
       this.setState({ selected: false });
@@ -37,20 +46,22 @@ class Square extends Component {
   }
 
   getPiece() {
-    if (!this.isOccupied()) return (<div />);
-    const { piece } = this.props;
-    return piece;
+    const { slot, piece, targets } = this.props;
+
+    if (this.isOccupied()) return piece;
+    if (targets.includes(slot)) return (<Dot />);
+    return (<div />);
   }
 
   handleClick() {
     const {
-      row, col, selectedRow, selectedCol, handleMove, handleSelect,
+      slot, selectedSlot, handleMove, handleSelect,
     } = this.props;
     const { selected } = this.state;
-    if (this.isOccupied() && selected) handleSelect(null, null);
-    else if (this.isOccupied()) handleSelect(row, col);
-    else if (this.anySelected()) handleMove(selectedRow, selectedCol, row, col);
-    else handleSelect(null, null);
+    if (this.isOccupied() && selected) handleSelect(null);
+    else if (this.isOccupied()) handleSelect(slot);
+    else if (this.anySelected()) handleMove(selectedSlot, slot);
+    else handleSelect(null);
   }
 
   isOccupied() {
@@ -59,8 +70,8 @@ class Square extends Component {
   }
 
   anySelected() {
-    const { selectedRow, selectedCol } = this.props;
-    return selectedRow !== null && selectedCol !== null;
+    const { selectedSlot } = this.props;
+    return selectedSlot !== null;
   }
 
   render() {
@@ -79,19 +90,17 @@ class Square extends Component {
 }
 
 Square.propTypes = {
-  col: PropTypes.number.isRequired,
   handleMove: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
   piece: PropTypes.element,
-  row: PropTypes.number.isRequired,
-  selectedCol: PropTypes.number,
-  selectedRow: PropTypes.number,
+  slot: PropTypes.number.isRequired,
+  selectedSlot: PropTypes.number,
+  targets: PropTypes.arrayOf(PropTypes.number).isRequired
 };
 
 Square.defaultProps = {
   piece: undefined,
-  selectedCol: null,
-  selectedRow: null,
+  selectedSlot: null,
 };
 
 export default Square;
