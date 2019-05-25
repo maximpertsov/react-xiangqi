@@ -6,7 +6,7 @@ const BLACK_RIVER_BANK = 4;
 const RED_RIVER_BANK = 5;
 
 export const getSlot = (rank, file) => file + rank * FILES;
-export const getRank = (idx) => Math.ceil(idx / RANKS);
+export const getRank = (idx) => Math.floor(idx / FILES);
 export const getFile = (idx) => idx % FILES;
 const isRed = (code) => RED_PIECES.includes(code);
 const isBlack = (code) => BLACK_PIECES.includes(code);
