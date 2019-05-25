@@ -51,9 +51,24 @@ const legalMoveTests = [
       [getSlot(5, 1)]: toSlots([6, 1], [5, 2], [5, 0]),
     },
   ],
+  [
+    'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR',
+    {
+      [getSlot(3, 0)]: toSlots([4, 0]),
+      [getSlot(3, 2)]: toSlots([4, 2]),
+      [getSlot(3, 4)]: toSlots([4, 4]),
+      [getSlot(3, 6)]: toSlots([4, 6]),
+      [getSlot(3, 8)]: toSlots([4, 8]),
+      [getSlot(6, 0)]: toSlots([5, 0]),
+      [getSlot(6, 2)]: toSlots([5, 2]),
+      [getSlot(6, 4)]: toSlots([5, 4]),
+      [getSlot(6, 6)]: toSlots([5, 6]),
+      [getSlot(6, 8)]: toSlots([5, 8]),
+    },
+  ],
 ];
 
-test.each(legalMoveTests)('finds all legal moves for %i', (fen, expected) => {
+test.each(legalMoveTests)('finds all legal moves for %s', (fen, expected) => {
   const actual = legalMoves(fromFen(fen));
   for (let i = 0; i < 90; i++) {
     if (Object.hasOwnProperty.call(expected, i)) {
