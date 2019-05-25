@@ -44,6 +44,7 @@ function isBeyondRiver(board, idx) {
 
 function isUniverallyLegal(board, fromIdx, toIdx) {
   if (fromIdx === toIdx) return false;
+  // TODO Check if rank and file in bounds, not just slots
   if (toIdx < 0) return false;
   if (toIdx >= RANKS * FILES) return false;
   if (sameColor(board[fromIdx], board[toIdx])) return false;

@@ -165,6 +165,7 @@ const legalMoveTests = [
       [getSlot(6, 8)]: toSlots([5, 8]),
     },
   ],
+  // Bugfix: Pawn going across board
   [
     '9/9/9/9/9/9/9/9/8p/9',
     {
