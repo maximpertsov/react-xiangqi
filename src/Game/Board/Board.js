@@ -93,7 +93,7 @@ class Board extends Component {
             targets={targets}
             handleMove={this.handleMove}
             handleSelect={this.handleSelect}
-            getPieceOn={this.handleSelect}
+            getPieceOn={this.getPieceOn}
           />
         ))}
       </Wrapper>

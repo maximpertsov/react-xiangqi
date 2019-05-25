@@ -53,14 +53,17 @@ class Square extends Component {
     return (<div />);
   }
 
+  // TODO move logic to board class by passing any required
+  // state params to as arguments
   handleClick() {
     const {
       slot, selectedSlot, handleMove, handleSelect,
     } = this.props;
     const { selected } = this.state;
     if (this.isOccupied() && selected) handleSelect(null);
-    else if (this.isOccupied()) handleSelect(slot);
-    else if (this.anySelected()) handleMove(selectedSlot, slot);
+    else if (this.isOccupied() && !this.selectedCanCapture()) {
+      handleSelect(slot);
+    } else if (this.anySelected()) handleMove(selectedSlot, slot);
     else handleSelect(null);
   }
 
@@ -70,11 +73,11 @@ class Square extends Component {
   }
 
   selectedCanCapture() {
-    if (!this.anySelected) return false;
+    if (!this.anySelected()) return false;
     const { selectedSlot, piece, getPieceOn } = this.props;
     const selectedPiece = getPieceOn(selectedSlot);
-    if (piece === undefined || selectedPiece === null) return false;
-    return piece.color !== selectedPiece.color;
+    if (piece === undefined || selectedPiece === undefined) return false;
+    return piece.props.color !== selectedPiece.props.color;
   }
 
   anySelected() {
