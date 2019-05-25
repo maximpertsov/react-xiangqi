@@ -52,8 +52,7 @@ class Board extends Component {
   }
 
   updateLegalMoves() {
-    const { pieces } = this.state;
-    this.setState({ moves: legalMoves(pieces) });
+    this.setState((prevState) => ({ moves: legalMoves(prevState.pieces) }));
   }
 
   handleMove(prevSlot, nextSlot) {
@@ -66,8 +65,8 @@ class Board extends Component {
       }),
     }));
     this.handleSelect(null);
-    changePlayer();
     this.updateLegalMoves();
+    changePlayer();
   }
 
 
