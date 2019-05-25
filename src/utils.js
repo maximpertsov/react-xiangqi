@@ -42,17 +42,20 @@ function isBeyondRiver(board, idx) {
   return false;
 }
 
-function isUniverallyLegal(board, fromIdx, toIdx) {
-  if (fromIdx === toIdx) return false;
-  // TODO Check if rank and file in bounds, not just slots
-  if (toIdx < 0) return false;
-  if (toIdx >= RANKS * FILES) return false;
-  if (sameColor(board[fromIdx], board[toIdx])) return false;
+function isUniverallyLegal(board, fromIdx, toRank, toFile) {
+  if (fromIdx === getSlot(toRank, toFile)) return false;
+  if (toRank < 0) return false;
+  if (toRank >= RANKS) return false;
+  if (toFile < 0) return false;
+  if (toFile >= FILES) return false;
+  if (sameColor(board[fromIdx], board[getSlot(toRank, toFile)])) return false;
   return true;
 }
 
-function addIfUniversallyLegal(moves, board, fromIdx, toIdx) {
-  if (isUniverallyLegal(board, fromIdx, toIdx)) moves.push(toIdx);
+function addIfUniversallyLegal(moves, board, fromIdx, toRank, toFile) {
+  if (isUniverallyLegal(board, fromIdx, toRank, toFile)) {
+    moves.push(getSlot(toRank, toFile));
+  }
 }
 
 function legalPawnMoves(board, idx) {
@@ -60,10 +63,10 @@ function legalPawnMoves(board, idx) {
   const rank = getRank(idx);
   const file = getFile(idx);
   const nextRank = getNextRank(board, idx);
-  addIfUniversallyLegal(result, board, idx, getSlot(nextRank, file));
+  addIfUniversallyLegal(result, board, idx, nextRank, file);
   if (isBeyondRiver(board, idx)) {
-    addIfUniversallyLegal(result, board, idx, getSlot(rank, file - 1));
-    addIfUniversallyLegal(result, board, idx, getSlot(rank, file + 1));
+    addIfUniversallyLegal(result, board, idx, rank, file - 1);
+    addIfUniversallyLegal(result, board, idx, rank, file + 1);
   }
   return result;
 }
