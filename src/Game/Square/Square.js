@@ -95,7 +95,7 @@ Square.propTypes = {
   piece: PropTypes.element,
   slot: PropTypes.number.isRequired,
   selectedSlot: PropTypes.number,
-  targets: PropTypes.arrayOf(PropTypes.number).isRequired
+  targets: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 Square.defaultProps = {
