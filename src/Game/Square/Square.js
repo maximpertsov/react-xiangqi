@@ -69,6 +69,14 @@ class Square extends Component {
     return piece !== undefined;
   }
 
+  selectedCanCapture() {
+    if (!this.anySelected) return false;
+    const { selectedSlot, piece, getPieceOn } = this.props;
+    const selectedPiece = getPieceOn(selectedSlot);
+    if (piece === undefined || selectedPiece === null) return false;
+    return piece.color !== selectedPiece.color;
+  }
+
   anySelected() {
     const { selectedSlot } = this.props;
     return selectedSlot !== null;
@@ -92,6 +100,7 @@ class Square extends Component {
 Square.propTypes = {
   handleMove: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
+  getPieceOn: PropTypes.func.isRequired,
   piece: PropTypes.element,
   slot: PropTypes.number.isRequired,
   selectedSlot: PropTypes.number,

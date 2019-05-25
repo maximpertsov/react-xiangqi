@@ -27,6 +27,7 @@ class Board extends Component {
 
     this.handleSelect = this.handleSelect.bind(this);
     this.handleMove = this.handleMove.bind(this);
+    this.getPieceOn = this.getPieceOn.bind(this);
 
     this.state = {
       pieces: null,
@@ -39,6 +40,15 @@ class Board extends Component {
     this.fetchBoard();
   }
 
+  getPieceOn(slot) {
+    const { pieces } = this.state;
+    return getPiece(pieces[slot]);
+  }
+
+  updateLegalMoves() {
+    this.setState((prevState) => ({ moves: legalMoves(prevState.pieces) }));
+  }
+
   fetchBoard() {
     getInitialPosition().then((data) => {
       const { fen } = data;
@@ -49,10 +59,6 @@ class Board extends Component {
 
   handleSelect(slot) {
     this.setState({ selectedSlot: slot });
-  }
-
-  updateLegalMoves() {
-    this.setState((prevState) => ({ moves: legalMoves(prevState.pieces) }));
   }
 
   handleMove(prevSlot, nextSlot) {
@@ -69,7 +75,6 @@ class Board extends Component {
     changePlayer();
   }
 
-
   render() {
     const { pieces, selectedSlot, moves } = this.state;
     const targets = (selectedSlot === null) ? [] : moves[selectedSlot];
@@ -79,15 +84,16 @@ class Board extends Component {
 
     return (
       <Wrapper className="Board">
-        {pieces.map((pieceCode, i) => (
+        {pieces.map((_, i) => (
           <Square
             key={i}
             slot={i}
-            piece={getPiece(pieceCode)}
+            piece={this.getPieceOn(i)}
             selectedSlot={selectedSlot}
             targets={targets}
             handleMove={this.handleMove}
             handleSelect={this.handleSelect}
+            getPieceOn={this.handleSelect}
           />
         ))}
       </Wrapper>
