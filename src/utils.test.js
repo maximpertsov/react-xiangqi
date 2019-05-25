@@ -32,9 +32,7 @@ test('converts FEN string to an array', () => {
     'R', 'H', 'E', 'A', 'K', 'A', 'E', 'H', 'R',
   ];
   const actual = fromFen(fen);
-  for (let i = 0; i < 90; i++) {
-    expect(actual[i]).toBe(expected[i]);
-  }
+  expect(actual).toStrictEqual(expected);
 });
 
 function sameElements(actual, expected) {
