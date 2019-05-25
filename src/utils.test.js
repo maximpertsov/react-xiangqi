@@ -165,6 +165,13 @@ const legalMoveTests = [
       [getSlot(6, 8)]: toSlots([5, 8]),
     },
   ],
+  // Bugfix: Pawn going across board
+  [
+    '9/9/9/9/9/9/9/9/8p/9',
+    {
+      [getSlot(8, 8)]: toSlots([9, 8], [8, 7]),
+    },
+  ],
 ];
 
 test.each(legalMoveTests)('finds all legal moves for %s', (fen, expected) => {

@@ -53,20 +53,31 @@ class Square extends Component {
     return (<div />);
   }
 
+  // TODO move logic to board class by passing any required
+  // state params to as arguments
   handleClick() {
     const {
       slot, selectedSlot, handleMove, handleSelect,
     } = this.props;
     const { selected } = this.state;
     if (this.isOccupied() && selected) handleSelect(null);
-    else if (this.isOccupied()) handleSelect(slot);
-    else if (this.anySelected()) handleMove(selectedSlot, slot);
+    else if (this.isOccupied() && !this.selectedCanCapture()) {
+      handleSelect(slot);
+    } else if (this.anySelected()) handleMove(selectedSlot, slot);
     else handleSelect(null);
   }
 
   isOccupied() {
     const { piece } = this.props;
     return piece !== undefined;
+  }
+
+  selectedCanCapture() {
+    if (!this.anySelected()) return false;
+    const { selectedSlot, piece, getPieceOn } = this.props;
+    const selectedPiece = getPieceOn(selectedSlot);
+    if (piece === undefined || selectedPiece === undefined) return false;
+    return piece.props.color !== selectedPiece.props.color;
   }
 
   anySelected() {
@@ -92,10 +103,11 @@ class Square extends Component {
 Square.propTypes = {
   handleMove: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
+  getPieceOn: PropTypes.func.isRequired,
   piece: PropTypes.element,
   slot: PropTypes.number.isRequired,
   selectedSlot: PropTypes.number,
-  targets: PropTypes.arrayOf(PropTypes.number).isRequired
+  targets: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 Square.defaultProps = {
