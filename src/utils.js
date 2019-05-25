@@ -5,7 +5,7 @@ const RED_PIECES = 'RHEAKCP';
 const BLACK_RIVER_BANK = 4;
 const RED_RIVER_BANK = 5;
 
-export const getIndex = (rank, file) => file + rank * FILES;
+export const getSlot = (rank, file) => file + rank * FILES;
 export const getRank = (idx) => Math.ceil(idx / RANKS);
 export const getFile = (idx) => idx % FILES;
 const isRed = (code) => RED_PIECES.includes(code);
@@ -59,10 +59,10 @@ function legalPawnMoves(board, idx) {
   const rank = getRank(idx);
   const file = getFile(idx);
   const nextRank = getNextRank(board, idx);
-  addIfUniversallyLegal(result, board, idx, getIndex(nextRank, file));
+  addIfUniversallyLegal(result, board, idx, getSlot(nextRank, file));
   if (isBeyondRiver(board, idx)) {
-    addIfUniversallyLegal(result, board, idx, getIndex(rank, file - 1));
-    addIfUniversallyLegal(result, board, idx, getIndex(rank, file + 1));
+    addIfUniversallyLegal(result, board, idx, getSlot(rank, file - 1));
+    addIfUniversallyLegal(result, board, idx, getSlot(rank, file + 1));
   }
   return result;
 }

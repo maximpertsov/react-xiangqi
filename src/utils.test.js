@@ -1,10 +1,10 @@
 import {
-  fromFen, getIndex, getRank, getFile, legalMoves,
+  fromFen, getSlot, getRank, getFile, legalMoves,
 } from './utils';
 
 test('convert rank-file to index', () => {
-  expect(getIndex(0, 0)).toBe(0);
-  expect(getIndex(5, 3)).toBe(48);
+  expect(getSlot(0, 0)).toBe(0);
+  expect(getSlot(5, 3)).toBe(48);
 });
 
 test('convert index to rank', () => {
@@ -42,15 +42,15 @@ function sameElements(actual, expected) {
   expect(expected).toEqual(expect.arrayContaining(actual));
 }
 
-const Slots = (...rankFiles) => rankFiles.map((rf) => getIndex(...rf));
+const toSlots = (...rankFiles) => rankFiles.map((rf) => getSlot(...rf));
 
 const legalMoveTests = [
   [
     '4k4/9/9/9/pp7/1p7/9/9/9/4K4',
     {
-      [getIndex(4, 0)]: Slots([5, 0]),
-      [getIndex(4, 1)]: Slots(),
-      [getIndex(5, 1)]: Slots([6, 1], [5, 2], [5, 0]),
+      [getSlot(4, 0)]: toSlots([5, 0]),
+      [getSlot(4, 1)]: toSlots(),
+      [getSlot(5, 1)]: toSlots([6, 1], [5, 2], [5, 0]),
     },
   ],
 ];
@@ -61,7 +61,7 @@ test.each(legalMoveTests)('finds all legal moves for %i', (fen, expected) => {
     if (Object.hasOwnProperty.call(expected, i)) {
       sameElements(actual[i], expected[i]);
     } else {
-      sameElements(actual[i], Slots());
+      sameElements(actual[i], toSlots());
     }
   }
 });
