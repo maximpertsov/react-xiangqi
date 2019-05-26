@@ -45,14 +45,6 @@ class Square extends Component {
     }
   }
 
-  getPiece() {
-    const { slot, piece, targets } = this.props;
-
-    if (this.isOccupied()) return piece;
-    if (targets.includes(slot)) return (<Dot />);
-    return (<div />);
-  }
-
   handleClick() {
     const { handleSquareClick } = this.props;
     handleSquareClick(this);
@@ -72,6 +64,14 @@ class Square extends Component {
     return this.isOccupied() && this.isSelected();
   }
 
+  renderSquareElement() {
+    const { slot, piece, targets } = this.props;
+
+    if (this.isOccupied()) return piece;
+    if (targets.includes(slot)) return (<Dot />);
+    return (<div />);
+  }
+
   render() {
     const { selected } = this.state;
 
@@ -81,7 +81,7 @@ class Square extends Component {
         onClick={this.handleClick}
         selected={selected}
       >
-        {this.getPiece()}
+        {this.renderSquareElement()}
       </Wrapper>
     );
   }
