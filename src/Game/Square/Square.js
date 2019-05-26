@@ -53,8 +53,6 @@ class Square extends Component {
     return (<div />);
   }
 
-  // TODO move logic to board class by passing any required
-  // state params to as arguments
   handleClick() {
     const { handleSquareClick } = this.props;
     handleSquareClick(this);
