@@ -68,6 +68,10 @@ class Square extends Component {
     return selected;
   }
 
+  clickWillUnselect() {
+    return this.isOccupied() && this.isSelected();
+  }
+
   render() {
     const { selected } = this.state;
 
