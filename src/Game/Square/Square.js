@@ -57,13 +57,17 @@ class Square extends Component {
   // state params to as arguments
   handleClick() {
     const { handleSquareClick } = this.props;
-    const { selected } = this.state;
-    handleSquareClick(this, selected);
+    handleSquareClick(this);
   }
 
   isOccupied() {
     const { piece } = this.props;
     return piece !== undefined;
+  }
+
+  isSelected() {
+    const { selected } = this.state;
+    return selected;
   }
 
   selectedCanCapture() {

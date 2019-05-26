@@ -56,10 +56,10 @@ class Board extends Component {
     });
   }
 
-  handleSquareClick(square, selected) {
+  handleSquareClick(square) {
     const { slot } = square.props;
     const { selectedSlot } = this.state;
-    if (square.isOccupied() && selected) this.handleSelect(null);
+    if (square.isOccupied() && square.isSelected()) this.handleSelect(null);
     else if (square.isOccupied() && !square.selectedCanCapture()) {
       this.handleSelect(slot);
     } else if (square.anySelected()) this.handleMove(selectedSlot, slot);
