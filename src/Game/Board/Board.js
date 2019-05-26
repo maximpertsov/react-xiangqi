@@ -25,9 +25,8 @@ class Board extends Component {
   constructor(props) {
     super(props);
 
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleMove = this.handleMove.bind(this);
     this.getPieceOn = this.getPieceOn.bind(this);
+    this.handleSquareClick = this.handleSquareClick.bind(this);
 
     this.state = {
       pieces: null,
@@ -55,6 +54,26 @@ class Board extends Component {
       const pieces = fromFen(fen);
       this.setState({ pieces, moves: legalMoves(pieces) });
     });
+  }
+
+  selectedCanCapture(slot) {
+    const { selectedSlot } = this.state;
+    const selectedPiece = this.getPieceOn(selectedSlot);
+    const targetedPiece = this.getPieceOn(slot);
+    if (selectedPiece === undefined || targetedPiece === undefined) {
+      return false;
+    }
+    return targetedPiece.props.color !== selectedPiece.props.color;
+  }
+
+  handleSquareClick(square) {
+    const { slot } = square.props;
+    const { selectedSlot } = this.state;
+    if (square.clickWillUnselect()) this.handleSelect(null);
+    else if (square.isOccupied() && !this.selectedCanCapture(slot)) {
+      this.handleSelect(slot);
+    } else if (selectedSlot !== null) this.handleMove(selectedSlot, slot);
+    else this.handleSelect(null);
   }
 
   handleSelect(slot) {
@@ -91,8 +110,7 @@ class Board extends Component {
             piece={this.getPieceOn(i)}
             selectedSlot={selectedSlot}
             targets={targets}
-            handleMove={this.handleMove}
-            handleSelect={this.handleSelect}
+            handleSquareClick={this.handleSquareClick}
             getPieceOn={this.getPieceOn}
           />
         ))}

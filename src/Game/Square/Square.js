@@ -9,9 +9,13 @@ const Wrapper = styled.div(
     backgroundSize: 'contain',
     display: 'flex',
     justifyContent: 'center',
+    padding: '0px;',
+    margin: '0px;',
   },
-  ({ selected }) => ({
+  ({ selected, targeted }) => ({
     backgroundColor: (selected ? 'rgba(152, 251, 152, 0.3)' : 'none'),
+    outline: (targeted ? '3px dotted rgba(152, 251, 152, 0.3)' : 'none'),
+    outlineOffset: (targeted ? '-2px' : 'none'),
   }),
 );
 
@@ -23,7 +27,7 @@ const Dot = styled.div`
   top:50%;
   transform:translateY(-50%);
   border-radius:50%;
-  background:rgba(152, 251, 152, 0.3)
+  background:rgba(152, 251, 152, 0.3);
 `;
 
 class Square extends Component {
@@ -45,26 +49,9 @@ class Square extends Component {
     }
   }
 
-  getPiece() {
-    const { slot, piece, targets } = this.props;
-
-    if (this.isOccupied()) return piece;
-    if (targets.includes(slot)) return (<Dot />);
-    return (<div />);
-  }
-
-  // TODO move logic to board class by passing any required
-  // state params to as arguments
   handleClick() {
-    const {
-      slot, selectedSlot, handleMove, handleSelect,
-    } = this.props;
-    const { selected } = this.state;
-    if (this.isOccupied() && selected) handleSelect(null);
-    else if (this.isOccupied() && !this.selectedCanCapture()) {
-      handleSelect(slot);
-    } else if (this.anySelected()) handleMove(selectedSlot, slot);
-    else handleSelect(null);
+    const { handleSquareClick } = this.props;
+    handleSquareClick(this);
   }
 
   isOccupied() {
@@ -72,38 +59,42 @@ class Square extends Component {
     return piece !== undefined;
   }
 
-  selectedCanCapture() {
-    if (!this.anySelected()) return false;
-    const { selectedSlot, piece, getPieceOn } = this.props;
-    const selectedPiece = getPieceOn(selectedSlot);
-    if (piece === undefined || selectedPiece === undefined) return false;
-    return piece.props.color !== selectedPiece.props.color;
+  isSelected() {
+    const { selected } = this.state;
+    return selected;
   }
 
-  anySelected() {
-    const { selectedSlot } = this.props;
-    return selectedSlot !== null;
+  clickWillUnselect() {
+    return this.isOccupied() && this.isSelected();
+  }
+
+  renderSquareElement() {
+    const { slot, piece, targets } = this.props;
+    if (this.isOccupied()) return piece;
+    if (targets.includes(slot)) return (<Dot />);
+    return (<div />);
   }
 
   render() {
     const { selected } = this.state;
+    const { slot, targets } = this.props;
+    const targeted = (this.isOccupied() && targets.includes(slot));
 
     return (
       <Wrapper
         className="Square"
         onClick={this.handleClick}
         selected={selected}
+        targeted={targeted}
       >
-        {this.getPiece()}
+        {this.renderSquareElement()}
       </Wrapper>
     );
   }
 }
 
 Square.propTypes = {
-  handleMove: PropTypes.func.isRequired,
-  handleSelect: PropTypes.func.isRequired,
-  getPieceOn: PropTypes.func.isRequired,
+  handleSquareClick: PropTypes.func.isRequired,
   piece: PropTypes.element,
   slot: PropTypes.number.isRequired,
   selectedSlot: PropTypes.number,
