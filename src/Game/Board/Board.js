@@ -56,13 +56,23 @@ class Board extends Component {
     });
   }
 
+  selectedCanCapture(slot) {
+    const { selectedSlot } = this.state;
+    const selectedPiece = this.getPieceOn(selectedSlot);
+    const targetedPiece = this.getPieceOn(slot);
+    if (selectedPiece === undefined || targetedPiece === undefined) {
+      return false;
+    }
+    return targetedPiece.props.color !== selectedPiece.props.color;
+  }
+
   handleSquareClick(square) {
     const { slot } = square.props;
     const { selectedSlot } = this.state;
     if (square.isOccupied() && square.isSelected()) this.handleSelect(null);
-    else if (square.isOccupied() && !square.selectedCanCapture()) {
+    else if (square.isOccupied() && !this.selectedCanCapture(slot)) {
       this.handleSelect(slot);
-    } else if (square.anySelected()) this.handleMove(selectedSlot, slot);
+    } else if (selectedSlot !== null) this.handleMove(selectedSlot, slot);
     else this.handleSelect(null);
   }
 
