@@ -25,8 +25,6 @@ class Board extends Component {
   constructor(props) {
     super(props);
 
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleMove = this.handleMove.bind(this);
     this.getPieceOn = this.getPieceOn.bind(this);
     this.handleSquareClick = this.handleSquareClick.bind(this);
 
@@ -102,8 +100,6 @@ class Board extends Component {
             piece={this.getPieceOn(i)}
             selectedSlot={selectedSlot}
             targets={targets}
-            handleMove={this.handleMove}
-            handleSelect={this.handleSelect}
             handleSquareClick={this.handleSquareClick}
             getPieceOn={this.getPieceOn}
           />
