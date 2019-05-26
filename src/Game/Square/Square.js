@@ -23,7 +23,7 @@ const Dot = styled.div`
   top:50%;
   transform:translateY(-50%);
   border-radius:50%;
-  background:rgba(152, 251, 152, 0.3)
+  background:rgba(152, 251, 152, 0.3);
 `;
 
 class Square extends Component {
@@ -56,15 +56,9 @@ class Square extends Component {
   // TODO move logic to board class by passing any required
   // state params to as arguments
   handleClick() {
-    const {
-      slot, selectedSlot, handleMove, handleSelect,
-    } = this.props;
+    const { handleSquareClick } = this.props;
     const { selected } = this.state;
-    if (this.isOccupied() && selected) handleSelect(null);
-    else if (this.isOccupied() && !this.selectedCanCapture()) {
-      handleSelect(slot);
-    } else if (this.anySelected()) handleMove(selectedSlot, slot);
-    else handleSelect(null);
+    handleSquareClick(this, selected);
   }
 
   isOccupied() {
@@ -101,8 +95,7 @@ class Square extends Component {
 }
 
 Square.propTypes = {
-  handleMove: PropTypes.func.isRequired,
-  handleSelect: PropTypes.func.isRequired,
+  handleSquareClick: PropTypes.func.isRequired,
   getPieceOn: PropTypes.func.isRequired,
   piece: PropTypes.element,
   slot: PropTypes.number.isRequired,

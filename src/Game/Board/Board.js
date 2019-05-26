@@ -28,6 +28,7 @@ class Board extends Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.handleMove = this.handleMove.bind(this);
     this.getPieceOn = this.getPieceOn.bind(this);
+    this.handleSquareClick = this.handleSquareClick.bind(this);
 
     this.state = {
       pieces: null,
@@ -55,6 +56,16 @@ class Board extends Component {
       const pieces = fromFen(fen);
       this.setState({ pieces, moves: legalMoves(pieces) });
     });
+  }
+
+  handleSquareClick(square, selected) {
+    const { slot } = square.props;
+    const { selectedSlot } = this.state;
+    if (square.isOccupied() && selected) this.handleSelect(null);
+    else if (square.isOccupied() && !square.selectedCanCapture()) {
+      this.handleSelect(slot);
+    } else if (square.anySelected()) this.handleMove(selectedSlot, slot);
+    else this.handleSelect(null);
   }
 
   handleSelect(slot) {
@@ -93,6 +104,7 @@ class Board extends Component {
             targets={targets}
             handleMove={this.handleMove}
             handleSelect={this.handleSelect}
+            handleSquareClick={this.handleSquareClick}
             getPieceOn={this.getPieceOn}
           />
         ))}
