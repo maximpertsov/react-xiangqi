@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
+const SELECTION_GREEN = 'rgba(152, 251, 152, 0.3)';
+
 const Wrapper = styled.div(
   {
     backgroundPosition: 'center',
@@ -13,8 +15,8 @@ const Wrapper = styled.div(
     margin: '0px;',
   },
   ({ selected, targeted }) => ({
-    backgroundColor: (selected ? 'rgba(152, 251, 152, 0.3)' : 'none'),
-    outline: (targeted ? '3px dotted rgba(152, 251, 152, 0.3)' : 'none'),
+    backgroundColor: (selected ? SELECTION_GREEN : 'none'),
+    outline: (targeted ? `3px dotted ${SELECTION_GREEN}` : 'none'),
     outlineOffset: (targeted ? '-2px' : 'none'),
   }),
 );
@@ -22,12 +24,11 @@ const Wrapper = styled.div(
 const Dot = styled.div`
   width:50%;
   height:50%;
-  color:#fff;
   position:relative;
   top:50%;
   transform:translateY(-50%);
   border-radius:50%;
-  background:rgba(152, 251, 152, 0.3);
+  background:${SELECTION_GREEN};
 `;
 
 class Square extends Component {
