@@ -77,6 +77,7 @@ class Board extends Component {
   }
 
   handleSelect(slot) {
+    console.log("Legal moves for slot", slot, this.state.moves[slot]);
     this.setState({ selectedSlot: slot });
   }
 
