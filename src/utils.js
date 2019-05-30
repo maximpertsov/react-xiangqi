@@ -8,6 +8,7 @@ const RED_RIVER_BANK = 5;
 export const getSlot = (rank, file) => file + rank * FILES;
 export const getRank = (slot) => Math.floor(slot / FILES);
 export const getFile = (slot) => slot % FILES;
+const getRankFile = (slot) => [getRank(slot), getFile(slot)];
 const isRed = (code) => RED_PIECES.includes(code);
 const isBlack = (code) => BLACK_PIECES.includes(code);
 function sameColor(code1, code2) {
@@ -82,7 +83,7 @@ function orthogonalSquares(board, slot) {
 }
 
 function diagonalSquares(board, slot) {
-  return relativeSquares(board, slot, [[1, 1], [-1, 1], [-1, 1], [-1, -1]]);
+  return relativeSquares(board, slot, [[1, 1], [-1, 1], [1, -1], [-1, -1]]);
 }
 
 function isOccupied(board, slot) {
@@ -94,22 +95,25 @@ function legalHorseMoves(board, slot) {
   let toRank;
   let toFile;
 
-  orthogonalSquares().forEach(function(firstHop, _, firstHops) {
+  orthogonalSquares(board, slot).forEach((firstHop, _, firstHops) => {
     if (isOccupied(board, firstHop)) return;
 
     diagonalSquares(board, firstHop).forEach((secondHop) => {
-      if (firstHops.includes(secondHop)) return;
+      if (firstHops.includes(secondHop) || result.includes(secondHop)) return;
       // TODO standardize rank,file => idx conversions
       toRank = getRank(secondHop);
       toFile = getFile(secondHop);
       addIfUniversallyLegal(result, board, slot, toRank, toFile);
     });
   });
+
+  return result;
 }
 
 export function legalMoves(board) {
   return board.map((code, slot, b) => {
     if (code === 'p' || code === 'P') return legalPawnMoves(b, slot);
+    if (code === 'h' || code === 'H') return legalHorseMoves(b, slot);
     return [];
   });
 }
