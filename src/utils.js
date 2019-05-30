@@ -6,8 +6,8 @@ const BLACK_RIVER_BANK = 4;
 const RED_RIVER_BANK = 5;
 
 export const getSlot = (rank, file) => file + rank * FILES;
-export const getRank = (idx) => Math.floor(idx / FILES);
-export const getFile = (idx) => idx % FILES;
+export const getRank = (slot) => Math.floor(slot / FILES);
+export const getFile = (slot) => slot % FILES;
 const isRed = (code) => RED_PIECES.includes(code);
 const isBlack = (code) => BLACK_PIECES.includes(code);
 function sameColor(code1, code2) {
@@ -26,17 +26,17 @@ export function fromFen(fen) {
   return fen.split('/').reduce((acc, row) => acc.concat(fromFenRow(row)), []);
 }
 
-function getNextRank(board, idx) {
-  const code = board[idx];
-  const rank = getRank(idx);
+function getNextRank(board, slot) {
+  const code = board[slot];
+  const rank = getRank(slot);
   if (isBlack(code)) return Math.min(rank + 1, RANKS - 1);
   if (isRed(code)) return Math.max(rank - 1, 0);
   return rank;
 }
 
-function isBeyondRiver(board, idx) {
-  const code = board[idx];
-  const rank = getRank(idx);
+function isBeyondRiver(board, slot) {
+  const code = board[slot];
+  const rank = getRank(slot);
   if (isBlack(code)) return rank >= RED_RIVER_BANK;
   if (isRed(code)) return rank <= BLACK_RIVER_BANK;
   return false;
@@ -58,23 +58,22 @@ function addIfUniversallyLegal(moves, board, fromIdx, toRank, toFile) {
   }
 }
 
-function legalPawnMoves(board, idx) {
+function legalPawnMoves(board, slot) {
   const result = [];
-  const rank = getRank(idx);
-  const file = getFile(idx);
-  const nextRank = getNextRank(board, idx);
-  addIfUniversallyLegal(result, board, idx, nextRank, file);
-  if (isBeyondRiver(board, idx)) {
-    addIfUniversallyLegal(result, board, idx, rank, file - 1);
-    addIfUniversallyLegal(result, board, idx, rank, file + 1);
+  const rank = getRank(slot);
+  const file = getFile(slot);
+  const nextRank = getNextRank(board, slot);
+  addIfUniversallyLegal(result, board, slot, nextRank, file);
+  if (isBeyondRiver(board, slot)) {
+    addIfUniversallyLegal(result, board, slot, rank, file - 1);
+    addIfUniversallyLegal(result, board, slot, rank, file + 1);
   }
   return result;
 }
 
-
 export function legalMoves(board) {
-  return board.map((code, idx, b) => {
-    if (code === 'p' || code === 'P') return legalPawnMoves(b, idx);
+  return board.map((code, slot, b) => {
+    if (code === 'p' || code === 'P') return legalPawnMoves(b, slot);
     return [];
   });
 }
