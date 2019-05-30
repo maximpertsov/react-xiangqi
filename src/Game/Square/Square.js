@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
-const SELECTION_GREEN = 'rgba(152, 251, 152, 0.3)';
+const SELECTION_GREEN = 'rgba(30, 179, 0, 0.3)';
 
 const Wrapper = styled.div(
   {
