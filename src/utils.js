@@ -71,6 +71,42 @@ function legalPawnMoves(board, slot) {
   return result;
 }
 
+function relativeSquares(board, slot, moves) {
+  const rank = getRank(slot);
+  const file = getFile(slot);
+  return moves.map((m) => getSlot(m[0] + rank, m[1] + file));
+}
+
+function orthogonalSquares(board, slot) {
+  return relativeSquares(board, slot, [[1, 0], [-1, 0], [0, 1], [0, -1]]);
+}
+
+function diagonalSquares(board, slot) {
+  return relativeSquares(board, slot, [[1, 1], [-1, 1], [-1, 1], [-1, -1]]);
+}
+
+function isOccupied(board, slot) {
+  return board[slot] !== null;
+}
+
+function legalHorseMoves(board, slot) {
+  const result = [];
+  let toRank;
+  let toFile;
+
+  orthogonalSquares().forEach(function(firstHop, _, firstHops) {
+    if (isOccupied(board, firstHop)) return;
+
+    diagonalSquares(board, firstHop).forEach((secondHop) => {
+      if (firstHops.includes(secondHop)) return;
+      // TODO standardize rank,file => idx conversions
+      toRank = getRank(secondHop);
+      toFile = getFile(secondHop);
+      addIfUniversallyLegal(result, board, slot, toRank, toFile);
+    });
+  });
+}
+
 export function legalMoves(board) {
   return board.map((code, slot, b) => {
     if (code === 'p' || code === 'P') return legalPawnMoves(b, slot);
