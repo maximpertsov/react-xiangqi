@@ -80,18 +80,29 @@ class Board extends Component {
     this.setState({ selectedSlot: slot });
   }
 
-  handleMove(prevSlot, nextSlot) {
+  isLegalMove(prevSlot, nextSlot) {
+    const { moves } = this.state;
+    return moves[prevSlot].includes(nextSlot);
+  }
+
+  changePlayer() {
     const { changePlayer } = this.props;
-    this.setState((prevState) => ({
-      pieces: update(update([...prevState.pieces], {
-        [nextSlot]: { $set: prevState.pieces[prevSlot] },
-      }), {
-        [prevSlot]: { $set: undefined },
-      }),
-    }));
-    this.handleSelect(null);
-    this.updateLegalMoves();
     changePlayer();
+  }
+
+  handleMove(prevSlot, nextSlot) {
+    if (this.isLegalMove(prevSlot, nextSlot)) {
+      this.setState((prevState) => ({
+        pieces: update(update([...prevState.pieces], {
+          [nextSlot]: { $set: prevState.pieces[prevSlot] },
+        }), {
+          [prevSlot]: { $set: undefined },
+        }),
+      }));
+      this.updateLegalMoves();
+      this.changePlayer();
+    }
+    this.handleSelect(null);
   }
 
   render() {
