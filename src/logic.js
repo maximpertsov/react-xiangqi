@@ -82,12 +82,26 @@ function legalPawnMoves(board, slot) {
   return result;
 }
 
-function orthogonalMoves(slot) {
-  return tryMoves(slot, [[1, 0], [-1, 0], [0, 1], [0, -1]]);
+function orthogonalMoves(slot, radius) {
+  const r = radius === undefined ? 1 : radius;
+  const result = [];
+  Array(r).fill().map((_, i) => i + 1).forEach((i) => {
+    tryMoves(slot, [[i, 0], [-i, 0], [0, i], [0, -i]]).forEach((s) => {
+      result.push(s);
+    });
+  });
+  return result;
 }
 
-function diagonalMoves(slot) {
-  return tryMoves(slot, [[1, 1], [-1, 1], [1, -1], [-1, -1]]);
+function diagonalMoves(slot, radius) {
+  const r = radius === undefined ? 1 : radius;
+  const result = [];
+  Array(r).fill().map((_, i) => i + 1).forEach((i) => {
+    tryMoves(slot, [[i, i], [-i, i], [i, -i], [-i, -i]]).forEach((s) => {
+      result.push(s);
+    });
+  });
+  return result;
 }
 
 function isOccupied(board, slot) {
