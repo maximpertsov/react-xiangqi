@@ -1,6 +1,6 @@
 import {
   fromFen, getSlot, getRank, getFile, legalMoves,
-} from './utils';
+} from './logic';
 
 const slotRankFileTests = [
   [0, 0, 0],

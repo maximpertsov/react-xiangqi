@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import Square from '../Square/Square';
-import { fromFen, legalMoves } from '../../utils';
+import { fromFen, legalMoves } from '../../logic';
 import { getInitialPosition } from '../../client';
 import { getPiece } from '../Piece/Piece';
 
