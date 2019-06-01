@@ -202,6 +202,16 @@ const legalMoveTests = [
       [getSlot(9, 7)]: toSlots([7, 6], [7, 8]),
     },
   ],
+  // // Bugfix: Horse jumps around board
+  // [
+  //   '9/9/9/9/9/9/P8/HC7/9/9',
+  //   {
+  //     // pawn moves
+  //     [getSlot(6, 0)]: toSlots([5, 0]),
+  //     // horse moves
+  //     [getSlot(7, 0)]: toSlots([9, 1]),
+  //   },
+  // ],
 ];
 
 test.each(legalMoveTests)('finds all legal moves for %s', (fen, expected) => {
