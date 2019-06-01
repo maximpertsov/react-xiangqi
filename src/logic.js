@@ -131,10 +131,45 @@ function legalHorseMoves(board, slot) {
   return result;
 }
 
+// TODO stub
+function legalRookMoves(board, slot) {
+  return orthogonalMoves(slot, 10);
+}
+
+// TODO stub
+function legalCannonMoves(board, slot) {
+  return orthogonalMoves(slot, 10);
+}
+
+// TODO stub
+function legalElephantMoves(board, slot) {
+  return diagonalMoves(slot, 2);
+}
+
+// TODO stub
+function legalAdvisorMoves(board, slot) {
+  return diagonalMoves(slot, 1);
+}
+
+// TODO stub
+function legalKingMoves(board, slot) {
+  return orthogonalMoves(slot, 1);
+}
+
 export function legalMoves(board) {
   return board.map((code, slot, b) => {
     if (code === 'p' || code === 'P') return legalPawnMoves(b, slot);
     if (code === 'h' || code === 'H') return legalHorseMoves(b, slot);
+    // // TODO untested
+    // if (code === 'r' || code === 'R') return legalRookMoves(b, slot);
+    // // TODO untested
+    // if (code === 'c' || code === 'C') return legalCannonMoves(b, slot);
+    // // TODO untested
+    // if (code === 'e' || code === 'E') return legalElephantMoves(b, slot);
+    // // TODO untested
+    // if (code === 'a' || code === 'A') return legalAdvisorMoves(b, slot);
+    // // TODO untested
+    // if (code === 'k' || code === 'K') return legalKingMoves(b, slot);
     return [];
   });
 }
