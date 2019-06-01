@@ -45,20 +45,15 @@ function isBeyondRiver(board, slot) {
   return false;
 }
 
-function isUniverallyLegal(board, fromIdx, toSlot) {
+function isUniverallyLegal(board, fromSlot, toSlot) {
   if (toSlot === null) return false;
-  if (fromIdx === toSlot) return false;
-  const [toRank, toFile] = getRankFile(toSlot);
-  if (toRank < 0) return false;
-  if (toRank >= RANKS) return false;
-  if (toFile < 0) return false;
-  if (toFile >= FILES) return false;
-  if (sameColor(board[fromIdx], board[toSlot])) return false;
+  if (fromSlot === toSlot) return false;
+  if (sameColor(board[fromSlot], board[toSlot])) return false;
   return true;
 }
 
-function addIfUniversallyLegal(moves, board, fromIdx, toSlot) {
-  if (isUniverallyLegal(board, fromIdx, toSlot)) {
+function addIfUniversallyLegal(moves, board, fromSlot, toSlot) {
+  if (isUniverallyLegal(board, fromSlot, toSlot)) {
     moves.push(toSlot);
   }
 }
