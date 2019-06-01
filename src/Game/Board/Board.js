@@ -50,8 +50,7 @@ class Board extends Component {
 
   fetchBoard() {
     getInitialPosition().then((data) => {
-      // const { fen } = data;
-      const fen = '9/9/9/9/9/9/P8/HC7/9/9';
+      const { fen } = data;
       const pieces = fromFen(fen);
       this.setState({ pieces, moves: legalMoves(pieces) });
     });

@@ -73,9 +73,7 @@ function tryMove(slot, rankMove, fileMove) {
 }
 
 function relativeSquares(board, slot, moves) {
-  const rank = getRank(slot);
-  const file = getFile(slot);
-  return moves.map((m) => getSlot(m[0] + rank, m[1] + file));
+  return moves.map((m) => tryMove(slot, m[0], m[1]));
 }
 
 function legalPawnMoves(board, slot) {
