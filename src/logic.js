@@ -27,12 +27,14 @@ export function fromFen(fen) {
   return fen.split('/').reduce((acc, row) => acc.concat(fromFenRow(row)), []);
 }
 
-function getNextRank(board, slot) {
+function getNextRankSlot(board, slot) {
   const code = board[slot];
   const rank = getRank(slot);
-  if (isBlack(code)) return Math.min(rank + 1, RANKS - 1);
-  if (isRed(code)) return Math.max(rank - 1, 0);
-  return rank;
+  const file = getFile(slot);
+  let nextRank = rank;
+  if (isBlack(code)) nextRank = Math.min(rank + 1, RANKS - 1);
+  if (isRed(code)) nextRank = Math.max(rank - 1, 0);
+  return getSlot(nextRank, file);
 }
 
 function isBeyondRiver(board, slot) {
@@ -43,39 +45,48 @@ function isBeyondRiver(board, slot) {
   return false;
 }
 
-function isUniverallyLegal(board, fromIdx, toRank, toFile) {
-  if (fromIdx === getSlot(toRank, toFile)) return false;
+function isUniverallyLegal(board, fromIdx, toSlot) {
+  if (toSlot === null) return false;
+  if (fromIdx === toSlot) return false;
+  const [toRank, toFile] = getRankFile(toSlot);
   if (toRank < 0) return false;
   if (toRank >= RANKS) return false;
   if (toFile < 0) return false;
   if (toFile >= FILES) return false;
-  if (sameColor(board[fromIdx], board[getSlot(toRank, toFile)])) return false;
+  if (sameColor(board[fromIdx], board[toSlot])) return false;
   return true;
 }
 
-function addIfUniversallyLegal(moves, board, fromIdx, toRank, toFile) {
-  if (isUniverallyLegal(board, fromIdx, toRank, toFile)) {
-    moves.push(getSlot(toRank, toFile));
+function addIfUniversallyLegal(moves, board, fromIdx, toSlot) {
+  if (isUniverallyLegal(board, fromIdx, toSlot)) {
+    moves.push(toSlot);
   }
 }
 
-function legalPawnMoves(board, slot) {
-  const result = [];
-  const rank = getRank(slot);
-  const file = getFile(slot);
-  const nextRank = getNextRank(board, slot);
-  addIfUniversallyLegal(result, board, slot, nextRank, file);
-  if (isBeyondRiver(board, slot)) {
-    addIfUniversallyLegal(result, board, slot, rank, file - 1);
-    addIfUniversallyLegal(result, board, slot, rank, file + 1);
-  }
-  return result;
+function tryMove(slot, rankMove, fileMove) {
+  const [rank, file] = getRankFile(slot);
+  const newRank = rankMove + rank;
+  const newFile = fileMove + file;
+  if (newRank < 0 || newRank >= RANKS) return null;
+  if (newFile < 0 || newFile >= FILES) return null;
+  return getSlot(newRank, newFile);
 }
 
 function relativeSquares(board, slot, moves) {
   const rank = getRank(slot);
   const file = getFile(slot);
   return moves.map((m) => getSlot(m[0] + rank, m[1] + file));
+}
+
+function legalPawnMoves(board, slot) {
+  const result = [];
+  const forwardSlot = getNextRankSlot(board, slot);
+  addIfUniversallyLegal(result, board, slot, forwardSlot);
+  if (isBeyondRiver(board, slot)) {
+    addIfUniversallyLegal(result, board, slot, tryMove(slot, 0, -1));
+    addIfUniversallyLegal(result, board, slot, tryMove(slot, 0, 1));
+  }
+  return result;
 }
 
 function orthogonalSquares(board, slot) {
@@ -92,18 +103,13 @@ function isOccupied(board, slot) {
 
 function legalHorseMoves(board, slot) {
   const result = [];
-  let toRank;
-  let toFile;
 
   orthogonalSquares(board, slot).forEach((firstHop, _, firstHops) => {
     if (isOccupied(board, firstHop)) return;
 
     diagonalSquares(board, firstHop).forEach((secondHop) => {
       if (firstHops.includes(secondHop) || result.includes(secondHop)) return;
-      // TODO standardize rank,file => idx conversions
-      toRank = getRank(secondHop);
-      toFile = getFile(secondHop);
-      addIfUniversallyLegal(result, board, slot, toRank, toFile);
+      addIfUniversallyLegal(result, board, slot, secondHop);
     });
   });
 
