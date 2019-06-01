@@ -67,7 +67,7 @@ function tryMove(slot, rankMove, fileMove) {
   return getSlot(newRank, newFile);
 }
 
-function relativeSquares(board, slot, moves) {
+function tryMoves(slot, moves) {
   return moves.map((m) => tryMove(slot, m[0], m[1]));
 }
 
@@ -82,12 +82,12 @@ function legalPawnMoves(board, slot) {
   return result;
 }
 
-function orthogonalSquares(board, slot) {
-  return relativeSquares(board, slot, [[1, 0], [-1, 0], [0, 1], [0, -1]]);
+function orthogonalMoves(slot) {
+  return tryMoves(slot, [[1, 0], [-1, 0], [0, 1], [0, -1]]);
 }
 
-function diagonalSquares(board, slot) {
-  return relativeSquares(board, slot, [[1, 1], [-1, 1], [1, -1], [-1, -1]]);
+function diagonalMoves(slot) {
+  return tryMoves(slot, [[1, 1], [-1, 1], [1, -1], [-1, -1]]);
 }
 
 function isOccupied(board, slot) {
@@ -97,10 +97,10 @@ function isOccupied(board, slot) {
 function legalHorseMoves(board, slot) {
   const result = [];
 
-  orthogonalSquares(board, slot).forEach((firstHop, _, firstHops) => {
+  orthogonalMoves(slot).forEach((firstHop, _, firstHops) => {
     if (isOccupied(board, firstHop)) return;
 
-    diagonalSquares(board, firstHop).forEach((secondHop) => {
+    diagonalMoves(firstHop).forEach((secondHop) => {
       if (firstHops.includes(secondHop) || result.includes(secondHop)) return;
       addIfUniversallyLegal(result, board, slot, secondHop);
     });
