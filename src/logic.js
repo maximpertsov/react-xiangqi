@@ -71,6 +71,14 @@ function tryMoves(slot, moves) {
   return moves.map((m) => tryMove(slot, m[0], m[1]));
 }
 
+function tryMarch(slot, rankMove, fileMove, steps) {
+  if (steps < 1) {
+    return [];
+  }
+  const nextSlot = tryMove(slot, rankMove, fileMove);
+  return tryMarch(nextSlot, rankMove, fileMove, steps - 1).concat([nextSlot]);
+}
+
 function legalPawnMoves(board, slot) {
   const result = [];
   const forwardSlot = getNextRankSlot(board, slot);
