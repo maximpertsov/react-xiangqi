@@ -15,11 +15,15 @@ class XiangqiBoard {
     redPieces = RED_PIECES,
     blackPieces = BLACK_PIECES,
     fen = EMPTY_BOARD_FEN,
+    redRiverBank = RED_RIVER_BANK,
+    blackRiverBank = BLACK_RIVER_BANK,
   }) {
     this.ranks = ranks;
     this.files = files;
     this.redPieces = redPieces;
     this.blackPieces = blackPieces;
+    this.redRiverBank = redRiverBank;
+    this.blackRiverBank = blackRiverBank;
     this.board = this.constructor.fromFen(fen);
   }
 
@@ -55,156 +59,158 @@ class XiangqiBoard {
     );
   }
 
-// function getNextRankSlot(board, slot) {
-//   const code = board[slot];
-//   const rank = getRank(slot);
-//   const file = getFile(slot);
-//   let nextRank = rank;
-//   if (isBlack(code)) nextRank = Math.min(rank + 1, RANKS - 1);
-//   if (isRed(code)) nextRank = Math.max(rank - 1, 0);
-//   return getSlot(nextRank, file);
-// }
-//
-// function crossingRiver(board, fromSlot, toSlot) {
-//   const code = board[fromSlot];
-//   const rank = getRank(toSlot);
-//   if (isBlack(code)) return rank >= RED_RIVER_BANK;
-//   if (isRed(code)) return rank <= BLACK_RIVER_BANK;
-//   return false;
-// }
-//
-// function isUniverallyLegal(board, fromSlot, toSlot) {
-//   if (toSlot === null) return false;
-//   if (fromSlot === toSlot) return false;
-//   if (sameColor(board[fromSlot], board[toSlot])) return false;
-//   return true;
-// }
-//
-// function addIfUniversallyLegal(moves, board, fromSlot, toSlot) {
-//   if (isUniverallyLegal(board, fromSlot, toSlot)) {
-//     moves.push(toSlot);
-//   }
-// }
-//
-// function tryMove(slot, rankMove, fileMove) {
-//   const [rank, file] = getRankFile(slot);
-//   const newRank = rankMove + rank;
-//   const newFile = fileMove + file;
-//   if (newRank < 0 || newRank >= RANKS) return null;
-//   if (newFile < 0 || newFile >= FILES) return null;
-//   return getSlot(newRank, newFile);
-// }
-//
-// function tryMoves(slot, moves) {
-//   return moves.map((m) => tryMove(slot, m[0], m[1]));
-// }
-//
-// // TODO make this non-recursive?
-// function tryMarch(slot, rankMove, fileMove, steps) {
-//   if (steps < 1) return [];
-//   const nextSlot = tryMove(slot, rankMove, fileMove);
-//   if (nextSlot === null) return [];
-//   return [nextSlot].concat(tryMarch(nextSlot, rankMove, fileMove, steps - 1));
-// }
-//
-// function tryMarchMoves(slot, moves, steps) {
-//   return moves.reduce(
-//     (acc, move) => acc.concat(tryMarch(slot, move[0], move[1], steps)),
-//     [],
-//   );
-// }
-//
-// function legalPawnMoves(board, slot) {
-//   const result = [];
-//   const forwardSlot = getNextRankSlot(board, slot);
-//   addIfUniversallyLegal(result, board, slot, forwardSlot);
-//   if (crossingRiver(board, slot, slot)) {
-//     addIfUniversallyLegal(result, board, slot, tryMove(slot, 0, -1));
-//     addIfUniversallyLegal(result, board, slot, tryMove(slot, 0, 1));
-//   }
-//   return result;
-// }
-//
-// function orthogonalSlots(slot, radius) {
-//   const steps = radius === undefined ? 1 : radius;
-//   return tryMarchMoves(slot, ORTHOGONAL_MOVES, steps);
-// }
-//
-// function diagonalSlots(slot, radius) {
-//   const steps = radius === undefined ? 1 : radius;
-//   return tryMarchMoves(slot, DIAGONAL_MOVES, steps);
-// }
-//
-// function isOccupied(board, slot) {
-//   return board[slot] !== null;
-// }
-//
-// function legalHorseMoves(board, slot) {
-//   const result = [];
-//
-//   orthogonalSlots(slot).forEach((firstHop, _, firstHops) => {
-//     if (isOccupied(board, firstHop)) return;
-//
-//     diagonalSlots(firstHop).forEach((secondHop) => {
-//       if (firstHops.includes(secondHop) || result.includes(secondHop)) return;
-//       addIfUniversallyLegal(result, board, slot, secondHop);
-//     });
-//   });
-//
-//   return result;
-// }
-//
-// // TODO stub
-// function legalRookMoves(board, slot) {
-//   return orthogonalSlots(slot, 10);
-// }
-//
-// // TODO stub
-// function legalCannonMoves(board, slot) {
-//   return orthogonalSlots(slot, 10);
-// }
-//
-// function legalElephantMoves(board, slot) {
-//   const result = [];
-//   DIAGONAL_MOVES.forEach((move) => {
-//     const firstHop = tryMove(slot, ...move);
-//     if (isOccupied(board, firstHop) || crossingRiver(board, slot, firstHop)) {
-//       return;
-//     }
-//
-//     const secondHop = tryMove(firstHop, ...move);
-//     addIfUniversallyLegal(result, board, slot, secondHop);
-//   });
-//   return result;
-// }
-//
-// // TODO stub
-// function legalAdvisorMoves(board, slot) {
-//   return diagonalSlots(slot, 1);
-// }
-//
-// // TODO stub
-// function legalKingMoves(board, slot) {
-//   return orthogonalSlots(slot, 1);
-// }
-//
-// export function legalMoves(board) {
-//   return board.map((code, slot, b) => {
-//     if (code === 'p' || code === 'P') return legalPawnMoves(b, slot);
-//     if (code === 'h' || code === 'H') return legalHorseMoves(b, slot);
-//     // // TODO untested
-//     // if (code === 'r' || code === 'R') return legalRookMoves(b, slot);
-//     // // TODO untested
-//     // if (code === 'c' || code === 'C') return legalCannonMoves(b, slot);
-//     // TODO untested
-//     if (code === 'e' || code === 'E') return legalElephantMoves(b, slot);
-//     // // TODO untested
-//     // if (code === 'a' || code === 'A') return legalAdvisorMoves(b, slot);
-//     // // TODO untested
-//     // if (code === 'k' || code === 'K') return legalKingMoves(b, slot);
-//     return [];
-//   });
-// }
+  getNextRankSlot(slot) {
+    const code = this.board[slot];
+    const rank = this.getRank(slot);
+    const file = this.getFile(slot);
+    let nextRank = rank;
+    if (this.isBlack(code)) nextRank = Math.min(rank + 1, this.ranks - 1);
+    if (this.isRed(code)) nextRank = Math.max(rank - 1, 0);
+    return this.getSlot(nextRank, file);
+  }
+
+  crossingRiver(fromSlot, toSlot) {
+    const code = this.board[fromSlot];
+    const rank = this.getRank(toSlot);
+    if (this.isBlack(code)) return rank >= this.redRiverBank;
+    if (this.isRed(code)) return rank <= this.blackRiverBank;
+    return false;
+  }
+
+  isUniverallyLegal(fromSlot, toSlot) {
+    if (toSlot === null) return false;
+    if (fromSlot === toSlot) return false;
+    if (this.sameColor(this.board[fromSlot], this.board[toSlot])) return false;
+    return true;
+  }
+
+  addIfUniversallyLegal(moves, fromSlot, toSlot) {
+    if (this.isUniverallyLegal(fromSlot, toSlot)) {
+      moves.push(toSlot);
+    }
+  }
+
+  tryMove(slot, rankMove, fileMove) {
+    const [rank, file] = this.getRankFile(slot);
+    const newRank = rankMove + rank;
+    const newFile = fileMove + file;
+    if (newRank < 0 || newRank >= this.ranks) return null;
+    if (newFile < 0 || newFile >= this.files) return null;
+    return this.getSlot(newRank, newFile);
+  }
+
+  tryMoves(slot, moves) {
+    return moves.map((m) => this.tryMove(slot, ...m));
+  }
+
+  // TODO make this non-recursive?
+  tryMarch(slot, rankMove, fileMove, steps) {
+    if (steps < 1) return [];
+    const nextSlot = this.tryMove(slot, rankMove, fileMove);
+    if (nextSlot === null) return [];
+    return [nextSlot].concat(
+      this.tryMarch(nextSlot, rankMove, fileMove, steps - 1),
+    );
+  }
+
+  tryMarchMoves(slot, moves, steps) {
+    return moves.reduce(
+      (acc, move) => acc.concat(this.tryMarch(slot, move[0], move[1], steps)),
+      [],
+    );
+  }
+
+  legalPawnMoves(slot) {
+    const result = [];
+    const forwardSlot = this.getNextRankSlot(slot);
+    this.addIfUniversallyLegal(result, slot, forwardSlot);
+    if (this.crossingRiver(slot, slot)) {
+      this.addIfUniversallyLegal(result, slot, this.tryMove(slot, 0, -1));
+      this.addIfUniversallyLegal(result, slot, this.tryMove(slot, 0, 1));
+    }
+    return result;
+  }
+
+  orthogonalSlots(slot, radius) {
+    const steps = radius === undefined ? 1 : radius;
+    return this.tryMarchMoves(slot, ORTHOGONAL_MOVES, steps);
+  }
+
+  diagonalSlots(slot, radius) {
+    const steps = radius === undefined ? 1 : radius;
+    return this.tryMarchMoves(slot, DIAGONAL_MOVES, steps);
+  }
+
+  isOccupied(slot) {
+    return this.board[slot] !== null;
+  }
+
+  legalHorseMoves(slot) {
+    const result = [];
+
+    this.orthogonalSlots(slot).forEach((firstHop, _, firstHops) => {
+      if (this.isOccupied(firstHop)) return;
+
+      this.diagonalSlots(firstHop).forEach((secondHop) => {
+        if (firstHops.includes(secondHop) || result.includes(secondHop)) return;
+        this.addIfUniversallyLegal(result, slot, secondHop);
+      });
+    });
+
+    return result;
+  }
+
+  // TODO stub
+  legalRookMoves(board, slot) {
+    return this.orthogonalSlots(slot, 10);
+  }
+
+  // TODO stub
+  legalCannonMoves(board, slot) {
+    return this.orthogonalSlots(slot, 10);
+  }
+
+  legalElephantMoves(slot) {
+    const result = [];
+    DIAGONAL_MOVES.forEach((move) => {
+      const firstHop = this.tryMove(slot, ...move);
+      if (this.isOccupied(firstHop) || this.crossingRiver(slot, firstHop)) {
+        return;
+      }
+
+      const secondHop = this.tryMove(firstHop, ...move);
+      this.addIfUniversallyLegal(result, slot, secondHop);
+    });
+    return result;
+  }
+
+  // TODO stub
+  legalAdvisorMoves(slot) {
+    return this.diagonalSlots(slot, 1);
+  }
+
+  // TODO stub
+  legalKingMoves(slot) {
+    return this.orthogonalSlots(slot, 1);
+  }
+
+  legalMoves() {
+    return this.board.map((code, slot) => {
+      if (code === 'p' || code === 'P') return this.legalPawnMoves(slot);
+      if (code === 'h' || code === 'H') return this.legalHorseMoves(slot);
+      // // TODO untested
+      // if (code === 'r' || code === 'R') return legalRookMoves(b, slot);
+      // // TODO untested
+      // if (code === 'c' || code === 'C') return legalCannonMoves(b, slot);
+      // TODO untested
+      if (code === 'e' || code === 'E') return this.legalElephantMoves(slot);
+      // // TODO untested
+      // if (code === 'a' || code === 'A') return legalAdvisorMoves(b, slot);
+      // // TODO untested
+      // if (code === 'k' || code === 'K') return legalKingMoves(b, slot);
+      return [];
+    });
+  }
 }
 
 export default XiangqiBoard;
