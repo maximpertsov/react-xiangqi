@@ -16,7 +16,7 @@ const Wrapper = styled.div(
   },
   ({ selected, targeted }) => ({
     backgroundColor: (selected ? SELECTION_GREEN : 'none'),
-    outline: (targeted ? `3px dotted ${SELECTION_GREEN}` : 'none'),
+    outline: (targeted ? `2px dotted ${SELECTION_GREEN}` : 'none'),
     outlineOffset: (targeted ? '-2px' : 'none'),
   }),
 );
