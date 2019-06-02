@@ -75,6 +75,7 @@ function tryMoves(slot, moves) {
 function tryMarch(slot, rankMove, fileMove, steps) {
   if (steps < 1) return [];
   const nextSlot = tryMove(slot, rankMove, fileMove);
+  if (nextSlot === null) return [];
   return [nextSlot].concat(tryMarch(nextSlot, rankMove, fileMove, steps - 1));
 }
 
