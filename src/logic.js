@@ -79,6 +79,13 @@ function tryMarch(slot, rankMove, fileMove, steps) {
   return [nextSlot].concat(tryMarch(nextSlot, rankMove, fileMove, steps - 1));
 }
 
+function tryMarchMoves(slot, moves, steps) {
+  return moves.reduce(
+    (acc, move) => acc.concat(tryMarch(slot, move[0], move[1], steps)),
+    [],
+  );
+}
+
 function legalPawnMoves(board, slot) {
   const result = [];
   const forwardSlot = getNextRankSlot(board, slot);
@@ -91,22 +98,13 @@ function legalPawnMoves(board, slot) {
 }
 
 function orthogonalMoves(slot, radius) {
-  const r = radius === undefined ? 1 : radius;
-  return [[1, 0], [-1, 0], [0, 1], [0, -1]].reduce(
-    (acc, move) => acc.concat(tryMarch(slot, move[0], move[1], r)),
-    [],
-  );
+  const steps = radius === undefined ? 1 : radius;
+  return tryMarchMoves(slot, [[1, 0], [-1, 0], [0, 1], [0, -1]], steps)
 }
 
 function diagonalMoves(slot, radius) {
-  const r = radius === undefined ? 1 : radius;
-  const result = [];
-  Array(r).fill().map((_, i) => i + 1).forEach((i) => {
-    tryMoves(slot, [[i, i], [-i, i], [i, -i], [-i, -i]]).forEach((s) => {
-      result.push(s);
-    });
-  });
-  return result;
+  const steps = radius === undefined ? 1 : radius;
+  return tryMarchMoves(slot, [[1, 1], [-1, 1], [1, -1], [-1, -1]], steps)
 }
 
 function isOccupied(board, slot) {
@@ -157,16 +155,16 @@ export function legalMoves(board) {
   return board.map((code, slot, b) => {
     if (code === 'p' || code === 'P') return legalPawnMoves(b, slot);
     if (code === 'h' || code === 'H') return legalHorseMoves(b, slot);
-    // TODO untested
-    if (code === 'r' || code === 'R') return legalRookMoves(b, slot);
-    // TODO untested
-    if (code === 'c' || code === 'C') return legalCannonMoves(b, slot);
-    // TODO untested
-    if (code === 'e' || code === 'E') return legalElephantMoves(b, slot);
-    // TODO untested
-    if (code === 'a' || code === 'A') return legalAdvisorMoves(b, slot);
-    // TODO untested
-    if (code === 'k' || code === 'K') return legalKingMoves(b, slot);
+    // // TODO untested
+    // if (code === 'r' || code === 'R') return legalRookMoves(b, slot);
+    // // TODO untested
+    // if (code === 'c' || code === 'C') return legalCannonMoves(b, slot);
+    // // TODO untested
+    // if (code === 'e' || code === 'E') return legalElephantMoves(b, slot);
+    // // TODO untested
+    // if (code === 'a' || code === 'A') return legalAdvisorMoves(b, slot);
+    // // TODO untested
+    // if (code === 'k' || code === 'K') return legalKingMoves(b, slot);
     return [];
   });
 }
