@@ -99,12 +99,12 @@ function legalPawnMoves(board, slot) {
 
 function orthogonalMoves(slot, radius) {
   const steps = radius === undefined ? 1 : radius;
-  return tryMarchMoves(slot, [[1, 0], [-1, 0], [0, 1], [0, -1]], steps)
+  return tryMarchMoves(slot, [[1, 0], [-1, 0], [0, 1], [0, -1]], steps);
 }
 
 function diagonalMoves(slot, radius) {
   const steps = radius === undefined ? 1 : radius;
-  return tryMarchMoves(slot, [[1, 1], [-1, 1], [1, -1], [-1, -1]], steps)
+  return tryMarchMoves(slot, [[1, 1], [-1, 1], [1, -1], [-1, -1]], steps);
 }
 
 function isOccupied(board, slot) {
@@ -155,16 +155,16 @@ export function legalMoves(board) {
   return board.map((code, slot, b) => {
     if (code === 'p' || code === 'P') return legalPawnMoves(b, slot);
     if (code === 'h' || code === 'H') return legalHorseMoves(b, slot);
-    // // TODO untested
-    // if (code === 'r' || code === 'R') return legalRookMoves(b, slot);
-    // // TODO untested
-    // if (code === 'c' || code === 'C') return legalCannonMoves(b, slot);
-    // // TODO untested
-    // if (code === 'e' || code === 'E') return legalElephantMoves(b, slot);
-    // // TODO untested
-    // if (code === 'a' || code === 'A') return legalAdvisorMoves(b, slot);
-    // // TODO untested
-    // if (code === 'k' || code === 'K') return legalKingMoves(b, slot);
+    // TODO untested
+    if (code === 'r' || code === 'R') return legalRookMoves(b, slot);
+    // TODO untested
+    if (code === 'c' || code === 'C') return legalCannonMoves(b, slot);
+    // TODO untested
+    if (code === 'e' || code === 'E') return legalElephantMoves(b, slot);
+    // TODO untested
+    if (code === 'a' || code === 'A') return legalAdvisorMoves(b, slot);
+    // TODO untested
+    if (code === 'k' || code === 'K') return legalKingMoves(b, slot);
     return [];
   });
 }
