@@ -224,11 +224,13 @@ const legalMoveTests = [
   ],
   // Blocked elephant
   [
-    '9/9/9/9/9/2E6/1P1p5/9/9/9',
+    '9/9/9/9/9/2E6/1P1p5/E8/9/9',
     {
       // pawn moves
       [getSlot(6, 1)]: toSlots([5, 1]),
       [getSlot(6, 3)]: toSlots([7, 3], [6, 2], [6, 4]),
+      // elephant moves
+      [getSlot(7, 0)]: toSlots([9, 2]),
     },
   ],
 ];

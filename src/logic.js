@@ -4,6 +4,8 @@ const BLACK_PIECES = 'rheakcp';
 const RED_PIECES = 'RHEAKCP';
 const BLACK_RIVER_BANK = 4;
 const RED_RIVER_BANK = 5;
+const ORTHOGONAL_MOVES = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+const DIAGONAL_MOVES = [[1, 1], [-1, 1], [1, -1], [-1, -1]];
 
 export const getSlot = (rank, file) => file + rank * FILES;
 export const getRank = (slot) => Math.floor(slot / FILES);
@@ -37,9 +39,9 @@ function getNextRankSlot(board, slot) {
   return getSlot(nextRank, file);
 }
 
-function isBeyondRiver(board, slot) {
-  const code = board[slot];
-  const rank = getRank(slot);
+function crossingRiver(board, fromSlot, toSlot) {
+  const code = board[fromSlot];
+  const rank = getRank(toSlot);
   if (isBlack(code)) return rank >= RED_RIVER_BANK;
   if (isRed(code)) return rank <= BLACK_RIVER_BANK;
   return false;
@@ -90,21 +92,21 @@ function legalPawnMoves(board, slot) {
   const result = [];
   const forwardSlot = getNextRankSlot(board, slot);
   addIfUniversallyLegal(result, board, slot, forwardSlot);
-  if (isBeyondRiver(board, slot)) {
+  if (crossingRiver(board, slot, slot)) {
     addIfUniversallyLegal(result, board, slot, tryMove(slot, 0, -1));
     addIfUniversallyLegal(result, board, slot, tryMove(slot, 0, 1));
   }
   return result;
 }
 
-function orthogonalMoves(slot, radius) {
+function orthogonalSlots(slot, radius) {
   const steps = radius === undefined ? 1 : radius;
-  return tryMarchMoves(slot, [[1, 0], [-1, 0], [0, 1], [0, -1]], steps);
+  return tryMarchMoves(slot, ORTHOGONAL_MOVES, steps);
 }
 
-function diagonalMoves(slot, radius) {
+function diagonalSlots(slot, radius) {
   const steps = radius === undefined ? 1 : radius;
-  return tryMarchMoves(slot, [[1, 1], [-1, 1], [1, -1], [-1, -1]], steps);
+  return tryMarchMoves(slot, DIAGONAL_MOVES, steps);
 }
 
 function isOccupied(board, slot) {
@@ -114,10 +116,10 @@ function isOccupied(board, slot) {
 function legalHorseMoves(board, slot) {
   const result = [];
 
-  orthogonalMoves(slot).forEach((firstHop, _, firstHops) => {
+  orthogonalSlots(slot).forEach((firstHop, _, firstHops) => {
     if (isOccupied(board, firstHop)) return;
 
-    diagonalMoves(firstHop).forEach((secondHop) => {
+    diagonalSlots(firstHop).forEach((secondHop) => {
       if (firstHops.includes(secondHop) || result.includes(secondHop)) return;
       addIfUniversallyLegal(result, board, slot, secondHop);
     });
@@ -128,27 +130,36 @@ function legalHorseMoves(board, slot) {
 
 // TODO stub
 function legalRookMoves(board, slot) {
-  return orthogonalMoves(slot, 10);
+  return orthogonalSlots(slot, 10);
 }
 
 // TODO stub
 function legalCannonMoves(board, slot) {
-  return orthogonalMoves(slot, 10);
+  return orthogonalSlots(slot, 10);
 }
 
-// TODO stub
 function legalElephantMoves(board, slot) {
-  return diagonalMoves(slot, 2);
+  const result = [];
+  DIAGONAL_MOVES.forEach((move) => {
+    const firstHop = tryMove(slot, ...move);
+    if (isOccupied(board, firstHop) || crossingRiver(board, slot, firstHop)) {
+      return;
+    }
+
+    const secondHop = tryMove(firstHop, ...move);
+    addIfUniversallyLegal(result, board, slot, secondHop);
+  });
+  return result;
 }
 
 // TODO stub
 function legalAdvisorMoves(board, slot) {
-  return diagonalMoves(slot, 1);
+  return diagonalSlots(slot, 1);
 }
 
 // TODO stub
 function legalKingMoves(board, slot) {
-  return orthogonalMoves(slot, 1);
+  return orthogonalSlots(slot, 1);
 }
 
 export function legalMoves(board) {
