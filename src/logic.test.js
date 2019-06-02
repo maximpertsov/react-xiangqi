@@ -171,6 +171,11 @@ const legalMoveTests = [
       [getSlot(0, 7)]: toSlots([2, 6], [2, 8]),
       [getSlot(9, 1)]: toSlots([7, 0], [7, 2]),
       [getSlot(9, 7)]: toSlots([7, 6], [7, 8]),
+      // elephant moves
+      [getSlot(0, 2)]: toSlots([2, 0], [2, 4]),
+      [getSlot(0, 6)]: toSlots([2, 4], [2, 8]),
+      [getSlot(9, 2)]: toSlots([7, 0], [7, 4]),
+      [getSlot(9, 6)]: toSlots([7, 4], [7, 8]),
     },
   ],
   // Bugfix: Pawn going across board
@@ -200,6 +205,11 @@ const legalMoveTests = [
       [getSlot(0, 7)]: toSlots([2, 6], [2, 8]),
       [getSlot(7, 2)]: toSlots([9, 1], [8, 4], [5, 1], [5, 3]),
       [getSlot(9, 7)]: toSlots([7, 6], [7, 8]),
+      // elephant moves
+      [getSlot(0, 2)]: toSlots([2, 0], [2, 4]),
+      [getSlot(0, 6)]: toSlots([2, 4], [2, 8]),
+      [getSlot(9, 2)]: toSlots([7, 0], [7, 4]),
+      [getSlot(9, 6)]: toSlots([7, 4], [7, 8]),
     },
   ],
   // Bugfix: Horse jumps around board
