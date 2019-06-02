@@ -71,12 +71,11 @@ function tryMoves(slot, moves) {
   return moves.map((m) => tryMove(slot, m[0], m[1]));
 }
 
+// TODO make this non-recursive?
 function tryMarch(slot, rankMove, fileMove, steps) {
-  if (steps < 1) {
-    return [];
-  }
+  if (steps < 1) return [];
   const nextSlot = tryMove(slot, rankMove, fileMove);
-  return tryMarch(nextSlot, rankMove, fileMove, steps - 1).concat([nextSlot]);
+  return [nextSlot].concat(tryMarch(nextSlot, rankMove, fileMove, steps - 1));
 }
 
 function legalPawnMoves(board, slot) {
@@ -92,13 +91,10 @@ function legalPawnMoves(board, slot) {
 
 function orthogonalMoves(slot, radius) {
   const r = radius === undefined ? 1 : radius;
-  const result = [];
-  Array(r).fill().map((_, i) => i + 1).forEach((i) => {
-    tryMoves(slot, [[i, 0], [-i, 0], [0, i], [0, -i]]).forEach((s) => {
-      result.push(s);
-    });
-  });
-  return result;
+  return [[1, 0], [-1, 0], [0, 1], [0, -1]].reduce(
+    (acc, move) => acc.concat(tryMarch(slot, move[0], move[1], r)),
+    [],
+  );
 }
 
 function diagonalMoves(slot, radius) {
