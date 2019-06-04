@@ -60,6 +60,13 @@ class XiangqiBoard {
       || (this.isBlack(code1) && this.isBlack(code2));
   }
 
+  // TODO consolidate with sameColor method
+  sameColorSlot(slot1, slot2) {
+    const code1 = this.board[slot1];
+    const code2 = this.board[slot2];
+    return this.sameColor(code1, code2);
+  }
+
   static fromFenRow(row) {
     return row.split('').reduce((acc, ch) => {
       const val = +ch;

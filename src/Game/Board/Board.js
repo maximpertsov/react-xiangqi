@@ -52,13 +52,11 @@ class Board extends Component {
   }
 
   selectedCanCapture(slot) {
-    const { selectedSlot } = this.state;
-    const selectedPiece = this.getPieceOn(selectedSlot);
-    const targetedPiece = this.getPieceOn(slot);
-    if (selectedPiece === undefined || targetedPiece === undefined) {
-      return false;
-    }
-    return targetedPiece.props.color !== selectedPiece.props.color;
+    const { selectedSlot, xboard } = this.state;
+    if (selectedSlot === null) return false;
+    if (!xboard.isOccupied(selectedSlot)) return false;
+    if (!xboard.isOccupied(slot)) return false;
+    return !xboard.sameColorSlot(slot, selectedSlot);
   }
 
   handleSquareClick(square) {
