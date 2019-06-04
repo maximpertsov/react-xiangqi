@@ -146,6 +146,18 @@ test('converts FEN string to an board and back', () => {
   expect(xb.toFen()).toBe(fen);
 });
 
+test('moves a piece and returns the new board with the new position', () => {
+  const fen = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
+  const xb = new XiangqiBoard({ fen });
+
+  const actual = xb.move(0, 9).toFen()
+  const expected = '1heakaehr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
+  expect(actual).toBe(expected);
+
+  // original board should be unchanged
+  expect(xb.toFen()).toBe(fen);
+});
+
 function sameElements(actual, expected) {
   expect(actual).toEqual(expect.arrayContaining(expected));
   expect(expected).toEqual(expect.arrayContaining(actual));

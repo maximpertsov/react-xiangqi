@@ -27,6 +27,18 @@ class XiangqiBoard {
     this.board = this.fromFen(fen);
   }
 
+  move(fromSlot, toSlot) {
+    const options = { ...this };
+    const board = options.board.map((p, i, b) => {
+      if (i === toSlot) return b[fromSlot];
+      if (i === fromSlot) return null;
+      return p;
+    });
+    delete options.board;
+    options.fen = this.toFen(board);
+    return new this.constructor(options);
+  }
+
   getPiece(rank, file) { return this.board[this.getSlot(rank, file)]; }
 
   getSlot(rank, file) { return file + rank * this.files; }
@@ -213,9 +225,9 @@ class XiangqiBoard {
     });
   }
 
-  toFen() {
+  toFen(board = this.board) {
     const rows = [];
-    this.board.forEach((piece, idx) => {
+    board.forEach((piece, idx) => {
       if (idx % this.files === 0) rows.push([]);
       const lastRow = rows[rows.length - 1];
       const lastRowSize = lastRow.length;
