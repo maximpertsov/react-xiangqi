@@ -1,6 +1,4 @@
-import {
-  fromFen, getSlot, getRank, getFile, legalMoves,
-} from './logic';
+import XiangqiBoard from './logic';
 
 const slotRankFileTests = [
   [0, 0, 0],
@@ -95,29 +93,36 @@ const slotRankFileTests = [
   [89, 9, 8],
 ];
 
-test.each(slotRankFileTests)('convert slot (%i) to [rank, file]([%i, %i])',
+test.each(slotRankFileTests)(
+  'convert slot (%i) to [rank, file]([%i, %i])',
   (slot, rank, file) => {
-    expect(getRank(slot)).toBe(rank);
-    expect(getFile(slot)).toBe(file);
-    expect(getSlot(rank, file)).toBe(slot);
-  });
+    const xb = new XiangqiBoard();
+    expect(xb.getRank(slot)).toBe(rank);
+    expect(xb.getFile(slot)).toBe(file);
+    expect(xb.getSlot(rank, file)).toBe(slot);
+  },
+);
 
 test('convert rank-file to index', () => {
-  expect(getSlot(0, 0)).toBe(0);
-  expect(getSlot(5, 3)).toBe(48);
+  const xb = new XiangqiBoard();
+  expect(xb.getSlot(0, 0)).toBe(0);
+  expect(xb.getSlot(5, 3)).toBe(48);
 });
 
 test('convert index to rank', () => {
-  expect(getRank(0)).toBe(0);
-  expect(getRank(48)).toBe(5);
+  const xb = new XiangqiBoard();
+  expect(xb.getRank(0)).toBe(0);
+  expect(xb.getRank(48)).toBe(5);
 });
 
 test('convert index to file', () => {
-  expect(getFile(0)).toBe(0);
-  expect(getFile(48)).toBe(3);
+  const xb = new XiangqiBoard();
+  expect(xb.getFile(0)).toBe(0);
+  expect(xb.getFile(48)).toBe(3);
 });
 
 test('converts FEN string to an array', () => {
+  const xb = new XiangqiBoard();
   const fen = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
   const expected = [
     'r', 'h', 'e', 'a', 'k', 'a', 'e', 'h', 'r',
@@ -131,8 +136,26 @@ test('converts FEN string to an array', () => {
     ...Array(9).fill(null),
     'R', 'H', 'E', 'A', 'K', 'A', 'E', 'H', 'R',
   ];
-  const actual = fromFen(fen);
+  const actual = xb.fromFen(fen);
   expect(actual).toStrictEqual(expected);
+});
+
+test('converts FEN string to an board and back', () => {
+  const fen = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
+  const xb = new XiangqiBoard({ fen });
+  expect(xb.toFen()).toBe(fen);
+});
+
+test('moves a piece and returns the new board with the new position', () => {
+  const fen = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
+  const xb = new XiangqiBoard({ fen });
+
+  const actual = xb.move(0, 9).toFen()
+  const expected = '1heakaehr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
+  expect(actual).toBe(expected);
+
+  // original board should be unchanged
+  expect(xb.toFen()).toBe(fen);
 });
 
 function sameElements(actual, expected) {
@@ -140,108 +163,115 @@ function sameElements(actual, expected) {
   expect(expected).toEqual(expect.arrayContaining(actual));
 }
 
-const toSlots = (...rankFiles) => rankFiles.map((rf) => getSlot(...rf));
+const toExpected = (xb, moves) => moves.reduce(
+  (acc, { from, to }) => {
+    acc[xb.getSlot(...from)] = to.map((pos) => xb.getSlot(...pos));
+    return acc;
+  },
+  {},
+);
 
 const legalMoveTests = [
   [
     '4k4/9/9/9/pp7/1p7/9/9/9/4K4',
-    {
-      [getSlot(4, 0)]: toSlots([5, 0]),
-      [getSlot(4, 1)]: toSlots(),
-      [getSlot(5, 1)]: toSlots([6, 1], [5, 2], [5, 0]),
-    },
+    [
+      { from: [4, 0], to: [[5, 0]] },
+      { from: [4, 1], to: [] },
+      { from: [5, 1], to: [[6, 1], [5, 2], [5, 0]] },
+    ],
   ],
   // Initial board layout
   [
     'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR',
-    {
+    [
       // pawn moves
-      [getSlot(3, 0)]: toSlots([4, 0]),
-      [getSlot(3, 2)]: toSlots([4, 2]),
-      [getSlot(3, 4)]: toSlots([4, 4]),
-      [getSlot(3, 6)]: toSlots([4, 6]),
-      [getSlot(3, 8)]: toSlots([4, 8]),
-      [getSlot(6, 0)]: toSlots([5, 0]),
-      [getSlot(6, 2)]: toSlots([5, 2]),
-      [getSlot(6, 4)]: toSlots([5, 4]),
-      [getSlot(6, 6)]: toSlots([5, 6]),
-      [getSlot(6, 8)]: toSlots([5, 8]),
+      { from: [3, 0], to: [[4, 0]] },
+      { from: [3, 2], to: [[4, 2]] },
+      { from: [3, 4], to: [[4, 4]] },
+      { from: [3, 6], to: [[4, 6]] },
+      { from: [3, 8], to: [[4, 8]] },
+      { from: [6, 0], to: [[5, 0]] },
+      { from: [6, 2], to: [[5, 2]] },
+      { from: [6, 4], to: [[5, 4]] },
+      { from: [6, 6], to: [[5, 6]] },
+      { from: [6, 8], to: [[5, 8]] },
       // horse moves
-      [getSlot(0, 1)]: toSlots([2, 0], [2, 2]),
-      [getSlot(0, 7)]: toSlots([2, 6], [2, 8]),
-      [getSlot(9, 1)]: toSlots([7, 0], [7, 2]),
-      [getSlot(9, 7)]: toSlots([7, 6], [7, 8]),
+      { from: [0, 1], to: [[2, 0], [2, 2]] },
+      { from: [0, 7], to: [[2, 6], [2, 8]] },
+      { from: [9, 1], to: [[7, 0], [7, 2]] },
+      { from: [9, 7], to: [[7, 6], [7, 8]] },
       // elephant moves
-      [getSlot(0, 2)]: toSlots([2, 0], [2, 4]),
-      [getSlot(0, 6)]: toSlots([2, 4], [2, 8]),
-      [getSlot(9, 2)]: toSlots([7, 0], [7, 4]),
-      [getSlot(9, 6)]: toSlots([7, 4], [7, 8]),
-    },
+      { from: [0, 2], to: [[2, 0], [2, 4]] },
+      { from: [0, 6], to: [[2, 4], [2, 8]] },
+      { from: [9, 2], to: [[7, 0], [7, 4]] },
+      { from: [9, 6], to: [[7, 4], [7, 8]] },
+    ],
   ],
   // Bugfix: Pawn going across board
   [
     '9/9/9/9/9/9/9/9/8p/9',
-    {
-      [getSlot(8, 8)]: toSlots([9, 8], [8, 7]),
-    },
+    [
+      { from: [8, 8], to: [[9, 8], [8, 7]] },
+    ],
   ],
   // Bugfix: Missing horse positions
   [
     'rheakaehr/9/1c5c1/p1p1p1p1p/9/2P6/P3P1P1P/1CH4C1/9/R1EAKAEHR',
-    {
+    [
       // pawn moves
-      [getSlot(3, 0)]: toSlots([4, 0]),
-      [getSlot(3, 2)]: toSlots([4, 2]),
-      [getSlot(3, 4)]: toSlots([4, 4]),
-      [getSlot(3, 6)]: toSlots([4, 6]),
-      [getSlot(3, 8)]: toSlots([4, 8]),
-      [getSlot(6, 0)]: toSlots([5, 0]),
-      [getSlot(5, 2)]: toSlots([4, 2]),
-      [getSlot(6, 4)]: toSlots([5, 4]),
-      [getSlot(6, 6)]: toSlots([5, 6]),
-      [getSlot(6, 8)]: toSlots([5, 8]),
+      { from: [3, 0], to: [[4, 0]] },
+      { from: [3, 2], to: [[4, 2]] },
+      { from: [3, 4], to: [[4, 4]] },
+      { from: [3, 6], to: [[4, 6]] },
+      { from: [3, 8], to: [[4, 8]] },
+      { from: [6, 0], to: [[5, 0]] },
+      { from: [5, 2], to: [[4, 2]] },
+      { from: [6, 4], to: [[5, 4]] },
+      { from: [6, 6], to: [[5, 6]] },
+      { from: [6, 8], to: [[5, 8]] },
       // horse moves
-      [getSlot(0, 1)]: toSlots([2, 0], [2, 2]),
-      [getSlot(0, 7)]: toSlots([2, 6], [2, 8]),
-      [getSlot(7, 2)]: toSlots([9, 1], [8, 4], [5, 1], [5, 3]),
-      [getSlot(9, 7)]: toSlots([7, 6], [7, 8]),
+      { from: [0, 1], to: [[2, 0], [2, 2]] },
+      { from: [0, 7], to: [[2, 6], [2, 8]] },
+      { from: [7, 2], to: [[9, 1], [8, 4], [5, 1], [5, 3]] },
+      { from: [9, 7], to: [[7, 6], [7, 8]] },
       // elephant moves
-      [getSlot(0, 2)]: toSlots([2, 0], [2, 4]),
-      [getSlot(0, 6)]: toSlots([2, 4], [2, 8]),
-      [getSlot(9, 2)]: toSlots([7, 0], [7, 4]),
-      [getSlot(9, 6)]: toSlots([7, 4], [7, 8]),
-    },
+      { from: [0, 2], to: [[2, 0], [2, 4]] },
+      { from: [0, 6], to: [[2, 4], [2, 8]] },
+      { from: [9, 2], to: [[7, 0], [7, 4]] },
+      { from: [9, 6], to: [[7, 4], [7, 8]] },
+    ],
   ],
   // Bugfix: Horse jumps around board
   [
     '9/9/9/9/9/9/P8/HC7/9/9',
-    {
-      // pawn moves
-      [getSlot(6, 0)]: toSlots([5, 0]),
+    [ // pawn moves
+      { from: [6, 0], to: [[5, 0]] },
       // horse moves
-      [getSlot(7, 0)]: toSlots([9, 1]),
-    },
+      { from: [7, 0], to: [[9, 1]] },
+    ],
   ],
   // Blocked elephant
   [
     '9/9/9/9/9/2E6/1P1p5/E8/9/9',
-    {
+    [
       // pawn moves
-      [getSlot(6, 1)]: toSlots([5, 1]),
-      [getSlot(6, 3)]: toSlots([7, 3], [6, 2], [6, 4]),
+      { from: [6, 1], to: [[5, 1]] },
+      { from: [6, 3], to: [[7, 3], [6, 2], [6, 4]] },
       // elephant moves
-      [getSlot(7, 0)]: toSlots([9, 2]),
-    },
+      { from: [7, 0], to: [[9, 2]] },
+    ],
   ],
 ];
 
-test.each(legalMoveTests)('finds all legal moves for %s', (fen, expected) => {
-  const actual = legalMoves(fromFen(fen));
+test.each(legalMoveTests)('finds all legal moves for %s', (fen, moves) => {
+  const xb = new XiangqiBoard({ fen });
+  const actual = xb.legalMoves();
+  const expected = toExpected(xb, moves);
   for (let i = 0; i < 90; i++) {
     if (Object.hasOwnProperty.call(expected, i)) {
       sameElements(actual[i], expected[i]);
     } else {
-      sameElements(actual[i], toSlots());
+      sameElements(actual[i], []);
     }
   }
 });

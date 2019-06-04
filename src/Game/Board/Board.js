@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
-import XiangqiBoard from '../../logic.class';
+import XiangqiBoard from '../../logic';
 import { getInitialPosition } from '../../client';
 import { getPiece } from '../Piece/Piece';
 
