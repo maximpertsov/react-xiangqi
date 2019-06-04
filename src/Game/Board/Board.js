@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import update from 'immutability-helper';
 import Square from '../Square/Square';
-import { fromFen, legalMoves } from '../../utils';
+import XiangqiBoard from '../../logic';
 import { getInitialPosition } from '../../client';
 import { getPiece } from '../Piece/Piece';
 
@@ -29,7 +28,7 @@ class Board extends Component {
     this.handleSquareClick = this.handleSquareClick.bind(this);
 
     this.state = {
-      pieces: null,
+      xboard: null,
       moves: null,
       selectedSlot: null,
     };
@@ -40,30 +39,24 @@ class Board extends Component {
   }
 
   getPieceOn(slot) {
-    const { pieces } = this.state;
-    return getPiece(pieces[slot]);
-  }
-
-  updateLegalMoves() {
-    this.setState((prevState) => ({ moves: legalMoves(prevState.pieces) }));
+    const { xboard } = this.state;
+    return getPiece(xboard.board[slot]);
   }
 
   fetchBoard() {
     getInitialPosition().then((data) => {
       const { fen } = data;
-      const pieces = fromFen(fen);
-      this.setState({ pieces, moves: legalMoves(pieces) });
+      const xboard = new XiangqiBoard({ fen });
+      this.setState({ xboard, moves: xboard.legalMoves() });
     });
   }
 
   selectedCanCapture(slot) {
-    const { selectedSlot } = this.state;
-    const selectedPiece = this.getPieceOn(selectedSlot);
-    const targetedPiece = this.getPieceOn(slot);
-    if (selectedPiece === undefined || targetedPiece === undefined) {
-      return false;
-    }
-    return targetedPiece.props.color !== selectedPiece.props.color;
+    const { selectedSlot, xboard } = this.state;
+    if (selectedSlot === null) return false;
+    if (!xboard.isOccupied(selectedSlot)) return false;
+    if (!xboard.isOccupied(slot)) return false;
+    return !xboard.sameColorSlot(slot, selectedSlot);
   }
 
   handleSquareClick(square) {
@@ -80,30 +73,37 @@ class Board extends Component {
     this.setState({ selectedSlot: slot });
   }
 
-  handleMove(prevSlot, nextSlot) {
+  isLegalMove(prevSlot, nextSlot) {
+    const { moves } = this.state;
+    return moves[prevSlot].includes(nextSlot);
+  }
+
+  changePlayer() {
     const { changePlayer } = this.props;
-    this.setState((prevState) => ({
-      pieces: update(update([...prevState.pieces], {
-        [nextSlot]: { $set: prevState.pieces[prevSlot] },
-      }), {
-        [prevSlot]: { $set: undefined },
-      }),
-    }));
-    this.handleSelect(null);
-    this.updateLegalMoves();
     changePlayer();
   }
 
+  handleMove(prevSlot, nextSlot) {
+    if (this.isLegalMove(prevSlot, nextSlot)) {
+      this.setState((prevState) => {
+        const xboard = prevState.xboard.move(prevSlot, nextSlot);
+        return { xboard, moves: xboard.legalMoves() };
+      });
+      this.changePlayer();
+    }
+    this.handleSelect(null);
+  }
+
   render() {
-    const { pieces, selectedSlot, moves } = this.state;
+    const { xboard, selectedSlot, moves } = this.state;
     const targets = (selectedSlot === null) ? [] : moves[selectedSlot];
 
     // TODO Add loading spinner
-    if (pieces === null) return (<div>Loading...</div>);
+    if (xboard === null) return (<div>Loading...</div>);
 
     return (
       <Wrapper className="Board">
-        {pieces.map((_, i) => (
+        {xboard.board.map((_, i) => (
           <Square
             key={i}
             slot={i}
