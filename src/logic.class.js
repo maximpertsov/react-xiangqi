@@ -213,22 +213,21 @@ class XiangqiBoard {
     });
   }
 
-  // toFenRow(rank) {
-  //   Array(this.files).reduce(
-  //     ([acc, n], _, file) => {
-  //       const slot = this.getSlot(rank, file);
-  //       if (this.occ
-  //       const code = this.board[slot];
-  //       if (
-  //     },
-  //     [[], 0],
-  //   );
-  // }
-
   toFen() {
+    const rows = [];
     this.board.forEach((piece, idx) => {
-
+      if (idx % this.files === 0) rows.push([]);
+      const lastRow = rows[rows.length - 1];
+      const lastRowSize = lastRow.length;
+      if (piece !== null) {
+        lastRow.push(piece);
+      } else if (lastRowSize === 0 || Number.isNaN(+lastRow[lastRowSize - 1])) {
+        lastRow.push(1);
+      } else {
+        lastRow[lastRowSize - 1]++;
+      }
     });
+    return rows.map((row) => row.join('')).join('/');
   }
 }
 
