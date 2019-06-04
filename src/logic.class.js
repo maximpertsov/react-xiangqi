@@ -1,3 +1,5 @@
+import update from 'immutability-helper';
+
 const RANKS = 10;
 const FILES = 9;
 const BLACK_PIECES = 'rheakcp';
@@ -29,10 +31,10 @@ class XiangqiBoard {
 
   move(fromSlot, toSlot) {
     const options = { ...this };
-    const board = options.board.map((p, i, b) => {
-      if (i === toSlot) return b[fromSlot];
-      if (i === fromSlot) return null;
-      return p;
+    const board = update(update(options.board, {
+      [toSlot]: { $set: options.board[fromSlot] },
+    }), {
+      [fromSlot]: { $set: null },
     });
     delete options.board;
     options.fen = this.toFen(board);

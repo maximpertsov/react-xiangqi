@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import update from 'immutability-helper';
 import Square from '../Square/Square';
 import XiangqiBoard from '../../logic.class';
 import { getInitialPosition } from '../../client';
