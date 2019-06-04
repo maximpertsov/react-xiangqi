@@ -17,14 +17,14 @@ class XiangqiBoard {
     fen = EMPTY_BOARD_FEN,
     redRiverBank = RED_RIVER_BANK,
     blackRiverBank = BLACK_RIVER_BANK,
-  }) {
+  } = {}) {
     this.ranks = ranks;
     this.files = files;
     this.redPieces = redPieces;
     this.blackPieces = blackPieces;
     this.redRiverBank = redRiverBank;
     this.blackRiverBank = blackRiverBank;
-    this.board = this.constructor.fromFen(fen);
+    this.board = this.fromFen(fen);
   }
 
   getSlot(rank, file) { return file + rank * this.files; }
@@ -52,7 +52,7 @@ class XiangqiBoard {
     }, []);
   }
 
-  static fromFen(fen) {
+  fromFen(fen) {
     return fen.split('/').reduce(
       (acc, row) => acc.concat(this.constructor.fromFenRow(row)),
       [],
@@ -202,7 +202,6 @@ class XiangqiBoard {
       // if (code === 'r' || code === 'R') return legalRookMoves(b, slot);
       // // TODO untested
       // if (code === 'c' || code === 'C') return legalCannonMoves(b, slot);
-      // TODO untested
       if (code === 'e' || code === 'E') return this.legalElephantMoves(slot);
       // // TODO untested
       // if (code === 'a' || code === 'A') return legalAdvisorMoves(b, slot);
