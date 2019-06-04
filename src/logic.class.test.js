@@ -140,6 +140,12 @@ test('converts FEN string to an array', () => {
   expect(actual).toStrictEqual(expected);
 });
 
+test('converts FEN string to an board and back', () => {
+  const fen = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
+  const xb = new XiangqiBoard({ fen });
+  expect(xb.toFen()).toBe(fen);
+});
+
 function sameElements(actual, expected) {
   expect(actual).toEqual(expect.arrayContaining(expected));
   expect(expected).toEqual(expect.arrayContaining(actual));

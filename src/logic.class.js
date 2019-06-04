@@ -27,6 +27,8 @@ class XiangqiBoard {
     this.board = this.fromFen(fen);
   }
 
+  getPiece(rank, file) { return this.board[this.getSlot(rank, file)]; }
+
   getSlot(rank, file) { return file + rank * this.files; }
 
   getRank(slot) { return Math.floor(slot / this.files); }
@@ -208,6 +210,24 @@ class XiangqiBoard {
       // // TODO untested
       // if (code === 'k' || code === 'K') return legalKingMoves(b, slot);
       return [];
+    });
+  }
+
+  // toFenRow(rank) {
+  //   Array(this.files).reduce(
+  //     ([acc, n], _, file) => {
+  //       const slot = this.getSlot(rank, file);
+  //       if (this.occ
+  //       const code = this.board[slot];
+  //       if (
+  //     },
+  //     [[], 0],
+  //   );
+  // }
+
+  toFen() {
+    this.board.forEach((piece, idx) => {
+
     });
   }
 }
