@@ -197,9 +197,25 @@ class XiangqiBoard {
     return result;
   }
 
-  // TODO stub
-  legalCannonMoves(board, slot) {
-    return this.orthogonalSlots(slot, 10);
+  legalCannonMoves(slot) {
+    const result = [];
+    ORTHOGONAL_MOVES.forEach((move) => {
+      let toSlot = slot;
+      let vaulted = false;
+      while (true) {
+        toSlot = this.tryMove(toSlot, ...move);
+        if (toSlot === null) break;
+        if (vaulted || this.isOccupied(toSlot)) {
+          this.addIfUniversallyLegal(result, slot, toSlot);
+          break;
+        } else if (this.isOccupied(toSlot)) {
+          vaulted = true;
+        } else {
+          this.addIfUniversallyLegal(result, slot, toSlot);
+        }
+      }
+    });
+    return result;
   }
 
   legalElephantMoves(slot) {
@@ -231,8 +247,7 @@ class XiangqiBoard {
       if (code === 'p' || code === 'P') return this.legalPawnMoves(slot);
       if (code === 'h' || code === 'H') return this.legalHorseMoves(slot);
       if (code === 'r' || code === 'R') return this.legalRookMoves(slot);
-      // // TODO untested
-      // if (code === 'c' || code === 'C') return this.legalCannonMoves(slot);
+      if (code === 'c' || code === 'C') return this.legalCannonMoves(slot);
       if (code === 'e' || code === 'E') return this.legalElephantMoves(slot);
       // // TODO untested
       // if (code === 'a' || code === 'A') return this.legalAdvisorMoves(slot);
