@@ -127,7 +127,7 @@ class XiangqiBoard {
   }
 
   // TODO make this non-recursive?
-  tryMarch(slot, rankMove, fileMove, steps) {
+  tryMarch(slot, rankMove, fileMove, steps = Math.max(this.ranks, this.files)) {
     if (steps < 1) return [];
     const nextSlot = this.tryMove(slot, rankMove, fileMove);
     if (nextSlot === null) return [];
