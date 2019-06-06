@@ -247,8 +247,8 @@ const legalMoveTests = [
       // rook moves
       { from: [0, 0], to: [[1, 0], [2, 0]] },
       { from: [0, 8], to: [[1, 8], [2, 8]] },
-      { from: [9, 0], to: [[8, 0], [7, 0]] },
-      { from: [9, 8], to: [[8, 8], [7, 8], [8, 7]] },
+      { from: [9, 0], to: [[8, 0], [7, 0], [9, 1]] },
+      { from: [9, 8], to: [[8, 8], [7, 8]] },
     ],
   ],
   // Bugfix: Horse jumps around board
