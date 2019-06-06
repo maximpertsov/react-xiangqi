@@ -210,7 +210,7 @@ class XiangqiBoard {
           break;
         } else if (this.isOccupied(toSlot)) {
           vaulted = true;
-        } else {
+        } else if (!vaulted) {
           this.addIfUniversallyLegal(result, slot, toSlot);
         }
       }
