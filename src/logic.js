@@ -205,7 +205,7 @@ class XiangqiBoard {
       while (true) {
         toSlot = this.tryMove(toSlot, ...move);
         if (toSlot === null) break;
-        if (vaulted || this.isOccupied(toSlot)) {
+        if (vaulted && this.isOccupied(toSlot)) {
           this.addIfUniversallyLegal(result, slot, toSlot);
           break;
         } else if (this.isOccupied(toSlot)) {
