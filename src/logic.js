@@ -127,13 +127,13 @@ class XiangqiBoard {
   }
 
   // TODO make this non-recursive?
-  tryMarch(slot, rankMove, fileMove, steps) {
+  tryMarch(slot, rankMove, fileMove, steps = Math.max(this.ranks, this.files)) {
     if (steps < 1) return [];
     const nextSlot = this.tryMove(slot, rankMove, fileMove);
     if (nextSlot === null) return [];
-    return [nextSlot].concat(
-      this.tryMarch(nextSlot, rankMove, fileMove, steps - 1),
-    );
+    const restSlots = this.tryMarch(nextSlot, rankMove, fileMove, steps - 1);
+    restSlots.push(nextSlot);
+    return restSlots;
   }
 
   tryMarchMoves(slot, moves, steps) {
@@ -183,14 +183,39 @@ class XiangqiBoard {
     return result;
   }
 
-  // TODO stub
-  legalRookMoves(board, slot) {
-    return this.orthogonalSlots(slot, 10);
+  legalRookMoves(slot) {
+    const result = [];
+    ORTHOGONAL_MOVES.forEach((move) => {
+      let toSlot = slot;
+      while (true) {
+        toSlot = this.tryMove(toSlot, ...move);
+        if (toSlot === null) break;
+        this.addIfUniversallyLegal(result, slot, toSlot);
+        if (this.isOccupied(toSlot)) break;
+      }
+    });
+    return result;
   }
 
-  // TODO stub
-  legalCannonMoves(board, slot) {
-    return this.orthogonalSlots(slot, 10);
+  legalCannonMoves(slot) {
+    const result = [];
+    ORTHOGONAL_MOVES.forEach((move) => {
+      let toSlot = slot;
+      let vaulted = false;
+      while (true) {
+        toSlot = this.tryMove(toSlot, ...move);
+        if (toSlot === null) break;
+        if (vaulted && this.isOccupied(toSlot)) {
+          this.addIfUniversallyLegal(result, slot, toSlot);
+          break;
+        } else if (this.isOccupied(toSlot)) {
+          vaulted = true;
+        } else if (!vaulted) {
+          this.addIfUniversallyLegal(result, slot, toSlot);
+        }
+      }
+    });
+    return result;
   }
 
   legalElephantMoves(slot) {
@@ -221,15 +246,13 @@ class XiangqiBoard {
     return this.board.map((code, slot) => {
       if (code === 'p' || code === 'P') return this.legalPawnMoves(slot);
       if (code === 'h' || code === 'H') return this.legalHorseMoves(slot);
-      // // TODO untested
-      // if (code === 'r' || code === 'R') return legalRookMoves(b, slot);
-      // // TODO untested
-      // if (code === 'c' || code === 'C') return legalCannonMoves(b, slot);
+      if (code === 'r' || code === 'R') return this.legalRookMoves(slot);
+      if (code === 'c' || code === 'C') return this.legalCannonMoves(slot);
       if (code === 'e' || code === 'E') return this.legalElephantMoves(slot);
       // // TODO untested
-      // if (code === 'a' || code === 'A') return legalAdvisorMoves(b, slot);
+      // if (code === 'a' || code === 'A') return this.legalAdvisorMoves(slot);
       // // TODO untested
-      // if (code === 'k' || code === 'K') return legalKingMoves(b, slot);
+      // if (code === 'k' || code === 'K') return this.legalKingMoves(slot);
       return [];
     });
   }
