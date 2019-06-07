@@ -274,7 +274,7 @@ class XiangqiBoard {
   }
 
   // TODO should not allow self-checks by default
-  legalMoves(allowSelfCheck = true) {
+  legalMoves(allowSelfCheck) {
     const result = this.board.map((code, slot) => {
       if (code === 'p' || code === 'P') return this.legalPawnMoves(slot);
       if (code === 'h' || code === 'H') return this.legalHorseMoves(slot);
@@ -289,7 +289,7 @@ class XiangqiBoard {
     if (allowSelfCheck) return result;
 
     return result.map((toSlots, fromSlot) => (
-      toSlots.filter((toSlot) => this.checksOwnKing(fromSlot, toSlot))
+      toSlots.filter((toSlot) => (!this.checksOwnKing(fromSlot, toSlot)))
     ));
   }
 
@@ -303,14 +303,16 @@ class XiangqiBoard {
     return result;
   }
 
+  // TODO add check for two kings facing each other
+  //      hack this by replacing the opposing king with a rook?
   checksOwnKing(fromSlot, toSlot) {
     const code = this.board[fromSlot];
     let ownKing;
-    if (this.isBlack(code)) ownKing = 'K';
-    if (this.isRed(code)) ownKing = 'k';
+    if (this.isBlack(code)) ownKing = 'k';
+    if (this.isRed(code)) ownKing = 'K';
 
     const nextBoard = this.move(fromSlot, toSlot);
-    return nextBoard.captures.has(ownKing);
+    return nextBoard.captures().has(ownKing);
   }
 
   toFen(board = this.board) {
