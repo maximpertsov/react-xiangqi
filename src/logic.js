@@ -293,8 +293,7 @@ class XiangqiBoard {
     return result;
   }
 
-  // TODO should not allow self-checks by default
-  legalMoves(allowSelfCheck) {
+  legalMoves(allowSelfCheck = false) {
     const result = this.board.map((code, slot) => {
       if (code === 'p' || code === 'P') return this.legalPawnMoves(slot);
       if (code === 'h' || code === 'H') return this.legalHorseMoves(slot);
