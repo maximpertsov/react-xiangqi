@@ -8,9 +8,21 @@ const BLACK_RIVER_BANK = 4;
 const RED_RIVER_BANK = 5;
 const ORTHOGONAL_MOVES = [[1, 0], [-1, 0], [0, 1], [0, -1]];
 const DIAGONAL_MOVES = [[1, 1], [-1, 1], [1, -1], [-1, -1]];
+// TODO store this in a board FEN-style string?
+const BLACK_PALACE = [
+  [0, 3], [0, 4], [0, 5],
+  [1, 3], [1, 4], [1, 5],
+  [2, 3], [2, 4], [2, 5],
+];
+const RED_PALACE = [
+  [9, 3], [9, 4], [9, 5],
+  [8, 3], [8, 4], [8, 5],
+  [7, 3], [7, 4], [7, 5],
+];
 const EMPTY_BOARD_FEN = '9/9/9/9/9/9/9/9/9/9';
 
 class XiangqiBoard {
+  // TODO can remove most of this information and parse it from the FEN string
   constructor({
     ranks = RANKS,
     files = FILES,
@@ -19,6 +31,8 @@ class XiangqiBoard {
     fen = EMPTY_BOARD_FEN,
     redRiverBank = RED_RIVER_BANK,
     blackRiverBank = BLACK_RIVER_BANK,
+    redPalace = RED_PALACE,
+    blackPalace = BLACK_PALACE,
   } = {}) {
     this.ranks = ranks;
     this.files = files;
@@ -26,6 +40,8 @@ class XiangqiBoard {
     this.blackPieces = blackPieces;
     this.redRiverBank = redRiverBank;
     this.blackRiverBank = blackRiverBank;
+    this.redPalace = redPalace.map((pos) => this.getSlot(...pos));
+    this.blackPalace = blackPalace.map((pos) => this.getSlot(...pos));
     this.board = this.fromFen(fen);
   }
 
@@ -38,6 +54,8 @@ class XiangqiBoard {
     });
     delete options.board;
     options.fen = this.toFen(board);
+    options.redPalace = this.redPalace.map((slot) => this.getRankFile(slot));
+    options.blackPalace = this.blackPalace.map((slot) => this.getRankFile(slot));
     return new this.constructor(options);
   }
 
@@ -232,14 +250,27 @@ class XiangqiBoard {
     return result;
   }
 
-  // TODO stub
-  legalAdvisorMoves(slot) {
-    return this.diagonalSlots(slot, 1);
+  inPalace(fromSlot, toSlot) {
+    const code = this.board[fromSlot];
+    if (this.isBlack(code)) return this.blackPalace.includes(toSlot);
+    if (this.isRed(code)) return this.redPalace.includes(toSlot);
+    return false;
   }
 
-  // TODO stub
+  legalAdvisorMoves(slot) {
+    const result = [];
+    this.diagonalSlots(slot, 1).filter((s) => this.inPalace(slot, s)).forEach((s) => {
+      this.addIfUniversallyLegal(result, slot, s);
+    });
+    return result;
+  }
+
   legalKingMoves(slot) {
-    return this.orthogonalSlots(slot, 1);
+    const result = [];
+    this.orthogonalSlots(slot, 1).filter((s) => this.inPalace(slot, s)).forEach((s) => {
+      this.addIfUniversallyLegal(result, slot, s);
+    });
+    return result;
   }
 
   legalMoves() {
@@ -249,10 +280,8 @@ class XiangqiBoard {
       if (code === 'r' || code === 'R') return this.legalRookMoves(slot);
       if (code === 'c' || code === 'C') return this.legalCannonMoves(slot);
       if (code === 'e' || code === 'E') return this.legalElephantMoves(slot);
-      // // TODO untested
-      // if (code === 'a' || code === 'A') return this.legalAdvisorMoves(slot);
-      // // TODO untested
-      // if (code === 'k' || code === 'K') return this.legalKingMoves(slot);
+      if (code === 'a' || code === 'A') return this.legalAdvisorMoves(slot);
+      if (code === 'k' || code === 'K') return this.legalKingMoves(slot);
       return [];
     });
   }

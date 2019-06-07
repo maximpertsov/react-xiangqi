@@ -175,6 +175,10 @@ const legalMoveTests = [
   [
     '4k4/9/9/9/pp7/1p7/9/9/9/4K4',
     [
+      // king moves
+      { from: [0, 4], to: [[0, 3], [0, 5], [1, 4]] },
+      { from: [9, 4], to: [[9, 3], [9, 5], [8, 4]] },
+      // pawn moves
       { from: [4, 0], to: [[5, 0]] },
       { from: [4, 1], to: [] },
       { from: [5, 1], to: [[6, 1], [5, 2], [5, 0]] },
@@ -184,6 +188,14 @@ const legalMoveTests = [
   [
     'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR',
     [
+      // king moves
+      { from: [0, 4], to: [[1, 4]] },
+      { from: [9, 4], to: [[8, 4]] },
+      // advisor moves
+      { from: [0, 3], to: [[1, 4]] },
+      { from: [0, 5], to: [[1, 4]] },
+      { from: [9, 3], to: [[8, 4]] },
+      { from: [9, 5], to: [[8, 4]] },
       // pawn moves
       { from: [3, 0], to: [[4, 0]] },
       { from: [3, 2], to: [[4, 2]] },
@@ -252,6 +264,14 @@ const legalMoveTests = [
   [
     'rheakaehr/9/1c5c1/p1p1p1p1p/9/2P6/P3P1P1P/1CH4C1/9/R1EAKAEHR',
     [
+      // king moves
+      { from: [0, 4], to: [[1, 4]] },
+      { from: [9, 4], to: [[8, 4]] },
+      // advisor moves
+      { from: [0, 3], to: [[1, 4]] },
+      { from: [0, 5], to: [[1, 4]] },
+      { from: [9, 3], to: [[8, 4]] },
+      { from: [9, 5], to: [[8, 4]] },
       // pawn moves
       { from: [3, 0], to: [[4, 0]] },
       { from: [3, 2], to: [[4, 2]] },
