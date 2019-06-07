@@ -46,12 +46,32 @@ class XiangqiBoard {
   }
 
   move(fromSlot, toSlot) {
-    const options = { ...this };
-    const board = update(update(options.board, {
-      [toSlot]: { $set: options.board[fromSlot] },
+    const board = update(update(this.board, {
+      [toSlot]: { $set: this.board[fromSlot] },
     }), {
       [fromSlot]: { $set: null },
     });
+    return this.new(board, this);
+  }
+
+  move(fromSlot, toSlot) {
+    const board = update(update(this.board, {
+      [toSlot]: { $set: this.board[fromSlot] },
+    }), {
+      [fromSlot]: { $set: null },
+    });
+    return this.new(board);
+  }
+
+  drop(piece, toSlot) {
+    const board = update(this.board, {
+      [toSlot]: { $set: piece },
+    });
+    return this.new(board);
+  }
+
+  new(board) {
+    const options = { ...this };
     delete options.board;
     options.fen = this.toFen(board);
     options.redPalace = this.redPalace.map((slot) => this.getRankFile(slot));
@@ -273,8 +293,8 @@ class XiangqiBoard {
     return result;
   }
 
-  legalMoves() {
-    return this.board.map((code, slot) => {
+  legalMoves(allowSelfCheck = false) {
+    const result = this.board.map((code, slot) => {
       if (code === 'p' || code === 'P') return this.legalPawnMoves(slot);
       if (code === 'h' || code === 'H') return this.legalHorseMoves(slot);
       if (code === 'r' || code === 'R') return this.legalRookMoves(slot);
@@ -284,6 +304,39 @@ class XiangqiBoard {
       if (code === 'k' || code === 'K') return this.legalKingMoves(slot);
       return [];
     });
+
+    if (allowSelfCheck) return result;
+
+    return result.map((toSlots, fromSlot) => (
+      toSlots.filter((toSlot) => (!this.checksOwnKing(fromSlot, toSlot)))
+    ));
+  }
+
+  captures() {
+    const result = new Set();
+    for (const [_fromSlot, toSlots] of this.legalMoves(true).entries()) {
+      toSlots.forEach((slot) => {
+        if (this.isOccupied(slot)) result.add(this.board[slot]);
+      });
+    }
+    return result;
+  }
+
+  // HACK: king facing logic implemented by replacing the
+  //       opposing king with a rook
+  checksOwnKing(fromSlot, toSlot) {
+    const code = this.board[fromSlot];
+    let ownKing;
+    let otherKing;
+    let otherRook;
+    if (this.isBlack(code)) [ownKing, otherKing, otherRook] = ['k', 'K', 'R'];
+    if (this.isRed(code)) [ownKing, otherKing, otherRook] = ['K', 'k', 'r'];
+
+    const nextBoard = this.move(fromSlot, toSlot);
+    return nextBoard.drop(
+      otherRook,
+      nextBoard.board.indexOf(otherKing)
+    ).captures().has(ownKing);
   }
 
   toFen(board = this.board) {
