@@ -8,9 +8,21 @@ const BLACK_RIVER_BANK = 4;
 const RED_RIVER_BANK = 5;
 const ORTHOGONAL_MOVES = [[1, 0], [-1, 0], [0, 1], [0, -1]];
 const DIAGONAL_MOVES = [[1, 1], [-1, 1], [1, -1], [-1, -1]];
+// TODO store this in a board FEN-style string?
+const RED_PALACE = [
+  [0, 3], [0, 4], [0, 5],
+  [1, 3], [1, 4], [1, 5],
+  [2, 3], [2, 4], [2, 5],
+];
+const BLACK_PALACE = [
+  [9, 3], [9, 4], [9, 5],
+  [8, 3], [8, 4], [8, 5],
+  [7, 3], [7, 4], [7, 5],
+];
 const EMPTY_BOARD_FEN = '9/9/9/9/9/9/9/9/9/9';
 
 class XiangqiBoard {
+  // TODO can remove most of this information and parse it from the FEN string
   constructor({
     ranks = RANKS,
     files = FILES,
@@ -19,6 +31,8 @@ class XiangqiBoard {
     fen = EMPTY_BOARD_FEN,
     redRiverBank = RED_RIVER_BANK,
     blackRiverBank = BLACK_RIVER_BANK,
+    redPalace = RED_PALACE,
+    blackPalace = BLACK_PALACE,
   } = {}) {
     this.ranks = ranks;
     this.files = files;
@@ -26,6 +40,8 @@ class XiangqiBoard {
     this.blackPieces = blackPieces;
     this.redRiverBank = redRiverBank;
     this.blackRiverBank = blackRiverBank;
+    this.redPalace = redPalace.map((pos) => this.getSlot(...pos));
+    this.blackPalace = blackPalace.map((pos) => this.getSlot(...pos));
     this.board = this.fromFen(fen);
   }
 
@@ -38,6 +54,8 @@ class XiangqiBoard {
     });
     delete options.board;
     options.fen = this.toFen(board);
+    options.redPalace = this.redPalace.map((slot) => this.getRankFile(slot));
+    options.blackPalace = this.blackPalace.map((slot) => this.getRankFile(slot));
     return new this.constructor(options);
   }
 
