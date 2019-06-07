@@ -273,8 +273,9 @@ class XiangqiBoard {
     return result;
   }
 
-  legalMoves() {
-    return this.board.map((code, slot) => {
+  // TODO should not allow self-checks by default
+  legalMoves(allowSelfCheck = true) {
+    const result = this.board.map((code, slot) => {
       if (code === 'p' || code === 'P') return this.legalPawnMoves(slot);
       if (code === 'h' || code === 'H') return this.legalHorseMoves(slot);
       if (code === 'r' || code === 'R') return this.legalRookMoves(slot);
@@ -284,6 +285,32 @@ class XiangqiBoard {
       if (code === 'k' || code === 'K') return this.legalKingMoves(slot);
       return [];
     });
+
+    if (allowSelfCheck) return result;
+
+    return result.map((toSlots, fromSlot) => (
+      toSlots.filter((toSlot) => this.checksOwnKing(fromSlot, toSlot))
+    ));
+  }
+
+  captures() {
+    const result = new Set();
+    for (const [_fromSlot, toSlots] of this.legalMoves(true).entries()) {
+      toSlots.forEach((slot) => {
+        if (this.isOccupied(slot)) result.add(this.board[slot]);
+      });
+    }
+    return result;
+  }
+
+  checksOwnKing(fromSlot, toSlot) {
+    const code = this.board[fromSlot];
+    let ownKing;
+    if (this.isBlack(code)) ownKing = 'K';
+    if (this.isRed(code)) ownKing = 'k';
+
+    const nextBoard = this.move(fromSlot, toSlot);
+    return nextBoard.captures.has(ownKing);
   }
 
   toFen(board = this.board) {
