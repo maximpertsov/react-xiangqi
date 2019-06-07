@@ -323,8 +323,8 @@ class XiangqiBoard {
     return result;
   }
 
-  // TODO add check for two kings facing each other
-  //      hack this by replacing the opposing king with a rook?
+  // HACK: king facing logic implemented by replacing the
+  //       opposing king with a rook
   checksOwnKing(fromSlot, toSlot) {
     const code = this.board[fromSlot];
     let ownKing;
