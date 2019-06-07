@@ -357,6 +357,19 @@ const legalMoveTests = [
       { from: [7, 0], to: [[9, 2]] },
     ],
   ],
+  // King in check
+  [
+    'rheakaehr/4P4/1c5c1/p1p1p1p1p/9/9/9/9/9/9',
+    [
+      // king moves
+      { from: [0, 4], to: [[1, 4]] },
+      // advisor moves
+      { from: [0, 3], to: [[1, 4]] },
+      { from: [0, 5], to: [[1, 4]] },
+      // pawn moves
+      { from: [1, 4], to: [[0, 4], [1, 3], [1, 5]] },
+    ],
+  ],
 ];
 
 test.each(legalMoveTests)('finds all legal moves for %s', (fen, moves) => {
