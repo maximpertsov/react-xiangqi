@@ -9,12 +9,12 @@ const RED_RIVER_BANK = 5;
 const ORTHOGONAL_MOVES = [[1, 0], [-1, 0], [0, 1], [0, -1]];
 const DIAGONAL_MOVES = [[1, 1], [-1, 1], [1, -1], [-1, -1]];
 // TODO store this in a board FEN-style string?
-const RED_PALACE = [
+const BLACK_PALACE = [
   [0, 3], [0, 4], [0, 5],
   [1, 3], [1, 4], [1, 5],
   [2, 3], [2, 4], [2, 5],
 ];
-const BLACK_PALACE = [
+const RED_PALACE = [
   [9, 3], [9, 4], [9, 5],
   [8, 3], [8, 4], [8, 5],
   [7, 3], [7, 4], [7, 5],
@@ -250,19 +250,19 @@ class XiangqiBoard {
     return result;
   }
 
-  inPalace(slot) {
-    const code = this.board[slot];
-    if (this.isBlack(code)) return this.blackPalace.includes(slot);
-    if (this.isRed(code)) return this.redPalace.includes(slot);
+  inPalace(fromSlot, toSlot) {
+    const code = this.board[fromSlot];
+    if (this.isBlack(code)) return this.blackPalace.includes(toSlot);
+    if (this.isRed(code)) return this.redPalace.includes(toSlot);
     return false;
   }
 
   legalAdvisorMoves(slot) {
-    return this.diagonalSlots(slot, 1).filter((s) => this.inPalace(s));
+    return this.diagonalSlots(slot, 1).filter((s) => this.inPalace(slot, s));
   }
 
   legalKingMoves(slot) {
-    return this.orthogonalSlots(slot, 1).filter((s) => this.inPalace(s));
+    return this.orthogonalSlots(slot, 1).filter((s) => this.inPalace(slot, s));
   }
 
   legalMoves() {
