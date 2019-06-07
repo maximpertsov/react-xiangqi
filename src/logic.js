@@ -46,12 +46,32 @@ class XiangqiBoard {
   }
 
   move(fromSlot, toSlot) {
-    const options = { ...this };
-    const board = update(update(options.board, {
-      [toSlot]: { $set: options.board[fromSlot] },
+    const board = update(update(this.board, {
+      [toSlot]: { $set: this.board[fromSlot] },
     }), {
       [fromSlot]: { $set: null },
     });
+    return this.new(board, this);
+  }
+
+  move(fromSlot, toSlot) {
+    const board = update(update(this.board, {
+      [toSlot]: { $set: this.board[fromSlot] },
+    }), {
+      [fromSlot]: { $set: null },
+    });
+    return this.new(board);
+  }
+
+  drop(piece, toSlot) {
+    const board = update(this.board, {
+      [toSlot]: { $set: piece },
+    });
+    return this.new(board);
+  }
+
+  new(board) {
+    const options = { ...this };
     delete options.board;
     options.fen = this.toFen(board);
     options.redPalace = this.redPalace.map((slot) => this.getRankFile(slot));
