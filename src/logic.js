@@ -328,11 +328,16 @@ class XiangqiBoard {
   checksOwnKing(fromSlot, toSlot) {
     const code = this.board[fromSlot];
     let ownKing;
-    if (this.isBlack(code)) ownKing = 'k';
-    if (this.isRed(code)) ownKing = 'K';
+    let otherKing;
+    let otherRook;
+    if (this.isBlack(code)) [ownKing, otherKing, otherRook] = ['k', 'K', 'R'];
+    if (this.isRed(code)) [ownKing, otherKing, otherRook] = ['K', 'k', 'r'];
 
     const nextBoard = this.move(fromSlot, toSlot);
-    return nextBoard.captures().has(ownKing);
+    return nextBoard.drop(
+      otherRook,
+      nextBoard.board.indexOf(otherKing)
+    ).captures().has(ownKing);
   }
 
   toFen(board = this.board) {

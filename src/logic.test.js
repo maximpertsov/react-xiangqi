@@ -173,11 +173,11 @@ const toExpected = (xb, moves) => moves.reduce(
 
 const legalMoveTests = [
   [
-    '4k4/9/9/9/pp7/1p7/9/9/9/4K4',
+    '3k5/9/9/9/pp7/1p7/9/9/9/4K4',
     [
       // king moves
-      { from: [0, 4], to: [[0, 3], [0, 5], [1, 4]] },
-      { from: [9, 4], to: [[9, 3], [9, 5], [8, 4]] },
+      { from: [0, 3], to: [[1, 3]] },
+      { from: [9, 4], to: [[9, 5], [8, 4]] },
       // pawn moves
       { from: [4, 0], to: [[5, 0]] },
       { from: [4, 1], to: [] },
