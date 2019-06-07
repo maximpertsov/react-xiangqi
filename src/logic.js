@@ -250,14 +250,19 @@ class XiangqiBoard {
     return result;
   }
 
-  // TODO stub
-  legalAdvisorMoves(slot) {
-    return this.diagonalSlots(slot, 1);
+  inPalace(slot) {
+    const code = this.board[slot];
+    if (this.isBlack(code)) return this.blackPalace.includes(slot);
+    if (this.isRed(code)) return this.redPalace.includes(slot);
+    return false;
   }
 
-  // TODO stub
+  legalAdvisorMoves(slot) {
+    return this.diagonalSlots(slot, 1).filter((s) => this.inPalace(s));
+  }
+
   legalKingMoves(slot) {
-    return this.orthogonalSlots(slot, 1);
+    return this.orthogonalSlots(slot, 1).filter((s) => this.inPalace(s));
   }
 
   legalMoves() {
@@ -267,10 +272,8 @@ class XiangqiBoard {
       if (code === 'r' || code === 'R') return this.legalRookMoves(slot);
       if (code === 'c' || code === 'C') return this.legalCannonMoves(slot);
       if (code === 'e' || code === 'E') return this.legalElephantMoves(slot);
-      // // TODO untested
-      // if (code === 'a' || code === 'A') return this.legalAdvisorMoves(slot);
-      // // TODO untested
-      // if (code === 'k' || code === 'K') return this.legalKingMoves(slot);
+      if (code === 'a' || code === 'A') return this.legalAdvisorMoves(slot);
+      if (code === 'k' || code === 'K') return this.legalKingMoves(slot);
       return [];
     });
   }
