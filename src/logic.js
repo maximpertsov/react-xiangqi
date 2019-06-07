@@ -258,11 +258,19 @@ class XiangqiBoard {
   }
 
   legalAdvisorMoves(slot) {
-    return this.diagonalSlots(slot, 1).filter((s) => this.inPalace(slot, s));
+    const result = [];
+    this.diagonalSlots(slot, 1).filter((s) => this.inPalace(slot, s)).forEach((s) => {
+      this.addIfUniversallyLegal(result, slot, s);
+    });
+    return result;
   }
 
   legalKingMoves(slot) {
-    return this.orthogonalSlots(slot, 1).filter((s) => this.inPalace(slot, s));
+    const result = [];
+    this.orthogonalSlots(slot, 1).filter((s) => this.inPalace(slot, s)).forEach((s) => {
+      this.addIfUniversallyLegal(result, slot, s);
+    });
+    return result;
   }
 
   legalMoves() {
