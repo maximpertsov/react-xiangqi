@@ -4,6 +4,8 @@ import Board from './Board/Board';
 import GameInfo from './GameInfo';
 import { getGame } from '../client';
 
+const GAME_PK = 2;
+
 const Wrapper = styled.div`
   text-align: center;
 `;
@@ -18,12 +20,14 @@ class Game extends Component {
     this.state = {
       activePlayerIdx: 0,
       players: [],
+      fen: null,
     };
   }
 
   componentDidMount() {
-    getGame(1).then((data) => {
-      this.setState({ players: data.players });
+    getGame(GAME_PK).then((data) => {
+      const { players, fen } = data;
+      this.setState({ players, fen });
     });
   }
 
@@ -43,14 +47,23 @@ class Game extends Component {
 
   gameInfoOrLoading() {
     const { players } = this.state;
-    if (players.length === 0) {
-      return (<div><p>Loading...</p></div>);
-    }
+    if (players.length === 0) return (<div><p>Loading...</p></div>);
     return (
       <GameInfo
-        redPlayer={players[0]}
-        blackPlayer={players[1]}
+        redPlayer={players.find((p) => p.color === 'red')}
+        blackPlayer={players.find((p) => p.color === 'black')}
         activePlayer={this.activePlayer}
+      />
+    );
+  }
+
+  boardOrLoading() {
+    const { fen } = this.state;
+    if (fen === null) return (<div><p>Loading...</p></div>);
+    return (
+      <Board
+        changePlayer={this.changePlayer}
+        fen={fen}
       />
     );
   }
@@ -58,9 +71,7 @@ class Game extends Component {
   render() {
     return (
       <Wrapper className="Game">
-        <Board
-          changePlayer={this.changePlayer}
-        />
+        { this.boardOrLoading() }
         { this.gameInfoOrLoading() }
       </Wrapper>
     );

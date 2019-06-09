@@ -3,9 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import XiangqiBoard from '../../logic';
-import { getInitialPosition } from '../../client';
 import { getPiece } from '../Piece/Piece';
-
 
 import boardImg from './board-1000px.svg.png';
 
@@ -35,7 +33,7 @@ class Board extends Component {
   }
 
   componentDidMount() {
-    this.fetchBoard();
+    this.setBoard();
   }
 
   getPieceOn(slot) {
@@ -43,12 +41,10 @@ class Board extends Component {
     return getPiece(xboard.board[slot]);
   }
 
-  fetchBoard() {
-    getInitialPosition().then((data) => {
-      const { fen } = data;
-      const xboard = new XiangqiBoard({ fen });
-      this.setState({ xboard, moves: xboard.legalMoves() });
-    });
+  setBoard() {
+    const { fen } = this.props;
+    const xboard = new XiangqiBoard({ fen });
+    this.setState({ xboard, moves: xboard.legalMoves() });
   }
 
   selectedCanCapture(slot) {
@@ -121,6 +117,7 @@ class Board extends Component {
 
 Board.propTypes = {
   changePlayer: PropTypes.func.isRequired,
+  fen: PropTypes.string.isRequired,
 };
 
 export default Board;
