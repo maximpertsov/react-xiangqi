@@ -62,6 +62,7 @@ class Game extends Component {
     if (fen === null) return (<div><p>Loading...</p></div>);
     return (
       <Board
+        activePlayer={this.activePlayer}
         changePlayer={this.changePlayer}
         fen={fen}
       />

@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import XiangqiBoard from '../../logic';
+import { postMove } from '../../client';
 import { getPiece } from '../Piece/Piece';
 
 import boardImg from './board-1000px.svg.png';
@@ -80,7 +81,10 @@ class Board extends Component {
   }
 
   handleMove(prevSlot, nextSlot) {
+    const { player } = this.activePlayer();
+
     if (this.isLegalMove(prevSlot, nextSlot)) {
+      // Try posting move here?
       this.setState((prevState) => {
         const xboard = prevState.xboard.move(prevSlot, nextSlot);
         return { xboard, moves: xboard.legalMoves() };
@@ -116,6 +120,7 @@ class Board extends Component {
 }
 
 Board.propTypes = {
+  activePlayer: PropTypes.func.isRequired,
   changePlayer: PropTypes.func.isRequired,
   fen: PropTypes.string.isRequired,
 };
