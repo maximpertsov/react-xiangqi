@@ -15,4 +15,21 @@ export async function getGame(gameId) {
   }
 }
 
+export async function postMove(gameId, player, piece, from, to) {
+  const payload = {
+    player,
+    piece,
+    from,
+    to,
+    type: 'move',
+  };
+  try {
+    const response = await axios.post(`game/${gameId}`, payload);
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default {};
