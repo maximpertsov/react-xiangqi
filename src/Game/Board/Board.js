@@ -88,14 +88,15 @@ class Board extends Component {
         const from = prevState.xboard.getRankFile(prevSlot).join(',');
         const to = prevState.xboard.getRankFile(nextSlot).join(',');
         const piece = prevState.xboard.board[prevSlot];
-        const success = postMove(gameId, activePlayer().name, piece, from, to)
+        let success = false;
+
+        postMove(gameId, activePlayer().name, piece, from, to)
           .then((response) => {
             const { status } = response;
-            return status === 201;
+            success = status === 201;
           })
           .catch((error) => {
             console.log(JSON.stringify(error));
-            return false;
           });
 
         if (success) {
