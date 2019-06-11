@@ -53,7 +53,6 @@ class Game extends Component {
         redPlayer={players.find((p) => p.color === 'red')}
         blackPlayer={players.find((p) => p.color === 'black')}
         activePlayer={this.activePlayer}
-        gameId={GAME_PK}
       />
     );
   }
@@ -66,6 +65,7 @@ class Game extends Component {
         activePlayer={this.activePlayer}
         changePlayer={this.changePlayer}
         fen={fen}
+        gameId={GAME_PK}
       />
     );
   }

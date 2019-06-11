@@ -87,8 +87,8 @@ class Board extends Component {
       this.setState((prevState) => {
         const from = prevState.xboard.getRankFile(prevSlot).join(',');
         const to = prevState.xboard.getRankFile(nextSlot).join(',');
-        const piece = prevState.xboard[prevSlot];
-        const success = postMove(gameId, activePlayer(), piece, from, to)
+        const piece = prevState.xboard.board[prevSlot];
+        const success = postMove(gameId, activePlayer().name, piece, from, to)
           .then((response) => {
             const { status } = response;
             return status === 201;
