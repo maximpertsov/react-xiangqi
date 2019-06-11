@@ -81,17 +81,32 @@ class Board extends Component {
   }
 
   handleMove(prevSlot, nextSlot) {
-    const { player } = this.activePlayer();
+    const { gameId, activePlayer } = this.props;
 
     if (this.isLegalMove(prevSlot, nextSlot)) {
-      // Try posting move here?
       this.setState((prevState) => {
-        const xboard = prevState.xboard.move(prevSlot, nextSlot);
-        return { xboard, moves: xboard.legalMoves() };
+        const from = prevState.xboard.getRankFile(prevSlot).join(',');
+        const to = prevState.xboard.getRankFile(nextSlot).join(',');
+        const piece = prevState.xboard[prevSlot];
+        const success = postMove(gameId, activePlayer(), piece, from, to)
+          .then((response) => {
+            const { status } = response;
+            return status === 201;
+          })
+          .catch((error) => {
+            console.log(JSON.stringify(error));
+            return false;
+          });
+
+        if (success) {
+          const xboard = prevState.xboard.move(prevSlot, nextSlot);
+          this.changePlayer();
+          return { xboard, moves: xboard.legalMoves() };
+        }
+        return prevState;
       });
-      this.changePlayer();
+      this.handleSelect(null);
     }
-    this.handleSelect(null);
   }
 
   render() {
@@ -123,6 +138,7 @@ Board.propTypes = {
   activePlayer: PropTypes.func.isRequired,
   changePlayer: PropTypes.func.isRequired,
   fen: PropTypes.string.isRequired,
+  gameId: PropTypes.number.isRequired,
 };
 
 export default Board;
