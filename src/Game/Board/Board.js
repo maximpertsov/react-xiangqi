@@ -80,6 +80,11 @@ class Board extends Component {
     changePlayer();
   }
 
+  refreshState() {
+    const { refreshState } = this.props;
+    refreshState();
+  }
+
   handleMove(prevSlot, nextSlot) {
     const { gameId, activePlayer } = this.props;
 
@@ -88,23 +93,22 @@ class Board extends Component {
         const from = prevState.xboard.getRankFile(prevSlot).join(',');
         const to = prevState.xboard.getRankFile(nextSlot).join(',');
         const piece = prevState.xboard.board[prevSlot];
-        let success = false;
 
         postMove(gameId, activePlayer().name, piece, from, to)
           .then((response) => {
-            const { status } = response;
-            success = status === 201;
+            const { status } = response
+            if (status === 201) {
+              console.log("Successfully updated move");
+            };
           })
           .catch((error) => {
             console.log(JSON.stringify(error));
+            this.refreshState();
           });
 
-        if (success) {
-          const xboard = prevState.xboard.move(prevSlot, nextSlot);
-          this.changePlayer();
-          return { xboard, moves: xboard.legalMoves() };
-        }
-        return prevState;
+        const xboard = prevState.xboard.move(prevSlot, nextSlot);
+        this.changePlayer();
+        return { xboard, moves: xboard.legalMoves() };
       });
       this.handleSelect(null);
     }
@@ -138,6 +142,7 @@ class Board extends Component {
 Board.propTypes = {
   activePlayer: PropTypes.func.isRequired,
   changePlayer: PropTypes.func.isRequired,
+  refreshState: PropTypes.func.isRequired,
   fen: PropTypes.string.isRequired,
   gameId: PropTypes.number.isRequired,
 };

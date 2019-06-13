@@ -16,6 +16,7 @@ class Game extends Component {
 
     this.activePlayer = this.activePlayer.bind(this);
     this.changePlayer = this.changePlayer.bind(this);
+    this.refreshState = this.refreshState.bind(this);
 
     this.state = {
       activePlayerIdx: 0,
@@ -24,11 +25,16 @@ class Game extends Component {
     };
   }
 
-  componentDidMount() {
+  refreshState() {
     getGame(GAME_PK).then((data) => {
-      const { players, fen } = data;
-      this.setState({ players, fen });
+      const { players, fen, active_color } = data;
+      const activePlayerIdx = players.map((p) => p.color).indexOf(active_color);
+      this.setState({ players, fen, activePlayerIdx });
     });
+  }
+
+  componentDidMount() {
+    this.refreshState();
   }
 
   // TODO: create PlayerManager class?
@@ -64,6 +70,7 @@ class Game extends Component {
       <Board
         activePlayer={this.activePlayer}
         changePlayer={this.changePlayer}
+        refreshState={this.refreshState}
         fen={fen}
         gameId={GAME_PK}
       />
