@@ -67,7 +67,7 @@ class Board extends Component {
     if (selectedSlot === null) return false;
     if (!xboard.isOccupied(selectedSlot)) return false;
     if (!xboard.isOccupied(slot)) return false;
-    return !xboard.sameColorSlot(slot, selectedSlot);
+    return !xboard.sameColor(slot, selectedSlot);
   }
 
   handleSquareClick(square) {
