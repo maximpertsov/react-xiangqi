@@ -70,9 +70,9 @@ class Board extends Component {
     this.setState({ selectedSlot: slot });
   }
 
-  isLegalMove(prevSlot, nextSlot) {
+  isLegalMove(fromSlot, toSlot) {
     const { moves } = this.state;
-    return moves[prevSlot].includes(nextSlot);
+    return moves[fromSlot].includes(toSlot);
   }
 
   changePlayer() {
@@ -80,14 +80,14 @@ class Board extends Component {
     changePlayer();
   }
 
-  handleMove(prevSlot, nextSlot) {
+  handleMove(fromSlot, toSlot) {
     const { gameId, activePlayer } = this.props;
 
-    if (this.isLegalMove(prevSlot, nextSlot)) {
+    if (this.isLegalMove(fromSlot, toSlot)) {
       this.setState((prevState) => {
-        const from = prevState.xboard.getRankFile(prevSlot).join(',');
-        const to = prevState.xboard.getRankFile(nextSlot).join(',');
-        const piece = prevState.xboard.board[prevSlot];
+        const from = prevState.xboard.getRankFile(fromSlot).join(',');
+        const to = prevState.xboard.getRankFile(toSlot).join(',');
+        const piece = prevState.xboard.board[fromSlot];
 
         postMove(gameId, activePlayer().name, piece, from, to)
           .then((response) => {
@@ -100,7 +100,7 @@ class Board extends Component {
             console.log(JSON.stringify(error));
           });
 
-        const xboard = prevState.xboard.move(prevSlot, nextSlot);
+        const xboard = prevState.xboard.move(fromSlot, toSlot);
         this.changePlayer();
         return { xboard, moves: xboard.legalMoves() };
       });
