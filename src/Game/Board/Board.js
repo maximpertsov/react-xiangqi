@@ -37,9 +37,23 @@ class Board extends Component {
     this.setBoard();
   }
 
+  getActivePlayer() {
+    const { activePlayer } = this.props;
+    return activePlayer();
+  }
+
   getPieceOn(slot) {
     const { xboard } = this.state;
     return getPiece(xboard.board[slot]);
+  }
+
+  getPostMoveParams(fromSlot, toSlot) {
+    const { gameId } = this.props;
+    const { xboard } = this.state;
+    const from = xboard.getRankFile(fromSlot).join(',');
+    const to = xboard.getRankFile(toSlot).join(',');
+    const piece = xboard.board[fromSlot];
+    return [gameId, this.getActivePlayer().name, piece, from, to];
   }
 
   setBoard() {
@@ -86,15 +100,6 @@ class Board extends Component {
       return { xboard, moves: xboard.legalMoves() };
     });
     this.changePlayer();
-  }
-
-  getPostMoveParams(fromSlot, toSlot) {
-    const { gameId, activePlayer } = this.props;
-    const { xboard } = this.state;
-    const from = xboard.getRankFile(fromSlot).join(',');
-    const to = xboard.getRankFile(toSlot).join(',');
-    const piece = xboard.board[fromSlot];
-    return [gameId, activePlayer.name(), from, to, piece];
   }
 
   handleMove(fromSlot, toSlot) {
