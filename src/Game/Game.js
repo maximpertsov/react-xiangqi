@@ -16,7 +16,6 @@ class Game extends Component {
 
     this.activePlayer = this.activePlayer.bind(this);
     this.changePlayer = this.changePlayer.bind(this);
-    this.refreshState = this.refreshState.bind(this);
 
     this.state = {
       activePlayerIdx: 0,
@@ -70,7 +69,6 @@ class Game extends Component {
       <Board
         activePlayer={this.activePlayer}
         changePlayer={this.changePlayer}
-        refreshState={this.refreshState}
         fen={fen}
         gameId={GAME_PK}
       />

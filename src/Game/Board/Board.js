@@ -80,11 +80,6 @@ class Board extends Component {
     changePlayer();
   }
 
-  refreshState() {
-    const { refreshState } = this.props;
-    refreshState();
-  }
-
   handleMove(prevSlot, nextSlot) {
     const { gameId, activePlayer } = this.props;
 
@@ -96,14 +91,13 @@ class Board extends Component {
 
         postMove(gameId, activePlayer().name, piece, from, to)
           .then((response) => {
-            const { status } = response
+            const { status } = response;
             if (status === 201) {
-              console.log("Successfully updated move");
-            };
+              console.log('Successfully updated move');
+            }
           })
           .catch((error) => {
             console.log(JSON.stringify(error));
-            this.refreshState();
           });
 
         const xboard = prevState.xboard.move(prevSlot, nextSlot);
@@ -142,7 +136,6 @@ class Board extends Component {
 Board.propTypes = {
   activePlayer: PropTypes.func.isRequired,
   changePlayer: PropTypes.func.isRequired,
-  refreshState: PropTypes.func.isRequired,
   fen: PropTypes.string.isRequired,
   gameId: PropTypes.number.isRequired,
 };
