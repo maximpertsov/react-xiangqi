@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import XiangqiBoard from '../../logic';
+import { postMove } from '../../client';
 import { getPiece } from '../Piece/Piece';
 
 import boardImg from './board-1000px.svg.png';
@@ -36,9 +37,23 @@ class Board extends Component {
     this.setBoard();
   }
 
+  getActivePlayer() {
+    const { activePlayer } = this.props;
+    return activePlayer();
+  }
+
   getPieceOn(slot) {
     const { xboard } = this.state;
     return getPiece(xboard.board[slot]);
+  }
+
+  getPostMoveParams(fromSlot, toSlot) {
+    const { gameId } = this.props;
+    const { xboard } = this.state;
+    const from = xboard.getRankFile(fromSlot).join(',');
+    const to = xboard.getRankFile(toSlot).join(',');
+    const piece = xboard.board[fromSlot];
+    return [gameId, this.getActivePlayer().name, piece, from, to];
   }
 
   setBoard() {
@@ -52,7 +67,7 @@ class Board extends Component {
     if (selectedSlot === null) return false;
     if (!xboard.isOccupied(selectedSlot)) return false;
     if (!xboard.isOccupied(slot)) return false;
-    return !xboard.sameColorSlot(slot, selectedSlot);
+    return !xboard.sameColor(slot, selectedSlot);
   }
 
   handleSquareClick(square) {
@@ -69,9 +84,10 @@ class Board extends Component {
     this.setState({ selectedSlot: slot });
   }
 
-  isLegalMove(prevSlot, nextSlot) {
-    const { moves } = this.state;
-    return moves[prevSlot].includes(nextSlot);
+  isLegalMove(fromSlot, toSlot) {
+    const { moves, xboard } = this.state;
+    if (!xboard.isColor(this.getActivePlayer().color, fromSlot)) return false;
+    return moves[fromSlot].includes(toSlot);
   }
 
   changePlayer() {
@@ -79,13 +95,27 @@ class Board extends Component {
     changePlayer();
   }
 
-  handleMove(prevSlot, nextSlot) {
-    if (this.isLegalMove(prevSlot, nextSlot)) {
-      this.setState((prevState) => {
-        const xboard = prevState.xboard.move(prevSlot, nextSlot);
-        return { xboard, moves: xboard.legalMoves() };
-      });
-      this.changePlayer();
+  move(fromSlot, toSlot) {
+    this.setState((fromState) => {
+      const xboard = fromState.xboard.move(fromSlot, toSlot);
+      return { xboard, moves: xboard.legalMoves() };
+    });
+    this.changePlayer();
+  }
+
+  handleMove(fromSlot, toSlot) {
+    if (this.isLegalMove(fromSlot, toSlot)) {
+      postMove(...this.getPostMoveParams(fromSlot, toSlot))
+        .then((response) => {
+          const { status } = response;
+          if (status === 201) {
+            console.log('Successfully updated move');
+            this.move(fromSlot, toSlot);
+          }
+        })
+        .catch((error) => {
+          console.log(JSON.stringify(error));
+        });
     }
     this.handleSelect(null);
   }
@@ -116,8 +146,10 @@ class Board extends Component {
 }
 
 Board.propTypes = {
+  activePlayer: PropTypes.func.isRequired,
   changePlayer: PropTypes.func.isRequired,
   fen: PropTypes.string.isRequired,
+  gameId: PropTypes.number.isRequired,
 };
 
 export default Board;

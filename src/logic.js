@@ -51,15 +51,6 @@ class XiangqiBoard {
     }), {
       [fromSlot]: { $set: null },
     });
-    return this.new(board, this);
-  }
-
-  move(fromSlot, toSlot) {
-    const board = update(update(this.board, {
-      [toSlot]: { $set: this.board[fromSlot] },
-    }), {
-      [fromSlot]: { $set: null },
-    });
     return this.new(board);
   }
 
@@ -89,20 +80,37 @@ class XiangqiBoard {
 
   getRankFile(slot) { return [this.getRank(slot), this.getFile(slot)]; }
 
-  isRed(code) { return this.redPieces.includes(code); }
+  isRedCode(code) { return this.redPieces.includes(code); }
 
-  isBlack(code) { return this.blackPieces.includes(code); }
-
-  sameColor(code1, code2) {
-    return (this.isRed(code1) && this.isRed(code2))
-      || (this.isBlack(code1) && this.isBlack(code2));
+  isRed(slot) {
+    const code = this.board[slot];
+    return this.isRedCode(code);
   }
 
-  // TODO consolidate with sameColor method
-  sameColorSlot(slot1, slot2) {
+  isBlackCode(code) { return this.blackPieces.includes(code); }
+
+  isBlack(slot) {
+    const code = this.board[slot];
+    return this.isBlackCode(code);
+  }
+
+  // TODO refactor and rename?
+  isColor(color, slot) {
+    const code = this.board[slot];
+    if (color === 'red' && this.isRedCode(code)) return true;
+    if (color === 'black' && this.isBlackCode(code)) return true;
+    return false;
+  }
+
+  sameColorCode(code1, code2) {
+    return (this.isRedCode(code1) && this.isRedCode(code2))
+      || (this.isBlackCode(code1) && this.isBlackCode(code2));
+  }
+
+  sameColor(slot1, slot2) {
     const code1 = this.board[slot1];
     const code2 = this.board[slot2];
-    return this.sameColor(code1, code2);
+    return this.sameColorCode(code1, code2);
   }
 
   static fromFenRow(row) {
@@ -121,27 +129,25 @@ class XiangqiBoard {
   }
 
   getNextRankSlot(slot) {
-    const code = this.board[slot];
     const rank = this.getRank(slot);
     const file = this.getFile(slot);
     let nextRank = rank;
-    if (this.isBlack(code)) nextRank = Math.min(rank + 1, this.ranks - 1);
-    if (this.isRed(code)) nextRank = Math.max(rank - 1, 0);
+    if (this.isBlack(slot)) nextRank = Math.min(rank + 1, this.ranks - 1);
+    if (this.isRed(slot)) nextRank = Math.max(rank - 1, 0);
     return this.getSlot(nextRank, file);
   }
 
   crossingRiver(fromSlot, toSlot) {
-    const code = this.board[fromSlot];
     const rank = this.getRank(toSlot);
-    if (this.isBlack(code)) return rank >= this.redRiverBank;
-    if (this.isRed(code)) return rank <= this.blackRiverBank;
+    if (this.isBlack(fromSlot)) return rank >= this.redRiverBank;
+    if (this.isRed(fromSlot)) return rank <= this.blackRiverBank;
     return false;
   }
 
   isUniverallyLegal(fromSlot, toSlot) {
     if (toSlot === null) return false;
     if (fromSlot === toSlot) return false;
-    if (this.sameColor(this.board[fromSlot], this.board[toSlot])) return false;
+    if (this.sameColor(fromSlot, toSlot)) return false;
     return true;
   }
 
@@ -271,9 +277,8 @@ class XiangqiBoard {
   }
 
   inPalace(fromSlot, toSlot) {
-    const code = this.board[fromSlot];
-    if (this.isBlack(code)) return this.blackPalace.includes(toSlot);
-    if (this.isRed(code)) return this.redPalace.includes(toSlot);
+    if (this.isBlack(fromSlot)) return this.blackPalace.includes(toSlot);
+    if (this.isRed(fromSlot)) return this.redPalace.includes(toSlot);
     return false;
   }
 
@@ -329,13 +334,13 @@ class XiangqiBoard {
     let ownKing;
     let otherKing;
     let otherRook;
-    if (this.isBlack(code)) [ownKing, otherKing, otherRook] = ['k', 'K', 'R'];
-    if (this.isRed(code)) [ownKing, otherKing, otherRook] = ['K', 'k', 'r'];
+    if (this.isBlackCode(code)) [ownKing, otherKing, otherRook] = ['k', 'K', 'R'];
+    if (this.isRedCode(code)) [ownKing, otherKing, otherRook] = ['K', 'k', 'r'];
 
     const nextBoard = this.move(fromSlot, toSlot);
     return nextBoard.drop(
       otherRook,
-      nextBoard.board.indexOf(otherKing)
+      nextBoard.board.indexOf(otherKing),
     ).captures().has(ownKing);
   }
 
