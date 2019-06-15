@@ -80,32 +80,38 @@ class Board extends Component {
     changePlayer();
   }
 
-  handleMove(fromSlot, toSlot) {
+  move(fromSlot, toSlot) {
+    this.setState((fromState) => {
+      const xboard = fromState.xboard.move(fromSlot, toSlot);
+      return { xboard, moves: xboard.legalMoves() };
+    });
+    this.changePlayer();
+  }
+
+  getPostMoveParams(fromSlot, toSlot) {
     const { gameId, activePlayer } = this.props;
+    const { xboard } = this.state;
+    const from = xboard.getRankFile(fromSlot).join(',');
+    const to = xboard.getRankFile(toSlot).join(',');
+    const piece = xboard.board[fromSlot];
+    return [gameId, activePlayer.name(), from, to, piece];
+  }
 
+  handleMove(fromSlot, toSlot) {
     if (this.isLegalMove(fromSlot, toSlot)) {
-      this.setState((prevState) => {
-        const from = prevState.xboard.getRankFile(fromSlot).join(',');
-        const to = prevState.xboard.getRankFile(toSlot).join(',');
-        const piece = prevState.xboard.board[fromSlot];
-
-        postMove(gameId, activePlayer().name, piece, from, to)
-          .then((response) => {
-            const { status } = response;
-            if (status === 201) {
-              console.log('Successfully updated move');
-            }
-          })
-          .catch((error) => {
-            console.log(JSON.stringify(error));
-          });
-
-        const xboard = prevState.xboard.move(fromSlot, toSlot);
-        this.changePlayer();
-        return { xboard, moves: xboard.legalMoves() };
-      });
-      this.handleSelect(null);
+      postMove(...this.getPostMoveParams(fromSlot, toSlot))
+        .then((response) => {
+          const { status } = response;
+          if (status === 201) {
+            console.log('Successfully updated move');
+            this.move(fromSlot, toSlot);
+          }
+        })
+        .catch((error) => {
+          console.log(JSON.stringify(error));
+        });
     }
+    this.handleSelect(null);
   }
 
   render() {
