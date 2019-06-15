@@ -93,6 +93,14 @@ class XiangqiBoard {
 
   isBlack(code) { return this.blackPieces.includes(code); }
 
+  // TODO refactor and rename?
+  isColor(color, slot) {
+    const code = this.board[slot];
+    if (color === 'red' && this.isRed(code)) return true;
+    if (color === 'black' && this.isBlack(code)) return true;
+    return false;
+  }
+
   sameColor(code1, code2) {
     return (this.isRed(code1) && this.isRed(code2))
       || (this.isBlack(code1) && this.isBlack(code2));
@@ -335,7 +343,7 @@ class XiangqiBoard {
     const nextBoard = this.move(fromSlot, toSlot);
     return nextBoard.drop(
       otherRook,
-      nextBoard.board.indexOf(otherKing)
+      nextBoard.board.indexOf(otherKing),
     ).captures().has(ownKing);
   }
 

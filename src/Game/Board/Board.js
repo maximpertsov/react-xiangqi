@@ -85,7 +85,8 @@ class Board extends Component {
   }
 
   isLegalMove(fromSlot, toSlot) {
-    const { moves } = this.state;
+    const { moves, xboard } = this.state;
+    if (!xboard.isColor(this.getActivePlayer().color, fromSlot)) return false;
     return moves[fromSlot].includes(toSlot);
   }
 
