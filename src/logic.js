@@ -82,7 +82,17 @@ class XiangqiBoard {
 
   isRedCode(code) { return this.redPieces.includes(code); }
 
+  isRed(slot) {
+    const code = this.board[slot];
+    return this.isRedCode(code);
+  }
+
   isBlackCode(code) { return this.blackPieces.includes(code); }
+
+  isBlack(slot) {
+    const code = this.board[slot];
+    return this.isBlackCode(code);
+  }
 
   // TODO refactor and rename?
   isColor(color, slot) {
@@ -119,20 +129,18 @@ class XiangqiBoard {
   }
 
   getNextRankSlot(slot) {
-    const code = this.board[slot];
     const rank = this.getRank(slot);
     const file = this.getFile(slot);
     let nextRank = rank;
-    if (this.isBlackCode(code)) nextRank = Math.min(rank + 1, this.ranks - 1);
-    if (this.isRedCode(code)) nextRank = Math.max(rank - 1, 0);
+    if (this.isBlack(slot)) nextRank = Math.min(rank + 1, this.ranks - 1);
+    if (this.isRed(slot)) nextRank = Math.max(rank - 1, 0);
     return this.getSlot(nextRank, file);
   }
 
   crossingRiver(fromSlot, toSlot) {
-    const code = this.board[fromSlot];
     const rank = this.getRank(toSlot);
-    if (this.isBlackCode(code)) return rank >= this.redRiverBank;
-    if (this.isRedCode(code)) return rank <= this.blackRiverBank;
+    if (this.isBlack(fromSlot)) return rank >= this.redRiverBank;
+    if (this.isRed(fromSlot)) return rank <= this.blackRiverBank;
     return false;
   }
 
@@ -269,9 +277,8 @@ class XiangqiBoard {
   }
 
   inPalace(fromSlot, toSlot) {
-    const code = this.board[fromSlot];
-    if (this.isBlackCode(code)) return this.blackPalace.includes(toSlot);
-    if (this.isRedCode(code)) return this.redPalace.includes(toSlot);
+    if (this.isBlack(fromSlot)) return this.blackPalace.includes(toSlot);
+    if (this.isRed(fromSlot)) return this.redPalace.includes(toSlot);
     return false;
   }
 
