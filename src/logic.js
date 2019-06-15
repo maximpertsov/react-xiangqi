@@ -51,15 +51,6 @@ class XiangqiBoard {
     }), {
       [fromSlot]: { $set: null },
     });
-    return this.new(board, this);
-  }
-
-  move(fromSlot, toSlot) {
-    const board = update(update(this.board, {
-      [toSlot]: { $set: this.board[fromSlot] },
-    }), {
-      [fromSlot]: { $set: null },
-    });
     return this.new(board);
   }
 
