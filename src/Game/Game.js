@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
 import Board from './Board/Board';
+import Move from './Move/Move';
 import GameInfo from './GameInfo';
 import { getGame } from '../client';
 
@@ -12,10 +13,23 @@ const Wrapper = styled.div`
   flex-direction: row;
 `;
 
-const InfoWrapper = styled.div`
+const SidebarWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
+  padding: 0px 50px;
+`;
+
+const InfoWrapper = styled.div`
+  height: 30%;
+`;
+
+const MovesWrapper = styled.div`
+  outline: 2px solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  height: 70%;
 `;
 
 class Game extends Component {
@@ -29,6 +43,7 @@ class Game extends Component {
       activePlayerIdx: 0,
       players: [],
       fen: null,
+      moves: [{ description: 'move1' }],
     };
   }
 
@@ -61,13 +76,22 @@ class Game extends Component {
   gameInfoOrLoading() {
     const { players } = this.state;
     if (players.length === 0) return (<div><p>Loading...</p></div>);
+    // TODO: move info wrapper to GameInfo class
     return (
-      <GameInfo
-        redPlayer={players.find((p) => p.color === 'red')}
-        blackPlayer={players.find((p) => p.color === 'black')}
-        activePlayer={this.activePlayer}
-      />
+      <InfoWrapper>
+        <GameInfo
+          redPlayer={players.find((p) => p.color === 'red')}
+          blackPlayer={players.find((p) => p.color === 'black')}
+          activePlayer={this.activePlayer}
+        />
+      </InfoWrapper>
     );
+  }
+
+  renderMoves() {
+    const { moves } = this.state;
+    const moveComponents = moves.map((m) => <Move description={m.description} />);
+    return (<MovesWrapper>{moveComponents}</MovesWrapper>);
   }
 
   boardOrLoading() {
@@ -87,9 +111,10 @@ class Game extends Component {
     return (
       <Wrapper className="Game">
         { this.boardOrLoading() }
-        <InfoWrapper>
+        <SidebarWrapper>
           { this.gameInfoOrLoading() }
-        </InfoWrapper>
+          { this.renderMoves() }
+        </SidebarWrapper>
       </Wrapper>
     );
   }
