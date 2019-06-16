@@ -7,7 +7,15 @@ import { getGame } from '../client';
 const GAME_PK = 2;
 
 const Wrapper = styled.div`
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+`;
+
+const InfoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 `;
 
 class Game extends Component {
@@ -79,7 +87,9 @@ class Game extends Component {
     return (
       <Wrapper className="Game">
         { this.boardOrLoading() }
-        { this.gameInfoOrLoading() }
+        <InfoWrapper>
+          { this.gameInfoOrLoading() }
+        </InfoWrapper>
       </Wrapper>
     );
   }
