@@ -61,8 +61,8 @@ class Game extends Component {
       this.setState({
         moves: moves.map((move) => {
           const result = { ...move };
-          move.description = `${move.from_position} -> ${move.to_position}`;
-          return move;
+          result.description = `${move.from_position} -> ${move.to_position}`;
+          return result;
         }),
       });
     });
