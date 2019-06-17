@@ -30,6 +30,7 @@ class Board extends Component {
       xboard: null,
       moves: null,
       selectedSlot: null,
+      boards: [],
     };
   }
 
@@ -57,9 +58,20 @@ class Board extends Component {
   }
 
   setBoard() {
-    const { fen } = this.props;
+    const { fen, moves } = this.props;
+    const boards = moves.reduce(
+      (board, move) => {
+        const { from_position, to_position } = move;
+        const [fromRank, fromFile] = from_position.split(',').map((x) => +x);
+        const [toRank, toFile] = to_position.split(',').map((x) => +x);
+        const fromSlot = board.getSlot(fromRank, fromFile);
+        const toSlot = board.getSlot(toRank, toFile);
+        return board.move(fromSlot, toSlot);
+      },
+      new XiangqiBoard({ fen }),
+    );
     const xboard = new XiangqiBoard({ fen });
-    this.setState({ xboard, moves: xboard.legalMoves() });
+    this.setState({ boards, xboard, moves: xboard.legalMoves() });
   }
 
   selectedCanCapture(slot) {

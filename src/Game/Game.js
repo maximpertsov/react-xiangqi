@@ -52,9 +52,9 @@ class Game extends Component {
 
   refreshState() {
     getGame(GAME_PK).then((data) => {
-      const { players, fen, active_color } = data;
+      const { players, initial_fen, active_color } = data;
       const activePlayerIdx = players.map((p) => p.color).indexOf(active_color);
-      this.setState({ players, fen, activePlayerIdx });
+      this.setState({ players, fen: initial_fen, activePlayerIdx });
     });
     getMoves(GAME_PK).then((data) => {
       const { moves } = data;
@@ -111,13 +111,14 @@ class Game extends Component {
   }
 
   boardOrLoading() {
-    const { fen } = this.state;
+    const { fen, moves } = this.state;
     if (fen === null) return (<div><p>Loading...</p></div>);
     return (
       <Board
         activePlayer={this.activePlayer}
         changePlayer={this.changePlayer}
         fen={fen}
+        moves={moves}
         gameId={GAME_PK}
       />
     );
