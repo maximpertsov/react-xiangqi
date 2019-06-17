@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   background-image: url(${boardImg});
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: top;
   display: grid;
   grid-template-rows: repeat(10, 60px);
   grid-template-columns: repeat(9, 60px);

@@ -11,25 +11,28 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: row;
+  height: 600px;
 `;
 
 const SidebarWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex-direction: column;
   padding: 0px 50px;
+  height: 100%;
 `;
 
 const InfoWrapper = styled.div`
-  height: 30%;
+  height: 20%;
 `;
 
+// TODO: set max-height by percentage?
 const MovesWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 50% auto;
   outline: 2px solid;
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-  height: 70%;
+  max-height: 55%;
+  overflow: auto;
 `;
 
 class Game extends Component {
