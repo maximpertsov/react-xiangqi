@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
+import update from 'immutability-helper';
 import Square from '../Square/Square';
 import XiangqiBoard from '../../logic';
 import { postMove } from '../../client';
@@ -44,13 +45,17 @@ class Board extends Component {
   }
 
   getPieceOn(slot) {
-    const { xboard } = this.state;
-    return getPiece(xboard.board[slot]);
+    return getPiece(this.getCurrentBoard().board[slot]);
+  }
+
+  getCurrentBoard() {
+    const { boards } = this.state;
+    return boards[boards.length - 1];
   }
 
   getPostMoveParams(fromSlot, toSlot) {
     const { gameId } = this.props;
-    const { xboard } = this.state;
+    const xboard = this.getCurrentBoard();
     const from = xboard.getRankFile(fromSlot).join(',');
     const to = xboard.getRankFile(toSlot).join(',');
     const piece = xboard.board[fromSlot];
@@ -60,22 +65,24 @@ class Board extends Component {
   setBoard() {
     const { fen, moves } = this.props;
     const boards = moves.reduce(
-      (board, move) => {
+      (scan, move) => {
+        const board = scan[scan.length - 1];
         const { from_position, to_position } = move;
         const [fromRank, fromFile] = from_position.split(',').map((x) => +x);
         const [toRank, toFile] = to_position.split(',').map((x) => +x);
         const fromSlot = board.getSlot(fromRank, fromFile);
         const toSlot = board.getSlot(toRank, toFile);
-        return board.move(fromSlot, toSlot);
+        scan.push(board.move(fromSlot, toSlot));
+        return scan;
       },
-      new XiangqiBoard({ fen }),
+      [new XiangqiBoard({ fen })],
     );
-    const xboard = new XiangqiBoard({ fen });
-    this.setState({ boards, xboard, moves: xboard.legalMoves() });
+    this.setState({ boards, moves: boards[boards.length - 1].legalMoves() });
   }
 
   selectedCanCapture(slot) {
-    const { selectedSlot, xboard } = this.state;
+    const { selectedSlot } = this.state;
+    const xboard = this.getCurrentBoard();
     if (selectedSlot === null) return false;
     if (!xboard.isOccupied(selectedSlot)) return false;
     if (!xboard.isOccupied(slot)) return false;
@@ -97,7 +104,8 @@ class Board extends Component {
   }
 
   isLegalMove(fromSlot, toSlot) {
-    const { moves, xboard } = this.state;
+    const { moves } = this.state;
+    const xboard = this.getCurrentBoard();
     if (!xboard.isColor(this.getActivePlayer().color, fromSlot)) return false;
     return moves[fromSlot].includes(toSlot);
   }
@@ -109,8 +117,12 @@ class Board extends Component {
 
   move(fromSlot, toSlot) {
     this.setState((fromState) => {
-      const xboard = fromState.xboard.move(fromSlot, toSlot);
-      return { xboard, moves: xboard.legalMoves() };
+      const { boards } = fromState;
+      const xboard = boards[boards.length - 1].move(fromSlot, toSlot);
+      return {
+        boards: update(boards, { $push: [xboard] }),
+        moves: xboard.legalMoves(),
+      };
     });
     this.changePlayer();
   }
@@ -133,11 +145,13 @@ class Board extends Component {
   }
 
   render() {
-    const { xboard, selectedSlot, moves } = this.state;
-    const targets = (selectedSlot === null) ? [] : moves[selectedSlot];
+    const { boards, selectedSlot, moves } = this.state;
 
     // TODO Add loading spinner
-    if (xboard === null) return (<div>Loading...</div>);
+    if (boards.length === 0) return (<div>Loading...</div>);
+
+    const xboard = this.getCurrentBoard();
+    const targets = (selectedSlot === null) ? [] : moves[selectedSlot];
 
     return (
       <Wrapper className="Board">
