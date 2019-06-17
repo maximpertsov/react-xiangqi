@@ -46,7 +46,7 @@ class Game extends Component {
       activePlayerIdx: 0,
       players: [],
       fen: null,
-      moves: [{ description: 'move1' }],
+      moves: [],
     };
   }
 
@@ -103,7 +103,10 @@ class Game extends Component {
 
   renderMoves() {
     const { moves } = this.state;
-    const moveComponents = moves.map((m) => <Move description={m.description} />);
+    const moveComponents = moves.map((m) => {
+      const key = `${m.player.color}_${m.order}`;
+      return (<Move key={key} description={m.description} />);
+    });
     return (<MovesWrapper>{moveComponents}</MovesWrapper>);
   }
 
