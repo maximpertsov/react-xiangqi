@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Board from './Board/Board';
 import Move from './Move/Move';
 import GameInfo from './GameInfo';
-import { getGame } from '../client';
+import { getGame, getMoves } from '../client';
 
 const GAME_PK = 2;
 
@@ -52,6 +52,16 @@ class Game extends Component {
       const { players, fen, active_color } = data;
       const activePlayerIdx = players.map((p) => p.color).indexOf(active_color);
       this.setState({ players, fen, activePlayerIdx });
+    });
+    getMoves(GAME_PK).then((data) => {
+      const { moves } = data;
+      this.setState({
+        moves: moves.map((move) => {
+          const result = { ...move };
+          move.description = `${move.from_position} -> ${move.to_position}`;
+          return move;
+        }),
+      });
     });
   }
 

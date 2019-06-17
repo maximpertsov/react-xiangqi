@@ -15,6 +15,16 @@ export async function getGame(gameId) {
   }
 }
 
+export async function getMoves(gameId) {
+  try {
+    const response = await axios.get(`game/${gameId}/move`);
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function postMove(gameId, player, piece, from, to) {
   const payload = {
     player,
