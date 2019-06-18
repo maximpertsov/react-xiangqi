@@ -31,7 +31,7 @@ const MovesWrapper = styled.div`
   display: grid;
   grid-template-columns: 50% auto;
   outline: 2px solid;
-  max-height: 55%;
+  height: 55%;
   overflow: auto;
 `;
 
