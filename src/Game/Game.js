@@ -54,6 +54,10 @@ class Game extends Component {
     };
   }
 
+  componentDidMount() {
+    this.fetchGame();
+  }
+
   fetchMoves() {
     const { fen } = this.state;
     getMoves(GAME_PK).then((data) => {
@@ -61,7 +65,6 @@ class Game extends Component {
       const toState = [];
       moves.reduce(
         (board, move) => {
-          console.log(board);
           const result = {};
           result.move = move;
           result.move.description = `${move.from_position} -> ${move.to_position}`;
@@ -85,7 +88,7 @@ class Game extends Component {
     });
   }
 
-  refreshState() {
+  fetchGame() {
     getGame(GAME_PK).then((data) => {
       const { players, initial_fen, active_color } = data;
       const activePlayerIdx = players.map((p) => p.color).indexOf(active_color);
@@ -104,10 +107,6 @@ class Game extends Component {
       };
     });
     this.changePlayer();
-  }
-
-  componentDidMount() {
-    this.refreshState();
   }
 
   // TODO: create PlayerManager class?
