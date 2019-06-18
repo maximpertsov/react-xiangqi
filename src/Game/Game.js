@@ -149,15 +149,17 @@ class Game extends Component {
   }
 
   boardOrLoading() {
-    const { fen, moves } = this.state;
-    if (fen === null || moves.length === 0) return (<div><p>Loading...</p></div>);
+    const { boards } = this.state;
+    if (boards.length === 0) return (<div><p>Loading...</p></div>);
+
+    const board = boards[boards.length - 1];
+
     return (
       <Board
         activePlayer={this.activePlayer}
-        changePlayer={this.changePlayer}
+        board={board}
+        legalMoves={board.legalMoves()}
         handleMove={this.handleMove}
-        fen={fen}
-        moves={moves}
         gameId={GAME_PK}
       />
     );

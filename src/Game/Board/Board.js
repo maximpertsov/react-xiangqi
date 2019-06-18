@@ -28,15 +28,8 @@ class Board extends Component {
     this.handleSquareClick = this.handleSquareClick.bind(this);
 
     this.state = {
-      xboard: null,
-      moves: null,
       selectedSlot: null,
-      boards: [],
     };
-  }
-
-  componentDidMount() {
-    this.setBoard();
   }
 
   getActivePlayer() {
@@ -49,8 +42,8 @@ class Board extends Component {
   }
 
   getCurrentBoard() {
-    const { boards } = this.state;
-    return boards[boards.length - 1];
+    const { board } = this.props;
+    return board;
   }
 
   getPostMoveParams(fromSlot, toSlot) {
@@ -60,24 +53,6 @@ class Board extends Component {
     const to = xboard.getRankFile(toSlot).join(',');
     const piece = xboard.board[fromSlot];
     return [gameId, this.getActivePlayer().name, piece, from, to];
-  }
-
-  setBoard() {
-    const { fen, moves } = this.props;
-    const boards = moves.reduce(
-      (scan, move) => {
-        const board = scan[scan.length - 1];
-        const { from_position, to_position } = move;
-        const [fromRank, fromFile] = from_position.split(',').map((x) => +x);
-        const [toRank, toFile] = to_position.split(',').map((x) => +x);
-        const fromSlot = board.getSlot(fromRank, fromFile);
-        const toSlot = board.getSlot(toRank, toFile);
-        scan.push(board.move(fromSlot, toSlot));
-        return scan;
-      },
-      [new XiangqiBoard({ fen })],
-    );
-    this.setState({ boards, moves: boards[boards.length - 1].legalMoves() });
   }
 
   selectedCanCapture(slot) {
@@ -104,37 +79,22 @@ class Board extends Component {
   }
 
   isLegalMove(fromSlot, toSlot) {
-    const { moves } = this.state;
+    const { legalMoves } = this.props;
     const xboard = this.getCurrentBoard();
     if (!xboard.isColor(this.getActivePlayer().color, fromSlot)) return false;
-    return moves[fromSlot].includes(toSlot);
-  }
-
-  changePlayer() {
-    const { changePlayer } = this.props;
-    changePlayer();
-  }
-
-  move(fromSlot, toSlot) {
-    this.setState((fromState) => {
-      const { boards } = fromState;
-      const xboard = boards[boards.length - 1].move(fromSlot, toSlot);
-      return {
-        boards: update(boards, { $push: [xboard] }),
-        moves: xboard.legalMoves(),
-      };
-    });
-    this.changePlayer();
+    return legalMoves[fromSlot].includes(toSlot);
   }
 
   handleMove(fromSlot, toSlot) {
+    const { handleMove } = this.props;
+
     if (this.isLegalMove(fromSlot, toSlot)) {
       postMove(...this.getPostMoveParams(fromSlot, toSlot))
         .then((response) => {
           const { status } = response;
           if (status === 201) {
             console.log('Successfully updated move');
-            this.move(fromSlot, toSlot);
+            handleMove(fromSlot, toSlot);
           }
         })
         .catch((error) => {
@@ -145,13 +105,14 @@ class Board extends Component {
   }
 
   render() {
-    const { boards, selectedSlot, moves } = this.state;
+    const { selectedSlot } = this.state;
+    const { legalMoves, board } = this.props;
 
     // TODO Add loading spinner
-    if (boards.length === 0) return (<div>Loading...</div>);
+    if (board === null) return (<div>Loading...</div>);
 
     const xboard = this.getCurrentBoard();
-    const targets = (selectedSlot === null) ? [] : moves[selectedSlot];
+    const targets = (selectedSlot === null) ? [] : legalMoves[selectedSlot];
 
     return (
       <Wrapper className="Board">
@@ -173,8 +134,11 @@ class Board extends Component {
 
 Board.propTypes = {
   activePlayer: PropTypes.func.isRequired,
-  changePlayer: PropTypes.func.isRequired,
-  fen: PropTypes.string.isRequired,
+  // TODO: specify board shape
+  board: PropTypes.object.isRequired,
+  handleMove: PropTypes.func.isRequired,
+  // TODO: specify legalMoves shape
+  legalMoves: PropTypes.array.isRequired,
   gameId: PropTypes.number.isRequired,
 };
 
