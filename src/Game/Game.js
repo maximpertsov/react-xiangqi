@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Board from './Board/Board';
 import Move from './Move/Move';
 import GameInfo from './GameInfo';
+import XiangqiBoard from '../logic';
 import { getGame, getMoves } from '../client';
 
 const GAME_PK = 2;
@@ -47,7 +48,39 @@ class Game extends Component {
       players: [],
       fen: null,
       moves: [],
+      boards: [],
     };
+  }
+
+  fetchMoves() {
+    const { fen } = this.state;
+    getMoves(GAME_PK).then((data) => {
+      const { moves } = data;
+      const toState = [];
+      moves.reduce(
+        (board, move) => {
+          console.log(board);
+          const result = {};
+          result.move = move;
+          result.move.description = `${move.from_position} -> ${move.to_position}`; 
+
+          const { from_position, to_position } = move;
+          const [fromRank, fromFile] = from_position.split(',').map((x) => +x);
+          const [toRank, toFile] = to_position.split(',').map((x) => +x);
+          const fromSlot = board.getSlot(fromRank, fromFile);
+          const toSlot = board.getSlot(toRank, toFile);
+          result.board = board.move(fromSlot, toSlot);
+          toState.push(result);
+          return result.board;
+        },
+        new XiangqiBoard({ fen }),
+      );
+      this.setState({
+        moves: toState.map((d) => d.move),
+        boards: toState.map((d) => d.board),
+      });
+      console.log(this.state);
+    });
   }
 
   refreshState() {
@@ -55,16 +88,7 @@ class Game extends Component {
       const { players, initial_fen, active_color } = data;
       const activePlayerIdx = players.map((p) => p.color).indexOf(active_color);
       this.setState({ players, fen: initial_fen, activePlayerIdx });
-    });
-    getMoves(GAME_PK).then((data) => {
-      const { moves } = data;
-      this.setState({
-        moves: moves.map((move) => {
-          const result = { ...move };
-          result.description = `${move.from_position} -> ${move.to_position}`;
-          return result;
-        }),
-      });
+      this.fetchMoves();
     });
   }
 
@@ -112,7 +136,7 @@ class Game extends Component {
 
   boardOrLoading() {
     const { fen, moves } = this.state;
-    if (fen === null) return (<div><p>Loading...</p></div>);
+    if (fen === null || moves.length === 0) return (<div><p>Loading...</p></div>);
     return (
       <Board
         activePlayer={this.activePlayer}
