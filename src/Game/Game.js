@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
+import update from 'immutability-helper';
 import Board from './Board/Board';
 import Move from './Move/Move';
 import GameInfo from './GameInfo';
@@ -42,6 +43,7 @@ class Game extends Component {
 
     this.activePlayer = this.activePlayer.bind(this);
     this.changePlayer = this.changePlayer.bind(this);
+    this.handleMove = this.handleMove.bind(this);
 
     this.state = {
       activePlayerIdx: 0,
@@ -90,6 +92,18 @@ class Game extends Component {
       this.setState({ players, fen: initial_fen, activePlayerIdx });
       this.fetchMoves();
     });
+  }
+
+  handleMove(fromSlot, toSlot) {
+    this.setState((fromState) => {
+      const { boards } = fromState;
+      const fromBoard = boards[boards.length - 1];
+      return {
+        boards: update(boards, { $push: [fromBoard.move(fromSlot, toSlot)] }),
+        // TODO: add new move to moves state
+      };
+    });
+    this.changePlayer();
   }
 
   componentDidMount() {
@@ -141,6 +155,7 @@ class Game extends Component {
       <Board
         activePlayer={this.activePlayer}
         changePlayer={this.changePlayer}
+        handleMove={this.handleMove}
         fen={fen}
         moves={moves}
         gameId={GAME_PK}
