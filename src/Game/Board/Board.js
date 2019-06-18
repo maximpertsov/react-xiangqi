@@ -85,12 +85,12 @@ class Board extends Component {
         .then((response) => {
           const { status } = response;
           if (status === 201) {
-            console.log('Successfully updated move');
             handleMove(fromSlot, toSlot);
           }
         })
         .catch((error) => {
-          console.log(JSON.stringify(error));
+          // TODO: display useful error
+          throw error;
         });
     }
     this.handleSelect(null);
