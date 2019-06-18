@@ -62,7 +62,7 @@ class Game extends Component {
           console.log(board);
           const result = {};
           result.move = move;
-          result.move.description = `${move.from_position} -> ${move.to_position}`; 
+          result.move.description = `${move.from_position} -> ${move.to_position}`;
 
           const { from_position, to_position } = move;
           const [fromRank, fromFile] = from_position.split(',').map((x) => +x);
