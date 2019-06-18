@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import update from 'immutability-helper';
 import Square from '../Square/Square';
-import XiangqiBoard from '../../logic';
 import { postMove } from '../../client';
 import { getPiece } from '../Piece/Piece';
 
@@ -38,30 +36,25 @@ class Board extends Component {
   }
 
   getPieceOn(slot) {
-    return getPiece(this.getCurrentBoard().board[slot]);
-  }
-
-  getCurrentBoard() {
     const { board } = this.props;
-    return board;
+    return getPiece(board.board[slot]);
   }
 
   getPostMoveParams(fromSlot, toSlot) {
-    const { gameId } = this.props;
-    const xboard = this.getCurrentBoard();
-    const from = xboard.getRankFile(fromSlot).join(',');
-    const to = xboard.getRankFile(toSlot).join(',');
-    const piece = xboard.board[fromSlot];
+    const { gameId, board } = this.props;
+    const from = board.getRankFile(fromSlot).join(',');
+    const to = board.getRankFile(toSlot).join(',');
+    const piece = board.board[fromSlot];
     return [gameId, this.getActivePlayer().name, piece, from, to];
   }
 
   selectedCanCapture(slot) {
     const { selectedSlot } = this.state;
-    const xboard = this.getCurrentBoard();
+    const { board } = this.props;
     if (selectedSlot === null) return false;
-    if (!xboard.isOccupied(selectedSlot)) return false;
-    if (!xboard.isOccupied(slot)) return false;
-    return !xboard.sameColor(slot, selectedSlot);
+    if (!board.isOccupied(selectedSlot)) return false;
+    if (!board.isOccupied(slot)) return false;
+    return !board.sameColor(slot, selectedSlot);
   }
 
   handleSquareClick(square) {
@@ -79,9 +72,8 @@ class Board extends Component {
   }
 
   isLegalMove(fromSlot, toSlot) {
-    const { legalMoves } = this.props;
-    const xboard = this.getCurrentBoard();
-    if (!xboard.isColor(this.getActivePlayer().color, fromSlot)) return false;
+    const { board, legalMoves } = this.props;
+    if (!board.isColor(this.getActivePlayer().color, fromSlot)) return false;
     return legalMoves[fromSlot].includes(toSlot);
   }
 
@@ -106,17 +98,13 @@ class Board extends Component {
 
   render() {
     const { selectedSlot } = this.state;
-    const { legalMoves, board } = this.props;
+    const { board, legalMoves } = this.props;
 
-    // TODO Add loading spinner
-    if (board === null) return (<div>Loading...</div>);
-
-    const xboard = this.getCurrentBoard();
     const targets = (selectedSlot === null) ? [] : legalMoves[selectedSlot];
 
     return (
       <Wrapper className="Board">
-        {xboard.board.map((_, i) => (
+        {board.board.map((_, i) => (
           <Square
             key={i}
             slot={i}
