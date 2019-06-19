@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import { postMove } from '../../client';
 import { getPiece } from '../Piece/Piece';
+import { boardPropType } from '../../logic';
 
 import boardImg from './board-1000px.svg.png';
 
@@ -127,11 +128,9 @@ class Board extends Component {
 
 Board.propTypes = {
   activePlayer: PropTypes.func.isRequired,
-  // TODO: specify board shape
-  board: PropTypes.object.isRequired,
+  board: boardPropType.isRequired,
   handleMove: PropTypes.func.isRequired,
-  // TODO: specify legalMoves shape
-  legalMoves: PropTypes.array.isRequired,
+  legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   gameId: PropTypes.number.isRequired,
 };
 

@@ -1,4 +1,5 @@
 import update from 'immutability-helper';
+import PropTypes from 'prop-types';
 
 export const RefType = Object.freeze({
   SLOT: 0,
@@ -386,3 +387,15 @@ export default class XiangqiBoard {
     return rows.map((row) => row.join('')).join('/');
   }
 }
+
+export const boardPropType = PropTypes.shape({
+  ranks: PropTypes.number,
+  files: PropTypes.number,
+  redPieces: PropTypes.string,
+  blackPieces: PropTypes.string,
+  fen: PropTypes.string,
+  redRiverBank: PropTypes.number,
+  blackRiverBank: PropTypes.number,
+  redPalace: PropTypes.arrayOf(PropTypes.number),
+  blackPalace: PropTypes.arrayOf(PropTypes.number),
+});
