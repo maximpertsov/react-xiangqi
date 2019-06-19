@@ -15,7 +15,7 @@
     "function-paren-newline": "off",
     "import/no-extraneous-dependencies": "off",
     "max-len": ["error", { "code": 80 }],
-    "max-statements": ["error", { "max": 7 }],
+    "no-underscore-dangle": "off",
     "quote-props": ["error", "consistent-as-needed"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/no-array-index-key": "off",
