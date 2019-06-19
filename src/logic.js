@@ -1,5 +1,11 @@
 import update from 'immutability-helper';
 
+export const RefType = Object.freeze({
+  SLOT: 0,
+  RANK_FILE: 1,
+  RANK_FILE_STRING: 2,
+});
+
 const RANKS = 10;
 const FILES = 9;
 const BLACK_PIECES = 'rheakcp';
@@ -21,7 +27,7 @@ const RED_PALACE = [
 ];
 const EMPTY_BOARD_FEN = '9/9/9/9/9/9/9/9/9/9';
 
-class XiangqiBoard {
+export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
   constructor({
     ranks = RANKS,
@@ -43,6 +49,19 @@ class XiangqiBoard {
     this.redPalace = redPalace.map((pos) => this.getSlot(...pos));
     this.blackPalace = blackPalace.map((pos) => this.getSlot(...pos));
     this.board = this.fromFen(fen);
+  }
+
+  _fromRefType(ref, refType) {
+    if (refType === RefType.SLOT) return ref;
+    if (refType === RefType.RANK_FILE) {
+      const [rank, file] = ref;
+      return this.getSlot(rank, file);
+    }
+    if (refType === RefType.RANK_FILE_STRING) {
+      const _ref = ref.split(',').map((x) => +x);
+      return this._fromRefType(_ref, refType.RANK_FILE);
+    }
+    throw new Error(`Invalid reference type: ${refType}`);
   }
 
   move(fromSlot, toSlot) {
@@ -361,5 +380,3 @@ class XiangqiBoard {
     return rows.map((row) => row.join('')).join('/');
   }
 }
-
-export default XiangqiBoard;
