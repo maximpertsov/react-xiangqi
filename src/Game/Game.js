@@ -80,7 +80,7 @@ class Game extends Component {
           toState.push(result);
           return result.board;
         },
-        toState[0],
+        toState[0].board,
       );
       // TODO: There is one more board than moves.
       // Watch out for off by 1 errors!
