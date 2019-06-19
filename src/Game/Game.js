@@ -93,9 +93,13 @@ class Game extends Component {
 
   fetchGame() {
     getGame(GAME_PK).then((data) => {
-      const { players, initial_fen, active_color } = data;
-      const activePlayerIdx = players.map((p) => p.color).indexOf(active_color);
-      this.setState({ players, fen: initial_fen, activePlayerIdx });
+      const {
+        players,
+        initial_fen: initFen,
+        active_color: activeColor,
+      } = data;
+      const activePlayerIdx = players.map((p) => p.color).indexOf(activeColor);
+      this.setState({ players, fen: initFen, activePlayerIdx });
       this.fetchMoves();
     });
   }
