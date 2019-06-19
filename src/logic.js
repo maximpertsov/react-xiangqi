@@ -64,7 +64,9 @@ export default class XiangqiBoard {
     throw new Error(`Invalid reference type: ${refType}`);
   }
 
-  move(fromSlot, toSlot) {
+  move(from, to, refType = RefType.SLOT) {
+    const fromSlot = this._fromRefType(from, refType);
+    const toSlot = this._fromRefType(to, refType);
     const board = update(update(this.board, {
       [toSlot]: { $set: this.board[fromSlot] },
     }), {
@@ -73,7 +75,8 @@ export default class XiangqiBoard {
     return this.new(board);
   }
 
-  drop(piece, toSlot) {
+  drop(piece, to, refType = RefType.SLOT) {
+    const toSlot = this._fromRefType(to, refType);
     const board = update(this.board, {
       [toSlot]: { $set: piece },
     });
