@@ -70,8 +70,6 @@ class Game extends Component {
             move,
             board: board.move(fromPos, toPos, RefType.RANK_FILE_STRING),
           };
-          // TODO: construct this line in the move component
-          result.move.description = `${move.from_position} -> ${move.to_position}`;
           toState.push(result);
           return result.board;
         },
@@ -138,7 +136,13 @@ class Game extends Component {
     const { moves } = this.state;
     const moveComponents = moves.map((m) => {
       const key = `${m.player.color}_${m.order}`;
-      return (<Move key={key} description={m.description} />);
+      return (
+        <Move
+          key={key}
+          fromPos={m.from_position}
+          toPos={m.to_position}
+        />
+      );
     });
     return (<MovesWrapper>{moveComponents}</MovesWrapper>);
   }
