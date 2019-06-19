@@ -51,17 +51,17 @@ export default class XiangqiBoard {
     this.board = this.fromFen(fen);
   }
 
-  _slot(pos, type) {
-    if (type === RefType.SLOT) return pos;
-    if (type === RefType.RANK_FILE) {
+  _slot(pos, refType) {
+    if (refType === RefType.SLOT) return pos;
+    if (refType === RefType.RANK_FILE) {
       const [rank, file] = pos;
       return this.getSlot(rank, file);
     }
-    if (type === RefType.RANK_FILE_STRING) {
+    if (refType === RefType.RANK_FILE_STRING) {
       const _pos = pos.split(',').map((x) => +x);
       return this._slot(_pos, RefType.RANK_FILE);
     }
-    throw new Error(`Invalid reference type: ${type}`);
+    throw new Error(`Invalid reference type: ${refType}`);
   }
 
   move(fromPos, toPos, refType = RefType.SLOT) {
@@ -92,7 +92,10 @@ export default class XiangqiBoard {
     return new this.constructor(options);
   }
 
-  getPiece(rank, file) { return this.board[this.getSlot(rank, file)]; }
+  getPiece(pos, refType = RefType.SLOT) {
+    const slot = this._slot(pos, refType);
+    return this.board[slot];
+  }
 
   getSlot(rank, file) { return file + rank * this.files; }
 
