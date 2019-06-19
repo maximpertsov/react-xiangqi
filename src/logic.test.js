@@ -165,8 +165,8 @@ function sameElements(actual, expected) {
 
 const toExpected = (xb, moves) => moves.reduce(
   (acc, { from, to }) => {
-    acc[xb._fromRefType(from, RefType.RANK_FILE)] = to.map(
-      (pos) => xb._fromRefType(pos, RefType.RANK_FILE),
+    acc[xb._slot(from, RefType.RANK_FILE)] = to.map(
+      (pos) => xb._slot(pos, RefType.RANK_FILE),
     );
     return acc;
   },

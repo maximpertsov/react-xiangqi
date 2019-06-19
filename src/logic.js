@@ -51,22 +51,22 @@ export default class XiangqiBoard {
     this.board = this.fromFen(fen);
   }
 
-  _fromRefType(ref, type) {
-    if (type === RefType.SLOT) return ref;
+  _slot(pos, type) {
+    if (type === RefType.SLOT) return pos;
     if (type === RefType.RANK_FILE) {
-      const [rank, file] = ref;
+      const [rank, file] = pos;
       return this.getSlot(rank, file);
     }
     if (type === RefType.RANK_FILE_STRING) {
-      const _ref = ref.split(',').map((x) => +x);
-      return this._fromRefType(_ref, RefType.RANK_FILE);
+      const _pos = pos.split(',').map((x) => +x);
+      return this._slot(_pos, RefType.RANK_FILE);
     }
     throw new Error(`Invalid reference type: ${type}`);
   }
 
-  move(from, to, refType = RefType.SLOT) {
-    const fromSlot = this._fromRefType(from, refType);
-    const toSlot = this._fromRefType(to, refType);
+  move(fromPos, toPos, refType = RefType.SLOT) {
+    const fromSlot = this._slot(fromPos, refType);
+    const toSlot = this._slot(toPos, refType);
     const board = update(update(this.board, {
       [toSlot]: { $set: this.board[fromSlot] },
     }), {
@@ -75,10 +75,10 @@ export default class XiangqiBoard {
     return this.new(board);
   }
 
-  drop(piece, to, refType = RefType.SLOT) {
-    const toSlot = this._fromRefType(to, refType);
+  drop(piece, pos, refType = RefType.SLOT) {
+    const slot = this._slot(pos, refType);
     const board = update(this.board, {
-      [toSlot]: { $set: piece },
+      [slot]: { $set: piece },
     });
     return this.new(board);
   }

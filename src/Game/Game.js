@@ -65,10 +65,10 @@ class Game extends Component {
       const toState = [];
       moves.reduce(
         (board, move) => {
-          const { from_position: from, to_position: to } = move;
+          const { from_position: fromPos, to_position: toPos } = move;
           const result = {
             move,
-            board: board.move(from, to, RefType.RANK_FILE_STRING),
+            board: board.move(fromPos, toPos, RefType.RANK_FILE_STRING),
           };
           // TODO: construct this line in the move component
           result.move.description = `${move.from_position} -> ${move.to_position}`;
