@@ -62,7 +62,14 @@ class Game extends Component {
     const { fen } = this.state;
     getMoves(GAME_PK).then((data) => {
       const { moves } = data;
-      const toState = [];
+      const toState = [
+        {
+          // TODO: There is one more board than moves.
+          // Watch out for off by 1 errors!
+          move: null,
+          board: new XiangqiBoard({ fen }),
+        },
+      ];
       moves.reduce(
         (board, move) => {
           const { from_position: fromPos, to_position: toPos } = move;
@@ -73,10 +80,12 @@ class Game extends Component {
           toState.push(result);
           return result.board;
         },
-        new XiangqiBoard({ fen }),
+        toState[0],
       );
+      // TODO: There is one more board than moves.
+      // Watch out for off by 1 errors!
       this.setState({
-        moves: toState.map((d) => d.move),
+        moves: toState.map((d) => d.move).filter((m) => m !== null),
         boards: toState.map((d) => d.board),
       });
     });
