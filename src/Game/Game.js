@@ -130,7 +130,7 @@ class Game extends Component {
     }));
   }
 
-  gameInfoOrLoading() {
+  renderGameInfoOrLoading() {
     const { players } = this.state;
     if (players.length === 0) return (<div><p>Loading...</p></div>);
     // TODO: move info wrapper to GameInfo class
@@ -160,7 +160,7 @@ class Game extends Component {
     return (<MovesWrapper>{moveComponents}</MovesWrapper>);
   }
 
-  boardOrLoading() {
+  renderBoardOrLoading() {
     const { boards } = this.state;
     if (boards.length === 0) return (<div><p>Loading...</p></div>);
 
@@ -180,9 +180,9 @@ class Game extends Component {
   render() {
     return (
       <Wrapper className="Game">
-        { this.boardOrLoading() }
+        { this.renderBoardOrLoading() }
         <SidebarWrapper>
-          { this.gameInfoOrLoading() }
+          { this.renderGameInfoOrLoading() }
           { this.renderMoves() }
         </SidebarWrapper>
       </Wrapper>
