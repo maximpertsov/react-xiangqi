@@ -4,7 +4,7 @@ import update from 'immutability-helper';
 import Board from './Board/Board';
 import Move from './Move/Move';
 import GameInfo from './GameInfo';
-import XiangqiBoard from '../logic';
+import XiangqiBoard, { RefType } from '../logic';
 import { getGame, getMoves } from '../client';
 
 const GAME_PK = 2;
@@ -65,16 +65,13 @@ class Game extends Component {
       const toState = [];
       moves.reduce(
         (board, move) => {
-          const result = {};
-          result.move = move;
+          const { from_position: from, to_position: to } = move;
+          const result = {
+            move,
+            board: board.move(from, to, RefType.RANK_FILE_STRING),
+          };
+          // TODO: construct this line in the move component
           result.move.description = `${move.from_position} -> ${move.to_position}`;
-
-          const { from_position, to_position } = move;
-          const [fromRank, fromFile] = from_position.split(',').map((x) => +x);
-          const [toRank, toFile] = to_position.split(',').map((x) => +x);
-          const fromSlot = board.getSlot(fromRank, fromFile);
-          const toSlot = board.getSlot(toRank, toFile);
-          result.board = board.move(fromSlot, toSlot);
           toState.push(result);
           return result.board;
         },
@@ -84,7 +81,6 @@ class Game extends Component {
         moves: toState.map((d) => d.move),
         boards: toState.map((d) => d.board),
       });
-      console.log(this.state);
     });
   }
 
