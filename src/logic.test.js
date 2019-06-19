@@ -1,4 +1,4 @@
-import XiangqiBoard from './logic';
+import XiangqiBoard, { RefType } from './logic';
 
 const slotRankFileTests = [
   [0, 0, 0],
@@ -165,7 +165,9 @@ function sameElements(actual, expected) {
 
 const toExpected = (xb, moves) => moves.reduce(
   (acc, { from, to }) => {
-    acc[xb.getSlot(...from)] = to.map((pos) => xb.getSlot(...pos));
+    acc[xb._slot(from, RefType.RANK_FILE)] = to.map(
+      (pos) => xb._slot(pos, RefType.RANK_FILE),
+    );
     return acc;
   },
   {},

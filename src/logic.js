@@ -1,4 +1,11 @@
 import update from 'immutability-helper';
+import PropTypes from 'prop-types';
+
+export const RefType = Object.freeze({
+  SLOT: 0,
+  RANK_FILE: 1,
+  RANK_FILE_STRING: 2,
+});
 
 const RANKS = 10;
 const FILES = 9;
@@ -21,7 +28,7 @@ const RED_PALACE = [
 ];
 const EMPTY_BOARD_FEN = '9/9/9/9/9/9/9/9/9/9';
 
-class XiangqiBoard {
+export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
   constructor({
     ranks = RANKS,
@@ -45,7 +52,22 @@ class XiangqiBoard {
     this.board = this.fromFen(fen);
   }
 
-  move(fromSlot, toSlot) {
+  _slot(pos, refType) {
+    if (refType === RefType.SLOT) return pos;
+    if (refType === RefType.RANK_FILE) {
+      const [rank, file] = pos;
+      return this.getSlot(rank, file);
+    }
+    if (refType === RefType.RANK_FILE_STRING) {
+      const _pos = pos.split(',').map((x) => +x);
+      return this._slot(_pos, RefType.RANK_FILE);
+    }
+    throw new Error(`Invalid reference type: ${refType}`);
+  }
+
+  move(fromPos, toPos, refType = RefType.SLOT) {
+    const fromSlot = this._slot(fromPos, refType);
+    const toSlot = this._slot(toPos, refType);
     const board = update(update(this.board, {
       [toSlot]: { $set: this.board[fromSlot] },
     }), {
@@ -54,9 +76,10 @@ class XiangqiBoard {
     return this.new(board);
   }
 
-  drop(piece, toSlot) {
+  drop(piece, pos, refType = RefType.SLOT) {
+    const slot = this._slot(pos, refType);
     const board = update(this.board, {
-      [toSlot]: { $set: piece },
+      [slot]: { $set: piece },
     });
     return this.new(board);
   }
@@ -70,7 +93,10 @@ class XiangqiBoard {
     return new this.constructor(options);
   }
 
-  getPiece(rank, file) { return this.board[this.getSlot(rank, file)]; }
+  getPiece(pos, refType = RefType.SLOT) {
+    const slot = this._slot(pos, refType);
+    return this.board[slot];
+  }
 
   getSlot(rank, file) { return file + rank * this.files; }
 
@@ -319,7 +345,7 @@ class XiangqiBoard {
 
   captures() {
     const result = new Set();
-    for (const [_fromSlot, toSlots] of this.legalMoves(true).entries()) {
+    for (const [, toSlots] of this.legalMoves(true).entries()) {
       toSlots.forEach((slot) => {
         if (this.isOccupied(slot)) result.add(this.board[slot]);
       });
@@ -362,4 +388,14 @@ class XiangqiBoard {
   }
 }
 
-export default XiangqiBoard;
+export const boardPropType = PropTypes.shape({
+  ranks: PropTypes.number,
+  files: PropTypes.number,
+  redPieces: PropTypes.string,
+  blackPieces: PropTypes.string,
+  fen: PropTypes.string,
+  redRiverBank: PropTypes.number,
+  blackRiverBank: PropTypes.number,
+  redPalace: PropTypes.arrayOf(PropTypes.number),
+  blackPalace: PropTypes.arrayOf(PropTypes.number),
+});

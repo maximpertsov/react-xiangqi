@@ -5,33 +5,21 @@ const BASE_URL = 'http://localhost:8000';
 axios.defaults.baseURL = `${BASE_URL}/api/`;
 axios.defaults.timeout = 1000;
 
-export async function getGame(gameId) {
-  try {
-    const response = await axios.get(`game/${gameId}`);
-    console.log(response);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
+export const getGame = (gameId) => axios.get(`game/${gameId}`);
 
-export async function postMove(gameId, player, piece, from, to) {
+export const getMoves = (gameId) => axios.get(`game/${gameId}/moves`);
+
+export async function postMove(gameId, {
+  player, piece, fromPos, toPos,
+}) {
   const payload = {
     player,
     piece,
-    from,
-    to,
+    from: fromPos,
+    to: toPos,
     type: 'move',
   };
-
-  try {
-    console.log(`Posting move to game ${gameId} with payload ${JSON.stringify(payload)}`);
-    const response = await axios.post(`game/${gameId}`, payload);
-    console.log(response);
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
+  return axios.post(`game/${gameId}/moves`, payload);
 }
 
 export default {};
