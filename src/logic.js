@@ -345,7 +345,7 @@ export default class XiangqiBoard {
 
   captures() {
     const result = new Set();
-    for (const [_fromSlot, toSlots] of this.legalMoves(true).entries()) {
+    for (const [, toSlots] of this.legalMoves(true).entries()) {
       toSlots.forEach((slot) => {
         if (this.isOccupied(slot)) result.add(this.board[slot]);
       });
