@@ -40,12 +40,17 @@ class Board extends Component {
     return getPiece(board.board[slot]);
   }
 
-  getPostMoveParams(fromSlot, toSlot) {
-    const { gameId, board } = this.props;
+  getPostMovePayload(fromSlot, toSlot) {
+    const { board } = this.props;
     const from = board.getRankFile(fromSlot).join(',');
     const to = board.getRankFile(toSlot).join(',');
     const piece = board.board[fromSlot];
-    return [gameId, this.getActivePlayer().name, piece, from, to];
+    return {
+      player: this.getActivePlayer().name,
+      piece,
+      fromPos: from,
+      toPos: to,
+    };
   }
 
   selectedCanCapture(slot) {
@@ -78,10 +83,10 @@ class Board extends Component {
   }
 
   handleMove(fromSlot, toSlot) {
-    const { handleMove } = this.props;
+    const { gameId, handleMove } = this.props;
 
     if (this.isLegalMove(fromSlot, toSlot)) {
-      postMove(...this.getPostMoveParams(fromSlot, toSlot))
+      postMove(gameId, this.getPostMovePayload(fromSlot, toSlot))
         .then((response) => {
           const { status } = response;
           if (status === 201) {

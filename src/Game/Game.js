@@ -60,8 +60,8 @@ class Game extends Component {
 
   fetchMoves() {
     const { fen } = this.state;
-    getMoves(GAME_PK).then((data) => {
-      const { moves } = data;
+    getMoves(GAME_PK).then((response) => {
+      const { moves } = response.data;
       const toState = [
         {
           // TODO: There is one more board than moves.
@@ -92,12 +92,12 @@ class Game extends Component {
   }
 
   fetchGame() {
-    getGame(GAME_PK).then((data) => {
+    getGame(GAME_PK).then((response) => {
       const {
         players,
         initial_fen: initFen,
         active_color: activeColor,
-      } = data;
+      } = response.data;
       const activePlayerIdx = players.map((p) => p.color).indexOf(activeColor);
       this.setState({ players, fen: initFen, activePlayerIdx });
       this.fetchMoves();
