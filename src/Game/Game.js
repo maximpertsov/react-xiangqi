@@ -7,7 +7,7 @@ import GameInfo from './GameInfo';
 import XiangqiBoard, { RefType } from '../logic';
 import { getGame, getMoves } from '../client';
 
-const GAME_PK = 2;
+const GAME_ID = 'ABC123';
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,7 +48,6 @@ class Game extends Component {
     this.state = {
       activePlayerIdx: 0,
       players: [],
-      fen: null,
       moves: [],
       boards: [],
     };
@@ -58,9 +57,8 @@ class Game extends Component {
     this.fetchGame();
   }
 
-  fetchMoves() {
-    const { fen } = this.state;
-    getMoves(GAME_PK).then((response) => {
+  fetchMoves(fen) {
+    getMoves(GAME_ID).then((response) => {
       const { moves } = response.data;
       const toState = [
         {
@@ -72,10 +70,10 @@ class Game extends Component {
       ];
       moves.reduce(
         (board, move) => {
-          const { from_position: fromPos, to_position: toPos } = move;
+          const { origin: fromPos, destination: toPos } = move;
           const result = {
             move,
-            board: board.move(fromPos, toPos, RefType.RANK_FILE_STRING),
+            board: board.move(fromPos, toPos, RefType.RANK_FILE),
           };
           toState.push(result);
           return result.board;
@@ -92,15 +90,15 @@ class Game extends Component {
   }
 
   fetchGame() {
-    getGame(GAME_PK).then((response) => {
+    getGame(GAME_ID).then((response) => {
       const {
         players,
-        initial_fen: initFen,
+        initial_fen: fen,
         active_color: activeColor,
       } = response.data;
       const activePlayerIdx = players.map((p) => p.color).indexOf(activeColor);
-      this.setState({ players, fen: initFen, activePlayerIdx });
-      this.fetchMoves();
+      this.setState({ players, activePlayerIdx });
+      this.fetchMoves(fen);
     });
   }
 
@@ -152,8 +150,8 @@ class Game extends Component {
       return (
         <Move
           key={key}
-          fromPos={m.from_position}
-          toPos={m.to_position}
+          fromPos={m.origin}
+          toPos={m.destination}
         />
       );
     });
@@ -172,7 +170,7 @@ class Game extends Component {
         board={board}
         legalMoves={board.legalMoves()}
         handleMove={this.handleMove}
-        gameId={GAME_PK}
+        gameId={GAME_ID}
       />
     );
   }
