@@ -168,7 +168,7 @@ class Game extends Component {
       <Board
         activePlayer={this.activePlayer}
         board={board}
-        legalMoves={board.legalMoves()}
+        legalMoves={board.legalMovesByActiveColor()}
         handleMove={this.handleMove}
         gameId={GAME_ID}
       />
