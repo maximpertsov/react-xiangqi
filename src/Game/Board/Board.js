@@ -43,8 +43,8 @@ class Board extends Component {
 
   getPostMovePayload(fromSlot, toSlot) {
     const { board } = this.props;
-    const from = board.getRankFile(fromSlot).join(',');
-    const to = board.getRankFile(toSlot).join(',');
+    const from = board.getRankFile(fromSlot);
+    const to = board.getRankFile(toSlot);
     const piece = board.getPiece(fromSlot);
     return {
       player: this.getActivePlayer().name,
