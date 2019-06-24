@@ -190,6 +190,8 @@ class Game extends Component {
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
     const { board, piece } = moves[selectedMove];
+    const legalMoves = board.legalMovesByActiveColor(piece)
+      .map((toSlots) => (selectedMove === moves.length - 1 ? toSlots : []));
 
     return (
       <Board
@@ -197,7 +199,7 @@ class Game extends Component {
         board={board}
         fetchGame={this.fetchGame}
         handleMove={this.handleMove}
-        legalMoves={board.legalMovesByActiveColor(piece)}
+        legalMoves={legalMoves}
         gameId={GAME_ID}
       />
     );
