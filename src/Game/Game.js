@@ -113,6 +113,7 @@ class Game extends Component {
       };
       return {
         moves: update(moves, { $push: [nextMove] }),
+        selectedMove: moves.length,
       };
     });
     this.changePlayer();
