@@ -44,6 +44,7 @@ class Game extends Component {
     this.activePlayer = this.activePlayer.bind(this);
     this.changePlayer = this.changePlayer.bind(this);
     this.handleMove = this.handleMove.bind(this);
+    this.fetchGame = this.fetchGame.bind(this);
 
     this.state = {
       activePlayerIdx: 0,
@@ -170,8 +171,9 @@ class Game extends Component {
       <Board
         activePlayer={this.activePlayer}
         board={board}
-        legalMoves={board.legalMovesByActiveColor(piece)}
+        fetchGame={this.fetchGame}
         handleMove={this.handleMove}
+        legalMoves={board.legalMovesByActiveColor(piece)}
         gameId={GAME_ID}
       />
     );

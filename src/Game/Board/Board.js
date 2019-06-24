@@ -84,25 +84,28 @@ class Board extends Component {
   }
 
   handleMove(fromSlot, toSlot) {
-    const { gameId, handleMove } = this.props;
+    const { gameId, fetchGame, handleMove } = this.props;
 
     if (this.isLegalMove(fromSlot, toSlot)) {
+      handleMove(fromSlot, toSlot);
+      this.handleSelect(null);
+
+      // Post move to server
       postMove(gameId, this.getPostMovePayload(fromSlot, toSlot))
         .then((response) => {
           const { status } = response;
           // TODO: consider updating the move on the front end without waiting
           // for a successful response and undoing the move if the response
           // fails.
-          if (status === 201) {
-            handleMove(fromSlot, toSlot);
+          if (status !== 201) {
+            fetchGame();
           }
         })
         .catch((error) => {
           // TODO: display useful error
-          throw error;
+          fetchGame();
         });
     }
-    this.handleSelect(null);
   }
 
   render() {
@@ -133,6 +136,7 @@ Board.propTypes = {
   activePlayer: PropTypes.func.isRequired,
   board: boardPropType.isRequired,
   handleMove: PropTypes.func.isRequired,
+  fetchGame: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   gameId: PropTypes.string.isRequired,
 };
