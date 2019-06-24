@@ -58,6 +58,15 @@ class Game extends Component {
 
   componentDidMount() {
     this.fetchGame();
+    this.scrollToBottomOfMovelist();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottomOfMovelist();
+  }
+
+  scrollToBottomOfMovelist() {
+    this.el.scrollIntoView({ behavior: 'smooth' });
   }
 
   fetchMoves(fen) {
@@ -167,7 +176,12 @@ class Game extends Component {
           selected={selectedMove === i}
         />
       ));
-    return (<MovesWrapper>{moveComponents}</MovesWrapper>);
+    return (
+      <MovesWrapper>
+        {moveComponents}
+        <div ref={(el) => { this.el = el; }} />
+      </MovesWrapper>
+    );
   }
 
   renderBoardOrLoading() {
