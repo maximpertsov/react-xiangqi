@@ -32,6 +32,7 @@ const InfoWrapper = styled.div`
 const MovesWrapper = styled.div`
   display: grid;
   grid-template-columns: 50% auto;
+  grid-template-rows: repeat(auto-fill, 50px);
   outline: 2px solid;
   height: 55%;
   overflow: auto;
