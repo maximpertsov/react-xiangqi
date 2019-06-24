@@ -66,7 +66,13 @@ class Game extends Component {
   }
 
   scrollToBottomOfMovelist() {
-    this.el.scrollIntoView({ behavior: 'smooth' });
+    try {
+      this.el.scrollIntoView({ behavior: 'smooth' });
+    } catch (e) {
+      if (e instanceof TypeError) {
+        // pass
+      } else { throw e; }
+    }
   }
 
   fetchMoves(fen) {
