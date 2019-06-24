@@ -62,8 +62,6 @@ class Game extends Component {
       const { moves } = response.data;
       const toState = [
         {
-          // TODO: There is one more board than moves.
-          // Watch out for off by 1 errors!
           move: null,
           board: new XiangqiBoard({ fen }),
         },
@@ -83,7 +81,7 @@ class Game extends Component {
       // TODO: There is one more board than moves.
       // Watch out for off by 1 errors!
       this.setState({
-        moves: toState.map((d) => d.move).filter((m) => m !== null),
+        moves: toState.map((d) => d.move),
         boards: toState.map((d) => d.board),
       });
     });
@@ -145,16 +143,19 @@ class Game extends Component {
 
   renderMoves() {
     const { moves } = this.state;
-    const moveComponents = moves.map((m) => {
-      const key = `${m.player.color}_${m.order}`;
-      return (
-        <Move
-          key={key}
-          fromPos={m.origin}
-          toPos={m.destination}
-        />
-      );
-    });
+    const moveComponents = moves
+      .filter((m) => m !== null)
+      .map((m) => {
+        const key = `${m.player.color}_${m.order}`;
+        return (
+          <Move
+            key={key}
+            fromPos={m.origin}
+            toPos={m.destination}
+            piece={m.piece}
+          />
+        );
+      });
     return (<MovesWrapper>{moveComponents}</MovesWrapper>);
   }
 
