@@ -68,15 +68,12 @@ class Game extends Component {
         },
       ];
       movesData.reduce(
-        (board, moveData) => {
+        (lastBoard, moveData) => {
           const { piece, origin: fromPos, destination: toPos } = moveData;
+          const board = lastBoard.move(fromPos, toPos, RefType.RANK_FILE);
           const move = {
-            piece,
-            fromPos,
-            toPos,
-            board: board.move(fromPos, toPos, RefType.RANK_FILE),
+            piece, fromPos, toPos, board,
           };
-          console.log(move);
           moves.push(move);
           return move.board;
         },

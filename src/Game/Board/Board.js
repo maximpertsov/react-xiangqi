@@ -131,7 +131,7 @@ Board.propTypes = {
   board: boardPropType.isRequired,
   handleMove: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-  gameId: PropTypes.number.isRequired,
+  gameId: PropTypes.string.isRequired,
 };
 
 export default Board;
