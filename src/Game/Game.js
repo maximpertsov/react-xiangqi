@@ -44,12 +44,14 @@ class Game extends Component {
     this.activePlayer = this.activePlayer.bind(this);
     this.changePlayer = this.changePlayer.bind(this);
     this.handleMove = this.handleMove.bind(this);
+    this.handleMoveSelect = this.handleMoveSelect.bind(this);
     this.fetchGame = this.fetchGame.bind(this);
 
     this.state = {
       activePlayerIdx: 0,
       players: [],
       moves: [],
+      selectedMove: null,
     };
   }
 
@@ -82,7 +84,7 @@ class Game extends Component {
       );
       // TODO: There is one more board than moves.
       // Watch out for off by 1 errors!
-      this.setState({ moves });
+      this.setState({ moves, selectedMove: moves.length - 1 });
     });
   }
 
@@ -116,6 +118,10 @@ class Game extends Component {
     this.changePlayer();
   }
 
+  handleMoveSelect(e, order) {
+    this.setState({ selectedMove: order });
+  }
+
   // TODO: create PlayerManager class?
   activePlayer() {
     const { players, activePlayerIdx } = this.state;
@@ -146,26 +152,28 @@ class Game extends Component {
   }
 
   renderMoves() {
-    const { moves } = this.state;
+    const { moves, selectedMove } = this.state;
     const moveComponents = moves
-      .filter((m) => m.piece !== null)
-      .map((m, key) => (
+      .map((m, i) => (
         <Move
-          key={key}
+          key={i}
+          order={i}
+          handleMoveSelect={this.handleMoveSelect}
           fromPos={m.fromPos}
           toPos={m.toPos}
           piece={m.piece}
+          selected={selectedMove === i}
         />
       ));
     return (<MovesWrapper>{moveComponents}</MovesWrapper>);
   }
 
   renderBoardOrLoading() {
-    const { moves } = this.state;
+    const { moves, selectedMove } = this.state;
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
-    const { board, piece } = moves[moves.length - 1];
+    const { board, piece } = moves[selectedMove];
 
     return (
       <Board
