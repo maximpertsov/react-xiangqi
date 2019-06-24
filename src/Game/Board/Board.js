@@ -92,17 +92,11 @@ class Board extends Component {
 
       // Post move to server
       postMove(gameId, this.getPostMovePayload(fromSlot, toSlot))
-        .then((response) => {
-          const { status } = response;
-          // TODO: consider updating the move on the front end without waiting
-          // for a successful response and undoing the move if the response
-          // fails.
-          if (status !== 201) {
-            fetchGame();
-          }
+        .then(({ status }) => {
+          if (status !== 201) fetchGame();
         })
-        .catch((error) => {
-          // TODO: display useful error
+        .catch(() => {
+          // TODO: display useful error?
           fetchGame();
         });
     }
