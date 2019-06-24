@@ -49,7 +49,6 @@ class Game extends Component {
       activePlayerIdx: 0,
       players: [],
       moves: [],
-      boards: [],
     };
   }
 
@@ -59,31 +58,33 @@ class Game extends Component {
 
   fetchMoves(fen) {
     getMoves(GAME_ID).then((response) => {
-      const { moves } = response.data;
-      const toState = [
+      const { moves: movesData } = response.data;
+      const moves = [
         {
-          move: null,
+          piece: null,
+          fromPos: null,
+          toPos: null,
           board: new XiangqiBoard({ fen }),
         },
       ];
-      moves.reduce(
-        (board, move) => {
-          const { origin: fromPos, destination: toPos } = move;
-          const result = {
-            move,
+      movesData.reduce(
+        (board, moveData) => {
+          const { piece, origin: fromPos, destination: toPos } = moveData;
+          const move = {
+            piece,
+            fromPos,
+            toPos,
             board: board.move(fromPos, toPos, RefType.RANK_FILE),
           };
-          toState.push(result);
-          return result.board;
+          console.log(move);
+          moves.push(move);
+          return move.board;
         },
-        toState[0].board,
+        moves[0].board,
       );
       // TODO: There is one more board than moves.
       // Watch out for off by 1 errors!
-      this.setState({
-        moves: toState.map((d) => d.move),
-        boards: toState.map((d) => d.board),
-      });
+      this.setState({ moves });
     });
   }
 
@@ -144,26 +145,24 @@ class Game extends Component {
   renderMoves() {
     const { moves } = this.state;
     const moveComponents = moves
-      .filter((m) => m !== null)
-      .map((m) => {
-        const key = `${m.player.color}_${m.order}`;
-        return (
-          <Move
-            key={key}
-            fromPos={m.origin}
-            toPos={m.destination}
-            piece={m.piece}
-          />
-        );
-      });
+      .filter((m) => m.piece !== null)
+      .map((m, key) => (
+        <Move
+          key={key}
+          fromPos={m.fromPos}
+          toPos={m.toPos}
+          piece={m.piece}
+        />
+      ));
     return (<MovesWrapper>{moveComponents}</MovesWrapper>);
   }
 
   renderBoardOrLoading() {
-    const { boards } = this.state;
-    if (boards.length === 0) return (<div><p>Loading...</p></div>);
+    const { moves } = this.state;
 
-    const board = boards[boards.length - 1];
+    if (moves.length === 0) return (<div><p>Loading...</p></div>);
+
+    const { board } = moves[moves.length - 1];
 
     return (
       <Board

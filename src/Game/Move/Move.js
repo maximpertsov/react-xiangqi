@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Move = ({ fromPos, toPos, piece }) => {
+  // const [fromRank, fromFile] = fromPos;
+  // const [fromRank, fromFile] = toPos;
   const description = `${piece}: ${fromPos} -> ${toPos}`;
   return (
     <div>
@@ -11,8 +13,8 @@ const Move = ({ fromPos, toPos, piece }) => {
 };
 
 Move.propTypes = {
-  fromPos: PropTypes.string.isRequired,
-  toPos: PropTypes.string.isRequired,
+  fromPos: PropTypes.arrayOf(PropTypes.number).isRequired,
+  toPos: PropTypes.arrayOf(PropTypes.number).isRequired,
   piece: PropTypes.string.isRequired,
 };
 
