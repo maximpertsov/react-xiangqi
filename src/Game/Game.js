@@ -7,7 +7,7 @@ import GameInfo from './GameInfo';
 import XiangqiBoard, { RefType } from '../logic';
 import { getGame, getMoves } from '../client';
 
-const GAME_PK = 2;
+const GAME_ID = 'ABC123';
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,6 +32,7 @@ const InfoWrapper = styled.div`
 const MovesWrapper = styled.div`
   display: grid;
   grid-template-columns: 50% auto;
+  grid-template-rows: repeat(auto-fill, 50px);
   outline: 2px solid;
   height: 55%;
   overflow: auto;
@@ -44,76 +45,98 @@ class Game extends Component {
     this.activePlayer = this.activePlayer.bind(this);
     this.changePlayer = this.changePlayer.bind(this);
     this.handleMove = this.handleMove.bind(this);
+    this.handleMoveSelect = this.handleMoveSelect.bind(this);
+    this.fetchGame = this.fetchGame.bind(this);
 
     this.state = {
       activePlayerIdx: 0,
       players: [],
-      fen: null,
       moves: [],
-      boards: [],
+      selectedMove: null,
     };
   }
 
   componentDidMount() {
     this.fetchGame();
+    this.scrollToBottomOfMovelist();
   }
 
-  fetchMoves() {
-    const { fen } = this.state;
-    getMoves(GAME_PK).then((response) => {
-      const { moves } = response.data;
-      const toState = [
+  componentDidUpdate() {
+    this.scrollToBottomOfMovelist();
+  }
+
+  scrollToBottomOfMovelist() {
+    try {
+      this.el.scrollIntoView({ behavior: 'smooth' });
+    } catch (e) {
+      if (e instanceof TypeError) {
+        // pass
+      } else { throw e; }
+    }
+  }
+
+  fetchMoves(fen) {
+    getMoves(GAME_ID).then((response) => {
+      const { moves: movesData } = response.data;
+      const moves = [
         {
-          // TODO: There is one more board than moves.
-          // Watch out for off by 1 errors!
-          move: null,
+          piece: null,
+          fromPos: null,
+          toPos: null,
           board: new XiangqiBoard({ fen }),
         },
       ];
-      moves.reduce(
-        (board, move) => {
-          const { from_position: fromPos, to_position: toPos } = move;
-          const result = {
-            move,
-            board: board.move(fromPos, toPos, RefType.RANK_FILE_STRING),
+      movesData.reduce(
+        (lastBoard, moveData) => {
+          const { piece, origin: fromPos, destination: toPos } = moveData;
+          const board = lastBoard.move(fromPos, toPos, RefType.RANK_FILE);
+          const move = {
+            piece, fromPos, toPos, board,
           };
-          toState.push(result);
-          return result.board;
+          moves.push(move);
+          return move.board;
         },
-        toState[0].board,
+        moves[0].board,
       );
       // TODO: There is one more board than moves.
       // Watch out for off by 1 errors!
-      this.setState({
-        moves: toState.map((d) => d.move).filter((m) => m !== null),
-        boards: toState.map((d) => d.board),
-      });
+      this.setState({ moves, selectedMove: moves.length - 1 });
     });
   }
 
   fetchGame() {
-    getGame(GAME_PK).then((response) => {
+    getGame(GAME_ID).then((response) => {
       const {
         players,
-        initial_fen: initFen,
+        initial_fen: fen,
         active_color: activeColor,
       } = response.data;
       const activePlayerIdx = players.map((p) => p.color).indexOf(activeColor);
-      this.setState({ players, fen: initFen, activePlayerIdx });
-      this.fetchMoves();
+      this.setState({ players, activePlayerIdx });
+      this.fetchMoves(fen);
     });
   }
 
   handleMove(fromSlot, toSlot) {
     this.setState((fromState) => {
-      const { boards } = fromState;
-      const fromBoard = boards[boards.length - 1];
+      const { moves } = fromState;
+      const { board: lastBoard } = moves[moves.length - 1];
+      const nextMove = {
+        fromPos: lastBoard.getRankFile(fromSlot),
+        toPos: lastBoard.getRankFile(toSlot),
+        piece: lastBoard.getPiece(fromSlot),
+        board: lastBoard.move(fromSlot, toSlot),
+      };
       return {
-        boards: update(boards, { $push: [fromBoard.move(fromSlot, toSlot)] }),
-        // TODO: add new move to moves state
+        moves: update(moves, { $push: [nextMove] }),
+        selectedMove: moves.length,
       };
     });
     this.changePlayer();
+  }
+
+  handleMoveSelect(e, order) {
+    this.setState({ selectedMove: order });
   }
 
   // TODO: create PlayerManager class?
@@ -146,33 +169,44 @@ class Game extends Component {
   }
 
   renderMoves() {
-    const { moves } = this.state;
-    const moveComponents = moves.map((m) => {
-      const key = `${m.player.color}_${m.order}`;
-      return (
+    const { moves, selectedMove } = this.state;
+    const moveComponents = moves
+      .map((m, i) => (
         <Move
-          key={key}
-          fromPos={m.from_position}
-          toPos={m.to_position}
+          key={i}
+          order={i}
+          handleMoveSelect={this.handleMoveSelect}
+          fromPos={m.fromPos}
+          toPos={m.toPos}
+          piece={m.piece}
+          selected={selectedMove === i}
         />
-      );
-    });
-    return (<MovesWrapper>{moveComponents}</MovesWrapper>);
+      ));
+    return (
+      <MovesWrapper>
+        {moveComponents}
+        <div ref={(el) => { this.el = el; }} />
+      </MovesWrapper>
+    );
   }
 
   renderBoardOrLoading() {
-    const { boards } = this.state;
-    if (boards.length === 0) return (<div><p>Loading...</p></div>);
+    const { moves, selectedMove } = this.state;
 
-    const board = boards[boards.length - 1];
+    if (moves.length === 0) return (<div><p>Loading...</p></div>);
+
+    const { board, piece } = moves[selectedMove];
+    const legalMoves = board.legalMovesByActiveColor(piece)
+      .map((toSlots) => (selectedMove === moves.length - 1 ? toSlots : []));
 
     return (
       <Board
         activePlayer={this.activePlayer}
         board={board}
-        legalMoves={board.legalMoves()}
+        fetchGame={this.fetchGame}
         handleMove={this.handleMove}
-        gameId={GAME_PK}
+        legalMoves={legalMoves}
+        gameId={GAME_ID}
       />
     );
   }

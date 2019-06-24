@@ -343,6 +343,16 @@ export default class XiangqiBoard {
     ));
   }
 
+  legalMovesByActiveColor(lastMovePiece = null) {
+    const isActive = (
+      this.isRedCode(lastMovePiece) ? this.isBlack : this.isRed
+    ).bind(this);
+    return this.legalMoves().map((toSlots, fromSlot) => {
+      if (toSlots.length === 0 || !isActive(fromSlot)) return [];
+      return toSlots;
+    });
+  }
+
   captures() {
     const result = new Set();
     for (const [, toSlots] of this.legalMoves(true).entries()) {

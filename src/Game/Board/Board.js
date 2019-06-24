@@ -43,8 +43,8 @@ class Board extends Component {
 
   getPostMovePayload(fromSlot, toSlot) {
     const { board } = this.props;
-    const from = board.getRankFile(fromSlot).join(',');
-    const to = board.getRankFile(toSlot).join(',');
+    const from = board.getRankFile(fromSlot);
+    const to = board.getRankFile(toSlot);
     const piece = board.getPiece(fromSlot);
     return {
       player: this.getActivePlayer().name,
@@ -84,22 +84,22 @@ class Board extends Component {
   }
 
   handleMove(fromSlot, toSlot) {
-    const { gameId, handleMove } = this.props;
+    const { gameId, fetchGame, handleMove } = this.props;
 
     if (this.isLegalMove(fromSlot, toSlot)) {
+      handleMove(fromSlot, toSlot);
+      this.handleSelect(null);
+
+      // Post move to server
       postMove(gameId, this.getPostMovePayload(fromSlot, toSlot))
-        .then((response) => {
-          const { status } = response;
-          if (status === 201) {
-            handleMove(fromSlot, toSlot);
-          }
+        .then(({ status }) => {
+          if (status !== 201) fetchGame();
         })
-        .catch((error) => {
-          // TODO: display useful error
-          throw error;
+        .catch(() => {
+          // TODO: display useful error?
+          fetchGame();
         });
     }
-    this.handleSelect(null);
   }
 
   render() {
@@ -130,8 +130,9 @@ Board.propTypes = {
   activePlayer: PropTypes.func.isRequired,
   board: boardPropType.isRequired,
   handleMove: PropTypes.func.isRequired,
+  fetchGame: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-  gameId: PropTypes.number.isRequired,
+  gameId: PropTypes.string.isRequired,
 };
 
 export default Board;
