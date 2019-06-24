@@ -100,11 +100,16 @@ class Game extends Component {
 
   handleMove(fromSlot, toSlot) {
     this.setState((fromState) => {
-      const { boards } = fromState;
-      const fromBoard = boards[boards.length - 1];
+      const { moves } = fromState;
+      const { board: lastBoard } = moves[moves.length - 1];
+      const nextMove = {
+        fromPos: lastBoard.getRankFile(fromSlot),
+        toPos: lastBoard.getRankFile(toSlot),
+        piece: lastBoard.getPiece(fromSlot),
+        board: lastBoard.move(fromSlot, toSlot),
+      };
       return {
-        boards: update(boards, { $push: [fromBoard.move(fromSlot, toSlot)] }),
-        // TODO: add new move to moves state
+        moves: update(moves, { $push: [nextMove] }),
       };
     });
     this.changePlayer();
@@ -159,13 +164,13 @@ class Game extends Component {
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
-    const { board } = moves[moves.length - 1];
+    const { board, piece } = moves[moves.length - 1];
 
     return (
       <Board
         activePlayer={this.activePlayer}
         board={board}
-        legalMoves={board.legalMovesByActiveColor()}
+        legalMoves={board.legalMovesByActiveColor(piece)}
         handleMove={this.handleMove}
         gameId={GAME_ID}
       />
