@@ -90,6 +90,9 @@ class Board extends Component {
       postMove(gameId, this.getPostMovePayload(fromSlot, toSlot))
         .then((response) => {
           const { status } = response;
+          // TODO: consider updating the move on the front end without waiting
+          // for a successful response and undoing the move if the response
+          // fails.
           if (status === 201) {
             handleMove(fromSlot, toSlot);
           }
