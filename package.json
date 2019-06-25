@@ -17,9 +17,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "gh-pages -d build",
     "test": "jest",
     "eject": "react-scripts eject"
   },
+  "homepage": "https://maximpertsov.github.io/react-xiangqi",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -46,6 +48,7 @@
     "eslint-plugin-import": ">=2.9.0",
     "eslint-plugin-jsx-a11y": ">=6.0.3",
     "eslint-plugin-react": ">=7.7.0",
+    "gh-pages": "^2.0.1",
     "jest": "^24.8.0",
     "react-test-renderer": "^16.8.6"
   }
