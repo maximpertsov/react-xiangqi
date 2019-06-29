@@ -10,11 +10,17 @@ class LoginForm extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(event) {
     const { target } = event;
     this.setState({ [target.name]: target.value });
+  }
+
+  handleClick(event) {
+    const { target } = event;
+    console.log('Submitted');
   }
 
   render() {
@@ -37,7 +43,7 @@ class LoginForm extends Component {
               type="password"
               placeholder="Password"
             />
-            <button type="button">login</button>
+            <button type="button" onClick={this.handleClick}>login</button>
           </form>
         </div>
       </div>
