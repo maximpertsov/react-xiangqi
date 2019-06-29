@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { authenticate } from '../client';
-import { getAccessToken, setAccessToken } from '../token';
+import { getAccessToken, setAccessToken, getUsername } from '../token';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -39,9 +39,8 @@ class LoginForm extends Component {
 
   render() {
     if (getAccessToken() !== null) {
-      return (
-        <div>Logged in</div>
-      );
+      const loggedInMessage = `Welcome ${getUsername()}`
+      return (<div>{loggedInMessage}</div>);
     }
 
     const { username, password, error } = this.state;
