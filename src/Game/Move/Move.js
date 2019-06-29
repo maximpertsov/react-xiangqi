@@ -57,11 +57,17 @@ const Move = ({
 // TODO: allow fromPos, toPos, piece to be null
 Move.propTypes = {
   handleMoveSelect: PropTypes.func.isRequired,
-  fromPos: PropTypes.arrayOf(PropTypes.number).isRequired,
-  toPos: PropTypes.arrayOf(PropTypes.number).isRequired,
-  piece: PropTypes.string.isRequired,
+  fromPos: PropTypes.arrayOf(PropTypes.number),
+  toPos: PropTypes.arrayOf(PropTypes.number),
+  piece: PropTypes.string,
   order: PropTypes.number.isRequired,
   selected: PropTypes.bool.isRequired,
+};
+
+Move.defaultProps = {
+  fromPos: null,
+  toPos: null,
+  piece: null,
 };
 
 export default Move;

@@ -75,9 +75,9 @@ class Game extends Component {
       const { moves: movesData } = response.data;
       const moves = [
         {
-          piece: null,
-          fromPos: null,
-          toPos: null,
+          piece: undefined,
+          fromPos: undefined,
+          toPos: undefined,
           board: new XiangqiBoard({ fen }),
         },
       ];
