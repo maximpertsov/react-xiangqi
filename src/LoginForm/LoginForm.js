@@ -39,7 +39,7 @@ class LoginForm extends Component {
 
   render() {
     if (getAccessToken() !== null) {
-      const loggedInMessage = `Welcome ${getUsername()}`
+      const loggedInMessage = `Welcome ${getUsername()}`;
       return (<div>{loggedInMessage}</div>);
     }
 
