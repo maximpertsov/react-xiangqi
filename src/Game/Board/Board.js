@@ -92,7 +92,6 @@ class Board extends Component {
 
     if (this.isLegalMove(fromSlot, toSlot)) {
       handleMove(fromSlot, toSlot);
-      this.handleSelect(null);
 
       // Post move to server
       postMove(gameId, this.getPostMovePayload(fromSlot, toSlot))
@@ -104,6 +103,7 @@ class Board extends Component {
           fetchGame();
         });
     }
+    this.handleSelect(null);
   }
 
   render() {
