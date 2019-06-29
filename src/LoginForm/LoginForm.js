@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { authenticate } from '../client';
-
-const getAccessToken = () => window.sessionStorage.getItem('accessToken');
-
-const setAccessToken = (accessToken) => {
-  window.sessionStorage.setItem('accessToken', accessToken);
-};
+import { getAccessToken, setAccessToken } from '../token';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -43,6 +38,12 @@ class LoginForm extends Component {
   }
 
   render() {
+    if (getAccessToken() !== null) {
+      return (
+        <div>Logged in</div>
+      );
+    }
+
     const { username, password, error } = this.state;
     return (
       <div className="LoginForm">
