@@ -58,11 +58,6 @@ class Game extends Component {
 
   componentDidMount() {
     this.fetchGame();
-    this.scrollToBottomOfMovelist();
-  }
-
-  componentDidUpdate() {
-    this.scrollToBottomOfMovelist();
   }
 
   scrollToBottomOfMovelist() {
@@ -101,6 +96,7 @@ class Game extends Component {
       // TODO: There is one more board than moves.
       // Watch out for off by 1 errors!
       this.setState({ moves, selectedMove: moves.length - 1 });
+      this.scrollToBottomOfMovelist();
     });
   }
 
@@ -170,6 +166,7 @@ class Game extends Component {
 
   renderMoves() {
     const { moves, selectedMove } = this.state;
+    const scrollTarget = (<div ref={(el) => { this.el = el; }} />);
     const moveComponents = moves
       .map((m, i) => (
         <Move
@@ -185,7 +182,7 @@ class Game extends Component {
     return (
       <MovesWrapper>
         {moveComponents}
-        <div ref={(el) => { this.el = el; }} />
+        {scrollTarget}
       </MovesWrapper>
     );
   }
@@ -196,7 +193,8 @@ class Game extends Component {
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
     const { board, piece } = moves[selectedMove];
-    const legalMoves = board.legalMovesByActiveColor(piece)
+    const legalMoves = board
+      .legalMovesByActiveColor(piece)
       .map((toSlots) => (selectedMove === moves.length - 1 ? toSlots : []));
 
     return (
