@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 import Board from './Board/Board';
 import Move from './Move/Move';
 import GameInfo from './GameInfo';
+import LoginForm from '../LoginForm/LoginForm';
 import XiangqiBoard, { RefType } from '../logic';
 import { getGame, getMoves } from '../client';
 
@@ -215,6 +216,7 @@ class Game extends Component {
         { this.renderBoardOrLoading() }
         <SidebarWrapper>
           { this.renderGameInfoOrLoading() }
+          <LoginForm />
           { this.renderMoves() }
         </SidebarWrapper>
       </Wrapper>
