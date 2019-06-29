@@ -22,7 +22,7 @@ export async function postMove(gameId, {
   return axios.post(`game/${gameId}/moves`, payload);
 }
 
-export async function authenticate(gameId, { username, password }) {
+export async function authenticate({ username, password }) {
   const payload = { username, password };
   return axios.post('authenticate', payload);
 }

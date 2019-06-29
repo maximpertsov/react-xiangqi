@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import { authenticate } from '../client';
+
+const getAccessToken = () => window.sessionStorage.getItem('accessToken');
+
+const setAccessToken = (accessToken) => {
+  window.sessionStorage.setItem('accessToken', accessToken);
+};
 
 class LoginForm extends Component {
   constructor(props) {
@@ -7,24 +14,36 @@ class LoginForm extends Component {
     this.state = {
       username: '',
       password: '',
+      error: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleChange(event) {
-    const { target } = event;
-    this.setState({ [target.name]: target.value });
+  clearState() {
+    this.setState({ username: '', password: '', error: '' });
   }
 
-  handleClick(event) {
-    const { target } = event;
-    console.log('Submitted');
+  handleChange(event) {
+    const { target: { name, value } } = event;
+    this.setState({ [name]: value });
+  }
+
+  handleClick() {
+    const { username, password } = this.state;
+    this.clearState();
+    authenticate({ username, password })
+      .then((response) => {
+        setAccessToken(response.data.access_token);
+      })
+      .catch(() => {
+        this.setState({ error: 'Login failed' });
+      });
   }
 
   render() {
-    const { username, password } = this.state;
+    const { username, password, error } = this.state;
     return (
       <div className="LoginForm">
         <div className="form">
@@ -45,6 +64,7 @@ class LoginForm extends Component {
             />
             <button type="button" onClick={this.handleClick}>login</button>
           </form>
+          <div>{error}</div>
         </div>
       </div>
     );
