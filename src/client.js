@@ -4,7 +4,9 @@ const BASE_URL = 'http://localhost:8000';
 
 axios.defaults.baseURL = `${BASE_URL}/api/`;
 axios.defaults.timeout = 1000;
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = true;
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+axios.defaults.xsrfCookieName = 'csrftoken';
 
 export const getGame = (gameId) => axios.get(`game/${gameId}`);
 
