@@ -205,13 +205,21 @@ class Game extends Component {
 
   renderBoardOrLoading() {
     const { moves, selectedMove } = this.state;
+    const userColor = this.getUserColor();
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
     const { board, piece } = moves[selectedMove];
     const legalMoves = board
       .legalMovesByActiveColor(piece)
-      .map((toSlots) => (selectedMove === moves.length - 1 ? toSlots : []));
+      .map(
+        (toSlots) => (selectedMove === moves.length - 1 ? toSlots : []),
+      )
+      .map(
+        (toSlots, fromSlot) => (
+          board.isColor(userColor, fromSlot) ? toSlots : []
+        ),
+      );
 
     return (
       <Board
