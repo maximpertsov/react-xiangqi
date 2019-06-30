@@ -4,6 +4,7 @@ const BASE_URL = 'http://localhost:8000';
 
 axios.defaults.baseURL = `${BASE_URL}/api/`;
 axios.defaults.timeout = 1000;
+axios.defaults.withCredentials = true
 
 export const getGame = (gameId) => axios.get(`game/${gameId}`);
 
