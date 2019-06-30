@@ -1,10 +1,9 @@
 import jwtDecode from 'jwt-decode';
 
-export const getAccessToken = () => window
-  .sessionStorage.getItem('accessToken');
+export const getAccessToken = () => localStorage.getItem('accessToken');
 
 export const setAccessToken = (accessToken) => {
-  window.sessionStorage.setItem('accessToken', accessToken);
+  localStorage.setItem('accessToken', accessToken);
 };
 
 export const getUsername = () => {
