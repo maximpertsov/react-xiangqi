@@ -222,8 +222,6 @@ class Game extends Component {
         { this.renderBoardOrLoading() }
         <SidebarWrapper>
           <GameInfo
-            redPlayer={players.find((p) => p.color === 'red')}
-            blackPlayer={players.find((p) => p.color === 'black')}
             activePlayer={this.activePlayer}
             userColor={this.getUserColor()}
             players={players}

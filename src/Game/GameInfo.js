@@ -6,9 +6,7 @@ const Wrapper = styled.div`
   height: 20%;
 `;
 
-const GameInfo = ({
-  activePlayer, redPlayer, blackPlayer, userColor, players,
-}) => {
+const GameInfo = ({ activePlayer, userColor, players }) => {
   const userIsActive = () => {
     const { color } = activePlayer();
     return color === userColor;
@@ -18,9 +16,15 @@ const GameInfo = ({
     userIsActive() ? 'Your turn' : 'Waiting for opponent'
   );
 
-  const versusMessage = () => (
-    `${redPlayer.name} [red] vs ${blackPlayer.name} [black]`
-  );
+  const getRedPlayer = () => players.find((p) => p.color === 'red');
+
+  const getBlackPlayer = () => players.find((p) => p.color === 'black');
+
+  const versusMessage = () => {
+    const { color: redColor, name: redName } = getRedPlayer();
+    const { color: blackColor, name: blackName } = getBlackPlayer();
+    return `${redName} [${redColor}] vs ${blackName} [${blackColor}]`;
+  };
 
   const isLoading = () => players.length === 0;
 
@@ -43,10 +47,12 @@ const playerPropType = PropTypes.shape({
 
 GameInfo.propTypes = {
   activePlayer: PropTypes.func.isRequired,
-  blackPlayer: playerPropType.isRequired,
-  redPlayer: playerPropType.isRequired,
-  userColor: PropTypes.string.isRequired,
   players: PropTypes.arrayOf(playerPropType).isRequired,
+  userColor: PropTypes.string,
+};
+
+GameInfo.defaultProps = {
+  userColor: null,
 };
 
 export default GameInfo;
