@@ -175,6 +175,7 @@ class Game extends Component {
           redPlayer={players.find((p) => p.color === 'red')}
           blackPlayer={players.find((p) => p.color === 'black')}
           activePlayer={this.activePlayer}
+          userColor={this.getUserColor()}
         />
       </InfoWrapper>
     );
