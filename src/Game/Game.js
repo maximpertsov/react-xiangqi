@@ -6,7 +6,7 @@ import Move from './Move/Move';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
 import XiangqiBoard, { RefType } from '../logic';
-import { getGame, getMoves } from '../client';
+import { getGame, getMoves, getCurrentPlayer } from '../client';
 
 const GAME_ID = 'ABC123';
 
@@ -45,6 +45,7 @@ class Game extends Component {
       moves: [],
       selectedMove: null,
       username: null,
+      timer: null,
     };
 
     this.changePlayer = this.changePlayer.bind(this);
@@ -58,6 +59,10 @@ class Game extends Component {
     this.fetchGame();
   }
 
+  componentWillUnmount() {
+    this.setState({ timer: null });
+  }
+
   scrollToBottomOfMovelist() {
     try {
       this.el.scrollIntoView({ behavior: 'smooth' });
@@ -66,6 +71,21 @@ class Game extends Component {
         // pass
       } else { throw e; }
     }
+  }
+
+  // TODO: only poll for move update? Can't do that now because
+  // we don't update active player based on moves
+  pollForGameUpdate() {
+    console.log('Polling for an update...');
+    const { username } = this.state;
+    getCurrentPlayer(GAME_ID)
+      .then((response) => {
+        const { data: { player } } = response;
+        if (player === username) {
+          this.fetchGame();
+          this.clearTimer();
+        }
+      });
   }
 
   fetchMoves(fen) {
@@ -108,6 +128,9 @@ class Game extends Component {
       const activePlayerIdx = players.map((p) => p.color).indexOf(activeColor);
       this.setState({ players, activePlayerIdx });
       this.fetchMoves(fen);
+
+      const { username } = this.state;
+      if (this.activePlayer().name !== username) this.setTimer();
     });
   }
 
@@ -127,6 +150,21 @@ class Game extends Component {
       };
     });
     this.changePlayer();
+    this.setTimer();
+  }
+
+  setTimer() {
+    this.setState({
+      timer: setInterval(() => this.pollForGameUpdate(), 1000),
+    });
+  }
+
+  clearTimer() {
+    this.setState((fromState) => {
+      const { timer } = fromState;
+      clearInterval(timer);
+      return { timer: null };
+    });
   }
 
   handleMoveSelect(e, order) {

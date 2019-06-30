@@ -12,6 +12,9 @@ export const getGame = (gameId) => axios.get(`game/${gameId}`);
 
 export const getMoves = (gameId) => axios.get(`game/${gameId}/moves`);
 
+export const getCurrentPlayer = (gameId) => axios
+  .get(`game/${gameId}/current-player`);
+
 export async function postMove(gameId, {
   player, piece, fromPos, toPos,
 }) {
