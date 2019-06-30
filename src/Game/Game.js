@@ -43,18 +43,20 @@ class Game extends Component {
   constructor(props) {
     super(props);
 
-    this.activePlayer = this.activePlayer.bind(this);
-    this.changePlayer = this.changePlayer.bind(this);
-    this.handleMove = this.handleMove.bind(this);
-    this.handleMoveSelect = this.handleMoveSelect.bind(this);
-    this.fetchGame = this.fetchGame.bind(this);
-
     this.state = {
       activePlayerIdx: 0,
       players: [],
       moves: [],
       selectedMove: null,
+      username: null,
     };
+
+    this.activePlayer = this.activePlayer.bind(this);
+    this.changePlayer = this.changePlayer.bind(this);
+    this.handleMove = this.handleMove.bind(this);
+    this.handleMoveSelect = this.handleMoveSelect.bind(this);
+    this.fetchGame = this.fetchGame.bind(this);
+    this.setUsername = this.setUsername.bind(this);
   }
 
   componentDidMount() {
@@ -150,6 +152,19 @@ class Game extends Component {
     }));
   }
 
+  getUserPlayer() {
+    const { username, players } = this.state;
+    return players.find((p) => p.name === username) || {};
+  }
+
+  getUserColor() {
+    return this.getUserPlayer().color;
+  }
+
+  setUsername(username) {
+    this.setState({ username });
+  }
+
   renderGameInfoOrLoading() {
     const { players } = this.state;
     if (players.length === 0) return (<div><p>Loading...</p></div>);
@@ -216,7 +231,7 @@ class Game extends Component {
         { this.renderBoardOrLoading() }
         <SidebarWrapper>
           { this.renderGameInfoOrLoading() }
-          <LoginForm />
+          <LoginForm setUsername={this.setUsername} />
           { this.renderMoves() }
         </SidebarWrapper>
       </Wrapper>

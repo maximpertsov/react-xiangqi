@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { authenticate } from '../client';
 import { getAccessToken, setAccessToken, getUsername } from '../token';
 
@@ -16,6 +17,18 @@ class LoginForm extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentDidMount() {
+    if (getAccessToken() !== null) {
+      const username = getUsername();
+      this.setUsername(username);
+    }
+  }
+
+  setUsername(username) {
+    const { setUsername } = this.props;
+    setUsername(username);
+  }
+
   clearState() {
     this.setState({ username: '', password: '', error: '' });
   }
@@ -31,6 +44,7 @@ class LoginForm extends Component {
     authenticate({ username, password })
       .then((response) => {
         setAccessToken(response.data.access_token);
+        this.setUsername(getUsername());
       })
       .catch(() => {
         this.setState({ error: 'Login failed' });
@@ -70,5 +84,9 @@ class LoginForm extends Component {
     );
   }
 }
+
+LoginForm.propTypes = {
+  setUsername: PropTypes.func.isRequired,
+};
 
 export default LoginForm;
