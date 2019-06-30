@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import jwtDecode from 'jwt-decode';
 import { authenticate } from '../client';
-import { getAccessToken, setAccessToken, getUsername } from '../token';
 
 class LoginForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      sub: null,
       username: '',
       password: '',
       error: '',
@@ -18,10 +19,13 @@ class LoginForm extends Component {
   }
 
   componentDidMount() {
-    if (getAccessToken() !== null) {
-      const username = getUsername();
-      this.setUsername(username);
-    }
+    const { username, password } = this.state;
+    // TODO: username and password unnecessary for cookie auth
+    authenticate({ username, password })
+      .then((response) => {
+        if (response.status === 201) this.handleAuthenticationSuccess(response);
+      })
+      .catch(() => {});
   }
 
   setUsername(username) {
@@ -31,6 +35,13 @@ class LoginForm extends Component {
 
   clearState() {
     this.setState({ username: '', password: '', error: '' });
+  }
+
+  handleAuthenticationSuccess(response) {
+    const { data: { access_token: accessToken } } = response;
+    const { sub } = jwtDecode(accessToken);
+    this.setState({ sub });
+    this.setUsername(sub);
   }
 
   handleChange(event) {
@@ -43,20 +54,25 @@ class LoginForm extends Component {
     this.clearState();
     authenticate({ username, password })
       .then((response) => {
-        setAccessToken(response.data.access_token);
-        this.setUsername(getUsername());
+        if (response.status === 201) this.handleAuthenticationSuccess(response);
       })
       .catch(() => {
         this.setState({ error: 'Login failed' });
       });
   }
 
-  render() {
-    if (getAccessToken() !== null) {
-      const loggedInMessage = `Welcome ${getUsername()}`;
-      return (<div>{loggedInMessage}</div>);
-    }
+  isLoggedIn() {
+    const { sub } = this.state;
+    return sub !== null;
+  }
 
+  renderLoggedIn() {
+    const { sub } = this.state;
+    const loggedInMessage = `Welcome ${sub}`;
+    return (<div>{loggedInMessage}</div>);
+  }
+
+  renderLoggedOut() {
     const { username, password, error } = this.state;
     return (
       <div className="LoginForm">
@@ -82,6 +98,10 @@ class LoginForm extends Component {
         </div>
       </div>
     );
+  }
+
+  render() {
+    return this.isLoggedIn() ? this.renderLoggedIn() : this.renderLoggedOut();
   }
 }
 
