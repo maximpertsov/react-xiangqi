@@ -1,25 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
+
+const Wrapper = styled.div`
+  height: 20%;
+`;
 
 const GameInfo = ({
-  activePlayer, redPlayer, blackPlayer, userColor,
+  activePlayer, redPlayer, blackPlayer, userColor, players,
 }) => {
-  const { color } = activePlayer();
-  const userIsActive = color === userColor;
-  const turnMessage = {
-    true: 'Your turn',
-    false: 'Waiting for opponent',
+  const userIsActive = () => {
+    const { color } = activePlayer();
+    return color === userColor;
   };
-  return (
-    <div>
-      <p>
-        { `${redPlayer.name} [red] vs ${blackPlayer.name} [black]` }
-      </p>
-      <p>
-        {turnMessage[userIsActive]}
-      </p>
-    </div>
+
+  const turnMessage = () => (
+    userIsActive() ? 'Your turn' : 'Waiting for opponent'
   );
+
+  const versusMessage = () => (
+    `${redPlayer.name} [red] vs ${blackPlayer.name} [black]`
+  );
+
+  const isLoading = () => players.length === 0;
+
+  const renderLoading = () => (<div><p>Loading...</p></div>);
+
+  const renderLoaded = () => (
+    <Wrapper>
+      <p>{ versusMessage() }</p>
+      <p>{ turnMessage() }</p>
+    </Wrapper>
+  );
+
+  return isLoading() ? renderLoading() : renderLoaded();
 };
 
 const playerPropType = PropTypes.shape({
@@ -32,6 +46,7 @@ GameInfo.propTypes = {
   blackPlayer: playerPropType.isRequired,
   redPlayer: playerPropType.isRequired,
   userColor: PropTypes.string.isRequired,
+  players: PropTypes.arrayOf(playerPropType).isRequired,
 };
 
 export default GameInfo;

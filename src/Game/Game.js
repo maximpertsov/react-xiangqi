@@ -25,10 +25,6 @@ const SidebarWrapper = styled.div`
   height: 100%;
 `;
 
-const InfoWrapper = styled.div`
-  height: 20%;
-`;
-
 // TODO: set max-height by percentage?
 const MovesWrapper = styled.div`
   display: grid;
@@ -165,22 +161,6 @@ class Game extends Component {
     this.setState({ username });
   }
 
-  renderGameInfoOrLoading() {
-    const { players } = this.state;
-    if (players.length === 0) return (<div><p>Loading...</p></div>);
-    // TODO: move info wrapper to GameInfo class
-    return (
-      <InfoWrapper>
-        <GameInfo
-          redPlayer={players.find((p) => p.color === 'red')}
-          blackPlayer={players.find((p) => p.color === 'black')}
-          activePlayer={this.activePlayer}
-          userColor={this.getUserColor()}
-        />
-      </InfoWrapper>
-    );
-  }
-
   renderMoves() {
     const { moves, selectedMove } = this.state;
     const scrollTarget = (<div ref={(el) => { this.el = el; }} />);
@@ -235,11 +215,19 @@ class Game extends Component {
   }
 
   render() {
+    const { players } = this.state;
+
     return (
       <Wrapper className="Game">
         { this.renderBoardOrLoading() }
         <SidebarWrapper>
-          { this.renderGameInfoOrLoading() }
+          <GameInfo
+            redPlayer={players.find((p) => p.color === 'red')}
+            blackPlayer={players.find((p) => p.color === 'black')}
+            activePlayer={this.activePlayer}
+            userColor={this.getUserColor()}
+            players={players}
+          />
           <LoginForm setUsername={this.setUsername} />
           { this.renderMoves() }
         </SidebarWrapper>
