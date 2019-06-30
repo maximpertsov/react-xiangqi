@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 const Wrapper = styled.div(
   ({ selected, piece }) => ({
     // TODO: find a better selction color
-    backgroundColor: (selected ? '#abc999' : 'none'),
+    backgroundColor: (selected ? '#d9d9d9' : 'none'),
     color: ('RHEAKCP'.includes(piece) ? 'red' : 'black'),
   }),
 );
@@ -57,11 +57,17 @@ const Move = ({
 // TODO: allow fromPos, toPos, piece to be null
 Move.propTypes = {
   handleMoveSelect: PropTypes.func.isRequired,
-  fromPos: PropTypes.arrayOf(PropTypes.number).isRequired,
-  toPos: PropTypes.arrayOf(PropTypes.number).isRequired,
-  piece: PropTypes.string.isRequired,
+  fromPos: PropTypes.arrayOf(PropTypes.number),
+  toPos: PropTypes.arrayOf(PropTypes.number),
+  piece: PropTypes.string,
   order: PropTypes.number.isRequired,
   selected: PropTypes.bool.isRequired,
+};
+
+Move.defaultProps = {
+  fromPos: null,
+  toPos: null,
+  piece: null,
 };
 
 export default Move;

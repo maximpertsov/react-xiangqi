@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 import Board from './Board/Board';
 import Move from './Move/Move';
 import GameInfo from './GameInfo';
+import LoginForm from '../LoginForm/LoginForm';
 import XiangqiBoard, { RefType } from '../logic';
 import { getGame, getMoves } from '../client';
 
@@ -24,10 +25,6 @@ const SidebarWrapper = styled.div`
   height: 100%;
 `;
 
-const InfoWrapper = styled.div`
-  height: 20%;
-`;
-
 // TODO: set max-height by percentage?
 const MovesWrapper = styled.div`
   display: grid;
@@ -42,27 +39,23 @@ class Game extends Component {
   constructor(props) {
     super(props);
 
-    this.activePlayer = this.activePlayer.bind(this);
-    this.changePlayer = this.changePlayer.bind(this);
-    this.handleMove = this.handleMove.bind(this);
-    this.handleMoveSelect = this.handleMoveSelect.bind(this);
-    this.fetchGame = this.fetchGame.bind(this);
-
     this.state = {
       activePlayerIdx: 0,
       players: [],
       moves: [],
       selectedMove: null,
+      username: null,
     };
+
+    this.changePlayer = this.changePlayer.bind(this);
+    this.handleMove = this.handleMove.bind(this);
+    this.handleMoveSelect = this.handleMoveSelect.bind(this);
+    this.fetchGame = this.fetchGame.bind(this);
+    this.setUsername = this.setUsername.bind(this);
   }
 
   componentDidMount() {
     this.fetchGame();
-    this.scrollToBottomOfMovelist();
-  }
-
-  componentDidUpdate() {
-    this.scrollToBottomOfMovelist();
   }
 
   scrollToBottomOfMovelist() {
@@ -80,9 +73,9 @@ class Game extends Component {
       const { moves: movesData } = response.data;
       const moves = [
         {
-          piece: null,
-          fromPos: null,
-          toPos: null,
+          piece: undefined,
+          fromPos: undefined,
+          toPos: undefined,
           board: new XiangqiBoard({ fen }),
         },
       ];
@@ -101,6 +94,7 @@ class Game extends Component {
       // TODO: There is one more board than moves.
       // Watch out for off by 1 errors!
       this.setState({ moves, selectedMove: moves.length - 1 });
+      this.scrollToBottomOfMovelist();
     });
   }
 
@@ -153,23 +147,22 @@ class Game extends Component {
     }));
   }
 
-  renderGameInfoOrLoading() {
-    const { players } = this.state;
-    if (players.length === 0) return (<div><p>Loading...</p></div>);
-    // TODO: move info wrapper to GameInfo class
-    return (
-      <InfoWrapper>
-        <GameInfo
-          redPlayer={players.find((p) => p.color === 'red')}
-          blackPlayer={players.find((p) => p.color === 'black')}
-          activePlayer={this.activePlayer}
-        />
-      </InfoWrapper>
-    );
+  getUserPlayer() {
+    const { username, players } = this.state;
+    return players.find((p) => p.name === username) || {};
+  }
+
+  getUserColor() {
+    return this.getUserPlayer().color;
+  }
+
+  setUsername(username) {
+    this.setState({ username });
   }
 
   renderMoves() {
     const { moves, selectedMove } = this.state;
+    const scrollTarget = (<div ref={(el) => { this.el = el; }} />);
     const moveComponents = moves
       .map((m, i) => (
         <Move
@@ -185,23 +178,32 @@ class Game extends Component {
     return (
       <MovesWrapper>
         {moveComponents}
-        <div ref={(el) => { this.el = el; }} />
+        {scrollTarget}
       </MovesWrapper>
     );
   }
 
   renderBoardOrLoading() {
     const { moves, selectedMove } = this.state;
+    const userColor = this.getUserColor();
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
     const { board, piece } = moves[selectedMove];
-    const legalMoves = board.legalMovesByActiveColor(piece)
-      .map((toSlots) => (selectedMove === moves.length - 1 ? toSlots : []));
+    const legalMoves = board
+      .legalMovesByActiveColor(piece)
+      .map(
+        (toSlots) => (selectedMove === moves.length - 1 ? toSlots : []),
+      )
+      .map(
+        (toSlots, fromSlot) => (
+          board.isColor(userColor, fromSlot) ? toSlots : []
+        ),
+      );
 
     return (
       <Board
-        activePlayer={this.activePlayer}
+        activePlayer={this.activePlayer()}
         board={board}
         fetchGame={this.fetchGame}
         handleMove={this.handleMove}
@@ -212,11 +214,18 @@ class Game extends Component {
   }
 
   render() {
+    const { players } = this.state;
+
     return (
       <Wrapper className="Game">
         { this.renderBoardOrLoading() }
         <SidebarWrapper>
-          { this.renderGameInfoOrLoading() }
+          <GameInfo
+            activePlayer={this.activePlayer()}
+            userColor={this.getUserColor()}
+            players={players}
+          />
+          <LoginForm setUsername={this.setUsername} />
           { this.renderMoves() }
         </SidebarWrapper>
       </Wrapper>
