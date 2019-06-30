@@ -9,6 +9,7 @@ import XiangqiBoard, { RefType } from '../logic';
 import { getGame, getMoves, getCurrentPlayer } from '../client';
 
 const GAME_ID = 'ABC123';
+const POLL_INTERVAL = 2500;
 
 const Wrapper = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ class Game extends Component {
       moves: [],
       selectedMove: null,
       username: null,
+      clientUpdatedAt: null,
       timer: null,
     };
 
@@ -76,14 +78,20 @@ class Game extends Component {
   // TODO: only poll for move update? Can't do that now because
   // we don't update active player based on moves
   pollForGameUpdate() {
+    // Use current fen instead?
+    const { username, clientUpdatedAt } = this.state;
+    if (username === null || username === this.activePlayer.name) return;
+
     console.log('Polling for an update...');
-    const { username } = this.state;
+
     getCurrentPlayer(GAME_ID)
       .then((response) => {
-        const { data: { player } } = response;
-        if (player === username) {
+        const { data: { updated_at: serverUpdatedAt } } = response;
+        if ((clientUpdatedAt === null && serverUpdatedAt !== null)
+          || (clientUpdatedAt < serverUpdatedAt)) {
           this.fetchGame();
           this.clearTimer();
+          this.setState({ clientUpdatedAt: serverUpdatedAt });
         }
       });
   }
@@ -155,7 +163,7 @@ class Game extends Component {
 
   setTimer() {
     this.setState({
-      timer: setInterval(() => this.pollForGameUpdate(), 1000),
+      timer: setInterval(() => this.pollForGameUpdate(), POLL_INTERVAL),
     });
   }
 
