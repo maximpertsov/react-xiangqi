@@ -47,7 +47,6 @@ class Game extends Component {
       username: null,
     };
 
-    this.activePlayer = this.activePlayer.bind(this);
     this.changePlayer = this.changePlayer.bind(this);
     this.handleMove = this.handleMove.bind(this);
     this.handleMoveSelect = this.handleMoveSelect.bind(this);
@@ -204,7 +203,7 @@ class Game extends Component {
 
     return (
       <Board
-        activePlayer={this.activePlayer}
+        activePlayer={this.activePlayer()}
         board={board}
         fetchGame={this.fetchGame}
         handleMove={this.handleMove}
@@ -222,7 +221,7 @@ class Game extends Component {
         { this.renderBoardOrLoading() }
         <SidebarWrapper>
           <GameInfo
-            activePlayer={this.activePlayer}
+            activePlayer={this.activePlayer()}
             userColor={this.getUserColor()}
             players={players}
           />

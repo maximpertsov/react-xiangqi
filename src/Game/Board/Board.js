@@ -5,6 +5,7 @@ import Square from '../Square/Square';
 import { postMove } from '../../client';
 import { getPiece } from '../Piece/Piece';
 import { boardPropType } from '../../logic';
+import { playerPropType } from '../../customPropTypes';
 
 import boardImg from './board-1000px.svg.png';
 
@@ -33,7 +34,7 @@ class Board extends Component {
 
   getActivePlayer() {
     const { activePlayer } = this.props;
-    return activePlayer();
+    return activePlayer;
   }
 
   getPieceOn(slot) {
@@ -131,7 +132,7 @@ class Board extends Component {
 }
 
 Board.propTypes = {
-  activePlayer: PropTypes.func.isRequired,
+  activePlayer: playerPropType.isRequired,
   board: boardPropType.isRequired,
   handleMove: PropTypes.func.isRequired,
   fetchGame: PropTypes.func.isRequired,

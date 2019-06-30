@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { playerPropType } from '../customPropTypes';
 
 const Wrapper = styled.div`
   height: 20%;
@@ -8,7 +9,7 @@ const Wrapper = styled.div`
 
 const GameInfo = ({ activePlayer, userColor, players }) => {
   const userIsActive = () => {
-    const { color } = activePlayer();
+    const { color } = activePlayer;
     return color === userColor;
   };
 
@@ -40,18 +41,14 @@ const GameInfo = ({ activePlayer, userColor, players }) => {
   return isLoading() ? renderLoading() : renderLoaded();
 };
 
-const playerPropType = PropTypes.shape({
-  color: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-});
-
 GameInfo.propTypes = {
-  activePlayer: PropTypes.func.isRequired,
+  activePlayer: playerPropType,
   players: PropTypes.arrayOf(playerPropType).isRequired,
   userColor: PropTypes.string,
 };
 
 GameInfo.defaultProps = {
+  activePlayer: null,
   userColor: null,
 };
 
