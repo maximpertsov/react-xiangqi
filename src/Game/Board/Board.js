@@ -30,19 +30,15 @@ const Board = ({
   selectedSlot,
   gameId,
 }) => {
-  const getActivePlayer = () => activePlayer;
-
   const getPieceOn = (slot) => getPiece(board.getPiece(slot));
 
   const getPostMovePayload = (fromSlot, toSlot) => {
-    const from = board.getRankFile(fromSlot);
-    const to = board.getRankFile(toSlot);
+    const { name: player } = activePlayer;
+    const fromPos = board.getRankFile(fromSlot);
+    const toPos = board.getRankFile(toSlot);
     const piece = board.getPiece(fromSlot);
     return {
-      player: getActivePlayer().name,
-      piece,
-      fromPos: from,
-      toPos: to,
+      player, piece, fromPos, toPos,
     };
   };
 
@@ -54,7 +50,8 @@ const Board = ({
   };
 
   const isLegalMove = (fromSlot, toSlot) => {
-    if (!board.isColor(getActivePlayer().color, fromSlot)) return false;
+    const { color } = activePlayer;
+    if (!board.isColor(color, fromSlot)) return false;
     return legalMoves[fromSlot].includes(toSlot);
   };
 
@@ -122,9 +119,12 @@ Board.propTypes = {
   handleSelect: PropTypes.func.isRequired,
   fetchGame: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-  // number or null?
-  selectedSlot: PropTypes.number.isRequired,
+  selectedSlot: PropTypes.number,
   gameId: PropTypes.string.isRequired,
+};
+
+Board.defaultProps = {
+  selectedSlot: null,
 };
 
 export default Board;

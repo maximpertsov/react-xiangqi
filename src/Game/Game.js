@@ -180,7 +180,7 @@ class Game extends Component {
   }
 
   handleSquareSelect({ slot }) {
-    this.setState({ selectedSlot: slot });
+    this.setState({ selectedSlot: slot === null ? undefined : slot });
   }
 
   // TODO: create PlayerManager class?
