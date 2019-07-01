@@ -175,8 +175,8 @@ class Game extends Component {
     });
   }
 
-  handleMoveSelect(e, order) {
-    this.setState({ selectedMoveIdx: order });
+  handleMoveSelect({ idx }) {
+    this.setState({ selectedMoveIdx: idx });
   }
 
   handleSquareSelect({ slot }) {
@@ -217,7 +217,7 @@ class Game extends Component {
       .map((m, i) => (
         <Move
           key={i}
-          order={i}
+          idx={i}
           handleMoveSelect={this.handleMoveSelect}
           fromPos={m.fromPos}
           toPos={m.toPos}
