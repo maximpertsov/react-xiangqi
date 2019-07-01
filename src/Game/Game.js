@@ -245,14 +245,6 @@ class Game extends Component {
         ),
       );
 
-    const legalMoveCount = legalMoves.reduce(
-      (count, toSlots) => toSlots.length + count,
-      0,
-    );
-
-    const stalemate = legalMoveCount === 0;
-    const checkmate = stalemate && board.kingInCheck(userColor);
-
     return (
       <Board
         activePlayer={this.activePlayer()}
@@ -266,7 +258,9 @@ class Game extends Component {
   }
 
   render() {
-    const { players } = this.state;
+    const { moves, players } = this.state;
+
+    if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
     return (
       <Wrapper className="Game">
