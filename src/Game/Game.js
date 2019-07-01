@@ -44,7 +44,7 @@ class Game extends Component {
       activePlayerIdx: 0,
       players: [],
       moves: [],
-      selectedMove: null,
+      selectedMoveIdx: null,
       username: null,
       clientUpdatedAt: null,
       timer: null,
@@ -119,7 +119,7 @@ class Game extends Component {
       );
       // TODO: There is one more board than moves.
       // Watch out for off by 1 errors!
-      this.setState({ moves, selectedMove: moves.length - 1 });
+      this.setState({ moves, selectedMoveIdx: moves.length - 1 });
       this.scrollToBottomOfMovelist();
     });
   }
@@ -152,7 +152,7 @@ class Game extends Component {
       };
       return {
         moves: update(moves, { $push: [nextMove] }),
-        selectedMove: moves.length,
+        selectedMoveIdx: moves.length,
       };
     });
     this.changePlayer();
@@ -174,7 +174,7 @@ class Game extends Component {
   }
 
   handleMoveSelect(e, order) {
-    this.setState({ selectedMove: order });
+    this.setState({ selectedMoveIdx: order });
   }
 
   // TODO: create PlayerManager class?
@@ -205,7 +205,7 @@ class Game extends Component {
   }
 
   renderMoves() {
-    const { moves, selectedMove } = this.state;
+    const { moves, selectedMoveIdx } = this.state;
     const scrollTarget = (<div ref={(el) => { this.el = el; }} />);
     const moveComponents = moves
       .map((m, i) => (
@@ -216,7 +216,7 @@ class Game extends Component {
           fromPos={m.fromPos}
           toPos={m.toPos}
           piece={m.piece}
-          selected={selectedMove === i}
+          selected={selectedMoveIdx === i}
         />
       ));
     return (
@@ -228,16 +228,16 @@ class Game extends Component {
   }
 
   renderBoardOrLoading() {
-    const { moves, selectedMove } = this.state;
+    const { moves, selectedMoveIdx } = this.state;
     const userColor = this.getUserColor();
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
-    const { board, piece } = moves[selectedMove];
+    const { board, piece } = moves[selectedMoveIdx];
     const legalMoves = board
       .legalMovesByActiveColor(piece)
       .map(
-        (toSlots) => (selectedMove === moves.length - 1 ? toSlots : []),
+        (toSlots) => (selectedMoveIdx === moves.length - 1 ? toSlots : []),
       )
       .map(
         (toSlots, fromSlot) => (
