@@ -369,7 +369,7 @@ export default class XiangqiBoard {
 
   // HACK: king facing logic implemented by replacing the
   //       opposing king with a rook
-  checksOwnKing(fromSlot, toSlot) {
+  kingInCheck(fromSlot, board = this.new(this.board)) {
     const code = this.board[fromSlot];
     let ownKing;
     let otherKing;
@@ -377,11 +377,16 @@ export default class XiangqiBoard {
     if (this.isBlackCode(code)) [ownKing, otherKing, otherRook] = ['k', 'K', 'R'];
     if (this.isRedCode(code)) [ownKing, otherKing, otherRook] = ['K', 'k', 'r'];
 
-    const nextBoard = this.move(fromSlot, toSlot);
-    return nextBoard.drop(
+    return board.drop(
       otherRook,
-      nextBoard.board.indexOf(otherKing),
+      board.board.indexOf(otherKing),
     ).captures().has(ownKing);
+  }
+
+  // HACK: king facing logic implemented by replacing the
+  //       opposing king with a rook
+  checksOwnKing(fromSlot, toSlot) {
+    return this.kingInCheck(fromSlot, this.move(fromSlot, toSlot));
   }
 
   toFen(board = this.board) {
