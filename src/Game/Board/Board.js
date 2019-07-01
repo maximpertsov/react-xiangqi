@@ -64,12 +64,11 @@ class Board extends Component {
     return !board.sameColor(slot, selectedSlot);
   }
 
-  handleSquareClick(square) {
-    const { slot } = square.props;
+  handleSquareClick({ slot, isOccupied, clickWillUnselect }) {
     const { selectedSlot } = this.state;
-    if (square.clickWillUnselect()) {
+    if (clickWillUnselect) {
       this.handleSelect(null);
-    } else if (square.isOccupied() && !this.selectedCanCapture(slot)) {
+    } else if (isOccupied && !this.selectedCanCapture(slot)) {
       this.handleSelect(slot);
     } else if (selectedSlot !== null) {
       this.handleMove(selectedSlot, slot);

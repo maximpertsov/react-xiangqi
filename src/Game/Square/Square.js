@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
@@ -34,58 +34,51 @@ const Dot = styled.div`
   background:${SELECTION_GREEN};
 `;
 
-class Square extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
 
-  handleClick() {
-    const { handleSquareClick } = this.props;
-    handleSquareClick(this);
-  }
+export const Square = ({
+  handleSquareClick,
+  piece,
+  slot,
+  selected,
+  inCheckSlot,
+  targets,
+}) => {
+  const isOccupied = () => piece !== undefined;
 
-  isOccupied() {
-    const { piece } = this.props;
-    return piece !== undefined;
-  }
+  const isSelected = () => selected;
 
-  isSelected() {
-    const { selected } = this.props;
-    return selected;
-  }
+  const clickWillUnselect = () => isOccupied() && isSelected();
 
-  clickWillUnselect() {
-    return this.isOccupied() && this.isSelected();
-  }
-
-  renderSquareElement() {
-    const { slot, piece, targets } = this.props;
-    if (this.isOccupied()) return piece;
+  const renderSquareElement = () => {
+    if (isOccupied()) return piece;
     if (targets.includes(slot)) return (<Dot />);
     return (<div />);
-  }
+  };
 
-  render() {
-    const {
-      selected, inCheckSlot, slot, targets,
-    } = this.props;
-    const targeted = (this.isOccupied() && targets.includes(slot));
-    const inCheck = slot === inCheckSlot;
+  const isTargeted = () => isOccupied() && targets.includes(slot);
 
-    return (
-      <Wrapper
-        className="Square"
-        onClick={this.handleClick}
-        selected={selected}
-        targeted={targeted}
-        inCheck={inCheck}
-      >
-        {this.renderSquareElement()}
-      </Wrapper>
-    );
-  }
-}
+  const inCheck = () => slot === inCheckSlot;
+
+  const handleClick = () => {
+    handleSquareClick({
+      slot,
+      isOccupied: isOccupied(),
+      clickWillUnselect: clickWillUnselect(),
+    });
+  };
+
+  return (
+    <Wrapper
+      className="Square"
+      onClick={handleClick}
+      selected={selected}
+      targeted={isTargeted()}
+      inCheck={inCheck()}
+    >
+      {renderSquareElement()}
+    </Wrapper>
+  );
+};
 
 Square.propTypes = {
   handleSquareClick: PropTypes.func.isRequired,
