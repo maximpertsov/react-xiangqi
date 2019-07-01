@@ -42,6 +42,7 @@ const Move = ({
   if (piece === null) return null;
 
   const description = moveString({ piece, fromPos, toPos });
+  // TODO: don't user arrow function in render
   return (
     <Wrapper
       className="Move"
