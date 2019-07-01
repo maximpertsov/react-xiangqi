@@ -272,6 +272,9 @@ class Game extends Component {
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
+    // TODO: smell -- repeat code
+    const { board: latestBoard } = moves[moves.length - 1];
+
     return (
       <Wrapper className="Game">
         { this.renderBoardOrLoading() }
@@ -280,6 +283,7 @@ class Game extends Component {
             activePlayer={this.activePlayer()}
             userColor={this.getUserColor()}
             players={players}
+            latestBoard={latestBoard}
           />
           <LoginForm setUsername={this.setUsername} />
           { this.renderMoves() }
