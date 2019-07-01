@@ -26,10 +26,6 @@ class Board extends Component {
 
     this.getPieceOn = this.getPieceOn.bind(this);
     this.handleSquareClick = this.handleSquareClick.bind(this);
-
-    this.state = {
-      selectedSlot: null,
-    };
   }
 
   getActivePlayer() {
@@ -56,8 +52,7 @@ class Board extends Component {
   }
 
   selectedCanCapture(slot) {
-    const { selectedSlot } = this.state;
-    const { board } = this.props;
+    const { board, selectedSlot } = this.props;
     if (selectedSlot === null) return false;
     if (!board.isOccupied(selectedSlot)) return false;
     if (!board.isOccupied(slot)) return false;
@@ -65,7 +60,7 @@ class Board extends Component {
   }
 
   handleSquareClick({ slot, isOccupied }) {
-    const { selectedSlot } = this.state;
+    const { selectedSlot } = this.props;
     if (slot === selectedSlot) {
       this.handleSelect(null);
     } else if (isOccupied && !this.selectedCanCapture(slot)) {
@@ -78,7 +73,8 @@ class Board extends Component {
   }
 
   handleSelect(slot) {
-    this.setState({ selectedSlot: slot });
+    const { handleSelect } = this.props;
+    handleSelect({ slot });
   }
 
   isLegalMove(fromSlot, toSlot) {
@@ -107,8 +103,9 @@ class Board extends Component {
   }
 
   render() {
-    const { selectedSlot } = this.state;
-    const { activePlayer: { color }, board, legalMoves } = this.props;
+    const {
+      activePlayer: { color }, board, legalMoves, selectedSlot,
+    } = this.props;
 
     const targets = (selectedSlot === null) ? [] : legalMoves[selectedSlot];
     // TODO: smell
@@ -138,8 +135,10 @@ Board.propTypes = {
   activePlayer: playerPropType.isRequired,
   board: boardPropType.isRequired,
   handleMove: PropTypes.func.isRequired,
+  handleSelect: PropTypes.func.isRequired,
   fetchGame: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+  selectedSlot: PropTypes.number.isRequired,
   gameId: PropTypes.string.isRequired,
 };
 

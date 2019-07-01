@@ -45,6 +45,7 @@ class Game extends Component {
       players: [],
       moves: [],
       selectedMoveIdx: null,
+      selectedSlot: null,
       username: null,
       clientUpdatedAt: null,
       timer: null,
@@ -53,6 +54,7 @@ class Game extends Component {
     this.changePlayer = this.changePlayer.bind(this);
     this.handleMove = this.handleMove.bind(this);
     this.handleMoveSelect = this.handleMoveSelect.bind(this);
+    this.handleSquareSelect = this.handleSquareSelect.bind(this);
     this.fetchGame = this.fetchGame.bind(this);
     this.setUsername = this.setUsername.bind(this);
   }
@@ -177,6 +179,10 @@ class Game extends Component {
     this.setState({ selectedMoveIdx: order });
   }
 
+  handleSquareSelect({ slot }) {
+    this.setState({ selectedSlot: slot });
+  }
+
   // TODO: create PlayerManager class?
   activePlayer() {
     const { players, activePlayerIdx } = this.state;
@@ -228,7 +234,7 @@ class Game extends Component {
   }
 
   renderBoardOrLoading() {
-    const { moves, selectedMoveIdx } = this.state;
+    const { moves, selectedMoveIdx, selectedSlot } = this.state;
     const userColor = this.getUserColor();
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
@@ -251,7 +257,9 @@ class Game extends Component {
         board={board}
         fetchGame={this.fetchGame}
         handleMove={this.handleMove}
+        handleSelect={this.handleSquareSelect}
         legalMoves={legalMoves}
+        selectedSlot={selectedSlot}
         gameId={GAME_ID}
       />
     );
