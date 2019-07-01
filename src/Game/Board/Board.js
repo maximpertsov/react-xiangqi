@@ -87,14 +87,12 @@ const Board = ({
     }
   };
 
-  const getActivePlayerColor = () => activePlayer.color;
-
   const getTargets = () => (
     selectedSlot === null ? [] : legalMoves[selectedSlot]
   );
 
   const getInCheckSlot = () => {
-    const { color } = getActivePlayerColor();
+    const { color } = activePlayer;
     return board.kingInCheck(color) ? board.findKingSlot(color) : undefined;
   };
 
