@@ -53,9 +53,7 @@ export const Square = ({
 }) => {
   const isOccupied = () => piece !== undefined;
 
-  const isSelected = () => selected;
-
-  const clickWillUnselect = () => isOccupied() && isSelected();
+  const clickWillUnselect = () => isOccupied() && selected;
 
   const renderSquareElement = () => {
     if (isOccupied()) return piece;
