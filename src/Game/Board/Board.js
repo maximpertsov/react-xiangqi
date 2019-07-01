@@ -109,9 +109,13 @@ class Board extends Component {
 
   render() {
     const { selectedSlot } = this.state;
-    const { board, legalMoves } = this.props;
+    const { activePlayer: { color }, board, legalMoves } = this.props;
 
     const targets = (selectedSlot === null) ? [] : legalMoves[selectedSlot];
+    // TODO: smell
+    const inCheckSlot = (
+      board.kingInCheck(color) ? board.findKingSlot(color) : undefined
+    );
 
     return (
       <Wrapper className="Board">
@@ -121,6 +125,7 @@ class Board extends Component {
             slot={i}
             piece={this.getPieceOn(i)}
             selectedSlot={selectedSlot}
+            inCheckSlot={inCheckSlot}
             targets={targets}
             handleSquareClick={this.handleSquareClick}
             getPieceOn={this.getPieceOn}
