@@ -52,7 +52,7 @@ class Game extends Component {
     };
 
     this.changePlayer = this.changePlayer.bind(this);
-    this.handleMove = this.handleMove.bind(this);
+    this.handleLegalMove = this.handleLegalMove.bind(this);
     this.handleMoveSelect = this.handleMoveSelect.bind(this);
     this.handleSquareSelect = this.handleSquareSelect.bind(this);
     this.fetchGame = this.fetchGame.bind(this);
@@ -142,7 +142,7 @@ class Game extends Component {
     });
   }
 
-  handleMove(fromSlot, toSlot) {
+  handleLegalMove(fromSlot, toSlot) {
     this.setState((fromState) => {
       const { moves } = fromState;
       const { board: lastBoard } = moves[moves.length - 1];
@@ -256,7 +256,7 @@ class Game extends Component {
         activePlayer={this.activePlayer()}
         board={board}
         fetchGame={this.fetchGame}
-        handleMove={this.handleMove}
+        handleLegalMove={this.handleLegalMove}
         handleSelect={this.handleSquareSelect}
         legalMoves={legalMoves}
         selectedSlot={selectedSlot}

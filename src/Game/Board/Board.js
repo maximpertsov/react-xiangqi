@@ -20,6 +20,102 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
+const PureBoard = ({
+  activePlayer,
+  board,
+  handleLegalMove,
+  handleSelect,
+  fetchGame,
+  legalMoves,
+  selectedSlot,
+  gameId,
+}) => {
+  const getActivePlayer = () => activePlayer;
+
+  const getPieceOn = (slot) => getPiece(board.getPiece(slot));
+
+  const getPostMovePayload = (fromSlot, toSlot) => {
+    const from = board.getRankFile(fromSlot);
+    const to = board.getRankFile(toSlot);
+    const piece = board.getPiece(fromSlot);
+    return {
+      player: this.getActivePlayer().name,
+      piece,
+      fromPos: from,
+      toPos: to,
+    };
+  };
+
+  const selectedCanCapture = (slot) => {
+    if (selectedSlot === null) return false;
+    if (!board.isOccupied(selectedSlot)) return false;
+    if (!board.isOccupied(slot)) return false;
+    return !board.sameColor(slot, selectedSlot);
+  };
+
+  const isLegalMove = (fromSlot, toSlot) => {
+    if (!board.isColor(getActivePlayer().color, fromSlot)) return false;
+    return legalMoves[fromSlot].includes(toSlot);
+  };
+
+  const handleMove = (fromSlot, toSlot) => {
+    if (isLegalMove(fromSlot, toSlot)) {
+      handleLegalMove(fromSlot, toSlot);
+
+      // Post move to server
+      postMove(gameId, getPostMovePayload(fromSlot, toSlot))
+        .then(({ status }) => {
+          if (status !== 201) fetchGame();
+        })
+        .catch(() => {
+          // TODO: display useful error?
+          fetchGame();
+        });
+    }
+    this.handleSelect(null);
+  };
+
+  const handleSquareClick = ({ slot, isOccupied }) => {
+    if (slot === selectedSlot) {
+      handleSelect({ slot: null });
+    } else if (isOccupied && !selectedCanCapture(slot)) {
+      handleSelect({ slot });
+    } else if (selectedSlot !== null) {
+      handleMove(selectedSlot, slot);
+    } else {
+      handleSelect({ slot: null });
+    }
+  };
+
+  const render = () => {
+    const { color } = activePlayer;
+
+    const targets = (selectedSlot === null) ? [] : legalMoves[selectedSlot];
+    // TODO: smell
+    const inCheckSlot = (
+      board.kingInCheck(color) ? board.findKingSlot(color) : undefined
+    );
+
+    return (
+      <Wrapper className="Board">
+        {board.board.map((_, i) => (
+          <Square
+            key={i}
+            slot={i}
+            piece={getPieceOn(i)}
+            inCheckSlot={inCheckSlot}
+            targets={targets}
+            handleSquareClick={handleSquareClick}
+            selected={selectedSlot === i}
+          />
+        ))}
+      </Wrapper>
+    );
+  };
+
+  return render();
+};
+
 class Board extends Component {
   constructor(props) {
     super(props);
