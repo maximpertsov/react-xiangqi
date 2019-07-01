@@ -52,8 +52,6 @@ const Square = ({
 }) => {
   const isOccupied = () => piece !== undefined;
 
-  const clickWillUnselect = () => isOccupied() && selected;
-
   const renderSquareElement = () => {
     if (isOccupied()) return piece;
     if (targets.includes(slot)) return (<Dot />);
@@ -65,11 +63,7 @@ const Square = ({
   const inCheck = () => slot === inCheckSlot;
 
   const handleClick = () => {
-    handleSquareClick({
-      slot,
-      isOccupied: isOccupied(),
-      clickWillUnselect: clickWillUnselect(),
-    });
+    handleSquareClick({ slot, isOccupied: isOccupied() });
   };
 
   return (
