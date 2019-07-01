@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
@@ -87,33 +87,34 @@ const Board = ({
     }
   };
 
-  const render = () => {
-    const { color } = activePlayer;
+  const getActivePlayerColor = () => activePlayer.color;
 
-    const targets = (selectedSlot === null) ? [] : legalMoves[selectedSlot];
-    // TODO: smell
-    const inCheckSlot = (
-      board.kingInCheck(color) ? board.findKingSlot(color) : undefined
-    );
+  const getTargets = () => (
+    selectedSlot === null ? [] : legalMoves[selectedSlot]
+  );
 
-    return (
-      <Wrapper className="Board">
-        {board.board.map((_, i) => (
-          <Square
-            key={i}
-            slot={i}
-            piece={getPieceOn(i)}
-            inCheckSlot={inCheckSlot}
-            targets={targets}
-            handleSquareClick={handleSquareClick}
-            selected={selectedSlot === i}
-          />
-        ))}
-      </Wrapper>
-    );
+  const getInCheckSlot = () => {
+    const { color } = getActivePlayerColor();
+    return board.kingInCheck(color) ? board.findKingSlot(color) : undefined;
   };
 
-  return render();
+  const renderSquares = () => board.board.map((_, i) => (
+    <Square
+      key={i}
+      slot={i}
+      piece={getPieceOn(i)}
+      inCheckSlot={getInCheckSlot()}
+      targets={getTargets()}
+      handleSquareClick={handleSquareClick}
+      selected={selectedSlot === i}
+    />
+  ));
+
+  return (
+    <Wrapper className="Board">
+      {renderSquares()}
+    </Wrapper>
+  );
 };
 
 Board.propTypes = {
