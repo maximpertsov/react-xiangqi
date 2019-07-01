@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 
 const Wrapper = styled.div(
   ({ selected, piece }) => ({
-    // TODO: find a better selction color
     backgroundColor: (selected ? '#d9d9d9' : 'none'),
     color: ('RHEAKCP'.includes(piece) ? 'red' : 'black'),
   }),
@@ -37,15 +36,17 @@ const moveString = ({ piece, fromPos, toPos }) => {
 };
 
 const Move = ({
-  fromPos, toPos, piece, handleMoveSelect, order, selected,
+  fromPos, toPos, piece, handleMoveSelect, idx, selected,
 }) => {
   if (piece === null) return null;
+
+  const handleClick = () => handleMoveSelect({ idx });
 
   const description = moveString({ piece, fromPos, toPos });
   return (
     <Wrapper
       className="Move"
-      onClick={(e) => handleMoveSelect(e, order)}
+      onClick={handleClick}
       selected={selected}
       piece={piece}
     >
@@ -54,13 +55,12 @@ const Move = ({
   );
 };
 
-// TODO: allow fromPos, toPos, piece to be null
 Move.propTypes = {
   handleMoveSelect: PropTypes.func.isRequired,
   fromPos: PropTypes.arrayOf(PropTypes.number),
   toPos: PropTypes.arrayOf(PropTypes.number),
   piece: PropTypes.string,
-  order: PropTypes.number.isRequired,
+  idx: PropTypes.number.isRequired,
   selected: PropTypes.bool.isRequired,
 };
 

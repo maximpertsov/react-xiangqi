@@ -350,11 +350,12 @@ export default class XiangqiBoard {
     });
   }
 
-  legalMovesByActiveColor(lastMovePiece = null) {
-    const isActive = (
-      this.isRedCode(lastMovePiece) ? this.isBlack : this.isRed
-    ).bind(this);
-    return this.filteredLegalMoves(isActive);
+  legalMovesByColor(color) {
+    let selectFunc;
+    if (color === 'black') selectFunc = this.isBlack;
+    if (color === 'red') selectFunc = this.isRed;
+    if (selectFunc === undefined) selectFunc = () => false;
+    return this.filteredLegalMoves(selectFunc.bind(this));
   }
 
   captures() {

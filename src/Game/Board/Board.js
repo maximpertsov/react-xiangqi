@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
@@ -20,82 +20,47 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-class Board extends Component {
-  constructor(props) {
-    super(props);
+const Board = ({
+  activePlayer,
+  board,
+  handleLegalMove,
+  handleSelect,
+  fetchGame,
+  legalMoves,
+  selectedSlot,
+  gameId,
+}) => {
+  const getPieceOn = (slot) => getPiece(board.getPiece(slot));
 
-    this.getPieceOn = this.getPieceOn.bind(this);
-    this.handleSquareClick = this.handleSquareClick.bind(this);
-
-    this.state = {
-      selectedSlot: null,
-    };
-  }
-
-  getActivePlayer() {
-    const { activePlayer } = this.props;
-    return activePlayer;
-  }
-
-  getPieceOn(slot) {
-    const { board } = this.props;
-    return getPiece(board.getPiece(slot));
-  }
-
-  getPostMovePayload(fromSlot, toSlot) {
-    const { board } = this.props;
-    const from = board.getRankFile(fromSlot);
-    const to = board.getRankFile(toSlot);
+  const getPostMovePayload = (fromSlot, toSlot) => {
+    const { name: player } = activePlayer;
+    const fromPos = board.getRankFile(fromSlot);
+    const toPos = board.getRankFile(toSlot);
     const piece = board.getPiece(fromSlot);
     return {
-      player: this.getActivePlayer().name,
-      piece,
-      fromPos: from,
-      toPos: to,
+      player, piece, fromPos, toPos,
     };
-  }
+  };
 
-  selectedCanCapture(slot) {
-    const { selectedSlot } = this.state;
-    const { board } = this.props;
+  const selectedCanCapture = (slot) => {
     if (selectedSlot === null) return false;
     if (!board.isOccupied(selectedSlot)) return false;
     if (!board.isOccupied(slot)) return false;
     return !board.sameColor(slot, selectedSlot);
-  }
+  };
 
-  handleSquareClick(square) {
-    const { slot } = square.props;
-    const { selectedSlot } = this.state;
-    if (square.clickWillUnselect()) {
-      this.handleSelect(null);
-    } else if (square.isOccupied() && !this.selectedCanCapture(slot)) {
-      this.handleSelect(slot);
-    } else if (selectedSlot !== null) {
-      this.handleMove(selectedSlot, slot);
-    } else {
-      this.handleSelect(null);
-    }
-  }
-
-  handleSelect(slot) {
-    this.setState({ selectedSlot: slot });
-  }
-
-  isLegalMove(fromSlot, toSlot) {
-    const { board, legalMoves } = this.props;
-    if (!board.isColor(this.getActivePlayer().color, fromSlot)) return false;
+  const isLegalMove = (fromSlot, toSlot) => {
+    const { color } = activePlayer;
+    if (!board.isColor(color, fromSlot)) return false;
     return legalMoves[fromSlot].includes(toSlot);
-  }
+  };
 
-  handleMove(fromSlot, toSlot) {
-    const { gameId, fetchGame, handleMove } = this.props;
-
-    if (this.isLegalMove(fromSlot, toSlot)) {
-      handleMove(fromSlot, toSlot);
+  const handleMove = (fromSlot, toSlot) => {
+    if (isLegalMove(fromSlot, toSlot)) {
+      handleLegalMove(fromSlot, toSlot);
 
       // Post move to server
-      postMove(gameId, this.getPostMovePayload(fromSlot, toSlot))
+      postMove(gameId, getPostMovePayload(fromSlot, toSlot))
         .then(({ status }) => {
           if (status !== 201) fetchGame();
         })
@@ -104,45 +69,62 @@ class Board extends Component {
           fetchGame();
         });
     }
-    this.handleSelect(null);
-  }
+    handleSelect({ slot: null });
+  };
 
-  render() {
-    const { selectedSlot } = this.state;
-    const { activePlayer: { color }, board, legalMoves } = this.props;
+  const handleSquareClick = ({ slot, isOccupied }) => {
+    if (slot === selectedSlot) {
+      handleSelect({ slot: null });
+    } else if (isOccupied && !selectedCanCapture(slot)) {
+      handleSelect({ slot });
+    } else if (selectedSlot !== null) {
+      handleMove(selectedSlot, slot);
+    } else {
+      handleSelect({ slot: null });
+    }
+  };
 
-    const targets = (selectedSlot === null) ? [] : legalMoves[selectedSlot];
-    // TODO: smell
-    const inCheckSlot = (
-      board.kingInCheck(color) ? board.findKingSlot(color) : undefined
-    );
+  const getTargets = () => (
+    selectedSlot === null ? [] : legalMoves[selectedSlot]
+  );
 
-    return (
-      <Wrapper className="Board">
-        {board.board.map((_, i) => (
-          <Square
-            key={i}
-            slot={i}
-            piece={this.getPieceOn(i)}
-            selectedSlot={selectedSlot}
-            inCheckSlot={inCheckSlot}
-            targets={targets}
-            handleSquareClick={this.handleSquareClick}
-            getPieceOn={this.getPieceOn}
-          />
-        ))}
-      </Wrapper>
-    );
-  }
-}
+  const getInCheckSlot = () => {
+    const { color } = activePlayer;
+    return board.kingInCheck(color) ? board.findKingSlot(color) : undefined;
+  };
+
+  const renderSquares = () => board.board.map((_, i) => (
+    <Square
+      key={i}
+      slot={i}
+      piece={getPieceOn(i)}
+      inCheckSlot={getInCheckSlot()}
+      targets={getTargets()}
+      handleSquareClick={handleSquareClick}
+      selected={selectedSlot === i}
+    />
+  ));
+
+  return (
+    <Wrapper className="Board">
+      {renderSquares()}
+    </Wrapper>
+  );
+};
 
 Board.propTypes = {
   activePlayer: playerPropType.isRequired,
   board: boardPropType.isRequired,
-  handleMove: PropTypes.func.isRequired,
+  handleLegalMove: PropTypes.func.isRequired,
+  handleSelect: PropTypes.func.isRequired,
   fetchGame: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+  selectedSlot: PropTypes.number,
   gameId: PropTypes.string.isRequired,
+};
+
+Board.defaultProps = {
+  selectedSlot: null,
 };
 
 export default Board;

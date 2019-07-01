@@ -2,20 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { playerPropType } from '../customPropTypes';
+// TODO: move to custom props?
+import { boardPropType } from '../logic';
 
 const Wrapper = styled.div`
   height: 20%;
 `;
 
-const GameInfo = ({ activePlayer, userColor, players }) => {
+const GameInfo = ({
+  activePlayer, latestBoard, userColor, players,
+}) => {
+  const countLegalMovesByActivePlayer = () => {
+    const { color } = activePlayer;
+    return latestBoard
+      .legalMovesByColor(color)
+      .reduce((count, toSlots) => count + toSlots.length, 0);
+  };
+
   const userIsActive = () => {
     const { color } = activePlayer;
     return color === userColor;
   };
 
-  const turnMessage = () => (
-    userIsActive() ? 'Your turn' : 'Waiting for opponent'
-  );
+  const turnMessage = () => {
+    if (countLegalMovesByActivePlayer() === 0) {
+      // TODO: specify if won by stalemate or checkmate
+      return userIsActive() ? 'You lose!' : 'You win!';
+    }
+    return userIsActive() ? 'Your turn' : 'Waiting for opponent';
+  };
 
   const getRedPlayer = () => players.find((p) => p.color === 'red');
 
@@ -45,6 +60,7 @@ GameInfo.propTypes = {
   activePlayer: playerPropType,
   players: PropTypes.arrayOf(playerPropType).isRequired,
   userColor: PropTypes.string,
+  latestBoard: boardPropType.isRequired,
 };
 
 GameInfo.defaultProps = {

@@ -45,14 +45,16 @@ class Game extends Component {
       players: [],
       moves: [],
       selectedMoveIdx: null,
+      selectedSlot: null,
       username: null,
       clientUpdatedAt: null,
       timer: null,
     };
 
     this.changePlayer = this.changePlayer.bind(this);
-    this.handleMove = this.handleMove.bind(this);
+    this.handleLegalMove = this.handleLegalMove.bind(this);
     this.handleMoveSelect = this.handleMoveSelect.bind(this);
+    this.handleSquareSelect = this.handleSquareSelect.bind(this);
     this.fetchGame = this.fetchGame.bind(this);
     this.setUsername = this.setUsername.bind(this);
   }
@@ -140,7 +142,7 @@ class Game extends Component {
     });
   }
 
-  handleMove(fromSlot, toSlot) {
+  handleLegalMove(fromSlot, toSlot) {
     this.setState((fromState) => {
       const { moves } = fromState;
       const { board: lastBoard } = moves[moves.length - 1];
@@ -173,8 +175,12 @@ class Game extends Component {
     });
   }
 
-  handleMoveSelect(e, order) {
-    this.setState({ selectedMoveIdx: order });
+  handleMoveSelect({ idx }) {
+    this.setState({ selectedMoveIdx: idx });
+  }
+
+  handleSquareSelect({ slot }) {
+    this.setState({ selectedSlot: slot === null ? undefined : slot });
   }
 
   // TODO: create PlayerManager class?
@@ -211,7 +217,7 @@ class Game extends Component {
       .map((m, i) => (
         <Move
           key={i}
-          order={i}
+          idx={i}
           handleMoveSelect={this.handleMoveSelect}
           fromPos={m.fromPos}
           toPos={m.toPos}
@@ -228,14 +234,16 @@ class Game extends Component {
   }
 
   renderBoardOrLoading() {
-    const { moves, selectedMoveIdx } = this.state;
+    const { moves, selectedMoveIdx, selectedSlot } = this.state;
     const userColor = this.getUserColor();
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
     const { board, piece } = moves[selectedMoveIdx];
+    const nextMoveColor = board.isRedCode(piece) ? 'black' : 'red';
+
     const legalMoves = board
-      .legalMovesByActiveColor(piece)
+      .legalMovesByColor(nextMoveColor)
       .map(
         (toSlots) => (selectedMoveIdx === moves.length - 1 ? toSlots : []),
       )
@@ -250,8 +258,10 @@ class Game extends Component {
         activePlayer={this.activePlayer()}
         board={board}
         fetchGame={this.fetchGame}
-        handleMove={this.handleMove}
+        handleLegalMove={this.handleLegalMove}
+        handleSelect={this.handleSquareSelect}
         legalMoves={legalMoves}
+        selectedSlot={selectedSlot}
         gameId={GAME_ID}
       />
     );
@@ -262,6 +272,9 @@ class Game extends Component {
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
+    // TODO: smell -- repeat code
+    const { board: latestBoard } = moves[moves.length - 1];
+
     return (
       <Wrapper className="Game">
         { this.renderBoardOrLoading() }
@@ -270,6 +283,7 @@ class Game extends Component {
             activePlayer={this.activePlayer()}
             userColor={this.getUserColor()}
             players={players}
+            latestBoard={latestBoard}
           />
           <LoginForm setUsername={this.setUsername} />
           { this.renderMoves() }
