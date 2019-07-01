@@ -6,7 +6,7 @@ import Move from './Move/Move';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
 import XiangqiBoard, { RefType } from '../logic';
-import { getGame, getMoves, getCurrentPlayer } from '../client';
+import { getGame, getMoves, getLastUpdate } from '../client';
 
 const GAME_ID = 'ABC123';
 const POLL_INTERVAL = 2500;
@@ -84,7 +84,7 @@ class Game extends Component {
 
     console.log('Polling for an update...');
 
-    getCurrentPlayer(GAME_ID)
+    getLastUpdate(GAME_ID)
       .then((response) => {
         const { data: { updated_at: serverUpdatedAt } } = response;
         if ((clientUpdatedAt === null && serverUpdatedAt !== null)
