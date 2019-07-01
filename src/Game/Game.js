@@ -6,9 +6,10 @@ import Move from './Move/Move';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
 import XiangqiBoard, { RefType } from '../logic';
-import { getGame, getMoves } from '../client';
+import { getGame, getMoves, getLastUpdate } from '../client';
 
 const GAME_ID = 'ABC123';
+const POLL_INTERVAL = 2500;
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,8 +44,10 @@ class Game extends Component {
       activePlayerIdx: 0,
       players: [],
       moves: [],
-      selectedMove: null,
+      selectedMoveIdx: null,
       username: null,
+      clientUpdatedAt: null,
+      timer: null,
     };
 
     this.changePlayer = this.changePlayer.bind(this);
@@ -58,6 +61,10 @@ class Game extends Component {
     this.fetchGame();
   }
 
+  componentWillUnmount() {
+    this.setState({ timer: null });
+  }
+
   scrollToBottomOfMovelist() {
     try {
       this.el.scrollIntoView({ behavior: 'smooth' });
@@ -66,6 +73,25 @@ class Game extends Component {
         // pass
       } else { throw e; }
     }
+  }
+
+  // TODO: only poll for move update? Can't do that now because
+  // we don't update active player based on moves
+  pollForGameUpdate() {
+    // Use current fen instead?
+    const { username, clientUpdatedAt } = this.state;
+    if (username === null || username === this.activePlayer.name) return;
+
+    getLastUpdate(GAME_ID)
+      .then((response) => {
+        const { data: { updated_at: serverUpdatedAt } } = response;
+        if ((clientUpdatedAt === null && serverUpdatedAt !== null)
+          || (clientUpdatedAt < serverUpdatedAt)) {
+          this.fetchGame();
+          this.clearTimer();
+          this.setState({ clientUpdatedAt: serverUpdatedAt });
+        }
+      });
   }
 
   fetchMoves(fen) {
@@ -93,7 +119,7 @@ class Game extends Component {
       );
       // TODO: There is one more board than moves.
       // Watch out for off by 1 errors!
-      this.setState({ moves, selectedMove: moves.length - 1 });
+      this.setState({ moves, selectedMoveIdx: moves.length - 1 });
       this.scrollToBottomOfMovelist();
     });
   }
@@ -108,6 +134,9 @@ class Game extends Component {
       const activePlayerIdx = players.map((p) => p.color).indexOf(activeColor);
       this.setState({ players, activePlayerIdx });
       this.fetchMoves(fen);
+
+      const { username } = this.state;
+      if (this.activePlayer().name !== username) this.setTimer();
     });
   }
 
@@ -123,14 +152,29 @@ class Game extends Component {
       };
       return {
         moves: update(moves, { $push: [nextMove] }),
-        selectedMove: moves.length,
+        selectedMoveIdx: moves.length,
       };
     });
     this.changePlayer();
+    this.setTimer();
+  }
+
+  setTimer() {
+    this.setState({
+      timer: setInterval(() => this.pollForGameUpdate(), POLL_INTERVAL),
+    });
+  }
+
+  clearTimer() {
+    this.setState((fromState) => {
+      const { timer } = fromState;
+      clearInterval(timer);
+      return { timer: null };
+    });
   }
 
   handleMoveSelect(e, order) {
-    this.setState({ selectedMove: order });
+    this.setState({ selectedMoveIdx: order });
   }
 
   // TODO: create PlayerManager class?
@@ -161,7 +205,7 @@ class Game extends Component {
   }
 
   renderMoves() {
-    const { moves, selectedMove } = this.state;
+    const { moves, selectedMoveIdx } = this.state;
     const scrollTarget = (<div ref={(el) => { this.el = el; }} />);
     const moveComponents = moves
       .map((m, i) => (
@@ -172,7 +216,7 @@ class Game extends Component {
           fromPos={m.fromPos}
           toPos={m.toPos}
           piece={m.piece}
-          selected={selectedMove === i}
+          selected={selectedMoveIdx === i}
         />
       ));
     return (
@@ -184,16 +228,16 @@ class Game extends Component {
   }
 
   renderBoardOrLoading() {
-    const { moves, selectedMove } = this.state;
+    const { moves, selectedMoveIdx } = this.state;
     const userColor = this.getUserColor();
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
-    const { board, piece } = moves[selectedMove];
+    const { board, piece } = moves[selectedMoveIdx];
     const legalMoves = board
       .legalMovesByActiveColor(piece)
       .map(
-        (toSlots) => (selectedMove === moves.length - 1 ? toSlots : []),
+        (toSlots) => (selectedMoveIdx === moves.length - 1 ? toSlots : []),
       )
       .map(
         (toSlots, fromSlot) => (
@@ -214,7 +258,9 @@ class Game extends Component {
   }
 
   render() {
-    const { players } = this.state;
+    const { moves, players } = this.state;
+
+    if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
     return (
       <Wrapper className="Game">

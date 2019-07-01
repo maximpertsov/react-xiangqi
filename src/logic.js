@@ -343,14 +343,18 @@ export default class XiangqiBoard {
     ));
   }
 
+  filteredLegalMoves(selectFunc) {
+    return this.legalMoves().map((toSlots, fromSlot) => {
+      if (toSlots.length === 0 || !selectFunc(fromSlot)) return [];
+      return toSlots;
+    });
+  }
+
   legalMovesByActiveColor(lastMovePiece = null) {
     const isActive = (
       this.isRedCode(lastMovePiece) ? this.isBlack : this.isRed
     ).bind(this);
-    return this.legalMoves().map((toSlots, fromSlot) => {
-      if (toSlots.length === 0 || !isActive(fromSlot)) return [];
-      return toSlots;
-    });
+    return this.filteredLegalMoves(isActive);
   }
 
   captures() {
@@ -363,21 +367,35 @@ export default class XiangqiBoard {
     return result;
   }
 
+  findKingSlot(color) {
+    let king;
+    if (color === 'black') king = 'k';
+    if (color === 'red') king = 'K';
+    return this.board.indexOf(king);
+  }
+
   // HACK: king facing logic implemented by replacing the
   //       opposing king with a rook
-  checksOwnKing(fromSlot, toSlot) {
-    const code = this.board[fromSlot];
+  kingInCheck(color, board = this.new(this.board)) {
     let ownKing;
     let otherKing;
     let otherRook;
-    if (this.isBlackCode(code)) [ownKing, otherKing, otherRook] = ['k', 'K', 'R'];
-    if (this.isRedCode(code)) [ownKing, otherKing, otherRook] = ['K', 'k', 'r'];
+    if (color === 'black') [ownKing, otherKing, otherRook] = ['k', 'K', 'R'];
+    if (color === 'red') [ownKing, otherKing, otherRook] = ['K', 'k', 'r'];
 
-    const nextBoard = this.move(fromSlot, toSlot);
-    return nextBoard.drop(
+    return board.drop(
       otherRook,
-      nextBoard.board.indexOf(otherKing),
+      board.board.indexOf(otherKing),
     ).captures().has(ownKing);
+  }
+
+  // HACK: king facing logic implemented by replacing the
+  //       opposing king with a rook
+  checksOwnKing(fromSlot, toSlot) {
+    let color;
+    if (this.isBlack(fromSlot)) color = 'black';
+    if (this.isRed(fromSlot)) color = 'red';
+    return this.kingInCheck(color, this.move(fromSlot, toSlot));
   }
 
   toFen(board = this.board) {
