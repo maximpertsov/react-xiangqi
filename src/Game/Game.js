@@ -82,8 +82,6 @@ class Game extends Component {
     const { username, clientUpdatedAt } = this.state;
     if (username === null || username === this.activePlayer.name) return;
 
-    console.log('Polling for an update...');
-
     getLastUpdate(GAME_ID)
       .then((response) => {
         const { data: { updated_at: serverUpdatedAt } } = response;
@@ -246,6 +244,14 @@ class Game extends Component {
           board.isColor(userColor, fromSlot) ? toSlots : []
         ),
       );
+
+    const legalMoveCount = legalMoves.reduce(
+      (count, toSlots) => toSlots.length + count,
+      0,
+    );
+
+    const stalemate = legalMoveCount === 0;
+    const checkmate = stalemate && board.kingInCheck(userColor);
 
     return (
       <Board
