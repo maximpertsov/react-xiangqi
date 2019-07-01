@@ -42,8 +42,7 @@ const Dot = styled.div`
   background:${SELECTION_GREEN};
 `;
 
-
-export const Square = ({
+const Square = ({
   handleSquareClick,
   piece,
   slot,
