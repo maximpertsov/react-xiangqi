@@ -15,13 +15,21 @@ const Wrapper = styled.div(
     padding: '0px;',
     margin: '0px;',
   },
-  ({ inCheck, selected, targeted }) => ({
-    backgroundColor: (selected ? SELECTION_GREEN : 'none'),
-    outline: (targeted ? `2px dotted ${SELECTION_GREEN}` : (
-      inCheck ? `2px dotted ${IN_CHECK_RED}` : 'none'
-    )),
-    outlineOffset: (targeted ? '-2px' : 'none'),
-  }),
+  ({ inCheck, selected, targeted }) => {
+    let outline;
+    if (targeted) {
+      outline = `2px dotted ${SELECTION_GREEN}`;
+    } else if (inCheck) {
+      outline = `2px dotted ${IN_CHECK_RED}`;
+    } else {
+      outline = 'none';
+    }
+    return {
+      backgroundColor: (selected ? SELECTION_GREEN : 'none'),
+      outline,
+      outlineOffset: (targeted ? '-2px' : 'none'),
+    };
+  },
 );
 
 const Dot = styled.div`
