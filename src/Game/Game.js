@@ -240,8 +240,10 @@ class Game extends Component {
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
     const { board, piece } = moves[selectedMoveIdx];
+    const nextMoveColor = board.isRedCode(piece) ? 'black' : 'red';
+
     const legalMoves = board
-      .legalMovesByActiveColor(piece)
+      .legalMovesByColor(nextMoveColor)
       .map(
         (toSlots) => (selectedMoveIdx === moves.length - 1 ? toSlots : []),
       )
