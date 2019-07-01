@@ -124,7 +124,6 @@ class Board extends Component {
             key={i}
             slot={i}
             piece={this.getPieceOn(i)}
-            selectedSlot={selectedSlot}
             inCheckSlot={inCheckSlot}
             targets={targets}
             handleSquareClick={this.handleSquareClick}

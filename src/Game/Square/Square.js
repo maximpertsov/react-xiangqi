@@ -92,14 +92,12 @@ Square.propTypes = {
   piece: PropTypes.element,
   slot: PropTypes.number.isRequired,
   selected: PropTypes.bool.isRequired,
-  selectedSlot: PropTypes.number,
   inCheckSlot: PropTypes.number,
   targets: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 Square.defaultProps = {
   piece: undefined,
-  selectedSlot: null,
   inCheckSlot: null,
 };
 
