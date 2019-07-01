@@ -129,6 +129,7 @@ class Board extends Component {
             targets={targets}
             handleSquareClick={this.handleSquareClick}
             getPieceOn={this.getPieceOn}
+            selected={selectedSlot === i}
           />
         ))}
       </Wrapper>

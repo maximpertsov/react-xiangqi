@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 const SELECTION_GREEN = 'rgba(30, 179, 0, 0.3)';
-const IN_CHECK_RED = 'red'
+const IN_CHECK_RED = 'red';
 
 const Wrapper = styled.div(
   {
@@ -38,19 +38,6 @@ class Square extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.state = {
-      selected: false,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { slot, selectedSlot } = nextProps;
-
-    if (this.isOccupied() && slot === selectedSlot) {
-      this.setState((prevState) => ({ selected: !prevState.selected }));
-    } else {
-      this.setState({ selected: false });
-    }
   }
 
   handleClick() {
@@ -64,7 +51,7 @@ class Square extends Component {
   }
 
   isSelected() {
-    const { selected } = this.state;
+    const { selected } = this.props;
     return selected;
   }
 
@@ -80,8 +67,9 @@ class Square extends Component {
   }
 
   render() {
-    const { selected } = this.state;
-    const { inCheckSlot, slot, targets } = this.props;
+    const {
+      selected, inCheckSlot, slot, targets,
+    } = this.props;
     const targeted = (this.isOccupied() && targets.includes(slot));
     const inCheck = slot === inCheckSlot;
 
@@ -103,6 +91,7 @@ Square.propTypes = {
   handleSquareClick: PropTypes.func.isRequired,
   piece: PropTypes.element,
   slot: PropTypes.number.isRequired,
+  selected: PropTypes.bool.isRequired,
   selectedSlot: PropTypes.number,
   inCheckSlot: PropTypes.number,
   targets: PropTypes.arrayOf(PropTypes.number).isRequired,
