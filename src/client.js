@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.API_BASE_URL;
+axios.defaults.baseURL = process.env.REACT_APP_BASE_API_URL;
 axios.defaults.timeout = 1000;
 axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
