@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8000';
-
-axios.defaults.baseURL = `${BASE_URL}/api/`;
+axios.defaults.baseURL = process.env.REACT_APP_BASE_API_URL;
 axios.defaults.timeout = 1000;
 axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
