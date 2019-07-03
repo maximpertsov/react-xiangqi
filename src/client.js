@@ -1,14 +1,6 @@
 import axios from 'axios';
 
-const PROD_URL = 'https://xchess.herokuapp.com';
-const LOCAL_URL = 'http://localhost:8000';
-
-const getBaseUrl = () => {
-  if (process.env.NODE_ENV === 'production') return PROD_URL;
-  return LOCAL_URL;
-};
-
-axios.defaults.baseURL = `${getBaseUrl()}/api/`;
+axios.defaults.baseURL = process.env.API_BASE_URL;
 axios.defaults.timeout = 1000;
 axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
