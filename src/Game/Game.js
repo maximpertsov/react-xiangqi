@@ -139,6 +139,7 @@ class Game extends Component {
 
       const { username } = this.state;
       if (this.activePlayer().name !== username) this.setTimer();
+      this.handleSquareSelect({ slot: null });
     });
   }
 
