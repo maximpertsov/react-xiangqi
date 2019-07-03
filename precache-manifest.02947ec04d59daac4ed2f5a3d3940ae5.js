@@ -8,15 +8,15 @@ self.__precacheManifest = [
     "url": "/react-xiangqi/static/js/runtime~main.fab9e7fb.js"
   },
   {
-    "revision": "0f46c97ddd588aa7f159",
-    "url": "/react-xiangqi/static/js/main.71b22f3d.chunk.js"
+    "revision": "029148caefd00ad48173",
+    "url": "/react-xiangqi/static/js/main.4f642d64.chunk.js"
   },
   {
-    "revision": "3a68a1d3336e3e4b320a",
-    "url": "/react-xiangqi/static/js/2.c93bbf88.chunk.js"
+    "revision": "fdba914923563cbb4019",
+    "url": "/react-xiangqi/static/js/2.5786b6fe.chunk.js"
   },
   {
-    "revision": "2fb9815309999fb6fea0c058e1eebf2b",
+    "revision": "7e8b9fa340f643686429240631ec7dd0",
     "url": "/react-xiangqi/index.html"
   }
 ];
