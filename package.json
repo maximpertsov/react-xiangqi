@@ -18,9 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:prod": "NODE_ENV=production react-scripts build",
     "deploy": "gh-pages -d build",
-    "deploy:prod": "NODE_ENV=production gh-pages -d build",
     "test": "jest",
     "eject": "react-scripts eject"
   },
