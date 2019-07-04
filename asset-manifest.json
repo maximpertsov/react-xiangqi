@@ -1,12 +1,12 @@
 {
-  "main.js": "/static/js/main.4600f907.chunk.js",
-  "main.js.map": "/static/js/main.4600f907.chunk.js.map",
-  "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
-  "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
-  "static/js/2.5786b6fe.chunk.js": "/static/js/2.5786b6fe.chunk.js",
-  "static/js/2.5786b6fe.chunk.js.map": "/static/js/2.5786b6fe.chunk.js.map",
-  "index.html": "/index.html",
-  "precache-manifest.deb5f5b01ba9c7b675a4cda511af8ccd.js": "/precache-manifest.deb5f5b01ba9c7b675a4cda511af8ccd.js",
-  "service-worker.js": "/service-worker.js",
-  "static/media/board-1000px.svg.png": "/static/media/board-1000px.svg.4cd7218f.png"
+  "main.js": "/react-xiangqi/static/js/main.4f642d64.chunk.js",
+  "main.js.map": "/react-xiangqi/static/js/main.4f642d64.chunk.js.map",
+  "runtime~main.js": "/react-xiangqi/static/js/runtime~main.fab9e7fb.js",
+  "runtime~main.js.map": "/react-xiangqi/static/js/runtime~main.fab9e7fb.js.map",
+  "static/js/2.5786b6fe.chunk.js": "/react-xiangqi/static/js/2.5786b6fe.chunk.js",
+  "static/js/2.5786b6fe.chunk.js.map": "/react-xiangqi/static/js/2.5786b6fe.chunk.js.map",
+  "index.html": "/react-xiangqi/index.html",
+  "precache-manifest.02947ec04d59daac4ed2f5a3d3940ae5.js": "/react-xiangqi/precache-manifest.02947ec04d59daac4ed2f5a3d3940ae5.js",
+  "service-worker.js": "/react-xiangqi/service-worker.js",
+  "static/media/board-1000px.svg.png": "/react-xiangqi/static/media/board-1000px.svg.4cd7218f.png"
 }
