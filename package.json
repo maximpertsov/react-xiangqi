@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && touch build/.nojekyll",
     "deploy": "gh-pages -d build",
     "test": "jest",
     "eject": "react-scripts eject"
