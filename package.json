@@ -22,7 +22,7 @@
     "test": "jest",
     "eject": "react-scripts eject"
   },
-  "homepage": "https://maximpertsov.github.io/react-xiangqi",
+  "homepage": "https://xchess.xyz",
   "eslintConfig": {
     "extends": "react-app"
   },
