@@ -283,13 +283,13 @@ class Game extends Component {
       <Wrapper className="Game">
         { this.renderBoardOrLoading() }
         <SidebarWrapper>
+          <LoginForm setUsername={this.setUsername} />
           <GameInfo
             activePlayer={this.activePlayer()}
             userColor={this.getUserColor()}
             players={players}
             latestBoard={latestBoard}
           />
-          <LoginForm setUsername={this.setUsername} />
           { this.renderMoves() }
         </SidebarWrapper>
       </Wrapper>
