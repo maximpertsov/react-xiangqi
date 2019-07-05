@@ -90,7 +90,7 @@ class Game extends Component {
         if ((clientUpdatedAt === null && serverUpdatedAt !== null)
           || (clientUpdatedAt < serverUpdatedAt)) {
           this.fetchGame();
-          this.clearTimer();
+          this.stopPolling();
           this.setState({ clientUpdatedAt: serverUpdatedAt });
         }
       });
@@ -137,8 +137,7 @@ class Game extends Component {
       this.setState({ players, activePlayerIdx });
       this.fetchMoves(fen);
 
-      const { username } = this.state;
-      if (this.activePlayer().name !== username) this.setTimer();
+      this.startPolling();
       this.handleSquareSelect({ slot: null });
     });
   }
@@ -159,16 +158,20 @@ class Game extends Component {
       };
     });
     this.changePlayer();
-    this.setTimer();
+    this.startPolling();
   }
 
-  setTimer() {
+  startPolling() {
+    const { username } = this.state;
+    const { name } = this.activePlayer();
+    if (name === username) return;
+
     this.setState({
       timer: setInterval(() => this.pollForGameUpdate(), POLL_INTERVAL),
     });
   }
 
-  clearTimer() {
+  stopPolling() {
     this.setState((fromState) => {
       const { timer } = fromState;
       clearInterval(timer);
