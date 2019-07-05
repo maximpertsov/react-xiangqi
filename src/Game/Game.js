@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import update from 'immutability-helper';
 import Board from './Board/Board';
 import Move from './Move/Move';
+import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
 import XiangqiBoard, { RefType } from '../logic';
@@ -216,24 +217,12 @@ class Game extends Component {
 
   renderMoves() {
     const { moves, selectedMoveIdx } = this.state;
-    const scrollTarget = (<div ref={(el) => { this.el = el; }} />);
-    const moveComponents = moves
-      .map((m, i) => (
-        <Move
-          key={i}
-          idx={i}
-          handleMoveSelect={this.handleMoveSelect}
-          fromPos={m.fromPos}
-          toPos={m.toPos}
-          piece={m.piece}
-          selected={selectedMoveIdx === i}
-        />
-      ));
     return (
-      <MovesWrapper>
-        {moveComponents}
-        {scrollTarget}
-      </MovesWrapper>
+      <MoveHistory
+        moves={moves}
+        selectedMoveIdx={selectedMoveIdx}
+        handleMoveSelect={this.handleMoveSelect}
+      />
     );
   }
 
