@@ -198,7 +198,7 @@ class Game extends Component {
     return (
       <MoveHistory
         moves={moves}
-        selectedMoveIdx={selectedMoveIdx}
+        selectedIdx={selectedMoveIdx}
         handleMoveSelect={this.handleMoveSelect}
       />
     );

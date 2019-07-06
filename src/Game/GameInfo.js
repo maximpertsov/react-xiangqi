@@ -13,10 +13,6 @@ const Wrapper = styled.div`
   outline: thin solid #999;
 `;
 
-const PlayerWrapper = styled.p(
-  ({ color }) => ({ color }),
-);
-
 const GameInfo = ({
   activePlayer, latestBoard, userColor, players,
 }) => {

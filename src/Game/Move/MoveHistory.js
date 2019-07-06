@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Move from './Move';
+import { boardPropType } from '../../logic';
 
 // TODO: set max-height by percentage?
 // TODO: hide scroll bar?
@@ -33,7 +34,7 @@ class MoveHistory extends Component {
   }
 
   render() {
-    const { moves, selectedMoveIdx, handleMoveSelect } = this.props;
+    const { moves, selectedIdx, handleMoveSelect } = this.props;
     const moveComponents = moves
       .map((m, i) => (
         <Move
@@ -43,7 +44,7 @@ class MoveHistory extends Component {
           fromPos={m.fromPos}
           toPos={m.toPos}
           piece={m.piece}
-          selected={selectedMoveIdx === i}
+          selected={selectedIdx === i}
         />
       ));
 
@@ -58,8 +59,8 @@ class MoveHistory extends Component {
 
 MoveHistory.propTypes = {
   // TODO: add move proptype
-  moves: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  selectedMoveIdx: PropTypes.number.isRequired,
+  moves: PropTypes.arrayOf(boardPropType).isRequired,
+  selectedIdx: PropTypes.number.isRequired,
   handleMoveSelect: PropTypes.func.isRequired,
 };
 
