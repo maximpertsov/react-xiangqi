@@ -4,9 +4,13 @@ import styled from '@emotion/styled';
 import { playerPropType } from '../customPropTypes';
 // TODO: move to custom props?
 import { boardPropType } from '../logic';
+import Player from './Player/Player';
 
 const Wrapper = styled.div`
   height: 20%;
+  margin-top: 15px;
+  padding: 20px;
+  outline: thin solid #999;
 `;
 
 const GameInfo = ({
@@ -36,19 +40,14 @@ const GameInfo = ({
 
   const getBlackPlayer = () => players.find((p) => p.color === 'black');
 
-  const versusMessage = () => {
-    const { color: redColor, name: redName } = getRedPlayer();
-    const { color: blackColor, name: blackName } = getBlackPlayer();
-    return `${redName} [${redColor}] vs ${blackName} [${blackColor}]`;
-  };
-
   const isLoading = () => players.length === 0;
 
   const renderLoading = () => (<div><p>Loading...</p></div>);
 
   const renderLoaded = () => (
     <Wrapper>
-      <p>{ versusMessage() }</p>
+      <Player {...getRedPlayer()} />
+      <Player {...getBlackPlayer()} />
       <p>{ turnMessage() }</p>
     </Wrapper>
   );

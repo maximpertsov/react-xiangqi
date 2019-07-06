@@ -27,6 +27,7 @@ const Board = ({
   handleSelect,
   fetchGame,
   legalMoves,
+  reversed,
   selectedSlot,
   gameId,
 }) => {
@@ -93,17 +94,22 @@ const Board = ({
     return board.kingInCheck(color) ? board.findKingSlot(color) : undefined;
   };
 
-  const renderSquares = () => board.board.map((_, i) => (
-    <Square
-      key={i}
-      slot={i}
-      piece={getPieceOn(i)}
-      inCheckSlot={getInCheckSlot()}
-      targets={getTargets()}
-      handleSquareClick={handleSquareClick}
-      selected={selectedSlot === i}
-    />
-  ));
+  const getSlot = (b, i) => (reversed ? b.length - i - 1 : i);
+
+  const renderSquares = () => board.board.map((_, i, b) => {
+    const slot = getSlot(b, i);
+    return (
+      <Square
+        key={slot}
+        slot={slot}
+        piece={getPieceOn(slot)}
+        inCheckSlot={getInCheckSlot()}
+        targets={getTargets()}
+        handleSquareClick={handleSquareClick}
+        selected={selectedSlot === slot}
+      />
+    );
+  });
 
   return (
     <Wrapper className="Board">
@@ -119,6 +125,7 @@ Board.propTypes = {
   handleSelect: PropTypes.func.isRequired,
   fetchGame: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+  reversed: PropTypes.bool.isRequired,
   selectedSlot: PropTypes.number,
   gameId: PropTypes.string.isRequired,
 };
