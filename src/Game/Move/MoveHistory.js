@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Move from './Move';
 
 // TODO: set max-height by percentage?
+// TODO: hide scroll bar?
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 50% auto;
@@ -13,30 +14,49 @@ const Wrapper = styled.div`
   overflow: auto;
 `;
 
-const MoveHistory = ({ moves, selectedMoveIdx, handleMoveSelect }) => {
-  const scrollTarget = (<div ref={(el) => { this.el = el; }} />);
-  const moveComponents = moves
-    .map((m, i) => (
-      <Move
-        key={i}
-        idx={i}
-        handleMoveSelect={handleMoveSelect}
-        fromPos={m.fromPos}
-        toPos={m.toPos}
-        piece={m.piece}
-        selected={selectedMoveIdx === i}
-      />
-    ));
+class MoveHistory extends Component {
+  constructor(props) {
+    super(props);
+    this.setBottomElement = this.setBottomElement.bind(this);
+  }
 
-  return (
-    <Wrapper>
-      {moveComponents}
-      {scrollTarget}
-    </Wrapper>
-  );
-};
+  componentDidMount() {
+    if (this.el !== undefined) this.scrollToBottom();
+  }
 
-Move.propTypes = {
+  scrollToBottom() {
+    this.el.scrollIntoView();
+  }
+
+  setBottomElement(el) {
+    this.el = el;
+  }
+
+  render() {
+    const { moves, selectedMoveIdx, handleMoveSelect } = this.props;
+    const moveComponents = moves
+      .map((m, i) => (
+        <Move
+          key={i}
+          idx={i}
+          handleMoveSelect={handleMoveSelect}
+          fromPos={m.fromPos}
+          toPos={m.toPos}
+          piece={m.piece}
+          selected={selectedMoveIdx === i}
+        />
+      ));
+
+    return (
+      <Wrapper>
+        {moveComponents}
+        <div ref={this.setBottomElement} />
+      </Wrapper>
+    );
+  }
+}
+
+MoveHistory.propTypes = {
   // TODO: add move proptype
   moves: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   selectedMoveIdx: PropTypes.number.isRequired,

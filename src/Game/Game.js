@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from '@emotion/styled';
 import update from 'immutability-helper';
 import Board from './Board/Board';
-import Move from './Move/Move';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
@@ -25,16 +24,6 @@ const SidebarWrapper = styled.div`
   flex-direction: column;
   padding: 0px 50px;
   height: 100%;
-`;
-
-// TODO: set max-height by percentage?
-const MovesWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 50% auto;
-  grid-template-rows: repeat(auto-fill, 50px);
-  outline: thin solid #999;
-  height: 55%;
-  overflow: auto;
 `;
 
 class Game extends Component {
@@ -66,16 +55,6 @@ class Game extends Component {
 
   componentWillUnmount() {
     this.setState({ timer: null });
-  }
-
-  scrollToBottomOfMovelist() {
-    try {
-      this.el.scrollIntoView({ behavior: 'smooth' });
-    } catch (e) {
-      if (e instanceof TypeError) {
-        // pass
-      } else { throw e; }
-    }
   }
 
   // TODO: only poll for move update? Can't do that now because
@@ -123,7 +102,6 @@ class Game extends Component {
       // TODO: There is one more board than moves.
       // Watch out for off by 1 errors!
       this.setState({ moves, selectedMoveIdx: moves.length - 1 });
-      this.scrollToBottomOfMovelist();
     });
   }
 
