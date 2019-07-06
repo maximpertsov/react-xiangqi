@@ -233,6 +233,7 @@ class Game extends Component {
         handleLegalMove={this.handleLegalMove}
         handleSelect={this.handleSquareSelect}
         legalMoves={legalMoves}
+        reversed={false}
         selectedSlot={selectedSlot}
         gameId={GAME_ID}
       />
