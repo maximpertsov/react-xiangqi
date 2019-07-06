@@ -194,6 +194,13 @@ class Game extends Component {
     this.setState({ username });
   }
 
+  // TODO: add a state that allows players to flip their original orientation
+  getInitialUserOrientation() {
+    if (this.getUserColor() === 'black') return true;
+    return false;
+  }
+
+
   renderMoves() {
     const { moves, selectedMoveIdx } = this.state;
     return (
@@ -233,7 +240,7 @@ class Game extends Component {
         handleLegalMove={this.handleLegalMove}
         handleSelect={this.handleSquareSelect}
         legalMoves={legalMoves}
-        reversed={false}
+        reversed={this.getInitialUserOrientation()}
         selectedSlot={selectedSlot}
         gameId={GAME_ID}
       />
