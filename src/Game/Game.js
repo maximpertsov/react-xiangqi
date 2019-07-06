@@ -24,6 +24,7 @@ const SidebarWrapper = styled.div`
   flex-direction: column;
   padding: 0px 50px;
   height: 100%;
+  width: 250px;
 `;
 
 class Game extends Component {
