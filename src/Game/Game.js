@@ -63,7 +63,10 @@ class Game extends Component {
   pollForGameUpdate() {
     // Use current fen instead?
     const { username, clientUpdatedAt } = this.state;
-    if (username === null || username === this.activePlayer.name) return;
+    if (username === null || username === this.activePlayer().name) {
+      this.stopPolling();
+      return;
+    }
 
     getLastUpdate(GAME_ID)
       .then((response) => {
@@ -142,10 +145,6 @@ class Game extends Component {
   }
 
   startPolling() {
-    const { username } = this.state;
-    const { name } = this.activePlayer();
-    if (name === username) return;
-
     this.setState({
       timer: setInterval(() => this.pollForGameUpdate(), POLL_INTERVAL),
     });
@@ -192,6 +191,7 @@ class Game extends Component {
 
   setUsername(username) {
     this.setState({ username });
+    this.startPolling();
   }
 
   // TODO: add a state that allows players to flip their original orientation
