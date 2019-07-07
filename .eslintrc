@@ -21,7 +21,6 @@
     "react/no-array-index-key": "off",
     "react/sort-comp": "off",
     "require-jsdoc": "off",
-    "sort-keys": "off",
     "space-before-function-paren": ["error", "never"]
   }
 }

@@ -38,6 +38,7 @@ class Game extends Component {
       selectedSlot: null,
       username: null,
       clientUpdatedAt: null,
+      /* eslint-disable-next-line react/no-unused-state */
       timer: null,
     };
 
@@ -53,6 +54,7 @@ class Game extends Component {
   }
 
   componentWillUnmount() {
+    /* eslint-disable-next-line react/no-unused-state */
     this.setState({ timer: null });
   }
 
@@ -141,6 +143,7 @@ class Game extends Component {
 
   startPolling() {
     this.setState({
+      /* eslint-disable-next-line react/no-unused-state */
       timer: setInterval(() => this.pollForGameUpdate(), POLL_INTERVAL),
     });
   }
