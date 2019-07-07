@@ -32,14 +32,14 @@ class Game extends Component {
     super(props);
 
     this.state = {
-      players: [],
+      clientUpdatedAt: null,
       moves: [],
+      players: [],
       selectedMoveIdx: null,
       selectedSlot: null,
-      username: null,
-      clientUpdatedAt: null,
       /* eslint-disable-next-line react/no-unused-state */
       timer: null,
+      username: null,
     };
 
     this.handleLegalMove = this.handleLegalMove.bind(this);
