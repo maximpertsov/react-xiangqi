@@ -61,7 +61,7 @@ class Game extends Component {
   // TODO: only poll for move update? Can't do that now because
   // we don't update active player based on moves
   pollForGameUpdate() {
-    // Use current fen instead?
+    // TODO: Use current fen instead?
     const { username, clientUpdatedAt } = this.state;
     const { name: nextMovePlayerName } = this.getNextMovePlayer();
     if (username === null || username === nextMovePlayerName) {
