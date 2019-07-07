@@ -10,6 +10,9 @@ import XiangqiBoard, { RefType } from '../logic';
 import * as client from '../client';
 
 const POLL_INTERVAL = 2500;
+// TODO: define in logic class
+/* eslint-disable-next-line max-len */
+const DEFAULT_FEN = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,9 +36,20 @@ class Game extends Component {
 
     this.state = {
       clientUpdatedAt: null,
-      moves: [],
-      players: [],
-      selectedMoveIdx: null,
+      moves: [
+        {
+          piece: undefined,
+          fromPos: undefined,
+          toPos: undefined,
+          board: new XiangqiBoard(),
+        },
+      ],
+      players: [
+        // TODO: allow for same display name?
+        { name: '', color: 'red' },
+        { name: ' ', color: 'black' },
+      ],
+      selectedMoveIdx: 0,
       selectedSlot: null,
       /* eslint-disable-next-line react/no-unused-state */
       timer: null,
