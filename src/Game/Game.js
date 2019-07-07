@@ -7,9 +7,7 @@ import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
 import XiangqiBoard, { RefType } from '../logic';
-import {
-  getGame, getMoves, postMove, getLastUpdate,
-} from '../client';
+import * as client from '../client';
 
 const POLL_INTERVAL = 2500;
 
@@ -72,7 +70,7 @@ class Game extends Component {
     }
 
     const { gameSlug } = this.props;
-    getLastUpdate(gameSlug)
+    client.getLastUpdate(gameSlug)
       .then((response) => {
         const { data: { updated_at: serverUpdatedAt } } = response;
         if ((clientUpdatedAt === null && serverUpdatedAt !== null)
@@ -86,7 +84,7 @@ class Game extends Component {
 
   fetchMoves(fen) {
     const { gameSlug } = this.props;
-    getMoves(gameSlug).then((response) => {
+    client.getMoves(gameSlug).then((response) => {
       const { moves: movesData } = response.data;
       const moves = [
         {
@@ -116,7 +114,7 @@ class Game extends Component {
 
   fetchGame() {
     const { gameSlug } = this.props;
-    getGame(gameSlug).then((response) => {
+    client.getGame(gameSlug).then((response) => {
       const { players, initial_fen: fen } = response.data;
       this.setState({ players });
       this.fetchMoves(fen);
@@ -158,7 +156,7 @@ class Game extends Component {
 
   postMoveToServer(board, fromSlot, toSlot) {
     const { gameSlug } = this.props;
-    postMove(gameSlug, this.getPostMovePayload(board, fromSlot, toSlot))
+    client.postMove(gameSlug, this.getPostMovePayload(board, fromSlot, toSlot))
       .then(({ status }) => {
         if (status !== 201) {
           this.fetchGame();
