@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import update from 'immutability-helper';
 import Board from './Board/Board';
@@ -8,7 +9,6 @@ import LoginForm from '../LoginForm/LoginForm';
 import XiangqiBoard, { RefType } from '../logic';
 import { getGame, getMoves, getLastUpdate } from '../client';
 
-const GAME_ID = 'ABC123';
 const POLL_INTERVAL = 2500;
 
 const Wrapper = styled.div`
@@ -68,7 +68,8 @@ class Game extends Component {
       return;
     }
 
-    getLastUpdate(GAME_ID)
+    const { gameSlug } = this.props;
+    getLastUpdate(gameSlug)
       .then((response) => {
         const { data: { updated_at: serverUpdatedAt } } = response;
         if ((clientUpdatedAt === null && serverUpdatedAt !== null)
@@ -81,7 +82,8 @@ class Game extends Component {
   }
 
   fetchMoves(fen) {
-    getMoves(GAME_ID).then((response) => {
+    const { gameSlug } = this.props;
+    getMoves(gameSlug).then((response) => {
       const { moves: movesData } = response.data;
       const moves = [
         {
@@ -110,7 +112,8 @@ class Game extends Component {
   }
 
   fetchGame() {
-    getGame(GAME_ID).then((response) => {
+    const { gameSlug } = this.props;
+    getGame(gameSlug).then((response) => {
       const {
         players,
         initial_fen: fen,
@@ -214,6 +217,7 @@ class Game extends Component {
 
   renderBoardOrLoading() {
     const { moves, selectedMoveIdx, selectedSlot } = this.state;
+    const { gameSlug } = this.props;
     const userColor = this.getUserColor();
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
@@ -242,7 +246,7 @@ class Game extends Component {
         legalMoves={legalMoves}
         reversed={this.getInitialUserOrientation()}
         selectedSlot={selectedSlot}
-        gameId={GAME_ID}
+        gameId={gameSlug}
       />
     );
   }
@@ -272,5 +276,9 @@ class Game extends Component {
     );
   }
 }
+
+Game.propTypes = {
+  gameSlug: PropTypes.string.isRequired,
+};
 
 export default Game;
