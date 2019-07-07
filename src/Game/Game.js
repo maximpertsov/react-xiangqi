@@ -63,7 +63,8 @@ class Game extends Component {
   pollForGameUpdate() {
     // Use current fen instead?
     const { username, clientUpdatedAt } = this.state;
-    if (username === null || username === this.activePlayer().name) {
+    const { name: nextMovePlayerName } = this.getNextMovePlayer();
+    if (username === null || username === nextMovePlayerName) {
       this.stopPolling();
       return;
     }
@@ -164,7 +165,7 @@ class Game extends Component {
     this.setState({ selectedSlot: slot === null ? undefined : slot });
   }
 
-  nextMoveColor() {
+  getNextMoveColor() {
     const { moves } = this.state;
     if (moves.length === 0) return 'red';
 
@@ -175,9 +176,9 @@ class Game extends Component {
   }
 
   // TODO: create PlayerManager class?
-  activePlayer() {
+  getNextMovePlayer() {
     const { players } = this.state;
-    const nextMoveColor = this.nextMoveColor();
+    const nextMoveColor = this.getNextMoveColor();
 
     return players.find((p) => p.color === nextMoveColor);
   }
@@ -237,7 +238,7 @@ class Game extends Component {
 
     return (
       <Board
-        activePlayer={this.activePlayer()}
+        activePlayer={this.getNextMovePlayer()}
         board={board}
         fetchGame={this.fetchGame}
         handleLegalMove={this.handleLegalMove}
@@ -264,7 +265,7 @@ class Game extends Component {
         <SidebarWrapper>
           <LoginForm setUsername={this.setUsername} />
           <GameInfo
-            activePlayer={this.activePlayer()}
+            activePlayer={this.getNextMovePlayer()}
             userColor={this.getUserColor()}
             players={players}
             latestBoard={latestBoard}
