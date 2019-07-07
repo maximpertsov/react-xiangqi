@@ -2,10 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
-import { postMove } from '../../client';
 import { getPiece } from '../Piece/Piece';
 import { boardPropType } from '../../logic';
-import { playerPropType } from '../../customPropTypes';
 
 import boardImg from './board-1000px.svg.png';
 
@@ -21,27 +19,15 @@ const Wrapper = styled.div`
 `;
 
 const Board = ({
-  activePlayer,
   board,
   handleLegalMove,
   handleSelect,
-  fetchGame,
   legalMoves,
+  nextMoveColor,
   reversed,
   selectedSlot,
-  gameId,
 }) => {
   const getPieceOn = (slot) => getPiece(board.getPiece(slot));
-
-  const getPostMovePayload = (fromSlot, toSlot) => {
-    const { name: player } = activePlayer;
-    const fromPos = board.getRankFile(fromSlot);
-    const toPos = board.getRankFile(toSlot);
-    const piece = board.getPiece(fromSlot);
-    return {
-      player, piece, fromPos, toPos,
-    };
-  };
 
   const selectedCanCapture = (slot) => {
     if (selectedSlot === null) return false;
@@ -50,26 +36,12 @@ const Board = ({
     return !board.sameColor(slot, selectedSlot);
   };
 
-  const isLegalMove = (fromSlot, toSlot) => {
-    const { color } = activePlayer;
-    if (!board.isColor(color, fromSlot)) return false;
-    return legalMoves[fromSlot].includes(toSlot);
-  };
+  const isLegalMove = (fromSlot, toSlot) => (
+    legalMoves[fromSlot].includes(toSlot)
+  );
 
   const handleMove = (fromSlot, toSlot) => {
-    if (isLegalMove(fromSlot, toSlot)) {
-      handleLegalMove(fromSlot, toSlot);
-
-      // Post move to server
-      postMove(gameId, getPostMovePayload(fromSlot, toSlot))
-        .then(({ status }) => {
-          if (status !== 201) fetchGame();
-        })
-        .catch(() => {
-          // TODO: display useful error?
-          fetchGame();
-        });
-    }
+    if (isLegalMove(fromSlot, toSlot)) handleLegalMove(board, fromSlot, toSlot);
     handleSelect({ slot: null });
   };
 
@@ -90,8 +62,8 @@ const Board = ({
   );
 
   const getInCheckSlot = () => {
-    const { color } = activePlayer;
-    return board.kingInCheck(color) ? board.findKingSlot(color) : undefined;
+    if (!board.kingInCheck(nextMoveColor)) return undefined;
+    return board.findKingSlot(nextMoveColor);
   };
 
   const getSlot = (b, i) => (reversed ? b.length - i - 1 : i);
@@ -119,15 +91,13 @@ const Board = ({
 };
 
 Board.propTypes = {
-  activePlayer: playerPropType.isRequired,
   board: boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
-  fetchGame: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+  nextMoveColor: PropTypes.string.isRequired,
   reversed: PropTypes.bool.isRequired,
   selectedSlot: PropTypes.number,
-  gameId: PropTypes.string.isRequired,
 };
 
 Board.defaultProps = {
