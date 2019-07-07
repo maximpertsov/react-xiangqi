@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import { getPiece } from '../Piece/Piece';
 import { boardPropType } from '../../logic';
-import { playerPropType } from '../../customPropTypes';
 
 import boardImg from './board-1000px.svg.png';
 
@@ -96,7 +95,7 @@ Board.propTypes = {
   handleLegalMove: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-  nextMoveColor: playerPropType.isRequired,
+  nextMoveColor: PropTypes.string.isRequired,
   reversed: PropTypes.bool.isRequired,
   selectedSlot: PropTypes.number,
 };

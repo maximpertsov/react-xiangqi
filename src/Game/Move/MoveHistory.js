@@ -22,11 +22,17 @@ class MoveHistory extends Component {
   }
 
   componentDidMount() {
-    if (this.el !== undefined) this.scrollToBottom();
+    this.scrollToBottom();
   }
 
   scrollToBottom() {
-    this.el.scrollIntoView();
+    try {
+      this.el.scrollIntoView();
+    } catch (e) {
+      if (e instanceof TypeError) {
+        // pass
+      } else { throw e; }
+    }
   }
 
   setBottomElement(el) {
