@@ -20,11 +20,11 @@ const Wrapper = styled.div`
 `;
 
 const Board = ({
-  activePlayer,
   board,
   handleLegalMove,
   handleSelect,
   legalMoves,
+  nextMoveColor,
   reversed,
   selectedSlot,
 }) => {
@@ -37,11 +37,9 @@ const Board = ({
     return !board.sameColor(slot, selectedSlot);
   };
 
-  const isLegalMove = (fromSlot, toSlot) => {
-    const { color } = activePlayer;
-    if (!board.isColor(color, fromSlot)) return false;
-    return legalMoves[fromSlot].includes(toSlot);
-  };
+  const isLegalMove = (fromSlot, toSlot) => (
+    legalMoves[fromSlot].includes(toSlot)
+  );
 
   const handleMove = (fromSlot, toSlot) => {
     if (isLegalMove(fromSlot, toSlot)) handleLegalMove(board, fromSlot, toSlot);
@@ -65,8 +63,8 @@ const Board = ({
   );
 
   const getInCheckSlot = () => {
-    const { color } = activePlayer;
-    return board.kingInCheck(color) ? board.findKingSlot(color) : undefined;
+    if (!board.kingInCheck(nextMoveColor)) return undefined;
+    return board.findKingSlot(nextMoveColor);
   };
 
   const getSlot = (b, i) => (reversed ? b.length - i - 1 : i);
@@ -94,11 +92,11 @@ const Board = ({
 };
 
 Board.propTypes = {
-  activePlayer: playerPropType.isRequired,
   board: boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+  nextMoveColor: playerPropType.isRequired,
   reversed: PropTypes.bool.isRequired,
   selectedSlot: PropTypes.number,
 };

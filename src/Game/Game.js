@@ -230,7 +230,6 @@ class Game extends Component {
     return false;
   }
 
-
   renderMoves() {
     const { moves, selectedMoveIdx } = this.state;
     return (
@@ -245,27 +244,25 @@ class Game extends Component {
   renderBoardOrLoading() {
     const { moves, selectedMoveIdx, selectedSlot } = this.state;
     const { gameSlug } = this.props;
+    const nextMoveColor = this.getNextMoveColor();
     const userColor = this.getUserColor();
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
-    const { board, piece } = moves[selectedMoveIdx];
-    const nextMoveColor = board.isRedCode(piece) ? 'black' : 'red';
+    const { board } = moves[selectedMoveIdx];
 
     const legalMoves = board
-      .legalMovesByColor(nextMoveColor)
-      .map(
-        (toSlots) => (selectedMoveIdx === moves.length - 1 ? toSlots : []),
-      )
-      .map(
-        (toSlots, fromSlot) => (
-          board.isColor(userColor, fromSlot) ? toSlots : []
-        ),
-      );
+      .legalMoves()
+      .map((toSlots, fromSlot) => {
+        if (selectedMoveIdx !== moves.length - 1) return [];
+        if (!board.isColor(nextMoveColor, fromSlot)) return [];
+        if (!board.isColor(userColor, fromSlot)) return [];
+        return toSlots;
+      });
 
     return (
       <Board
-        activePlayer={this.getNextMovePlayer()}
+        nextMoveColor={nextMoveColor}
         board={board}
         fetchGame={this.fetchGame}
         handleLegalMove={this.handleLegalMove}
