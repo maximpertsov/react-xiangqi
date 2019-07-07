@@ -83,6 +83,8 @@ class Game extends Component {
     }
 
     const { gameSlug } = this.props;
+    if (gameSlug === null) return;
+
     client.getLastUpdate(gameSlug)
       .then((response) => {
         const { data: { updated_at: serverUpdatedAt } } = response;
@@ -127,6 +129,20 @@ class Game extends Component {
 
   fetchGame() {
     const { gameSlug } = this.props;
+    if (gameSlug === null) {
+      this.setState({
+        moves: [{
+          piece: undefined,
+          fromPos: undefined,
+          toPos: undefined,
+          board: new XiangqiBoard({ fen: DEFAULT_FEN }),
+        }],
+        selectedMoveIdx: 0,
+      });
+
+      return;
+    }
+
     client.getGame(gameSlug).then((response) => {
       const { players, initial_fen: fen } = response.data;
       this.setState({ players });
@@ -169,6 +185,8 @@ class Game extends Component {
 
   postMoveToServer(board, fromSlot, toSlot) {
     const { gameSlug } = this.props;
+    if (gameSlug === null) return;
+
     client.postMove(gameSlug, this.getPostMovePayload(board, fromSlot, toSlot))
       .then(({ status }) => {
         if (status !== 201) {
@@ -256,6 +274,7 @@ class Game extends Component {
 
   renderBoardOrLoading() {
     const { moves, selectedMoveIdx, selectedSlot } = this.state;
+    const { gameSlug } = this.props;
 
     const nextMoveColor = this.getNextMoveColor();
     const userColor = this.getUserColor();
@@ -269,7 +288,7 @@ class Game extends Component {
       .map((toSlots, fromSlot) => {
         if (selectedMoveIdx !== moves.length - 1) return [];
         if (!board.isColor(nextMoveColor, fromSlot)) return [];
-        if (!board.isColor(userColor, fromSlot)) return [];
+        if (gameSlug !== null && !board.isColor(userColor, fromSlot)) return [];
         return toSlots;
       });
 
@@ -286,7 +305,10 @@ class Game extends Component {
     );
   }
 
-  render() {
+  renderGameInfo() {
+    const { gameSlug } = this.props;
+    if (gameSlug === null) return null;
+
     const { moves, players } = this.state;
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
@@ -295,16 +317,22 @@ class Game extends Component {
     const { board: latestBoard } = moves[moves.length - 1];
 
     return (
+      <GameInfo
+        activePlayer={this.getNextMovePlayer()}
+        userColor={this.getUserColor()}
+        players={players}
+        latestBoard={latestBoard}
+      />
+    );
+  }
+
+  render() {
+    return (
       <Wrapper className="Game">
         { this.renderBoardOrLoading() }
         <SidebarWrapper>
           <LoginForm setUsername={this.setUsername} />
-          <GameInfo
-            activePlayer={this.getNextMovePlayer()}
-            userColor={this.getUserColor()}
-            players={players}
-            latestBoard={latestBoard}
-          />
+          { this.renderGameInfo() }
           { this.renderMoves() }
         </SidebarWrapper>
       </Wrapper>
@@ -313,7 +341,11 @@ class Game extends Component {
 }
 
 Game.propTypes = {
-  gameSlug: PropTypes.string.isRequired,
+  gameSlug: PropTypes.string,
+};
+
+Game.defaultProps = {
+  gameSlug: null,
 };
 
 export default Game;
