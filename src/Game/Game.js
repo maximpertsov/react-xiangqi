@@ -169,10 +169,22 @@ class Game extends Component {
     this.setState({ selectedSlot: slot === null ? undefined : slot });
   }
 
+  nextMoveColor() {
+    const { moves } = this.state;
+    if (moves.length === 0) return 'red';
+
+    // TODO: we don't really need a specific board for this function
+    const { piece: lastMovedPiece, board } = moves[moves.length - 1];
+
+    return board.isRedCode(lastMovedPiece) ? 'black' : 'red';
+  }
+
   // TODO: create PlayerManager class?
   activePlayer() {
-    const { players, activePlayerIdx } = this.state;
-    return players[activePlayerIdx];
+    const { players } = this.state;
+    const nextMoveColor = this.nextMoveColor();
+
+    return players.find((p) => p.color === nextMoveColor);
   }
 
   // TODO: create PlayerManager class?
