@@ -256,7 +256,7 @@ class Game extends Component {
 
   renderBoardOrLoading() {
     const { moves, selectedMoveIdx, selectedSlot } = this.state;
-    const { gameSlug } = this.props;
+
     const nextMoveColor = this.getNextMoveColor();
     const userColor = this.getUserColor();
 
@@ -282,7 +282,6 @@ class Game extends Component {
         legalMoves={legalMoves}
         reversed={this.getInitialUserOrientation()}
         selectedSlot={selectedSlot}
-        gameId={gameSlug}
       />
     );
   }
