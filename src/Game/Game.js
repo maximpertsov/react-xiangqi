@@ -45,7 +45,6 @@ class Game extends Component {
     this.handleLegalMove = this.handleLegalMove.bind(this);
     this.handleMoveSelect = this.handleMoveSelect.bind(this);
     this.handleSquareSelect = this.handleSquareSelect.bind(this);
-    this.fetchGame = this.fetchGame.bind(this);
     this.setUsername = this.setUsername.bind(this);
   }
 
@@ -264,7 +263,6 @@ class Game extends Component {
       <Board
         nextMoveColor={nextMoveColor}
         board={board}
-        fetchGame={this.fetchGame}
         handleLegalMove={this.handleLegalMove}
         handleSelect={this.handleSquareSelect}
         legalMoves={legalMoves}
