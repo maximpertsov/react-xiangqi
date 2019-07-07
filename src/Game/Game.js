@@ -32,7 +32,6 @@ class Game extends Component {
     super(props);
 
     this.state = {
-      activePlayerIdx: 0,
       players: [],
       moves: [],
       selectedMoveIdx: null,
@@ -42,7 +41,6 @@ class Game extends Component {
       timer: null,
     };
 
-    this.changePlayer = this.changePlayer.bind(this);
     this.handleLegalMove = this.handleLegalMove.bind(this);
     this.handleMoveSelect = this.handleMoveSelect.bind(this);
     this.handleSquareSelect = this.handleSquareSelect.bind(this);
@@ -114,13 +112,8 @@ class Game extends Component {
   fetchGame() {
     const { gameSlug } = this.props;
     getGame(gameSlug).then((response) => {
-      const {
-        players,
-        initial_fen: fen,
-        active_color: activeColor,
-      } = response.data;
-      const activePlayerIdx = players.map((p) => p.color).indexOf(activeColor);
-      this.setState({ players, activePlayerIdx });
+      const { players, initial_fen: fen } = response.data;
+      this.setState({ players });
       this.fetchMoves(fen);
 
       this.startPolling();
@@ -143,7 +136,6 @@ class Game extends Component {
         selectedMoveIdx: moves.length,
       };
     });
-    this.changePlayer();
     this.startPolling();
   }
 
@@ -185,14 +177,6 @@ class Game extends Component {
     const nextMoveColor = this.nextMoveColor();
 
     return players.find((p) => p.color === nextMoveColor);
-  }
-
-  // TODO: create PlayerManager class?
-  changePlayer() {
-    const { players } = this.state;
-    this.setState((prevState) => ({
-      activePlayerIdx: (prevState.activePlayerIdx + 1) % players.length,
-    }));
   }
 
   getUserPlayer() {
