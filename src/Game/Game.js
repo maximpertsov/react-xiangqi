@@ -7,7 +7,9 @@ import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
 import XiangqiBoard, { RefType } from '../logic';
-import { getGame, getMoves, getLastUpdate } from '../client';
+import {
+  getGame, getMoves, postMove, getLastUpdate,
+} from '../client';
 
 const POLL_INTERVAL = 2500;
 
@@ -124,22 +126,49 @@ class Game extends Component {
     });
   }
 
-  handleLegalMove(fromSlot, toSlot) {
+  handleLegalMove(board, fromSlot, toSlot) {
     this.setState((fromState) => {
       const { moves } = fromState;
-      const { board: lastBoard } = moves[moves.length - 1];
       const nextMove = {
-        fromPos: lastBoard.getRankFile(fromSlot),
-        toPos: lastBoard.getRankFile(toSlot),
-        piece: lastBoard.getPiece(fromSlot),
-        board: lastBoard.move(fromSlot, toSlot),
+        fromPos: board.getRankFile(fromSlot),
+        toPos: board.getRankFile(toSlot),
+        piece: board.getPiece(fromSlot),
+        board: board.move(fromSlot, toSlot),
       };
       return {
+        // TODO: can there be an inconsistency if function receives
+        // a board other than the most recent board?
         moves: update(moves, { $push: [nextMove] }),
         selectedMoveIdx: moves.length,
       };
     });
-    this.startPolling();
+
+    this.postMoveToServer(board, fromSlot, toSlot);
+  }
+
+  getPostMovePayload(board, fromSlot, toSlot) {
+    const { name: player } = this.getNextMovePlayer();
+    const fromPos = board.getRankFile(fromSlot);
+    const toPos = board.getRankFile(toSlot);
+    const piece = board.getPiece(fromSlot);
+    return {
+      player, piece, fromPos, toPos,
+    };
+  }
+
+  postMoveToServer(board, fromSlot, toSlot) {
+    const { gameSlug } = this.props;
+    postMove(gameSlug, this.getPostMovePayload(board, fromSlot, toSlot))
+      .then(({ status }) => {
+        if (status !== 201) {
+          this.fetchGame();
+          this.startPolling();
+        }
+      })
+      .catch(() => {
+        // TODO: display useful error?
+        this.fetchGame();
+      });
   }
 
   startPolling() {
