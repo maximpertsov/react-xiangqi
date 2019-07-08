@@ -1,13 +1,12 @@
 'use strict'
 
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const Wrapper = styled.div(({ color }) => ({ color }))
 
 interface PlayerProps {
-  // TODO: make this a type
+  // TODO: make this an exported type
   color: 'red' | 'black'
   name: string
 }
