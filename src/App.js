@@ -5,14 +5,9 @@ import 'babel-polyfill';
 // const GAME_ID = 'ABC123';
 
 const App = () => {
-  const path = window.location.pathname.replace(/^\/|\/$/g, '');
-
-  switch (path) {
-    case '':
-      return <Game />;
-    default:
-      return <Game gameSlug={path} />;
-  }
+  const queryParams = new URLSearchParams(window.location.search);
+  const gameSlug = queryParams.get('game') || undefined;
+  return <Game gameSlug={gameSlug} />;
 };
 
 export default App;
