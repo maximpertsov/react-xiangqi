@@ -2,14 +2,19 @@
   "extends": [
     "eslint:recommended",
     "walmart/rules/eslint/best-practices/on",
-    "airbnb"
+    "airbnb",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "globals": {
     "document": false,
     "localStorage": false,
     "window": false
   },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "rules": {
+    "@typescript-eslint/semi": "never",
     "arrow-parens": ["error", "always"],
     "complexity": ["error", { "max": 5 }],
     "function-paren-newline": "off",
