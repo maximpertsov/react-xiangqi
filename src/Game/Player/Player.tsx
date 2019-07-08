@@ -1,24 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
+'use strict'
 
-const Wrapper = styled.div(
-  ({ color }) => ({ color }),
-);
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from '@emotion/styled'
 
-const Player = ({ name, color }) => {
-  const displayText = `${color === 'red' ? '帥' : '將'} ${name}`;
+const Wrapper = styled.div(({ color }) => ({ color }))
 
-  return (
-    <Wrapper color={color}>
-      {displayText}
-    </Wrapper>
-  );
-};
+interface PlayerProps {
+  // TODO: make this a type
+  color: 'red' | 'black'
+  name: string
+}
 
-Player.propTypes = {
-  color: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-};
+const Player = ({ name, color }: PlayerProps) => {
+  const displayText = `${color === 'red' ? '帥' : '將'} ${name}`
 
-export default Player;
+  return <Wrapper color={color}>{displayText}</Wrapper>
+}
+
+export default Player
