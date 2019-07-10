@@ -2,10 +2,10 @@
 
 import React from 'react'
 import { jsx } from '@emotion/core'
+import { Color } from '../../types'
 
 interface PlayerProps {
-  // TODO: make this an exported type
-  color: 'red' | 'black'
+  color: Color
   name: string
 }
 

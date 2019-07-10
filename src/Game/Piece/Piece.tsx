@@ -3,6 +3,7 @@
 import React from 'react'
 import { css, jsx } from '@emotion/core'
 import * as images from './images'
+import { Color } from '../../types'
 
 type PieceCode =
   | 'k'
@@ -30,8 +31,7 @@ type PieceType =
   | 'soldier'
 
 interface PieceProps {
-  // TODO: make this an exported type
-  color: 'red' | 'black'
+  color: Color
   type: PieceType
   icon: string
 }
