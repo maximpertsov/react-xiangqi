@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from '@emotion/styled'
+/** @jsx jsx */ jsx
 
-const Wrapper = styled.div(({ color }) => ({ color }))
+import React from 'react'
+import { jsx } from '@emotion/core'
 
 interface PlayerProps {
   // TODO: make this an exported type
@@ -12,7 +12,7 @@ interface PlayerProps {
 const Player = ({ name, color }: PlayerProps) => {
   const displayText = `${color === 'red' ? '帥' : '將'} ${name}`
 
-  return <Wrapper color={color}>{displayText}</Wrapper>
+  return <div css={{ color: color }}>{displayText}</div>
 }
 
 export default Player
