@@ -14,7 +14,7 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "@typescript-eslint/semi": "never",
+    "@typescript-eslint/semi": "off",
     "arrow-parens": ["error", "always"],
     "complexity": ["error", { "max": 5 }],
     "function-paren-newline": "off",
