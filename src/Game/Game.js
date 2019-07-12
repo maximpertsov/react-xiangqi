@@ -50,7 +50,7 @@ class Game extends Component {
         { name: '', color: 'red' },
         { name: ' ', color: 'black' },
       ],
-      // selectedMoveIdx: 0,
+      selectedMoveIdx: 0,
       selectedSlot: null,
       /* eslint-disable-next-line react/no-unused-state */
       timer: null,
@@ -331,6 +331,9 @@ class Game extends Component {
     return (
       <Wrapper className="Game">
         { this.renderBoardOrLoading() }
+        <GameContext.Consumer>
+          {(context) => context.number}
+        </GameContext.Consumer>
         <SidebarWrapper>
           <LoginForm setUsername={this.setUsername} />
           { this.renderGameInfo() }
@@ -348,7 +351,5 @@ Game.propTypes = {
 Game.defaultProps = {
   gameSlug: null,
 };
-
-Game.contextType = GameContext;
 
 export default Game;

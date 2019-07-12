@@ -5,24 +5,17 @@ export const GameContext = React.createContext();
 export class GameProvider extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      selectedMoveIdx: 0,
+      number: 10,
+      inc: () => {
+        this.setState((prevState) => ({ number: prevState.number + 1 }));
+      },
     };
-  }
-
-  get selectedMoveIdx() {
-    const { selectedMoveIdx } = this.state;
-    return selectedMoveIdx;
-  }
-
-  setSelectedMoveIdx(idx) {
-    this.setState({ selectedMoveIdx: idx });
   }
 
   render() {
     return (
-      <GameContext.Provider value={this}>
+      <GameContext.Provider value={this.state}>
         {this.props.children}
       </GameContext.Provider>
     );
