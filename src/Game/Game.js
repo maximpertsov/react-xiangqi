@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import update from 'immutability-helper';
-import { inject, observer, PropTypes as MobXPropTypes } from 'mobx-react';
+import { observer } from 'mobx-react';
 import Board from './Board/Board';
 import MoveHistory from './Move/MoveHistory';
+import { GameState } from './game-state';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
 import XiangqiBoard, { RefType } from '../logic';
@@ -126,8 +127,8 @@ class Game extends Component {
       // Watch out for off by 1 errors!
       this.setState({ moves });
 
-      const { store } = this.props;
-      store.setSelectedMoveIdx(moves.length - 1);
+      const { context } = this;
+      context.setSelectedMoveIdx(moves.length - 1);
     });
   }
 
@@ -143,8 +144,8 @@ class Game extends Component {
         }],
       });
 
-      const { store } = this.props;
-      store.setSelectedMoveIdx(0);
+      const { context } = this;
+      context.setSelectedMoveIdx(0);
 
       return;
     }
@@ -176,8 +177,8 @@ class Game extends Component {
       };
     });
 
-    const { store } = this.props;
-    store.setSelectedMoveIdx(this.state.moves.length);
+    const { context } = this;
+    context.setSelectedMoveIdx(this.state.moves.length);
 
     this.postMoveToServer(board, fromSlot, toSlot);
   }
@@ -225,8 +226,8 @@ class Game extends Component {
   }
 
   handleMoveSelect({ idx }) {
-    const { store } = this.props;
-    store.setSelectedMoveIdx(idx);
+    const { context } = this;
+    context.setSelectedMoveIdx(idx);
   }
 
   handleSquareSelect({ slot }) {
@@ -273,7 +274,7 @@ class Game extends Component {
 
   renderMoves() {
     const { moves } = this.state;
-    const { store: { selectedMoveIdx } } = this.props;
+    const { context: { selectedMoveIdx } } = this;
     return (
       <MoveHistory
         moves={moves}
@@ -285,7 +286,7 @@ class Game extends Component {
 
   renderBoardOrLoading() {
     const { moves, selectedSlot } = this.state;
-    const { store: { selectedMoveIdx } } = this.props;
+    const { context: { selectedMoveIdx } } = this;
     const { gameSlug } = this.props;
 
     const nextMoveColor = this.getNextMoveColor();
@@ -354,11 +355,13 @@ class Game extends Component {
 
 Game.propTypes = {
   gameSlug: PropTypes.string,
-  store: MobXPropTypes.observableObject.isRequired,
+  // context: MobXPropTypes.observableObject.isRequired,
 };
 
 Game.defaultProps = {
   gameSlug: null,
 };
 
-export default inject('store')(observer(Game));
+Game.contextType = GameState;
+
+export default observer(Game);
