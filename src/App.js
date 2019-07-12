@@ -1,19 +1,17 @@
 import React from 'react';
-import { observable, decorate } from 'mobx';
+import { observable } from 'mobx';
 import Game from './Game/Game';
 import 'babel-polyfill';
 
 // const GAME_ID = 'ABC123';
 
-class Store {
-  value = 0;
-}
+const store = observable.object({
+  value: 0,
 
-decorate(Store, {
-  value: observable,
+  get valuePlusOne() {
+    return this.value + 1;
+  },
 });
-
-const store = new Store();
 
 const App = () => {
   const queryParams = new URLSearchParams(window.location.search);

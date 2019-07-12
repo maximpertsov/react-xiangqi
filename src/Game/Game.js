@@ -63,6 +63,8 @@ class Game extends Component {
   }
 
   componentDidMount() {
+    const { store } = this.props;
+    console.log(store.valuePlusOne);
     this.fetchGame();
   }
 
