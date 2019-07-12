@@ -1,17 +1,19 @@
 import React from 'react';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import { Provider } from 'mobx-react';
 import Game from './Game/Game';
 import 'babel-polyfill';
 
 // const GAME_ID = 'ABC123';
 
-const store = observable.object({
-  value: 0,
+const store = observable({
+  selectedMoveIdx: 0,
 
-  get valuePlusOne() {
-    return this.value + 1;
+  setSelectedMoveIdx(idx) {
+    this.selectedMoveIdx = idx;
   },
+}, {
+  setSelectedMoveIdx: action,
 });
 
 const App = () => {

@@ -50,7 +50,7 @@ class Game extends Component {
         { name: '', color: 'red' },
         { name: ' ', color: 'black' },
       ],
-      selectedMoveIdx: 0,
+      // selectedMoveIdx: 0,
       selectedSlot: null,
       /* eslint-disable-next-line react/no-unused-state */
       timer: null,
@@ -64,8 +64,6 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    const { store } = this.props;
-    console.log(store.valuePlusOne);
     this.fetchGame();
   }
 
@@ -126,7 +124,10 @@ class Game extends Component {
       );
       // TODO: There is one more board than moves.
       // Watch out for off by 1 errors!
-      this.setState({ moves, selectedMoveIdx: moves.length - 1 });
+      this.setState({ moves });
+
+      const { store } = this.props;
+      store.setSelectedMoveIdx(moves.length - 1);
     });
   }
 
@@ -140,8 +141,10 @@ class Game extends Component {
           toPos: undefined,
           board: new XiangqiBoard({ fen: DEFAULT_FEN }),
         }],
-        selectedMoveIdx: 0,
       });
+
+      const { store } = this.props;
+      store.setSelectedMoveIdx(0);
 
       return;
     }
@@ -165,13 +168,16 @@ class Game extends Component {
         piece: board.getPiece(fromSlot),
         board: board.move(fromSlot, toSlot),
       };
+
       return {
         // TODO: can there be an inconsistency if function receives
         // a board other than the most recent board?
         moves: update(moves, { $push: [nextMove] }),
-        selectedMoveIdx: moves.length,
       };
     });
+
+    const { store } = this.props;
+    store.setSelectedMoveIdx(this.state.moves.length);
 
     this.postMoveToServer(board, fromSlot, toSlot);
   }
@@ -219,7 +225,8 @@ class Game extends Component {
   }
 
   handleMoveSelect({ idx }) {
-    this.setState({ selectedMoveIdx: idx });
+    const { store } = this.props;
+    store.setSelectedMoveIdx(idx);
   }
 
   handleSquareSelect({ slot }) {
@@ -265,7 +272,8 @@ class Game extends Component {
   }
 
   renderMoves() {
-    const { moves, selectedMoveIdx } = this.state;
+    const { moves } = this.state;
+    const { store: { selectedMoveIdx } } = this.props;
     return (
       <MoveHistory
         moves={moves}
@@ -276,7 +284,8 @@ class Game extends Component {
   }
 
   renderBoardOrLoading() {
-    const { moves, selectedMoveIdx, selectedSlot } = this.state;
+    const { moves, selectedSlot } = this.state;
+    const { store: { selectedMoveIdx } } = this.props;
     const { gameSlug } = this.props;
 
     const nextMoveColor = this.getNextMoveColor();
