@@ -18,7 +18,7 @@ const Dot = styled.div`
 `
 
 interface SquareProps {
-  handleSquareClick: (params: { slot: number; isOccupied: boolean }) => void
+  handleSquareClick: (params: { slot: number, isOccupied: boolean }) => void
   piece?: JSX.Element
   slot: number
   selected: boolean
