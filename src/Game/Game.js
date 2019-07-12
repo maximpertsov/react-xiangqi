@@ -35,28 +35,6 @@ class Game extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      clientUpdatedAt: null,
-      moves: [
-        {
-          piece: undefined,
-          fromPos: undefined,
-          toPos: undefined,
-          board: new XiangqiBoard(),
-        },
-      ],
-      players: [
-        // TODO: allow for same display name?
-        { name: '', color: 'red' },
-        { name: ' ', color: 'black' },
-      ],
-      selectedMoveIdx: 0,
-      selectedSlot: null,
-      /* eslint-disable-next-line react/no-unused-state */
-      timer: null,
-      username: null,
-    };
-
     this.handleLegalMove = this.handleLegalMove.bind(this);
     this.handleMoveSelect = this.handleMoveSelect.bind(this);
     this.handleSquareSelect = this.handleSquareSelect.bind(this);
@@ -69,14 +47,14 @@ class Game extends Component {
 
   componentWillUnmount() {
     /* eslint-disable-next-line react/no-unused-state */
-    this.setState({ timer: null });
+    this.context.set({ timer: null });
   }
 
   // TODO: only poll for move update? Can't do that now because
   // we don't update active player based on moves
   pollForGameUpdate() {
     // TODO: Use current fen instead?
-    const { username, clientUpdatedAt } = this.state;
+    const { username, clientUpdatedAt } = this.context;
     const { name: nextMovePlayerName } = this.getNextMovePlayer();
     if (username === null || username === nextMovePlayerName) {
       this.stopPolling();
@@ -93,7 +71,7 @@ class Game extends Component {
           || (clientUpdatedAt < serverUpdatedAt)) {
           this.fetchGame();
           this.stopPolling();
-          this.setState({ clientUpdatedAt: serverUpdatedAt });
+          this.context.set({ clientUpdatedAt: serverUpdatedAt });
         }
       });
   }
@@ -124,14 +102,14 @@ class Game extends Component {
       );
       // TODO: There is one more board than moves.
       // Watch out for off by 1 errors!
-      this.setState({ moves, selectedMoveIdx: moves.length - 1 });
+      this.context.set({ moves, selectedMoveIdx: moves.length - 1 });
     });
   }
 
   fetchGame() {
     const { gameSlug } = this.props;
     if (gameSlug === null) {
-      this.setState({
+      this.context.set({
         moves: [{
           piece: undefined,
           fromPos: undefined,
@@ -146,7 +124,7 @@ class Game extends Component {
 
     client.getGame(gameSlug).then((response) => {
       const { players, initial_fen: fen } = response.data;
-      this.setState({ players });
+      this.context.set({ players });
       this.fetchMoves(fen);
 
       this.startPolling();
@@ -155,7 +133,7 @@ class Game extends Component {
   }
 
   handleLegalMove(board, fromSlot, toSlot) {
-    this.setState((fromState) => {
+    this.context.set((fromState) => {
       const { moves } = fromState;
       const nextMove = {
         fromPos: board.getRankFile(fromSlot),
@@ -202,14 +180,14 @@ class Game extends Component {
   }
 
   startPolling() {
-    this.setState({
+    this.context.set({
       /* eslint-disable-next-line react/no-unused-state */
       timer: setInterval(() => this.pollForGameUpdate(), POLL_INTERVAL),
     });
   }
 
   stopPolling() {
-    this.setState((fromState) => {
+    this.context.set((fromState) => {
       const { timer } = fromState;
       clearInterval(timer);
       return { timer: null };
@@ -217,15 +195,15 @@ class Game extends Component {
   }
 
   handleMoveSelect({ idx }) {
-    this.setState({ selectedMoveIdx: idx });
+    this.context.set({ selectedMoveIdx: idx });
   }
 
   handleSquareSelect({ slot }) {
-    this.setState({ selectedSlot: slot === null ? undefined : slot });
+    this.context.set({ selectedSlot: slot === null ? undefined : slot });
   }
 
   getNextMoveColor() {
-    const { moves } = this.state;
+    const { moves } = this.context;
     if (moves.length === 0) return 'red';
 
     // TODO: we don't really need a specific board for this function
@@ -236,14 +214,14 @@ class Game extends Component {
 
   // TODO: create PlayerManager class?
   getNextMovePlayer() {
-    const { players } = this.state;
+    const { players } = this.context;
     const nextMoveColor = this.getNextMoveColor();
 
     return players.find((p) => p.color === nextMoveColor);
   }
 
   getUserPlayer() {
-    const { username, players } = this.state;
+    const { username, players } = this.context;
     return players.find((p) => p.name === username) || {};
   }
 
@@ -252,7 +230,7 @@ class Game extends Component {
   }
 
   setUsername(username) {
-    this.setState({ username });
+    this.context.set({ username });
     this.startPolling();
   }
 
@@ -263,7 +241,7 @@ class Game extends Component {
   }
 
   renderMoves() {
-    const { moves, selectedMoveIdx } = this.state;
+    const { moves, selectedMoveIdx } = this.context;
     return (
       <MoveHistory
         moves={moves}
@@ -274,7 +252,7 @@ class Game extends Component {
   }
 
   renderBoardOrLoading() {
-    const { moves, selectedMoveIdx, selectedSlot } = this.state;
+    const { moves, selectedMoveIdx, selectedSlot } = this.context;
     const { gameSlug } = this.props;
 
     const nextMoveColor = this.getNextMoveColor();
@@ -310,7 +288,7 @@ class Game extends Component {
     const { gameSlug } = this.props;
     if (gameSlug === null) return null;
 
-    const { moves, players } = this.state;
+    const { moves, players } = this.context;
 
     if (moves.length === 0) return (<div><p>Loading...</p></div>);
 
@@ -331,9 +309,6 @@ class Game extends Component {
     return (
       <Wrapper className="Game">
         { this.renderBoardOrLoading() }
-        <GameContext.Consumer>
-          {(context) => context.number}
-        </GameContext.Consumer>
         <SidebarWrapper>
           <LoginForm setUsername={this.setUsername} />
           { this.renderGameInfo() }
@@ -351,5 +326,7 @@ Game.propTypes = {
 Game.defaultProps = {
   gameSlug: null,
 };
+
+Game.contextType = GameContext;
 
 export default Game;
