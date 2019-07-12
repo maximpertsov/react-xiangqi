@@ -220,13 +220,8 @@ class Game extends Component {
     return players.find((p) => p.color === nextMoveColor);
   }
 
-  getUserPlayer() {
-    const { username, players } = this.context;
-    return players.find((p) => p.name === username) || {};
-  }
-
   getUserColor() {
-    return this.getUserPlayer().color;
+    return this.context.userPlayer.color;
   }
 
   setUsername(username) {

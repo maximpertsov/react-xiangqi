@@ -35,9 +35,19 @@ export default class GameProvider extends Component {
   }
 
   getContext() {
+    const { state } = this;
+
     return {
-      ...this.state,
+      // state
+      ...state,
+
+      // actions
       set: (update) => { this.setState(update); },
+
+      // computed
+      get userPlayer() {
+        return state.players.find((p) => p.name === state.username) || {};
+      },
     };
   }
 
