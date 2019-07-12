@@ -199,7 +199,7 @@ class Game extends Component {
   }
 
   handleSquareSelect({ slot }) {
-    this.context.set({ selectedSlot: slot === null ? undefined : slot });
+    this.context.selectSquare({ slot });
   }
 
   getNextMoveColor() {

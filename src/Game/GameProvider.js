@@ -43,6 +43,9 @@ export default class GameProvider extends Component {
 
       // actions
       set: (update) => { this.setState(update); },
+      selectSquare: ({ slot }) => {
+        this.setState({ selectedSlot: slot === null ? undefined : slot });
+      },
 
       // computed
       get userPlayer() {
