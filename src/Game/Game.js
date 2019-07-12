@@ -5,6 +5,7 @@ import update from 'immutability-helper';
 import Board from './Board/Board';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
+import { GameContext } from './GameContext';
 import LoginForm from '../LoginForm/LoginForm';
 import XiangqiBoard, { RefType } from '../logic';
 import * as client from '../client';
@@ -330,6 +331,9 @@ class Game extends Component {
     return (
       <Wrapper className="Game">
         { this.renderBoardOrLoading() }
+        <GameContext.Consumer>
+          {(context) => context.number}
+        </GameContext.Consumer>
         <SidebarWrapper>
           <LoginForm setUsername={this.setUsername} />
           { this.renderGameInfo() }
