@@ -5,7 +5,7 @@ import update from 'immutability-helper';
 import Board from './Board/Board';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
-import { GameContext } from './GameContext';
+import { GameContext } from './GameProvider';
 import LoginForm from '../LoginForm/LoginForm';
 import XiangqiBoard, { RefType } from '../logic';
 import * as client from '../client';

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import XiangqiBoard from '../logic';
 
 export const GameContext = React.createContext();
 
-export class GameProvider extends Component {
+export default class GameProvider extends Component {
   constructor(props) {
     super(props);
     /* eslint-disable react/no-unused-state */
@@ -35,12 +36,16 @@ export class GameProvider extends Component {
   }
 
   render() {
+    const { children } = this.props;
     return (
       <GameContext.Provider value={this.state}>
-        {this.props.children}
+        {children}
       </GameContext.Provider>
     );
   }
 }
 
-export default {};
+
+GameProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+};

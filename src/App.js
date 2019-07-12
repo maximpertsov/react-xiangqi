@@ -1,6 +1,6 @@
 import React from 'react';
 import Game from './Game/Game';
-import { GameProvider } from './Game/GameContext';
+import GameProvider from './Game/GameProvider';
 import 'babel-polyfill';
 
 // const GAME_ID = 'ABC123';
