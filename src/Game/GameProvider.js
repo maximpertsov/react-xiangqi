@@ -5,40 +5,46 @@ import XiangqiBoard from '../logic';
 
 export const GameContext = React.createContext();
 
+const initialMoves = [
+  {
+    piece: undefined,
+    fromPos: undefined,
+    toPos: undefined,
+    board: new XiangqiBoard(),
+  },
+];
+
+const initialPlayers = [
+  // TODO: allow for same display name?
+  { name: '', color: 'red' },
+  { name: ' ', color: 'black' },
+];
+
 export default class GameProvider extends Component {
   constructor(props) {
     super(props);
-    /* eslint-disable react/no-unused-state */
     this.state = {
       clientUpdatedAt: null,
-      moves: [
-        {
-          piece: undefined,
-          fromPos: undefined,
-          toPos: undefined,
-          board: new XiangqiBoard(),
-        },
-      ],
-      players: [
-        // TODO: allow for same display name?
-        { name: '', color: 'red' },
-        { name: ' ', color: 'black' },
-      ],
+      moves: initialMoves,
+      players: initialPlayers,
       selectedMoveIdx: 0,
       selectedSlot: null,
       timer: null,
       username: null,
+    };
+  }
 
-      // Action
+  getContext() {
+    return {
+      ...this.state,
       set: (update) => { this.setState(update); },
     };
-    /* eslint-enable react/no-unused-state */
   }
 
   render() {
     const { children } = this.props;
     return (
-      <GameContext.Provider value={this.state}>
+      <GameContext.Provider value={this.getContext()}>
         {children}
       </GameContext.Provider>
     );
