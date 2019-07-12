@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import update from 'immutability-helper';
+import { inject, observer, PropTypes as MobXPropTypes } from 'mobx-react';
 import Board from './Board/Board';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
@@ -344,10 +345,11 @@ class Game extends Component {
 
 Game.propTypes = {
   gameSlug: PropTypes.string,
+  store: MobXPropTypes.observableObject.isRequired,
 };
 
 Game.defaultProps = {
   gameSlug: null,
 };
 
-export default Game;
+export default inject('store')(observer(Game));

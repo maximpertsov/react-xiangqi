@@ -1,5 +1,6 @@
 import React from 'react';
 import { observable } from 'mobx';
+import { Provider } from 'mobx-react';
 import Game from './Game/Game';
 import 'babel-polyfill';
 
@@ -16,7 +17,11 @@ const store = observable.object({
 const App = () => {
   const queryParams = new URLSearchParams(window.location.search);
   const gameSlug = queryParams.get('game') || undefined;
-  return <Game store={store} gameSlug={gameSlug} />;
+  return (
+    <Provider store={store}>
+      <Game gameSlug={gameSlug} />
+    </Provider>
+  );
 };
 
 export default App;
