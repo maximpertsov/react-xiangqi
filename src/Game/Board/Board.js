@@ -1,22 +1,12 @@
-import React from 'react';
-import styled from '@emotion/styled';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import { getPiece } from '../Piece/Piece';
 import { boardPropType } from '../../logic';
 
 import boardImg from './board-1000px.svg.png';
-
-const Wrapper = styled.div`
-  background-image: url(${boardImg});
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: top;
-  display: grid;
-  grid-template-rows: repeat(10, 60px);
-  grid-template-columns: repeat(9, 60px);
-  justify-content: center;
-`;
 
 const Board = ({
   board,
@@ -84,9 +74,22 @@ const Board = ({
   });
 
   return (
-    <Wrapper className="Board">
+    <div
+      className="Board"
+      css={css`
+        background-image: url(${boardImg});
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: top;
+        display: grid;
+        grid-template-rows: repeat(10, 60px);
+        grid-template-columns: repeat(9, 60px);
+        justify-content: center;
+      `}
+
+    >
       {renderSquares()}
-    </Wrapper>
+    </div>
   );
 };
 
