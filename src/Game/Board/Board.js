@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import { getPiece } from '../Piece/Piece';
 import { boardPropType } from '../../logic';
-import { GameContext } from '../GameProvider';
 
 import boardImg from './board-1000px.svg.png';
 
@@ -27,7 +26,7 @@ const Board = ({
   nextMoveColor,
   reversed,
   selectedSlot,
-}, context) => {
+}) => {
   const getPieceOn = (slot) => getPiece(board.getPiece(slot));
 
   const selectedCanCapture = (slot) => {
@@ -43,18 +42,18 @@ const Board = ({
 
   const handleMove = (fromSlot, toSlot) => {
     if (isLegalMove(fromSlot, toSlot)) handleLegalMove(board, fromSlot, toSlot);
-    context.selectSquare({ slot: null });
+    handleSelect({ slot: null });
   };
 
   const handleSquareClick = ({ slot, isOccupied }) => {
     if (slot === selectedSlot) {
-      context.selectSquare({ slot: null });
+      handleSelect({ slot: null });
     } else if (isOccupied && !selectedCanCapture(slot)) {
-      context.selectSquare({ slot });
+      handleSelect({ slot });
     } else if (selectedSlot !== null) {
       handleMove(selectedSlot, slot);
     } else {
-      context.selectSquare({ slot: null });
+      handleSelect({ slot: null });
     }
   };
 
@@ -104,7 +103,5 @@ Board.propTypes = {
 Board.defaultProps = {
   selectedSlot: null,
 };
-
-Board.contextType = GameContext;
 
 export default Board;
