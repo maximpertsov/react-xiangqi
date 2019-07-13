@@ -8,7 +8,7 @@ import XiangqiPiece from '../Piece/Piece';
 const SELECTION_GREEN = 'rgba(30, 179, 0, 0.3)';
 const IN_CHECK_RED = 'red';
 
-const TargetedEmptySquare = styled.div`
+const EmptyTargetIndicator = styled.div`
   width:50%;
   height:50%;
   position:relative;
@@ -16,6 +16,15 @@ const TargetedEmptySquare = styled.div`
   transform:translateY(-50%);
   border-radius:50%;
   background:${SELECTION_GREEN};
+`;
+
+// Absolute position allows us to fill the parent element
+const SelectionIndicator = styled.div`
+  background-color:${SELECTION_GREEN};
+  position:absolute;
+  height:100%;
+  width:100%;
+  z-index:-1;
 `;
 
 const Square = ({
@@ -30,7 +39,7 @@ const Square = ({
 
   const renderSquareElement = () => {
     if (isOccupied()) return <XiangqiPiece code={pieceCode} />;
-    if (targeted) return (<TargetedEmptySquare />);
+    if (targeted) return (<EmptyTargetIndicator />);
     return (<div />);
   };
 
@@ -47,16 +56,11 @@ const Square = ({
       className="Square"
       onClick={handleClick}
       css={{
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'contain',
         display: 'flex',
         justifyContent: 'center',
         margin: '0px;',
         padding: '0px;',
-        ...selected && {
-          backgroundColor: SELECTION_GREEN,
-        },
+        position: 'relative',
         ...attacked() && {
           outline: `2px dotted ${SELECTION_GREEN}`,
           outlineOffset: `2px ${SELECTION_GREEN}`,
@@ -66,6 +70,7 @@ const Square = ({
         },
       }}
     >
+      {selected && <SelectionIndicator />}
       {renderSquareElement()}
     </div>
   );
