@@ -18,7 +18,7 @@ const SelectionIndicator = styled.div`
 `;
 
 const TargetIndicator = styled.div(({ code }) => ({
-  ...(code === undefined) && {
+  ...(code === undefined) ? {
     width: '50%',
     height: '50%',
     position: 'relative',
@@ -26,8 +26,22 @@ const TargetIndicator = styled.div(({ code }) => ({
     transform: 'translateY(-50%)',
     borderRadius: '50%',
     background: SELECTION_GREEN,
+  } : {
+    outline: `2px dotted ${SELECTION_GREEN}`,
+    outlineOffset: `2px ${SELECTION_GREEN}`,
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
   },
 }));
+
+const KingCheckedIndicator = styled.div({
+  outline: `2px dotted ${IN_CHECK_RED}`,
+  outlineOffset: `2px ${IN_CHECK_RED}`,
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+});
 
 
 const Square = ({
@@ -58,18 +72,12 @@ const Square = ({
         margin: '0px;',
         padding: '0px;',
         position: 'relative',
-        ...attacked() && {
-          outline: `2px dotted ${SELECTION_GREEN}`,
-          outlineOffset: `2px ${SELECTION_GREEN}`,
-        },
-        ...inCheck() && {
-          outline: `2px dotted ${IN_CHECK_RED}`,
-        },
       }}
     >
       {selected && <SelectionIndicator />}
       {isOccupied() && <XiangqiPiece code={pieceCode} />}
       {targeted && <TargetIndicator code={pieceCode} />}
+      {inCheck() && <KingCheckedIndicator />}
     </div>
   );
 };
