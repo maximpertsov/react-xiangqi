@@ -38,7 +38,7 @@ const Square = ({
   const inCheck = () => slot === inCheckSlot;
 
   const handleClick = () => {
-    handleSquareClick({ slot, isOccupied: isOccupied() });
+    handleSquareClick(slot);
   };
 
   const getOutline = () => {

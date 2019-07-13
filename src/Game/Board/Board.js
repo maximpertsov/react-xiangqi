@@ -40,10 +40,10 @@ const Board = ({
     handleSelect({ slot: null });
   };
 
-  const handleSquareClick = ({ slot, isOccupied }) => {
+  const handleSquareClick = (slot) => {
     if (slot === selectedSlot) {
       handleSelect({ slot: null });
-    } else if (isOccupied && !selectedCanCapture(slot)) {
+    } else if (board.isOccupied(slot) && !selectedCanCapture(slot)) {
       handleSelect({ slot });
     } else if (selectedSlot !== null) {
       handleMove(selectedSlot, slot);
