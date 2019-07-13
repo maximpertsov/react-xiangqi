@@ -8,7 +8,7 @@ import XiangqiPiece from '../Piece/Piece';
 const SELECTION_GREEN = 'rgba(30, 179, 0, 0.3)';
 const IN_CHECK_RED = 'red';
 
-const Dot = styled.div`
+const TargetedEmptySquare = styled.div`
   width:50%;
   height:50%;
   position:relative;
@@ -30,7 +30,7 @@ const Square = ({
 
   const renderSquareElement = () => {
     if (isOccupied()) return <XiangqiPiece code={pieceCode} />;
-    if (targeted) return (<Dot />);
+    if (targeted) return (<TargetedEmptySquare />);
     return (<div />);
   };
 
