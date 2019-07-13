@@ -25,9 +25,26 @@ const Piece = ({ color, type, icon }) => {
   );
 };
 
+export const sourcePropType = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.number,
+  PropTypes.shape({
+    uri: PropTypes.string,
+    headers: PropTypes.objectOf(PropTypes.string),
+  }),
+  PropTypes.arrayOf(
+    PropTypes.shape({
+      uri: PropTypes.string,
+      width: PropTypes.number,
+      height: PropTypes.number,
+      headers: PropTypes.objectOf(PropTypes.string),
+    }),
+  ),
+]);
+
 Piece.propTypes = {
   color: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
+  icon: sourcePropType.isRequired,
   type: PropTypes.string.isRequired,
 };
 

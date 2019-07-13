@@ -3,7 +3,6 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
-import XiangqiPiece from '../Piece/Piece';
 import { boardPropType } from '../../logic';
 
 import boardImg from './board-1000px.svg.png';
@@ -17,12 +16,7 @@ const Board = ({
   reversed,
   selectedSlot,
 }) => {
-  const getPieceOn = (slot) => {
-    const code = board.getPiece(slot);
-
-    if (code === null) return undefined;
-    return <XiangqiPiece code={code} />;
-  };
+  const getPieceCode = (slot) => board.getPiece(slot) || undefined;
 
   const selectedCanCapture = (slot) => {
     if (selectedSlot === null) return false;
@@ -69,7 +63,7 @@ const Board = ({
       <Square
         key={slot}
         slot={slot}
-        piece={getPieceOn(slot)}
+        pieceCode={getPieceCode(slot)}
         inCheckSlot={getInCheckSlot()}
         targeted={getTargets().includes(slot)}
         handleSquareClick={handleSquareClick}
@@ -91,7 +85,6 @@ const Board = ({
         grid-template-columns: repeat(9, 60px);
         justify-content: center;
       `}
-
     >
       {renderSquares()}
     </div>

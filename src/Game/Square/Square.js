@@ -3,6 +3,7 @@ import { jsx } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import XiangqiPiece from '../Piece/Piece';
 
 const SELECTION_GREEN = 'rgba(30, 179, 0, 0.3)';
 const IN_CHECK_RED = 'red';
@@ -19,16 +20,16 @@ const Dot = styled.div`
 
 const Square = ({
   handleSquareClick,
-  piece,
+  pieceCode,
   slot,
   selected,
   inCheckSlot,
   targeted,
 }) => {
-  const isOccupied = () => piece !== undefined;
+  const isOccupied = () => pieceCode !== undefined;
 
   const renderSquareElement = () => {
-    if (isOccupied()) return piece;
+    if (isOccupied()) return <XiangqiPiece code={pieceCode} />;
     if (targeted) return (<Dot />);
     return (<div />);
   };
@@ -71,7 +72,7 @@ const Square = ({
 
 Square.propTypes = {
   handleSquareClick: PropTypes.func.isRequired,
-  piece: PropTypes.element,
+  pieceCode: PropTypes.string,
   slot: PropTypes.number.isRequired,
   selected: PropTypes.bool.isRequired,
   inCheckSlot: PropTypes.number,
@@ -79,7 +80,7 @@ Square.propTypes = {
 };
 
 Square.defaultProps = {
-  piece: undefined,
+  pieceCode: undefined,
   inCheckSlot: null,
 };
 
