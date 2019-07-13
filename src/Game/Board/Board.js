@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
-import { getPiece } from '../Piece/Piece';
+import { XiangqiPiece } from '../Piece/Piece';
 import { boardPropType } from '../../logic';
 
 import boardImg from './board-1000px.svg.png';
@@ -17,7 +17,12 @@ const Board = ({
   reversed,
   selectedSlot,
 }) => {
-  const getPieceOn = (slot) => getPiece(board.getPiece(slot));
+  const getPieceOn = (slot) => {
+    const code = board.getPiece(slot);
+
+    if (code === null) return undefined;
+    return <XiangqiPiece code={code} />;
+  };
 
   const selectedCanCapture = (slot) => {
     if (selectedSlot === null) return false;
