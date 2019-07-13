@@ -1,36 +1,11 @@
-import React from 'react';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
+
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 const SELECTION_GREEN = 'rgba(30, 179, 0, 0.3)';
 const IN_CHECK_RED = 'red';
-
-const Wrapper = styled.div(
-  {
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'contain',
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '0px;',
-    margin: '0px;',
-  },
-  ({ inCheck, selected, targeted }) => {
-    let outline;
-    if (targeted) {
-      outline = `2px dotted ${SELECTION_GREEN}`;
-    } else if (inCheck) {
-      outline = `2px dotted ${IN_CHECK_RED}`;
-    } else {
-      outline = 'none';
-    }
-    return {
-      backgroundColor: (selected ? SELECTION_GREEN : 'none'),
-      outline,
-      outlineOffset: (targeted ? '-2px' : 'none'),
-    };
-  },
-);
 
 const Dot = styled.div`
   width:50%;
@@ -66,16 +41,31 @@ const Square = ({
     handleSquareClick({ slot, isOccupied: isOccupied() });
   };
 
+  const getOutline = () => {
+    if (isTargeted()) return `2px dotted ${SELECTION_GREEN}`;
+    if (inCheck()) return `2px dotted ${IN_CHECK_RED}`;
+    return 'none';
+  };
+
   return (
-    <Wrapper
+    <div
       className="Square"
       onClick={handleClick}
-      selected={selected}
-      targeted={isTargeted()}
-      inCheck={inCheck()}
+      css={{
+        backgroundColor: selected ? SELECTION_GREEN : 'none',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'contain',
+        display: 'flex',
+        justifyContent: 'center',
+        margin: '0px;',
+        outline: getOutline(),
+        outlineOffset: isTargeted() ? '-2px' : 'none',
+        padding: '0px;',
+      }}
     >
       {renderSquareElement()}
-    </Wrapper>
+    </div>
   );
 };
 
