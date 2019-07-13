@@ -8,13 +8,17 @@ import XiangqiPiece from '../Piece/Piece';
 const SELECTION_GREEN = 'rgba(30, 179, 0, 0.3)';
 const IN_CHECK_RED = 'red';
 
-const SelectionIndicator = styled.div`
-  background-color:${SELECTION_GREEN};
-  position:absolute;
-  height:100%;
-  width:100%;
-  z-index:-1;
-`;
+const fillParentElement = {
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+};
+
+const SelectionIndicator = styled.div({
+  backgroundColor: SELECTION_GREEN,
+  zIndex: '-1',
+  ...fillParentElement,
+});
 
 const TargetIndicator = styled.div(({ code }) => ({
   ...(code === undefined) ? {
@@ -24,22 +28,16 @@ const TargetIndicator = styled.div(({ code }) => ({
     top: '50%',
     transform: 'translateY(-50%)',
     borderRadius: '50%',
-    background: SELECTION_GREEN,
+    backgroundColor: SELECTION_GREEN,
   } : {
     outline: `2px dotted ${SELECTION_GREEN}`,
-    outlineOffset: '2px',
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
+    ...fillParentElement,
   },
 }));
 
 const KingCheckedIndicator = styled.div({
   outline: `2px dotted ${IN_CHECK_RED}`,
-  outlineOffset: '2px',
-  position: 'absolute',
-  height: '100%',
-  width: '100%',
+  ...fillParentElement,
 });
 
 
