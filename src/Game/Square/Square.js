@@ -8,16 +8,6 @@ import XiangqiPiece from '../Piece/Piece';
 const SELECTION_GREEN = 'rgba(30, 179, 0, 0.3)';
 const IN_CHECK_RED = 'red';
 
-const EmptyTargetIndicator = styled.div`
-  width:50%;
-  height:50%;
-  position:relative;
-  top:50%;
-  transform:translateY(-50%);
-  border-radius:50%;
-  background:${SELECTION_GREEN};
-`;
-
 // Absolute position allows us to fill the parent element
 const SelectionIndicator = styled.div`
   background-color:${SELECTION_GREEN};
@@ -26,6 +16,19 @@ const SelectionIndicator = styled.div`
   width:100%;
   z-index:-1;
 `;
+
+const TargetIndicator = styled.div(({ code }) => ({
+  ...(code === undefined) && {
+    width: '50%',
+    height: '50%',
+    position: 'relative',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    borderRadius: '50%',
+    background: SELECTION_GREEN,
+  },
+}));
+
 
 const Square = ({
   handleSquareClick,
@@ -36,12 +39,6 @@ const Square = ({
   targeted,
 }) => {
   const isOccupied = () => pieceCode !== undefined;
-
-  const renderSquareElement = () => {
-    if (isOccupied()) return <XiangqiPiece code={pieceCode} />;
-    if (targeted) return (<EmptyTargetIndicator />);
-    return (<div />);
-  };
 
   const attacked = () => isOccupied() && targeted;
 
@@ -71,7 +68,8 @@ const Square = ({
       }}
     >
       {selected && <SelectionIndicator />}
-      {renderSquareElement()}
+      {isOccupied() && <XiangqiPiece code={pieceCode} />}
+      {targeted && <TargetIndicator code={pieceCode} />}
     </div>
   );
 };
