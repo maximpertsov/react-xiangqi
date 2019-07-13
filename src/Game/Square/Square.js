@@ -8,7 +8,6 @@ import XiangqiPiece from '../Piece/Piece';
 const SELECTION_GREEN = 'rgba(30, 179, 0, 0.3)';
 const IN_CHECK_RED = 'red';
 
-// Absolute position allows us to fill the parent element
 const SelectionIndicator = styled.div`
   background-color:${SELECTION_GREEN};
   position:absolute;
@@ -28,7 +27,7 @@ const TargetIndicator = styled.div(({ code }) => ({
     background: SELECTION_GREEN,
   } : {
     outline: `2px dotted ${SELECTION_GREEN}`,
-    outlineOffset: `2px ${SELECTION_GREEN}`,
+    outlineOffset: '2px',
     position: 'absolute',
     height: '100%',
     width: '100%',
@@ -37,7 +36,7 @@ const TargetIndicator = styled.div(({ code }) => ({
 
 const KingCheckedIndicator = styled.div({
   outline: `2px dotted ${IN_CHECK_RED}`,
-  outlineOffset: `2px ${IN_CHECK_RED}`,
+  outlineOffset: '2px',
   position: 'absolute',
   height: '100%',
   width: '100%',
