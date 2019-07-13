@@ -1,25 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
-import * as images from './images';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
 
-const Wrapper = styled.img`
-  pointer-events: none;
-  user-select: none;
-  -moz-user-select: none;
-  max-height:80%;
-  max-width:80%;
-  display:block;
-  margin:auto;
-`;
+import PropTypes from 'prop-types';
+import * as images from './images';
 
 export const Piece = ({ color, type, icon }) => {
   const alt = `${color} ${type}`;
+
   return (
-    <Wrapper
+    <img
       className="Piece"
-      color={color}
-      type={type}
+      css={css`
+        pointer-events: none;
+        user-select: none;
+        -moz-user-select: none;
+        max-height: 80%;
+        max-width: 80%;
+        display: block;
+        margin: auto;
+      `}
       alt={alt}
       src={icon}
     />
