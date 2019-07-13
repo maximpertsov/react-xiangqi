@@ -23,17 +23,17 @@ const Square = ({
   slot,
   selected,
   inCheckSlot,
-  targets,
+  targeted,
 }) => {
   const isOccupied = () => piece !== undefined;
 
   const renderSquareElement = () => {
     if (isOccupied()) return piece;
-    if (targets.includes(slot)) return (<Dot />);
+    if (targeted) return (<Dot />);
     return (<div />);
   };
 
-  const isTargeted = () => isOccupied() && targets.includes(slot);
+  const attacked = () => isOccupied() && targeted;
 
   const inCheck = () => slot === inCheckSlot;
 
@@ -42,7 +42,7 @@ const Square = ({
   };
 
   const getOutline = () => {
-    if (isTargeted()) return `2px dotted ${SELECTION_GREEN}`;
+    if (attacked()) return `2px dotted ${SELECTION_GREEN}`;
     if (inCheck()) return `2px dotted ${IN_CHECK_RED}`;
     return 'none';
   };
@@ -60,7 +60,7 @@ const Square = ({
         justifyContent: 'center',
         margin: '0px;',
         outline: getOutline(),
-        outlineOffset: isTargeted() ? '-2px' : 'none',
+        outlineOffset: attacked() ? '-2px' : 'none',
         padding: '0px;',
       }}
     >
@@ -75,7 +75,7 @@ Square.propTypes = {
   slot: PropTypes.number.isRequired,
   selected: PropTypes.bool.isRequired,
   inCheckSlot: PropTypes.number,
-  targets: PropTypes.arrayOf(PropTypes.number).isRequired,
+  targeted: PropTypes.bool.isRequired,
 };
 
 Square.defaultProps = {

@@ -71,7 +71,7 @@ const Board = ({
         slot={slot}
         piece={getPieceOn(slot)}
         inCheckSlot={getInCheckSlot()}
-        targets={getTargets()}
+        targeted={getTargets().includes(slot)}
         handleSquareClick={handleSquareClick}
         selected={selectedSlot === slot}
       />
