@@ -42,27 +42,28 @@ const Square = ({
     handleSquareClick(slot);
   };
 
-  const getOutline = () => {
-    if (attacked()) return `2px dotted ${SELECTION_GREEN}`;
-    if (inCheck()) return `2px dotted ${IN_CHECK_RED}`;
-    return 'none';
-  };
-
   return (
     <div
       className="Square"
       onClick={handleClick}
       css={{
-        backgroundColor: selected ? SELECTION_GREEN : 'none',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'contain',
         display: 'flex',
         justifyContent: 'center',
         margin: '0px;',
-        outline: getOutline(),
-        outlineOffset: attacked() ? '-2px' : 'none',
         padding: '0px;',
+        ...selected && {
+          backgroundColor: SELECTION_GREEN,
+        },
+        ...attacked() && {
+          outline: `2px dotted ${SELECTION_GREEN}`,
+          outlineOffset: `2px ${SELECTION_GREEN}`,
+        },
+        ...inCheck() && {
+          outline: `2px dotted ${IN_CHECK_RED}`,
+        },
       }}
     >
       {renderSquareElement()}
