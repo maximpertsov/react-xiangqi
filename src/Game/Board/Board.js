@@ -52,7 +52,7 @@ const Board = ({
     } else if (isOccupied && !selectedCanCapture(slot)) {
       context.selectSquare({ slot });
     } else if (selectedSlot !== null) {
-      context.selectSquare(selectedSlot, slot);
+      handleMove(selectedSlot, slot);
     } else {
       context.selectSquare({ slot: null });
     }
