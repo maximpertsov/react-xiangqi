@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
-import { XiangqiPiece } from '../Piece/Piece';
+import XiangqiPiece from '../Piece/Piece';
 import { boardPropType } from '../../logic';
 
 import boardImg from './board-1000px.svg.png';
