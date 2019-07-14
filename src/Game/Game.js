@@ -5,6 +5,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import Board from './Board/Board';
+import { selectMove } from './utils';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
@@ -247,18 +248,17 @@ class Game extends Component {
     return false;
   }
 
-  renderBoardOrLoading() {
-    const { moves, selectedMoveIdx, selectedSlot } = this.state;
+  getLegalMoves() {
     const { gameSlug } = this.props;
+    const { moves, selectedMoveIdx } = this.state;
 
     const nextMoveColor = this.getNextMoveColor();
     const userColor = this.getUserColor();
 
-    if (moves.length === 0) return (<div><p>Loading...</p></div>);
+    const { board } = selectMove(moves, selectedMoveIdx);
+    if (board === undefined) return undefined;
 
-    const { board } = moves[selectedMoveIdx];
-
-    const legalMoves = board
+    return board
       .legalMoves()
       .map((toSlots, fromSlot) => {
         if (selectedMoveIdx !== moves.length - 1) return [];
@@ -266,18 +266,6 @@ class Game extends Component {
         if (gameSlug !== null && !board.isColor(userColor, fromSlot)) return [];
         return toSlots;
       });
-
-    return (
-      <Board
-        nextMoveColor={nextMoveColor}
-        board={board}
-        handleLegalMove={this.handleLegalMove}
-        handleSelect={this.handleSquareSelect}
-        legalMoves={legalMoves}
-        reversed={this.getInitialUserOrientation()}
-        selectedSlot={selectedSlot}
-      />
-    );
   }
 
   renderGameInfo() {
@@ -302,6 +290,8 @@ class Game extends Component {
   }
 
   render() {
+    const { moves, selectedMoveIdx, selectedSlot } = this.state;
+
     return (
       <div
         className="Game"
@@ -312,7 +302,15 @@ class Game extends Component {
           height: 600px;
         `}
       >
-        { this.renderBoardOrLoading() }
+        <Board
+          nextMoveColor={this.getNextMoveColor()}
+          board={selectMove(moves, selectedMoveIdx).board}
+          handleLegalMove={this.handleLegalMove}
+          handleSelect={this.handleSquareSelect}
+          legalMoves={this.getLegalMoves()}
+          reversed={this.getInitialUserOrientation()}
+          selectedSlot={selectedSlot}
+        />
         <div
           css={css`
             display: flex;
