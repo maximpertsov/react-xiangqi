@@ -17,7 +17,6 @@
     "max-len": ["error", { "code": 80 }],
     "no-underscore-dangle": "off",
     "quote-props": ["error", "consistent-as-needed"],
-    "react/destructuring-assignment": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/no-array-index-key": "off",
     "react/sort-comp": "off",

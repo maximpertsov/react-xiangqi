@@ -70,7 +70,7 @@ class Game extends Component {
     }
 
     const { gameSlug } = this.props;
-    if (gameSlug === null) return;
+    if (gameSlug === undefined) return;
 
     client.getLastUpdate(gameSlug)
       .then((response) => {
@@ -116,7 +116,7 @@ class Game extends Component {
 
   fetchGame() {
     const { gameSlug } = this.props;
-    if (gameSlug === null) {
+    if (gameSlug === undefined) {
       this.setState({
         moves: [{
           piece: undefined,
@@ -172,7 +172,7 @@ class Game extends Component {
 
   postMoveToServer(board, fromSlot, toSlot) {
     const { gameSlug } = this.props;
-    if (gameSlug === null) return;
+    if (gameSlug === undefined) return;
 
     client.postMove(gameSlug, this.getPostMovePayload(board, fromSlot, toSlot))
       .then(({ status }) => {
@@ -248,48 +248,28 @@ class Game extends Component {
     return false;
   }
 
-  getLegalMoves() {
+  getLegalMoves(idx, currentUserOnly = true) {
     const { gameSlug } = this.props;
-    const { moves, selectedMoveIdx } = this.state;
-
+    const { moves } = this.state;
     const nextMoveColor = this.getNextMoveColor();
     const userColor = this.getUserColor();
-
-    const { board } = selectMove(moves, selectedMoveIdx);
+    const { board } = selectMove(moves, idx);
+    const selectUserMoves = currentUserOnly && gameSlug !== undefined;
 
     return board
       .legalMoves()
       .map((toSlots, fromSlot) => {
-        if (selectedMoveIdx !== moves.length - 1) return [];
+        if (idx !== -1 && idx !== moves.length - 1) return [];
         if (!board.isColor(nextMoveColor, fromSlot)) return [];
-        if (gameSlug !== null && !board.isColor(userColor, fromSlot)) return [];
+        if (selectUserMoves && !board.isColor(userColor, fromSlot)) return [];
         return toSlots;
       });
   }
 
-  renderGameInfo() {
-    const { gameSlug } = this.props;
-    if (gameSlug === null) return null;
-
-    const { moves, players } = this.state;
-
-    if (moves.length === 0) return (<div><p>Loading...</p></div>);
-
-    // TODO: smell -- repeat code
-    const { board: latestBoard } = moves[moves.length - 1];
-
-    return (
-      <GameInfo
-        activePlayer={this.getNextMovePlayer()}
-        userColor={this.getUserColor()}
-        players={players}
-        latestBoard={latestBoard}
-      />
-    );
-  }
-
   render() {
-    const { moves, selectedMoveIdx, selectedSlot } = this.state;
+    const {
+      moves, selectedMoveIdx, selectedSlot, players,
+    } = this.state;
 
     return (
       <div
@@ -306,7 +286,7 @@ class Game extends Component {
           board={selectMove(moves, selectedMoveIdx).board}
           handleLegalMove={this.handleLegalMove}
           handleSelect={this.handleSquareSelect}
-          legalMoves={this.getLegalMoves()}
+          legalMoves={this.getLegalMoves(selectedMoveIdx)}
           reversed={this.getInitialUserOrientation()}
           selectedSlot={selectedSlot}
         />
@@ -321,10 +301,15 @@ class Game extends Component {
           `}
         >
           <LoginForm setUsername={this.setUsername} />
-          { this.renderGameInfo() }
+          <GameInfo
+            activePlayer={this.getNextMovePlayer()}
+            userColor={this.getUserColor()}
+            players={players}
+            activeLegalMoves={this.getLegalMoves(-1, false)}
+          />
           <MoveHistory
-            moves={this.state.moves}
-            selectedIdx={this.state.selectedMoveIdx}
+            moves={moves}
+            selectedIdx={selectedMoveIdx}
             handleMoveSelect={this.handleMoveSelect}
           />
         </div>
@@ -338,7 +323,7 @@ Game.propTypes = {
 };
 
 Game.defaultProps = {
-  gameSlug: null,
+  gameSlug: undefined,
 };
 
 export default Game;

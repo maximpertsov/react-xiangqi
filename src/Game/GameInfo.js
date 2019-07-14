@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { playerPropType } from '../customPropTypes';
-// TODO: move to custom props?
-import { boardPropType } from '../logic';
 import Player from './Player/Player';
 
 const Wrapper = styled.div`
@@ -14,21 +12,25 @@ const Wrapper = styled.div`
 `;
 
 const GameInfo = ({
-  activePlayer, latestBoard, userColor, players,
+  activePlayer, activeLegalMoves, userColor, players,
 }) => {
-  const countLegalMovesByActivePlayer = () => {
-    const { color } = activePlayer;
-    return latestBoard
-      .legalMovesByColor(color)
-      .reduce((count, toSlots) => count + toSlots.length, 0);
-  };
+  const countLegalMovesByActivePlayer = () => (
+    activeLegalMoves.reduce((count, toSlots) => count + toSlots.length, 0)
+  );
 
   const userIsActive = () => {
     const { color } = activePlayer;
     return color === userColor;
   };
 
-  const turnMessage = () => {
+  const loadingUser = () => userColor === undefined;
+
+  const getMessage = () => {
+    if (loadingUser()) {
+      const { color } = activePlayer;
+      return `${color}'s turn`;
+    }
+
     if (countLegalMovesByActivePlayer() === 0) {
       // TODO: specify if won by stalemate or checkmate
       return userIsActive() ? 'You lose!' : 'You win!';
@@ -40,31 +42,27 @@ const GameInfo = ({
 
   const getBlackPlayer = () => players.find((p) => p.color === 'black');
 
-  const isLoading = () => players.length === 0;
-
-  const renderLoading = () => (<div><p>Loading...</p></div>);
-
-  const renderLoaded = () => (
+  return (
     <Wrapper>
       <Player {...getRedPlayer()} />
       <Player {...getBlackPlayer()} />
-      <p>{ turnMessage() }</p>
+      <p>{ getMessage() }</p>
     </Wrapper>
   );
-
-  return isLoading() ? renderLoading() : renderLoaded();
 };
 
 GameInfo.propTypes = {
   activePlayer: playerPropType,
+  activeLegalMoves: PropTypes.arrayOf(
+    PropTypes.arrayOf(PropTypes.number),
+  ).isRequired,
   players: PropTypes.arrayOf(playerPropType).isRequired,
   userColor: PropTypes.string,
-  latestBoard: boardPropType.isRequired,
 };
 
 GameInfo.defaultProps = {
-  activePlayer: null,
-  userColor: null,
+  activePlayer: undefined,
+  userColor: undefined,
 };
 
 export default GameInfo;
