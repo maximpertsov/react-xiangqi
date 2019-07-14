@@ -9,9 +9,9 @@ const SELECTION_GREEN = 'rgba(30, 179, 0, 0.3)';
 const IN_CHECK_RED = 'red';
 
 const fillParentElement = {
-  position: 'absolute',
   height: '100%',
   width: '100%',
+  position: 'absolute',
 };
 
 const SelectionIndicator = styled.div({
@@ -22,13 +22,13 @@ const SelectionIndicator = styled.div({
 
 const TargetIndicator = styled.div(({ code }) => ({
   ...(code === undefined) ? {
-    width: '50%',
+    backgroundColor: SELECTION_GREEN,
+    borderRadius: '50%',
     height: '50%',
+    width: '50%',
     position: 'relative',
     top: '50%',
     transform: 'translateY(-50%)',
-    borderRadius: '50%',
-    backgroundColor: SELECTION_GREEN,
   } : {
     outline: `2px dotted ${SELECTION_GREEN}`,
     ...fillParentElement,
@@ -49,15 +49,13 @@ const Square = ({
   inCheckSlot,
   targeted,
 }) => {
-  const isOccupied = () => pieceCode !== undefined;
-
-  const attacked = () => isOccupied() && targeted;
-
-  const inCheck = () => slot === inCheckSlot;
-
   const handleClick = () => {
     handleSquareClick(slot);
   };
+
+  const occupied = pieceCode !== undefined;
+
+  const inCheck = slot === inCheckSlot;
 
   return (
     <div
@@ -72,9 +70,9 @@ const Square = ({
       }}
     >
       {selected && <SelectionIndicator />}
-      {isOccupied() && <XiangqiPiece code={pieceCode} />}
+      {occupied && <XiangqiPiece code={pieceCode} />}
       {targeted && <TargetIndicator code={pieceCode} />}
-      {inCheck() && <KingCheckedIndicator />}
+      {inCheck && <KingCheckedIndicator />}
     </div>
   );
 };
