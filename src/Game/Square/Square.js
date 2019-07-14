@@ -42,14 +42,8 @@ const KingCheckedIndicator = styled.div({
 
 
 const Square = ({
-  handleSquareClick,
-  pieceCode,
-  slot,
-  selected,
-  inCheck,
-  targeted,
+  handleClick, pieceCode, selected, inCheck, targeted,
 }) => {
-  const handleClick = () => { handleSquareClick(slot); };
   const occupied = pieceCode !== undefined;
 
   return (
@@ -73,9 +67,8 @@ const Square = ({
 };
 
 Square.propTypes = {
-  handleSquareClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
   pieceCode: PropTypes.string,
-  slot: PropTypes.number.isRequired,
   selected: PropTypes.bool.isRequired,
   inCheck: PropTypes.bool.isRequired,
   targeted: PropTypes.bool.isRequired,
@@ -83,7 +76,6 @@ Square.propTypes = {
 
 Square.defaultProps = {
   pieceCode: undefined,
-  inCheckSlot: null,
 };
 
 export default Square;

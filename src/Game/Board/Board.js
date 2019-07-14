@@ -34,7 +34,7 @@ const Board = ({
     handleSelect({ slot: null });
   };
 
-  const handleSquareClick = (slot) => {
+  const handleSquareClick = (slot) => (() => {
     if (slot === selectedSlot) {
       handleSelect({ slot: null });
     } else if (board.isOccupied(slot) && !selectedCanCapture(slot)) {
@@ -44,7 +44,7 @@ const Board = ({
     } else {
       handleSelect({ slot: null });
     }
-  };
+  });
 
   const getTargets = () => (
     selectedSlot === null ? [] : legalMoves[selectedSlot]
@@ -62,12 +62,11 @@ const Board = ({
     return (
       <Square
         key={slot}
-        slot={slot}
-        pieceCode={getPieceCode(slot)}
+        handleClick={handleSquareClick(slot)}
         inCheck={inCheck(slot)}
-        targeted={getTargets().includes(slot)}
-        handleSquareClick={handleSquareClick}
+        pieceCode={getPieceCode(slot)}
         selected={selectedSlot === slot}
+        targeted={getTargets().includes(slot)}
       />
     );
   });
