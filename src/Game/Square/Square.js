@@ -20,8 +20,11 @@ const SelectionIndicator = styled.div({
   ...fillParentElement,
 });
 
-const TargetIndicator = styled.div(({ code }) => ({
-  ...(code === undefined) ? {
+const TargetIndicator = styled.div(({ occupied }) => ({
+  ...(occupied) ? {
+    outline: `2px dotted ${SELECTION_GREEN}`,
+    ...fillParentElement,
+  } : {
     backgroundColor: SELECTION_GREEN,
     borderRadius: '50%',
     height: '50%',
@@ -29,9 +32,6 @@ const TargetIndicator = styled.div(({ code }) => ({
     position: 'relative',
     top: '50%',
     transform: 'translateY(-50%)',
-  } : {
-    outline: `2px dotted ${SELECTION_GREEN}`,
-    ...fillParentElement,
   },
 }));
 
@@ -46,16 +46,11 @@ const Square = ({
   pieceCode,
   slot,
   selected,
-  inCheckSlot,
+  inCheck,
   targeted,
 }) => {
-  const handleClick = () => {
-    handleSquareClick(slot);
-  };
-
+  const handleClick = () => { handleSquareClick(slot); };
   const occupied = pieceCode !== undefined;
-
-  const inCheck = slot === inCheckSlot;
 
   return (
     <div
@@ -71,7 +66,7 @@ const Square = ({
     >
       {selected && <SelectionIndicator />}
       {occupied && <XiangqiPiece code={pieceCode} />}
-      {targeted && <TargetIndicator code={pieceCode} />}
+      {targeted && <TargetIndicator occupied={occupied} />}
       {inCheck && <KingCheckedIndicator />}
     </div>
   );
@@ -82,7 +77,7 @@ Square.propTypes = {
   pieceCode: PropTypes.string,
   slot: PropTypes.number.isRequired,
   selected: PropTypes.bool.isRequired,
-  inCheckSlot: PropTypes.number,
+  inCheck: PropTypes.bool.isRequired,
   targeted: PropTypes.bool.isRequired,
 };
 

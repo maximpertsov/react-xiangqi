@@ -50,9 +50,9 @@ const Board = ({
     selectedSlot === null ? [] : legalMoves[selectedSlot]
   );
 
-  const getInCheckSlot = () => {
-    if (!board.kingInCheck(nextMoveColor)) return undefined;
-    return board.findKingSlot(nextMoveColor);
+  const inCheck = (slot) => {
+    if (!board.kingInCheck(nextMoveColor)) return false;
+    return board.findKingSlot(nextMoveColor) === slot;
   };
 
   const getSlot = (b, i) => (reversed ? b.length - i - 1 : i);
@@ -64,7 +64,7 @@ const Board = ({
         key={slot}
         slot={slot}
         pieceCode={getPieceCode(slot)}
-        inCheckSlot={getInCheckSlot()}
+        inCheck={inCheck(slot)}
         targeted={getTargets().includes(slot)}
         handleSquareClick={handleSquareClick}
         selected={selectedSlot === slot}
