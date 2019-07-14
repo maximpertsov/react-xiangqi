@@ -1,22 +1,11 @@
-import React from 'react';
-import styled from '@emotion/styled';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
-import { getPiece } from '../Piece/Piece';
 import { boardPropType } from '../../logic';
 
 import boardImg from './board-1000px.svg.png';
-
-const Wrapper = styled.div`
-  background-image: url(${boardImg});
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: top;
-  display: grid;
-  grid-template-rows: repeat(10, 60px);
-  grid-template-columns: repeat(9, 60px);
-  justify-content: center;
-`;
 
 const Board = ({
   board,
@@ -27,7 +16,7 @@ const Board = ({
   reversed,
   selectedSlot,
 }) => {
-  const getPieceOn = (slot) => getPiece(board.getPiece(slot));
+  const getPieceCode = (slot) => board.getPiece(slot) || undefined;
 
   const selectedCanCapture = (slot) => {
     if (selectedSlot === null) return false;
@@ -45,25 +34,25 @@ const Board = ({
     handleSelect({ slot: null });
   };
 
-  const handleSquareClick = ({ slot, isOccupied }) => {
+  const handleSquareClick = (slot) => (() => {
     if (slot === selectedSlot) {
       handleSelect({ slot: null });
-    } else if (isOccupied && !selectedCanCapture(slot)) {
+    } else if (board.isOccupied(slot) && !selectedCanCapture(slot)) {
       handleSelect({ slot });
     } else if (selectedSlot !== null) {
       handleMove(selectedSlot, slot);
     } else {
       handleSelect({ slot: null });
     }
-  };
+  });
 
   const getTargets = () => (
     selectedSlot === null ? [] : legalMoves[selectedSlot]
   );
 
-  const getInCheckSlot = () => {
-    if (!board.kingInCheck(nextMoveColor)) return undefined;
-    return board.findKingSlot(nextMoveColor);
+  const inCheck = (slot) => {
+    if (!board.kingInCheck(nextMoveColor)) return false;
+    return board.findKingSlot(nextMoveColor) === slot;
   };
 
   const getSlot = (b, i) => (reversed ? b.length - i - 1 : i);
@@ -73,20 +62,31 @@ const Board = ({
     return (
       <Square
         key={slot}
-        slot={slot}
-        piece={getPieceOn(slot)}
-        inCheckSlot={getInCheckSlot()}
-        targets={getTargets()}
-        handleSquareClick={handleSquareClick}
+        handleClick={handleSquareClick(slot)}
+        inCheck={inCheck(slot)}
+        pieceCode={getPieceCode(slot)}
         selected={selectedSlot === slot}
+        targeted={getTargets().includes(slot)}
       />
     );
   });
 
   return (
-    <Wrapper className="Board">
+    <div
+      className="Board"
+      css={css`
+        background-image: url(${boardImg});
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: top;
+        display: grid;
+        grid-template-rows: repeat(10, 60px);
+        grid-template-columns: repeat(9, 60px);
+        justify-content: center;
+      `}
+    >
       {renderSquares()}
-    </Wrapper>
+    </div>
   );
 };
 

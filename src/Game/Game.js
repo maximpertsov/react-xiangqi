@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+
+import { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
 import update from 'immutability-helper';
 import Board from './Board/Board';
+import { selectMove } from './utils';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
@@ -13,22 +16,6 @@ const POLL_INTERVAL = 2500;
 // TODO: define in logic class
 /* eslint-disable-next-line max-len */
 const DEFAULT_FEN = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  height: 600px;
-`;
-
-const SidebarWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  padding: 0px 50px;
-  height: 100%;
-  width: 250px;
-`;
 
 class Game extends Component {
   constructor(props) {
@@ -83,7 +70,7 @@ class Game extends Component {
     }
 
     const { gameSlug } = this.props;
-    if (gameSlug === null) return;
+    if (gameSlug === undefined) return;
 
     client.getLastUpdate(gameSlug)
       .then((response) => {
@@ -129,7 +116,7 @@ class Game extends Component {
 
   fetchGame() {
     const { gameSlug } = this.props;
-    if (gameSlug === null) {
+    if (gameSlug === undefined) {
       this.setState({
         moves: [{
           piece: undefined,
@@ -185,7 +172,7 @@ class Game extends Component {
 
   postMoveToServer(board, fromSlot, toSlot) {
     const { gameSlug } = this.props;
-    if (gameSlug === null) return;
+    if (gameSlug === undefined) return;
 
     client.postMove(gameSlug, this.getPostMovePayload(board, fromSlot, toSlot))
       .then(({ status }) => {
@@ -261,81 +248,72 @@ class Game extends Component {
     return false;
   }
 
-  renderMoves() {
-    const { moves, selectedMoveIdx } = this.state;
-    return (
-      <MoveHistory
-        moves={moves}
-        selectedIdx={selectedMoveIdx}
-        handleMoveSelect={this.handleMoveSelect}
-      />
-    );
-  }
-
-  renderBoardOrLoading() {
-    const { moves, selectedMoveIdx, selectedSlot } = this.state;
+  getLegalMoves(idx, currentUserOnly = true) {
     const { gameSlug } = this.props;
-
+    const { moves } = this.state;
     const nextMoveColor = this.getNextMoveColor();
     const userColor = this.getUserColor();
+    const { board } = selectMove(moves, idx);
+    const selectUserMoves = currentUserOnly && gameSlug !== undefined;
 
-    if (moves.length === 0) return (<div><p>Loading...</p></div>);
-
-    const { board } = moves[selectedMoveIdx];
-
-    const legalMoves = board
+    return board
       .legalMoves()
       .map((toSlots, fromSlot) => {
-        if (selectedMoveIdx !== moves.length - 1) return [];
+        if (idx !== -1 && idx !== moves.length - 1) return [];
         if (!board.isColor(nextMoveColor, fromSlot)) return [];
-        if (gameSlug !== null && !board.isColor(userColor, fromSlot)) return [];
+        if (selectUserMoves && !board.isColor(userColor, fromSlot)) return [];
         return toSlots;
       });
-
-    return (
-      <Board
-        nextMoveColor={nextMoveColor}
-        board={board}
-        handleLegalMove={this.handleLegalMove}
-        handleSelect={this.handleSquareSelect}
-        legalMoves={legalMoves}
-        reversed={this.getInitialUserOrientation()}
-        selectedSlot={selectedSlot}
-      />
-    );
-  }
-
-  renderGameInfo() {
-    const { gameSlug } = this.props;
-    if (gameSlug === null) return null;
-
-    const { moves, players } = this.state;
-
-    if (moves.length === 0) return (<div><p>Loading...</p></div>);
-
-    // TODO: smell -- repeat code
-    const { board: latestBoard } = moves[moves.length - 1];
-
-    return (
-      <GameInfo
-        activePlayer={this.getNextMovePlayer()}
-        userColor={this.getUserColor()}
-        players={players}
-        latestBoard={latestBoard}
-      />
-    );
   }
 
   render() {
+    const {
+      moves, selectedMoveIdx, selectedSlot, players,
+    } = this.state;
+
     return (
-      <Wrapper className="Game">
-        { this.renderBoardOrLoading() }
-        <SidebarWrapper>
+      <div
+        className="Game"
+        css={css`
+          display: flex;
+          justify-content: center;
+          flex-direction: row;
+          height: 600px;
+        `}
+      >
+        <Board
+          nextMoveColor={this.getNextMoveColor()}
+          board={selectMove(moves, selectedMoveIdx).board}
+          handleLegalMove={this.handleLegalMove}
+          handleSelect={this.handleSquareSelect}
+          legalMoves={this.getLegalMoves(selectedMoveIdx)}
+          reversed={this.getInitialUserOrientation()}
+          selectedSlot={selectedSlot}
+        />
+        <div
+          css={css`
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            padding: 0px 50px;
+            height: 100%;
+            width: 250px;
+          `}
+        >
           <LoginForm setUsername={this.setUsername} />
-          { this.renderGameInfo() }
-          { this.renderMoves() }
-        </SidebarWrapper>
-      </Wrapper>
+          <GameInfo
+            activePlayer={this.getNextMovePlayer()}
+            userColor={this.getUserColor()}
+            players={players}
+            activeLegalMoves={this.getLegalMoves(-1, false)}
+          />
+          <MoveHistory
+            moves={moves}
+            selectedIdx={selectedMoveIdx}
+            handleMoveSelect={this.handleMoveSelect}
+          />
+        </div>
+      </div>
     );
   }
 }
@@ -345,7 +323,7 @@ Game.propTypes = {
 };
 
 Game.defaultProps = {
-  gameSlug: null,
+  gameSlug: undefined,
 };
 
 export default Game;
