@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+
+import { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
 import update from 'immutability-helper';
 import Board from './Board/Board';
 import MoveHistory from './Move/MoveHistory';
@@ -13,22 +15,6 @@ const POLL_INTERVAL = 2500;
 // TODO: define in logic class
 /* eslint-disable-next-line max-len */
 const DEFAULT_FEN = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  height: 600px;
-`;
-
-const SidebarWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  padding: 0px 50px;
-  height: 100%;
-  width: 250px;
-`;
 
 class Game extends Component {
   constructor(props) {
@@ -328,14 +314,31 @@ class Game extends Component {
 
   render() {
     return (
-      <Wrapper className="Game">
+      <div
+        className="Game"
+        css={css`
+          display: flex;
+          justify-content: center;
+          flex-direction: row;
+          height: 600px;
+        `}
+      >
         { this.renderBoardOrLoading() }
-        <SidebarWrapper>
+        <div
+          css={css`
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            padding: 0px 50px;
+            height: 100%;
+            width: 250px;
+          `}
+        >
           <LoginForm setUsername={this.setUsername} />
           { this.renderGameInfo() }
           { this.renderMoves() }
-        </SidebarWrapper>
-      </Wrapper>
+        </div>
+      </div>
     );
   }
 }
