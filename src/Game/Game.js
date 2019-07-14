@@ -256,7 +256,6 @@ class Game extends Component {
     const userColor = this.getUserColor();
 
     const { board } = selectMove(moves, selectedMoveIdx);
-    if (board === undefined) return undefined;
 
     return board
       .legalMoves()
