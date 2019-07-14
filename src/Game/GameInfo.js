@@ -1,15 +1,9 @@
-import React from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
 import { playerPropType } from '../customPropTypes';
 import Player from './Player/Player';
-
-const Wrapper = styled.div`
-  height: 20%;
-  margin-top: 15px;
-  padding: 20px;
-  outline: thin solid #999;
-`;
 
 const GameInfo = ({
   activePlayer, activeLegalMoves, userColor, players,
@@ -43,11 +37,19 @@ const GameInfo = ({
   const getBlackPlayer = () => players.find((p) => p.color === 'black');
 
   return (
-    <Wrapper>
+    <div
+      className="GameInfo"
+      css={css`
+        height: 20%;
+        margin-top: 15px;
+        padding: 20px;
+        outline: thin solid #999;
+      `}
+    >
       <Player {...getRedPlayer()} />
       <Player {...getBlackPlayer()} />
       <p>{ getMessage() }</p>
-    </Wrapper>
+    </div>
   );
 };
 

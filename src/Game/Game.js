@@ -32,9 +32,8 @@ class Game extends Component {
         },
       ],
       players: [
-        // TODO: allow for same display name?
-        { name: '', color: 'red' },
-        { name: ' ', color: 'black' },
+        { name: undefined, color: 'red' },
+        { name: undefined, color: 'black' },
       ],
       selectedMoveIdx: 0,
       selectedSlot: null,
