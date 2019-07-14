@@ -247,17 +247,6 @@ class Game extends Component {
     return false;
   }
 
-  renderMoves() {
-    const { moves, selectedMoveIdx } = this.state;
-    return (
-      <MoveHistory
-        moves={moves}
-        selectedIdx={selectedMoveIdx}
-        handleMoveSelect={this.handleMoveSelect}
-      />
-    );
-  }
-
   renderBoardOrLoading() {
     const { moves, selectedMoveIdx, selectedSlot } = this.state;
     const { gameSlug } = this.props;
@@ -336,7 +325,11 @@ class Game extends Component {
         >
           <LoginForm setUsername={this.setUsername} />
           { this.renderGameInfo() }
-          { this.renderMoves() }
+          <MoveHistory
+            moves={this.state.moves}
+            selectedIdx={this.state.selectedMoveIdx}
+            handleMoveSelect={this.handleMoveSelect}
+          />
         </div>
       </div>
     );
