@@ -36,7 +36,6 @@ class Game extends Component {
         { name: undefined, color: 'black' },
       ],
       selectedMoveIdx: 0,
-      selectedSlot: null,
       /* eslint-disable-next-line react/no-unused-state */
       timer: null,
       username: null,
@@ -44,7 +43,6 @@ class Game extends Component {
 
     this.handleLegalMove = this.handleLegalMove.bind(this);
     this.handleMoveSelect = this.handleMoveSelect.bind(this);
-    this.handleSquareSelect = this.handleSquareSelect.bind(this);
     this.setUsername = this.setUsername.bind(this);
   }
 
@@ -135,7 +133,6 @@ class Game extends Component {
       this.fetchMoves(fen);
 
       this.startPolling();
-      this.handleSquareSelect({ slot: null });
     });
   }
 
@@ -205,10 +202,6 @@ class Game extends Component {
     this.setState({ selectedMoveIdx: idx });
   }
 
-  handleSquareSelect({ slot }) {
-    this.setState({ selectedSlot: slot === null ? undefined : slot });
-  }
-
   getNextMoveColor() {
     const { moves } = this.state;
     if (moves.length === 0) return 'red';
@@ -266,9 +259,7 @@ class Game extends Component {
   }
 
   render() {
-    const {
-      moves, selectedMoveIdx, selectedSlot, players,
-    } = this.state;
+    const { moves, selectedMoveIdx, players } = this.state;
 
     return (
       <div
@@ -289,10 +280,8 @@ class Game extends Component {
           nextMoveColor={this.getNextMoveColor()}
           board={selectMove(moves, selectedMoveIdx).board}
           handleLegalMove={this.handleLegalMove}
-          handleSelect={this.handleSquareSelect}
           legalMoves={this.getLegalMoves(selectedMoveIdx)}
           reversed={this.getInitialUserOrientation()}
-          selectedSlot={selectedSlot}
         />
         <div
           css={css`

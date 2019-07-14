@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import { boardPropType } from '../../logic';
@@ -10,16 +11,17 @@ import boardImg from './board-1000px.svg.png';
 const Board = ({
   board,
   handleLegalMove,
-  handleSelect,
   legalMoves,
   nextMoveColor,
   reversed,
-  selectedSlot,
 }) => {
+  const [selectedSlot, setSelectedSlot] = useState(undefined);
+  // TODO: clear selected slot when a new board is received
+
   const getPieceCode = (slot) => board.getPiece(slot) || undefined;
 
   const selectedCanCapture = (slot) => {
-    if (selectedSlot === null) return false;
+    if (selectedSlot === undefined) return false;
     if (!board.isOccupied(selectedSlot)) return false;
     if (!board.isOccupied(slot)) return false;
     return !board.sameColor(slot, selectedSlot);
@@ -31,23 +33,23 @@ const Board = ({
 
   const handleMove = (fromSlot, toSlot) => {
     if (isLegalMove(fromSlot, toSlot)) handleLegalMove(board, fromSlot, toSlot);
-    handleSelect({ slot: null });
+    setSelectedSlot(undefined);
   };
 
   const handleSquareClick = (slot) => (() => {
     if (slot === selectedSlot) {
-      handleSelect({ slot: null });
+      setSelectedSlot(undefined);
     } else if (board.isOccupied(slot) && !selectedCanCapture(slot)) {
-      handleSelect({ slot });
-    } else if (selectedSlot !== null) {
+      setSelectedSlot(slot);
+    } else if (selectedSlot !== undefined) {
       handleMove(selectedSlot, slot);
     } else {
-      handleSelect({ slot: null });
+      setSelectedSlot(undefined);
     }
   });
 
   const getTargets = () => (
-    selectedSlot === null ? [] : legalMoves[selectedSlot]
+    selectedSlot === undefined ? [] : legalMoves[selectedSlot]
   );
 
   const inCheck = (slot) => {
@@ -106,15 +108,9 @@ const Board = ({
 Board.propTypes = {
   board: boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
-  handleSelect: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   nextMoveColor: PropTypes.string.isRequired,
   reversed: PropTypes.bool.isRequired,
-  selectedSlot: PropTypes.number,
-};
-
-Board.defaultProps = {
-  selectedSlot: null,
 };
 
 export default Board;
