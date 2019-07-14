@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 
-import { useState } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import { boardPropType } from '../../logic';
@@ -16,7 +16,17 @@ const Board = ({
   reversed,
 }) => {
   const [selectedSlot, setSelectedSlot] = useState(undefined);
-  // TODO: clear selected slot when a new board is received
+
+  // NOTE: this is the synchronous version of useEffect. Using
+  // this version prevents late selection clearing, but causes
+  // move updates to take longer. Annoying in development but
+  // seems to be faster enough on a production build.
+  useLayoutEffect(
+    () => { setSelectedSlot(undefined); },
+    // TODO: is it too expensive to check if the board changes?
+    // Can I key on another prop update?
+    [board],
+  );
 
   const getPieceCode = (slot) => board.getPiece(slot) || undefined;
 
