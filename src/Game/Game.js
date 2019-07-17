@@ -276,8 +276,13 @@ class Game extends Component {
         className="Game"
         css={css`
           display: flex;
-          justify-content: center;
-          flex-direction: row;
+          align-items: center;
+          @media (max-width: 720px) {
+            flex-direction: column;
+          }
+          @media (min-width: 720px) {
+            flex-direction: row;
+          }
           height: 600px;
         `}
       >
@@ -292,12 +297,17 @@ class Game extends Component {
         />
         <div
           css={css`
-            display: flex;
             justify-content: space-between;
             flex-direction: column;
             padding: 0px 50px;
             height: 100%;
-            width: 250px;
+            max-width: 250px;
+            @media (max-width: 720px) {
+              display: none;
+            }
+            @media (min-width: 720px) {
+              display: flex;
+            }
           `}
         >
           <LoginForm setUsername={this.setUsername} />

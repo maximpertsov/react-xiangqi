@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   grid-template-columns: 50% auto;
   grid-template-rows: repeat(auto-fill, 50px);
   outline: thin solid #999;
-  height: 55%;
+  max-height: 55%;
   overflow: auto;
 `;
 

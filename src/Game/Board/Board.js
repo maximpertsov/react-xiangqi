@@ -80,9 +80,22 @@ const Board = ({
         background-repeat: no-repeat;
         background-position: top;
         display: grid;
-        grid-template-rows: repeat(10, 60px);
-        grid-template-columns: repeat(9, 60px);
-        justify-content: center;
+        @media (max-width: 360px) {
+          grid-template-rows: repeat(10, 20px);
+          grid-template-columns: repeat(9, 20px);
+        }
+        @media (min-width: 360px) and (max-width: 540px) {
+          grid-template-rows: repeat(10, 30px);
+          grid-template-columns: repeat(9, 30px);
+        }
+        @media (min-width: 540px) and (max-width: 720px) {
+          grid-template-rows: repeat(10, 45px);
+          grid-template-columns: repeat(9, 45px);
+        }
+        @media (min-width: 720px) {
+          grid-template-rows: repeat(10, 60px);
+          grid-template-columns: repeat(9, 60px);
+        }
       `}
     >
       {renderSquares()}
