@@ -171,67 +171,37 @@ const PureGame = ({ gameSlug }) => {
     postMoveToServer(board, fromSlot, toSlot);
   };
 
-  //
-  // handleMoveSelect({ idx }) {
-  //   this.setState({ selectedMoveIdx: idx });
-  // }
-  //
-  // getNextMoveColor() {
-  //   const { moves } = this.state;
-  //   if (moves.length === 0) return 'red';
-  //
-  //   // TODO: we don't really need a specific board for this function
-  //   const { piece: lastMovedPiece, board } = moves[moves.length - 1];
-  //
-  //   return board.isRedCode(lastMovedPiece) ? 'black' : 'red';
-  // }
-  //
-  // // TODO: create PlayerManager class?
-  // getNextMovePlayer() {
-  //   const { players } = this.state;
-  //   const nextMoveColor = this.getNextMoveColor();
-  //
-  //   return players.find((p) => p.color === nextMoveColor);
-  // }
-  //
-  // getUserPlayer() {
-  //   const { username, players } = this.state;
-  //   return players.find((p) => p.name === username) || {};
-  // }
-  //
-  // getUserColor() {
-  //   return this.getUserPlayer().color;
-  // }
-  //
-  // setUsername(username) {
-  //   this.setState({ username });
-  //   this.startPolling();
-  // }
-  //
-  // // TODO: add a state that allows players to flip their original orientation
-  // getInitialUserOrientation() {
-  //   if (this.getUserColor() === 'black') return true;
-  //   return false;
-  // }
-  //
-  // getLegalMoves(idx, currentUserOnly = true) {
-  //   const { gameSlug } = this.props;
-  //   const { moves } = this.state;
-  //   const nextMoveColor = this.getNextMoveColor();
-  //   const userColor = this.getUserColor();
-  //   const { board } = selectMove(moves, idx);
-  //   const selectUserMoves = currentUserOnly && gameSlug !== undefined;
-  //
-  //   return board
-  //     .legalMoves()
-  //     .map((toSlots, fromSlot) => {
-  //       if (idx !== -1 && idx !== moves.length - 1) return [];
-  //       if (!board.isColor(nextMoveColor, fromSlot)) return [];
-  //       if (selectUserMoves && !board.isColor(userColor, fromSlot)) return [];
-  //       return toSlots;
-  //     });
-  // }
+  const handleMoveSelect = ({ idx }) => {
+    setSelectedMoveIdx(idx);
+  };
 
+  const getUserPlayer = () => players.find((p) => p.name === username) || {};
+
+  const getUserColor = () => getUserPlayer().color;
+
+  const setUsernameAndPoll = (name) => {
+    setUsername(name);
+    startPolling();
+  };
+
+  // TODO: add a state that allows players to flip their original orientation
+  const getInitialUserOrientation = () => getUserColor() === 'black';
+
+  const getLegalMoves = (idx, currentUserOnly = true) => {
+    const nextMoveColor = getNextMoveColor();
+    const userColor = getUserColor();
+    const { board } = selectMove(moves, idx);
+    const selectUserMoves = currentUserOnly && gameSlug !== undefined;
+
+    return board
+      .legalMoves()
+      .map((toSlots, fromSlot) => {
+        if (idx !== -1 && idx !== moves.length - 1) return [];
+        if (!board.isColor(nextMoveColor, fromSlot)) return [];
+        if (selectUserMoves && !board.isColor(userColor, fromSlot)) return [];
+        return toSlots;
+      });
+  };
 
   return (
     <div
@@ -249,11 +219,11 @@ const PureGame = ({ gameSlug }) => {
         `}
     >
       <Board
-        nextMoveColor={this.getNextMoveColor()}
+        nextMoveColor={getNextMoveColor()}
         board={selectMove(moves, selectedMoveIdx).board}
-        handleLegalMove={this.handleLegalMove}
-        legalMoves={this.getLegalMoves(selectedMoveIdx)}
-        reversed={this.getInitialUserOrientation()}
+        handleLegalMove={handleLegalMove}
+        legalMoves={getLegalMoves(selectedMoveIdx)}
+        reversed={getInitialUserOrientation()}
       />
       <div
         css={css`
@@ -270,17 +240,17 @@ const PureGame = ({ gameSlug }) => {
             }
           `}
       >
-        <LoginForm setUsername={this.setUsername} />
+        <LoginForm setUsername={setUsernameAndPoll} />
         <GameInfo
-          activePlayer={this.getNextMovePlayer()}
-          userColor={this.getUserColor()}
+          activePlayer={getNextMovePlayer()}
+          userColor={getUserColor()}
           players={players}
-          activeLegalMoves={this.getLegalMoves(-1, false)}
+          activeLegalMoves={getLegalMoves(-1, false)}
         />
         <MoveHistory
           moves={moves}
           selectedIdx={selectedMoveIdx}
-          handleMoveSelect={this.handleMoveSelect}
+          handleMoveSelect={handleMoveSelect}
         />
       </div>
     </div>
