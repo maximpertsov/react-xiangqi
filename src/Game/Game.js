@@ -3,7 +3,9 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
-import { Component, useState, useEffect } from 'react';
+import {
+  Component, useRef, useState, useEffect,
+} from 'react';
 import Board from './Board/Board';
 import { selectMove, getNextMoveColor, getNextMovePlayer } from './utils';
 import MoveHistory from './Move/MoveHistory';
@@ -89,6 +91,7 @@ const Game = ({ gameSlug }) => {
   // we don't update active player based on moves
   const pollForGameUpdate = () => {
     // TODO: Use current fen instead?
+    console.log(`Username: ${username}`);
     const { name: nextMovePlayerName } = getNextMovePlayer(players, moves);
     if (username === null || username === nextMovePlayerName) {
       stopPolling();
@@ -179,10 +182,11 @@ const Game = ({ gameSlug }) => {
 
   const getUserColor = () => getUserPlayer().color;
 
-  const setUsernameAndPoll = (name) => {
+  function handleUsernameUpdate(name) {
+    console.log(`received username update: ${name}`);
     setUsername(name);
     startPolling();
-  };
+  }
 
   // TODO: add a state that allows players to flip their original orientation
   const getInitialUserOrientation = () => getUserColor() === 'black';
@@ -240,7 +244,7 @@ const Game = ({ gameSlug }) => {
             }
           `}
       >
-        <LoginForm setUsername={setUsernameAndPoll} />
+        <LoginForm handleUsernameUpdate={handleUsernameUpdate} />
         <GameInfo
           activePlayer={getNextMovePlayer(players, moves)}
           userColor={getUserColor()}

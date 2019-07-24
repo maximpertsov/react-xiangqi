@@ -28,9 +28,10 @@ class LoginForm extends Component {
       .catch(() => {});
   }
 
-  setUsername(username) {
-    const { setUsername } = this.props;
-    setUsername(username);
+  updateUsername(username) {
+    const { handleUsernameUpdate } = this.props;
+    console.log(`Setting username to: ${username}`);
+    handleUsernameUpdate(username);
   }
 
   clearState() {
@@ -41,7 +42,7 @@ class LoginForm extends Component {
     const { data: { access_token: accessToken } } = response;
     const { sub } = jwtDecode(accessToken);
     this.setState({ sub });
-    this.setUsername(sub);
+    this.updateUsername(sub);
   }
 
   handleChange(event) {
@@ -106,7 +107,7 @@ class LoginForm extends Component {
 }
 
 LoginForm.propTypes = {
-  setUsername: PropTypes.func.isRequired,
+  handleUsernameUpdate: PropTypes.func.isRequired,
 };
 
 export default LoginForm;
