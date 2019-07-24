@@ -31,7 +31,7 @@ const initialPlayers = [
   { name: undefined, color: 'black' },
 ];
 
-const PureGame = ({ gameSlug }) => {
+const Game = ({ gameSlug }) => {
   const [clientUpdatedAt, setClientUpdatedAt] = useState(null);
   const [moves, setMoves] = useState(getInitialMoves());
   const [players, setPlayers] = useState(initialPlayers);
@@ -89,7 +89,7 @@ const PureGame = ({ gameSlug }) => {
   // we don't update active player based on moves
   const pollForGameUpdate = () => {
     // TODO: Use current fen instead?
-    const { name: nextMovePlayerName } = getNextMovePlayer(players);
+    const { name: nextMovePlayerName } = getNextMovePlayer(players, moves);
     if (username === null || username === nextMovePlayerName) {
       stopPolling();
       return;
@@ -188,7 +188,7 @@ const PureGame = ({ gameSlug }) => {
   const getInitialUserOrientation = () => getUserColor() === 'black';
 
   const getLegalMoves = (idx, currentUserOnly = true) => {
-    const nextMoveColor = getNextMoveColor();
+    const nextMoveColor = getNextMoveColor(moves);
     const userColor = getUserColor();
     const { board } = selectMove(moves, idx);
     const selectUserMoves = currentUserOnly && gameSlug !== undefined;
@@ -219,7 +219,7 @@ const PureGame = ({ gameSlug }) => {
         `}
     >
       <Board
-        nextMoveColor={getNextMoveColor()}
+        nextMoveColor={getNextMoveColor(moves)}
         board={selectMove(moves, selectedMoveIdx).board}
         handleLegalMove={handleLegalMove}
         legalMoves={getLegalMoves(selectedMoveIdx)}
@@ -242,7 +242,7 @@ const PureGame = ({ gameSlug }) => {
       >
         <LoginForm setUsername={setUsernameAndPoll} />
         <GameInfo
-          activePlayer={getNextMovePlayer()}
+          activePlayer={getNextMovePlayer(players, moves)}
           userColor={getUserColor()}
           players={players}
           activeLegalMoves={getLegalMoves(-1, false)}
@@ -257,7 +257,7 @@ const PureGame = ({ gameSlug }) => {
   );
 };
 
-class Game extends Component {
+class StatefulGame extends Component {
   constructor(props) {
     super(props);
 
