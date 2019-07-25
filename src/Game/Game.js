@@ -3,9 +3,7 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
-import {
-  Component, useRef, useState, useEffect,
-} from 'react';
+import { useState, useEffect } from 'react';
 import Board from './Board/Board';
 import { selectMove, getNextMoveColor, getNextMovePlayer } from './utils';
 import MoveHistory from './Move/MoveHistory';
