@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import Board from './Board/Board';
 import { selectMove, getNextMoveColor, getNextMovePlayer } from './utils';
 import MoveHistory from './Move/MoveHistory';
@@ -41,78 +41,93 @@ const Game = ({ gameSlug }) => {
 
   // Fetch data utilities
 
-  const fetchMoves = (fen) => {
-    client.getMoves(gameSlug).then((response) => {
-      const { moves: movesData } = response.data;
-      const _moves = getInitialMoves(fen);
-      movesData.reduce(
-        (lastBoard, moveData) => {
-          const { piece, origin: fromPos, destination: toPos } = moveData;
-          const board = lastBoard.move(fromPos, toPos, RefType.RANK_FILE);
-          const move = {
-            piece, fromPos, toPos, board,
-          };
-          _moves.push(move);
-          return move.board;
-        },
-        _moves[0].board,
-      );
-      // TODO: There is one more board than moves.
-      // Watch out for off by 1 errors!
-      setMoves(_moves);
-      setSelectedMoveIdx(_moves.length - 1);
-    });
-  };
+  const fetchMoves = useCallback(
+    (fen) => {
+      client.getMoves(gameSlug).then((response) => {
+        const { moves: movesData } = response.data;
+        const _moves = getInitialMoves(fen);
+        movesData.reduce(
+          (lastBoard, moveData) => {
+            const { piece, origin: fromPos, destination: toPos } = moveData;
+            const board = lastBoard.move(fromPos, toPos, RefType.RANK_FILE);
+            const move = {
+              piece, fromPos, toPos, board,
+            };
+            _moves.push(move);
+            return move.board;
+          },
+          _moves[0].board,
+        );
+        // TODO: There is one more board than moves.
+        // Watch out for off by 1 errors!
+        setMoves(_moves);
+        setSelectedMoveIdx(_moves.length - 1);
+      });
+    },
+    [gameSlug],
+  );
 
-  const fetchGame = () => {
-    if (gameSlug === undefined) {
-      setMoves(getInitialMoves());
-      setSelectedMoveIdx(0);
-      return;
-    }
+  const fetchGame = useCallback(
+    () => {
+      if (gameSlug === undefined) {
+        setMoves(getInitialMoves());
+        setSelectedMoveIdx(0);
+        return;
+      }
 
-    client.getGame(gameSlug).then((response) => {
-      const { players: _players, initial_fen: fen } = response.data;
-      setPlayers(_players);
-      fetchMoves(fen);
-    });
-  };
+      client.getGame(gameSlug).then((response) => {
+        const { players: _players, initial_fen: fen } = response.data;
+        setPlayers(_players);
+        fetchMoves(fen);
+      });
+    },
+    [fetchMoves, gameSlug],
+  );
 
   // Polling utilities
 
-  const stopPolling = () => {
-    clearInterval(timer);
-    setTimer(null);
-  };
+  const stopPolling = useCallback(
+    () => {
+      clearInterval(timer);
+      setTimer(null);
+    },
+    [timer],
+  );
 
   // TODO: only poll for move update? Can't do that now because
   // we don't update active player based on moves
-  const pollForGameUpdate = () => {
+  const pollForGameUpdate = useCallback(
+    () => {
     // TODO: Use current fen instead?
-    console.log(`Username: ${username}`);
-    const { name: nextMovePlayerName } = getNextMovePlayer(players, moves);
-    if (username === null || username === nextMovePlayerName) {
-      stopPolling();
-      return;
-    }
+      console.log(`Username: ${username}`);
+      const { name: nextMovePlayerName } = getNextMovePlayer(players, moves);
+      if (username === null || username === nextMovePlayerName) {
+        stopPolling();
+        return;
+      }
 
-    if (gameSlug === undefined) return;
+      if (gameSlug === undefined) return;
 
-    client.getLastUpdate(gameSlug)
-      .then((response) => {
-        const { data: { updated_at: serverUpdatedAt } } = response;
-        if ((clientUpdatedAt === null && serverUpdatedAt !== null)
+      client.getLastUpdate(gameSlug)
+        .then((response) => {
+          const { data: { updated_at: serverUpdatedAt } } = response;
+          if ((clientUpdatedAt === null && serverUpdatedAt !== null)
           || (clientUpdatedAt < serverUpdatedAt)) {
-          fetchGame();
-          stopPolling();
-          setClientUpdatedAt(serverUpdatedAt);
-        }
-      });
-  };
+            fetchGame();
+            stopPolling();
+            setClientUpdatedAt(serverUpdatedAt);
+          }
+        });
+    },
+    [clientUpdatedAt, fetchGame, gameSlug, moves, players, stopPolling, username],
+  );
 
-  const startPolling = () => {
-    setTimer(setInterval(() => pollForGameUpdate(), POLL_INTERVAL));
-  };
+  const startPolling = useCallback(
+    () => {
+      setTimer(setInterval(() => pollForGameUpdate(), POLL_INTERVAL));
+    },
+    [pollForGameUpdate],
+  );
 
   // Lifecycle methods
 
@@ -124,7 +139,7 @@ const Game = ({ gameSlug }) => {
       // will unmount
       return () => { setTimer(null); };
     },
-    [gameSlug, fetchGame, startPolling],
+    [fetchGame, gameSlug, startPolling],
   );
 
   // Move updates
