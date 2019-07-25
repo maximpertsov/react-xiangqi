@@ -124,7 +124,7 @@ const Game = ({ gameSlug }) => {
       // will unmount
       return () => { setTimer(null); };
     },
-    [gameSlug],
+    [gameSlug, fetchGame, startPolling],
   );
 
   // Move updates
