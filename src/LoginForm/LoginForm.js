@@ -29,8 +29,8 @@ class LoginForm extends Component {
   }
 
   updateUsername(username) {
-    const { handleUsernameUpdate } = this.props;
-    handleUsernameUpdate(username);
+    const { setUsername } = this.props;
+    setUsername(username);
   }
 
   clearState() {
@@ -106,7 +106,7 @@ class LoginForm extends Component {
 }
 
 LoginForm.propTypes = {
-  handleUsernameUpdate: PropTypes.func.isRequired,
+  setUsername: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

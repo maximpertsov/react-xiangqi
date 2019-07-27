@@ -117,9 +117,7 @@ const Game = ({ gameSlug }) => {
 
   useEffect(
     () => {
-      // will mount
       const interval = setInterval(() => pollForGameUpdate(), POLL_INTERVAL);
-      // will unmount
       return () => clearInterval(interval);
     },
     [gameSlug, pollForGameUpdate],
@@ -174,10 +172,6 @@ const Game = ({ gameSlug }) => {
   const getUserPlayer = () => players.find((p) => p.name === username) || {};
 
   const getUserColor = () => getUserPlayer().color;
-
-  function handleUsernameUpdate(name) {
-    setUsername(name);
-  }
 
   // TODO: add a state that allows players to flip their original orientation
   const getInitialUserOrientation = () => getUserColor() === 'black';
@@ -235,7 +229,7 @@ const Game = ({ gameSlug }) => {
             }
           `}
       >
-        <LoginForm handleUsernameUpdate={handleUsernameUpdate} />
+        <LoginForm setUsername={setUsername} />
         <GameInfo
           activePlayer={getNextMovePlayer(players, moves)}
           userColor={getUserColor()}
