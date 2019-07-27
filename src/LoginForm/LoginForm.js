@@ -30,7 +30,6 @@ class LoginForm extends Component {
 
   updateUsername(username) {
     const { handleUsernameUpdate } = this.props;
-    console.log(`Setting username to: ${username}`);
     handleUsernameUpdate(username);
   }
 

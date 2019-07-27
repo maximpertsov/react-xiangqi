@@ -36,7 +36,6 @@ const Game = ({ gameSlug }) => {
   const [moves, setMoves] = useState(getInitialMoves());
   const [players, setPlayers] = useState(initialPlayers);
   const [selectedMoveIdx, setSelectedMoveIdx] = useState(0);
-  const [timer, setTimer] = useState(null);
   const [username, setUsername] = useState(null);
 
   // Fetch data utilities
@@ -84,62 +83,46 @@ const Game = ({ gameSlug }) => {
     [fetchMoves, gameSlug],
   );
 
-  // Polling utilities
-
-  const stopPolling = useCallback(
-    () => {
-      clearInterval(timer);
-      setTimer(null);
-    },
-    [timer],
-  );
-
   // TODO: only poll for move update? Can't do that now because
   // we don't update active player based on moves
   const pollForGameUpdate = useCallback(
     () => {
-    // TODO: Use current fen instead?
-      console.log(`Username: ${username}`);
-      const { name: nextMovePlayerName } = getNextMovePlayer(players, moves);
-      if (username === null || username === nextMovePlayerName) {
-        stopPolling();
+      if (gameSlug === undefined) return;
+      if (username === null) return;
+      if (clientUpdatedAt === null) {
+        fetchGame();
+        // HACK to make sure we have at least one refresh!
+        setClientUpdatedAt(1);
         return;
       }
 
-      if (gameSlug === undefined) return;
+      const { name: nextMovePlayerName } = getNextMovePlayer(players, moves);
+      if (username === nextMovePlayerName) return;
 
       client.getLastUpdate(gameSlug)
         .then((response) => {
           const { data: { updated_at: serverUpdatedAt } } = response;
-          if ((clientUpdatedAt === null && serverUpdatedAt !== null)
-          || (clientUpdatedAt < serverUpdatedAt)) {
-            fetchGame();
-            stopPolling();
-            setClientUpdatedAt(serverUpdatedAt);
-          }
+          if (serverUpdatedAt === null) return;
+          if (clientUpdatedAt >= serverUpdatedAt) return;
+
+          fetchGame();
+          setClientUpdatedAt(serverUpdatedAt);
         });
     },
-    [clientUpdatedAt, fetchGame, gameSlug, moves, players, stopPolling, username],
+    [clientUpdatedAt, fetchGame, gameSlug, moves, players, username],
   );
 
-  const startPolling = useCallback(
-    () => {
-      setTimer(setInterval(() => pollForGameUpdate(), POLL_INTERVAL));
-    },
-    [pollForGameUpdate],
-  );
 
   // Lifecycle methods
 
   useEffect(
     () => {
       // will mount
-      fetchGame();
-      startPolling();
+      const interval = setInterval(() => pollForGameUpdate(), POLL_INTERVAL);
       // will unmount
-      return () => { setTimer(null); };
+      return () => clearInterval(interval);
     },
-    [fetchGame, gameSlug, startPolling],
+    [gameSlug, pollForGameUpdate],
   );
 
   // Move updates
@@ -161,10 +144,7 @@ const Game = ({ gameSlug }) => {
     client
       .postMove(gameSlug, payload)
       .then(({ status }) => {
-        if (status !== 201) {
-          fetchGame();
-          startPolling();
-        }
+        if (status !== 201) fetchGame();
       })
       .catch(() => {
         // TODO: display useful error?
@@ -196,9 +176,7 @@ const Game = ({ gameSlug }) => {
   const getUserColor = () => getUserPlayer().color;
 
   function handleUsernameUpdate(name) {
-    console.log(`received username update: ${name}`);
     setUsername(name);
-    startPolling();
   }
 
   // TODO: add a state that allows players to flip their original orientation
