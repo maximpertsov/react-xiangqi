@@ -131,12 +131,7 @@ const Game = ({ gameSlug }) => {
     () => {
       if (gameSlug === undefined) return;
       if (username === null) return;
-      if (clientUpdatedAt === null) {
-        fetchGame();
-        // HACK to make sure we have at least one refresh!
-        setClientUpdatedAt(1);
-        return;
-      }
+      if (clientUpdatedAt === null) return;
 
       const { name: nextMovePlayerName } = getNextMovePlayer(players, moves);
       if (username === nextMovePlayerName) return;
@@ -154,8 +149,16 @@ const Game = ({ gameSlug }) => {
     [clientUpdatedAt, fetchGame, gameSlug, moves, players, username],
   );
 
-
   // Lifecycle methods
+
+  useEffect(
+    () => {
+      fetchGame();
+      // HACK to make sure we have at least one refresh!
+      setClientUpdatedAt(1);
+    },
+    [fetchGame, gameSlug],
+  );
 
   useEffect(
     () => {
