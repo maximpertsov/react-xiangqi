@@ -2,97 +2,25 @@
 import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
-import update from 'immutability-helper';
-import {
-  useCallback, useReducer, useState, useEffect,
-} from 'react';
+import { useCallback, useState, useEffect } from 'react';
+import useMoveReducer from './reducers';
 import Board from './Board/Board';
 import { selectMove, getNextMoveColor, getNextMovePlayer } from './utils';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
-import XiangqiBoard, { RefType } from '../logic';
 import * as client from '../client';
 
 const POLL_INTERVAL = 2500;
-// TODO: define in logic class
-/* eslint-disable-next-line max-len */
-const DEFAULT_FEN = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
-
-const getInitialMovesState = (fen = DEFAULT_FEN) => ({
-  selectedMove: 0,
-  moves: [
-    {
-      piece: undefined,
-      fromPos: undefined,
-      toPos: undefined,
-      board: new XiangqiBoard({ fen }),
-    },
-  ],
-});
 
 const initialPlayers = [
   { name: undefined, color: 'red' },
   { name: undefined, color: 'black' },
 ];
 
-const addMove = (state, { piece, origin: fromPos, destination: toPos }) => {
-  const { board } = state.moves[state.moves.length - 1];
-  const newMove = {
-    piece,
-    fromPos,
-    toPos,
-    board: board.move(fromPos, toPos, RefType.RANK_FILE),
-  };
-  return update(state, { moves: { $push: [newMove] } });
-};
-
-const setSelectedMove = (state, index) => (
-  { ...state, selectedMove: index }
-);
-
-const selectLastMove = (state) => {
-  const { moves } = state;
-  return { ...state, selectedMove: moves.length - 1 };
-};
-
-const addMoveToBoard = (state, board, { fromSlot, toSlot }) => {
-  const newMove = {
-    fromPos: board.getRankFile(fromSlot),
-    toPos: board.getRankFile(toSlot),
-    piece: board.getPiece(fromSlot),
-    board: board.move(fromSlot, toSlot),
-  };
-  return selectLastMove(update(state, { moves: { $push: [newMove] } }));
-};
-
-const syncMoves = (state, moves) => selectLastMove(
-  moves.reduce(
-    (prevState, move) => addMove(prevState, move),
-    state,
-  ),
-);
-
-const reduceMoves = (state, action) => {
-  switch (action.type) {
-    case 'add_move':
-      return addMoveToBoard(state, action.board, action.move);
-    case 'select_move':
-      return setSelectedMove(state, action.index);
-    case 'sync_moves':
-      return syncMoves(getInitialMovesState(), action.moves);
-    default:
-      return state;
-  }
-};
-
 const Game = ({ gameSlug }) => {
   const [clientUpdatedAt, setClientUpdatedAt] = useState(null);
-  const [movesState, dispatchMoves] = useReducer(
-    reduceMoves,
-    DEFAULT_FEN,
-    getInitialMovesState,
-  );
+  const [movesState, dispatchMoves] = useMoveReducer();
   const [players, setPlayers] = useState(initialPlayers);
   const [username, setUsername] = useState(null);
 
@@ -107,7 +35,7 @@ const Game = ({ gameSlug }) => {
         dispatchMoves({ type: 'sync_moves', moves: movesData });
       });
     },
-    [gameSlug],
+    [dispatchMoves, gameSlug],
   );
 
   const fetchGame = useCallback(
@@ -123,7 +51,7 @@ const Game = ({ gameSlug }) => {
         fetchMoves(fen);
       });
     },
-    [fetchMoves, gameSlug],
+    [dispatchMoves, fetchMoves, gameSlug],
   );
 
   // TODO: only poll for move update? Can't do that now because
@@ -210,7 +138,7 @@ const Game = ({ gameSlug }) => {
 
       postMoveToServer(board, fromSlot, toSlot);
     },
-    [postMoveToServer],
+    [dispatchMoves, postMoveToServer],
   );
 
   const handleMoveSelect = ({ idx }) => {
