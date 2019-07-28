@@ -44,8 +44,18 @@ const addMove = (state, { piece, fromPos, toPos }) => {
   return update(state, { $push: [newMove] });
 };
 
+const addMoveToBoard = (state, board, { fromSlot, toSlot }) => {
+  const newMove = {
+    fromPos: board.getRankFile(fromSlot),
+    toPos: board.getRankFile(toSlot),
+    piece: board.getPiece(fromSlot),
+    board: board.move(fromSlot, toSlot),
+  };
+  return update(state, { $push: [newMove] });
+};
+
 const addMoves = (state, moves) => moves.reduce(
-  (prevState, move) => addMoves(prevState, move),
+  (prevState, move) => addMove(prevState, move),
   state,
 );
 
@@ -53,6 +63,8 @@ const reduceMoves = (state, action) => {
   switch (action.type) {
     case 'add_move':
       return addMove(state, action.move);
+    case 'add_move_to_board':
+      return addMoveToBoard(state, action.board, action.move);
     case 'add_moves':
       return addMoves(state, action.moves);
     default:
