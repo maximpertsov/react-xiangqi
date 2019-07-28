@@ -19,14 +19,17 @@ const POLL_INTERVAL = 2500;
 /* eslint-disable-next-line max-len */
 const DEFAULT_FEN = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
 
-const getInitialMoves = (fen = DEFAULT_FEN) => [
-  {
-    piece: undefined,
-    fromPos: undefined,
-    toPos: undefined,
-    board: new XiangqiBoard({ fen }),
-  },
-];
+const getInitialMoves = (fen = DEFAULT_FEN) => ({
+  selectedMoveIdx: 0,
+  moves: [
+    {
+      piece: undefined,
+      fromPos: undefined,
+      toPos: undefined,
+      board: new XiangqiBoard({ fen }),
+    },
+  ],
+});
 
 const initialPlayers = [
   { name: undefined, color: 'red' },
@@ -34,14 +37,23 @@ const initialPlayers = [
 ];
 
 const addMove = (state, { piece, origin: fromPos, destination: toPos }) => {
-  const { board } = state[state.length - 1];
+  const { board } = state.moves[state.moves.length - 1];
   const newMove = {
     piece,
     fromPos,
     toPos,
     board: board.move(fromPos, toPos, RefType.RANK_FILE),
   };
-  return update(state, { $push: [newMove] });
+  return update(state, { moves: { $push: [newMove] } });
+};
+
+const setSelectedMove = (state, index) => (
+  { ...state, selectedMoveIdx: index }
+);
+
+const selectLastMove = (state) => {
+  const { moves } = state;
+  return { ...state, selectedMoveIdx: moves.length - 1 };
 };
 
 const addMoveToBoard = (state, board, { fromSlot, toSlot }) => {
@@ -51,23 +63,24 @@ const addMoveToBoard = (state, board, { fromSlot, toSlot }) => {
     piece: board.getPiece(fromSlot),
     board: board.move(fromSlot, toSlot),
   };
-  return update(state, { $push: [newMove] });
+  return selectLastMove(update(state, { moves: { $push: [newMove] } }));
 };
 
-const addMoves = (state, moves) => moves.reduce(
-  (prevState, move) => addMove(prevState, move),
-  state,
+const syncMoves = (state, moves) => selectLastMove(
+  moves.reduce(
+    (prevState, move) => addMove(prevState, move),
+    state,
+  ),
 );
 
 const reduceMoves = (state, action) => {
   switch (action.type) {
     case 'add_move':
-      return addMove(state, action.move);
-    case 'add_move_to_board':
       return addMoveToBoard(state, action.board, action.move);
-    case 'add_moves':
-      // TODO: make it clear that you are reseting here!
-      return addMoves(getInitialMoves(), action.moves);
+    case 'select_move':
+      return setSelectedMove(state, action.index);
+    case 'sync_moves':
+      return syncMoves(getInitialMoves(), action.moves);
     default:
       return state;
   }
@@ -75,10 +88,12 @@ const reduceMoves = (state, action) => {
 
 const Game = ({ gameSlug }) => {
   const [clientUpdatedAt, setClientUpdatedAt] = useState(null);
-  // const [moves, setMoves] = useState(getInitialMoves());
-  const [moves, dispatchMoves] = useReducer(reduceMoves, DEFAULT_FEN, getInitialMoves);
+  const [moves, dispatchMoves] = useReducer(
+    reduceMoves,
+    DEFAULT_FEN,
+    getInitialMoves,
+  );
   const [players, setPlayers] = useState(initialPlayers);
-  const [selectedMoveIdx, setSelectedMoveIdx] = useState(0);
   const [username, setUsername] = useState(null);
 
   // Fetch data utilities
@@ -89,8 +104,7 @@ const Game = ({ gameSlug }) => {
     (fen) => {
       client.getMoves(gameSlug).then((response) => {
         const { moves: movesData } = response.data;
-        dispatchMoves({ type: 'add_moves', moves: movesData });
-        setSelectedMoveIdx(movesData.length);
+        dispatchMoves({ type: 'sync_moves', moves: movesData });
       });
     },
     [gameSlug],
@@ -99,8 +113,7 @@ const Game = ({ gameSlug }) => {
   const fetchGame = useCallback(
     () => {
       if (gameSlug === undefined) {
-        dispatchMoves({ type: 'addMoves', moves: [] });
-        setSelectedMoveIdx(0);
+        dispatchMoves({ type: 'sync_moves', moves: [] });
         return;
       }
 
@@ -121,7 +134,7 @@ const Game = ({ gameSlug }) => {
       if (username === null) return;
       if (clientUpdatedAt === null) return;
 
-      const { name: nextMovePlayerName } = getNextMovePlayer(players, moves);
+      const { name: nextMovePlayerName } = getNextMovePlayer(players, moves.moves);
       if (username === nextMovePlayerName) return;
 
       client.getLastUpdate(gameSlug)
@@ -134,7 +147,7 @@ const Game = ({ gameSlug }) => {
           setClientUpdatedAt(serverUpdatedAt);
         });
     },
-    [clientUpdatedAt, fetchGame, gameSlug, moves, players, username],
+    [clientUpdatedAt, fetchGame, gameSlug, moves.moves, players, username],
   );
 
   // Lifecycle methods
@@ -160,7 +173,7 @@ const Game = ({ gameSlug }) => {
 
   const getPostMovePayload = useCallback(
     (board, fromSlot, toSlot) => {
-      const { name: player } = getNextMovePlayer(players, moves);
+      const { name: player } = getNextMovePlayer(players, moves.moves);
       const fromPos = board.getRankFile(fromSlot);
       const toPos = board.getRankFile(toSlot);
       const piece = board.getPiece(fromSlot);
@@ -168,7 +181,7 @@ const Game = ({ gameSlug }) => {
         player, piece, fromPos, toPos,
       };
     },
-    [moves, players],
+    [moves.moves, players],
   );
 
   const postMoveToServer = useCallback(
@@ -192,19 +205,18 @@ const Game = ({ gameSlug }) => {
   const handleLegalMove = useCallback(
     (board, fromSlot, toSlot) => {
       dispatchMoves({
-        type: 'add_move_to_board',
+        type: 'add_move',
         board,
         move: { fromSlot, toSlot },
       });
-      setSelectedMoveIdx(moves.length);
 
       postMoveToServer(board, fromSlot, toSlot);
     },
-    [moves.length, postMoveToServer],
+    [postMoveToServer],
   );
 
   const handleMoveSelect = ({ idx }) => {
-    setSelectedMoveIdx(idx);
+    dispatchMoves({ type: 'select_move', index: idx });
   };
 
   const getUserPlayer = () => players.find((p) => p.name === username) || {};
@@ -215,15 +227,15 @@ const Game = ({ gameSlug }) => {
   const getInitialUserOrientation = () => getUserColor() === 'black';
 
   const getLegalMoves = (idx, currentUserOnly = true) => {
-    const nextMoveColor = getNextMoveColor(moves);
+    const nextMoveColor = getNextMoveColor(moves.moves);
     const userColor = getUserColor();
-    const { board } = selectMove(moves, idx);
+    const { board } = selectMove(moves.moves, idx);
     const selectUserMoves = currentUserOnly && gameSlug !== undefined;
 
     return board
       .legalMoves()
       .map((toSlots, fromSlot) => {
-        if (idx !== -1 && idx !== moves.length - 1) return [];
+        if (idx !== -1 && idx !== moves.moves.length - 1) return [];
         if (!board.isColor(nextMoveColor, fromSlot)) return [];
         if (selectUserMoves && !board.isColor(userColor, fromSlot)) return [];
         return toSlots;
@@ -246,10 +258,10 @@ const Game = ({ gameSlug }) => {
         `}
     >
       <Board
-        nextMoveColor={getNextMoveColor(moves)}
-        board={selectMove(moves, selectedMoveIdx).board}
+        nextMoveColor={getNextMoveColor(moves.moves)}
+        board={selectMove(moves.moves, moves.selectedMoveIdx).board}
         handleLegalMove={handleLegalMove}
-        legalMoves={getLegalMoves(selectedMoveIdx)}
+        legalMoves={getLegalMoves(moves.selectedMoveIdx)}
         reversed={getInitialUserOrientation()}
       />
       <div
@@ -269,14 +281,14 @@ const Game = ({ gameSlug }) => {
       >
         <LoginForm setUsername={setUsername} />
         <GameInfo
-          activePlayer={getNextMovePlayer(players, moves)}
+          activePlayer={getNextMovePlayer(players, moves.moves)}
           userColor={getUserColor()}
           players={players}
           activeLegalMoves={getLegalMoves(-1, false)}
         />
         <MoveHistory
-          moves={moves}
-          selectedIdx={selectedMoveIdx}
+          moves={moves.moves}
+          selectedIdx={moves.selectedMoveIdx}
           handleMoveSelect={handleMoveSelect}
         />
       </div>
