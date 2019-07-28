@@ -33,7 +33,7 @@ const initialPlayers = [
   { name: undefined, color: 'black' },
 ];
 
-const addMove = (state, { piece, fromPos, toPos }) => {
+const addMove = (state, { piece, origin: fromPos, destination: toPos }) => {
   const { board } = state[state.length - 1];
   const newMove = {
     piece,
@@ -66,7 +66,8 @@ const reduceMoves = (state, action) => {
     case 'add_move_to_board':
       return addMoveToBoard(state, action.board, action.move);
     case 'add_moves':
-      return addMoves(state, action.moves);
+      // TODO: make it clear that you are reseting here!
+      return addMoves(getInitialMoves(), action.moves);
     default:
       return state;
   }
@@ -74,8 +75,8 @@ const reduceMoves = (state, action) => {
 
 const Game = ({ gameSlug }) => {
   const [clientUpdatedAt, setClientUpdatedAt] = useState(null);
-  const [moves, setMoves] = useState(getInitialMoves());
-  // const [moves, dispatchMoves] = useReducer(reduceMoves, DEFAULT_FEN, getInitialMoves);
+  // const [moves, setMoves] = useState(getInitialMoves());
+  const [moves, dispatchMoves] = useReducer(reduceMoves, DEFAULT_FEN, getInitialMoves);
   const [players, setPlayers] = useState(initialPlayers);
   const [selectedMoveIdx, setSelectedMoveIdx] = useState(0);
   const [username, setUsername] = useState(null);
@@ -83,26 +84,13 @@ const Game = ({ gameSlug }) => {
   // Fetch data utilities
 
   const fetchMoves = useCallback(
+    // TODO: incorporate fen
+    // see: https://reactjs.org/docs/hooks-reference.html#lazy-initialization
     (fen) => {
       client.getMoves(gameSlug).then((response) => {
         const { moves: movesData } = response.data;
-        const _moves = getInitialMoves(fen);
-        movesData.reduce(
-          (lastBoard, moveData) => {
-            const { piece, origin: fromPos, destination: toPos } = moveData;
-            const board = lastBoard.move(fromPos, toPos, RefType.RANK_FILE);
-            const move = {
-              piece, fromPos, toPos, board,
-            };
-            _moves.push(move);
-            return move.board;
-          },
-          _moves[0].board,
-        );
-        // TODO: There is one more board than moves.
-        // Watch out for off by 1 errors!
-        setMoves(_moves);
-        setSelectedMoveIdx(_moves.length - 1);
+        dispatchMoves({ type: 'add_moves', moves: movesData });
+        setSelectedMoveIdx(movesData.length);
       });
     },
     [gameSlug],
@@ -111,7 +99,7 @@ const Game = ({ gameSlug }) => {
   const fetchGame = useCallback(
     () => {
       if (gameSlug === undefined) {
-        setMoves(getInitialMoves());
+        dispatchMoves({ type: 'addMoves', moves: [] });
         setSelectedMoveIdx(0);
         return;
       }
@@ -135,6 +123,8 @@ const Game = ({ gameSlug }) => {
 
       const { name: nextMovePlayerName } = getNextMovePlayer(players, moves);
       if (username === nextMovePlayerName) return;
+
+      console.log('needs an update');
 
       client.getLastUpdate(gameSlug)
         .then((response) => {
@@ -170,45 +160,50 @@ const Game = ({ gameSlug }) => {
 
   // Move updates
 
-  const getPostMovePayload = (board, fromSlot, toSlot) => {
-    const { name: player } = getNextMovePlayer(players, moves);
-    const fromPos = board.getRankFile(fromSlot);
-    const toPos = board.getRankFile(toSlot);
-    const piece = board.getPiece(fromSlot);
-    return {
-      player, piece, fromPos, toPos,
-    };
-  };
-
-  const postMoveToServer = (board, fromSlot, toSlot) => {
-    if (gameSlug === undefined) return;
-
-    const payload = getPostMovePayload(board, fromSlot, toSlot);
-    client
-      .postMove(gameSlug, payload)
-      .then(({ status }) => {
-        if (status !== 201) fetchGame();
-      })
-      .catch(() => {
-        // TODO: display useful error?
-        fetchGame();
-      });
-  };
-
-  const handleLegalMove = (board, fromSlot, toSlot) => {
-    setMoves((fromMoves) => {
-      const nextMove = {
-        fromPos: board.getRankFile(fromSlot),
-        toPos: board.getRankFile(toSlot),
-        piece: board.getPiece(fromSlot),
-        board: board.move(fromSlot, toSlot),
+  const getPostMovePayload = useCallback(
+    (board, fromSlot, toSlot) => {
+      const { name: player } = getNextMovePlayer(players, moves);
+      const fromPos = board.getRankFile(fromSlot);
+      const toPos = board.getRankFile(toSlot);
+      const piece = board.getPiece(fromSlot);
+      return {
+        player, piece, fromPos, toPos,
       };
-      return update(fromMoves, { $push: [nextMove] });
-    });
-    setSelectedMoveIdx(moves.length);
+    },
+    [moves, players],
+  );
 
-    postMoveToServer(board, fromSlot, toSlot);
-  };
+  const postMoveToServer = useCallback(
+    (board, fromSlot, toSlot) => {
+      if (gameSlug === undefined) return;
+
+      const payload = getPostMovePayload(board, fromSlot, toSlot);
+      client
+        .postMove(gameSlug, payload)
+        .then(({ status }) => {
+          if (status !== 201) fetchGame();
+        })
+        .catch(() => {
+        // TODO: display useful error?
+          fetchGame();
+        });
+    },
+    [fetchGame, gameSlug, getPostMovePayload],
+  );
+
+  const handleLegalMove = useCallback(
+    (board, fromSlot, toSlot) => {
+      dispatchMoves({
+        type: 'add_move_to_board',
+        board,
+        move: { fromSlot, toSlot },
+      });
+      setSelectedMoveIdx(moves.length);
+
+      postMoveToServer(board, fromSlot, toSlot);
+    },
+    [moves.length, postMoveToServer],
+  );
 
   const handleMoveSelect = ({ idx }) => {
     setSelectedMoveIdx(idx);
