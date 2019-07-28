@@ -19,8 +19,8 @@ const POLL_INTERVAL = 2500;
 /* eslint-disable-next-line max-len */
 const DEFAULT_FEN = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
 
-const getInitialMoves = (fen = DEFAULT_FEN) => ({
-  selectedMoveIdx: 0,
+const getInitialMovesState = (fen = DEFAULT_FEN) => ({
+  selectedMove: 0,
   moves: [
     {
       piece: undefined,
@@ -48,12 +48,12 @@ const addMove = (state, { piece, origin: fromPos, destination: toPos }) => {
 };
 
 const setSelectedMove = (state, index) => (
-  { ...state, selectedMoveIdx: index }
+  { ...state, selectedMove: index }
 );
 
 const selectLastMove = (state) => {
   const { moves } = state;
-  return { ...state, selectedMoveIdx: moves.length - 1 };
+  return { ...state, selectedMove: moves.length - 1 };
 };
 
 const addMoveToBoard = (state, board, { fromSlot, toSlot }) => {
@@ -80,7 +80,7 @@ const reduceMoves = (state, action) => {
     case 'select_move':
       return setSelectedMove(state, action.index);
     case 'sync_moves':
-      return syncMoves(getInitialMoves(), action.moves);
+      return syncMoves(getInitialMovesState(), action.moves);
     default:
       return state;
   }
@@ -88,10 +88,10 @@ const reduceMoves = (state, action) => {
 
 const Game = ({ gameSlug }) => {
   const [clientUpdatedAt, setClientUpdatedAt] = useState(null);
-  const [moves, dispatchMoves] = useReducer(
+  const [movesState, dispatchMoves] = useReducer(
     reduceMoves,
     DEFAULT_FEN,
-    getInitialMoves,
+    getInitialMovesState,
   );
   const [players, setPlayers] = useState(initialPlayers);
   const [username, setUsername] = useState(null);
@@ -133,9 +133,7 @@ const Game = ({ gameSlug }) => {
       if (gameSlug === undefined) return;
       if (username === null) return;
       if (clientUpdatedAt === null) return;
-
-      const { name: nextMovePlayerName } = getNextMovePlayer(players, moves.moves);
-      if (username === nextMovePlayerName) return;
+      if (username === getNextMovePlayer(players, movesState.moves)) return;
 
       client.getLastUpdate(gameSlug)
         .then((response) => {
@@ -147,7 +145,7 @@ const Game = ({ gameSlug }) => {
           setClientUpdatedAt(serverUpdatedAt);
         });
     },
-    [clientUpdatedAt, fetchGame, gameSlug, moves.moves, players, username],
+    [clientUpdatedAt, fetchGame, gameSlug, movesState.moves, players, username],
   );
 
   // Lifecycle methods
@@ -173,7 +171,7 @@ const Game = ({ gameSlug }) => {
 
   const getPostMovePayload = useCallback(
     (board, fromSlot, toSlot) => {
-      const { name: player } = getNextMovePlayer(players, moves.moves);
+      const { name: player } = getNextMovePlayer(players, movesState.moves);
       const fromPos = board.getRankFile(fromSlot);
       const toPos = board.getRankFile(toSlot);
       const piece = board.getPiece(fromSlot);
@@ -181,7 +179,7 @@ const Game = ({ gameSlug }) => {
         player, piece, fromPos, toPos,
       };
     },
-    [moves.moves, players],
+    [movesState.moves, players],
   );
 
   const postMoveToServer = useCallback(
@@ -227,15 +225,15 @@ const Game = ({ gameSlug }) => {
   const getInitialUserOrientation = () => getUserColor() === 'black';
 
   const getLegalMoves = (idx, currentUserOnly = true) => {
-    const nextMoveColor = getNextMoveColor(moves.moves);
+    const nextMoveColor = getNextMoveColor(movesState.moves);
     const userColor = getUserColor();
-    const { board } = selectMove(moves.moves, idx);
+    const { board } = selectMove(movesState.moves, idx);
     const selectUserMoves = currentUserOnly && gameSlug !== undefined;
 
     return board
       .legalMoves()
       .map((toSlots, fromSlot) => {
-        if (idx !== -1 && idx !== moves.moves.length - 1) return [];
+        if (idx !== -1 && idx !== movesState.moves.length - 1) return [];
         if (!board.isColor(nextMoveColor, fromSlot)) return [];
         if (selectUserMoves && !board.isColor(userColor, fromSlot)) return [];
         return toSlots;
@@ -258,10 +256,10 @@ const Game = ({ gameSlug }) => {
         `}
     >
       <Board
-        nextMoveColor={getNextMoveColor(moves.moves)}
-        board={selectMove(moves.moves, moves.selectedMoveIdx).board}
+        nextMoveColor={getNextMoveColor(movesState.moves)}
+        board={selectMove(movesState.moves, movesState.selectedMove).board}
         handleLegalMove={handleLegalMove}
-        legalMoves={getLegalMoves(moves.selectedMoveIdx)}
+        legalMoves={getLegalMoves(movesState.selectedMove)}
         reversed={getInitialUserOrientation()}
       />
       <div
@@ -281,14 +279,14 @@ const Game = ({ gameSlug }) => {
       >
         <LoginForm setUsername={setUsername} />
         <GameInfo
-          activePlayer={getNextMovePlayer(players, moves.moves)}
+          activePlayer={getNextMovePlayer(players, movesState.moves)}
           userColor={getUserColor()}
           players={players}
           activeLegalMoves={getLegalMoves(-1, false)}
         />
         <MoveHistory
-          moves={moves.moves}
-          selectedIdx={moves.selectedMoveIdx}
+          moves={movesState.moves}
+          selectedIdx={movesState.selectedMove}
           handleMoveSelect={handleMoveSelect}
         />
       </div>
