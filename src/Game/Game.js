@@ -124,8 +124,6 @@ const Game = ({ gameSlug }) => {
       const { name: nextMovePlayerName } = getNextMovePlayer(players, moves);
       if (username === nextMovePlayerName) return;
 
-      console.log('needs an update');
-
       client.getLastUpdate(gameSlug)
         .then((response) => {
           const { data: { updated_at: serverUpdatedAt } } = response;
