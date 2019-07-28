@@ -3,7 +3,9 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
-import { useCallback, useState, useEffect } from 'react';
+import {
+  useCallback, useReducer, useState, useEffect,
+} from 'react';
 import Board from './Board/Board';
 import { selectMove, getNextMoveColor, getNextMovePlayer } from './utils';
 import MoveHistory from './Move/MoveHistory';
@@ -31,9 +33,37 @@ const initialPlayers = [
   { name: undefined, color: 'black' },
 ];
 
+const addMove = (state, { piece, fromPos, toPos }) => {
+  const { board } = state[state.length - 1];
+  const newMove = {
+    piece,
+    fromPos,
+    toPos,
+    board: board.move(fromPos, toPos, RefType.RANK_FILE),
+  };
+  return update(state, { $push: [newMove] });
+};
+
+const addMoves = (state, moves) => moves.reduce(
+  (prevState, move) => addMoves(prevState, move),
+  state,
+);
+
+const reduceMoves = (state, action) => {
+  switch (action.type) {
+    case 'add_move':
+      return addMove(state, action.move);
+    case 'add_moves':
+      return addMoves(state, action.moves);
+    default:
+      return state;
+  }
+};
+
 const Game = ({ gameSlug }) => {
   const [clientUpdatedAt, setClientUpdatedAt] = useState(null);
   const [moves, setMoves] = useState(getInitialMoves());
+  // const [moves, dispatchMoves] = useReducer(reduceMoves, DEFAULT_FEN, getInitialMoves);
   const [players, setPlayers] = useState(initialPlayers);
   const [selectedMoveIdx, setSelectedMoveIdx] = useState(0);
   const [username, setUsername] = useState(null);
