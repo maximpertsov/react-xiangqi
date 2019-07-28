@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
 import { authenticate } from '../client';
@@ -9,22 +9,30 @@ const LoginForm = ({ setUsername }) => {
   const [sub, setSub] = useState(null);
   const [form, setForm] = useState(initialForm);
 
-  const handleAuthenticationSuccess = (response) => {
-    const { data: { access_token: accessToken } } = response;
-    const { sub: _sub } = jwtDecode(accessToken);
-    setSub(_sub);
-    setUsername(_sub);
-  };
+  const handleAuthenticationSuccess = useCallback(
+    (response) => {
+      const { data: { access_token: accessToken } } = response;
+      const { sub: _sub } = jwtDecode(accessToken);
+      setSub(_sub);
+      setUsername(_sub);
+    },
+    [setUsername],
+  );
 
-  useEffect(() => {
-    // TODO: username and password unnecessary for cookie auth
-    const { username, password } = form;
-    authenticate({ username, password })
-      .then((response) => {
-        if (response.status === 201) handleAuthenticationSuccess(response);
-      })
-      .catch(() => {});
-  });
+  useEffect(
+    () => {
+      // TODO: username and password unnecessary for cookie auth
+      const { username, password } = form;
+      authenticate({ username, password })
+        .then((response) => {
+          if (response.status === 201) handleAuthenticationSuccess(response);
+        })
+        .catch(() => {});
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
 
   const clearState = () => {
     setForm((prevForm) => ({ ...prevForm, initialForm }));
