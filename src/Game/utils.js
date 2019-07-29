@@ -4,4 +4,22 @@ export const selectMove = (moves, idx) => (
   moves[idx === -1 ? moves.length - 1 : idx] || {}
 );
 
+
+export const getNextMoveColor = (moves) => {
+  if (moves.length === 0) return 'red';
+
+  // TODO: we don't really need a specific board for this function
+  const { piece: lastMovedPiece, board } = moves[moves.length - 1];
+
+  return board.isRedCode(lastMovedPiece) ? 'black' : 'red';
+};
+
+
+// TODO: create PlayerManager class?
+export const getNextMovePlayer = (players, moves) => {
+  const nextMoveColor = getNextMoveColor(moves);
+  return players.find((p) => p.color === nextMoveColor);
+};
+
+
 export default {};

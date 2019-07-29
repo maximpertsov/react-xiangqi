@@ -1,79 +1,69 @@
-import React, { Component } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
 import { authenticate } from '../client';
 
-class LoginForm extends Component {
-  constructor(props) {
-    super(props);
+const initialForm = { username: '', password: '', error: '' };
 
-    this.state = {
-      sub: null,
-      username: '',
-      password: '',
-      error: '',
-    };
+const LoginForm = ({ setUsername }) => {
+  const [sub, setSub] = useState(null);
+  const [form, setForm] = useState(initialForm);
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
+  const handleAuthenticationSuccess = useCallback(
+    (response) => {
+      const { data: { access_token: accessToken } } = response;
+      const { sub: _sub } = jwtDecode(accessToken);
+      setSub(_sub);
+      setUsername(_sub);
+    },
+    [setUsername],
+  );
 
-  componentDidMount() {
-    const { username, password } = this.state;
-    // TODO: username and password unnecessary for cookie auth
-    authenticate({ username, password })
-      .then((response) => {
-        if (response.status === 201) this.handleAuthenticationSuccess(response);
-      })
-      .catch(() => {});
-  }
+  useEffect(
+    () => {
+      // TODO: username and password unnecessary for cookie auth
+      const { username, password } = form;
+      authenticate({ username, password })
+        .then((response) => {
+          if (response.status === 201) handleAuthenticationSuccess(response);
+        })
+        .catch(() => {});
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
-  setUsername(username) {
-    const { setUsername } = this.props;
-    setUsername(username);
-  }
 
-  clearState() {
-    this.setState({ username: '', password: '', error: '' });
-  }
+  const clearState = () => {
+    setForm((prevForm) => ({ ...prevForm, initialForm }));
+  };
 
-  handleAuthenticationSuccess(response) {
-    const { data: { access_token: accessToken } } = response;
-    const { sub } = jwtDecode(accessToken);
-    this.setState({ sub });
-    this.setUsername(sub);
-  }
-
-  handleChange(event) {
+  const handleChange = (event) => {
     const { target: { name, value } } = event;
-    this.setState({ [name]: value });
-  }
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+  };
 
-  handleClick() {
-    const { username, password } = this.state;
-    this.clearState();
+  const handleClick = () => {
+    const { username, password } = form;
+    clearState();
     authenticate({ username, password })
       .then((response) => {
-        if (response.status === 201) this.handleAuthenticationSuccess(response);
+        if (response.status === 201) handleAuthenticationSuccess(response);
       })
       .catch(() => {
-        this.setState({ error: 'Login failed' });
+        setForm((prevForm) => ({ ...prevForm, error: 'Login failed' }));
       });
-  }
+  };
 
-  isLoggedIn() {
-    const { sub } = this.state;
-    return sub !== null;
-  }
+  const isLoggedIn = () => sub !== null;
 
-  renderLoggedIn() {
-    const { sub } = this.state;
+  const renderLoggedIn = () => {
     const loggedInMessage = `Welcome ${sub}`;
     return (<div>{loggedInMessage}</div>);
-  }
+  };
 
-  renderLoggedOut() {
-    const { username, password, error } = this.state;
+  const renderLoggedOut = () => {
+    const { username, password, error } = form;
     return (
       <div className="LoginForm">
         <div className="form">
@@ -81,29 +71,27 @@ class LoginForm extends Component {
             <input
               name="username"
               value={username}
-              onChange={this.handleChange}
+              onChange={handleChange}
               type="text"
               placeholder="Username"
             />
             <input
               name="password"
               value={password}
-              onChange={this.handleChange}
+              onChange={handleChange}
               type="password"
               placeholder="Password"
             />
-            <button type="button" onClick={this.handleClick}>login</button>
+            <button type="button" onClick={handleClick}>login</button>
           </form>
           <div>{error}</div>
         </div>
       </div>
     );
-  }
+  };
 
-  render() {
-    return this.isLoggedIn() ? this.renderLoggedIn() : this.renderLoggedOut();
-  }
-}
+  return isLoggedIn() ? renderLoggedIn() : renderLoggedOut();
+};
 
 LoginForm.propTypes = {
   setUsername: PropTypes.func.isRequired,
