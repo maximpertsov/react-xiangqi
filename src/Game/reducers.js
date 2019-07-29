@@ -2,22 +2,28 @@ import update from 'immutability-helper';
 import { useReducer } from 'react';
 import XiangqiBoard, { RefType } from '../logic';
 
+// Initial State
+
 
 // TODO: define in logic class
 /* eslint-disable-next-line max-len */
 const DEFAULT_FEN = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
 
-const getInitialMovesState = (fen = DEFAULT_FEN) => ({
+const getInitialMovesState = (fen = DEFAULT_FEN) => ([
+  {
+    piece: undefined,
+    fromPos: undefined,
+    toPos: undefined,
+    board: new XiangqiBoard({ fen }),
+  },
+]);
+
+const getInitialState = () => ({
   selectedMove: 0,
-  moves: [
-    {
-      piece: undefined,
-      fromPos: undefined,
-      toPos: undefined,
-      board: new XiangqiBoard({ fen }),
-    },
-  ],
+  moves: getInitialMovesState(),
 });
+
+// Actions
 
 const setSelectedMove = (state, index) => (
   { ...state, selectedMove: index }
@@ -57,23 +63,21 @@ const syncMoves = (state, moves) => selectLastMove(
   ),
 );
 
-const reduceMoves = (state, action) => {
+const reducer = (state, action) => {
   switch (action.type) {
     case 'add_move':
       return addMoveToBoard(state, action.board, action.move);
     case 'select_move':
       return setSelectedMove(state, action.index);
-    case 'sync_moves':
-      return syncMoves(getInitialMovesState(), action.moves);
+    case 'sync_game':
+      return syncMoves(getInitialState(), action.moves);
     default:
       return state;
   }
 };
 
-const useMoveReducer = () => useReducer(
-  reduceMoves,
-  DEFAULT_FEN,
-  getInitialMovesState,
+const useGameReducer = () => useReducer(
+  reducer, getInitialState(),
 );
 
-export default useMoveReducer;
+export default useGameReducer;
