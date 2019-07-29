@@ -4,7 +4,6 @@ import XiangqiBoard, { RefType } from '../logic';
 
 // Initial State
 
-
 // TODO: define in logic class
 /* eslint-disable-next-line max-len */
 const DEFAULT_FEN = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
@@ -18,9 +17,15 @@ const getInitialMovesState = (fen = DEFAULT_FEN) => ([
   },
 ]);
 
+const initialPlayers = [
+  { name: undefined, color: 'red' },
+  { name: undefined, color: 'black' },
+];
+
 const getInitialState = () => ({
   selectedMove: 0,
   moves: getInitialMovesState(),
+  players: initialPlayers,
 });
 
 // Actions
@@ -44,7 +49,7 @@ const addMoveToBoard = (state, board, { fromSlot, toSlot }) => {
   return selectLastMove(update(state, { moves: { $push: [newMove] } }));
 };
 
-const syncMove = (state, { piece, origin: fromPos, destination: toPos }) => {
+const setMove = (state, { piece, origin: fromPos, destination: toPos }) => {
   const { board } = state.moves[state.moves.length - 1];
   const newMove = {
     piece,
@@ -56,10 +61,14 @@ const syncMove = (state, { piece, origin: fromPos, destination: toPos }) => {
 };
 
 
-const syncMoves = (state, moves) => selectLastMove(
+const setMoves = (state, moves) => selectLastMove(
   moves.reduce(
-    (prevState, move) => syncMove(prevState, move),
-    state,
+    (prevState, move) => setMove(prevState, move),
+    {
+      ...state,
+      moves: getInitialMovesState(),
+      setSelectedMove: 0,
+    },
   ),
 );
 
@@ -69,8 +78,10 @@ const reducer = (state, action) => {
       return addMoveToBoard(state, action.board, action.move);
     case 'select_move':
       return setSelectedMove(state, action.index);
-    case 'sync_game':
-      return syncMoves(getInitialState(), action.moves);
+    case 'set_moves':
+      return setMoves(state, action.moves);
+    case 'set_players':
+      return ({ ...state, players: action.players });
     default:
       return state;
   }

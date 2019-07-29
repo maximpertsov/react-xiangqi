@@ -13,15 +13,9 @@ import * as client from '../client';
 
 const POLL_INTERVAL = 2500;
 
-const initialPlayers = [
-  { name: undefined, color: 'red' },
-  { name: undefined, color: 'black' },
-];
-
 const Game = ({ gameSlug }) => {
-  const [clientUpdatedAt, setClientUpdatedAt] = useState(null);
   const [state, dispatch] = useGameReducer();
-  const [players, setPlayers] = useState(initialPlayers);
+  const [clientUpdatedAt, setClientUpdatedAt] = useState(null);
   const [username, setUsername] = useState(null);
 
   // Fetch data utilities
@@ -29,10 +23,10 @@ const Game = ({ gameSlug }) => {
   const fetchMoves = useCallback(
     // TODO: incorporate fen
     // see: https://reactjs.org/docs/hooks-reference.html#lazy-initialization
-    (fen) => {
+    // (fen) => {
+    () => {
       client.getMoves(gameSlug).then((response) => {
-        const { moves: movesData } = response.data;
-        dispatch({ type: 'sync_game', moves: movesData });
+        dispatch({ type: 'set_moves', moves: response.data.moves });
       });
     },
     [dispatch, gameSlug],
@@ -41,14 +35,13 @@ const Game = ({ gameSlug }) => {
   const fetchGame = useCallback(
     () => {
       if (gameSlug === undefined) {
-        dispatch({ type: 'sync_game', moves: [] });
+        dispatch({ type: 'set_moves', moves: [] });
         return;
       }
 
       client.getGame(gameSlug).then((response) => {
-        const { players: _players, initial_fen: fen } = response.data;
-        setPlayers(_players);
-        fetchMoves(fen);
+        dispatch({ type: 'set_players', players: response.data.players });
+        fetchMoves();
       });
     },
     [dispatch, fetchMoves, gameSlug],
@@ -61,7 +54,7 @@ const Game = ({ gameSlug }) => {
       if (gameSlug === undefined) return;
       if (username === null) return;
       if (clientUpdatedAt === null) return;
-      if (username === getNextMovePlayer(players, state.moves)) return;
+      if (username === getNextMovePlayer(state.players, state.moves)) return;
 
       client.getLastUpdate(gameSlug)
         .then((response) => {
@@ -73,7 +66,14 @@ const Game = ({ gameSlug }) => {
           setClientUpdatedAt(serverUpdatedAt);
         });
     },
-    [clientUpdatedAt, fetchGame, gameSlug, state.moves, players, username],
+    [
+      clientUpdatedAt,
+      fetchGame,
+      gameSlug,
+      state.moves,
+      state.players,
+      username,
+    ],
   );
 
   // Lifecycle methods
@@ -99,7 +99,7 @@ const Game = ({ gameSlug }) => {
 
   const getPostMovePayload = useCallback(
     (board, fromSlot, toSlot) => {
-      const { name: player } = getNextMovePlayer(players, state.moves);
+      const { name: player } = getNextMovePlayer(state.players, state.moves);
       const fromPos = board.getRankFile(fromSlot);
       const toPos = board.getRankFile(toSlot);
       const piece = board.getPiece(fromSlot);
@@ -107,7 +107,7 @@ const Game = ({ gameSlug }) => {
         player, piece, fromPos, toPos,
       };
     },
-    [state.moves, players],
+    [state.moves, state.players],
   );
 
   const postMoveToServer = useCallback(
@@ -145,7 +145,9 @@ const Game = ({ gameSlug }) => {
     dispatch({ type: 'select_move', index: idx });
   };
 
-  const getUserPlayer = () => players.find((p) => p.name === username) || {};
+  const getUserPlayer = () => (
+    state.players.find((p) => p.name === username) || {}
+  );
 
   const getUserColor = () => getUserPlayer().color;
 
@@ -207,9 +209,9 @@ const Game = ({ gameSlug }) => {
       >
         <LoginForm setUsername={setUsername} />
         <GameInfo
-          activePlayer={getNextMovePlayer(players, state.moves)}
+          activePlayer={getNextMovePlayer(state.players, state.moves)}
           userColor={getUserColor()}
-          players={players}
+          players={state.players}
           activeLegalMoves={getLegalMoves(-1, false)}
         />
         <MoveHistory
