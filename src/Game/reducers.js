@@ -19,24 +19,13 @@ const getInitialMovesState = (fen = DEFAULT_FEN) => ({
   ],
 });
 
-const addMove = (state, { piece, origin: fromPos, destination: toPos }) => {
-  const { board } = state.moves[state.moves.length - 1];
-  const newMove = {
-    piece,
-    fromPos,
-    toPos,
-    board: board.move(fromPos, toPos, RefType.RANK_FILE),
-  };
-  return update(state, { moves: { $push: [newMove] } });
-};
-
 const setSelectedMove = (state, index) => (
   { ...state, selectedMove: index }
 );
 
 const selectLastMove = (state) => {
   const { moves } = state;
-  return { ...state, selectedMove: moves.length - 1 };
+  return setSelectedMove(state, moves.length - 1);
 };
 
 const addMoveToBoard = (state, board, { fromSlot, toSlot }) => {
@@ -49,9 +38,21 @@ const addMoveToBoard = (state, board, { fromSlot, toSlot }) => {
   return selectLastMove(update(state, { moves: { $push: [newMove] } }));
 };
 
+const syncMove = (state, { piece, origin: fromPos, destination: toPos }) => {
+  const { board } = state.moves[state.moves.length - 1];
+  const newMove = {
+    piece,
+    fromPos,
+    toPos,
+    board: board.move(fromPos, toPos, RefType.RANK_FILE),
+  };
+  return update(state, { moves: { $push: [newMove] } });
+};
+
+
 const syncMoves = (state, moves) => selectLastMove(
   moves.reduce(
-    (prevState, move) => addMove(prevState, move),
+    (prevState, move) => syncMove(prevState, move),
     state,
   ),
 );
