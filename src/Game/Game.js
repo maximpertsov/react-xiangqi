@@ -155,13 +155,13 @@ const Game = ({ gameSlug }) => {
   const getLegalMoves = (idx, currentUserOnly = true) => {
     const nextMoveColor = getNextMoveColor(state.moves);
     const userColor = getUserColor();
-    const { board } = getMove(state.moves, idx);
+    const { board } = getMove(state, idx);
     const selectUserMoves = currentUserOnly && gameSlug !== undefined;
 
     return board
       .legalMoves()
       .map((toSlots, fromSlot) => {
-        if (idx !== -1 && idx !== state.moves.length - 1) return [];
+        if (idx !== state.moves.length - 1) return [];
         if (!board.isColor(nextMoveColor, fromSlot)) return [];
         if (selectUserMoves && !board.isColor(userColor, fromSlot)) return [];
         return toSlots;
@@ -185,7 +185,7 @@ const Game = ({ gameSlug }) => {
     >
       <Board
         nextMoveColor={getNextMoveColor(state.moves)}
-        board={getMove(state.moves, state.selectedMoveIdx).board}
+        board={getMove(state, state.selectedMoveIdx).board}
         handleLegalMove={handleLegalMove}
         legalMoves={getLegalMoves(state.selectedMoveIdx)}
         reversed={getInitialUserOrientation()}
@@ -210,7 +210,7 @@ const Game = ({ gameSlug }) => {
           activePlayer={getNextMovePlayer(state.players, state.moves)}
           userColor={getUserColor()}
           players={state.players}
-          activeLegalMoves={getLegalMoves(-1, false)}
+          activeLegalMoves={getLegalMoves(state.moves.length - 1, false)}
         />
         <MoveHistory
           moves={state.moves}
