@@ -185,7 +185,7 @@ const Game = ({ gameSlug }) => {
     >
       <Board
         nextMoveColor={getNextMoveColor(state.moves)}
-        board={selectMove(state.moves, state.selectedMoveIdx).board}
+        board={getMove(state.moves, state.selectedMoveIdx).board}
         handleLegalMove={handleLegalMove}
         legalMoves={getLegalMoves(state.selectedMoveIdx)}
         reversed={getInitialUserOrientation()}
