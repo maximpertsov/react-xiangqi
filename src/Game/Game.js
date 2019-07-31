@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useState, useEffect } from 'react';
 import useGameReducer from './reducers';
 import Board from './Board/Board';
-import { getMove, getNextMoveColor, getNextMovePlayer } from './utils';
+import { getMove, getNextMoveColor, getNextMovePlayer } from './selectors';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
