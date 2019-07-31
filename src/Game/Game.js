@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useState, useEffect } from 'react';
 import useGameReducer from './reducers';
 import Board from './Board/Board';
-import { selectMove, getNextMoveColor, getNextMovePlayer } from './utils';
+import { getMove, getNextMoveColor, getNextMovePlayer } from './utils';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
@@ -155,7 +155,7 @@ const Game = ({ gameSlug }) => {
   const getLegalMoves = (idx, currentUserOnly = true) => {
     const nextMoveColor = getNextMoveColor(state.moves);
     const userColor = getUserColor();
-    const { board } = selectMove(state.moves, idx);
+    const { board } = getMove(state.moves, idx);
     const selectUserMoves = currentUserOnly && gameSlug !== undefined;
 
     return board
