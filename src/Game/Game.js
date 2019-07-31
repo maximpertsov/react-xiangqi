@@ -21,9 +21,6 @@ const Game = ({ gameSlug }) => {
   // Fetch data utilities
 
   const fetchMoves = useCallback(
-    // TODO: incorporate fen
-    // see: https://reactjs.org/docs/hooks-reference.html#lazy-initialization
-    // (fen) => {
     () => {
       if (gameSlug === undefined) {
         dispatch({ type: 'set_moves', moves: [] });
