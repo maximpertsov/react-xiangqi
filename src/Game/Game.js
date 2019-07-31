@@ -25,6 +25,11 @@ const Game = ({ gameSlug }) => {
     // see: https://reactjs.org/docs/hooks-reference.html#lazy-initialization
     // (fen) => {
     () => {
+      if (gameSlug === undefined) {
+        dispatch({ type: 'set_moves', moves: [] });
+        return;
+      }
+
       client.getMoves(gameSlug).then((response) => {
         dispatch({ type: 'set_moves', moves: response.data.moves });
       });
@@ -34,22 +39,18 @@ const Game = ({ gameSlug }) => {
 
   const fetchGame = useCallback(
     () => {
-      if (gameSlug === undefined) {
-        dispatch({ type: 'set_moves', moves: [] });
-        return;
-      }
+      if (gameSlug === undefined) return;
 
       client.getGame(gameSlug).then((response) => {
         dispatch({ type: 'set_players', players: response.data.players });
-        fetchMoves();
       });
     },
-    [dispatch, fetchMoves, gameSlug],
+    [dispatch, gameSlug],
   );
 
   // TODO: only poll for move update? Can't do that now because
   // we don't update active player based on moves
-  const pollForGameUpdate = useCallback(
+  const pollForMoveUpdate = useCallback(
     () => {
       if (gameSlug === undefined) return;
       if (username === null) return;
@@ -62,13 +63,13 @@ const Game = ({ gameSlug }) => {
           if (serverUpdatedAt === null) return;
           if (clientUpdatedAt >= serverUpdatedAt) return;
 
-          fetchGame();
+          fetchMoves();
           setClientUpdatedAt(serverUpdatedAt);
         });
     },
     [
       clientUpdatedAt,
-      fetchGame,
+      fetchMoves,
       gameSlug,
       state.moves,
       state.players,
@@ -89,10 +90,10 @@ const Game = ({ gameSlug }) => {
 
   useEffect(
     () => {
-      const interval = setInterval(() => pollForGameUpdate(), POLL_INTERVAL);
+      const interval = setInterval(() => pollForMoveUpdate(), POLL_INTERVAL);
       return () => clearInterval(interval);
     },
-    [gameSlug, pollForGameUpdate],
+    [gameSlug, pollForMoveUpdate],
   );
 
   // Move updates
@@ -118,14 +119,14 @@ const Game = ({ gameSlug }) => {
       client
         .postMove(gameSlug, payload)
         .then(({ status }) => {
-          if (status !== 201) fetchGame();
+          if (status !== 201) fetchMoves();
         })
         .catch(() => {
         // TODO: display useful error?
-          fetchGame();
+          fetchMoves();
         });
     },
-    [fetchGame, gameSlug, getPostMovePayload],
+    [fetchMoves, gameSlug, getPostMovePayload],
   );
 
   const handleLegalMove = useCallback(
@@ -187,9 +188,9 @@ const Game = ({ gameSlug }) => {
     >
       <Board
         nextMoveColor={getNextMoveColor(state.moves)}
-        board={selectMove(state.moves, state.selectedMove).board}
+        board={selectMove(state.moves, state.selectedMoveIdx).board}
         handleLegalMove={handleLegalMove}
-        legalMoves={getLegalMoves(state.selectedMove)}
+        legalMoves={getLegalMoves(state.selectedMoveIdx)}
         reversed={getInitialUserOrientation()}
       />
       <div
@@ -216,7 +217,7 @@ const Game = ({ gameSlug }) => {
         />
         <MoveHistory
           moves={state.moves}
-          selectedIdx={state.selectedMove}
+          selectedIdx={state.selectedMoveIdx}
           handleMoveSelect={handleMoveSelect}
         />
       </div>

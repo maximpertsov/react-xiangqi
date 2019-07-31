@@ -23,7 +23,7 @@ const initialPlayers = [
 ];
 
 const getInitialState = () => ({
-  selectedMove: 0,
+  selectedMoveIdx: 0,
   moves: getInitialMovesState(),
   players: initialPlayers,
 });
@@ -31,7 +31,7 @@ const getInitialState = () => ({
 // Actions
 
 const setSelectedMove = (state, index) => (
-  { ...state, selectedMove: index }
+  { ...state, selectedMoveIdx: index }
 );
 
 const selectLastMove = (state) => {
@@ -52,7 +52,7 @@ const addMove = (state, board, { fromSlot, toSlot }) => {
 const setMove = (
   state,
   { piece, origin: fromPos, destination: toPos },
-  fromMoveIdx = undefined
+  fromMoveIdx = undefined,
 ) => {
   const { board } = state.moves[fromMoveIdx || state.moves.length - 1];
   const newMove = {
