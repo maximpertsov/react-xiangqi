@@ -2,7 +2,7 @@
 // Return an empty object if move lookup fails
 export const getMove = ({ moves }, idx) => moves[idx];
 
-export const getNextMoveColor = (moves) => {
+export const getNextMoveColor = ({ moves }) => {
   if (moves.length === 0) return 'red';
 
   // TODO: we don't really need a specific board for this function
@@ -13,8 +13,8 @@ export const getNextMoveColor = (moves) => {
 
 
 // TODO: create PlayerManager class?
-export const getNextMovePlayer = (players, moves) => {
-  const nextMoveColor = getNextMoveColor(moves);
+export const getNextMovePlayer = ({ players, moves }) => {
+  const nextMoveColor = getNextMoveColor({ moves });
   return players.find((p) => p.color === nextMoveColor);
 };
 

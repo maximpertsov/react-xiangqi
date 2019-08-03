@@ -52,7 +52,7 @@ const Game = ({ gameSlug }) => {
       if (gameSlug === undefined) return;
       if (username === null) return;
       if (clientUpdatedAt === null) return;
-      if (username === getNextMovePlayer(state.players, state.moves)) return;
+      if (username === getNextMovePlayer(state)) return;
 
       client.getLastUpdate(gameSlug)
         .then((response) => {
@@ -97,7 +97,7 @@ const Game = ({ gameSlug }) => {
 
   const getPostMovePayload = useCallback(
     (board, fromSlot, toSlot) => {
-      const { name: player } = getNextMovePlayer(state.players, state.moves);
+      const { name: player } = getNextMovePlayer(state);
       const fromPos = board.getRankFile(fromSlot);
       const toPos = board.getRankFile(toSlot);
       const piece = board.getPiece(fromSlot);
@@ -153,7 +153,7 @@ const Game = ({ gameSlug }) => {
   const getInitialUserOrientation = () => getUserColor() === 'black';
 
   const getLegalMoves = (idx, currentUserOnly = true) => {
-    const nextMoveColor = getNextMoveColor(state.moves);
+    const nextMoveColor = getNextMoveColor(state);
     const userColor = getUserColor();
     const { board } = getMove(state, idx);
     const selectUserMoves = currentUserOnly && gameSlug !== undefined;
@@ -184,7 +184,7 @@ const Game = ({ gameSlug }) => {
         `}
     >
       <Board
-        nextMoveColor={getNextMoveColor(state.moves)}
+        nextMoveColor={getNextMoveColor(state)}
         board={getMove(state, state.selectedMoveIdx).board}
         handleLegalMove={handleLegalMove}
         legalMoves={getLegalMoves(state.selectedMoveIdx)}
@@ -207,7 +207,7 @@ const Game = ({ gameSlug }) => {
       >
         <LoginForm setUsername={setUsername} />
         <GameInfo
-          activePlayer={getNextMovePlayer(state.players, state.moves)}
+          activePlayer={getNextMovePlayer(state)}
           userColor={getUserColor()}
           players={state.players}
           activeLegalMoves={getLegalMoves(state.moves.length - 1, false)}
