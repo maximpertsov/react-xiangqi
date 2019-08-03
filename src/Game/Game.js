@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import { useCallback, useState, useEffect } from 'react';
 import useGameReducer from './reducers';
 import Board from './Board/Board';
-import { getMove, getNextMoveColor, getNextMovePlayer } from './selectors';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
 import * as client from '../client';
+import * as selectors from './selectors';
 
 const POLL_INTERVAL = 2500;
 
@@ -50,7 +50,7 @@ const Game = ({ gameSlug }) => {
     () => {
       if (gameSlug === undefined) return;
       if (username === null) return;
-      if (username === getNextMovePlayer(state)) return;
+      if (username === selectors.getNextMovePlayer(state)) return;
 
       client.getMoveCount(gameSlug)
         .then((response) => {
@@ -81,7 +81,7 @@ const Game = ({ gameSlug }) => {
 
   const getPostMovePayload = useCallback(
     (board, fromSlot, toSlot) => {
-      const { name: player } = getNextMovePlayer(state);
+      const { name: player } = selectors.getNextMovePlayer(state);
       const fromPos = board.getRankFile(fromSlot);
       const toPos = board.getRankFile(toSlot);
       const piece = board.getPiece(fromSlot);
@@ -137,9 +137,9 @@ const Game = ({ gameSlug }) => {
   const getInitialUserOrientation = () => getUserColor() === 'black';
 
   const getLegalMoves = (idx, currentUserOnly = true) => {
-    const nextMoveColor = getNextMoveColor(state);
+    const nextMoveColor = selectors.getNextMoveColor(state);
     const userColor = getUserColor();
-    const { board } = getMove(state, idx);
+    const { board } = selectors.getMove(state, idx);
     const selectUserMoves = currentUserOnly && gameSlug !== undefined;
 
     return board
@@ -168,8 +168,8 @@ const Game = ({ gameSlug }) => {
         `}
     >
       <Board
-        nextMoveColor={getNextMoveColor(state)}
-        board={getMove(state, state.selectedMoveIdx).board}
+        nextMoveColor={selectors.getNextMoveColor(state)}
+        board={selectors.getMove(state, state.selectedMoveIdx).board}
         handleLegalMove={handleLegalMove}
         legalMoves={getLegalMoves(state.selectedMoveIdx)}
         reversed={getInitialUserOrientation()}
@@ -191,7 +191,7 @@ const Game = ({ gameSlug }) => {
       >
         <LoginForm setUsername={setUsername} />
         <GameInfo
-          activePlayer={getNextMovePlayer(state)}
+          activePlayer={selectors.getNextMovePlayer(state)}
           userColor={getUserColor()}
           players={state.players}
           activeLegalMoves={getLegalMoves(state.moves.length - 1, false)}
