@@ -11,12 +11,10 @@ export const getNextMoveColor = ({ moves }) => {
   return board.isRedCode(lastMovedPiece) ? 'black' : 'red';
 };
 
-
 // TODO: create PlayerManager class?
 export const getNextMovePlayer = ({ players, moves }) => {
   const nextMoveColor = getNextMoveColor({ moves });
   return players.find((p) => p.color === nextMoveColor);
 };
-
 
 export default {};
