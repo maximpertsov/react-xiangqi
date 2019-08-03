@@ -64,14 +64,7 @@ const Game = ({ gameSlug }) => {
           setClientUpdatedAt(serverUpdatedAt);
         });
     },
-    [
-      clientUpdatedAt,
-      fetchMoves,
-      gameSlug,
-      state.moves,
-      state.players,
-      username,
-    ],
+    [clientUpdatedAt, fetchMoves, gameSlug, state, username],
   );
 
   // Lifecycle methods
@@ -105,7 +98,7 @@ const Game = ({ gameSlug }) => {
         player, piece, fromPos, toPos,
       };
     },
-    [state.moves, state.players],
+    [state],
   );
 
   const postMoveToServer = useCallback(
