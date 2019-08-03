@@ -15,7 +15,6 @@ const POLL_INTERVAL = 2500;
 
 const Game = ({ gameSlug }) => {
   const [state, dispatch] = useGameReducer();
-  const [clientUpdatedAt, setClientUpdatedAt] = useState(null);
   const [username, setUsername] = useState(null);
 
   // Fetch data utilities
@@ -49,35 +48,24 @@ const Game = ({ gameSlug }) => {
   // we don't update active player based on moves
   const pollForMoveUpdate = useCallback(
     () => {
-      console.log(state.moveCount);
-
       if (gameSlug === undefined) return;
       if (username === null) return;
-      if (clientUpdatedAt === null) return;
       if (username === getNextMovePlayer(state)) return;
 
-      client.getLastUpdate(gameSlug)
+      client.getMoveCount(gameSlug)
         .then((response) => {
-          const { data: { updated_at: serverUpdatedAt } } = response;
-          if (serverUpdatedAt === null) return;
-          if (clientUpdatedAt >= serverUpdatedAt) return;
-
-          // TODO: add last_updated_at to move api and in one step
+          const { data: { move_count: moveCount } } = response;
+          if (state.moveCount >= moveCount) return;
           fetchMoves();
-          setClientUpdatedAt(serverUpdatedAt);
         });
     },
-    [clientUpdatedAt, fetchMoves, gameSlug, state, username],
+    [fetchMoves, gameSlug, state, username],
   );
 
   // Lifecycle methods
 
   useEffect(
-    () => {
-      fetchGame();
-      // HACK to make sure we have at least one refresh!
-      setClientUpdatedAt(1);
-    },
+    () => { fetchGame(); },
     [fetchGame, gameSlug],
   );
 

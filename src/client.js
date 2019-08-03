@@ -13,6 +13,9 @@ export const getMoves = (gameId) => axios.get(`game/${gameId}/moves`);
 export const getLastUpdate = (gameId) => axios
   .get(`game/${gameId}/last-update`);
 
+export const getMoveCount = (gameId) => axios
+  .get(`game/${gameId}/move-count`);
+
 export async function postMove(gameId, {
   player, piece, fromPos, toPos,
 }) {
