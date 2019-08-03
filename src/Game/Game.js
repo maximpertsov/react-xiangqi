@@ -49,6 +49,8 @@ const Game = ({ gameSlug }) => {
   // we don't update active player based on moves
   const pollForMoveUpdate = useCallback(
     () => {
+      console.log(state.moveCount);
+
       if (gameSlug === undefined) return;
       if (username === null) return;
       if (clientUpdatedAt === null) return;
@@ -60,6 +62,7 @@ const Game = ({ gameSlug }) => {
           if (serverUpdatedAt === null) return;
           if (clientUpdatedAt >= serverUpdatedAt) return;
 
+          // TODO: add last_updated_at to move api and in one step
           fetchMoves();
           setClientUpdatedAt(serverUpdatedAt);
         });

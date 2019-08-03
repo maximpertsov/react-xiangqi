@@ -23,12 +23,17 @@ const initialPlayers = [
 ];
 
 const getInitialState = () => ({
-  selectedMoveIdx: 0,
   moves: getInitialMovesState(),
+  moveCount: 0,
   players: initialPlayers,
+  selectedMoveIdx: 0,
 });
 
 // Actions
+
+const incrementMoveCount = (state) => (
+  { ...state, moveCount: state.moveCount + 1 }
+);
 
 const setSelectedMove = (state, index) => (
   { ...state, selectedMoveIdx: index }
@@ -46,7 +51,11 @@ const addMove = (state, board, { fromSlot, toSlot }) => {
     piece: board.getPiece(fromSlot),
     board: board.move(fromSlot, toSlot),
   };
-  return selectLastMove(update(state, { moves: { $push: [newMove] } }));
+  return selectLastMove(
+    incrementMoveCount(
+      update(state, { moves: { $push: [newMove] } }),
+    ),
+  );
 };
 
 const setMove = (
@@ -61,7 +70,7 @@ const setMove = (
     toPos,
     board: board.move(fromPos, toPos, RefType.RANK_FILE),
   };
-  return update(state, { moves: { $push: [newMove] } });
+  return incrementMoveCount(update(state, { moves: { $push: [newMove] } }));
 };
 
 
@@ -71,11 +80,13 @@ const setMoves = (state, moves) => selectLastMove(
     {
       ...state,
       moves: getInitialMovesState(),
+      moveCount: 0,
       setSelectedMove: 0,
     },
   ),
 );
 
+/* eslint-disable-next-line complexity */
 const reducer = (state, action) => {
   switch (action.type) {
     case 'add_move':
