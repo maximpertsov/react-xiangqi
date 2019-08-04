@@ -127,11 +127,10 @@ const Game = ({ gameSlug }) => {
     dispatch({ type: 'select_move', index: idx });
   };
 
-  const getUserPlayer = () => (
-    state.players.find((p) => p.name === username) || {}
-  );
-
-  const getUserColor = () => getUserPlayer().color;
+  const getUserColor = () => {
+    if (username === null) return undefined;
+    return selectors.getUserPlayer(state, username).color;
+  };
 
   // TODO: add a state that allows players to flip their original orientation
   const getInitialUserOrientation = () => getUserColor() === 'black';

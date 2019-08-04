@@ -18,4 +18,8 @@ export const getNextMovePlayer = ({ players, moves }) => lookupPlayer(
   players, 'color', getNextMoveColor({ moves }),
 );
 
+export const getUserPlayer = ({ players }, username) => lookupPlayer(
+  players, 'name', username,
+);
+
 export default {};
