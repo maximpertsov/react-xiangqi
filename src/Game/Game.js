@@ -127,17 +127,14 @@ const Game = ({ gameSlug }) => {
     dispatch({ type: 'select_move', index: idx });
   };
 
-  const getUserColor = () => {
-    if (username === null) return undefined;
-    return selectors.getUserPlayer(state, username).color;
-  };
-
   // TODO: add a state that allows players to flip their original orientation
-  const getInitialUserOrientation = () => getUserColor() === 'black';
+  const getInitialUserOrientation = () => (
+    selectors.getUserColor(state, username) === 'black'
+  );
 
   const getLegalMoves = (idx, currentUserOnly = true) => {
     const nextMoveColor = selectors.getNextMoveColor(state);
-    const userColor = getUserColor();
+    const userColor = selectors.getUserColor(state, username);
     const { board } = selectors.getMove(state, idx);
     const selectUserMoves = currentUserOnly && gameSlug !== undefined;
 
@@ -191,7 +188,7 @@ const Game = ({ gameSlug }) => {
         <LoginForm setUsername={setUsername} />
         <GameInfo
           activePlayer={selectors.getNextMovePlayer(state)}
-          userColor={getUserColor()}
+          userColor={selectors.getUserColor(state, username)}
           players={state.players}
           activeLegalMoves={getLegalMoves(state.moves.length - 1, false)}
         />

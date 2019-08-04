@@ -14,12 +14,31 @@ export const getNextMoveColor = ({ moves }) => {
 const lookupPlayer = (players, key, value) => players
   .find((p) => p[key] === value);
 
+const lookupPlayerAttribute = (players, key, value, attribute, errorFn) => {
+  try {
+    return lookupPlayer(players, key, value)[attribute];
+  } catch (e) {
+    if (e instanceof TypeError) return errorFn();
+    throw e;
+  }
+};
+
 export const getNextMovePlayer = ({ players, moves }) => lookupPlayer(
   players, 'color', getNextMoveColor({ moves }),
 );
 
 export const getUserPlayer = ({ players }, username) => lookupPlayer(
   players, 'name', username,
+);
+
+export const getUserColor = ({ players }, username) => (
+  lookupPlayerAttribute(
+    players,
+    'name',
+    username,
+    'color',
+    () => undefined,
+  )
 );
 
 export default {};
