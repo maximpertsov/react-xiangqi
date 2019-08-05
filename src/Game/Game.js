@@ -13,9 +13,8 @@ import * as selectors from './selectors';
 
 const POLL_INTERVAL = 2500;
 
-const Game = ({ gameSlug }) => {
+const Game = ({ gameSlug, username, setUsername }) => {
   const [state, dispatch] = useGameReducer();
-  const [username, setUsername] = useState(null);
 
   // Fetch data utilities
 
@@ -49,7 +48,7 @@ const Game = ({ gameSlug }) => {
   const pollForMoveUpdate = useCallback(
     () => {
       if (gameSlug === undefined) return;
-      if (username === null) return;
+      if (username === undefined) return;
       if (username === selectors.getNextMovePlayer(state)) return;
 
       client.getMoveCount(gameSlug)
@@ -192,10 +191,13 @@ const Game = ({ gameSlug }) => {
 
 Game.propTypes = {
   gameSlug: PropTypes.string,
+  username: PropTypes.string,
+  setUsername: PropTypes.func.isRequired,
 };
 
 Game.defaultProps = {
   gameSlug: undefined,
+  username: undefined,
 };
 
 export default Game;
