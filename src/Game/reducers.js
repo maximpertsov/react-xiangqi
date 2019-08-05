@@ -23,15 +23,20 @@ const initialPlayers = [
 ];
 
 const getInitialState = () => ({
-  selectedMove: 0,
   moves: getInitialMovesState(),
+  moveCount: 0,
   players: initialPlayers,
+  selectedMoveIdx: 0,
 });
 
 // Actions
 
+const incrementMoveCount = (state) => (
+  { ...state, moveCount: state.moveCount + 1 }
+);
+
 const setSelectedMove = (state, index) => (
-  { ...state, selectedMove: index }
+  { ...state, selectedMoveIdx: index }
 );
 
 const selectLastMove = (state) => {
@@ -39,25 +44,33 @@ const selectLastMove = (state) => {
   return setSelectedMove(state, moves.length - 1);
 };
 
-const addMoveToBoard = (state, board, { fromSlot, toSlot }) => {
+const addMove = (state, board, { fromSlot, toSlot }) => {
   const newMove = {
     fromPos: board.getRankFile(fromSlot),
     toPos: board.getRankFile(toSlot),
     piece: board.getPiece(fromSlot),
     board: board.move(fromSlot, toSlot),
   };
-  return selectLastMove(update(state, { moves: { $push: [newMove] } }));
+  return selectLastMove(
+    incrementMoveCount(
+      update(state, { moves: { $push: [newMove] } }),
+    ),
+  );
 };
 
-const setMove = (state, { piece, origin: fromPos, destination: toPos }) => {
-  const { board } = state.moves[state.moves.length - 1];
+const setMove = (
+  state,
+  { piece, origin: fromPos, destination: toPos },
+  fromMoveIdx = undefined,
+) => {
+  const { board } = state.moves[fromMoveIdx || state.moves.length - 1];
   const newMove = {
     piece,
     fromPos,
     toPos,
     board: board.move(fromPos, toPos, RefType.RANK_FILE),
   };
-  return update(state, { moves: { $push: [newMove] } });
+  return incrementMoveCount(update(state, { moves: { $push: [newMove] } }));
 };
 
 
@@ -67,15 +80,17 @@ const setMoves = (state, moves) => selectLastMove(
     {
       ...state,
       moves: getInitialMovesState(),
+      moveCount: 0,
       setSelectedMove: 0,
     },
   ),
 );
 
+/* eslint-disable-next-line complexity */
 const reducer = (state, action) => {
   switch (action.type) {
     case 'add_move':
-      return addMoveToBoard(state, action.board, action.move);
+      return addMove(state, action.board, action.move);
     case 'select_move':
       return setSelectedMove(state, action.index);
     case 'set_moves':

@@ -2,29 +2,29 @@
 import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import useGameReducer from './reducers';
 import Board from './Board/Board';
-import { selectMove, getNextMoveColor, getNextMovePlayer } from './utils';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import LoginForm from '../LoginForm/LoginForm';
 import * as client from '../client';
+import * as selectors from './selectors';
 
 const POLL_INTERVAL = 2500;
 
-const Game = ({ gameSlug }) => {
+const Game = ({ gameSlug, username, setUsername }) => {
   const [state, dispatch] = useGameReducer();
-  const [clientUpdatedAt, setClientUpdatedAt] = useState(null);
-  const [username, setUsername] = useState(null);
 
   // Fetch data utilities
 
   const fetchMoves = useCallback(
-    // TODO: incorporate fen
-    // see: https://reactjs.org/docs/hooks-reference.html#lazy-initialization
-    // (fen) => {
     () => {
+      if (gameSlug === undefined) {
+        dispatch({ type: 'set_moves', moves: [] });
+        return;
+      }
+
       client.getMoves(gameSlug).then((response) => {
         dispatch({ type: 'set_moves', moves: response.data.moves });
       });
@@ -34,98 +34,67 @@ const Game = ({ gameSlug }) => {
 
   const fetchGame = useCallback(
     () => {
-      if (gameSlug === undefined) {
-        dispatch({ type: 'set_moves', moves: [] });
-        return;
-      }
+      if (gameSlug === undefined) return;
 
       client.getGame(gameSlug).then((response) => {
         dispatch({ type: 'set_players', players: response.data.players });
-        fetchMoves();
       });
     },
-    [dispatch, fetchMoves, gameSlug],
+    [dispatch, gameSlug],
   );
 
   // TODO: only poll for move update? Can't do that now because
   // we don't update active player based on moves
-  const pollForGameUpdate = useCallback(
+  const pollForMoveUpdate = useCallback(
     () => {
       if (gameSlug === undefined) return;
-      if (username === null) return;
-      if (clientUpdatedAt === null) return;
-      if (username === getNextMovePlayer(state.players, state.moves)) return;
+      if (username === undefined) return;
+      if (username === selectors.getNextMovePlayer(state)) return;
 
-      client.getLastUpdate(gameSlug)
+      client.getMoveCount(gameSlug)
         .then((response) => {
-          const { data: { updated_at: serverUpdatedAt } } = response;
-          if (serverUpdatedAt === null) return;
-          if (clientUpdatedAt >= serverUpdatedAt) return;
-
-          fetchGame();
-          setClientUpdatedAt(serverUpdatedAt);
+          const { data: { move_count: moveCount } } = response;
+          if (state.moveCount >= moveCount) return;
+          fetchMoves();
         });
     },
-    [
-      clientUpdatedAt,
-      fetchGame,
-      gameSlug,
-      state.moves,
-      state.players,
-      username,
-    ],
+    [fetchMoves, gameSlug, state, username],
   );
 
   // Lifecycle methods
 
   useEffect(
-    () => {
-      fetchGame();
-      // HACK to make sure we have at least one refresh!
-      setClientUpdatedAt(1);
-    },
+    () => { fetchGame(); },
     [fetchGame, gameSlug],
   );
 
   useEffect(
     () => {
-      const interval = setInterval(() => pollForGameUpdate(), POLL_INTERVAL);
+      const interval = setInterval(() => pollForMoveUpdate(), POLL_INTERVAL);
       return () => clearInterval(interval);
     },
-    [gameSlug, pollForGameUpdate],
+    [gameSlug, pollForMoveUpdate],
   );
 
   // Move updates
-
-  const getPostMovePayload = useCallback(
-    (board, fromSlot, toSlot) => {
-      const { name: player } = getNextMovePlayer(state.players, state.moves);
-      const fromPos = board.getRankFile(fromSlot);
-      const toPos = board.getRankFile(toSlot);
-      const piece = board.getPiece(fromSlot);
-      return {
-        player, piece, fromPos, toPos,
-      };
-    },
-    [state.moves, state.players],
-  );
 
   const postMoveToServer = useCallback(
     (board, fromSlot, toSlot) => {
       if (gameSlug === undefined) return;
 
-      const payload = getPostMovePayload(board, fromSlot, toSlot);
       client
-        .postMove(gameSlug, payload)
+        .postMove(gameSlug, {
+          username, board, fromSlot, toSlot,
+        })
         .then(({ status }) => {
-          if (status !== 201) fetchGame();
+          if (status !== 201) fetchMoves();
         })
         .catch(() => {
         // TODO: display useful error?
-          fetchGame();
+          fetchMoves();
         });
     },
-    [fetchGame, gameSlug, getPostMovePayload],
+    [fetchMoves, gameSlug, username],
   );
 
   const handleLegalMove = useCallback(
@@ -145,25 +114,21 @@ const Game = ({ gameSlug }) => {
     dispatch({ type: 'select_move', index: idx });
   };
 
-  const getUserPlayer = () => (
-    state.players.find((p) => p.name === username) || {}
+  // TODO: add a state that allows players to flip their original orientation
+  const getInitialUserOrientation = () => (
+    selectors.getUserColor(state, username) === 'black'
   );
 
-  const getUserColor = () => getUserPlayer().color;
-
-  // TODO: add a state that allows players to flip their original orientation
-  const getInitialUserOrientation = () => getUserColor() === 'black';
-
   const getLegalMoves = (idx, currentUserOnly = true) => {
-    const nextMoveColor = getNextMoveColor(state.moves);
-    const userColor = getUserColor();
-    const { board } = selectMove(state.moves, idx);
+    const nextMoveColor = selectors.getNextMoveColor(state);
+    const userColor = selectors.getUserColor(state, username);
+    const { board } = selectors.getMove(state, idx);
     const selectUserMoves = currentUserOnly && gameSlug !== undefined;
 
     return board
       .legalMoves()
       .map((toSlots, fromSlot) => {
-        if (idx !== -1 && idx !== state.moves.length - 1) return [];
+        if (idx !== state.moves.length - 1) return [];
         if (!board.isColor(nextMoveColor, fromSlot)) return [];
         if (selectUserMoves && !board.isColor(userColor, fromSlot)) return [];
         return toSlots;
@@ -186,10 +151,10 @@ const Game = ({ gameSlug }) => {
         `}
     >
       <Board
-        nextMoveColor={getNextMoveColor(state.moves)}
-        board={selectMove(state.moves, state.selectedMove).board}
+        nextMoveColor={selectors.getNextMoveColor(state)}
+        board={selectors.getMove(state, state.selectedMoveIdx).board}
         handleLegalMove={handleLegalMove}
-        legalMoves={getLegalMoves(state.selectedMove)}
+        legalMoves={getLegalMoves(state.selectedMoveIdx)}
         reversed={getInitialUserOrientation()}
       />
       <div
@@ -209,14 +174,14 @@ const Game = ({ gameSlug }) => {
       >
         <LoginForm setUsername={setUsername} />
         <GameInfo
-          activePlayer={getNextMovePlayer(state.players, state.moves)}
-          userColor={getUserColor()}
+          activePlayer={selectors.getNextMovePlayer(state)}
+          userColor={selectors.getUserColor(state, username)}
           players={state.players}
-          activeLegalMoves={getLegalMoves(-1, false)}
+          activeLegalMoves={getLegalMoves(state.moves.length - 1, false)}
         />
         <MoveHistory
           moves={state.moves}
-          selectedIdx={state.selectedMove}
+          selectedIdx={state.selectedMoveIdx}
           handleMoveSelect={handleMoveSelect}
         />
       </div>
@@ -226,10 +191,13 @@ const Game = ({ gameSlug }) => {
 
 Game.propTypes = {
   gameSlug: PropTypes.string,
+  username: PropTypes.string,
+  setUsername: PropTypes.func.isRequired,
 };
 
 Game.defaultProps = {
   gameSlug: undefined,
+  username: undefined,
 };
 
 export default Game;

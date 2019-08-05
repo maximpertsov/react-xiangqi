@@ -13,18 +13,24 @@ export const getMoves = (gameId) => axios.get(`game/${gameId}/moves`);
 export const getLastUpdate = (gameId) => axios
   .get(`game/${gameId}/last-update`);
 
-export async function postMove(gameId, {
-  player, piece, fromPos, toPos,
-}) {
-  const payload = {
-    player,
-    piece,
-    from: fromPos,
-    to: toPos,
-    type: 'move',
+export const getMoveCount = (gameId) => axios
+  .get(`game/${gameId}/move-count`);
+
+const getPostMovePayload = (username, board, fromSlot, toSlot) => {
+  const fromPos = board.getRankFile(fromSlot);
+  const toPos = board.getRankFile(toSlot);
+  const piece = board.getPiece(fromSlot);
+  return {
+    player: username, piece, from: fromPos, to: toPos, type: 'move',
   };
+};
+
+export const postMove = (gameId, {
+  username, board, fromSlot, toSlot,
+}) => {
+  const payload = getPostMovePayload(username, board, fromSlot, toSlot);
   return axios.post(`game/${gameId}/moves`, payload);
-}
+};
 
 export async function authenticate({ username, password }) {
   const payload = { username, password };
