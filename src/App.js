@@ -21,10 +21,10 @@ const App = () => {
       `}
       >
         <LoginForm setUsername={setUsername} />
-      <Game
-        gameSlug={gameSlug}
-        username={username}
-      />
+        <Game
+          gameSlug={gameSlug}
+          username={username}
+        />
       </div>
     </div>
   );
