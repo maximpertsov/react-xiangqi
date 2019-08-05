@@ -79,26 +79,14 @@ const Game = ({ gameSlug }) => {
 
   // Move updates
 
-  const getPostMovePayload = useCallback(
-    (board, fromSlot, toSlot) => {
-      const { name: player } = selectors.getNextMovePlayer(state);
-      const fromPos = board.getRankFile(fromSlot);
-      const toPos = board.getRankFile(toSlot);
-      const piece = board.getPiece(fromSlot);
-      return {
-        player, piece, fromPos, toPos,
-      };
-    },
-    [state],
-  );
-
   const postMoveToServer = useCallback(
     (board, fromSlot, toSlot) => {
       if (gameSlug === undefined) return;
 
-      const payload = getPostMovePayload(board, fromSlot, toSlot);
       client
-        .postMove(gameSlug, payload)
+        .postMove(gameSlug, {
+          username, board, fromSlot, toSlot,
+        })
         .then(({ status }) => {
           if (status !== 201) fetchMoves();
         })
@@ -107,7 +95,7 @@ const Game = ({ gameSlug }) => {
           fetchMoves();
         });
     },
-    [fetchMoves, gameSlug, getPostMovePayload],
+    [fetchMoves, gameSlug, username],
   );
 
   const handleLegalMove = useCallback(
