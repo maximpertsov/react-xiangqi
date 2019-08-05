@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import useGameReducer from './reducers';
 import Board from './Board/Board';
 import MoveHistory from './Move/MoveHistory';
