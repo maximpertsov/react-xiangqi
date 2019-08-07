@@ -46,7 +46,6 @@ const App = () => {
         <Game
           gameSlug={gameSlug}
           username={username}
-          setUsername={setUsername}
         />
       );
   }
