@@ -1,6 +1,7 @@
+import 'babel-polyfill';
 import React, { useCallback, useEffect, useState } from 'react';
 import Game from './Game/Game';
-import 'babel-polyfill';
+import GameList from './Game/GameList';
 import LoginForm from './LoginForm/LoginForm';
 import * as client from './client';
 
@@ -35,7 +36,7 @@ const App = () => {
         <div>
           <LoginForm setUsername={setUsername} />
           <br />
-          {games.map((game) => <div key={game.slug}>{game.slug}</div>)}
+          <GameList games={games} />
         </div>
       );
     case SOLO:
