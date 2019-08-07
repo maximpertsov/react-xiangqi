@@ -60,7 +60,7 @@ const LoginForm = ({ setUsername }) => {
   const isLoggedIn = () => sub !== undefined;
 
   const renderLoggedIn = () => {
-    const loggedInMessage = `${sub}`;
+    const loggedInMessage = `Welcome ${sub}`;
     return (<div>{loggedInMessage}</div>);
   };
 

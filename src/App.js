@@ -4,7 +4,7 @@ import 'babel-polyfill';
 import LoginForm from './LoginForm/LoginForm';
 import * as client from './client';
 
-// const GAME_ID = 'ABC123';
+const SOLO = 'solo';
 
 const App = () => {
   const [username, setUsername] = useState(undefined);
@@ -29,24 +29,26 @@ const App = () => {
   const queryParams = new URLSearchParams(window.location.search);
   const gameSlug = queryParams.get('game') || undefined;
 
-  if (gameSlug === undefined) {
-    return (
-      <div>
-        <LoginForm setUsername={setUsername} />
-        {games.map((game) => <div>{game.slug}</div>)}
-      </div>
-    );
+  switch (gameSlug) {
+    case undefined:
+      return (
+        <div>
+          <LoginForm setUsername={setUsername} />
+          <br />
+          {games.map((game) => <div key={game.slug}>{game.slug}</div>)}
+        </div>
+      );
+    case SOLO:
+      return <Game />;
+    default:
+      return (
+        <Game
+          gameSlug={gameSlug}
+          username={username}
+          setUsername={setUsername}
+        />
+      );
   }
-
-  return (
-    <div>
-      <Game
-        gameSlug={gameSlug}
-        username={username}
-        setUsername={setUsername}
-      />
-    </div>
-  );
 };
 
 export default App;

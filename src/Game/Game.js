@@ -12,7 +12,7 @@ import * as selectors from './selectors';
 
 const POLL_INTERVAL = 2500;
 
-const Game = ({ gameSlug, username, setUsername }) => {
+const Game = ({ gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
 
   // Fetch data utilities
@@ -190,7 +190,6 @@ const Game = ({ gameSlug, username, setUsername }) => {
 Game.propTypes = {
   gameSlug: PropTypes.string,
   username: PropTypes.string,
-  setUsername: PropTypes.func.isRequired,
 };
 
 Game.defaultProps = {
