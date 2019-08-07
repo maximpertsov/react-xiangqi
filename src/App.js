@@ -9,6 +9,7 @@ const SOLO = 'solo';
 
 const App = () => {
   const [username, setUsername] = useState(undefined);
+  const [gameSlug, setGameSlug] = useState(undefined);
   const [games, setGames] = useState([]);
 
   const fetchGames = useCallback(
@@ -27,16 +28,13 @@ const App = () => {
     [fetchGames, username],
   );
 
-  const queryParams = new URLSearchParams(window.location.search);
-  const gameSlug = queryParams.get('game') || undefined;
-
   switch (gameSlug) {
     case undefined:
       return (
         <div>
           <LoginForm setUsername={setUsername} />
           <br />
-          <GameList games={games} />
+          <GameList setGameSlug={setGameSlug} games={games} />
         </div>
       );
     case SOLO:
