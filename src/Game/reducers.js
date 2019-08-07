@@ -23,6 +23,7 @@ const initialPlayers = [
 ];
 
 const getInitialState = () => ({
+  loading: true,
   moves: getInitialMovesState(),
   moveCount: 0,
   players: initialPlayers,
@@ -82,6 +83,7 @@ const setMoves = (state, moves) => selectLastMove(
       moves: getInitialMovesState(),
       moveCount: 0,
       setSelectedMove: 0,
+      loading: false,
     },
   ),
 );

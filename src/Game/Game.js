@@ -134,6 +134,8 @@ const Game = ({ gameSlug, username }) => {
       });
   };
 
+  if (gameSlug !== undefined && state.loading) return <div>Loading...</div>;
+
   return (
     <div
       className="Game"
