@@ -1,8 +1,6 @@
-/** @jsx jsx */
-
 import 'babel-polyfill';
-import { jsx, css } from '@emotion/core';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { MenuButton } from './commonStyles';
 import Game from './Game/Game';
 import GameList from './Game/GameList';
 import LoginForm from './LoginForm/LoginForm';
@@ -39,16 +37,9 @@ const App = () => {
           <br />
           <GameList setGameSlug={setGameSlug} games={games} />
           <br />
-          <button
-            css={css`
-              &:hover {
-                color:hotpink;
-              }
-            `}
-            onClick={() => { setGameSlug(LOCAL); }}
-          >
+          <MenuButton onClick={() => { setGameSlug(LOCAL); }}>
             Local Play
-          </button>
+          </MenuButton>
         </div>
       );
     case LOCAL:
