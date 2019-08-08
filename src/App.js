@@ -1,11 +1,14 @@
+/** @jsx jsx */
+
 import 'babel-polyfill';
-import React, { useCallback, useEffect, useState } from 'react';
+import { jsx, css } from '@emotion/core';
+import { useCallback, useEffect, useState } from 'react';
 import Game from './Game/Game';
 import GameList from './Game/GameList';
 import LoginForm from './LoginForm/LoginForm';
 import * as client from './client';
 
-const SOLO = 'solo';
+const LOCAL = 'local';
 
 const App = () => {
   const [username, setUsername] = useState(undefined);
@@ -35,9 +38,20 @@ const App = () => {
           <LoginForm setUsername={setUsername} />
           <br />
           <GameList setGameSlug={setGameSlug} games={games} />
+          <br />
+          <button
+            css={css`
+              &:hover {
+                color:hotpink;
+              }
+            `}
+            onClick={() => { setGameSlug(LOCAL); }}
+          >
+            Local Play
+          </button>
         </div>
       );
-    case SOLO:
+    case LOCAL:
       return <Game />;
     default:
       return (
