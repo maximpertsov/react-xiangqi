@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { MenuButton } from '../commonStyles';
 
 const GameListItem = ({ slug, setGameSlug }) => {
   const setThisGameSlug = useCallback(
@@ -8,13 +9,12 @@ const GameListItem = ({ slug, setGameSlug }) => {
   );
 
   return (
-    <div
-      role="button"
+    <MenuButton
       onClick={setThisGameSlug}
       className="GameListItem"
     >
       {slug}
-    </div>
+    </MenuButton>
   );
 };
 
