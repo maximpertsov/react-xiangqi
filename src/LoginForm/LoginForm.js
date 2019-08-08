@@ -4,13 +4,14 @@ import { jsx, css } from '@emotion/core';
 import { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
-import { authenticate } from '../client';
+import { ping, authenticate } from '../client';
 
 const initialForm = { username: '', password: '', error: '' };
 
 const LoginForm = ({ setUsername }) => {
   const [sub, setSub] = useState(undefined);
   const [form, setForm] = useState(initialForm);
+  const [loading, setLoading] = useState(true);
 
   const handleAuthenticationSuccess = useCallback(
     (response) => {
@@ -20,6 +21,16 @@ const LoginForm = ({ setUsername }) => {
       setUsername(_sub);
     },
     [setUsername],
+  );
+
+  useEffect(
+    () => {
+      ping()
+        .then((response) => {
+          if (response.status === 200) setLoading(false);
+        });
+    },
+    [],
   );
 
   useEffect(
@@ -99,6 +110,8 @@ const LoginForm = ({ setUsername }) => {
       </div>
     );
   };
+
+  if (loading) return <div>Loading</div>;
 
   return isLoggedIn() ? renderLoggedIn() : renderLoggedOut();
 };
