@@ -164,7 +164,7 @@ const Game = ({ gameSlug, username }) => {
             flex-direction: column;
             padding: 0px 50px;
             height: 100%;
-            max-width: 250px;
+            width: 200px;
             @media (max-width: 720px) {
               display: none;
             }
