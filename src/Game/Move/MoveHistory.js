@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Move from './Move';
@@ -15,53 +15,43 @@ const Wrapper = styled.div`
   overflow: auto;
 `;
 
-class MoveHistory extends Component {
-  constructor(props) {
-    super(props);
-    this.setBottomElement = this.setBottomElement.bind(this);
-  }
+const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
+  const [bottomElement, setBottomElement] = useState(undefined);
 
-  componentDidMount() {
-    this.scrollToBottom();
-  }
+  useLayoutEffect(
+    () => {
+      const scrollToBottom = () => {
+        try {
+          bottomElement.scrollIntoView();
+        } catch (e) {
+          if (!(e instanceof TypeError)) { throw e; }
+        }
+      };
+      scrollToBottom();
+    },
+    [bottomElement, moves],
+  );
 
-  scrollToBottom() {
-    try {
-      this.el.scrollIntoView();
-    } catch (e) {
-      if (e instanceof TypeError) {
-        // pass
-      } else { throw e; }
-    }
-  }
+  const moveComponents = moves
+    .map((m, i) => (
+      <Move
+        key={i}
+        idx={i}
+        handleMoveSelect={handleMoveSelect}
+        fromPos={m.fromPos}
+        toPos={m.toPos}
+        piece={m.piece}
+        selected={selectedIdx === i}
+      />
+    ));
 
-  setBottomElement(el) {
-    this.el = el;
-  }
-
-  render() {
-    const { moves, selectedIdx, handleMoveSelect } = this.props;
-    const moveComponents = moves
-      .map((m, i) => (
-        <Move
-          key={i}
-          idx={i}
-          handleMoveSelect={handleMoveSelect}
-          fromPos={m.fromPos}
-          toPos={m.toPos}
-          piece={m.piece}
-          selected={selectedIdx === i}
-        />
-      ));
-
-    return (
-      <Wrapper>
-        {moveComponents}
-        <div ref={this.setBottomElement} />
-      </Wrapper>
-    );
-  }
-}
+  return (
+    <Wrapper>
+      {moveComponents}
+      <div ref={setBottomElement} />
+    </Wrapper>
+  );
+};
 
 MoveHistory.propTypes = {
   // TODO: add move proptype
