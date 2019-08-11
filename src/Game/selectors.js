@@ -39,4 +39,7 @@ export const getUserColor = ({ players }, username) => {
   }
 };
 
+export const getOtherPlayer = ({ players }, username) => players
+  .find((p) => p.name !== username);
+
 export default {};

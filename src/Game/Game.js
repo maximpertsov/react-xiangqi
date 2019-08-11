@@ -3,6 +3,7 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
+import Player from './Player/Player';
 import useGameReducer from './reducers';
 import Board from './Board/Board';
 import MoveHistory from './Move/MoveHistory';
@@ -118,6 +119,17 @@ const Game = ({ gameSlug, username }) => {
     selectors.getUserColor(state, username) === 'black'
   );
 
+  // TODO: move to layout class that displays board and players
+  const getCurrentPlayer = () => {
+    if (gameSlug === undefined) selectors.getRedPlayer(state);
+    return selectors.getUserPlayer(state, username);
+  };
+
+  const getOtherPlayer = () => {
+    if (gameSlug === undefined) selectors.getBlackPlayer(state);
+    return selectors.getOtherPlayer(state, username);
+  };
+
   const getLegalMoves = (idx, currentUserOnly = true) => {
     const nextMoveColor = selectors.getNextMoveColor(state);
     const userColor = selectors.getUserColor(state, username);
@@ -148,16 +160,26 @@ const Game = ({ gameSlug, username }) => {
           @media (min-width: 720px) {
             flex-direction: row;
           }
-          height: 600px;
+          height: 650px;
         `}
     >
-      <Board
-        nextMoveColor={selectors.getNextMoveColor(state)}
-        board={selectors.getMove(state, state.selectedMoveIdx).board}
-        handleLegalMove={handleLegalMove}
-        legalMoves={getLegalMoves(state.selectedMoveIdx)}
-        reversed={getInitialUserOrientation()}
-      />
+      <div
+        css={css`
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+        `}
+      >
+        <Player {...getOtherPlayer()} />
+        <Board
+          nextMoveColor={selectors.getNextMoveColor(state)}
+          board={selectors.getMove(state, state.selectedMoveIdx).board}
+          handleLegalMove={handleLegalMove}
+          legalMoves={getLegalMoves(state.selectedMoveIdx)}
+          reversed={getInitialUserOrientation()}
+        />
+        <Player {...getCurrentPlayer()} />
+      </div>
       <div
         css={css`
             justify-content: space-between;

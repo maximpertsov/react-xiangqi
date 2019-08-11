@@ -3,8 +3,6 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import { playerPropType } from '../customPropTypes';
-import Player from './Player/Player';
-import * as selectors from './selectors';
 
 const GameInfo = ({
   activePlayer, activeLegalMoves, userColor, players,
@@ -43,8 +41,6 @@ const GameInfo = ({
         outline: thin solid #999;
       `}
     >
-      <Player {...selectors.getRedPlayer({ players })} />
-      <Player {...selectors.getBlackPlayer({ players })} />
       <p>{ getMessage() }</p>
     </div>
   );
