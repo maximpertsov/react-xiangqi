@@ -4,6 +4,7 @@ import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
 import { playerPropType } from '../customPropTypes';
 import Player from './Player/Player';
+import * as selectors from './selectors';
 
 const GameInfo = ({
   activePlayer, activeLegalMoves, userColor, players,
@@ -32,10 +33,6 @@ const GameInfo = ({
     return userIsActive() ? 'Your turn' : 'Waiting for opponent';
   };
 
-  const getRedPlayer = () => players.find((p) => p.color === 'red');
-
-  const getBlackPlayer = () => players.find((p) => p.color === 'black');
-
   return (
     <div
       className="GameInfo"
@@ -46,8 +43,8 @@ const GameInfo = ({
         outline: thin solid #999;
       `}
     >
-      <Player {...getRedPlayer()} />
-      <Player {...getBlackPlayer()} />
+      <Player {...selectors.getRedPlayer({ players })} />
+      <Player {...selectors.getBlackPlayer({ players })} />
       <p>{ getMessage() }</p>
     </div>
   );
