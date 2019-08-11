@@ -1,4 +1,6 @@
-import React from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+
 import PropTypes from 'prop-types';
 import GameListItem from './GameListItem';
 
@@ -8,7 +10,23 @@ const GameList = ({ games, setGameSlug }) => {
   ),
   );
 
-  return <div className="GameList">{gameList}</div>;
+  return (
+    <div
+      className="GameList"
+      css={css`
+        border:1px #CCC solid;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        padding: 5px;
+        width: 100%;
+      `}
+    >
+      Games in play
+      <div>
+        {gameList}
+      </div>
+    </div>
+  );
 };
 
 GameList.propTypes = {

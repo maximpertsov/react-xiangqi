@@ -1,5 +1,8 @@
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+
 import 'babel-polyfill';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { MenuButton } from './commonStyles';
 import Game from './Game/Game';
 import GameList from './Game/GameList';
@@ -32,14 +35,30 @@ const App = () => {
   switch (gameSlug) {
     case undefined:
       return (
-        <div>
+        <div
+          css={css`
+            width:200px;
+          `}
+        >
           <LoginForm setUsername={setUsername} />
-          <br />
           <GameList setGameSlug={setGameSlug} games={games} />
-          <br />
-          <MenuButton onClick={() => { setGameSlug(LOCAL); }}>
-            Local Play
-          </MenuButton>
+
+          <div
+            css={css`
+              border:1px #CCC solid;
+              margin-top: 15px;
+              margin-bottom: 15px;
+              padding: 5px;
+              width: 100%;
+            `}
+          >
+            Other modes
+            <div>
+              <MenuButton onClick={() => { setGameSlug(LOCAL); }}>
+                Local Play
+              </MenuButton>
+            </div>
+          </div>
         </div>
       );
     case LOCAL:
