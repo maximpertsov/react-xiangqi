@@ -53,7 +53,7 @@ const Game = ({ gameSlug, username }) => {
       client.getMoveCount(gameSlug)
         .then((response) => {
           const { data: { move_count: moveCount } } = response;
-          if (state.moveCount >= moveCount) return;
+          if (!state.loading && state.moveCount >= moveCount) return;
           fetchMoves();
         });
     },
