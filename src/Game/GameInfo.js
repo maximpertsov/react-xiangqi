@@ -35,13 +35,12 @@ const GameInfo = ({
     <div
       className="GameInfo"
       css={css`
-        height: 20%;
-        margin-top: 15px;
-        padding: 20px;
-        outline: thin solid #999;
+        color: #999;
       `}
     >
-      <p>{ getMessage() }</p>
+      <p>
+        ({ getMessage() })
+      </p>
     </div>
   );
 };
