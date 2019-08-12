@@ -6,11 +6,14 @@ import { boardPropType } from '../../logic';
 
 // TODO: set max-height by percentage?
 // TODO: hide scroll bar?
+// TODO: move colors to constants
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 50% auto;
+  grid-template-columns: 10% 45% auto;
   grid-template-rows: repeat(auto-fill, 50px);
-  outline: thin solid #999;
+  outline: thin solid #CCC;
+  align-items: center;
+  color: #999;
   max-height: 55%;
   overflow: auto;
 `;
@@ -33,17 +36,24 @@ const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
   );
 
   const moveComponents = moves
-    .map((m, i) => (
-      <Move
-        key={i}
-        idx={i}
-        handleMoveSelect={handleMoveSelect}
-        fromPos={m.fromPos}
-        toPos={m.toPos}
-        piece={m.piece}
-        selected={selectedIdx === i}
-      />
-    ));
+    .reduce((acc, m, i) => (
+      acc.concat(
+        // HACK: counting starts at second element
+        i % 2 === 1 ? [`${Math.ceil(i / 2)}.`] : [],
+        [
+          <Move
+            key={i}
+            idx={i}
+            handleMoveSelect={handleMoveSelect}
+            fromPos={m.fromPos}
+            toPos={m.toPos}
+            piece={m.piece}
+            selected={selectedIdx === i}
+          />,
+        ],
+      )),
+    [],
+    );
 
   return (
     <Wrapper>
