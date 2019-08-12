@@ -154,13 +154,8 @@ const Game = ({ gameSlug, username }) => {
       css={css`
           display: flex;
           align-items: center;
-          @media (max-width: 720px) {
-            flex-direction: column;
-          }
-          @media (min-width: 720px) {
-            flex-direction: column;
-          }
-          height: 1000px;
+          flex-direction: column;
+          height: 100%;
         `}
     >
       <div
