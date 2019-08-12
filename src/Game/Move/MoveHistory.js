@@ -9,12 +9,13 @@ import { boardPropType } from '../../logic';
 // TODO: move colors to constants
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 10% 45% auto;
-  grid-template-rows: repeat(auto-fill, 50px);
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(auto-fill, 1fr);
   outline: thin solid #CCC;
-  align-items: center;
+  align-items:center;
   color: #999;
-  max-height: 55%;
+  width: 100%;
+  min-height: 20px;
   overflow: auto;
 `;
 

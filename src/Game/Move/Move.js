@@ -50,7 +50,7 @@ const Move = ({
       selected={selected}
       piece={piece}
     >
-      <p>{ description }</p>
+      { description }
     </Wrapper>
   );
 };
