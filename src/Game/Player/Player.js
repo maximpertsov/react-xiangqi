@@ -6,7 +6,9 @@ import PropTypes from 'prop-types';
 const Player = ({ name, color }) => (
   <div
     className="Player"
-    css={{ color }}
+    css={{
+      color,
+    }}
   >
     {`${color === 'red' ? '帥' : '將'} ${name || ''}`}
   </div>

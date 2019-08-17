@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Move from './Move';
@@ -6,62 +6,65 @@ import { boardPropType } from '../../logic';
 
 // TODO: set max-height by percentage?
 // TODO: hide scroll bar?
+// TODO: move colors to constants
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 50% auto;
-  grid-template-rows: repeat(auto-fill, 50px);
-  outline: thin solid #999;
-  max-height: 55%;
+  grid-template-columns: 5px 1fr 1fr 5px 1fr 1fr 5px 1fr 1fr;
+  grid-template-rows: repeat(auto-fill, 1fr);
+  outline: thin solid #CCC;
+  align-items:center;
+  color: #999;
+  width: 100%;
+  min-height: 20px;
   overflow: auto;
+  text-align: center;
+  font-size: x-small;
 `;
 
-class MoveHistory extends Component {
-  constructor(props) {
-    super(props);
-    this.setBottomElement = this.setBottomElement.bind(this);
-  }
+const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
+  const [bottomElement, setBottomElement] = useState(undefined);
 
-  componentDidMount() {
-    this.scrollToBottom();
-  }
+  useLayoutEffect(
+    () => {
+      const scrollToBottom = () => {
+        try {
+          bottomElement.scrollIntoView();
+        } catch (e) {
+          if (!(e instanceof TypeError)) { throw e; }
+        }
+      };
+      scrollToBottom();
+    },
+    [bottomElement, moves],
+  );
 
-  scrollToBottom() {
-    try {
-      this.el.scrollIntoView();
-    } catch (e) {
-      if (e instanceof TypeError) {
-        // pass
-      } else { throw e; }
-    }
-  }
-
-  setBottomElement(el) {
-    this.el = el;
-  }
-
-  render() {
-    const { moves, selectedIdx, handleMoveSelect } = this.props;
-    const moveComponents = moves
-      .map((m, i) => (
-        <Move
-          key={i}
-          idx={i}
-          handleMoveSelect={handleMoveSelect}
-          fromPos={m.fromPos}
-          toPos={m.toPos}
-          piece={m.piece}
-          selected={selectedIdx === i}
-        />
-      ));
-
-    return (
-      <Wrapper>
-        {moveComponents}
-        <div ref={this.setBottomElement} />
-      </Wrapper>
+  const moveComponents = moves
+    .reduce((acc, m, i) => (
+      acc.concat(
+        // HACK: counting starts at second element
+        i % 2 === 1 ? [`${Math.ceil(i / 2)}.`] : [],
+        [
+          <Move
+            key={i}
+            idx={i}
+            handleMoveSelect={handleMoveSelect}
+            fromPos={m.fromPos}
+            toPos={m.toPos}
+            piece={m.piece}
+            selected={selectedIdx === i}
+          />,
+        ],
+      )),
+    [],
     );
-  }
-}
+
+  return (
+    <Wrapper>
+      {moveComponents}
+      <div ref={setBottomElement} />
+    </Wrapper>
+  );
+};
 
 MoveHistory.propTypes = {
   // TODO: add move proptype

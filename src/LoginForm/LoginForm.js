@@ -1,13 +1,17 @@
-import React, { useCallback, useState, useEffect } from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+
+import { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
-import { authenticate } from '../client';
+import { ping, authenticate } from '../client';
 
 const initialForm = { username: '', password: '', error: '' };
 
 const LoginForm = ({ setUsername }) => {
-  const [sub, setSub] = useState(null);
+  const [sub, setSub] = useState(undefined);
   const [form, setForm] = useState(initialForm);
+  const [loading, setLoading] = useState(true);
 
   const handleAuthenticationSuccess = useCallback(
     (response) => {
@@ -17,6 +21,16 @@ const LoginForm = ({ setUsername }) => {
       setUsername(_sub);
     },
     [setUsername],
+  );
+
+  useEffect(
+    () => {
+      ping()
+        .then((response) => {
+          if (response.status === 200) setLoading(false);
+        });
+    },
+    [],
   );
 
   useEffect(
@@ -32,7 +46,6 @@ const LoginForm = ({ setUsername }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
-
 
   const clearState = () => {
     setForm((prevForm) => ({ ...prevForm, initialForm }));
@@ -55,7 +68,7 @@ const LoginForm = ({ setUsername }) => {
       });
   };
 
-  const isLoggedIn = () => sub !== null;
+  const isLoggedIn = () => sub !== undefined;
 
   const renderLoggedIn = () => {
     const loggedInMessage = `Welcome ${sub}`;
@@ -65,7 +78,15 @@ const LoginForm = ({ setUsername }) => {
   const renderLoggedOut = () => {
     const { username, password, error } = form;
     return (
-      <div className="LoginForm">
+      <div
+        className="LoginForm"
+        css={css`
+          height:80px;
+          width:190px;
+          border:1px #CCC solid;
+          padding:10px;
+        `}
+      >
         <div className="form">
           <form className="login-form">
             <input
@@ -89,6 +110,8 @@ const LoginForm = ({ setUsername }) => {
       </div>
     );
   };
+
+  if (loading) return <div>Loading</div>;
 
   return isLoggedIn() ? renderLoggedIn() : renderLoggedOut();
 };

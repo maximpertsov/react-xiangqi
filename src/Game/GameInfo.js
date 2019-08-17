@@ -3,10 +3,9 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import { playerPropType } from '../customPropTypes';
-import Player from './Player/Player';
 
 const GameInfo = ({
-  activePlayer, activeLegalMoves, userColor, players,
+  activePlayer, activeLegalMoves, userColor,
 }) => {
   const countLegalMovesByActivePlayer = () => (
     activeLegalMoves.reduce((count, toSlots) => count + toSlots.length, 0)
@@ -32,22 +31,13 @@ const GameInfo = ({
     return userIsActive() ? 'Your turn' : 'Waiting for opponent';
   };
 
-  const getRedPlayer = () => players.find((p) => p.color === 'red');
-
-  const getBlackPlayer = () => players.find((p) => p.color === 'black');
-
   return (
     <div
       className="GameInfo"
       css={css`
-        height: 20%;
-        margin-top: 15px;
-        padding: 20px;
-        outline: thin solid #999;
+        color: #999;
       `}
     >
-      <Player {...getRedPlayer()} />
-      <Player {...getBlackPlayer()} />
       <p>{ getMessage() }</p>
     </div>
   );
@@ -58,7 +48,6 @@ GameInfo.propTypes = {
   activeLegalMoves: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.number),
   ).isRequired,
-  players: PropTypes.arrayOf(playerPropType).isRequired,
   userColor: PropTypes.string,
 };
 

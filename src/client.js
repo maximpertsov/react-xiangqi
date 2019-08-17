@@ -6,6 +6,10 @@ axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.xsrfCookieName = 'csrftoken';
 
+export const ping = () => axios.get('ping');
+
+export const getGameList = (username) => axios.get(`player/${username}/games`);
+
 export const getGame = (gameId) => axios.get(`game/${gameId}`);
 
 export const getMoves = (gameId) => axios.get(`game/${gameId}/moves`);

@@ -3,17 +3,17 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
+import Player from './Player/Player';
 import useGameReducer from './reducers';
 import Board from './Board/Board';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
-import LoginForm from '../LoginForm/LoginForm';
 import * as client from '../client';
 import * as selectors from './selectors';
 
 const POLL_INTERVAL = 2500;
 
-const Game = ({ gameSlug, username, setUsername }) => {
+const Game = ({ gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
 
   // Fetch data utilities
@@ -54,7 +54,7 @@ const Game = ({ gameSlug, username, setUsername }) => {
       client.getMoveCount(gameSlug)
         .then((response) => {
           const { data: { move_count: moveCount } } = response;
-          if (state.moveCount >= moveCount) return;
+          if (!state.loading && state.moveCount >= moveCount) return;
           fetchMoves();
         });
     },
@@ -119,6 +119,17 @@ const Game = ({ gameSlug, username, setUsername }) => {
     selectors.getUserColor(state, username) === 'black'
   );
 
+  // TODO: move to layout class that displays board and players
+  const getCurrentPlayer = () => {
+    if (gameSlug === undefined) selectors.getRedPlayer(state);
+    return selectors.getUserPlayer(state, username);
+  };
+
+  const getOtherPlayer = () => {
+    if (gameSlug === undefined) selectors.getBlackPlayer(state);
+    return selectors.getOtherPlayer(state, username);
+  };
+
   const getLegalMoves = (idx, currentUserOnly = true) => {
     const nextMoveColor = selectors.getNextMoveColor(state);
     const userColor = selectors.getUserColor(state, username);
@@ -135,50 +146,58 @@ const Game = ({ gameSlug, username, setUsername }) => {
       });
   };
 
+  if (gameSlug !== undefined && state.loading) return <div>Loading...</div>;
+
   return (
     <div
       className="Game"
       css={css`
           display: flex;
           align-items: center;
-          @media (max-width: 720px) {
-            flex-direction: column;
-          }
-          @media (min-width: 720px) {
-            flex-direction: row;
-          }
-          height: 600px;
+          flex-direction: column;
+          height: 100%;
         `}
     >
-      <Board
-        nextMoveColor={selectors.getNextMoveColor(state)}
-        board={selectors.getMove(state, state.selectedMoveIdx).board}
-        handleLegalMove={handleLegalMove}
-        legalMoves={getLegalMoves(state.selectedMoveIdx)}
-        reversed={getInitialUserOrientation()}
-      />
       <div
         css={css`
-            justify-content: space-between;
-            flex-direction: column;
-            padding: 0px 50px;
-            height: 100%;
-            max-width: 250px;
-            @media (max-width: 720px) {
-              display: none;
-            }
-            @media (min-width: 720px) {
-              display: flex;
-            }
-          `}
+          display: flex;
+          justify-content: space-around;
+          flex-direction: column;
+        `}
       >
-        <LoginForm setUsername={setUsername} />
-        <GameInfo
-          activePlayer={selectors.getNextMovePlayer(state)}
-          userColor={selectors.getUserColor(state, username)}
-          players={state.players}
-          activeLegalMoves={getLegalMoves(state.moves.length - 1, false)}
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: column;
+          `}
+        >
+          <Player {...getOtherPlayer()} />
+        </div>
+        <Board
+          nextMoveColor={selectors.getNextMoveColor(state)}
+          board={selectors.getMove(state, state.selectedMoveIdx).board}
+          handleLegalMove={handleLegalMove}
+          legalMoves={getLegalMoves(state.selectedMoveIdx)}
+          reversed={getInitialUserOrientation()}
         />
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: row;
+          `}
+        >
+          <Player {...getCurrentPlayer()} />
+          <GameInfo
+            activePlayer={selectors.getNextMovePlayer(state)}
+            userColor={selectors.getUserColor(state, username)}
+            players={state.players}
+            activeLegalMoves={getLegalMoves(state.moves.length - 1, false)}
+          />
+        </div>
         <MoveHistory
           moves={state.moves}
           selectedIdx={state.selectedMoveIdx}
@@ -192,7 +211,6 @@ const Game = ({ gameSlug, username, setUsername }) => {
 Game.propTypes = {
   gameSlug: PropTypes.string,
   username: PropTypes.string,
-  setUsername: PropTypes.func.isRequired,
 };
 
 Game.defaultProps = {

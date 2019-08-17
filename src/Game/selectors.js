@@ -22,6 +22,14 @@ export const getUserPlayer = ({ players }, username) => lookupPlayer(
   players, 'name', username,
 );
 
+export const getRedPlayer = ({ players }) => lookupPlayer(
+  players, 'color', 'red',
+);
+
+export const getBlackPlayer = ({ players }) => lookupPlayer(
+  players, 'color', 'black',
+);
+
 export const getUserColor = ({ players }, username) => {
   try {
     return getUserPlayer({ players }, username).color;
@@ -30,5 +38,8 @@ export const getUserColor = ({ players }, username) => {
     throw e;
   }
 };
+
+export const getOtherPlayer = ({ players }, username) => players
+  .find((p) => p.name !== username);
 
 export default {};
