@@ -17,6 +17,7 @@ const Wrapper = styled.div`
   width: 100%;
   min-height: 20px;
   overflow: auto;
+  text-align: center;
 `;
 
 const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { playerPropType } from '../customPropTypes';
 
 const GameInfo = ({
-  activePlayer, activeLegalMoves, userColor, players,
+  activePlayer, activeLegalMoves, userColor,
 }) => {
   const countLegalMovesByActivePlayer = () => (
     activeLegalMoves.reduce((count, toSlots) => count + toSlots.length, 0)
@@ -38,9 +38,7 @@ const GameInfo = ({
         color: #999;
       `}
     >
-      <p>
-        ({ getMessage() })
-      </p>
+      <p>{ getMessage() }</p>
     </div>
   );
 };
@@ -50,7 +48,6 @@ GameInfo.propTypes = {
   activeLegalMoves: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.number),
   ).isRequired,
-  players: PropTypes.arrayOf(playerPropType).isRequired,
   userColor: PropTypes.string,
 };
 
