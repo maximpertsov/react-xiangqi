@@ -9,7 +9,7 @@ import { boardPropType } from '../../logic';
 // TODO: move colors to constants
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: 5px 1fr 1fr 5px 1fr 1fr 5px 1fr 1fr;
   grid-template-rows: repeat(auto-fill, 1fr);
   outline: thin solid #CCC;
   align-items:center;
@@ -18,6 +18,7 @@ const Wrapper = styled.div`
   min-height: 20px;
   overflow: auto;
   text-align: center;
+  font-size: x-small;
 `;
 
 const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
