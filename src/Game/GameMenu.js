@@ -2,26 +2,38 @@
 import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
 
-const GameMenu = ({ action }) => (
+const ACTIONS = [
+  { icon: '⋮' },
+  { icon: '↩️' },
+  { icon: '🔃' },
+  { icon: '⏪' },
+  { icon: '⏩' },
+];
+
+const GameMenu = ({ actions }) => (
   <div
     className="GameMenu"
     css={css`
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(${actions.length}, 1fr);
         text-align: center;
         align-items: center;
     `}
   >
-    <div>⋮</div>
-    <div>↩️</div>
-    <div>🔃</div>
-    <div>⏪</div>
-    <div>⏩</div>
+    { ACTIONS.map((act) => <div>{act.icon}</div>)}
   </div>
 );
 
 GameMenu.propTypes = {
-  action: PropTypes.func.isRequired,
+  actions: PropTypes.arrayOf(
+    PropTypes.shape({
+      icon: PropTypes.string,
+    }),
+  ),
+};
+
+GameMenu.defaultProps = {
+  actions: ACTIONS,
 };
 
 export default GameMenu;
