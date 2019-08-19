@@ -3,17 +3,17 @@ import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
 
 const ACTIONS = [
-  { icon: '⋮' },
-  { icon: '↩️' },
-  { icon: '🔃' },
-  { icon: '⏪' },
-  { icon: '⏩' },
+  { icon: '\u22EE' },
+  { icon: '\u21A9' },
+  { icon: '\ud83d\udd03' },
+  { icon: '\u23EA' },
+  { icon: '\u23E9' },
 ];
 
 const CONFIRM_ACTIONS = [
   { icon: 'Confirm move?' },
-  { icon: '✅' },
-  { icon: '❌' },
+  { icon: '\u2705' },
+  { icon: '\u274C' },
 ];
 
 const DEFAULT_CALLBACK = () => { console.log('Undefined'); };
