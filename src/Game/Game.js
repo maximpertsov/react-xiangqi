@@ -8,6 +8,7 @@ import useGameReducer from './reducers';
 import Board from './Board/Board';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
+import GameMenu from './GameMenu';
 import * as client from '../client';
 import * as selectors from './selectors';
 
@@ -198,6 +199,7 @@ const Game = ({ gameSlug, username }) => {
             activeLegalMoves={getLegalMoves(state.moves.length - 1, false)}
           />
         </div>
+        <GameMenu action={() => {}} />
         <MoveHistory
           moves={state.moves}
           selectedIdx={state.selectedMoveIdx}
