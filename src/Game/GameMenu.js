@@ -10,6 +10,14 @@ const ACTIONS = [
   { icon: '⏩' },
 ];
 
+const CONFIRM_ACTIONS = [
+  { icon: 'Confirm move?' },
+  { icon: '✅' },
+  { icon: '❌' },
+];
+
+const DEFAULT_CALLBACK = () => { console.log('Undefined'); };
+
 const GameMenu = ({ actions }) => (
   <div
     className="GameMenu"
@@ -20,7 +28,14 @@ const GameMenu = ({ actions }) => (
         align-items: center;
     `}
   >
-    { ACTIONS.map((act) => <div>{act.icon}</div>)}
+    { actions.map((act, i) => (
+      <div
+        key={i}
+        onClick={act.callback || DEFAULT_CALLBACK}
+      >
+        {act.icon}
+      </div>
+    ))}
   </div>
 );
 
@@ -33,7 +48,7 @@ GameMenu.propTypes = {
 };
 
 GameMenu.defaultProps = {
-  actions: ACTIONS,
+  actions: CONFIRM_ACTIONS,
 };
 
 export default GameMenu;
