@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
 
-const ACTIONS = [
+const DEFAULT_ACTIONS = [
   { icon: '\u22EE' },
   { icon: '\u21A9' },
   { icon: '\ud83d\udd03' },
@@ -48,7 +48,7 @@ GameMenu.propTypes = {
 };
 
 GameMenu.defaultProps = {
-  actions: CONFIRM_ACTIONS,
+  actions: DEFAULT_ACTIONS,
 };
 
 export default GameMenu;
