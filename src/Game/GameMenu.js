@@ -10,12 +10,6 @@ const DEFAULT_ACTIONS = [
   { icon: '\u23E9' },
 ];
 
-const CONFIRM_ACTIONS = [
-  { icon: 'Confirm move?' },
-  { icon: '\u2705' },
-  { icon: '\u274C' },
-];
-
 const DEFAULT_CALLBACK = () => { console.log('Undefined'); };
 
 const GameMenu = ({ actions }) => (
