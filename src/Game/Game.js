@@ -99,7 +99,7 @@ const Game = ({ gameSlug, username }) => {
   );
 
   const handleLegalMove = useCallback(
-    (board, fromSlot, toSlot) => {
+    ({ board, fromSlot, toSlot }) => {
       dispatch({
         type: 'add_move',
         board,
