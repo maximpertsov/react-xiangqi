@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Player from './Player/Player';
 import useGameReducer from './reducers';
 import Board from './Board/Board';
@@ -17,6 +17,7 @@ const POLL_INTERVAL = 2500;
 
 const Game = ({ gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
+  const [pendingMove, setPendingMove] = useState(undefined);
 
   // Fetch data utilities
 
@@ -100,16 +101,27 @@ const Game = ({ gameSlug, username }) => {
   );
 
   const handleLegalMove = useCallback(
-    ({ board, fromSlot, toSlot }) => {
-      dispatch({
-        type: 'add_move',
-        board,
-        move: { fromSlot, toSlot },
-      });
+    (move) => { setPendingMove(move); },
+    [],
+  );
 
+  const cancelMove = useCallback(
+    () => {
+      setPendingMove(undefined);
+    },
+    [],
+  );
+
+  const handleConfirmedMove = useCallback(
+    () => {
+      if (pendingMove === undefined) return;
+
+      const { board, fromSlot, toSlot } = pendingMove;
+      cancelMove();
+      dispatch({ type: 'add_move', board, move: { fromSlot, toSlot } });
       postMoveToServer(board, fromSlot, toSlot);
     },
-    [dispatch, postMoveToServer],
+    [cancelMove, dispatch, pendingMove, postMoveToServer],
   );
 
   const handleMoveSelect = ({ idx }) => {
@@ -200,8 +212,11 @@ const Game = ({ gameSlug, username }) => {
             activeLegalMoves={getLegalMoves(state.moves.length - 1, false)}
           />
         </div>
-        <GameMenu action={() => {}} />
-        <ConfirmMenu />
+        <ConfirmMenu
+          yesHandler={handleConfirmedMove}
+          noHandler={cancelMove}
+          show={pendingMove !== undefined}
+        />
         <MoveHistory
           moves={state.moves}
           selectedIdx={state.selectedMoveIdx}
