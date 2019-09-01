@@ -42,7 +42,9 @@ const Board = ({
   );
 
   const handleMove = (fromSlot, toSlot) => {
-    if (isLegalMove(fromSlot, toSlot)) handleLegalMove(board, fromSlot, toSlot);
+    if (isLegalMove(fromSlot, toSlot)) {
+      handleLegalMove({ board, fromSlot, toSlot });
+    }
     setSelectedSlot(undefined);
   };
 
