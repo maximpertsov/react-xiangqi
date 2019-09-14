@@ -17,6 +17,7 @@ const GameMenu = ({ actions }) => (
     className="GameMenu"
     css={css`
         display: grid;
+        font-size: small;
         grid-template-columns: repeat(${actions.length}, 1fr);
         text-align: center;
         align-items: center;
