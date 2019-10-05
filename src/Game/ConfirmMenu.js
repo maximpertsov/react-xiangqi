@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'semantic-ui-react';
 import GameMenu from './GameMenu';
 
 const ConfirmMenu = ({ yesHandler, noHandler, show }) => {
   if (!show) return null;
 
-  const actions = [
-    { icon: 'Confirm move?' },
-    { icon: '\u2705', callback: yesHandler },
-    { icon: '\u274C', callback: noHandler },
-  ];
-
-  return <GameMenu actions={actions} />;
+  return (
+    <GameMenu>
+      <Button inverted color="green" onClick={yesHandler}>Confirm</Button>
+      <Button inverted color="red" onClick={noHandler}>Cancel</Button>
+    </GameMenu>
+  );
 };
 
 ConfirmMenu.propTypes = {

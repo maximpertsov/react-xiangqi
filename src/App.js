@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 
+import 'semantic-ui-css/semantic.min.css';
 import 'babel-polyfill';
 import { useCallback, useEffect, useState } from 'react';
 import { MenuButton } from './commonStyles';
