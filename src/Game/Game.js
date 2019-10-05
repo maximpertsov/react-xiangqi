@@ -2,13 +2,15 @@
 import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
+
 import { useCallback, useEffect, useState } from 'react';
+import useEventListener from '@use-it/event-listener';
+
 import Player from './Player/Player';
 import useGameReducer from './reducers';
 import Board from './Board/Board';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
-import GameMenu from './GameMenu';
 import ConfirmMenu from './ConfirmMenu';
 import * as client from '../client';
 import * as selectors from './selectors';
@@ -77,6 +79,22 @@ const Game = ({ gameSlug, username }) => {
       return () => clearInterval(interval);
     },
     [gameSlug, pollForMoveUpdate],
+  );
+
+  useEventListener(
+    'keydown',
+    ({ key }) => {
+      switch (key) {
+        case 'ArrowLeft':
+          dispatch({ type: 'select_previous_move' });
+          break;
+        case 'ArrowRight':
+          dispatch({ type: 'select_next_move' });
+          break;
+        default:
+          break;
+      }
+    },
   );
 
   // Move updates
