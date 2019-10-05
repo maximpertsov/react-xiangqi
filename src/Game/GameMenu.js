@@ -24,12 +24,13 @@ const GameMenu = ({ actions }) => (
     `}
   >
     { actions.map((act, i) => (
-      <div
+      <button
         key={i}
+        type="button"
         onClick={act.callback || DEFAULT_CALLBACK}
       >
         {act.icon}
-      </div>
+      </button>
     ))}
   </div>
 );
