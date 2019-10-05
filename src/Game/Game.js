@@ -2,7 +2,10 @@
 import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
+
 import { useCallback, useEffect, useState } from 'react';
+import useEventListener from '@use-it/event-listener';
+
 import Player from './Player/Player';
 import useGameReducer from './reducers';
 import Board from './Board/Board';
@@ -78,6 +81,8 @@ const Game = ({ gameSlug, username }) => {
     },
     [gameSlug, pollForMoveUpdate],
   );
+
+  useEventListener('keydown', ({ key }) => { console.log(`Pressed ${key}`); });
 
   // Move updates
 
