@@ -81,7 +81,21 @@ const Game = ({ gameSlug, username }) => {
     [gameSlug, pollForMoveUpdate],
   );
 
-  useEventListener('keydown', ({ key }) => { console.log(`Pressed ${key}`); });
+  useEventListener(
+    'keydown',
+    ({ key }) => {
+      switch (key) {
+        case 'ArrowLeft':
+          dispatch({ type: 'select_previous_move' });
+          break;
+        case 'ArrowRight':
+          dispatch({ type: 'select_next_move' });
+          break;
+        default:
+          break;
+      }
+    },
+  );
 
   // Move updates
 

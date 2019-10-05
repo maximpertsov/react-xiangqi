@@ -40,6 +40,20 @@ const setSelectedMove = (state, index) => (
   { ...state, selectedMoveIdx: index }
 );
 
+const setPreviousMove = (state) => (
+  {
+    ...state,
+    selectedMoveIdx: Math.max(state.selectedMoveIdx - 1, 0),
+  }
+);
+
+const setNextMove = (state) => (
+  {
+    ...state,
+    selectedMoveIdx: Math.min(state.selectedMoveIdx + 1, state.moveCount),
+  }
+);
+
 const selectLastMove = (state) => {
   const { moves } = state;
   return setSelectedMove(state, moves.length - 1);
@@ -95,6 +109,10 @@ const reducer = (state, action) => {
       return addMove(state, action.board, action.move);
     case 'select_move':
       return setSelectedMove(state, action.index);
+    case 'select_previous_move':
+      return setPreviousMove(state);
+    case 'select_next_move':
+      return setNextMove(state);
     case 'set_moves':
       return setMoves(state, action.moves);
     case 'set_players':
