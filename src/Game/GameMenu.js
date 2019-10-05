@@ -1,16 +1,17 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
+import { Button } from 'semantic-ui-react';
 
 const DEFAULT_ACTIONS = [
-  { icon: '\u22EE' },
-  { icon: '\u21A9' },
-  { icon: '\ud83d\udd03' },
-  { icon: '\u23EA' },
-  { icon: '\u23E9' },
+  { text: '\u22EE' },
+  { text: '\u21A9' },
+  { text: '\ud83d\udd03' },
+  { text: '\u23EA' },
+  { text: '\u23E9' },
 ];
 
-const DEFAULT_CALLBACK = () => { console.log('Undefined'); };
+const DEFAULT_CALLBACK = () => {};
 
 const GameMenu = ({ actions }) => (
   <div
@@ -23,14 +24,12 @@ const GameMenu = ({ actions }) => (
         align-items: center;
     `}
   >
-    { actions.map((act, i) => (
-      <button
-        key={i}
-        type="button"
+    { actions.map((act) => (
+      <Button
         onClick={act.callback || DEFAULT_CALLBACK}
       >
-        {act.icon}
-      </button>
+        {act.text}
+      </Button>
     ))}
   </div>
 );
@@ -38,7 +37,7 @@ const GameMenu = ({ actions }) => (
 GameMenu.propTypes = {
   actions: PropTypes.arrayOf(
     PropTypes.shape({
-      icon: PropTypes.string,
+      text: PropTypes.string,
     }),
   ),
 };

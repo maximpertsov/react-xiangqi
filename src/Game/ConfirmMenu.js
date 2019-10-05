@@ -6,9 +6,8 @@ const ConfirmMenu = ({ yesHandler, noHandler, show }) => {
   if (!show) return null;
 
   const actions = [
-    { icon: 'Confirm move?' },
-    { icon: '\u2705', callback: yesHandler },
-    { icon: '\u274C', callback: noHandler },
+    { text: 'Confirm', callback: yesHandler },
+    { text: 'Cancel', callback: noHandler },
   ];
 
   return <GameMenu actions={actions} />;
