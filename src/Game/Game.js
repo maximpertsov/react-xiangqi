@@ -11,7 +11,6 @@ import useGameReducer from './reducers';
 import Board from './Board/Board';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
-import GameMenu from './GameMenu';
 import ConfirmMenu from './ConfirmMenu';
 import * as client from '../client';
 import * as selectors from './selectors';
