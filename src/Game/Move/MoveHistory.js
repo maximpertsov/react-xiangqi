@@ -1,6 +1,8 @@
 import React, { useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { Segment } from 'semantic-ui-react';
+
 import Move from './Move';
 import { boardPropType } from '../../logic';
 
@@ -11,7 +13,6 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 5px 1fr 1fr 5px 1fr 1fr 5px 1fr 1fr;
   grid-template-rows: repeat(auto-fill, 1fr);
-  outline: thin solid #CCC;
   align-items:center;
   color: #999;
   width: 100%;
@@ -59,10 +60,12 @@ const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
     );
 
   return (
-    <Wrapper>
-      {moveComponents}
-      <div ref={setBottomElement} />
-    </Wrapper>
+    <Segment clearing tertiary>
+      <Wrapper>
+        {moveComponents}
+        <div ref={setBottomElement} />
+      </Wrapper>
+    </Segment>
   );
 };
 
