@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { Button, Form, Segment } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
 
@@ -80,30 +80,28 @@ const LoginForm = ({ setUsername }) => {
       <div
         className="LoginForm"
       >
-        <Segment placeholder>
-          <Form>
-            <Form.Input
-              icon="user"
-              iconPosition="left"
-              label="Username"
-              placeholder="Username"
-              name="username"
-              value={username}
-              onChange={handleChange}
-            />
-            <Form.Input
-              icon="lock"
-              iconPosition="left"
-              label="Password"
-              type="password"
-              name="password"
-              value={password}
-              onChange={handleChange}
-            />
-            <Button content="Login" primary onClick={handleClick} />
-          </Form>
-          <div>{error}</div>
-        </Segment>
+        <Form>
+          <Form.Input
+            icon="user"
+            iconPosition="left"
+            label="Username"
+            placeholder="Username"
+            name="username"
+            value={username}
+            onChange={handleChange}
+          />
+          <Form.Input
+            icon="lock"
+            iconPosition="left"
+            label="Password"
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
+          <Button content="Login" primary onClick={handleClick} />
+        </Form>
+        <div>{error}</div>
       </div>
     );
   };

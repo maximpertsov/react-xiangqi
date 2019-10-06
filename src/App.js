@@ -1,10 +1,7 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-
-import 'semantic-ui-css/semantic.min.css';
 import 'babel-polyfill';
-import { useCallback, useEffect, useState } from 'react';
-import { Button, Divider, Grid, Segment } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Button, Container, Divider, Grid, Segment } from 'semantic-ui-react';
 
 import { MenuButton } from './commonStyles';
 import Game from './Game/Game';
@@ -13,11 +10,10 @@ import LoginForm from './LoginForm/LoginForm';
 import * as client from './client';
 
 const LOCAL = 'local';
-const BETA = 'beta';
 
 const App = () => {
   const [username, setUsername] = useState(undefined);
-  const [gameSlug, setGameSlug] = useState(BETA);
+  const [gameSlug, setGameSlug] = useState(undefined);
   const [games, setGames] = useState([]);
 
   const fetchGames = useCallback(
@@ -39,47 +35,32 @@ const App = () => {
   switch (gameSlug) {
     case undefined:
       return (
-        <div
-          css={css`
-            width:200px;
-          `}
-        >
-          <LoginForm setUsername={setUsername} />
-          <GameList setGameSlug={setGameSlug} games={games} />
+        <Container textAlign="center">
+          <Segment placeholder>
+            <Grid columns={2} relaxed="very" stackable>
+              <Grid.Column>
+                <LoginForm setUsername={setUsername} />
+              </Grid.Column>
 
-          <div
-            css={css`
-              border:1px #CCC solid;
-              margin-top: 15px;
-              margin-bottom: 15px;
-              padding: 5px;
-              width: 100%;
-            `}
-          >
+              <Grid.Column verticalAlign="middle">
+                <Button content="Sign up" icon="signup" size="big" />
+              </Grid.Column>
+            </Grid>
+
+            <Divider vertical>Or</Divider>
+          </Segment>
+          <Segment placeholder>
+            <GameList setGameSlug={setGameSlug} games={games} />
+          </Segment>
+          <Segment placeholder>
             Other modes
             <div>
               <MenuButton onClick={() => { setGameSlug(LOCAL); }}>
-                Local Play
+                  Local Play
               </MenuButton>
             </div>
-          </div>
-        </div>
-      );
-    case BETA:
-      return (
-        <Segment placeholder>
-          <Grid columns={2} relaxed="very" stackable>
-            <Grid.Column>
-              <LoginForm setUsername={setUsername} />
-            </Grid.Column>
-
-            <Grid.Column verticalAlign="middle">
-              <Button content="Sign up" icon="signup" size="big" />
-            </Grid.Column>
-          </Grid>
-
-          <Divider vertical>Or</Divider>
-        </Segment>
+          </Segment>
+        </Container>
       );
     case LOCAL:
       return <Game />;
