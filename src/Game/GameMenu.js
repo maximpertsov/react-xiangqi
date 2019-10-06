@@ -16,7 +16,6 @@ const GameMenu = ({ children }) => (
     className="GameMenu"
     css={css`
         display: grid;
-        font-size: small;
         grid-template-columns: repeat(${Children.count(children)}, 1fr);
         text-align: center;
         align-items: center;
