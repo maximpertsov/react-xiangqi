@@ -1,9 +1,8 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-
-import { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
+import { Button, Form, Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
+
 import { ping, authenticate } from '../client';
 
 const initialForm = { username: '', password: '', error: '' };
@@ -80,33 +79,31 @@ const LoginForm = ({ setUsername }) => {
     return (
       <div
         className="LoginForm"
-        css={css`
-          height:80px;
-          width:190px;
-          border:1px #CCC solid;
-          padding:10px;
-        `}
       >
-        <div className="form">
-          <form className="login-form">
-            <input
+        <Segment placeholder>
+          <Form>
+            <Form.Input
+              icon="user"
+              iconPosition="left"
+              label="Username"
+              placeholder="Username"
               name="username"
               value={username}
               onChange={handleChange}
-              type="text"
-              placeholder="Username"
             />
-            <input
+            <Form.Input
+              icon="lock"
+              iconPosition="left"
+              label="Password"
+              type="password"
               name="password"
               value={password}
               onChange={handleChange}
-              type="password"
-              placeholder="Password"
             />
-            <button type="button" onClick={handleClick}>login</button>
-          </form>
+            <Button content="Login" primary onClick={handleClick} />
+          </Form>
           <div>{error}</div>
-        </div>
+        </Segment>
       </div>
     );
   };

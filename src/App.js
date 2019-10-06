@@ -4,7 +4,7 @@ import { jsx, css } from '@emotion/core';
 import 'semantic-ui-css/semantic.min.css';
 import 'babel-polyfill';
 import { useCallback, useEffect, useState } from 'react';
-import { Button, Divider, Form, Grid, Segment } from 'semantic-ui-react';
+import { Button, Divider, Grid, Segment } from 'semantic-ui-react';
 
 import { MenuButton } from './commonStyles';
 import Game from './Game/Game';
@@ -17,7 +17,7 @@ const BETA = 'beta';
 
 const App = () => {
   const [username, setUsername] = useState(undefined);
-  const [gameSlug, setGameSlug] = useState(undefined);
+  const [gameSlug, setGameSlug] = useState(BETA);
   const [games, setGames] = useState([]);
 
   const fetchGames = useCallback(
@@ -70,22 +70,7 @@ const App = () => {
         <Segment placeholder>
           <Grid columns={2} relaxed="very" stackable>
             <Grid.Column>
-              <Form>
-                <Form.Input
-                  icon="user"
-                  iconPosition="left"
-                  label="Username"
-                  placeholder="Username"
-                />
-                <Form.Input
-                  icon="lock"
-                  iconPosition="left"
-                  label="Password"
-                  type="password"
-                />
-
-                <Button content="Login" primary />
-              </Form>
+              <LoginForm setUsername={setUsername} />
             </Grid.Column>
 
             <Grid.Column verticalAlign="middle">
