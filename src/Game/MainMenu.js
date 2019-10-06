@@ -33,7 +33,7 @@ const MainMenu = () => {
     case undefined:
       return (
         <Container textAlign="center">
-          <Segment.Group>
+          <Segment.Group compact>
             <Segment>
               <Header size="large">Play online</Header>
               <LoginForm setUsername={setUsername} />
