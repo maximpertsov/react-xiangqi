@@ -1,9 +1,8 @@
 import 'babel-polyfill';
 import 'semantic-ui-css/semantic.min.css';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Container, Divider, Grid, Segment } from 'semantic-ui-react';
+import { Button, Container, Header, Segment } from 'semantic-ui-react';
 
-import { MenuButton } from './commonStyles';
 import Game from './Game/Game';
 import GameList from './Game/GameList';
 import LoginForm from './LoginForm/LoginForm';
@@ -36,30 +35,21 @@ const App = () => {
     case undefined:
       return (
         <Container textAlign="center">
-          <Segment placeholder>
-            <Grid columns={2} relaxed="very" stackable>
-              <Grid.Column>
-                <LoginForm setUsername={setUsername} />
-              </Grid.Column>
-
-              <Grid.Column verticalAlign="middle">
-                <Button content="Sign up" icon="signup" size="big" />
-              </Grid.Column>
-            </Grid>
-
-            <Divider vertical>Or</Divider>
-          </Segment>
-          <Segment placeholder>
-            <GameList setGameSlug={setGameSlug} games={games} />
-          </Segment>
-          <Segment placeholder>
-            Other modes
-            <div>
-              <MenuButton onClick={() => { setGameSlug(LOCAL); }}>
-                  Local Play
-              </MenuButton>
-            </div>
-          </Segment>
+          <Segment.Group>
+            <Segment>
+              <Header size="large">Play online</Header>
+              <LoginForm setUsername={setUsername} />
+              { username === undefined ||
+                <GameList setGameSlug={setGameSlug} games={games} />
+              }
+            </Segment>
+            <Segment>
+              <Header size="large">Other modes</Header>
+              <Button onClick={() => { setGameSlug(LOCAL); }}>
+                Local Play
+              </Button>
+            </Segment>
+          </Segment.Group>
         </Container>
       );
     case LOCAL:
