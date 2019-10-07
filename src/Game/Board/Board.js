@@ -5,6 +5,7 @@ import { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import { boardPropType } from '../../logic';
+import * as styles from '../../commonStyles';
 
 import boardImg from './board-1000px.svg.png';
 
@@ -94,19 +95,19 @@ const Board = ({
         background-repeat: no-repeat;
         background-position: top;
         display: grid;
-        @media (max-width: 360px) {
+        ${styles.MEDIA_TINY} {
           grid-template-rows: repeat(10, 20px);
           grid-template-columns: repeat(9, 20px);
         }
-        @media (min-width: 360px) and (max-width: 540px) {
+        ${styles.MEDIA_SMALL} {
           grid-template-rows: repeat(10, 30px);
           grid-template-columns: repeat(9, 30px);
         }
-        @media (min-width: 540px) and (max-width: 720px) {
+        ${styles.MEDIA_MEDIUM} {
           grid-template-rows: repeat(10, 45px);
           grid-template-columns: repeat(9, 45px);
         }
-        @media (min-width: 720px) {
+        ${styles.MEDIA_LARGE} {
           grid-template-rows: repeat(10, 60px);
           grid-template-columns: repeat(9, 60px);
         }

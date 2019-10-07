@@ -5,17 +5,30 @@ import { Segment } from 'semantic-ui-react';
 
 import Move from './Move';
 import { boardPropType } from '../../logic';
+import * as styles from '../../commonStyles';
 
 // TODO: set max-height by percentage?
 // TODO: hide scroll bar?
 // TODO: move colors to constants
+
+/* eslint-disable max-len */
+const CSS_COLUMNS_SMALL = 'grid-template-columns: 0.25fr 1fr 1fr 0.25fr 1fr 1fr;';
+const CSS_COLUMNS_LARGE = 'grid-template-columns: 0.25fr 1fr 1fr 0.25fr 1fr 1fr 0.25fr 1fr 1fr;';
+/* eslint-enable max-len */
+
 const Wrapper = styled.div`
   display: grid;
-  @media (max-width: 540px) {
-    grid-template-columns: 0.25fr 1fr 1fr 0.25fr 1fr 1fr
+  ${styles.MEDIA_TINY} {
+    ${CSS_COLUMNS_SMALL}
   }
-  @media (min-width: 540px) {
-    grid-template-columns: 0.25fr 1fr 1fr 0.25fr 1fr 1fr 0.25fr 1fr 1fr;
+  ${styles.MEDIA_SMALL} {
+    ${CSS_COLUMNS_SMALL}
+  }
+  ${styles.MEDIA_MEDIUM} {
+    ${CSS_COLUMNS_LARGE}
+  }
+  ${styles.MEDIA_LARGE} {
+    ${CSS_COLUMNS_LARGE}
   }
   grid-template-rows: repeat(auto-fill, 1fr);
   overflow: auto;
