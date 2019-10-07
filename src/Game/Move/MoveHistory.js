@@ -12,18 +12,13 @@ import { boardPropType } from '../../logic';
 const Wrapper = styled.div`
   display: grid;
   @media (max-width: 540px) {
-    grid-template-columns: 0.5fr 1fr 1fr 0.5fr 1fr 1fr
+    grid-template-columns: 0.25fr 1fr 1fr 0.25fr 1fr 1fr
   }
   @media (min-width: 540px) {
-    grid-template-columns: 0.5fr 1fr 1fr 0.5fr 1fr 1fr 0.5fr 1fr 1fr;
+    grid-template-columns: 0.25fr 1fr 1fr 0.25fr 1fr 1fr 0.25fr 1fr 1fr;
   }
   grid-template-rows: repeat(auto-fill, 1fr);
-  align-items:center;
-  color: #999;
-  width: 100%;
-  min-height: 20px;
   overflow: auto;
-  text-align: center;
   font-size: x-small;
 `;
 
