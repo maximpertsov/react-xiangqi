@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { MenuButton } from '../commonStyles';
+import { Button } from 'semantic-ui-react';
 
 const GameListItem = ({ slug, setGameSlug }) => {
   const setThisGameSlug = useCallback(
@@ -9,12 +9,12 @@ const GameListItem = ({ slug, setGameSlug }) => {
   );
 
   return (
-    <MenuButton
+    <Button
       onClick={setThisGameSlug}
       className="GameListItem"
     >
       {slug}
-    </MenuButton>
+    </Button>
   );
 };
 

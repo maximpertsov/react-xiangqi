@@ -1,24 +1,40 @@
 import React, { useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { Segment } from 'semantic-ui-react';
+
 import Move from './Move';
 import { boardPropType } from '../../logic';
+import * as styles from '../../commonStyles';
 
 // TODO: set max-height by percentage?
 // TODO: hide scroll bar?
 // TODO: move colors to constants
+
+const cssMoveColumns = (columns) => Array(columns)
+  .fill('0.25fr 1fr 1fr').join(' ');
+
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 5px 1fr 1fr 5px 1fr 1fr 5px 1fr 1fr;
+  ${styles.MEDIA_TINY} {
+    grid-template-columns: ${cssMoveColumns(2)};
+    font-size: x-small;
+  }
+  ${styles.MEDIA_SMALL} {
+    grid-template-columns: ${cssMoveColumns(2)};
+    font-size: x-small;
+  }
+  ${styles.MEDIA_MEDIUM} {
+    grid-template-columns: ${cssMoveColumns(2)};
+    font-size: small;
+  }
+  ${styles.MEDIA_LARGE} {
+    grid-template-columns: ${cssMoveColumns(3)};
+    font-size: small;
+  }
   grid-template-rows: repeat(auto-fill, 1fr);
-  outline: thin solid #CCC;
-  align-items:center;
-  color: #999;
-  width: 100%;
-  min-height: 20px;
   overflow: auto;
-  text-align: center;
-  font-size: x-small;
+  font-size: small;
 `;
 
 const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
@@ -59,10 +75,12 @@ const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
     );
 
   return (
-    <Wrapper>
-      {moveComponents}
-      <div ref={setBottomElement} />
-    </Wrapper>
+    <Segment clearing tertiary>
+      <Wrapper>
+        {moveComponents}
+        <div ref={setBottomElement} />
+      </Wrapper>
+    </Segment>
   );
 };
 

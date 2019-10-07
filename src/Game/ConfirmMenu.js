@@ -4,7 +4,9 @@ import useEventListener from '@use-it/event-listener';
 import { Button } from 'semantic-ui-react';
 import GameMenu from './GameMenu';
 
-const ConfirmMenu = ({ yesHandler, noHandler, show }) => {
+const ConfirmMenu = ({
+  yesHandler, noHandler, show, disabled,
+}) => {
   useEventListener(
     'keydown',
     ({ key }) => {
@@ -20,6 +22,11 @@ const ConfirmMenu = ({ yesHandler, noHandler, show }) => {
     },
   );
 
+  if (disabled) {
+    yesHandler();
+    return null;
+  }
+
   if (!show) return null;
 
   return (
@@ -34,12 +41,14 @@ ConfirmMenu.propTypes = {
   yesHandler: PropTypes.func,
   noHandler: PropTypes.func,
   show: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 ConfirmMenu.defaultProps = {
   yesHandler: () => {},
   noHandler: () => {},
   show: true,
+  disabled: false,
 };
 
 export default ConfirmMenu;
