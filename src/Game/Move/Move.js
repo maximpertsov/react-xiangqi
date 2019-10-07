@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 const Wrapper = styled.div(
   ({ selected, piece }) => ({
-    backgroundColor: (selected ? '#d9d9d9' : 'none'),
+    textDecoration: (selected ? 'underline' : 'none'),
     color: ('RHEAKCP'.includes(piece) ? 'red' : 'black'),
   }),
 );
