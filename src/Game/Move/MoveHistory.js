@@ -11,28 +11,30 @@ import * as styles from '../../commonStyles';
 // TODO: hide scroll bar?
 // TODO: move colors to constants
 
-/* eslint-disable max-len */
-const CSS_COLUMNS_SMALL = 'grid-template-columns: 0.25fr 1fr 1fr 0.25fr 1fr 1fr;';
-const CSS_COLUMNS_LARGE = 'grid-template-columns: 0.25fr 1fr 1fr 0.25fr 1fr 1fr 0.25fr 1fr 1fr;';
-/* eslint-enable max-len */
+const cssMoveColumns = (columns) => Array(columns)
+  .fill('0.25fr 1fr 1fr').join(' ');
 
 const Wrapper = styled.div`
   display: grid;
   ${styles.MEDIA_TINY} {
-    ${CSS_COLUMNS_SMALL}
+    grid-template-columns: ${cssMoveColumns(2)};
+    font-size: x-small;
   }
   ${styles.MEDIA_SMALL} {
-    ${CSS_COLUMNS_SMALL}
+    grid-template-columns: ${cssMoveColumns(2)};
+    font-size: x-small;
   }
   ${styles.MEDIA_MEDIUM} {
-    ${CSS_COLUMNS_LARGE}
+    grid-template-columns: ${cssMoveColumns(2)};
+    font-size: small;
   }
   ${styles.MEDIA_LARGE} {
-    ${CSS_COLUMNS_LARGE}
+    grid-template-columns: ${cssMoveColumns(3)};
+    font-size: small;
   }
   grid-template-rows: repeat(auto-fill, 1fr);
   overflow: auto;
-  font-size: x-small;
+  font-size: small;
 `;
 
 const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
