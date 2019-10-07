@@ -11,7 +11,12 @@ import { boardPropType } from '../../logic';
 // TODO: move colors to constants
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 5px 1fr 1fr 5px 1fr 1fr 5px 1fr 1fr;
+  @media (max-width: 540px) {
+    grid-template-columns: 0.5fr 1fr 1fr 0.5fr 1fr 1fr
+  }
+  @media (min-width: 540px) {
+    grid-template-columns: 0.5fr 1fr 1fr 0.5fr 1fr 1fr 0.5fr 1fr 1fr;
+  }
   grid-template-rows: repeat(auto-fill, 1fr);
   align-items:center;
   color: #999;
