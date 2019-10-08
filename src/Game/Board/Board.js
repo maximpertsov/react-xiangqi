@@ -44,12 +44,12 @@ const Board = ({
     legalMoves[fromSlot].includes(toSlot)
   );
 
-  const handleMove = async(fromSlot, toSlot) => {
+  const handleMove = (fromSlot, toSlot) => {
     if (isLegalMove(fromSlot, toSlot)) {
       const [fromY, fromX] = board.getRankFile(fromSlot);
       const [toY, toX] = board.getRankFile(toSlot);
-      setMoveX(toX - fromX);
-      setMoveY(toY - fromY);
+      setMoveX(reversed ? fromX - toX : toX - fromX);
+      setMoveY(reversed ? fromY - toY : toY - fromY);
       setTimeout(() => {
         handleLegalMove({ board, fromSlot, toSlot });
         setMoveX(0);

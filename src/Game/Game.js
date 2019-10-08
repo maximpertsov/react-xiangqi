@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import useEventListener from '@use-it/event-listener';
 
 import Player from './Player/Player';
@@ -136,7 +136,10 @@ const Game = ({ gameSlug, username }) => {
       const lastMove = selectors.getLastMove(state);
       if (!lastMove.pending) return;
 
-      const { board, fromSlot, toSlot } = lastMove;
+      const { board, fromPos, toPos } = lastMove;
+      // TODO: let post move to server accept pos args as is?
+      const fromSlot = board.getSlot(...fromPos);
+      const toSlot = board.getSlot(...toPos);
       postMoveToServer(board, fromSlot, toSlot);
       dispatch({ type: 'confirm_moves' });
     },
