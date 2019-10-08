@@ -135,11 +135,11 @@ const Game = ({ gameSlug, username }) => {
       if (pendingMove === undefined) return;
 
       const { board, fromSlot, toSlot } = pendingMove;
-      cancelMove();
+      setPendingMove(undefined);
       dispatch({ type: 'add_move', board, move: { fromSlot, toSlot } });
       postMoveToServer(board, fromSlot, toSlot);
     },
-    [cancelMove, dispatch, pendingMove, postMoveToServer],
+    [dispatch, pendingMove, postMoveToServer],
   );
 
   const handleMoveSelect = ({ idx }) => {
