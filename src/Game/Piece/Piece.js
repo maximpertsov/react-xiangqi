@@ -11,13 +11,16 @@ const Piece = ({ color, type, icon }) => {
     <img
       className="Piece"
       css={css`
-        pointer-events: none;
         user-select: none;
         -moz-user-select: none;
         max-height: 80%;
         max-width: 80%;
         display: block;
         margin: auto;
+        transition: transform 500ms ease-in-out;
+        &:hover {
+          transform: translate(200px, 150px) rotate(20deg)
+        }
       `}
       alt={alt}
       src={icon}
