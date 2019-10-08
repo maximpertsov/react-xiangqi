@@ -1,6 +1,6 @@
-// Select a move by idx, where -1 is the latest move
-// Return an empty object if move lookup fails
 export const getMove = ({ moves }, idx) => moves[idx];
+
+export const getLastMove = ({ moves }) => getMove({ moves }, moves.length - 1);
 
 export const getNextMoveColor = ({ moves }) => {
   if (moves.length === 0) return 'red';

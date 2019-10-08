@@ -19,7 +19,6 @@ const POLL_INTERVAL = 2500;
 
 const Game = ({ gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
-  const [pendingMove, setPendingMove] = useState(undefined);
 
   // Fetch data utilities
 
@@ -119,27 +118,29 @@ const Game = ({ gameSlug, username }) => {
   );
 
   const handleLegalMove = useCallback(
-    (move) => { setPendingMove(move); },
-    [],
+    ({ board, fromSlot, toSlot }) => {
+      dispatch({ type: 'add_move', board, move: { fromSlot, toSlot } });
+    },
+    [dispatch],
   );
 
   const cancelMove = useCallback(
     () => {
-      setPendingMove(undefined);
+      dispatch({ type: 'cancelMoves' });
     },
-    [],
+    [dispatch],
   );
 
   const handleConfirmedMove = useCallback(
     () => {
-      if (pendingMove === undefined) return;
+      const lastMove = selectors.getLastMove(state);
+      if (!lastMove.pending) return;
 
-      const { board, fromSlot, toSlot } = pendingMove;
-      setPendingMove(undefined);
-      dispatch({ type: 'add_move', board, move: { fromSlot, toSlot } });
+      const { board, fromSlot, toSlot } = lastMove;
       postMoveToServer(board, fromSlot, toSlot);
+      dispatch({ type: 'confirm_moves' });
     },
-    [dispatch, pendingMove, postMoveToServer],
+    [dispatch, postMoveToServer, state],
   );
 
   const handleMoveSelect = ({ idx }) => {
@@ -233,8 +234,7 @@ const Game = ({ gameSlug, username }) => {
         <ConfirmMenu
           yesHandler={handleConfirmedMove}
           noHandler={cancelMove}
-          show={pendingMove !== undefined}
-          disabled={gameSlug === undefined}
+          show={selectors.getLastMove(state).pending}
         />
         <MoveHistory
           moves={state.moves}
