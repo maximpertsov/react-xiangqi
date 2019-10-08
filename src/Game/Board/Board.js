@@ -55,13 +55,14 @@ const Board = ({
       const [toY, toX] = board.getRankFile(toSlot);
       setMoveX(toX - fromX);
       setMoveY(toY - fromY);
-      // setTimeout(() => {
-      //   handleLegalMove({ board, fromSlot, toSlot });
-      //   setMoveX(0);
-      //   setMoveY(0);
-      // }, 100);
+      setTimeout(() => {
+        handleLegalMove({ board, fromSlot, toSlot });
+        setMoveX(0);
+        setMoveY(0);
+      }, 150);
+    } else {
+      setSelectedSlot(undefined);
     }
-    // setSelectedSlot(undefined);
   };
 
   const handleSquareClick = (slot) => (() => {

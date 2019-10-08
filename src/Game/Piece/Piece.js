@@ -8,6 +8,7 @@ const Piece = ({
   color, type, icon, moveX, moveY,
 }) => {
   const alt = `${color} ${type}`;
+  const moving = moveX !== 0 || moveY !== 0;
 
   return (
     <img
@@ -20,6 +21,7 @@ const Piece = ({
         max-width: 80%;
         display: block;
         margin: auto;
+        z-index: ${moving ? 100 : 0};
         transition: transform 100ms ease-in-out;
         transform: translate(calc(60px * ${moveX}), calc(60px * ${moveY}));
       `}
