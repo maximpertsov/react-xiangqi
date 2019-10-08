@@ -65,7 +65,7 @@ const Square = ({
       {selected && !(moving) && <SelectionIndicator />}
       {occupied && <XiangqiPiece moveX={selectedMoveX} moveY={selectedMoveY} code={pieceCode} />}
       {targeted && !(moving) && <TargetIndicator occupied={occupied} />}
-      {inCheck && <KingCheckedIndicator />}
+      {inCheck && !(moving) && <KingCheckedIndicator />}
     </div>
   );
 };
