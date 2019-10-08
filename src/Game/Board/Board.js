@@ -9,11 +9,6 @@ import * as styles from '../../commonStyles';
 
 import boardImg from './board-1000px.svg.png';
 
-const STEP_TINY = '20px';
-const STEP_SMALL = '30px';
-const STEP_MEDIUM = '45px';
-const STEP_LARGE = '60px';
-
 const Board = ({
   board,
   handleLegalMove,
@@ -115,20 +110,20 @@ const Board = ({
         background-position: top;
         display: grid;
         ${styles.MEDIA_TINY} {
-          grid-template-rows: repeat(10, ${STEP_TINY});
-          grid-template-columns: repeat(9, ${STEP_TINY});
+          grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_TINY});
+          grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_TINY});
         }
         ${styles.MEDIA_SMALL} {
-          grid-template-rows: repeat(10, ${STEP_SMALL});
-          grid-template-columns: repeat(9, ${STEP_SMALL});
+          grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_SMALL});
+          grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_SMALL});
         }
         ${styles.MEDIA_MEDIUM} {
-          grid-template-rows: repeat(10, ${STEP_MEDIUM});
-          grid-template-columns: repeat(9, ${STEP_MEDIUM});
+          grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_MEDIUM});
+          grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_MEDIUM});
         }
         ${styles.MEDIA_LARGE} {
-          grid-template-rows: repeat(10, ${STEP_LARGE});
-          grid-template-columns: repeat(9, ${STEP_LARGE});
+          grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_LARGE});
+          grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_LARGE});
         }
       `}
     >

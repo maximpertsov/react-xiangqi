@@ -235,6 +235,7 @@ const Game = ({ gameSlug, username }) => {
           yesHandler={handleConfirmedMove}
           noHandler={cancelMove}
           show={selectors.getLastMove(state).pending}
+          disabled={gameSlug === undefined}
         />
         <MoveHistory
           moves={state.moves}

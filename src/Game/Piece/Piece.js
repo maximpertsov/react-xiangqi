@@ -3,12 +3,20 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import * as images from './images';
+import * as styles from '../../commonStyles';
 
 const Piece = ({
   color, type, icon, moveX, moveY,
 }) => {
   const alt = `${color} ${type}`;
   const moving = moveX !== 0 || moveY !== 0;
+
+  const cssTransform = (squareSize) => {
+    const xTranslate = `calc(${squareSize} * ${moveX})`;
+    const yTranslate = `calc(${squareSize} * ${moveY})`;
+
+    return `transform: translate(${xTranslate}, ${yTranslate})`;
+  };
 
   return (
     <img
@@ -23,7 +31,18 @@ const Piece = ({
         margin: auto;
         z-index: ${moving ? 100 : 0};
         transition: transform 100ms ease-in-out;
-        transform: translate(calc(60px * ${moveX}), calc(60px * ${moveY}));
+        ${styles.MEDIA_TINY} {
+          ${cssTransform(styles.SQUARE_SIZE_TINY)};
+        }
+        ${styles.MEDIA_SMALL} {
+          ${cssTransform(styles.SQUARE_SIZE_SMALL)};
+        }
+        ${styles.MEDIA_MEDIUM} {
+          ${cssTransform(styles.SQUARE_SIZE_MEDIUM)};
+        }
+        ${styles.MEDIA_LARGE} {
+          ${cssTransform(styles.SQUARE_SIZE_LARGE)};
+        }
       `}
       alt={alt}
       src={icon}
