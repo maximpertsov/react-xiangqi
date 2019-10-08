@@ -59,6 +59,7 @@ const Board = ({
         handleLegalMove({ board, fromSlot, toSlot });
         setMoveX(0);
         setMoveY(0);
+        setSelectedSlot(undefined);
       }, 150);
     } else {
       setSelectedSlot(undefined);
