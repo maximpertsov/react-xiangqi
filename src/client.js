@@ -23,7 +23,7 @@ export const getMoveCount = (gameId) => axios
 const getPostMovePayload = (username, board, fromSlot, toSlot) => {
   const fromPos = board.getRankFile(fromSlot);
   const toPos = board.getRankFile(toSlot);
-  const piece = board.getPiece(fromSlot);
+  const piece = board.getPiece(toSlot);
   return {
     player: username, piece, from: fromPos, to: toPos, type: 'move',
   };

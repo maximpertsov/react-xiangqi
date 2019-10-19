@@ -17,6 +17,8 @@ const Board = ({
   reversed,
 }) => {
   const [selectedSlot, setSelectedSlot] = useState(undefined);
+  const [moveX, setMoveX] = useState(0);
+  const [moveY, setMoveY] = useState(0);
 
   // NOTE: this is the synchronous version of useEffect. Using
   // this version prevents late selection clearing, but causes
@@ -44,9 +46,19 @@ const Board = ({
 
   const handleMove = (fromSlot, toSlot) => {
     if (isLegalMove(fromSlot, toSlot)) {
-      handleLegalMove({ board, fromSlot, toSlot });
+      const [fromY, fromX] = board.getRankFile(fromSlot);
+      const [toY, toX] = board.getRankFile(toSlot);
+      setMoveX(reversed ? fromX - toX : toX - fromX);
+      setMoveY(reversed ? fromY - toY : toY - fromY);
+      setTimeout(() => {
+        handleLegalMove({ board, fromSlot, toSlot });
+        setMoveX(0);
+        setMoveY(0);
+        setSelectedSlot(undefined);
+      }, 150);
+    } else {
+      setSelectedSlot(undefined);
     }
-    setSelectedSlot(undefined);
   };
 
   const handleSquareClick = (slot) => (() => {
@@ -82,6 +94,8 @@ const Board = ({
         pieceCode={getPieceCode(slot)}
         selected={selectedSlot === slot}
         targeted={getTargets().includes(slot)}
+        moveX={moveX}
+        moveY={moveY}
       />
     );
   });
@@ -96,20 +110,20 @@ const Board = ({
         background-position: top;
         display: grid;
         ${styles.MEDIA_TINY} {
-          grid-template-rows: repeat(10, 20px);
-          grid-template-columns: repeat(9, 20px);
+          grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_TINY});
+          grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_TINY});
         }
         ${styles.MEDIA_SMALL} {
-          grid-template-rows: repeat(10, 30px);
-          grid-template-columns: repeat(9, 30px);
+          grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_SMALL});
+          grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_SMALL});
         }
         ${styles.MEDIA_MEDIUM} {
-          grid-template-rows: repeat(10, 45px);
-          grid-template-columns: repeat(9, 45px);
+          grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_MEDIUM});
+          grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_MEDIUM});
         }
         ${styles.MEDIA_LARGE} {
-          grid-template-rows: repeat(10, 60px);
-          grid-template-columns: repeat(9, 60px);
+          grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_LARGE});
+          grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_LARGE});
         }
       `}
     >

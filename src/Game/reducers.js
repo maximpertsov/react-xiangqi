@@ -14,6 +14,7 @@ const getInitialMovesState = (fen = DEFAULT_FEN) => ([
     fromPos: undefined,
     toPos: undefined,
     board: new XiangqiBoard({ fen }),
+    pending: false,
   },
 ]);
 
@@ -65,12 +66,33 @@ const addMove = (state, board, { fromSlot, toSlot }) => {
     toPos: board.getRankFile(toSlot),
     piece: board.getPiece(fromSlot),
     board: board.move(fromSlot, toSlot),
+    pending: true,
   };
   return selectLastMove(
     incrementMoveCount(
       update(state, { moves: { $push: [newMove] } }),
     ),
   );
+};
+
+const cancelMoves = (state) => {
+  const { moves, selectedMoveIdx } = state;
+  const confirmedMoves = moves.filter(({ pending }) => !pending);
+
+  return {
+    ...state,
+    moves: confirmedMoves,
+    moveCount: confirmedMoves.length,
+    selectedMoveIdx: Math.min(selectedMoveIdx, confirmedMoves.length - 1),
+  };
+};
+
+const confirmMoves = (state) => {
+  const { moves } = state;
+  return {
+    ...state,
+    moves: moves.map((move) => ({ ...move, pending: false })),
+  };
 };
 
 const setMove = (
@@ -84,6 +106,7 @@ const setMove = (
     fromPos,
     toPos,
     board: board.move(fromPos, toPos, RefType.RANK_FILE),
+    pending: false,
   };
   return incrementMoveCount(update(state, { moves: { $push: [newMove] } }));
 };
@@ -107,6 +130,10 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'add_move':
       return addMove(state, action.board, action.move);
+    case 'cancelMoves':
+      return cancelMoves(state);
+    case 'confirm_moves':
+      return confirmMoves(state);
     case 'select_move':
       return setSelectedMove(state, action.index);
     case 'select_previous_move':

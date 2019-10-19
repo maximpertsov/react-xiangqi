@@ -42,9 +42,13 @@ const KingCheckedIndicator = styled.div({
 
 
 const Square = ({
-  handleClick, pieceCode, selected, inCheck, targeted,
+  handleClick, pieceCode, selected, inCheck, targeted, moveX, moveY,
 }) => {
   const occupied = pieceCode !== undefined;
+  const moving = moveX !== 0 || moveY !== 0
+
+  const selectedMoveX = selected ? moveX : 0;
+  const selectedMoveY = selected ? moveY : 0;
 
   return (
     <div
@@ -58,10 +62,10 @@ const Square = ({
         position: 'relative',
       }}
     >
-      {selected && <SelectionIndicator />}
-      {occupied && <XiangqiPiece code={pieceCode} />}
-      {targeted && <TargetIndicator occupied={occupied} />}
-      {inCheck && <KingCheckedIndicator />}
+      {selected && !(moving) && <SelectionIndicator />}
+      {occupied && <XiangqiPiece moveX={selectedMoveX} moveY={selectedMoveY} code={pieceCode} />}
+      {targeted && !(moving) && <TargetIndicator occupied={occupied} />}
+      {inCheck && !(moving) && <KingCheckedIndicator />}
     </div>
   );
 };
@@ -72,10 +76,14 @@ Square.propTypes = {
   selected: PropTypes.bool.isRequired,
   inCheck: PropTypes.bool.isRequired,
   targeted: PropTypes.bool.isRequired,
+  moveX: PropTypes.number,
+  moveY: PropTypes.number,
 };
 
 Square.defaultProps = {
   pieceCode: undefined,
+  moveX: 0,
+  moveY: 0,
 };
 
 export default Square;

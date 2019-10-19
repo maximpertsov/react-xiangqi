@@ -3,9 +3,20 @@ import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import * as images from './images';
+import * as styles from '../../commonStyles';
 
-const Piece = ({ color, type, icon }) => {
+const Piece = ({
+  color, type, icon, moveX, moveY,
+}) => {
   const alt = `${color} ${type}`;
+  const moving = moveX !== 0 || moveY !== 0;
+
+  const cssTransform = (squareSize) => {
+    const xTranslate = `calc(${squareSize} * ${moveX})`;
+    const yTranslate = `calc(${squareSize} * ${moveY})`;
+
+    return `transform: translate(${xTranslate}, ${yTranslate})`;
+  };
 
   return (
     <img
@@ -18,6 +29,20 @@ const Piece = ({ color, type, icon }) => {
         max-width: 80%;
         display: block;
         margin: auto;
+        z-index: ${moving ? 100 : 0};
+        transition: transform 100ms ease-in-out;
+        ${styles.MEDIA_TINY} {
+          ${cssTransform(styles.SQUARE_SIZE_TINY)};
+        }
+        ${styles.MEDIA_SMALL} {
+          ${cssTransform(styles.SQUARE_SIZE_SMALL)};
+        }
+        ${styles.MEDIA_MEDIUM} {
+          ${cssTransform(styles.SQUARE_SIZE_MEDIUM)};
+        }
+        ${styles.MEDIA_LARGE} {
+          ${cssTransform(styles.SQUARE_SIZE_LARGE)};
+        }
       `}
       alt={alt}
       src={icon}
@@ -46,24 +71,31 @@ Piece.propTypes = {
   color: PropTypes.string.isRequired,
   icon: sourcePropType.isRequired,
   type: PropTypes.string.isRequired,
+  moveX: PropTypes.number,
+  moveY: PropTypes.number,
 };
 
-const XiangqiPiece = ({ code }) => {
+Piece.defaultProps = {
+  moveX: 0,
+  moveY: 0,
+};
+
+const XiangqiPiece = ({ code, moveX, moveY }) => {
   const pieceByCode = {
-    k: <Piece icon={images.blackGeneral} color="black" type="general" />,
-    a: <Piece icon={images.blackAdvisor} color="black" type="advisor" />,
-    e: <Piece icon={images.blackElephant} color="black" type="elephant" />,
-    h: <Piece icon={images.blackHorse} color="black" type="horse" />,
-    r: <Piece icon={images.blackChariot} color="black" type="chariot" />,
-    c: <Piece icon={images.blackCannon} color="black" type="cannon" />,
-    p: <Piece icon={images.blackSoldier} color="black" type="soldier" />,
-    K: <Piece icon={images.redGeneral} color="red" type="general" />,
-    A: <Piece icon={images.redAdvisor} color="red" type="advisor" />,
-    E: <Piece icon={images.redElephant} color="red" type="elephant" />,
-    H: <Piece icon={images.redHorse} color="red" type="horse" />,
-    R: <Piece icon={images.redChariot} color="red" type="chariot" />,
-    C: <Piece icon={images.redCannon} color="red" type="cannon" />,
-    P: <Piece icon={images.redSoldier} color="red" type="soldier" />,
+    k: <Piece moveX={moveX} moveY={moveY} icon={images.blackGeneral} color="black" type="general" />,
+    a: <Piece moveX={moveX} moveY={moveY} icon={images.blackAdvisor} color="black" type="advisor" />,
+    e: <Piece moveX={moveX} moveY={moveY} icon={images.blackElephant} color="black" type="elephant" />,
+    h: <Piece moveX={moveX} moveY={moveY} icon={images.blackHorse} color="black" type="horse" />,
+    r: <Piece moveX={moveX} moveY={moveY} icon={images.blackChariot} color="black" type="chariot" />,
+    c: <Piece moveX={moveX} moveY={moveY} icon={images.blackCannon} color="black" type="cannon" />,
+    p: <Piece moveX={moveX} moveY={moveY} icon={images.blackSoldier} color="black" type="soldier" />,
+    K: <Piece moveX={moveX} moveY={moveY} icon={images.redGeneral} color="red" type="general" />,
+    A: <Piece moveX={moveX} moveY={moveY} icon={images.redAdvisor} color="red" type="advisor" />,
+    E: <Piece moveX={moveX} moveY={moveY} icon={images.redElephant} color="red" type="elephant" />,
+    H: <Piece moveX={moveX} moveY={moveY} icon={images.redHorse} color="red" type="horse" />,
+    R: <Piece moveX={moveX} moveY={moveY} icon={images.redChariot} color="red" type="chariot" />,
+    C: <Piece moveX={moveX} moveY={moveY} icon={images.redCannon} color="red" type="cannon" />,
+    P: <Piece moveX={moveX} moveY={moveY} icon={images.redSoldier} color="red" type="soldier" />,
   };
 
   return pieceByCode[code];
