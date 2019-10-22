@@ -12,6 +12,27 @@ export const Color = Object.freeze({
   BLACK: 'black',
 });
 
+export const Piece = Object.freeze({
+  Black: Object.freeze({
+    CHARIOT: 'r',
+    HORSE: 'h',
+    ELEPHANT: 'e',
+    ADVISOR: 'a',
+    GENERAL: 'k',
+    CANNON: 'c',
+    PAWN: 'p',
+  }),
+  Red: Object.freeze({
+    CHARIOT: 'R',
+    HORSE: 'H',
+    ELEPHANT: 'E',
+    ADVISOR: 'A',
+    GENERAL: 'K',
+    CANNON: 'C',
+    PAWN: 'P',
+  }),
+});
+
 const RANKS = 10;
 const FILES = 9;
 const BLACK_PIECES = 'rheakcp';
