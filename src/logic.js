@@ -7,6 +7,11 @@ export const RefType = Object.freeze({
   RANK_FILE_STRING: 2,
 });
 
+export const Color = Object.freeze({
+  RED: 'red',
+  BLACK: 'black',
+});
+
 const RANKS = 10;
 const FILES = 9;
 const BLACK_PIECES = 'rheakcp';
@@ -123,8 +128,8 @@ export default class XiangqiBoard {
   // TODO refactor and rename?
   isColor(color, slot) {
     const code = this.board[slot];
-    if (color === 'red' && this.isRedCode(code)) return true;
-    if (color === 'black' && this.isBlackCode(code)) return true;
+    if (color === Color.RED && this.isRedCode(code)) return true;
+    if (color === Color.BLACK && this.isBlackCode(code)) return true;
     return false;
   }
 
@@ -352,8 +357,8 @@ export default class XiangqiBoard {
 
   legalMovesByColor(color) {
     let selectFunc;
-    if (color === 'black') selectFunc = this.isBlack;
-    if (color === 'red') selectFunc = this.isRed;
+    if (color === Color.BLACK) selectFunc = this.isBlack;
+    if (color === Color.RED) selectFunc = this.isRed;
     if (selectFunc === undefined) selectFunc = () => false;
     return this.filteredLegalMoves(selectFunc.bind(this));
   }
@@ -370,8 +375,8 @@ export default class XiangqiBoard {
 
   findKingSlot(color) {
     let king;
-    if (color === 'black') king = 'k';
-    if (color === 'red') king = 'K';
+    if (color === Color.BLACK) king = 'k';
+    if (color === Color.RED) king = 'K';
     return this.board.indexOf(king);
   }
 
@@ -381,8 +386,8 @@ export default class XiangqiBoard {
     let ownKing;
     let otherKing;
     let otherRook;
-    if (color === 'black') [ownKing, otherKing, otherRook] = ['k', 'K', 'R'];
-    if (color === 'red') [ownKing, otherKing, otherRook] = ['K', 'k', 'r'];
+    if (color === Color.BLACK) [ownKing, otherKing, otherRook] = ['k', 'K', 'R'];
+    if (color === Color.RED) [ownKing, otherKing, otherRook] = ['K', 'k', 'r'];
 
     return board.drop(
       otherRook,
@@ -394,8 +399,8 @@ export default class XiangqiBoard {
   //       opposing king with a rook
   checksOwnKing(fromSlot, toSlot) {
     let color;
-    if (this.isBlack(fromSlot)) color = 'black';
-    if (this.isRed(fromSlot)) color = 'red';
+    if (this.isBlack(fromSlot)) color = Color.BLACK;
+    if (this.isRed(fromSlot)) color = Color.RED;
     return this.kingInCheck(color, this.move(fromSlot, toSlot));
   }
 
