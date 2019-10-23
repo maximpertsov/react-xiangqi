@@ -33,10 +33,33 @@ export const Piece = Object.freeze({
   }),
 });
 
+
+const isPawn = (piece) => (
+  piece === Piece.Black.PAWN || piece === Piece.Red.PAWN
+);
+const isChariot = (piece) => (
+  piece === Piece.Black.CHARIOT || piece === Piece.Red.CHARIOT
+);
+const isHorse = (piece) => (
+  piece === Piece.Black.HORSE || piece === Piece.Red.HORSE
+);
+const isElephant = (piece) => (
+  piece === Piece.Black.ELEPHANT || piece === Piece.Red.ELEPHANT
+);
+const isGeneral = (piece) => (
+  piece === Piece.Black.GENERAL || piece === Piece.Red.GENERAL
+);
+const isCannon = (piece) => (
+  piece === Piece.Black.CANNON || piece === Piece.Red.CANNON
+);
+const isAdvisor = (piece) => (
+  piece === Piece.Black.ADVISOR || piece === Piece.Red.ADVISOR
+);
+
 const RANKS = 10;
 const FILES = 9;
-const BLACK_PIECES = 'rheakcp';
-const RED_PIECES = 'RHEAKCP';
+const BLACK_PIECES = Object.values(Piece.Black);
+const RED_PIECES = Object.values(Piece.Red);
 const BLACK_RIVER_BANK = 4;
 const RED_RIVER_BANK = 5;
 const ORTHOGONAL_MOVES = [[1, 0], [-1, 0], [0, 1], [0, -1]];
@@ -350,15 +373,16 @@ export default class XiangqiBoard {
     return result;
   }
 
+
   legalMoves(allowSelfCheck = false) {
     const result = this.board.map((code, slot) => {
-      if (code === 'p' || code === 'P') return this.legalPawnMoves(slot);
-      if (code === 'h' || code === 'H') return this.legalHorseMoves(slot);
-      if (code === 'r' || code === 'R') return this.legalRookMoves(slot);
-      if (code === 'c' || code === 'C') return this.legalCannonMoves(slot);
-      if (code === 'e' || code === 'E') return this.legalElephantMoves(slot);
-      if (code === 'a' || code === 'A') return this.legalAdvisorMoves(slot);
-      if (code === 'k' || code === 'K') return this.legalKingMoves(slot);
+      if (isPawn(code)) return this.legalPawnMoves(slot);
+      if (isChariot(code)) return this.legalRookMoves(slot);
+      if (isHorse(code)) return this.legalHorseMoves(slot);
+      if (isElephant(code)) return this.legalElephantMoves(slot);
+      if (isGeneral(code)) return this.legalKingMoves(slot);
+      if (isCannon(code)) return this.legalCannonMoves(slot);
+      if (isAdvisor(code)) return this.legalAdvisorMoves(slot);
       return [];
     });
 
@@ -396,8 +420,8 @@ export default class XiangqiBoard {
 
   findKingSlot(color) {
     let king;
-    if (color === Color.BLACK) king = 'k';
-    if (color === Color.RED) king = 'K';
+    if (color === Color.BLACK) king = Piece.Black.GENERAL;
+    if (color === Color.RED) king = Piece.Red.GENERAL;
     return this.board.indexOf(king);
   }
 
@@ -407,8 +431,19 @@ export default class XiangqiBoard {
     let ownKing;
     let otherKing;
     let otherRook;
-    if (color === Color.BLACK) [ownKing, otherKing, otherRook] = ['k', 'K', 'R'];
-    if (color === Color.RED) [ownKing, otherKing, otherRook] = ['K', 'k', 'r'];
+    if (color === Color.BLACK) {
+      [ownKing, otherKing, otherRook] = [
+        Piece.Black.GENERAL,
+        Piece.Red.GENERAL,
+        Piece.Red.CHARIOT,
+      ];
+    } else if (color === Color.RED) {
+      [ownKing, otherKing, otherRook] = [
+        Piece.Red.GENERAL,
+        Piece.Black.GENERAL,
+        Piece.Black.CHARIOT,
+      ];
+    }
 
     return board.drop(
       otherRook,
