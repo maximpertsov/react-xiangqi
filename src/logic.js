@@ -1,5 +1,6 @@
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
+import sample from 'lodash.sample';
 
 export const RefType = Object.freeze({
   SLOT: 0,
@@ -123,6 +124,19 @@ export default class XiangqiBoard {
       [fromSlot]: { $set: null },
     });
     return this.new(board);
+  }
+
+  randomMove(color) {
+    const legalMoves = this.legalMovesByColor(color);
+    const randomMoves = legalMoves.reduce(
+      (acc, toSlots, fromSlot) => {
+        if (toSlots.length === 0) return acc;
+        return acc.concat([[fromSlot, sample(toSlots)]]);
+      },
+      [],
+    );
+    // TODO: what if no legal move exists?
+    return this.move(...sample(randomMoves));
   }
 
   drop(piece, pos, refType = RefType.SLOT) {
