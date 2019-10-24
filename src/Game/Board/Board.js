@@ -64,7 +64,7 @@ const Board = ({
 
   useEffect(
     () => {
-      if (autoMove) {
+      if (autoMove && nextMoveColor === 'black') {
         const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
         handleMove(fromSlot, toSlot);
       }
