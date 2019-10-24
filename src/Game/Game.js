@@ -212,6 +212,7 @@ const Game = ({ gameSlug, username }) => {
           <Player {...getOtherPlayer()} />
         </div>
         <Board
+          autoMove
           nextMoveColor={selectors.getNextMoveColor(state)}
           board={selectors.getMove(state, state.selectedMoveIdx).board}
           handleLegalMove={handleLegalMove}

@@ -136,7 +136,7 @@ export default class XiangqiBoard {
       [],
     );
     // TODO: what if no legal move exists?
-    return this.move(...sample(randomMoves));
+    return sample(randomMoves);
   }
 
   drop(piece, pos, refType = RefType.SLOT) {
