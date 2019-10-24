@@ -64,9 +64,14 @@ const Board = ({
 
   useEffect(
     () => {
-      if (autoMove) {
-        const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
-        handleMove(fromSlot, toSlot);
+      if (autoMove === 'both' || autoMove === nextMoveColor) {
+        try {
+          const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
+          handleMove(fromSlot, toSlot);
+        } catch (error) {
+          if (error instanceof TypeError) return;
+          throw error;
+        }
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -145,7 +150,7 @@ const Board = ({
 };
 
 Board.propTypes = {
-  autoMove: PropTypes.bool,
+  autoMove: PropTypes.oneOf([undefined, 'red', 'black', 'both']),
   board: boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
@@ -154,7 +159,7 @@ Board.propTypes = {
 };
 
 Board.defaultProps = {
-  autoMove: false,
+  autoMove: undefined,
 };
 
 export default Board;

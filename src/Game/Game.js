@@ -17,7 +17,7 @@ import * as selectors from './selectors';
 
 const POLL_INTERVAL = 2500;
 
-const Game = ({ gameSlug, username }) => {
+const Game = ({ autoMove, gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
 
   // Fetch data utilities
@@ -212,7 +212,7 @@ const Game = ({ gameSlug, username }) => {
           <Player {...getOtherPlayer()} />
         </div>
         <Board
-          autoMove
+          autoMove={autoMove}
           nextMoveColor={selectors.getNextMoveColor(state)}
           board={selectors.getMove(state, state.selectedMoveIdx).board}
           handleLegalMove={handleLegalMove}
@@ -252,11 +252,13 @@ const Game = ({ gameSlug, username }) => {
 };
 
 Game.propTypes = {
+  autoMove: PropTypes.oneOf([undefined, 'red', 'black', 'both']),
   gameSlug: PropTypes.string,
   username: PropTypes.string,
 };
 
 Game.defaultProps = {
+  autoMove: undefined,
   gameSlug: undefined,
   username: undefined,
 };
