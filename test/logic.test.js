@@ -1,4 +1,4 @@
-import XiangqiBoard, { RefType } from './logic';
+import XiangqiBoard, { RefType } from '../src/logic';
 
 const slotRankFileTests = [
   [0, 0, 0],
