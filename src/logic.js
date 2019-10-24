@@ -1,5 +1,6 @@
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
+import sample from 'lodash.sample';
 
 export const RefType = Object.freeze({
   SLOT: 0,
@@ -7,10 +8,59 @@ export const RefType = Object.freeze({
   RANK_FILE_STRING: 2,
 });
 
+export const Color = Object.freeze({
+  RED: 'red',
+  BLACK: 'black',
+});
+
+export const Piece = Object.freeze({
+  Black: Object.freeze({
+    CHARIOT: 'r',
+    HORSE: 'h',
+    ELEPHANT: 'e',
+    ADVISOR: 'a',
+    GENERAL: 'k',
+    CANNON: 'c',
+    PAWN: 'p',
+  }),
+  Red: Object.freeze({
+    CHARIOT: 'R',
+    HORSE: 'H',
+    ELEPHANT: 'E',
+    ADVISOR: 'A',
+    GENERAL: 'K',
+    CANNON: 'C',
+    PAWN: 'P',
+  }),
+});
+
+
+const isPawn = (piece) => (
+  piece === Piece.Black.PAWN || piece === Piece.Red.PAWN
+);
+const isChariot = (piece) => (
+  piece === Piece.Black.CHARIOT || piece === Piece.Red.CHARIOT
+);
+const isHorse = (piece) => (
+  piece === Piece.Black.HORSE || piece === Piece.Red.HORSE
+);
+const isElephant = (piece) => (
+  piece === Piece.Black.ELEPHANT || piece === Piece.Red.ELEPHANT
+);
+const isGeneral = (piece) => (
+  piece === Piece.Black.GENERAL || piece === Piece.Red.GENERAL
+);
+const isCannon = (piece) => (
+  piece === Piece.Black.CANNON || piece === Piece.Red.CANNON
+);
+const isAdvisor = (piece) => (
+  piece === Piece.Black.ADVISOR || piece === Piece.Red.ADVISOR
+);
+
 const RANKS = 10;
 const FILES = 9;
-const BLACK_PIECES = 'rheakcp';
-const RED_PIECES = 'RHEAKCP';
+const BLACK_PIECES = Object.values(Piece.Black);
+const RED_PIECES = Object.values(Piece.Red);
 const BLACK_RIVER_BANK = 4;
 const RED_RIVER_BANK = 5;
 const ORTHOGONAL_MOVES = [[1, 0], [-1, 0], [0, 1], [0, -1]];
@@ -76,6 +126,19 @@ export default class XiangqiBoard {
     return this.new(board);
   }
 
+  randomMove(color) {
+    const legalMoves = this.legalMovesByColor(color);
+    const randomMoves = legalMoves.reduce(
+      (acc, toSlots, fromSlot) => {
+        if (toSlots.length === 0) return acc;
+        return acc.concat([[fromSlot, sample(toSlots)]]);
+      },
+      [],
+    );
+    // TODO: what if no legal move exists?
+    return sample(randomMoves);
+  }
+
   drop(piece, pos, refType = RefType.SLOT) {
     const slot = this._slot(pos, refType);
     const board = update(this.board, {
@@ -123,8 +186,8 @@ export default class XiangqiBoard {
   // TODO refactor and rename?
   isColor(color, slot) {
     const code = this.board[slot];
-    if (color === 'red' && this.isRedCode(code)) return true;
-    if (color === 'black' && this.isBlackCode(code)) return true;
+    if (color === Color.RED && this.isRedCode(code)) return true;
+    if (color === Color.BLACK && this.isBlackCode(code)) return true;
     return false;
   }
 
@@ -324,15 +387,16 @@ export default class XiangqiBoard {
     return result;
   }
 
+
   legalMoves(allowSelfCheck = false) {
     const result = this.board.map((code, slot) => {
-      if (code === 'p' || code === 'P') return this.legalPawnMoves(slot);
-      if (code === 'h' || code === 'H') return this.legalHorseMoves(slot);
-      if (code === 'r' || code === 'R') return this.legalRookMoves(slot);
-      if (code === 'c' || code === 'C') return this.legalCannonMoves(slot);
-      if (code === 'e' || code === 'E') return this.legalElephantMoves(slot);
-      if (code === 'a' || code === 'A') return this.legalAdvisorMoves(slot);
-      if (code === 'k' || code === 'K') return this.legalKingMoves(slot);
+      if (isPawn(code)) return this.legalPawnMoves(slot);
+      if (isChariot(code)) return this.legalRookMoves(slot);
+      if (isHorse(code)) return this.legalHorseMoves(slot);
+      if (isElephant(code)) return this.legalElephantMoves(slot);
+      if (isGeneral(code)) return this.legalKingMoves(slot);
+      if (isCannon(code)) return this.legalCannonMoves(slot);
+      if (isAdvisor(code)) return this.legalAdvisorMoves(slot);
       return [];
     });
 
@@ -352,8 +416,8 @@ export default class XiangqiBoard {
 
   legalMovesByColor(color) {
     let selectFunc;
-    if (color === 'black') selectFunc = this.isBlack;
-    if (color === 'red') selectFunc = this.isRed;
+    if (color === Color.BLACK) selectFunc = this.isBlack;
+    if (color === Color.RED) selectFunc = this.isRed;
     if (selectFunc === undefined) selectFunc = () => false;
     return this.filteredLegalMoves(selectFunc.bind(this));
   }
@@ -370,8 +434,8 @@ export default class XiangqiBoard {
 
   findKingSlot(color) {
     let king;
-    if (color === 'black') king = 'k';
-    if (color === 'red') king = 'K';
+    if (color === Color.BLACK) king = Piece.Black.GENERAL;
+    if (color === Color.RED) king = Piece.Red.GENERAL;
     return this.board.indexOf(king);
   }
 
@@ -381,8 +445,19 @@ export default class XiangqiBoard {
     let ownKing;
     let otherKing;
     let otherRook;
-    if (color === 'black') [ownKing, otherKing, otherRook] = ['k', 'K', 'R'];
-    if (color === 'red') [ownKing, otherKing, otherRook] = ['K', 'k', 'r'];
+    if (color === Color.BLACK) {
+      [ownKing, otherKing, otherRook] = [
+        Piece.Black.GENERAL,
+        Piece.Red.GENERAL,
+        Piece.Red.CHARIOT,
+      ];
+    } else if (color === Color.RED) {
+      [ownKing, otherKing, otherRook] = [
+        Piece.Red.GENERAL,
+        Piece.Black.GENERAL,
+        Piece.Black.CHARIOT,
+      ];
+    }
 
     return board.drop(
       otherRook,
@@ -394,8 +469,8 @@ export default class XiangqiBoard {
   //       opposing king with a rook
   checksOwnKing(fromSlot, toSlot) {
     let color;
-    if (this.isBlack(fromSlot)) color = 'black';
-    if (this.isRed(fromSlot)) color = 'red';
+    if (this.isBlack(fromSlot)) color = Color.BLACK;
+    if (this.isRed(fromSlot)) color = Color.RED;
     return this.kingInCheck(color, this.move(fromSlot, toSlot));
   }
 
@@ -420,8 +495,8 @@ export default class XiangqiBoard {
 export const boardPropType = PropTypes.shape({
   ranks: PropTypes.number,
   files: PropTypes.number,
-  redPieces: PropTypes.string,
-  blackPieces: PropTypes.string,
+  redPieces: PropTypes.arrayOf(PropTypes.string),
+  blackPieces: PropTypes.arrayOf(PropTypes.string),
   fen: PropTypes.string,
   redRiverBank: PropTypes.number,
   blackRiverBank: PropTypes.number,

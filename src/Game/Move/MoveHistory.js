@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
@@ -38,22 +38,6 @@ const Wrapper = styled.div`
 `;
 
 const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
-  const [bottomElement, setBottomElement] = useState(undefined);
-
-  useLayoutEffect(
-    () => {
-      const scrollToBottom = () => {
-        try {
-          bottomElement.scrollIntoView();
-        } catch (e) {
-          if (!(e instanceof TypeError)) { throw e; }
-        }
-      };
-      scrollToBottom();
-    },
-    [bottomElement, moves],
-  );
-
   const moveComponents = moves
     .reduce((acc, m, i) => (
       acc.concat(
@@ -78,7 +62,6 @@ const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
     <Segment clearing tertiary>
       <Wrapper>
         {moveComponents}
-        <div ref={setBottomElement} />
       </Wrapper>
     </Segment>
   );

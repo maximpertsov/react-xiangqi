@@ -7,6 +7,8 @@ import LoginForm from '../LoginForm/LoginForm';
 import * as client from '../client';
 
 const LOCAL = 'local';
+const PLAYER_VS_CPU = 'player_vs_cpu';
+const CPU_VS_CPU = 'cpu_vs_cpu';
 
 const MainMenu = () => {
   const [username, setUsername] = useState(undefined);
@@ -44,7 +46,13 @@ const MainMenu = () => {
             <Segment>
               <Header size="large">Other modes</Header>
               <Button onClick={() => { setGameSlug(LOCAL); }}>
-                Local Play
+                Solo play
+              </Button>
+              <Button onClick={() => { setGameSlug(PLAYER_VS_CPU); }}>
+                vs CPU
+              </Button>
+              <Button onClick={() => { setGameSlug(CPU_VS_CPU); }}>
+                CPU vs CPU
               </Button>
             </Segment>
           </Segment.Group>
@@ -52,6 +60,10 @@ const MainMenu = () => {
       );
     case LOCAL:
       return <Game />;
+    case PLAYER_VS_CPU:
+      return <Game autoMove="black" />;
+    case CPU_VS_CPU:
+      return <Game autoMove="both" />;
     default:
       return (
         <Game
