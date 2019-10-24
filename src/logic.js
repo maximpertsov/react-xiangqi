@@ -495,8 +495,8 @@ export default class XiangqiBoard {
 export const boardPropType = PropTypes.shape({
   ranks: PropTypes.number,
   files: PropTypes.number,
-  redPieces: PropTypes.string,
-  blackPieces: PropTypes.string,
+  redPieces: PropTypes.arrayOf(PropTypes.string),
+  blackPieces: PropTypes.arrayOf(PropTypes.string),
   fen: PropTypes.string,
   redRiverBank: PropTypes.number,
   blackRiverBank: PropTypes.number,
