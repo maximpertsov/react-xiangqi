@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
 
 import Move from './Move';
-import { boardPropType } from '../../logic';
+import * as logic from '../../logic';
 import * as styles from '../../commonStyles';
 
 // TODO: set max-height by percentage?
@@ -69,7 +69,7 @@ const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
 
 MoveHistory.propTypes = {
   // TODO: add move proptype
-  moves: PropTypes.arrayOf(boardPropType).isRequired,
+  moves: PropTypes.arrayOf(logic.boardPropType).isRequired,
   selectedIdx: PropTypes.number.isRequired,
   handleMoveSelect: PropTypes.func.isRequired,
 };

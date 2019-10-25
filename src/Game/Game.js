@@ -13,6 +13,7 @@ import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import ConfirmMenu from './ConfirmMenu';
 import * as client from '../client';
+import * as logic from '../logic';
 import * as selectors from './selectors';
 
 const POLL_INTERVAL = 2500;
@@ -138,8 +139,8 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
       const { board, fromPos, toPos } = lastMove;
       // TODO: let post move to server accept pos args as is?
-      const fromSlot = board.getSlot(...fromPos);
-      const toSlot = board.getSlot(...toPos);
+      const fromSlot = logic.getSlot(...fromPos);
+      const toSlot = logic.getSlot(...toPos);
       postMoveToServer(board, fromSlot, toSlot);
       dispatch({ type: 'confirm_moves' });
     },

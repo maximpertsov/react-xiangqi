@@ -1,6 +1,6 @@
 import update from 'immutability-helper';
 import { useReducer } from 'react';
-import XiangqiBoard, { RefType } from '../logic';
+import XiangqiBoard, * as logic from '../logic';
 
 // Initial State
 
@@ -62,8 +62,8 @@ const selectLastMove = (state) => {
 
 const addMove = (state, board, { fromSlot, toSlot }) => {
   const newMove = {
-    fromPos: board.getRankFile(fromSlot),
-    toPos: board.getRankFile(toSlot),
+    fromPos: logic.getRankFile(fromSlot),
+    toPos: logic.getRankFile(toSlot),
     piece: board.getPiece(fromSlot),
     board: board.move(fromSlot, toSlot),
     pending: true,
@@ -105,7 +105,7 @@ const setMove = (
     piece,
     fromPos,
     toPos,
-    board: board.move(fromPos, toPos, RefType.RANK_FILE),
+    board: board.move(fromPos, toPos, logic.RefType.RANK_FILE),
     pending: false,
   };
   return incrementMoveCount(update(state, { moves: { $push: [newMove] } }));
