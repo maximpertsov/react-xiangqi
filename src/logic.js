@@ -57,8 +57,8 @@ const isAdvisor = (piece) => (
   piece === Piece.Black.ADVISOR || piece === Piece.Red.ADVISOR
 );
 
-const RANKS = 10;
-const FILES = 9;
+const RANK_COUNT = 10;
+const FILE_COUNT = 9;
 const BLACK_PIECES = Object.values(Piece.Black);
 const RED_PIECES = Object.values(Piece.Red);
 const BLACK_RIVER_BANK = 4;
@@ -81,20 +81,12 @@ const EMPTY_BOARD_FEN = '9/9/9/9/9/9/9/9/9/9';
 export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
   constructor({
-    ranks = RANKS,
-    files = FILES,
-    redPieces = RED_PIECES,
-    blackPieces = BLACK_PIECES,
     fen = EMPTY_BOARD_FEN,
     redRiverBank = RED_RIVER_BANK,
     blackRiverBank = BLACK_RIVER_BANK,
     redPalace = RED_PALACE,
     blackPalace = BLACK_PALACE,
   } = {}) {
-    this.ranks = ranks;
-    this.files = files;
-    this.redPieces = redPieces;
-    this.blackPieces = blackPieces;
     this.redRiverBank = redRiverBank;
     this.blackRiverBank = blackRiverBank;
     this.redPalace = redPalace.map((pos) => this.getSlot(...pos));
@@ -161,22 +153,22 @@ export default class XiangqiBoard {
     return this.board[slot];
   }
 
-  getSlot(rank, file) { return file + rank * this.files; }
+  getSlot(rank, file) { return file + rank * FILE_COUNT; }
 
-  getRank(slot) { return Math.floor(slot / this.files); }
+  getRank(slot) { return Math.floor(slot / FILE_COUNT); }
 
-  getFile(slot) { return slot % this.files; }
+  getFile(slot) { return slot % FILE_COUNT; }
 
   getRankFile(slot) { return [this.getRank(slot), this.getFile(slot)]; }
 
-  isRedCode(code) { return this.redPieces.includes(code); }
+  isRedCode(code) { return RED_PIECES.includes(code); }
 
   isRed(slot) {
     const code = this.board[slot];
     return this.isRedCode(code);
   }
 
-  isBlackCode(code) { return this.blackPieces.includes(code); }
+  isBlackCode(code) { return BLACK_PIECES.includes(code); }
 
   isBlack(slot) {
     const code = this.board[slot];
@@ -221,7 +213,7 @@ export default class XiangqiBoard {
     const rank = this.getRank(slot);
     const file = this.getFile(slot);
     let nextRank = rank;
-    if (this.isBlack(slot)) nextRank = Math.min(rank + 1, this.ranks - 1);
+    if (this.isBlack(slot)) nextRank = Math.min(rank + 1, RANK_COUNT - 1);
     if (this.isRed(slot)) nextRank = Math.max(rank - 1, 0);
     return this.getSlot(nextRank, file);
   }
@@ -250,8 +242,8 @@ export default class XiangqiBoard {
     const [rank, file] = this.getRankFile(slot);
     const newRank = rankMove + rank;
     const newFile = fileMove + file;
-    if (newRank < 0 || newRank >= this.ranks) return null;
-    if (newFile < 0 || newFile >= this.files) return null;
+    if (newRank < 0 || newRank >= RANK_COUNT) return null;
+    if (newFile < 0 || newFile >= FILE_COUNT) return null;
     return this.getSlot(newRank, newFile);
   }
 
@@ -260,7 +252,7 @@ export default class XiangqiBoard {
   }
 
   // TODO make this non-recursive?
-  tryMarch(slot, rankMove, fileMove, steps = Math.max(this.ranks, this.files)) {
+  tryMarch(slot, rankMove, fileMove, steps = Math.max(RANK_COUNT, FILE_COUNT)) {
     if (steps < 1) return [];
     const nextSlot = this.tryMove(slot, rankMove, fileMove);
     if (nextSlot === null) return [];
@@ -477,7 +469,7 @@ export default class XiangqiBoard {
   toFen(board = this.board) {
     const rows = [];
     board.forEach((piece, idx) => {
-      if (idx % this.files === 0) rows.push([]);
+      if (idx % FILE_COUNT === 0) rows.push([]);
       const lastRow = rows[rows.length - 1];
       const lastRowSize = lastRow.length;
       if (piece !== null) {
