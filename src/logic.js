@@ -39,9 +39,10 @@ const isAdvisor = (piece) => (
   piece === Piece.Black.ADVISOR || piece === Piece.Red.ADVISOR
 );
 
-const getSlot = (rank, file) => file + (rank * FILE_COUNT);
-const getRank = (slot) => Math.floor(slot / FILE_COUNT);
-const getFile = (slot) => slot % FILE_COUNT;
+export const getSlot = (rank, file) => file + (rank * FILE_COUNT);
+export const getRank = (slot) => Math.floor(slot / FILE_COUNT);
+export const getFile = (slot) => slot % FILE_COUNT;
+export const getRankFile = (slot) => [getRank(slot), getFile(slot)];
 
 const BLACK_PALACE = [
   [0, 3], [0, 4], [0, 5],
@@ -69,7 +70,7 @@ export default class XiangqiBoard {
     if (refType === RefType.SLOT) return pos;
     if (refType === RefType.RANK_FILE) {
       const [rank, file] = pos;
-      return this.getSlot(rank, file);
+      return getSlot(rank, file);
     }
     if (refType === RefType.RANK_FILE_STRING) {
       const _pos = pos.split(',').map((x) => +x);
@@ -122,14 +123,6 @@ export default class XiangqiBoard {
     return this.board[slot];
   }
 
-  getSlot(rank, file) { return getSlot(rank, file); }
-
-  getRank(slot) { return getRank(slot); }
-
-  getFile(slot) { return getFile(slot); }
-
-  getRankFile(slot) { return [this.getRank(slot), this.getFile(slot)]; }
-
   isRedCode(code) { return RED_PIECES.includes(code); }
 
   isRed(slot) {
@@ -179,16 +172,16 @@ export default class XiangqiBoard {
   }
 
   getNextRankSlot(slot) {
-    const rank = this.getRank(slot);
-    const file = this.getFile(slot);
+    const rank = getRank(slot);
+    const file = getFile(slot);
     let nextRank = rank;
     if (this.isBlack(slot)) nextRank = Math.min(rank + 1, RANK_COUNT - 1);
     if (this.isRed(slot)) nextRank = Math.max(rank - 1, 0);
-    return this.getSlot(nextRank, file);
+    return getSlot(nextRank, file);
   }
 
   crossingRiver(fromSlot, toSlot) {
-    const rank = this.getRank(toSlot);
+    const rank = getRank(toSlot);
     if (this.isBlack(fromSlot)) return rank >= RED_RIVER_BANK;
     if (this.isRed(fromSlot)) return rank <= BLACK_RIVER_BANK;
     return false;
@@ -208,12 +201,12 @@ export default class XiangqiBoard {
   }
 
   tryMove(slot, rankMove, fileMove) {
-    const [rank, file] = this.getRankFile(slot);
+    const [rank, file] = getRankFile(slot);
     const newRank = rankMove + rank;
     const newFile = fileMove + file;
     if (newRank < 0 || newRank >= RANK_COUNT) return null;
     if (newFile < 0 || newFile >= FILE_COUNT) return null;
-    return this.getSlot(newRank, newFile);
+    return getSlot(newRank, newFile);
   }
 
   tryMoves(slot, moves) {

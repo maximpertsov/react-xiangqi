@@ -1,4 +1,9 @@
-import XiangqiBoard, { RefType } from '../src/logic';
+import XiangqiBoard, {
+  RefType,
+  getRank,
+  getFile,
+  getSlot,
+} from '../src/logic';
 
 const slotRankFileTests = [
   [0, 0, 0],
@@ -96,29 +101,25 @@ const slotRankFileTests = [
 test.each(slotRankFileTests)(
   'convert slot (%i) to [rank, file]([%i, %i])',
   (slot, rank, file) => {
-    const xb = new XiangqiBoard();
-    expect(xb.getRank(slot)).toBe(rank);
-    expect(xb.getFile(slot)).toBe(file);
-    expect(xb.getSlot(rank, file)).toBe(slot);
+    expect(getRank(slot)).toBe(rank);
+    expect(getFile(slot)).toBe(file);
+    expect(getSlot(rank, file)).toBe(slot);
   },
 );
 
 test('convert rank-file to index', () => {
-  const xb = new XiangqiBoard();
-  expect(xb.getSlot(0, 0)).toBe(0);
-  expect(xb.getSlot(5, 3)).toBe(48);
+  expect(getSlot(0, 0)).toBe(0);
+  expect(getSlot(5, 3)).toBe(48);
 });
 
 test('convert index to rank', () => {
-  const xb = new XiangqiBoard();
-  expect(xb.getRank(0)).toBe(0);
-  expect(xb.getRank(48)).toBe(5);
+  expect(getRank(0)).toBe(0);
+  expect(getRank(48)).toBe(5);
 });
 
 test('convert index to file', () => {
-  const xb = new XiangqiBoard();
-  expect(xb.getFile(0)).toBe(0);
-  expect(xb.getFile(48)).toBe(3);
+  expect(getFile(0)).toBe(0);
+  expect(getFile(48)).toBe(3);
 });
 
 test('converts FEN string to an array', () => {
