@@ -34,6 +34,8 @@ export const Piece = Object.freeze({
   }),
 });
 
+const BLACK_PIECES = Object.values(Piece.Black);
+const RED_PIECES = Object.values(Piece.Red);
 
 const isPawn = (piece) => (
   piece === Piece.Black.PAWN || piece === Piece.Red.PAWN
@@ -59,8 +61,6 @@ const isAdvisor = (piece) => (
 
 const RANK_COUNT = 10;
 const FILE_COUNT = 9;
-const BLACK_PIECES = Object.values(Piece.Black);
-const RED_PIECES = Object.values(Piece.Red);
 const BLACK_RIVER_BANK = 4;
 const RED_RIVER_BANK = 5;
 const ORTHOGONAL_MOVES = [[1, 0], [-1, 0], [0, 1], [0, -1]];
@@ -82,13 +82,9 @@ export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
   constructor({
     fen = EMPTY_BOARD_FEN,
-    redRiverBank = RED_RIVER_BANK,
-    blackRiverBank = BLACK_RIVER_BANK,
     redPalace = RED_PALACE,
     blackPalace = BLACK_PALACE,
   } = {}) {
-    this.redRiverBank = redRiverBank;
-    this.blackRiverBank = blackRiverBank;
     this.redPalace = redPalace.map((pos) => this.getSlot(...pos));
     this.blackPalace = blackPalace.map((pos) => this.getSlot(...pos));
     this.board = this.fromFen(fen);
@@ -220,8 +216,8 @@ export default class XiangqiBoard {
 
   crossingRiver(fromSlot, toSlot) {
     const rank = this.getRank(toSlot);
-    if (this.isBlack(fromSlot)) return rank >= this.redRiverBank;
-    if (this.isRed(fromSlot)) return rank <= this.blackRiverBank;
+    if (this.isBlack(fromSlot)) return rank >= RED_RIVER_BANK;
+    if (this.isRed(fromSlot)) return rank <= BLACK_RIVER_BANK;
     return false;
   }
 
@@ -485,13 +481,7 @@ export default class XiangqiBoard {
 }
 
 export const boardPropType = PropTypes.shape({
-  ranks: PropTypes.number,
-  files: PropTypes.number,
-  redPieces: PropTypes.arrayOf(PropTypes.string),
-  blackPieces: PropTypes.arrayOf(PropTypes.string),
   fen: PropTypes.string,
-  redRiverBank: PropTypes.number,
-  blackRiverBank: PropTypes.number,
   redPalace: PropTypes.arrayOf(PropTypes.number),
   blackPalace: PropTypes.arrayOf(PropTypes.number),
 });
