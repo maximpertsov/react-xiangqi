@@ -65,28 +65,30 @@ const BLACK_RIVER_BANK = 4;
 const RED_RIVER_BANK = 5;
 const ORTHOGONAL_MOVES = [[1, 0], [-1, 0], [0, 1], [0, -1]];
 const DIAGONAL_MOVES = [[1, 1], [-1, 1], [1, -1], [-1, -1]];
-// TODO store this in a board FEN-style string?
+
+const getSlot = (rank, file) => file + (rank * FILE_COUNT);
+const getRank = (slot) => Math.floor(slot / FILE_COUNT);
+const getFile = (slot) => slot % FILE_COUNT;
+
 const BLACK_PALACE = [
   [0, 3], [0, 4], [0, 5],
   [1, 3], [1, 4], [1, 5],
   [2, 3], [2, 4], [2, 5],
-];
+].map((pos) => getSlot(...pos));
+
 const RED_PALACE = [
   [9, 3], [9, 4], [9, 5],
   [8, 3], [8, 4], [8, 5],
   [7, 3], [7, 4], [7, 5],
-];
+].map((pos) => getSlot(...pos));
+
 const EMPTY_BOARD_FEN = '9/9/9/9/9/9/9/9/9/9';
 
 export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
   constructor({
     fen = EMPTY_BOARD_FEN,
-    redPalace = RED_PALACE,
-    blackPalace = BLACK_PALACE,
   } = {}) {
-    this.redPalace = redPalace.map((pos) => this.getSlot(...pos));
-    this.blackPalace = blackPalace.map((pos) => this.getSlot(...pos));
     this.board = this.fromFen(fen);
   }
 
@@ -139,8 +141,6 @@ export default class XiangqiBoard {
     const options = { ...this };
     delete options.board;
     options.fen = this.toFen(board);
-    options.redPalace = this.redPalace.map((slot) => this.getRankFile(slot));
-    options.blackPalace = this.blackPalace.map((slot) => this.getRankFile(slot));
     return new this.constructor(options);
   }
 
@@ -149,11 +149,11 @@ export default class XiangqiBoard {
     return this.board[slot];
   }
 
-  getSlot(rank, file) { return file + rank * FILE_COUNT; }
+  getSlot(rank, file) { return getSlot(rank, file); }
 
-  getRank(slot) { return Math.floor(slot / FILE_COUNT); }
+  getRank(slot) { return getRank(slot); }
 
-  getFile(slot) { return slot % FILE_COUNT; }
+  getFile(slot) { return getFile(slot); }
 
   getRankFile(slot) { return [this.getRank(slot), this.getFile(slot)]; }
 
@@ -354,8 +354,8 @@ export default class XiangqiBoard {
   }
 
   inPalace(fromSlot, toSlot) {
-    if (this.isBlack(fromSlot)) return this.blackPalace.includes(toSlot);
-    if (this.isRed(fromSlot)) return this.redPalace.includes(toSlot);
+    if (this.isBlack(fromSlot)) return BLACK_PALACE.includes(toSlot);
+    if (this.isRed(fromSlot)) return RED_PALACE.includes(toSlot);
     return false;
   }
 
@@ -482,6 +482,4 @@ export default class XiangqiBoard {
 
 export const boardPropType = PropTypes.shape({
   fen: PropTypes.string,
-  redPalace: PropTypes.arrayOf(PropTypes.number),
-  blackPalace: PropTypes.arrayOf(PropTypes.number),
 });
