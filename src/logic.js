@@ -1,41 +1,21 @@
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
 import sample from 'lodash.sample';
+import {
+  RefType,
+  Color,
+  Piece,
+  BLACK_PIECES,
+  RED_PIECES,
+  RANK_COUNT,
+  FILE_COUNT,
+  BLACK_RIVER_BANK,
+  RED_RIVER_BANK,
+  ORTHOGONAL_MOVES,
+  DIAGONAL_MOVES,
+} from './logic/constants';
 
-export const RefType = Object.freeze({
-  SLOT: 0,
-  RANK_FILE: 1,
-  RANK_FILE_STRING: 2,
-});
-
-export const Color = Object.freeze({
-  RED: 'red',
-  BLACK: 'black',
-});
-
-export const Piece = Object.freeze({
-  Black: Object.freeze({
-    CHARIOT: 'r',
-    HORSE: 'h',
-    ELEPHANT: 'e',
-    ADVISOR: 'a',
-    GENERAL: 'k',
-    CANNON: 'c',
-    PAWN: 'p',
-  }),
-  Red: Object.freeze({
-    CHARIOT: 'R',
-    HORSE: 'H',
-    ELEPHANT: 'E',
-    ADVISOR: 'A',
-    GENERAL: 'K',
-    CANNON: 'C',
-    PAWN: 'P',
-  }),
-});
-
-const BLACK_PIECES = Object.values(Piece.Black);
-const RED_PIECES = Object.values(Piece.Red);
+export { RefType };
 
 const isPawn = (piece) => (
   piece === Piece.Black.PAWN || piece === Piece.Red.PAWN
@@ -58,13 +38,6 @@ const isCannon = (piece) => (
 const isAdvisor = (piece) => (
   piece === Piece.Black.ADVISOR || piece === Piece.Red.ADVISOR
 );
-
-const RANK_COUNT = 10;
-const FILE_COUNT = 9;
-const BLACK_RIVER_BANK = 4;
-const RED_RIVER_BANK = 5;
-const ORTHOGONAL_MOVES = [[1, 0], [-1, 0], [0, 1], [0, -1]];
-const DIAGONAL_MOVES = [[1, 1], [-1, 1], [1, -1], [-1, -1]];
 
 const getSlot = (rank, file) => file + (rank * FILE_COUNT);
 const getRank = (slot) => Math.floor(slot / FILE_COUNT);
