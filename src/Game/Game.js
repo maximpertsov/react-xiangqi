@@ -138,8 +138,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       if (!lastMove.pending) return;
 
       const { board, fromPos, toPos } = lastMove;
-      // TODO: implement getPiece using position instead of slot
-      const piece = board.getPiece(logic.getSlot(...toPos));
+      const piece = board.getPiece(toPos, logic.RefType.RANK_FILE);
 
       postMoveToServer(piece, fromPos, toPos);
       dispatch({ type: 'confirm_moves' });
