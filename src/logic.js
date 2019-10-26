@@ -5,6 +5,7 @@ import {
   RefType,
   Color,
   Piece,
+  EMPTY_BOARD_FEN,
   RANK_COUNT,
   FILE_COUNT,
   BLACK_RIVER_BANK,
@@ -21,13 +22,9 @@ export const {
   getSlot, getRank, getFile, getRankFile,
 } = utils;
 
-const EMPTY_BOARD_FEN = '9/9/9/9/9/9/9/9/9/9';
-
 export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
-  constructor({
-    fen = EMPTY_BOARD_FEN,
-  } = {}) {
+  constructor({ fen = EMPTY_BOARD_FEN } = {}) {
     this.board = this.fromFen(fen);
   }
 
@@ -295,7 +292,6 @@ export default class XiangqiBoard {
     });
     return result;
   }
-
 
   legalMoves(allowSelfCheck = false) {
     const result = this.board.map((code, slot) => {
