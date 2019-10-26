@@ -1,5 +1,4 @@
 import axios from 'axios';
-import * as logic from './logic';
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_API_URL;
 axios.defaults.timeout = 1000;
@@ -21,19 +20,18 @@ export const getLastUpdate = (gameId) => axios
 export const getMoveCount = (gameId) => axios
   .get(`game/${gameId}/move-count`);
 
-const getPostMovePayload = (username, board, fromSlot, toSlot) => {
-  const fromPos = logic.getRankFile(fromSlot);
-  const toPos = logic.getRankFile(toSlot);
-  const piece = board.getPiece(toSlot);
-  return {
-    player: username, piece, from: fromPos, to: toPos, type: 'move',
-  };
-};
+const getPostMovePayload = (username, piece, fromPos, toPos) => ({
+  player: username,
+  piece,
+  from: fromPos,
+  to: toPos,
+  type: 'move',
+});
 
 export const postMove = (gameId, {
-  username, board, fromSlot, toSlot,
+  username, piece, fromPos, toPos,
 }) => {
-  const payload = getPostMovePayload(username, board, fromSlot, toSlot);
+  const payload = getPostMovePayload(username, piece, fromPos, toPos);
   return axios.post(`game/${gameId}/moves`, payload);
 };
 

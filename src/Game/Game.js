@@ -100,12 +100,12 @@ const Game = ({ autoMove, gameSlug, username }) => {
   // Move updates
 
   const postMoveToServer = useCallback(
-    (board, fromSlot, toSlot) => {
+    (piece, fromPos, toPos) => {
       if (gameSlug === undefined) return;
 
       client
         .postMove(gameSlug, {
-          username, board, fromSlot, toSlot,
+          username, piece, fromPos, toPos,
         })
         .then(({ status }) => {
           if (status !== 201) fetchMoves();
@@ -138,10 +138,10 @@ const Game = ({ autoMove, gameSlug, username }) => {
       if (!lastMove.pending) return;
 
       const { board, fromPos, toPos } = lastMove;
-      // TODO: let post move to server accept pos args as is?
-      const fromSlot = logic.getSlot(...fromPos);
-      const toSlot = logic.getSlot(...toPos);
-      postMoveToServer(board, fromSlot, toSlot);
+      // TODO: implement getPiece using position instead of slot
+      const piece = board.getPiece(logic.getSlot(...toPos));
+
+      postMoveToServer(piece, fromPos, toPos);
       dispatch({ type: 'confirm_moves' });
     },
     [dispatch, postMoveToServer, state],
