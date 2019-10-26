@@ -1,4 +1,4 @@
-import { Piece } from './constants';
+import { Piece, FILE_COUNT } from './constants';
 
 export const isPawn = (piece) => (
   piece === Piece.Black.PAWN || piece === Piece.Red.PAWN
@@ -21,3 +21,8 @@ export const isCannon = (piece) => (
 export const isAdvisor = (piece) => (
   piece === Piece.Black.ADVISOR || piece === Piece.Red.ADVISOR
 );
+
+export const getSlot = (rank, file) => file + (rank * FILE_COUNT);
+export const getRank = (slot) => Math.floor(slot / FILE_COUNT);
+export const getFile = (slot) => slot % FILE_COUNT;
+export const getRankFile = (slot) => [getRank(slot), getFile(slot)];

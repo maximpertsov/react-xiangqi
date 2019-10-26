@@ -18,10 +18,10 @@ import * as utils from './logic/utils';
 
 export { RefType };
 
-export const getSlot = (rank, file) => file + (rank * FILE_COUNT);
-export const getRank = (slot) => Math.floor(slot / FILE_COUNT);
-export const getFile = (slot) => slot % FILE_COUNT;
-export const getRankFile = (slot) => [getRank(slot), getFile(slot)];
+// TODO: re-const is ugly
+export const {
+  getSlot, getRank, getFile, getRankFile,
+} = utils;
 
 const BLACK_PALACE = [
   [0, 3], [0, 4], [0, 5],
