@@ -5,8 +5,6 @@ import {
   RefType,
   Color,
   Piece,
-  BLACK_PIECES,
-  RED_PIECES,
   RANK_COUNT,
   FILE_COUNT,
   BLACK_RIVER_BANK,
@@ -22,18 +20,6 @@ export { RefType };
 export const {
   getSlot, getRank, getFile, getRankFile,
 } = utils;
-
-const BLACK_PALACE = [
-  [0, 3], [0, 4], [0, 5],
-  [1, 3], [1, 4], [1, 5],
-  [2, 3], [2, 4], [2, 5],
-].map((pos) => getSlot(...pos));
-
-const RED_PALACE = [
-  [9, 3], [9, 4], [9, 5],
-  [8, 3], [8, 4], [8, 5],
-  [7, 3], [7, 4], [7, 5],
-].map((pos) => getSlot(...pos));
 
 const EMPTY_BOARD_FEN = '9/9/9/9/9/9/9/9/9/9';
 
@@ -102,37 +88,27 @@ export default class XiangqiBoard {
     return this.board[slot];
   }
 
-  isRedCode(code) { return RED_PIECES.includes(code); }
-
   isRed(slot) {
-    const code = this.board[slot];
-    return this.isRedCode(code);
+    const piece = this.board[slot];
+    return utils.isRed(piece);
   }
-
-  isBlackCode(code) { return BLACK_PIECES.includes(code); }
 
   isBlack(slot) {
-    const code = this.board[slot];
-    return this.isBlackCode(code);
+    const piece = this.board[slot];
+    return utils.isBlack(piece);
   }
 
-  // TODO refactor and rename?
+  // TODO: add test
   isColor(color, slot) {
-    const code = this.board[slot];
-    if (color === Color.RED && this.isRedCode(code)) return true;
-    if (color === Color.BLACK && this.isBlackCode(code)) return true;
+    if (color === Color.RED && this.isRed(slot)) return true;
+    if (color === Color.BLACK && this.isBlack(slot)) return true;
     return false;
   }
 
-  sameColorCode(code1, code2) {
-    return (this.isRedCode(code1) && this.isRedCode(code2))
-      || (this.isBlackCode(code1) && this.isBlackCode(code2));
-  }
-
   sameColor(slot1, slot2) {
-    const code1 = this.board[slot1];
-    const code2 = this.board[slot2];
-    return this.sameColorCode(code1, code2);
+    const piece1 = this.board[slot1];
+    const piece2 = this.board[slot2];
+    return utils.sameColor(piece1, piece2);
   }
 
   static fromFenRow(row) {
@@ -299,8 +275,8 @@ export default class XiangqiBoard {
   }
 
   inPalace(fromSlot, toSlot) {
-    if (this.isBlack(fromSlot)) return BLACK_PALACE.includes(toSlot);
-    if (this.isRed(fromSlot)) return RED_PALACE.includes(toSlot);
+    if (this.isBlack(fromSlot)) return utils.inBlackPalace(toSlot);
+    if (this.isRed(fromSlot)) return utils.inRedPalace(toSlot);
     return false;
   }
 
