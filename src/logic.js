@@ -14,30 +14,9 @@ import {
   ORTHOGONAL_MOVES,
   DIAGONAL_MOVES,
 } from './logic/constants';
+import * as utils from './logic/utils';
 
 export { RefType };
-
-const isPawn = (piece) => (
-  piece === Piece.Black.PAWN || piece === Piece.Red.PAWN
-);
-const isChariot = (piece) => (
-  piece === Piece.Black.CHARIOT || piece === Piece.Red.CHARIOT
-);
-const isHorse = (piece) => (
-  piece === Piece.Black.HORSE || piece === Piece.Red.HORSE
-);
-const isElephant = (piece) => (
-  piece === Piece.Black.ELEPHANT || piece === Piece.Red.ELEPHANT
-);
-const isGeneral = (piece) => (
-  piece === Piece.Black.GENERAL || piece === Piece.Red.GENERAL
-);
-const isCannon = (piece) => (
-  piece === Piece.Black.CANNON || piece === Piece.Red.CANNON
-);
-const isAdvisor = (piece) => (
-  piece === Piece.Black.ADVISOR || piece === Piece.Red.ADVISOR
-);
 
 export const getSlot = (rank, file) => file + (rank * FILE_COUNT);
 export const getRank = (slot) => Math.floor(slot / FILE_COUNT);
@@ -344,13 +323,13 @@ export default class XiangqiBoard {
 
   legalMoves(allowSelfCheck = false) {
     const result = this.board.map((code, slot) => {
-      if (isPawn(code)) return this.legalPawnMoves(slot);
-      if (isChariot(code)) return this.legalRookMoves(slot);
-      if (isHorse(code)) return this.legalHorseMoves(slot);
-      if (isElephant(code)) return this.legalElephantMoves(slot);
-      if (isGeneral(code)) return this.legalKingMoves(slot);
-      if (isCannon(code)) return this.legalCannonMoves(slot);
-      if (isAdvisor(code)) return this.legalAdvisorMoves(slot);
+      if (utils.isPawn(code)) return this.legalPawnMoves(slot);
+      if (utils.isChariot(code)) return this.legalRookMoves(slot);
+      if (utils.isHorse(code)) return this.legalHorseMoves(slot);
+      if (utils.isElephant(code)) return this.legalElephantMoves(slot);
+      if (utils.isGeneral(code)) return this.legalKingMoves(slot);
+      if (utils.isCannon(code)) return this.legalCannonMoves(slot);
+      if (utils.isAdvisor(code)) return this.legalAdvisorMoves(slot);
       return [];
     });
 
