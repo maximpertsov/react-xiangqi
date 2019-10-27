@@ -152,55 +152,15 @@ export default class XiangqiBoard {
     }
   }
 
-  tryMove(slot, rankMove, fileMove) {
-    const [rank, file] = getRankFile(slot);
-    const newRank = rankMove + rank;
-    const newFile = fileMove + file;
-    if (newRank < 0 || newRank >= RANK_COUNT) return null;
-    if (newFile < 0 || newFile >= FILE_COUNT) return null;
-    return getSlot(newRank, newFile);
-  }
-
-  tryMoves(slot, moves) {
-    return moves.map((m) => this.tryMove(slot, ...m));
-  }
-
-  // TODO make this non-recursive?
-  tryMarch(slot, rankMove, fileMove, steps = Math.max(RANK_COUNT, FILE_COUNT)) {
-    if (steps < 1) return [];
-    const nextSlot = this.tryMove(slot, rankMove, fileMove);
-    if (nextSlot === null) return [];
-    const restSlots = this.tryMarch(nextSlot, rankMove, fileMove, steps - 1);
-    restSlots.push(nextSlot);
-    return restSlots;
-  }
-
-  tryMarchMoves(slot, moves, steps) {
-    return moves.reduce(
-      (acc, move) => acc.concat(this.tryMarch(slot, move[0], move[1], steps)),
-      [],
-    );
-  }
-
   legalPawnMoves(slot) {
     const result = [];
     const forwardSlot = this.getNextRankSlot(slot);
     this.addIfUniversallyLegal(result, slot, forwardSlot);
     if (this.crossingRiver(slot, slot)) {
-      this.addIfUniversallyLegal(result, slot, this.tryMove(slot, 0, -1));
-      this.addIfUniversallyLegal(result, slot, this.tryMove(slot, 0, 1));
+      this.addIfUniversallyLegal(result, slot, utils.tryMove(slot, 0, -1));
+      this.addIfUniversallyLegal(result, slot, utils.tryMove(slot, 0, 1));
     }
     return result;
-  }
-
-  orthogonalSlots(slot, radius) {
-    const steps = radius === undefined ? 1 : radius;
-    return this.tryMarchMoves(slot, ORTHOGONAL_MOVES, steps);
-  }
-
-  diagonalSlots(slot, radius) {
-    const steps = radius === undefined ? 1 : radius;
-    return this.tryMarchMoves(slot, DIAGONAL_MOVES, steps);
   }
 
   isOccupied(slot) {
@@ -210,10 +170,10 @@ export default class XiangqiBoard {
   legalHorseMoves(slot) {
     const result = [];
 
-    this.orthogonalSlots(slot).forEach((firstHop, _, firstHops) => {
+    utils.orthogonalSlots(slot).forEach((firstHop, _, firstHops) => {
       if (this.isOccupied(firstHop)) return;
 
-      this.diagonalSlots(firstHop).forEach((secondHop) => {
+      utils.diagonalSlots(firstHop).forEach((secondHop) => {
         if (firstHops.includes(secondHop) || result.includes(secondHop)) return;
         this.addIfUniversallyLegal(result, slot, secondHop);
       });
@@ -227,7 +187,7 @@ export default class XiangqiBoard {
     ORTHOGONAL_MOVES.forEach((move) => {
       let toSlot = slot;
       while (true) {
-        toSlot = this.tryMove(toSlot, ...move);
+        toSlot = utils.tryMove(toSlot, ...move);
         if (toSlot === null) break;
         this.addIfUniversallyLegal(result, slot, toSlot);
         if (this.isOccupied(toSlot)) break;
@@ -242,7 +202,7 @@ export default class XiangqiBoard {
       let toSlot = slot;
       let vaulted = false;
       while (true) {
-        toSlot = this.tryMove(toSlot, ...move);
+        toSlot = utils.tryMove(toSlot, ...move);
         if (toSlot === null) break;
         if (vaulted && this.isOccupied(toSlot)) {
           this.addIfUniversallyLegal(result, slot, toSlot);
@@ -260,12 +220,12 @@ export default class XiangqiBoard {
   legalElephantMoves(slot) {
     const result = [];
     DIAGONAL_MOVES.forEach((move) => {
-      const firstHop = this.tryMove(slot, ...move);
+      const firstHop = utils.tryMove(slot, ...move);
       if (this.isOccupied(firstHop) || this.crossingRiver(slot, firstHop)) {
         return;
       }
 
-      const secondHop = this.tryMove(firstHop, ...move);
+      const secondHop = utils.tryMove(firstHop, ...move);
       this.addIfUniversallyLegal(result, slot, secondHop);
     });
     return result;
@@ -279,7 +239,9 @@ export default class XiangqiBoard {
 
   legalAdvisorMoves(slot) {
     const result = [];
-    this.diagonalSlots(slot, 1).filter((s) => this.inPalace(slot, s)).forEach((s) => {
+    utils.diagonalSlots(slot, 1).filter(
+      (s) => this.inPalace(slot, s),
+    ).forEach((s) => {
       this.addIfUniversallyLegal(result, slot, s);
     });
     return result;
@@ -287,7 +249,9 @@ export default class XiangqiBoard {
 
   legalKingMoves(slot) {
     const result = [];
-    this.orthogonalSlots(slot, 1).filter((s) => this.inPalace(slot, s)).forEach((s) => {
+    utils.orthogonalSlots(slot, 1).filter(
+      (s) => this.inPalace(slot, s),
+    ).forEach((s) => {
       this.addIfUniversallyLegal(result, slot, s);
     });
     return result;
