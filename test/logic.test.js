@@ -3,6 +3,7 @@ import XiangqiBoard, {
   getRank,
   getFile,
   getSlot,
+  fromFen,
 } from '../src/logic';
 
 const slotRankFileTests = [
@@ -137,7 +138,7 @@ test('converts FEN string to an array', () => {
     ...Array(9).fill(null),
     'R', 'H', 'E', 'A', 'K', 'A', 'E', 'H', 'R',
   ];
-  const actual = xb.fromFen(fen);
+  const actual = fromFen(fen);
   expect(actual).toStrictEqual(expected);
 });
 

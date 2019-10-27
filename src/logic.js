@@ -19,13 +19,13 @@ export { RefType };
 
 // TODO: re-const is ugly
 export const {
-  getSlot, getRank, getFile, getRankFile,
+  getSlot, getRank, getFile, getRankFile, fromFen,
 } = utils;
 
 export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
   constructor({ fen = EMPTY_BOARD_FEN } = {}) {
-    this.board = this.fromFen(fen);
+    this.board = utils.fromFen(fen);
   }
 
   _slot(pos, refType) {
@@ -106,21 +106,6 @@ export default class XiangqiBoard {
     const piece1 = this.board[slot1];
     const piece2 = this.board[slot2];
     return utils.sameColor(piece1, piece2);
-  }
-
-  static fromFenRow(row) {
-    return row.split('').reduce((acc, ch) => {
-      const val = +ch;
-      const newItems = Number.isNaN(val) ? [ch] : Array(val).fill(null);
-      return acc.concat(newItems);
-    }, []);
-  }
-
-  fromFen(fen) {
-    return fen.split('/').reduce(
-      (acc, row) => acc.concat(this.constructor.fromFenRow(row)),
-      [],
-    );
   }
 
   getNextRankSlot(slot) {
