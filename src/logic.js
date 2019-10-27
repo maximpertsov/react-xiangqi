@@ -257,17 +257,22 @@ export default class XiangqiBoard {
     return result;
   }
 
+  // eslint-disable-next-line complexity
+  legalMovePiece(piece, slot) {
+    if (utils.isPawn(piece)) return this.legalPawnMoves(slot);
+    if (utils.isChariot(piece)) return this.legalRookMoves(slot);
+    if (utils.isHorse(piece)) return this.legalHorseMoves(slot);
+    if (utils.isElephant(piece)) return this.legalElephantMoves(slot);
+    if (utils.isGeneral(piece)) return this.legalKingMoves(slot);
+    if (utils.isCannon(piece)) return this.legalCannonMoves(slot);
+    if (utils.isAdvisor(piece)) return this.legalAdvisorMoves(slot);
+    return [];
+  }
+
   legalMoves(allowSelfCheck = false) {
-    const result = this.board.map((code, slot) => {
-      if (utils.isPawn(code)) return this.legalPawnMoves(slot);
-      if (utils.isChariot(code)) return this.legalRookMoves(slot);
-      if (utils.isHorse(code)) return this.legalHorseMoves(slot);
-      if (utils.isElephant(code)) return this.legalElephantMoves(slot);
-      if (utils.isGeneral(code)) return this.legalKingMoves(slot);
-      if (utils.isCannon(code)) return this.legalCannonMoves(slot);
-      if (utils.isAdvisor(code)) return this.legalAdvisorMoves(slot);
-      return [];
-    });
+    const result = this.board.map(
+      (piece, slot) => this.legalMovePiece(piece, slot),
+    );
 
     if (allowSelfCheck) return result;
 
