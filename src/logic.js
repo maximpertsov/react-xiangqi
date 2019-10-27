@@ -390,7 +390,7 @@ export default class XiangqiBoard {
       } else if (lastRowSize === 0 || Number.isNaN(+lastRow[lastRowSize - 1])) {
         lastRow.push(1);
       } else {
-        lastRow[lastRowSize - 1]++;
+        lastRow[lastRowSize - 1] += 1;
       }
     });
     return rows.map((row) => row.join('')).join('/');
