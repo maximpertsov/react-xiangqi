@@ -186,6 +186,7 @@ export default class XiangqiBoard {
     const result = [];
     ORTHOGONAL_MOVES.forEach((move) => {
       let toSlot = slot;
+      // eslint-disable-next-line no-constant-condition
       while (true) {
         toSlot = utils.tryMove(toSlot, ...move);
         if (toSlot === null) break;
