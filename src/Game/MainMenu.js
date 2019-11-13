@@ -17,9 +17,9 @@ const MainMenu = () => {
   const [games, setGames] = useState([]);
 
   const fetchGames = useCallback(
-    () => {
-      client.getGameList(username)
-        .then((response) => { setGames(response.data.games); });
+    async() => {
+      const response = await client.getGameList(username);
+      setGames(response.data.games);
     },
     [username],
   );
