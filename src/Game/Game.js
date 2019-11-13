@@ -38,12 +38,11 @@ const Game = ({ autoMove, gameSlug, username }) => {
   );
 
   const fetchGame = useCallback(
-    () => {
+    async() => {
       if (gameSlug === undefined) return;
 
-      client.getGame(gameSlug).then((response) => {
-        dispatch({ type: 'set_players', players: response.data.players });
-      });
+      const response = await client.getGame(gameSlug);
+      dispatch({ type: 'set_players', players: response.data.players });
     },
     [dispatch, gameSlug],
   );
