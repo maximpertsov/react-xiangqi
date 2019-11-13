@@ -4,12 +4,8 @@ import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
 
 import Move from './Move';
-import { boardPropType } from '../../logic';
+import * as logic from '../../logic';
 import * as styles from '../../commonStyles';
-
-// TODO: set max-height by percentage?
-// TODO: hide scroll bar?
-// TODO: move colors to constants
 
 const cssMoveColumns = (columns) => Array(columns)
   .fill('0.25fr 1fr 1fr').join(' ');
@@ -33,8 +29,9 @@ const Wrapper = styled.div`
     font-size: small;
   }
   grid-template-rows: repeat(auto-fill, 1fr);
-  overflow: auto;
   font-size: small;
+  max-height: 10vh;
+  overflow: auto;
 `;
 
 const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
@@ -69,7 +66,7 @@ const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
 
 MoveHistory.propTypes = {
   // TODO: add move proptype
-  moves: PropTypes.arrayOf(boardPropType).isRequired,
+  moves: PropTypes.arrayOf(logic.boardPropType).isRequired,
   selectedIdx: PropTypes.number.isRequired,
   handleMoveSelect: PropTypes.func.isRequired,
 };

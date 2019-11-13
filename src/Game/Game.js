@@ -13,6 +13,7 @@ import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import ConfirmMenu from './ConfirmMenu';
 import * as client from '../client';
+import * as logic from '../logic';
 import * as selectors from './selectors';
 
 const POLL_INTERVAL = 2500;
@@ -99,12 +100,12 @@ const Game = ({ autoMove, gameSlug, username }) => {
   // Move updates
 
   const postMoveToServer = useCallback(
-    (board, fromSlot, toSlot) => {
+    (piece, fromPos, toPos) => {
       if (gameSlug === undefined) return;
 
       client
         .postMove(gameSlug, {
-          username, board, fromSlot, toSlot,
+          username, piece, fromPos, toPos,
         })
         .then(({ status }) => {
           if (status !== 201) fetchMoves();
@@ -137,10 +138,9 @@ const Game = ({ autoMove, gameSlug, username }) => {
       if (!lastMove.pending) return;
 
       const { board, fromPos, toPos } = lastMove;
-      // TODO: let post move to server accept pos args as is?
-      const fromSlot = board.getSlot(...fromPos);
-      const toSlot = board.getSlot(...toPos);
-      postMoveToServer(board, fromSlot, toSlot);
+      const piece = board.getPiece(toPos, logic.RefType.RANK_FILE);
+
+      postMoveToServer(piece, fromPos, toPos);
       dispatch({ type: 'confirm_moves' });
     },
     [dispatch, postMoveToServer, state],

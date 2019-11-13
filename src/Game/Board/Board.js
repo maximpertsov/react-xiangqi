@@ -4,7 +4,7 @@ import { jsx, css } from '@emotion/core';
 import { useEffect, useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
-import { boardPropType } from '../../logic';
+import * as logic from '../../logic';
 import * as styles from '../../commonStyles';
 
 import boardImg from './board-1000px.svg.png';
@@ -47,8 +47,8 @@ const Board = ({
 
   const handleMove = (fromSlot, toSlot) => {
     if (isLegalMove(fromSlot, toSlot)) {
-      const [fromY, fromX] = board.getRankFile(fromSlot);
-      const [toY, toX] = board.getRankFile(toSlot);
+      const [fromY, fromX] = logic.getRankFile(fromSlot);
+      const [toY, toX] = logic.getRankFile(toSlot);
       setMoveX(reversed ? fromX - toX : toX - fromX);
       setMoveY(reversed ? fromY - toY : toY - fromY);
       setTimeout(() => {
@@ -151,7 +151,7 @@ const Board = ({
 
 Board.propTypes = {
   autoMove: PropTypes.oneOf([undefined, 'red', 'black', 'both']),
-  board: boardPropType.isRequired,
+  board: logic.boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   nextMoveColor: PropTypes.string.isRequired,

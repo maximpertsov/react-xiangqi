@@ -1,112 +1,38 @@
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
 import sample from 'lodash.sample';
+import {
+  RefType,
+  Color,
+  Piece,
+  EMPTY_BOARD_FEN,
+  RANK_COUNT,
+  FILE_COUNT,
+  BLACK_RIVER_BANK,
+  RED_RIVER_BANK,
+  ORTHOGONAL_MOVES,
+  DIAGONAL_MOVES,
+} from './logic/constants';
+import * as utils from './logic/utils';
 
-export const RefType = Object.freeze({
-  SLOT: 0,
-  RANK_FILE: 1,
-  RANK_FILE_STRING: 2,
-});
+export { RefType };
 
-export const Color = Object.freeze({
-  RED: 'red',
-  BLACK: 'black',
-});
-
-export const Piece = Object.freeze({
-  Black: Object.freeze({
-    CHARIOT: 'r',
-    HORSE: 'h',
-    ELEPHANT: 'e',
-    ADVISOR: 'a',
-    GENERAL: 'k',
-    CANNON: 'c',
-    PAWN: 'p',
-  }),
-  Red: Object.freeze({
-    CHARIOT: 'R',
-    HORSE: 'H',
-    ELEPHANT: 'E',
-    ADVISOR: 'A',
-    GENERAL: 'K',
-    CANNON: 'C',
-    PAWN: 'P',
-  }),
-});
-
-
-const isPawn = (piece) => (
-  piece === Piece.Black.PAWN || piece === Piece.Red.PAWN
-);
-const isChariot = (piece) => (
-  piece === Piece.Black.CHARIOT || piece === Piece.Red.CHARIOT
-);
-const isHorse = (piece) => (
-  piece === Piece.Black.HORSE || piece === Piece.Red.HORSE
-);
-const isElephant = (piece) => (
-  piece === Piece.Black.ELEPHANT || piece === Piece.Red.ELEPHANT
-);
-const isGeneral = (piece) => (
-  piece === Piece.Black.GENERAL || piece === Piece.Red.GENERAL
-);
-const isCannon = (piece) => (
-  piece === Piece.Black.CANNON || piece === Piece.Red.CANNON
-);
-const isAdvisor = (piece) => (
-  piece === Piece.Black.ADVISOR || piece === Piece.Red.ADVISOR
-);
-
-const RANKS = 10;
-const FILES = 9;
-const BLACK_PIECES = Object.values(Piece.Black);
-const RED_PIECES = Object.values(Piece.Red);
-const BLACK_RIVER_BANK = 4;
-const RED_RIVER_BANK = 5;
-const ORTHOGONAL_MOVES = [[1, 0], [-1, 0], [0, 1], [0, -1]];
-const DIAGONAL_MOVES = [[1, 1], [-1, 1], [1, -1], [-1, -1]];
-// TODO store this in a board FEN-style string?
-const BLACK_PALACE = [
-  [0, 3], [0, 4], [0, 5],
-  [1, 3], [1, 4], [1, 5],
-  [2, 3], [2, 4], [2, 5],
-];
-const RED_PALACE = [
-  [9, 3], [9, 4], [9, 5],
-  [8, 3], [8, 4], [8, 5],
-  [7, 3], [7, 4], [7, 5],
-];
-const EMPTY_BOARD_FEN = '9/9/9/9/9/9/9/9/9/9';
+// TODO: re-const is ugly
+export const {
+  getSlot, getRank, getFile, getRankFile, fromFen,
+} = utils;
 
 export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
-  constructor({
-    ranks = RANKS,
-    files = FILES,
-    redPieces = RED_PIECES,
-    blackPieces = BLACK_PIECES,
-    fen = EMPTY_BOARD_FEN,
-    redRiverBank = RED_RIVER_BANK,
-    blackRiverBank = BLACK_RIVER_BANK,
-    redPalace = RED_PALACE,
-    blackPalace = BLACK_PALACE,
-  } = {}) {
-    this.ranks = ranks;
-    this.files = files;
-    this.redPieces = redPieces;
-    this.blackPieces = blackPieces;
-    this.redRiverBank = redRiverBank;
-    this.blackRiverBank = blackRiverBank;
-    this.redPalace = redPalace.map((pos) => this.getSlot(...pos));
-    this.blackPalace = blackPalace.map((pos) => this.getSlot(...pos));
-    this.board = this.fromFen(fen);
+  constructor({ fen = EMPTY_BOARD_FEN } = {}) {
+    this.board = utils.fromFen(fen);
   }
 
   _slot(pos, refType) {
     if (refType === RefType.SLOT) return pos;
     if (refType === RefType.RANK_FILE) {
       const [rank, file] = pos;
-      return this.getSlot(rank, file);
+      return getSlot(rank, file);
     }
     if (refType === RefType.RANK_FILE_STRING) {
       const _pos = pos.split(',').map((x) => +x);
@@ -151,8 +77,6 @@ export default class XiangqiBoard {
     const options = { ...this };
     delete options.board;
     options.fen = this.toFen(board);
-    options.redPalace = this.redPalace.map((slot) => this.getRankFile(slot));
-    options.blackPalace = this.blackPalace.map((slot) => this.getRankFile(slot));
     return new this.constructor(options);
   }
 
@@ -161,75 +85,42 @@ export default class XiangqiBoard {
     return this.board[slot];
   }
 
-  getSlot(rank, file) { return file + rank * this.files; }
-
-  getRank(slot) { return Math.floor(slot / this.files); }
-
-  getFile(slot) { return slot % this.files; }
-
-  getRankFile(slot) { return [this.getRank(slot), this.getFile(slot)]; }
-
-  isRedCode(code) { return this.redPieces.includes(code); }
-
   isRed(slot) {
-    const code = this.board[slot];
-    return this.isRedCode(code);
+    const piece = this.board[slot];
+    return utils.isRed(piece);
   }
-
-  isBlackCode(code) { return this.blackPieces.includes(code); }
 
   isBlack(slot) {
-    const code = this.board[slot];
-    return this.isBlackCode(code);
+    const piece = this.board[slot];
+    return utils.isBlack(piece);
   }
 
-  // TODO refactor and rename?
+  // TODO: add test
   isColor(color, slot) {
-    const code = this.board[slot];
-    if (color === Color.RED && this.isRedCode(code)) return true;
-    if (color === Color.BLACK && this.isBlackCode(code)) return true;
+    if (color === Color.RED && this.isRed(slot)) return true;
+    if (color === Color.BLACK && this.isBlack(slot)) return true;
     return false;
   }
 
-  sameColorCode(code1, code2) {
-    return (this.isRedCode(code1) && this.isRedCode(code2))
-      || (this.isBlackCode(code1) && this.isBlackCode(code2));
-  }
-
   sameColor(slot1, slot2) {
-    const code1 = this.board[slot1];
-    const code2 = this.board[slot2];
-    return this.sameColorCode(code1, code2);
-  }
-
-  static fromFenRow(row) {
-    return row.split('').reduce((acc, ch) => {
-      const val = +ch;
-      const newItems = Number.isNaN(val) ? [ch] : Array(val).fill(null);
-      return acc.concat(newItems);
-    }, []);
-  }
-
-  fromFen(fen) {
-    return fen.split('/').reduce(
-      (acc, row) => acc.concat(this.constructor.fromFenRow(row)),
-      [],
-    );
+    const piece1 = this.board[slot1];
+    const piece2 = this.board[slot2];
+    return utils.sameColor(piece1, piece2);
   }
 
   getNextRankSlot(slot) {
-    const rank = this.getRank(slot);
-    const file = this.getFile(slot);
+    const rank = getRank(slot);
+    const file = getFile(slot);
     let nextRank = rank;
-    if (this.isBlack(slot)) nextRank = Math.min(rank + 1, this.ranks - 1);
+    if (this.isBlack(slot)) nextRank = Math.min(rank + 1, RANK_COUNT - 1);
     if (this.isRed(slot)) nextRank = Math.max(rank - 1, 0);
-    return this.getSlot(nextRank, file);
+    return getSlot(nextRank, file);
   }
 
   crossingRiver(fromSlot, toSlot) {
-    const rank = this.getRank(toSlot);
-    if (this.isBlack(fromSlot)) return rank >= this.redRiverBank;
-    if (this.isRed(fromSlot)) return rank <= this.blackRiverBank;
+    const rank = getRank(toSlot);
+    if (this.isBlack(fromSlot)) return rank >= RED_RIVER_BANK;
+    if (this.isRed(fromSlot)) return rank <= BLACK_RIVER_BANK;
     return false;
   }
 
@@ -246,55 +137,15 @@ export default class XiangqiBoard {
     }
   }
 
-  tryMove(slot, rankMove, fileMove) {
-    const [rank, file] = this.getRankFile(slot);
-    const newRank = rankMove + rank;
-    const newFile = fileMove + file;
-    if (newRank < 0 || newRank >= this.ranks) return null;
-    if (newFile < 0 || newFile >= this.files) return null;
-    return this.getSlot(newRank, newFile);
-  }
-
-  tryMoves(slot, moves) {
-    return moves.map((m) => this.tryMove(slot, ...m));
-  }
-
-  // TODO make this non-recursive?
-  tryMarch(slot, rankMove, fileMove, steps = Math.max(this.ranks, this.files)) {
-    if (steps < 1) return [];
-    const nextSlot = this.tryMove(slot, rankMove, fileMove);
-    if (nextSlot === null) return [];
-    const restSlots = this.tryMarch(nextSlot, rankMove, fileMove, steps - 1);
-    restSlots.push(nextSlot);
-    return restSlots;
-  }
-
-  tryMarchMoves(slot, moves, steps) {
-    return moves.reduce(
-      (acc, move) => acc.concat(this.tryMarch(slot, move[0], move[1], steps)),
-      [],
-    );
-  }
-
   legalPawnMoves(slot) {
     const result = [];
     const forwardSlot = this.getNextRankSlot(slot);
     this.addIfUniversallyLegal(result, slot, forwardSlot);
     if (this.crossingRiver(slot, slot)) {
-      this.addIfUniversallyLegal(result, slot, this.tryMove(slot, 0, -1));
-      this.addIfUniversallyLegal(result, slot, this.tryMove(slot, 0, 1));
+      this.addIfUniversallyLegal(result, slot, utils.tryMove(slot, 0, -1));
+      this.addIfUniversallyLegal(result, slot, utils.tryMove(slot, 0, 1));
     }
     return result;
-  }
-
-  orthogonalSlots(slot, radius) {
-    const steps = radius === undefined ? 1 : radius;
-    return this.tryMarchMoves(slot, ORTHOGONAL_MOVES, steps);
-  }
-
-  diagonalSlots(slot, radius) {
-    const steps = radius === undefined ? 1 : radius;
-    return this.tryMarchMoves(slot, DIAGONAL_MOVES, steps);
   }
 
   isOccupied(slot) {
@@ -304,10 +155,10 @@ export default class XiangqiBoard {
   legalHorseMoves(slot) {
     const result = [];
 
-    this.orthogonalSlots(slot).forEach((firstHop, _, firstHops) => {
+    utils.orthogonalSlots(slot).forEach((firstHop, _, firstHops) => {
       if (this.isOccupied(firstHop)) return;
 
-      this.diagonalSlots(firstHop).forEach((secondHop) => {
+      utils.diagonalSlots(firstHop).forEach((secondHop) => {
         if (firstHops.includes(secondHop) || result.includes(secondHop)) return;
         this.addIfUniversallyLegal(result, slot, secondHop);
       });
@@ -320,8 +171,9 @@ export default class XiangqiBoard {
     const result = [];
     ORTHOGONAL_MOVES.forEach((move) => {
       let toSlot = slot;
+      // eslint-disable-next-line no-constant-condition
       while (true) {
-        toSlot = this.tryMove(toSlot, ...move);
+        toSlot = utils.tryMove(toSlot, ...move);
         if (toSlot === null) break;
         this.addIfUniversallyLegal(result, slot, toSlot);
         if (this.isOccupied(toSlot)) break;
@@ -335,8 +187,9 @@ export default class XiangqiBoard {
     ORTHOGONAL_MOVES.forEach((move) => {
       let toSlot = slot;
       let vaulted = false;
+      // eslint-disable-next-line no-constant-condition
       while (true) {
-        toSlot = this.tryMove(toSlot, ...move);
+        toSlot = utils.tryMove(toSlot, ...move);
         if (toSlot === null) break;
         if (vaulted && this.isOccupied(toSlot)) {
           this.addIfUniversallyLegal(result, slot, toSlot);
@@ -354,26 +207,28 @@ export default class XiangqiBoard {
   legalElephantMoves(slot) {
     const result = [];
     DIAGONAL_MOVES.forEach((move) => {
-      const firstHop = this.tryMove(slot, ...move);
+      const firstHop = utils.tryMove(slot, ...move);
       if (this.isOccupied(firstHop) || this.crossingRiver(slot, firstHop)) {
         return;
       }
 
-      const secondHop = this.tryMove(firstHop, ...move);
+      const secondHop = utils.tryMove(firstHop, ...move);
       this.addIfUniversallyLegal(result, slot, secondHop);
     });
     return result;
   }
 
   inPalace(fromSlot, toSlot) {
-    if (this.isBlack(fromSlot)) return this.blackPalace.includes(toSlot);
-    if (this.isRed(fromSlot)) return this.redPalace.includes(toSlot);
+    if (this.isBlack(fromSlot)) return utils.inBlackPalace(toSlot);
+    if (this.isRed(fromSlot)) return utils.inRedPalace(toSlot);
     return false;
   }
 
   legalAdvisorMoves(slot) {
     const result = [];
-    this.diagonalSlots(slot, 1).filter((s) => this.inPalace(slot, s)).forEach((s) => {
+    utils.diagonalSlots(slot, 1).filter(
+      (s) => this.inPalace(slot, s),
+    ).forEach((s) => {
       this.addIfUniversallyLegal(result, slot, s);
     });
     return result;
@@ -381,24 +236,30 @@ export default class XiangqiBoard {
 
   legalKingMoves(slot) {
     const result = [];
-    this.orthogonalSlots(slot, 1).filter((s) => this.inPalace(slot, s)).forEach((s) => {
+    utils.orthogonalSlots(slot, 1).filter(
+      (s) => this.inPalace(slot, s),
+    ).forEach((s) => {
       this.addIfUniversallyLegal(result, slot, s);
     });
     return result;
   }
 
+  // eslint-disable-next-line complexity
+  legalMovePiece(piece, slot) {
+    if (utils.isPawn(piece)) return this.legalPawnMoves(slot);
+    if (utils.isChariot(piece)) return this.legalRookMoves(slot);
+    if (utils.isHorse(piece)) return this.legalHorseMoves(slot);
+    if (utils.isElephant(piece)) return this.legalElephantMoves(slot);
+    if (utils.isGeneral(piece)) return this.legalKingMoves(slot);
+    if (utils.isCannon(piece)) return this.legalCannonMoves(slot);
+    if (utils.isAdvisor(piece)) return this.legalAdvisorMoves(slot);
+    return [];
+  }
 
   legalMoves(allowSelfCheck = false) {
-    const result = this.board.map((code, slot) => {
-      if (isPawn(code)) return this.legalPawnMoves(slot);
-      if (isChariot(code)) return this.legalRookMoves(slot);
-      if (isHorse(code)) return this.legalHorseMoves(slot);
-      if (isElephant(code)) return this.legalElephantMoves(slot);
-      if (isGeneral(code)) return this.legalKingMoves(slot);
-      if (isCannon(code)) return this.legalCannonMoves(slot);
-      if (isAdvisor(code)) return this.legalAdvisorMoves(slot);
-      return [];
-    });
+    const result = this.board.map(
+      (piece, slot) => this.legalMovePiece(piece, slot),
+    );
 
     if (allowSelfCheck) return result;
 
@@ -477,7 +338,7 @@ export default class XiangqiBoard {
   toFen(board = this.board) {
     const rows = [];
     board.forEach((piece, idx) => {
-      if (idx % this.files === 0) rows.push([]);
+      if (idx % FILE_COUNT === 0) rows.push([]);
       const lastRow = rows[rows.length - 1];
       const lastRowSize = lastRow.length;
       if (piece !== null) {
@@ -485,7 +346,7 @@ export default class XiangqiBoard {
       } else if (lastRowSize === 0 || Number.isNaN(+lastRow[lastRowSize - 1])) {
         lastRow.push(1);
       } else {
-        lastRow[lastRowSize - 1]++;
+        lastRow[lastRowSize - 1] += 1;
       }
     });
     return rows.map((row) => row.join('')).join('/');
@@ -493,13 +354,5 @@ export default class XiangqiBoard {
 }
 
 export const boardPropType = PropTypes.shape({
-  ranks: PropTypes.number,
-  files: PropTypes.number,
-  redPieces: PropTypes.arrayOf(PropTypes.string),
-  blackPieces: PropTypes.arrayOf(PropTypes.string),
   fen: PropTypes.string,
-  redRiverBank: PropTypes.number,
-  blackRiverBank: PropTypes.number,
-  redPalace: PropTypes.arrayOf(PropTypes.number),
-  blackPalace: PropTypes.arrayOf(PropTypes.number),
 });
