@@ -25,15 +25,14 @@ const Game = ({ autoMove, gameSlug, username }) => {
   // Fetch data utilities
 
   const fetchMoves = useCallback(
-    () => {
+    async() => {
       if (gameSlug === undefined) {
         dispatch({ type: 'set_moves', moves: [] });
         return;
       }
 
-      client.getMoves(gameSlug).then((response) => {
-        dispatch({ type: 'set_moves', moves: response.data.moves });
-      });
+      const response = await client.getMoves(gameSlug);
+      dispatch({ type: 'set_moves', moves: response.data.moves });
     },
     [dispatch, gameSlug],
   );
