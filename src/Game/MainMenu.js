@@ -32,33 +32,38 @@ const MainMenu = () => {
     [fetchGames, username],
   );
 
+  const renderGameList = () => (
+    username === undefined ||
+    <GameList setGameSlug={setGameSlug} games={games} />
+  );
+
+  const renderMenu = () => (
+    <Container textAlign="center">
+      <Segment.Group compact>
+        <Segment>
+          <Header size="large">Play online</Header>
+          <LoginForm setUsername={setUsername} />
+          { renderGameList() }
+        </Segment>
+        <Segment>
+          <Header size="large">Other modes</Header>
+          <Button onClick={() => { setGameSlug(LOCAL); }}>
+            Solo play
+          </Button>
+          <Button onClick={() => { setGameSlug(PLAYER_VS_CPU); }}>
+            vs CPU
+          </Button>
+          <Button onClick={() => { setGameSlug(CPU_VS_CPU); }}>
+            CPU vs CPU
+          </Button>
+        </Segment>
+      </Segment.Group>
+    </Container>
+  );
+
   switch (gameSlug) {
     case undefined:
-      return (
-        <Container textAlign="center">
-          <Segment.Group compact>
-            <Segment>
-              <Header size="large">Play online</Header>
-              <LoginForm setUsername={setUsername} />
-              { username === undefined ||
-                <GameList setGameSlug={setGameSlug} games={games} />
-              }
-            </Segment>
-            <Segment>
-              <Header size="large">Other modes</Header>
-              <Button onClick={() => { setGameSlug(LOCAL); }}>
-                Solo play
-              </Button>
-              <Button onClick={() => { setGameSlug(PLAYER_VS_CPU); }}>
-                vs CPU
-              </Button>
-              <Button onClick={() => { setGameSlug(CPU_VS_CPU); }}>
-                CPU vs CPU
-              </Button>
-            </Segment>
-          </Segment.Group>
-        </Container>
-      );
+      return renderMenu();
     case LOCAL:
       return <Game />;
     case PLAYER_VS_CPU:
