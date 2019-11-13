@@ -5,6 +5,7 @@ import { useEffect, useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import * as logic from '../../logic';
+import { Color } from '../../logic/constants';
 import * as styles from '../../commonStyles';
 
 import boardImg from './board-1000px.svg.png';
@@ -150,7 +151,7 @@ const Board = ({
 };
 
 Board.propTypes = {
-  autoMove: PropTypes.oneOf([undefined, 'red', 'black', 'both']),
+  autoMove: PropTypes.oneOf([undefined, Color.RED, Color.BLACK, 'both']),
   board: logic.boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,

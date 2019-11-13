@@ -4,6 +4,7 @@ import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
 import * as images from './images';
 import * as styles from '../../commonStyles';
+import { Color } from '../../logic/constants';
 
 const Piece = ({
   color, type, icon, moveX, moveY,
@@ -82,20 +83,20 @@ Piece.defaultProps = {
 
 const XiangqiPiece = ({ code, moveX, moveY }) => {
   const pieceByCode = {
-    k: <Piece moveX={moveX} moveY={moveY} icon={images.blackGeneral} color="black" type="general" />,
-    a: <Piece moveX={moveX} moveY={moveY} icon={images.blackAdvisor} color="black" type="advisor" />,
-    e: <Piece moveX={moveX} moveY={moveY} icon={images.blackElephant} color="black" type="elephant" />,
-    h: <Piece moveX={moveX} moveY={moveY} icon={images.blackHorse} color="black" type="horse" />,
-    r: <Piece moveX={moveX} moveY={moveY} icon={images.blackChariot} color="black" type="chariot" />,
-    c: <Piece moveX={moveX} moveY={moveY} icon={images.blackCannon} color="black" type="cannon" />,
-    p: <Piece moveX={moveX} moveY={moveY} icon={images.blackSoldier} color="black" type="soldier" />,
-    K: <Piece moveX={moveX} moveY={moveY} icon={images.redGeneral} color="red" type="general" />,
-    A: <Piece moveX={moveX} moveY={moveY} icon={images.redAdvisor} color="red" type="advisor" />,
-    E: <Piece moveX={moveX} moveY={moveY} icon={images.redElephant} color="red" type="elephant" />,
-    H: <Piece moveX={moveX} moveY={moveY} icon={images.redHorse} color="red" type="horse" />,
-    R: <Piece moveX={moveX} moveY={moveY} icon={images.redChariot} color="red" type="chariot" />,
-    C: <Piece moveX={moveX} moveY={moveY} icon={images.redCannon} color="red" type="cannon" />,
-    P: <Piece moveX={moveX} moveY={moveY} icon={images.redSoldier} color="red" type="soldier" />,
+    k: <Piece moveX={moveX} moveY={moveY} icon={images.blackGeneral} color={Color.BLACK} type="general" />,
+    a: <Piece moveX={moveX} moveY={moveY} icon={images.blackAdvisor} color={Color.BLACK} type="advisor" />,
+    e: <Piece moveX={moveX} moveY={moveY} icon={images.blackElephant} color={Color.BLACK} type="elephant" />,
+    h: <Piece moveX={moveX} moveY={moveY} icon={images.blackHorse} color={Color.BLACK} type="horse" />,
+    r: <Piece moveX={moveX} moveY={moveY} icon={images.blackChariot} color={Color.BLACK} type="chariot" />,
+    c: <Piece moveX={moveX} moveY={moveY} icon={images.blackCannon} color={Color.BLACK} type="cannon" />,
+    p: <Piece moveX={moveX} moveY={moveY} icon={images.blackSoldier} color={Color.BLACK} type="soldier" />,
+    K: <Piece moveX={moveX} moveY={moveY} icon={images.redGeneral} color={Color.RED} type="general" />,
+    A: <Piece moveX={moveX} moveY={moveY} icon={images.redAdvisor} color={Color.RED} type="advisor" />,
+    E: <Piece moveX={moveX} moveY={moveY} icon={images.redElephant} color={Color.RED} type="elephant" />,
+    H: <Piece moveX={moveX} moveY={moveY} icon={images.redHorse} color={Color.RED} type="horse" />,
+    R: <Piece moveX={moveX} moveY={moveY} icon={images.redChariot} color={Color.RED} type="chariot" />,
+    C: <Piece moveX={moveX} moveY={moveY} icon={images.redCannon} color={Color.RED} type="cannon" />,
+    P: <Piece moveX={moveX} moveY={moveY} icon={images.redSoldier} color={Color.RED} type="soldier" />,
   };
 
   return pieceByCode[code];

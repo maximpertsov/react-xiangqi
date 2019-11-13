@@ -5,6 +5,7 @@ import Game from './Game';
 import GameList from './GameList';
 import LoginForm from '../LoginForm/LoginForm';
 import * as client from '../client';
+import { Color } from '../logic/constants';
 
 const LOCAL = 'local';
 const PLAYER_VS_CPU = 'player_vs_cpu';
@@ -61,7 +62,7 @@ const MainMenu = () => {
     case LOCAL:
       return <Game />;
     case PLAYER_VS_CPU:
-      return <Game autoMove="black" />;
+      return <Game autoMove={Color.BLACK} />;
     case CPU_VS_CPU:
       return <Game autoMove="both" />;
     default:
