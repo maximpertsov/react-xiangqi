@@ -1,6 +1,7 @@
 import update from 'immutability-helper';
 import { useReducer } from 'react';
 import XiangqiBoard, * as logic from '../logic';
+import { Color } from '../logic/constants';
 
 // Initial State
 
@@ -19,8 +20,8 @@ const getInitialMovesState = (fen = DEFAULT_FEN) => ([
 ]);
 
 const initialPlayers = [
-  { name: undefined, color: 'red' },
-  { name: undefined, color: 'black' },
+  { name: undefined, color: Color.RED },
+  { name: undefined, color: Color.BLACK },
 ];
 
 const getInitialState = () => ({
