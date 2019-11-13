@@ -47,20 +47,17 @@ const Game = ({ autoMove, gameSlug, username }) => {
     [dispatch, gameSlug],
   );
 
-  // TODO: only poll for move update? Can't do that now because
-  // we don't update active player based on moves
   const pollForMoveUpdate = useCallback(
-    () => {
+    // eslint-disable-next-line complexity
+    async() => {
       if (gameSlug === undefined) return;
       if (username === undefined) return;
       if (username === selectors.getNextMovePlayer(state)) return;
 
-      client.getMoveCount(gameSlug)
-        .then((response) => {
-          const { data: { move_count: moveCount } } = response;
-          if (!state.loading && state.moveCount >= moveCount) return;
-          fetchMoves();
-        });
+      const response = await client.getMoveCount(gameSlug);
+      if (!state.loading && state.moveCount >= response.data.move_count) return;
+
+      fetchMoves();
     },
     [fetchMoves, gameSlug, state, username],
   );
