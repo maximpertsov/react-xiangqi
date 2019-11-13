@@ -96,20 +96,18 @@ const Game = ({ autoMove, gameSlug, username }) => {
   // Move updates
 
   const postMoveToServer = useCallback(
-    (piece, fromPos, toPos) => {
+    async(piece, fromPos, toPos) => {
       if (gameSlug === undefined) return;
 
-      client
-        .postMove(gameSlug, {
+      try {
+        const { status } = await client.postMove(gameSlug, {
           username, piece, fromPos, toPos,
-        })
-        .then(({ status }) => {
-          if (status !== 201) fetchMoves();
-        })
-        .catch(() => {
-        // TODO: display useful error?
-          fetchMoves();
         });
+        if (status !== 201) fetchMoves();
+      } catch (error) {
+        // TODO: display useful error?
+        fetchMoves();
+      }
     },
     [fetchMoves, gameSlug, username],
   );
@@ -129,14 +127,14 @@ const Game = ({ autoMove, gameSlug, username }) => {
   );
 
   const handleConfirmedMove = useCallback(
-    () => {
+    async() => {
       const lastMove = selectors.getLastMove(state);
       if (!lastMove.pending) return;
 
       const { board, fromPos, toPos } = lastMove;
       const piece = board.getPiece(toPos, logic.RefType.RANK_FILE);
 
-      postMoveToServer(piece, fromPos, toPos);
+      await postMoveToServer(piece, fromPos, toPos);
       dispatch({ type: 'confirm_moves' });
     },
     [dispatch, postMoveToServer, state],
