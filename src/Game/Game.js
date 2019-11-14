@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
-
+import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import { useCallback, useEffect } from 'react';
 import useEventListener from '@use-it/event-listener';
 
@@ -14,6 +14,7 @@ import GameInfo from './GameInfo';
 import ConfirmMenu from './ConfirmMenu';
 import * as client from '../client';
 import * as logic from '../logic';
+import { Color } from '../logic/constants';
 import * as selectors from './selectors';
 
 const POLL_INTERVAL = 2500;
@@ -24,44 +25,39 @@ const Game = ({ autoMove, gameSlug, username }) => {
   // Fetch data utilities
 
   const fetchMoves = useCallback(
-    () => {
+    async() => {
       if (gameSlug === undefined) {
         dispatch({ type: 'set_moves', moves: [] });
         return;
       }
 
-      client.getMoves(gameSlug).then((response) => {
-        dispatch({ type: 'set_moves', moves: response.data.moves });
-      });
+      const response = await client.getMoves(gameSlug);
+      dispatch({ type: 'set_moves', moves: response.data.moves });
     },
     [dispatch, gameSlug],
   );
 
   const fetchGame = useCallback(
-    () => {
+    async() => {
       if (gameSlug === undefined) return;
 
-      client.getGame(gameSlug).then((response) => {
-        dispatch({ type: 'set_players', players: response.data.players });
-      });
+      const response = await client.getGame(gameSlug);
+      dispatch({ type: 'set_players', players: response.data.players });
     },
     [dispatch, gameSlug],
   );
 
-  // TODO: only poll for move update? Can't do that now because
-  // we don't update active player based on moves
   const pollForMoveUpdate = useCallback(
-    () => {
+    // eslint-disable-next-line complexity
+    async() => {
       if (gameSlug === undefined) return;
       if (username === undefined) return;
       if (username === selectors.getNextMovePlayer(state)) return;
 
-      client.getMoveCount(gameSlug)
-        .then((response) => {
-          const { data: { move_count: moveCount } } = response;
-          if (!state.loading && state.moveCount >= moveCount) return;
-          fetchMoves();
-        });
+      const response = await client.getMoveCount(gameSlug);
+      if (!state.loading && state.moveCount >= response.data.move_count) return;
+
+      fetchMoves();
     },
     [fetchMoves, gameSlug, state, username],
   );
@@ -100,20 +96,18 @@ const Game = ({ autoMove, gameSlug, username }) => {
   // Move updates
 
   const postMoveToServer = useCallback(
-    (piece, fromPos, toPos) => {
+    async(piece, fromPos, toPos) => {
       if (gameSlug === undefined) return;
 
-      client
-        .postMove(gameSlug, {
+      try {
+        const { status } = await client.postMove(gameSlug, {
           username, piece, fromPos, toPos,
-        })
-        .then(({ status }) => {
-          if (status !== 201) fetchMoves();
-        })
-        .catch(() => {
-        // TODO: display useful error?
-          fetchMoves();
         });
+        if (status !== 201) fetchMoves();
+      } catch (error) {
+        // TODO: display useful error?
+        fetchMoves();
+      }
     },
     [fetchMoves, gameSlug, username],
   );
@@ -133,14 +127,14 @@ const Game = ({ autoMove, gameSlug, username }) => {
   );
 
   const handleConfirmedMove = useCallback(
-    () => {
+    async() => {
       const lastMove = selectors.getLastMove(state);
       if (!lastMove.pending) return;
 
       const { board, fromPos, toPos } = lastMove;
       const piece = board.getPiece(toPos, logic.RefType.RANK_FILE);
 
-      postMoveToServer(piece, fromPos, toPos);
+      await postMoveToServer(piece, fromPos, toPos);
       dispatch({ type: 'confirm_moves' });
     },
     [dispatch, postMoveToServer, state],
@@ -151,9 +145,8 @@ const Game = ({ autoMove, gameSlug, username }) => {
   };
 
   // TODO: add a state that allows players to flip their original orientation
-  const getInitialUserOrientation = () => (
-    selectors.getUserColor(state, username) === 'black'
-  );
+  const getInitialUserOrientation = () => selectors
+    .getUserColor(state, username) === Color.BLACK;
 
   // TODO: move to layout class that displays board and players
   const getCurrentPlayer = () => {
@@ -182,18 +175,28 @@ const Game = ({ autoMove, gameSlug, username }) => {
       });
   };
 
-  if (gameSlug !== undefined && state.loading) return <div>Loading...</div>;
+  const active = gameSlug !== undefined && state.loading;
 
   return (
-    <div
+    <Dimmer.Dimmable
+      as={Segment}
+      basic
+      blurring
+      dimmed={active}
       className="Game"
       css={css`
-          display: flex;
           align-items: center;
+          display: flex;
           flex-direction: column;
           height: 100%;
         `}
     >
+      <Dimmer
+        active={active}
+        page
+      >
+        <Loader>Loading</Loader>
+      </Dimmer>
       <div
         css={css`
           display: flex;
@@ -247,12 +250,12 @@ const Game = ({ autoMove, gameSlug, username }) => {
           handleMoveSelect={handleMoveSelect}
         />
       </div>
-    </div>
+    </Dimmer.Dimmable>
   );
 };
 
 Game.propTypes = {
-  autoMove: PropTypes.oneOf([undefined, 'red', 'black', 'both']),
+  autoMove: PropTypes.oneOf([undefined, Color.RED, Color.BLACK, 'both']),
   gameSlug: PropTypes.string,
   username: PropTypes.string,
 };

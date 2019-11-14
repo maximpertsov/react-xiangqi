@@ -3,7 +3,7 @@ import { Button, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
 
-import { ping, authenticate } from '../client';
+import * as client from '../client';
 
 const initialForm = { username: '', password: '', error: '' };
 
@@ -11,6 +11,14 @@ const LoginForm = ({ setUsername }) => {
   const [sub, setSub] = useState(undefined);
   const [form, setForm] = useState(initialForm);
   const [loading, setLoading] = useState(true);
+
+  const ping = useCallback(
+    async() => {
+      const { status } = await client.ping();
+      if (status === 200) setLoading(false);
+    },
+    [setLoading],
+  );
 
   const handleAuthenticationSuccess = useCallback(
     (response) => {
@@ -23,20 +31,16 @@ const LoginForm = ({ setUsername }) => {
   );
 
   useEffect(
-    () => {
-      ping()
-        .then((response) => {
-          if (response.status === 200) setLoading(false);
-        });
-    },
-    [],
+    () => { ping(); },
+    [ping],
   );
 
+  // TODO: remove this and re-authenticate with cookie
   useEffect(
     () => {
       // TODO: username and password unnecessary for cookie auth
       const { username, password } = form;
-      authenticate({ username, password })
+      client.authenticate({ username, password })
         .then((response) => {
           if (response.status === 201) handleAuthenticationSuccess(response);
         })
@@ -55,16 +59,15 @@ const LoginForm = ({ setUsername }) => {
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
   };
 
-  const handleClick = () => {
+  const handleClick = async() => {
     const { username, password } = form;
     clearState();
-    authenticate({ username, password })
-      .then((response) => {
-        if (response.status === 201) handleAuthenticationSuccess(response);
-      })
-      .catch(() => {
-        setForm((prevForm) => ({ ...prevForm, error: 'Login failed' }));
-      });
+    try {
+      const response = await client.authenticate({ username, password });
+      if (response.status === 201) handleAuthenticationSuccess(response);
+    } catch (error) {
+      setForm((prevForm) => ({ ...prevForm, error: 'Login failed' }));
+    }
   };
 
   const isLoggedIn = () => sub !== undefined;
