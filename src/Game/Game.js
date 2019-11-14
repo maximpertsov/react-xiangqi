@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
-
+import { Segment } from 'semantic-ui-react';
 import { useCallback, useEffect } from 'react';
 import useEventListener from '@use-it/event-listener';
 
@@ -175,10 +175,9 @@ const Game = ({ autoMove, gameSlug, username }) => {
       });
   };
 
-  if (gameSlug !== undefined && state.loading) return <div>Loading...</div>;
-
   return (
-    <div
+    <Segment
+      basic
       className="Game"
       css={css`
           display: flex;
@@ -186,6 +185,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
           flex-direction: column;
           height: 100%;
         `}
+      loading={gameSlug !== undefined && state.loading}
     >
       <div
         css={css`
@@ -240,7 +240,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
           handleMoveSelect={handleMoveSelect}
         />
       </div>
-    </div>
+    </Segment>
   );
 };
 
