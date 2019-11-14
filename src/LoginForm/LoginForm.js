@@ -3,7 +3,7 @@ import { Button, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
 
-import { ping, authenticate } from '../client';
+import * as client from '../client';
 
 const initialForm = { username: '', password: '', error: '' };
 
@@ -11,6 +11,14 @@ const LoginForm = ({ setUsername }) => {
   const [sub, setSub] = useState(undefined);
   const [form, setForm] = useState(initialForm);
   const [loading, setLoading] = useState(true);
+
+  const ping = useCallback(
+    async() => {
+      const { status } = await client.ping();
+      if (status === 200) setLoading(false);
+    },
+    [setLoading],
+  );
 
   const handleAuthenticationSuccess = useCallback(
     (response) => {
@@ -23,20 +31,15 @@ const LoginForm = ({ setUsername }) => {
   );
 
   useEffect(
-    () => {
-      ping()
-        .then((response) => {
-          if (response.status === 200) setLoading(false);
-        });
-    },
-    [],
+    () => { ping(); },
+    [ping],
   );
 
   useEffect(
     () => {
       // TODO: username and password unnecessary for cookie auth
       const { username, password } = form;
-      authenticate({ username, password })
+      client.authenticate({ username, password })
         .then((response) => {
           if (response.status === 201) handleAuthenticationSuccess(response);
         })
@@ -58,7 +61,7 @@ const LoginForm = ({ setUsername }) => {
   const handleClick = () => {
     const { username, password } = form;
     clearState();
-    authenticate({ username, password })
+    client.authenticate({ username, password })
       .then((response) => {
         if (response.status === 201) handleAuthenticationSuccess(response);
       })
