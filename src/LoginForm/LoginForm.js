@@ -35,6 +35,7 @@ const LoginForm = ({ setUsername }) => {
     [ping],
   );
 
+  // TODO: remove this and re-authenticate with cookie
   useEffect(
     () => {
       // TODO: username and password unnecessary for cookie auth
@@ -58,16 +59,15 @@ const LoginForm = ({ setUsername }) => {
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
   };
 
-  const handleClick = () => {
+  const handleClick = async() => {
     const { username, password } = form;
     clearState();
-    client.authenticate({ username, password })
-      .then((response) => {
-        if (response.status === 201) handleAuthenticationSuccess(response);
-      })
-      .catch(() => {
-        setForm((prevForm) => ({ ...prevForm, error: 'Login failed' }));
-      });
+    try {
+      const response = await client.authenticate({ username, password });
+      if (response.status === 201) handleAuthenticationSuccess(response);
+    } catch (error) {
+      setForm((prevForm) => ({ ...prevForm, error: 'Login failed' }));
+    }
   };
 
   const isLoggedIn = () => sub !== undefined;
