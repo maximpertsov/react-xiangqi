@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
-import { Segment } from 'semantic-ui-react';
+import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import { useCallback, useEffect } from 'react';
 import useEventListener from '@use-it/event-listener';
 
@@ -175,9 +175,12 @@ const Game = ({ autoMove, gameSlug, username }) => {
       });
   };
 
+  const active = gameSlug !== undefined && state.loading;
+
   return (
-    <Segment
-      basic
+    <Dimmer.Dimmable
+      as={Segment}
+      dimmed={active}
       className="Game"
       css={css`
           display: flex;
@@ -185,8 +188,10 @@ const Game = ({ autoMove, gameSlug, username }) => {
           flex-direction: column;
           height: 100%;
         `}
-      loading={gameSlug !== undefined && state.loading}
     >
+      <Dimmer active={active}>
+        <Loader>Loading</Loader>
+      </Dimmer>
       <div
         css={css`
           display: flex;
@@ -240,7 +245,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
           handleMoveSelect={handleMoveSelect}
         />
       </div>
-    </Segment>
+    </Dimmer.Dimmable>
   );
 };
 
