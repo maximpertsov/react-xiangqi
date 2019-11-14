@@ -180,16 +180,21 @@ const Game = ({ autoMove, gameSlug, username }) => {
   return (
     <Dimmer.Dimmable
       as={Segment}
+      basic
+      blurring
       dimmed={active}
       className="Game"
       css={css`
-          display: flex;
           align-items: center;
+          display: flex;
           flex-direction: column;
           height: 100%;
         `}
     >
-      <Dimmer active={active}>
+      <Dimmer
+        active={active}
+        page
+      >
         <Loader>Loading</Loader>
       </Dimmer>
       <div
