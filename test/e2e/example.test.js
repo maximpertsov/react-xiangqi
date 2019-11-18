@@ -1,8 +1,13 @@
-import { Selector } from 'testcafe';
+import { RequestLogger, Selector } from 'testcafe';
 
-fixture `Getting Started`
-    .page `http://devexpress.github.io/testcafe/example`;
+const logger = RequestLogger('http://localhost:8000/api/authenticate');
 
-test('My first test', async t => {
-    // Test code
+fixture('Getting Started')
+  .page('http://localhost:3000')
+  .requestHooks(logger);
+
+test('Failing login', async(t) => {
+  await t
+    .click(Selector('button').withExactText('Login'))
+    .expect(logger.contains((r) => r.response.statusCode === 401)).ok();
 });
