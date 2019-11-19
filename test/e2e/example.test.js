@@ -14,13 +14,13 @@ const mock_auth_fail = RequestMock()
   .respond({}, 401, ACCESS_CONTROL_HEADERS);
 const mock_auth_success = RequestMock()
   .onRequestTo(AUTH_URI)
-  .respond({}, 201, ACCESS_CONTROL_HEADERS);
+  .respond({ access_token: 'xyz.abc.ijk' }, 201, ACCESS_CONTROL_HEADERS);
 
 // Helper functions
 const login = async(t) => t
   .click(Selector('button').withExactText('Login'));
 
-fixture('Getting Started')
+fixture('Login')
   .page(APP_URI)
   .requestHooks(logger);
 
@@ -32,10 +32,11 @@ test
       await t.expect(Selector('div').withExactText('Login failed').exists).ok();
     });
 
+// TODO: mock games endpoint
 test
   .requestHooks(mock_auth_success)(
     'Login successfully', async(t) => {
       await login(t);
       await t.expect(logger.contains((r) => r.response.statusCode === 201)).ok();
-      // await t.expect(Selector('div').withExactText('Games in play').exists).ok();
+      await t.expect(Selector('button').withExactText('Login').exists).notOk();
     });
