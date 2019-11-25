@@ -1,4 +1,4 @@
-import { ClientFunction, RequestLogger, RequestMock, Selector } from 'testcafe';
+import { RequestLogger, RequestMock, Selector } from 'testcafe';
 
 const APP_URI = 'http://localhost:3000';
 const AUTH_URI = 'http://localhost:8000/api/authenticate';
@@ -7,7 +7,6 @@ const AUTH_URI = 'http://localhost:8000/api/authenticate';
 const ACCESS_CONTROL_HEADERS = {
   'access-control-allow-credentials': true,
   'access-control-allow-origin': APP_URI,
-  'x-csrftoken': 'cookie',
 };
 
 const logger = RequestLogger(AUTH_URI); // ([AUTH_URI, GAMES_URI]);
@@ -26,9 +25,6 @@ const login = async(t) => t
 
 fixture('Login')
   .page(APP_URI)
-  .beforeEach(async() => ClientFunction(() => {
-    document.cookie = 'csrftoken=cookie';
-  }))
   .requestHooks(logger);
 
 test
@@ -44,9 +40,7 @@ test
 test
   .requestHooks(mock_auth_success)(
     'Login successfully', async(t) => {
-      console.log('get cookies:' + await ClientFunction(() => document.cookie)());
       await login(t);
-      console.log('get cookies:' + await ClientFunction(() => document.cookie)());
       logger.requests.forEach((r) => { console.log(r); });
       await t.expect(logger.contains((r) => r.response.statusCode === 201)).ok();
       await t.expect(Selector('button').withExactText('Login').exists).notOk();
