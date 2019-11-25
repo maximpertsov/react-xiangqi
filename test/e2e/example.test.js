@@ -10,10 +10,10 @@ const ACCESS_CONTROL_HEADERS = {
 };
 
 const logger = RequestLogger(AUTH_URI); // ([AUTH_URI, GAMES_URI]);
-const mock_auth_fail = RequestMock()
+const mockAuthFail = RequestMock()
   .onRequestTo(AUTH_URI)
   .respond({}, 401, ACCESS_CONTROL_HEADERS);
-const mock_auth_success = RequestMock()
+const mockAuthSuccess = RequestMock()
   .onRequestTo(AUTH_URI)
   .respond({ access_token: 'xyz.abc.ijk' }, 201, ACCESS_CONTROL_HEADERS);
   // .onRequestTo(GAMES_URI)
@@ -28,7 +28,7 @@ fixture('Login')
   .requestHooks(logger);
 
 test
-  .requestHooks(mock_auth_fail)(
+  .requestHooks(mockAuthFail)(
     'Fail to login', async(t) => {
       await login(t);
       await t.expect(logger.contains((r) => r.response.statusCode === 401)).ok();
@@ -38,7 +38,7 @@ test
 // TODO: mock games endpoint
 // TODO: why isn't access_token in auth response?
 test
-  .requestHooks(mock_auth_success)(
+  .requestHooks(mockAuthSuccess)(
     'Login successfully', async(t) => {
       await login(t);
       logger.requests.forEach((r) => { console.log(r); });
