@@ -102,10 +102,8 @@ const setMove = (
   fromMoveIdx = undefined,
 ) => {
   const { board } = state.moves[fromMoveIdx || state.moves.length - 1];
-  const piece = board.getPiece(fromPos, logic.RefType.RANK_FILE);
-  console.log(`Piece ${piece}`);
   const newMove = {
-    piece,
+    piece: board.getPiece(fromPos, logic.RefType.RANK_FILE),
     fromPos,
     toPos,
     board: board.move(fromPos, toPos, logic.RefType.RANK_FILE),
