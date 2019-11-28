@@ -98,10 +98,12 @@ const confirmMoves = (state) => {
 
 const setMove = (
   state,
-  { piece, origin: fromPos, destination: toPos },
+  { origin: fromPos, destination: toPos },
   fromMoveIdx = undefined,
 ) => {
   const { board } = state.moves[fromMoveIdx || state.moves.length - 1];
+  const piece = board.getPiece(fromPos, logic.RefType.RANK_FILE);
+  console.log(`Piece ${piece}`);
   const newMove = {
     piece,
     fromPos,
