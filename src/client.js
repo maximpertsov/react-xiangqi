@@ -20,18 +20,17 @@ export const getLastUpdate = (gameId) => axios
 export const getMoveCount = (gameId) => axios
   .get(`game/${gameId}/move-count`);
 
-const getPostMovePayload = (username, piece, fromPos, toPos) => ({
+const getPostMovePayload = (username, fromPos, toPos) => ({
   player: username,
-  piece,
   from: fromPos,
   to: toPos,
   type: 'move',
 });
 
 export const postMove = (gameId, {
-  username, piece, fromPos, toPos,
+  username, fromPos, toPos,
 }) => {
-  const payload = getPostMovePayload(username, piece, fromPos, toPos);
+  const payload = getPostMovePayload(username, fromPos, toPos);
   return axios.post(`game/${gameId}/moves`, payload);
 };
 

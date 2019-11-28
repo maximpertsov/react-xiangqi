@@ -13,7 +13,6 @@ import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import ConfirmMenu from './ConfirmMenu';
 import * as client from '../client';
-import * as logic from '../logic';
 import { Color } from '../logic/constants';
 import * as selectors from './selectors';
 
@@ -96,12 +95,12 @@ const Game = ({ autoMove, gameSlug, username }) => {
   // Move updates
 
   const postMoveToServer = useCallback(
-    async(piece, fromPos, toPos) => {
+    async({ fromPos, toPos }) => {
       if (gameSlug === undefined) return;
 
       try {
         const { status } = await client.postMove(gameSlug, {
-          username, piece, fromPos, toPos,
+          username, fromPos, toPos,
         });
         if (status !== 201) fetchMoves();
       } catch (error) {
@@ -131,10 +130,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       const lastMove = selectors.getLastMove(state);
       if (!lastMove.pending) return;
 
-      const { board, fromPos, toPos } = lastMove;
-      const piece = board.getPiece(toPos, logic.RefType.RANK_FILE);
-
-      await postMoveToServer(piece, fromPos, toPos);
+      await postMoveToServer(lastMove);
       dispatch({ type: 'confirm_moves' });
     },
     [dispatch, postMoveToServer, state],
