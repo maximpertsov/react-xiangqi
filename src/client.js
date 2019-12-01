@@ -34,9 +34,8 @@ export const postMove = (gameId, {
   return axios.post(`game/${gameId}/moves`, payload);
 };
 
-export async function authenticate({ username, password }) {
-  const payload = { username, password };
-  return axios.post('authenticate', payload);
+export async function authenticate() {
+  return axios.post('authenticate');
 }
 
 export async function login({ username, password }) {

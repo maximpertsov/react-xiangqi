@@ -8,6 +8,7 @@ import * as client from '../client';
 const initialForm = { username: '', password: '', error: '' };
 
 const LoginForm = ({ setUsername }) => {
+  // TODO: remove sub and pass in username instead
   const [sub, setSub] = useState(undefined);
   const [form, setForm] = useState(initialForm);
   const [loading, setLoading] = useState(true);
@@ -23,9 +24,9 @@ const LoginForm = ({ setUsername }) => {
   const handleAuthenticationSuccess = useCallback(
     (response) => {
       const { data: { access_token: accessToken } } = response;
-      const { sub: _sub } = jwtDecode(accessToken);
-      setSub(_sub);
-      setUsername(_sub);
+      const { sub: username } = jwtDecode(accessToken);
+      setSub(username);
+      setUsername(username);
     },
     [setUsername],
   );
@@ -35,12 +36,9 @@ const LoginForm = ({ setUsername }) => {
     [ping],
   );
 
-  // TODO: remove this and re-authenticate with cookie
   useEffect(
     () => {
-      // TODO: username and password unnecessary for cookie auth
-      const { username, password } = form;
-      client.authenticate({ username, password })
+      client.authenticate()
         .then((response) => {
           if (response.status === 201) handleAuthenticationSuccess(response);
         })
