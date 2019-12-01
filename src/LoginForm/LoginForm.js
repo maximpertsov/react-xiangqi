@@ -5,10 +5,9 @@ import jwtDecode from 'jwt-decode';
 
 import * as client from '../client';
 
-const initialForm = { username: '', password: '', error: '' };
+const initialForm = { formUsername: '', formPassword: '', formError: '' };
 
-const LoginForm = ({ setUsername }) => {
-  const [sub, setSub] = useState(undefined);
+const LoginForm = ({ username, setUsername }) => {
   const [form, setForm] = useState(initialForm);
   const [loading, setLoading] = useState(true);
 
@@ -23,9 +22,8 @@ const LoginForm = ({ setUsername }) => {
   const handleAuthenticationSuccess = useCallback(
     (response) => {
       const { data: { access_token: accessToken } } = response;
-      const { sub: _sub } = jwtDecode(accessToken);
-      setSub(_sub);
-      setUsername(_sub);
+      const { sub } = jwtDecode(accessToken);
+      setUsername(sub);
     },
     [setUsername],
   );
@@ -35,12 +33,9 @@ const LoginForm = ({ setUsername }) => {
     [ping],
   );
 
-  // TODO: remove this and re-authenticate with cookie
   useEffect(
     () => {
-      // TODO: username and password unnecessary for cookie auth
-      const { username, password } = form;
-      client.authenticate({ username, password })
+      client.authenticate()
         .then((response) => {
           if (response.status === 201) handleAuthenticationSuccess(response);
         })
@@ -60,25 +55,28 @@ const LoginForm = ({ setUsername }) => {
   };
 
   const handleClick = async() => {
-    const { username, password } = form;
+    const { formUsername, formPassword } = form;
     clearState();
     try {
-      const response = await client.authenticate({ username, password });
+      const response = await client.login({
+        username: formUsername,
+        password: formPassword,
+      });
       if (response.status === 201) handleAuthenticationSuccess(response);
     } catch (error) {
-      setForm((prevForm) => ({ ...prevForm, error: 'Login failed' }));
+      setForm((prevForm) => ({ ...prevForm, formError: 'Login failed' }));
     }
   };
 
-  const isLoggedIn = () => sub !== undefined;
+  const isLoggedIn = () => username !== undefined;
 
   const renderLoggedIn = () => {
-    const loggedInMessage = `Welcome ${sub}`;
+    const loggedInMessage = `Welcome ${username}`;
     return (<div>{loggedInMessage}</div>);
   };
 
   const renderLoggedOut = () => {
-    const { username, password, error } = form;
+    const { formUsername, formPassword, formError } = form;
     return (
       <div
         className="LoginForm"
@@ -89,8 +87,8 @@ const LoginForm = ({ setUsername }) => {
             iconPosition="left"
             label="Username"
             placeholder="Username"
-            name="username"
-            value={username}
+            name="formUsername"
+            value={formUsername}
             onChange={handleChange}
           />
           <Form.Input
@@ -98,13 +96,13 @@ const LoginForm = ({ setUsername }) => {
             iconPosition="left"
             label="Password"
             type="password"
-            name="password"
-            value={password}
+            name="formPassword"
+            value={formPassword}
             onChange={handleChange}
           />
           <Button content="Login" primary onClick={handleClick} />
         </Form>
-        <div>{error}</div>
+        <div>{formError}</div>
       </div>
     );
   };
@@ -116,6 +114,11 @@ const LoginForm = ({ setUsername }) => {
 
 LoginForm.propTypes = {
   setUsername: PropTypes.func.isRequired,
+  username: PropTypes.func,
+};
+
+LoginForm.defaultProps = {
+  username: undefined,
 };
 
 export default LoginForm;
