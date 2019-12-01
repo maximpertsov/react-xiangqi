@@ -5,7 +5,7 @@ import { useEffect, useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import * as logic from '../../logic';
-import { Color } from '../../logic/constants';
+import { AutoMove } from '../../constants';
 import * as styles from '../../commonStyles';
 
 import boardImg from './board-1000px.svg.png';
@@ -65,7 +65,7 @@ const Board = ({
 
   useEffect(
     () => {
-      if (autoMove === 'both' || autoMove === nextMoveColor) {
+      if (autoMove === AutoMove.BOTH || autoMove === nextMoveColor) {
         try {
           const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
           handleMove(fromSlot, toSlot);
@@ -151,7 +151,7 @@ const Board = ({
 };
 
 Board.propTypes = {
-  autoMove: PropTypes.oneOf([undefined, Color.RED, Color.BLACK, 'both']),
+  autoMove: PropTypes.oneOf([undefined, ...Object.values(AutoMove)]),
   board: logic.boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,

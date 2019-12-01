@@ -15,6 +15,7 @@ import ConfirmMenu from './ConfirmMenu';
 import * as client from '../client';
 import { Color } from '../logic/constants';
 import * as selectors from './selectors';
+import { AutoMove } from '../constants';
 
 const POLL_INTERVAL = 2500;
 
@@ -251,7 +252,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
 };
 
 Game.propTypes = {
-  autoMove: PropTypes.oneOf([undefined, Color.RED, Color.BLACK, 'both']),
+  autoMove: PropTypes.oneOf([undefined, ...Object.values(AutoMove)]),
   gameSlug: PropTypes.string,
   username: PropTypes.string,
 };
