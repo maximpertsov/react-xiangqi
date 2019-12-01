@@ -63,7 +63,7 @@ const LoginForm = ({ setUsername }) => {
     const { username, password } = form;
     clearState();
     try {
-      const response = await client.authenticate({ username, password });
+      const response = await client.login({ username, password });
       if (response.status === 201) handleAuthenticationSuccess(response);
     } catch (error) {
       setForm((prevForm) => ({ ...prevForm, error: 'Login failed' }));

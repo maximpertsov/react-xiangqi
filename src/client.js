@@ -39,4 +39,9 @@ export async function authenticate({ username, password }) {
   return axios.post('authenticate', payload);
 }
 
+export async function login({ username, password }) {
+  const payload = { username, password };
+  return axios.post('login', payload);
+}
+
 export default {};
