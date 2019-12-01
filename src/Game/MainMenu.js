@@ -42,7 +42,10 @@ const MainMenu = () => {
       <Segment.Group compact>
         <Segment>
           <Header size="large">Play online</Header>
-          <LoginForm setUsername={setUsername} />
+          <LoginForm
+            username={username}
+            setUsername={setUsername}
+          />
           { renderGameList() }
         </Segment>
         <Segment>
