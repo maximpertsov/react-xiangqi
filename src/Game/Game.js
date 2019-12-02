@@ -14,6 +14,7 @@ import GameInfo from './GameInfo';
 import ConfirmMenu from './ConfirmMenu';
 import * as client from '../client';
 import { Color } from '../logic/constants';
+import { getSlot } from '../logic/utils';
 import * as selectors from './selectors';
 import { AutoMove } from '../constants';
 
@@ -192,6 +193,17 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const active = gameSlug !== undefined && state.loading;
 
+  // TODO: just pass selectedMove down instead of the board and move separately?
+  const {
+    board: selectedBoard,
+    fromPos,
+    toPos,
+  } = selectors.getMove(state, state.selectedMoveIdx);
+  const lastMoveOnSelectedBoard = {
+    fromSlot: fromPos === undefined ? undefined : getSlot(...fromPos),
+    toSlot: toPos === undefined ? undefined : getSlot(...toPos),
+  };
+
   return (
     <Dimmer.Dimmable
       as={Segment}
@@ -230,9 +242,10 @@ const Game = ({ autoMove, gameSlug, username }) => {
           <Player {...getOtherPlayer()} />
         </div>
         <Board
+          board={selectedBoard}
           nextMoveColor={selectors.getNextMoveColor(state)}
-          board={selectors.getMove(state, state.selectedMoveIdx).board}
           handleLegalMove={handleLegalMove}
+          lastMove={lastMoveOnSelectedBoard}
           legalMoves={getLegalMoves(state.selectedMoveIdx)}
           reversed={getInitialUserOrientation()}
         />

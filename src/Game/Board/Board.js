@@ -12,6 +12,7 @@ import boardImg from './board-1000px.svg.png';
 const Board = ({
   board,
   handleLegalMove,
+  lastMove,
   legalMoves,
   nextMoveColor,
   reversed,
@@ -86,11 +87,13 @@ const Board = ({
 
   const renderSquares = () => board.board.map((_, i, b) => {
     const slot = getSlot(b, i);
+    // TODO: use classNames to capture multiple styles
     return (
       <Square
         key={slot}
         handleClick={handleSquareClick(slot)}
         inCheck={inCheck(slot)}
+        inLastMove={slot === lastMove.fromSlot || slot === lastMove.toSlot}
         pieceCode={getPieceCode(slot)}
         selected={selectedSlot === slot}
         targeted={getTargets().includes(slot)}
@@ -135,6 +138,10 @@ const Board = ({
 Board.propTypes = {
   board: logic.boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
+  lastMove: PropTypes.shape({
+    fromSlot: PropTypes.oneOf([undefined, PropTypes.number]),
+    toSlot: PropTypes.oneOf([undefined, PropTypes.number]),
+  }).isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   nextMoveColor: PropTypes.string.isRequired,
   reversed: PropTypes.bool.isRequired,

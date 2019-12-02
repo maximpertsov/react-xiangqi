@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import XiangqiPiece from '../Piece/Piece';
 
-const SELECTION_GREEN = 'rgba(30, 179, 0, 0.3)';
+const LAST_MOVE_COLOR = 'rgb(170,143,121,0.3)';
+const SELECTION_GREEN = 'rgba(30,179,0,0.3)';
 const IN_CHECK_RED = 'red';
 
 const fillParentElement = {
@@ -13,6 +14,12 @@ const fillParentElement = {
   width: '100%',
   position: 'absolute',
 };
+
+const LastMoveIndicator = styled.div({
+  backgroundColor: LAST_MOVE_COLOR,
+  zIndex: '-1',
+  ...fillParentElement,
+});
 
 const SelectionIndicator = styled.div({
   backgroundColor: SELECTION_GREEN,
@@ -42,10 +49,10 @@ const KingCheckedIndicator = styled.div({
 
 
 const Square = ({
-  handleClick, pieceCode, selected, inCheck, targeted, moveX, moveY,
+  handleClick, pieceCode, selected, inCheck, inLastMove, targeted, moveX, moveY,
 }) => {
   const occupied = pieceCode !== undefined;
-  const moving = moveX !== 0 || moveY !== 0
+  const moving = moveX !== 0 || moveY !== 0;
 
   const selectedMoveX = selected ? moveX : 0;
   const selectedMoveY = selected ? moveY : 0;
@@ -62,8 +69,16 @@ const Square = ({
         position: 'relative',
       }}
     >
+      {inLastMove && <LastMoveIndicator />}
       {selected && !(moving) && <SelectionIndicator />}
-      {occupied && <XiangqiPiece moveX={selectedMoveX} moveY={selectedMoveY} code={pieceCode} />}
+      {
+        occupied &&
+          <XiangqiPiece
+            moveX={selectedMoveX}
+            moveY={selectedMoveY}
+            code={pieceCode}
+          />
+      }
       {targeted && !(moving) && <TargetIndicator occupied={occupied} />}
       {inCheck && !(moving) && <KingCheckedIndicator />}
     </div>
@@ -75,6 +90,7 @@ Square.propTypes = {
   pieceCode: PropTypes.string,
   selected: PropTypes.bool.isRequired,
   inCheck: PropTypes.bool.isRequired,
+  inLastMove: PropTypes.bool.isRequired,
   targeted: PropTypes.bool.isRequired,
   moveX: PropTypes.number,
   moveY: PropTypes.number,
