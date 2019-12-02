@@ -82,7 +82,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
     () => {
       const nextMoveColor = selectors.getNextMoveColor(state);
       if (autoMove === AutoMove.BOTH || autoMove === nextMoveColor) {
-        const { board } = selectors.getMove(state, state.selectedMoveIdx);
+        const { board } = selectors.getLastMove(state);
         const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
         dispatch({
           type: 'add_move', board, fromSlot, toSlot, pending: false,
