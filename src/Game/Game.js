@@ -77,6 +77,22 @@ const Game = ({ autoMove, gameSlug, username }) => {
     [gameSlug, pollForMoveUpdate],
   );
 
+  useEffect(
+    () => {
+      const nextMoveColor = selectors.getNextMoveColor(state);
+      if (autoMove === AutoMove.BOTH || autoMove === nextMoveColor) {
+        const { board } = selectors.getMove(state, state.selectedMoveIdx);
+        const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
+        dispatch({
+          type: 'add_move', board, fromSlot, toSlot, pending: false,
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [autoMove, dispatch, state.moves],
+  );
+
+
   useEventListener(
     'keydown',
     ({ key }) => {
@@ -114,7 +130,9 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const handleLegalMove = useCallback(
     ({ board, fromSlot, toSlot }) => {
-      dispatch({ type: 'add_move', board, move: { fromSlot, toSlot } });
+      dispatch({
+        type: 'add_move', board, fromSlot, toSlot, pending: true,
+      });
     },
     [dispatch],
   );
@@ -212,7 +230,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
           <Player {...getOtherPlayer()} />
         </div>
         <Board
-          autoMove={autoMove}
           nextMoveColor={selectors.getNextMoveColor(state)}
           board={selectors.getMove(state, state.selectedMoveIdx).board}
           handleLegalMove={handleLegalMove}

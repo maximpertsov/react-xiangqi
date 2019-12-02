@@ -1,17 +1,15 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 
-import { useEffect, useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import * as logic from '../../logic';
-import { AutoMove } from '../../constants';
 import * as styles from '../../commonStyles';
 
 import boardImg from './board-1000px.svg.png';
 
 const Board = ({
-  autoMove,
   board,
   handleLegalMove,
   legalMoves,
@@ -62,22 +60,6 @@ const Board = ({
       setSelectedSlot(undefined);
     }
   };
-
-  useEffect(
-    () => {
-      if (autoMove === AutoMove.BOTH || autoMove === nextMoveColor) {
-        try {
-          const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
-          handleMove(fromSlot, toSlot);
-        } catch (error) {
-          if (error instanceof TypeError) return;
-          throw error;
-        }
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [nextMoveColor],
-  );
 
   const handleSquareClick = (slot) => (() => {
     if (slot === selectedSlot) {
@@ -151,16 +133,11 @@ const Board = ({
 };
 
 Board.propTypes = {
-  autoMove: PropTypes.oneOf([undefined, ...Object.values(AutoMove)]),
   board: logic.boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   nextMoveColor: PropTypes.string.isRequired,
   reversed: PropTypes.bool.isRequired,
-};
-
-Board.defaultProps = {
-  autoMove: undefined,
 };
 
 export default Board;
