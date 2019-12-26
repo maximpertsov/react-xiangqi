@@ -27,7 +27,7 @@
     ],
     "comma-dangle": [
       "error",
-      "always"
+      "always-multiline"
     ],
     "function-paren-newline": "off",
     "import/no-extraneous-dependencies": "off",
