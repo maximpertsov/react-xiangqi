@@ -20,24 +20,27 @@ export const getLastUpdate = (gameId) => axios
 export const getMoveCount = (gameId) => axios
   .get(`game/${gameId}/move-count`);
 
-const getPostMovePayload = (username, piece, fromPos, toPos) => ({
+const getPostMovePayload = (username, fromPos, toPos) => ({
   player: username,
-  piece,
   from: fromPos,
   to: toPos,
   type: 'move',
 });
 
 export const postMove = (gameId, {
-  username, piece, fromPos, toPos,
+  username, fromPos, toPos,
 }) => {
-  const payload = getPostMovePayload(username, piece, fromPos, toPos);
+  const payload = getPostMovePayload(username, fromPos, toPos);
   return axios.post(`game/${gameId}/moves`, payload);
 };
 
-export async function authenticate({ username, password }) {
+export async function authenticate() {
+  return axios.post('authenticate');
+}
+
+export async function login({ username, password }) {
   const payload = { username, password };
-  return axios.post('authenticate', payload);
+  return axios.post('login', payload);
 }
 
 export default {};

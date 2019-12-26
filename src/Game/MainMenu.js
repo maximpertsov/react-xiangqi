@@ -5,7 +5,7 @@ import Game from './Game';
 import GameList from './GameList';
 import LoginForm from '../LoginForm/LoginForm';
 import * as client from '../client';
-import { Color } from '../logic/constants';
+import { AutoMove } from '../constants';
 
 const LOCAL = 'local';
 const PLAYER_VS_CPU = 'player_vs_cpu';
@@ -42,7 +42,10 @@ const MainMenu = () => {
       <Segment.Group compact>
         <Segment>
           <Header size="large">Play online</Header>
-          <LoginForm setUsername={setUsername} />
+          <LoginForm
+            username={username}
+            setUsername={setUsername}
+          />
           { renderGameList() }
         </Segment>
         <Segment>
@@ -67,9 +70,9 @@ const MainMenu = () => {
     case LOCAL:
       return <Game />;
     case PLAYER_VS_CPU:
-      return <Game autoMove={Color.BLACK} />;
+      return <Game autoMove={AutoMove.BLACK} />;
     case CPU_VS_CPU:
-      return <Game autoMove="both" />;
+      return <Game autoMove={AutoMove.BOTH} />;
     default:
       return (
         <Game

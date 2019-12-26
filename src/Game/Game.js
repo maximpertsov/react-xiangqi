@@ -13,9 +13,10 @@ import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import ConfirmMenu from './ConfirmMenu';
 import * as client from '../client';
-import * as logic from '../logic';
 import { Color } from '../logic/constants';
+import { getSlot } from '../logic/utils';
 import * as selectors from './selectors';
+import { AutoMove } from '../constants';
 
 const POLL_INTERVAL = 2500;
 
@@ -77,6 +78,22 @@ const Game = ({ autoMove, gameSlug, username }) => {
     [gameSlug, pollForMoveUpdate],
   );
 
+  useEffect(
+    () => {
+      const nextMoveColor = selectors.getNextMoveColor(state);
+      if (autoMove === AutoMove.BOTH || autoMove === nextMoveColor) {
+        const { board } = selectors.getLastMove(state);
+        const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
+        dispatch({
+          type: 'add_move', board, fromSlot, toSlot, pending: false,
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [autoMove, dispatch, state.moves],
+  );
+
+
   useEventListener(
     'keydown',
     ({ key }) => {
@@ -96,12 +113,12 @@ const Game = ({ autoMove, gameSlug, username }) => {
   // Move updates
 
   const postMoveToServer = useCallback(
-    async(piece, fromPos, toPos) => {
+    async({ fromPos, toPos }) => {
       if (gameSlug === undefined) return;
 
       try {
         const { status } = await client.postMove(gameSlug, {
-          username, piece, fromPos, toPos,
+          username, fromPos, toPos,
         });
         if (status !== 201) fetchMoves();
       } catch (error) {
@@ -114,7 +131,9 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const handleLegalMove = useCallback(
     ({ board, fromSlot, toSlot }) => {
-      dispatch({ type: 'add_move', board, move: { fromSlot, toSlot } });
+      dispatch({
+        type: 'add_move', board, fromSlot, toSlot, pending: true,
+      });
     },
     [dispatch],
   );
@@ -131,10 +150,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       const lastMove = selectors.getLastMove(state);
       if (!lastMove.pending) return;
 
-      const { board, fromPos, toPos } = lastMove;
-      const piece = board.getPiece(toPos, logic.RefType.RANK_FILE);
-
-      await postMoveToServer(piece, fromPos, toPos);
+      await postMoveToServer(lastMove);
       dispatch({ type: 'confirm_moves' });
     },
     [dispatch, postMoveToServer, state],
@@ -177,6 +193,17 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const active = gameSlug !== undefined && state.loading;
 
+  // TODO: just pass selectedMove down instead of the board and move separately?
+  const {
+    board: selectedBoard,
+    fromPos,
+    toPos,
+  } = selectors.getMove(state, state.selectedMoveIdx);
+  const lastMoveOnSelectedBoard = {
+    fromSlot: fromPos === undefined ? undefined : getSlot(...fromPos),
+    toSlot: toPos === undefined ? undefined : getSlot(...toPos),
+  };
+
   return (
     <Dimmer.Dimmable
       as={Segment}
@@ -215,10 +242,10 @@ const Game = ({ autoMove, gameSlug, username }) => {
           <Player {...getOtherPlayer()} />
         </div>
         <Board
-          autoMove={autoMove}
+          board={selectedBoard}
           nextMoveColor={selectors.getNextMoveColor(state)}
-          board={selectors.getMove(state, state.selectedMoveIdx).board}
           handleLegalMove={handleLegalMove}
+          lastMove={lastMoveOnSelectedBoard}
           legalMoves={getLegalMoves(state.selectedMoveIdx)}
           reversed={getInitialUserOrientation()}
         />
@@ -255,7 +282,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
 };
 
 Game.propTypes = {
-  autoMove: PropTypes.oneOf([undefined, Color.RED, Color.BLACK, 'both']),
+  autoMove: PropTypes.oneOf([undefined, ...Object.values(AutoMove)]),
   gameSlug: PropTypes.string,
   username: PropTypes.string,
 };
