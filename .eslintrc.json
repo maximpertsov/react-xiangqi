@@ -25,6 +25,10 @@
         "max": 5
       }
     ],
+    "comma-dangle": [
+      "error",
+      "always"
+    ],
     "function-paren-newline": "off",
     "import/no-extraneous-dependencies": "off",
     "max-len": [
