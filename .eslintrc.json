@@ -1,8 +1,9 @@
 {
   "extends": [
+    "airbnb",
     "eslint:recommended",
-    "walmart/rules/eslint/best-practices/on",
-    "airbnb"
+    "plugin:testcafe/recommended",
+    "walmart/rules/eslint/best-practices/on"
   ],
   "globals": {
     "document": false,
@@ -10,7 +11,8 @@
     "window": false
   },
   "plugins": [
-    "react-hooks"
+    "react-hooks",
+    "testcafe"
   ],
   "rules": {
     "arrow-parens": [
