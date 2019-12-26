@@ -1,6 +1,6 @@
 import { RequestLogger } from 'testcafe';
 
-import { expectLoginFailure, login } from './utils';
+import { expectLoginFailure, expectUnauthorized, login } from './utils';
 import * as mocks from './mocks';
 
 const logger = RequestLogger(mocks.AUTH_URI); // ([AUTH_URI, GAMES_URI]);
@@ -13,7 +13,9 @@ test
   .requestHooks(mocks.authFail, mocks.ping)(
     'Fail to login', async(t) => {
       await login(t);
-      await t.expect(logger.contains((r) => r.response.statusCode === 401)).ok();
+      // TODO: remove the next test after mocking setup is confirmed to be
+      // working correctly
+      await expectUnauthorized(t, logger);
       await expectLoginFailure(t);
     });
 
