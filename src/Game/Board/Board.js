@@ -9,6 +9,8 @@ import * as styles from '../../commonStyles';
 
 import boardImg from './board-1000px.svg.png';
 
+const ANIMATION_DELAY = 150
+
 const Board = ({
   board,
   handleLegalMove,
@@ -56,7 +58,7 @@ const Board = ({
         setMoveX(0);
         setMoveY(0);
         setSelectedSlot(undefined);
-      }, 150);
+      }, ANIMATION_DELAY);
     } else {
       setSelectedSlot(undefined);
     }
