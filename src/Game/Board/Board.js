@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core';
 
 import { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
-import Square from '../Square/Square';
+import Square from '../Square';
 import * as logic from '../../logic';
 import * as styles from '../../commonStyles';
 
@@ -26,7 +26,7 @@ const Board = ({
   // NOTE: this is the synchronous version of useEffect. Using
   // this version prevents late selection clearing, but causes
   // move updates to take longer. Annoying in development but
-  // seems to be faster enough on a production build.
+  // seems to be fast enough on a production build.
   useLayoutEffect(
     () => { setSelectedSlot(undefined); },
     // TODO: is it too expensive to check if the board changes?
