@@ -1,38 +1,16 @@
-import { RequestLogger, RequestMock, Selector } from 'testcafe';
+import { RequestLogger, Selector } from 'testcafe';
 
-const APP_URI = 'http://localhost:3000';
-const AUTH_URI = 'http://localhost:8000/api/authenticate';
-const PING_URI = 'http://localhost:8000/api/ping';
-// const GAMES_URI = /http:\/\/localhost:8000\/api\/\w+\/games/;
+import { login } from './helpers';
+import * as mocks from './mocks';
 
-const ACCESS_CONTROL_HEADERS = {
-  'access-control-allow-credentials': true,
-  'access-control-allow-origin': APP_URI,
-};
-
-const logger = RequestLogger(AUTH_URI); // ([AUTH_URI, GAMES_URI]);
-const mockPing = RequestMock()
-  .onRequestTo(PING_URI)
-  .respond({ result: 'ok' }, 200, ACCESS_CONTROL_HEADERS);
-const mockAuthFail = RequestMock()
-  .onRequestTo(AUTH_URI)
-  .respond({}, 401, ACCESS_CONTROL_HEADERS);
-const mockAuthSuccess = RequestMock()
-  .onRequestTo(AUTH_URI)
-  .respond({ access_token: 'xyz.abc.ijk' }, 201, ACCESS_CONTROL_HEADERS);
-  // .onRequestTo(GAMES_URI)
-  // .respond({ games: [{ slug: 'ABC123' }] }, 200, ACCESS_CONTROL_HEADERS);
-
-// Helper functions
-const login = async(t) => t
-  .click(Selector('button').withExactText('Login'));
+const logger = RequestLogger(mocks.AUTH_URI); // ([AUTH_URI, GAMES_URI]);
 
 fixture('Login')
-  .page(APP_URI)
+  .page(mocks.APP_URI)
   .requestHooks(logger);
 
 test
-  .requestHooks(mockAuthFail, mockPing)(
+  .requestHooks(mocks.authFail, mocks.ping)(
     'Fail to login', async(t) => {
       await login(t);
       await t.expect(logger.contains((r) => r.response.statusCode === 401)).ok();
