@@ -4,7 +4,7 @@ import { expectLoginFailure, expectUnauthorized, login } from './utils';
 import * as mocks from './mocks';
 
 const logger = RequestLogger(
-  mocks.AUTH_URI,
+  mocks.AUTH_URL,
   {
     logResponseBody: true,
     stringifyResponseBody: true,
@@ -12,7 +12,7 @@ const logger = RequestLogger(
 );
 
 fixture('Login')
-  .page(mocks.APP_URI)
+  .page(mocks.APP_URL)
   .requestHooks(logger);
 
 test
