@@ -37,6 +37,10 @@
     "not op_mini all"
   ],
   "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/e2e/"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetsTransformer.js",
       "\\.(css|less)$": "<rootDir>/assetsTransformer.js"
@@ -55,8 +59,10 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.6.1",
+    "eslint-plugin-testcafe": "^0.2.1",
     "gh-pages": "^2.0.1",
     "jest": "^24.8.0",
-    "react-test-renderer": "^16.8.6"
+    "react-test-renderer": "^16.8.6",
+    "testcafe": "^1.6.1"
   }
 }
