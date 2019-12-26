@@ -61,13 +61,13 @@ const selectLastMove = (state) => {
   return setSelectedMove(state, moves.length - 1);
 };
 
-const addMove = (state, board, { fromSlot, toSlot }) => {
+const addMove = (state, board, fromSlot, toSlot, pending) => {
   const newMove = {
     fromPos: logic.getRankFile(fromSlot),
     toPos: logic.getRankFile(toSlot),
     piece: board.getPiece(fromSlot),
     board: board.move(fromSlot, toSlot),
-    pending: true,
+    pending,
   };
   return selectLastMove(
     incrementMoveCount(
@@ -130,7 +130,13 @@ const setMoves = (state, moves) => selectLastMove(
 const reducer = (state, action) => {
   switch (action.type) {
     case 'add_move':
-      return addMove(state, action.board, action.move);
+      return addMove(
+        state,
+        action.board,
+        action.fromSlot,
+        action.toSlot,
+        action.pending,
+      );
     case 'cancelMoves':
       return cancelMoves(state);
     case 'confirm_moves':

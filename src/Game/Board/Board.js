@@ -1,19 +1,18 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 
-import { useEffect, useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import Square from '../Square/Square';
 import * as logic from '../../logic';
-import { Color } from '../../logic/constants';
 import * as styles from '../../commonStyles';
 
 import boardImg from './board-1000px.svg.png';
 
 const Board = ({
-  autoMove,
   board,
   handleLegalMove,
+  lastMove,
   legalMoves,
   nextMoveColor,
   reversed,
@@ -63,22 +62,6 @@ const Board = ({
     }
   };
 
-  useEffect(
-    () => {
-      if (autoMove === 'both' || autoMove === nextMoveColor) {
-        try {
-          const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
-          handleMove(fromSlot, toSlot);
-        } catch (error) {
-          if (error instanceof TypeError) return;
-          throw error;
-        }
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [nextMoveColor],
-  );
-
   const handleSquareClick = (slot) => (() => {
     if (slot === selectedSlot) {
       setSelectedSlot(undefined);
@@ -104,11 +87,13 @@ const Board = ({
 
   const renderSquares = () => board.board.map((_, i, b) => {
     const slot = getSlot(b, i);
+    // TODO: use classNames to capture multiple styles
     return (
       <Square
         key={slot}
         handleClick={handleSquareClick(slot)}
         inCheck={inCheck(slot)}
+        inLastMove={slot === lastMove.fromSlot || slot === lastMove.toSlot}
         pieceCode={getPieceCode(slot)}
         selected={selectedSlot === slot}
         targeted={getTargets().includes(slot)}
@@ -151,16 +136,15 @@ const Board = ({
 };
 
 Board.propTypes = {
-  autoMove: PropTypes.oneOf([undefined, Color.RED, Color.BLACK, 'both']),
   board: logic.boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
+  lastMove: PropTypes.shape({
+    fromSlot: PropTypes.oneOf([undefined, PropTypes.number]),
+    toSlot: PropTypes.oneOf([undefined, PropTypes.number]),
+  }).isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   nextMoveColor: PropTypes.string.isRequired,
   reversed: PropTypes.bool.isRequired,
-};
-
-Board.defaultProps = {
-  autoMove: undefined,
 };
 
 export default Board;
