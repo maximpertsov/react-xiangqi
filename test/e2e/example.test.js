@@ -1,6 +1,6 @@
-import { RequestLogger, Selector } from 'testcafe';
+import { RequestLogger } from 'testcafe';
 
-import { login } from './helpers';
+import { expectLoginFailure, login } from './utils';
 import * as mocks from './mocks';
 
 const logger = RequestLogger(mocks.AUTH_URI); // ([AUTH_URI, GAMES_URI]);
@@ -14,7 +14,7 @@ test
     'Fail to login', async(t) => {
       await login(t);
       await t.expect(logger.contains((r) => r.response.statusCode === 401)).ok();
-      await t.expect(Selector('div').withExactText('Login failed').exists).ok();
+      await expectLoginFailure(t);
     });
 
 // // TODO: mock games endpoint
