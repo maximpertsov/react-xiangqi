@@ -6,78 +6,38 @@ import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import { useCallback, useEffect } from 'react';
 import useEventListener from '@use-it/event-listener';
 
-import Board from '../../components/Board';
+import Board from 'components/Board';
+import { Color } from 'services/logic/constants';
+import { getSlot } from 'services/logic/utils';
 
 import ConfirmMenu from './components/ConfirmMenu';
 import GameInfo from './components/GameInfo';
 import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
+import * as client from './services/client';
 
 import useGameReducer from './reducers';
-import * as client from '../../client';
-import { Color } from '../../logic/constants';
-import { getSlot } from '../../logic/utils';
 import * as selectors from './selectors';
-import { AutoMove } from '../../constants';
 
-const POLL_INTERVAL = 2500;
+// TODO: seems like this needs to be a relative import
+// because it imports from services/logic/constants
+import { AutoMove } from '../../constants';
 
 const Game = ({ autoMove, gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
 
-  // Fetch data utilities
-
-  const fetchMoves = useCallback(
-    async() => {
-      if (gameSlug === undefined) {
-        dispatch({ type: 'set_moves', moves: [] });
-        return;
-      }
-
-      const response = await client.getMoves(gameSlug);
-      dispatch({ type: 'set_moves', moves: response.data.moves });
-    },
-    [dispatch, gameSlug],
-  );
-
-  const fetchGame = useCallback(
-    async() => {
-      if (gameSlug === undefined) return;
-
-      const response = await client.getGame(gameSlug);
-      dispatch({ type: 'set_players', players: response.data.players });
-    },
-    [dispatch, gameSlug],
-  );
-
-  const pollForMoveUpdate = useCallback(
-    // eslint-disable-next-line complexity
-    async() => {
-      if (gameSlug === undefined) return;
-      if (username === undefined) return;
-      if (username === selectors.getNextMovePlayer(state)) return;
-
-      const response = await client.getMoveCount(gameSlug);
-      if (!state.loading && state.moveCount >= response.data.move_count) return;
-
-      fetchMoves();
-    },
-    [fetchMoves, gameSlug, state, username],
-  );
-
-  // Lifecycle methods
-
   useEffect(
-    () => { fetchGame(); },
-    [fetchGame, gameSlug],
+    () => { client.fetchGame(dispatch, { gameSlug }); },
+    [dispatch, gameSlug],
   );
 
   useEffect(
     () => {
-      const interval = setInterval(() => pollForMoveUpdate(), POLL_INTERVAL);
+      const interval = client
+        .setPollMovesInterval(dispatch, {gameSlug, username, state});
       return () => clearInterval(interval);
     },
-    [gameSlug, pollForMoveUpdate],
+    [dispatch, gameSlug, state, username],
   );
 
   useEffect(
@@ -94,7 +54,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [autoMove, dispatch, state.moves],
   );
-
 
   useEventListener(
     'keydown',
@@ -114,23 +73,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   // Move updates
 
-  const postMoveToServer = useCallback(
-    async({ fromPos, toPos }) => {
-      if (gameSlug === undefined) return;
-
-      try {
-        const { status } = await client.postMove(gameSlug, {
-          username, fromPos, toPos,
-        });
-        if (status !== 201) fetchMoves();
-      } catch (error) {
-        // TODO: display useful error?
-        fetchMoves();
-      }
-    },
-    [fetchMoves, gameSlug, username],
-  );
-
   const handleLegalMove = useCallback(
     ({ board, fromSlot, toSlot }) => {
       dispatch({
@@ -149,13 +91,13 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const handleConfirmedMove = useCallback(
     async() => {
-      const lastMove = selectors.getLastMove(state);
-      if (!lastMove.pending) return;
+      const { fromPos, toPos, pending } = selectors.getLastMove(state);
+      if (!pending) return;
 
-      await postMoveToServer(lastMove);
+      await client.postMove(dispatch, {fromPos, toPos, gameSlug, username});
       dispatch({ type: 'confirm_moves' });
     },
-    [dispatch, postMoveToServer, state],
+    [dispatch, gameSlug, state, username],
   );
 
   const handleMoveSelect = ({ idx }) => {

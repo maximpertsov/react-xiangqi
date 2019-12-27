@@ -1,7 +1,8 @@
 import update from 'immutability-helper';
 import { useReducer } from 'react';
-import XiangqiBoard, * as logic from '../../logic';
-import { Color } from '../../logic/constants';
+
+import XiangqiBoard, * as logic from 'services/logic';
+import { Color } from 'services/logic/constants';
 
 // Initial State
 

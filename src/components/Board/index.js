@@ -4,13 +4,14 @@ import { jsx, css } from '@emotion/core';
 import { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import * as logic from 'services/logic';
+import * as styles from 'commonStyles';
+
 import Square from './components/Square';
-import * as logic from '../../logic';
-import * as styles from '../../commonStyles';
 
 import boardImg from './board-1000px.svg.png';
 
-const ANIMATION_DELAY = 150
+const ANIMATION_DELAY = 150;
 
 const Board = ({
   board,

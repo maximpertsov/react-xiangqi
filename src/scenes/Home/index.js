@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 
-import Game from '../Game';
+import Game from 'scenes/Game';
+import * as client from 'services/client';
+
 import GameList from './components/GameList';
 import LoginForm from './components/LoginForm';
-import * as client from '../../client';
+
+// TODO: absolute import?
 import { AutoMove } from '../../constants';
 
 const LOCAL = 'local';

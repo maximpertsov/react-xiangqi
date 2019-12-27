@@ -4,7 +4,7 @@ import XiangqiBoard, {
   getFile,
   getSlot,
   fromFen,
-} from '../src/logic';
+} from '../src/services/logic';
 
 const slotRankFileTests = [
   [0, 0, 0],

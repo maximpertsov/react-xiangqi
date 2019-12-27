@@ -1,4 +1,4 @@
-import { Color } from './logic/constants';
+import { Color } from 'services/logic/constants';
 
 export const AutoMove = Object.freeze({
   BLACK: Color.BLACK,
