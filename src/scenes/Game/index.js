@@ -15,7 +15,7 @@ import ConfirmMenu from './components/ConfirmMenu';
 import GameInfo from './components/GameInfo';
 import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
-import { fetchGame, fetchMoves } from './services/client';
+import { fetchGame, fetchMoves, pollForMoveUpdate } from './services/client';
 
 import useGameReducer from './reducers';
 import * as selectors from './selectors';
@@ -29,23 +29,6 @@ const POLL_INTERVAL = 2500;
 const Game = ({ autoMove, gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
 
-  // Fetch data utilities
-
-  const pollForMoveUpdate = useCallback(
-    // eslint-disable-next-line complexity
-    async() => {
-      if (gameSlug === undefined) return;
-      if (username === undefined) return;
-      if (username === selectors.getNextMovePlayer(state)) return;
-
-      const response = await client.getMoveCount(gameSlug);
-      if (!state.loading && state.moveCount >= response.data.move_count) return;
-
-      fetchMoves(dispatch, { gameSlug });
-    },
-    [dispatch, gameSlug, state, username],
-  );
-
   // Lifecycle methods
 
   useEffect(
@@ -55,10 +38,19 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   useEffect(
     () => {
-      const interval = setInterval(() => pollForMoveUpdate(), POLL_INTERVAL);
+      const interval = setInterval(
+        () => {
+          if (gameSlug === undefined) return;
+          if (username === undefined) return;
+          if (username === selectors.getNextMovePlayer(state)) return;
+
+          pollForMoveUpdate(dispatch, {gameSlug, state});
+        },
+        POLL_INTERVAL
+      );
       return () => clearInterval(interval);
     },
-    [gameSlug, pollForMoveUpdate],
+    [dispatch, gameSlug, state, username],
   );
 
   useEffect(

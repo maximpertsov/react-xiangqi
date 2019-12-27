@@ -17,4 +17,11 @@ export const fetchGame = async(dispatch, {gameSlug}) => {
   dispatch({ type: 'set_players', players: response.data.players });
 };
 
+export const pollForMoveUpdate = async(dispatch, {gameSlug, state}) => {
+  const response = await client.getMoveCount(gameSlug);
+  if (!state.loading && state.moveCount >= response.data.move_count) return;
+
+  fetchMoves(dispatch, { gameSlug });
+};
+
 export default {};
