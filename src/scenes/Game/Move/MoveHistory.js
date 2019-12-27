@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
 
 import Move from './Move';
-import * as logic from '../../logic';
-import * as styles from '../../commonStyles';
+import * as logic from '../../../logic';
+import * as styles from '../../../commonStyles';
 
 const cssMoveColumns = (columns) => Array(columns)
   .fill('0.25fr 1fr 1fr').join(' ');

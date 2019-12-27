@@ -3,9 +3,9 @@ import { Button, Container, Header, Segment } from 'semantic-ui-react';
 
 import Game from './Game';
 import GameList from './GameList';
-import LoginForm from '../LoginForm/LoginForm';
-import * as client from '../client';
-import { AutoMove } from '../constants';
+import LoginForm from '../../LoginForm/LoginForm';
+import * as client from '../../client';
+import { AutoMove } from '../../constants';
 
 const LOCAL = 'local';
 const PLAYER_VS_CPU = 'player_vs_cpu';

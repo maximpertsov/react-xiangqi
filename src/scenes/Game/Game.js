@@ -8,15 +8,15 @@ import useEventListener from '@use-it/event-listener';
 
 import Player from './Player/Player';
 import useGameReducer from './reducers';
-import Board from './Board';
+import Board from '../../components/Board';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import ConfirmMenu from './ConfirmMenu';
-import * as client from '../client';
-import { Color } from '../logic/constants';
-import { getSlot } from '../logic/utils';
+import * as client from '../../client';
+import { Color } from '../../logic/constants';
+import { getSlot } from '../../logic/utils';
 import * as selectors from './selectors';
-import { AutoMove } from '../constants';
+import { AutoMove } from '../../constants';
 
 const POLL_INTERVAL = 2500;
 

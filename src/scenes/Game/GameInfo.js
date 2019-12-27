@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 
 import PropTypes from 'prop-types';
-import { playerPropType } from '../customPropTypes';
+import { playerPropType } from '../../customPropTypes';
 
 const GameInfo = ({
   activePlayer, activeLegalMoves, userColor,
