@@ -14,7 +14,7 @@ import ConfirmMenu from './components/ConfirmMenu';
 import GameInfo from './components/GameInfo';
 import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
-import { fetchGame, pollForMoveUpdate, postMoveToServer } from './services/client';
+import * as client from './services/client';
 
 import useGameReducer from './reducers';
 import * as selectors from './selectors';
@@ -23,30 +23,18 @@ import * as selectors from './selectors';
 // because it imports from services/logic/constants
 import { AutoMove } from '../../constants';
 
-const POLL_INTERVAL = 2500;
-
 const Game = ({ autoMove, gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
 
-  // Lifecycle methods
-
   useEffect(
-    () => { fetchGame(dispatch, { gameSlug }); },
+    () => { client.fetchGame(dispatch, { gameSlug }); },
     [dispatch, gameSlug],
   );
 
   useEffect(
     () => {
-      const interval = setInterval(
-        () => {
-          if (gameSlug === undefined) return;
-          if (username === undefined) return;
-          if (username === selectors.getNextMovePlayer(state)) return;
-
-          pollForMoveUpdate(dispatch, {gameSlug, state});
-        },
-        POLL_INTERVAL
-      );
+      const interval = client
+        .setPollMovesInterval(dispatch, {gameSlug, username, state});
       return () => clearInterval(interval);
     },
     [dispatch, gameSlug, state, username],
@@ -106,7 +94,9 @@ const Game = ({ autoMove, gameSlug, username }) => {
       const { fromPos, toPos, pending } = selectors.getLastMove(state);
       if (!pending) return;
 
-      await postMoveToServer(dispatch, {fromPos, toPos, gameSlug, username});
+      await client.postMoveToServer(
+        dispatch, {fromPos, toPos, gameSlug, username}
+      );
       dispatch({ type: 'confirm_moves' });
     },
     [dispatch, gameSlug, state, username],
