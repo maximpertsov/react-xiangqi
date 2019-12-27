@@ -1,9 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-
 import PropTypes from 'prop-types';
+
+// TODO: use common css instead with class names?
+import * as styles from '../../../../commonStyles';
 import * as images from './images';
-import * as styles from '../../commonStyles';
 
 const Piece = ({ icon, moveX, moveY }) => {
   const moving = moveX !== 0 || moveY !== 0;

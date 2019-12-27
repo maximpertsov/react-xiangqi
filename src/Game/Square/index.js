@@ -3,7 +3,8 @@ import { jsx } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import XiangqiPiece from '../Piece/Piece';
+
+import XiangqiPiece from './components/Piece'
 
 const LAST_MOVE_COLOR = 'rgb(170,143,121,0.3)';
 const SELECTION_GREEN = 'rgba(30,179,0,0.3)';
