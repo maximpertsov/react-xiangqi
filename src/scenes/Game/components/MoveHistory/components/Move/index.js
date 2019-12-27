@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
-import { Color } from '../../../../../../services/logic/constants';
+import { Color } from 'services/logic/constants';
 
 const Wrapper = styled.div(
   ({ selected, piece }) => ({

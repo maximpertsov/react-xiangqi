@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useEventListener from '@use-it/event-listener';
 import { Button } from 'semantic-ui-react';
 
-import GameMenu from '../../../../components/GameMenu';
+import GameMenu from 'components/GameMenu';
 
 const ConfirmMenu = ({
   yesHandler, noHandler, show, disabled,
