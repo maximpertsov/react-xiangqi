@@ -14,7 +14,7 @@ import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
 
 import useGameReducer from './reducers';
-import * as client from '../../client';
+import * as client from '../../services/client';
 import { Color } from '../../services/logic/constants';
 import { getSlot } from '../../services/logic/utils';
 import * as selectors from './selectors';
