@@ -6,7 +6,10 @@ import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import { useCallback, useEffect } from 'react';
 import useEventListener from '@use-it/event-listener';
 
-import Board from '../../components/Board';
+import Board from 'components/Board';
+import * as client from 'services/client';
+import { Color } from 'services/logic/constants';
+import { getSlot } from 'services/logic/utils';
 
 import ConfirmMenu from './components/ConfirmMenu';
 import GameInfo from './components/GameInfo';
@@ -14,10 +17,10 @@ import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
 
 import useGameReducer from './reducers';
-import * as client from '../../services/client';
-import { Color } from '../../services/logic/constants';
-import { getSlot } from '../../services/logic/utils';
 import * as selectors from './selectors';
+
+// TODO: seems like this needs to be a relative import
+// because it imports from services/logic/constants
 import { AutoMove } from '../../constants';
 
 const POLL_INTERVAL = 2500;
