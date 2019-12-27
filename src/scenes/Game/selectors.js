@@ -1,5 +1,5 @@
-import * as utils from '../logic/utils';
-import { Color } from '../logic/constants';
+import * as utils from '../../logic/utils';
+import { Color } from '../../logic/constants';
 
 export const getMove = ({ moves }, idx) => moves[idx];
 

@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'semantic-ui-react';
 
-const GameListItem = ({ slug, setGameSlug }) => {
+const GameLink = ({ slug, setGameSlug }) => {
   const setThisGameSlug = useCallback(
     () => setGameSlug(slug),
     [slug, setGameSlug],
@@ -11,16 +11,16 @@ const GameListItem = ({ slug, setGameSlug }) => {
   return (
     <Button
       onClick={setThisGameSlug}
-      className="GameListItem"
+      className="GameLink"
     >
       {slug}
     </Button>
   );
 };
 
-GameListItem.propTypes = {
+GameLink.propTypes = {
   slug: PropTypes.string.isRequired,
   setGameSlug: PropTypes.func.isRequired,
 };
 
-export default GameListItem;
+export default GameLink;

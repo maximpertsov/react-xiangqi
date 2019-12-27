@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-
 import PropTypes from 'prop-types';
-import GameListItem from './GameListItem';
+
+import GameLink from './components/GameLink';
 
 const GameList = ({ games, setGameSlug }) => {
   const gameList = games.map((game) => (
-    <GameListItem key={game.slug} slug={game.slug} setGameSlug={setGameSlug} />
+    <GameLink key={game.slug} slug={game.slug} setGameSlug={setGameSlug} />
   ),
   );
 

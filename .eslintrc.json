@@ -56,6 +56,10 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "require-jsdoc": "off",
+    "semi": [
+      "error",
+      "always"
+    ],
     "space-before-function-paren": [
       "error",
       "never"

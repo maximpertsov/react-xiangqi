@@ -6,17 +6,19 @@ import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import { useCallback, useEffect } from 'react';
 import useEventListener from '@use-it/event-listener';
 
-import Player from './Player/Player';
+import Board from '../../components/Board';
+
+import ConfirmMenu from './components/ConfirmMenu';
+import GameInfo from './components/GameInfo';
+import MoveHistory from './components/MoveHistory';
+import Player from './components/Player';
+
 import useGameReducer from './reducers';
-import Board from './Board/Board';
-import MoveHistory from './Move/MoveHistory';
-import GameInfo from './GameInfo';
-import ConfirmMenu from './ConfirmMenu';
-import * as client from '../client';
-import { Color } from '../logic/constants';
-import { getSlot } from '../logic/utils';
+import * as client from '../../client';
+import { Color } from '../../logic/constants';
+import { getSlot } from '../../logic/utils';
 import * as selectors from './selectors';
-import { AutoMove } from '../constants';
+import { AutoMove } from '../../constants';
 
 const POLL_INTERVAL = 2500;
 
