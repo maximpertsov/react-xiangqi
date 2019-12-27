@@ -6,12 +6,14 @@ import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import { useCallback, useEffect } from 'react';
 import useEventListener from '@use-it/event-listener';
 
-import Player from './Player/Player';
-import useGameReducer from './reducers';
 import Board from '../../components/Board';
-import MoveHistory from './Move/MoveHistory';
-import GameInfo from './GameInfo';
-import ConfirmMenu from './ConfirmMenu';
+
+import ConfirmMenu from './components/ConfirmMenu';
+import GameInfo from './components/GameInfo';
+import MoveHistory from './components/MoveHistory';
+import Player from './components/Player';
+
+import useGameReducer from './reducers';
 import * as client from '../../client';
 import { Color } from '../../logic/constants';
 import { getSlot } from '../../logic/utils';

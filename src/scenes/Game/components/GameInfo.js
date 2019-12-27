@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-
 import PropTypes from 'prop-types';
-import { playerPropType } from '../../customPropTypes';
 
 const GameInfo = ({
   activePlayer, activeLegalMoves, userColor,
@@ -44,7 +42,10 @@ const GameInfo = ({
 };
 
 GameInfo.propTypes = {
-  activePlayer: playerPropType,
+  activePlayer: PropTypes.shape({
+    color: PropTypes.string.isRequired,
+    name: PropTypes.string,
+  }),
   activeLegalMoves: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.number),
   ).isRequired,
