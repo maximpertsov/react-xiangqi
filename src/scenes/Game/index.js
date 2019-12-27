@@ -7,7 +7,6 @@ import { useCallback, useEffect } from 'react';
 import useEventListener from '@use-it/event-listener';
 
 import Board from 'components/Board';
-import * as client from 'services/client';
 import { Color } from 'services/logic/constants';
 import { getSlot } from 'services/logic/utils';
 
@@ -15,7 +14,7 @@ import ConfirmMenu from './components/ConfirmMenu';
 import GameInfo from './components/GameInfo';
 import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
-import { fetchGame, fetchMoves, pollForMoveUpdate } from './services/client';
+import { fetchGame, pollForMoveUpdate, postMoveToServer } from './services/client';
 
 import useGameReducer from './reducers';
 import * as selectors from './selectors';
@@ -68,7 +67,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     [autoMove, dispatch, state.moves],
   );
 
-
   useEventListener(
     'keydown',
     ({ key }) => {
@@ -86,24 +84,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
   );
 
   // Move updates
-
-  const postMoveToServer = useCallback(
-    async({ fromPos, toPos }) => {
-      if (gameSlug === undefined) return;
-
-      try {
-        const { status } = await client.postMove(gameSlug, {
-          username, fromPos, toPos,
-        });
-        if (status !== 201) fetchMoves(dispatch, { gameSlug });
-
-      } catch (error) {
-        // TODO: display useful error?
-        fetchMoves(dispatch, { gameSlug });
-      }
-    },
-    [dispatch, gameSlug, username],
-  );
 
   const handleLegalMove = useCallback(
     ({ board, fromSlot, toSlot }) => {
@@ -123,13 +103,13 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const handleConfirmedMove = useCallback(
     async() => {
-      const lastMove = selectors.getLastMove(state);
-      if (!lastMove.pending) return;
+      const { fromPos, toPos, pending } = selectors.getLastMove(state);
+      if (!pending) return;
 
-      await postMoveToServer(lastMove);
+      await postMoveToServer(dispatch, {fromPos, toPos, gameSlug, username});
       dispatch({ type: 'confirm_moves' });
     },
-    [dispatch, postMoveToServer, state],
+    [dispatch, gameSlug, state, username],
   );
 
   const handleMoveSelect = ({ idx }) => {

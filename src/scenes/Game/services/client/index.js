@@ -24,4 +24,22 @@ export const pollForMoveUpdate = async(dispatch, {gameSlug, state}) => {
   fetchMoves(dispatch, { gameSlug });
 };
 
+export const postMoveToServer = async(
+  dispatch,
+  { fromPos, toPos, gameSlug, username }
+) => {
+  if (gameSlug === undefined) return;
+
+  try {
+    const { status } = await client.postMove(gameSlug, {
+      username, fromPos, toPos,
+    });
+    if (status !== 201) fetchMoves(dispatch, { gameSlug });
+
+  } catch (error) {
+    // TODO: display useful error?
+    fetchMoves(dispatch, { gameSlug });
+  }
+};
+
 export default {};
