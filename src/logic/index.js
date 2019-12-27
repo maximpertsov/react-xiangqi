@@ -12,8 +12,8 @@ import {
   RED_RIVER_BANK,
   ORTHOGONAL_MOVES,
   DIAGONAL_MOVES,
-} from './logic/constants';
-import * as utils from './logic/utils';
+} from './constants';
+import * as utils from './utils';
 
 export { RefType };
 
