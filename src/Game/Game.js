@@ -8,7 +8,7 @@ import useEventListener from '@use-it/event-listener';
 
 import Player from './Player/Player';
 import useGameReducer from './reducers';
-import Board from './Board/Board';
+import Board from './Board';
 import MoveHistory from './Move/MoveHistory';
 import GameInfo from './GameInfo';
 import ConfirmMenu from './ConfirmMenu';
