@@ -15,6 +15,7 @@ import ConfirmMenu from './components/ConfirmMenu';
 import GameInfo from './components/GameInfo';
 import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
+import { fetchMoves } from './services/client';
 
 import useGameReducer from './reducers';
 import * as selectors from './selectors';
@@ -29,19 +30,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
 
   // Fetch data utilities
-
-  const fetchMoves = useCallback(
-    async() => {
-      if (gameSlug === undefined) {
-        dispatch({ type: 'set_moves', moves: [] });
-        return;
-      }
-
-      const response = await client.getMoves(gameSlug);
-      dispatch({ type: 'set_moves', moves: response.data.moves });
-    },
-    [dispatch, gameSlug],
-  );
 
   const fetchGame = useCallback(
     async() => {
@@ -63,9 +51,9 @@ const Game = ({ autoMove, gameSlug, username }) => {
       const response = await client.getMoveCount(gameSlug);
       if (!state.loading && state.moveCount >= response.data.move_count) return;
 
-      fetchMoves();
+      fetchMoves(dispatch, state, { gameSlug });
     },
-    [fetchMoves, gameSlug, state, username],
+    [dispatch, gameSlug, state, username],
   );
 
   // Lifecycle methods
@@ -125,13 +113,14 @@ const Game = ({ autoMove, gameSlug, username }) => {
         const { status } = await client.postMove(gameSlug, {
           username, fromPos, toPos,
         });
-        if (status !== 201) fetchMoves();
+        if (status !== 201) fetchMoves(dispatch, state, { gameSlug });
+
       } catch (error) {
         // TODO: display useful error?
-        fetchMoves();
+        fetchMoves(dispatch, state, { gameSlug });
       }
     },
-    [fetchMoves, gameSlug, username],
+    [dispatch, gameSlug, state, username],
   );
 
   const handleLegalMove = useCallback(
