@@ -5,7 +5,7 @@ import { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Square from './components/Square';
-import * as logic from '../../logic';
+import * as logic from '../../services/logic';
 import * as styles from '../../commonStyles';
 
 import boardImg from './board-1000px.svg.png';

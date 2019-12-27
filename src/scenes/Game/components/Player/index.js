@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import PropTypes from 'prop-types';
 
-import { Color } from '../../../../logic/constants';
+import { Color } from '../../../../services/logic/constants';
 
 const Player = ({ name, color }) => (
   <div

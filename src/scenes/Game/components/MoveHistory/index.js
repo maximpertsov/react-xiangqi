@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
 
 import Move from './components/Move';
-import * as logic from '../../../../logic';
+import * as logic from '../../../../services/logic';
 import * as styles from '../../../../commonStyles';
 
 const cssMoveColumns = (columns) => Array(columns)

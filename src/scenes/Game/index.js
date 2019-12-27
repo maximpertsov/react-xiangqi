@@ -15,8 +15,8 @@ import Player from './components/Player';
 
 import useGameReducer from './reducers';
 import * as client from '../../client';
-import { Color } from '../../logic/constants';
-import { getSlot } from '../../logic/utils';
+import { Color } from '../../services/logic/constants';
+import { getSlot } from '../../services/logic/utils';
 import * as selectors from './selectors';
 import { AutoMove } from '../../constants';
 
