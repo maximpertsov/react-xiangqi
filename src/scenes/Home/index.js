@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 
-import Game from './Game';
-import GameList from './GameList';
+import Game from '../Game/Game';
+import GameList from '../Game/GameList';
 import LoginForm from '../../LoginForm/LoginForm';
 import * as client from '../../client';
 import { AutoMove } from '../../constants';
@@ -11,7 +11,7 @@ const LOCAL = 'local';
 const PLAYER_VS_CPU = 'player_vs_cpu';
 const CPU_VS_CPU = 'cpu_vs_cpu';
 
-const MainMenu = () => {
+const Home = () => {
   const [username, setUsername] = useState(undefined);
   const [gameSlug, setGameSlug] = useState(undefined);
   const [games, setGames] = useState([]);
@@ -83,4 +83,4 @@ const MainMenu = () => {
   }
 };
 
-export default MainMenu;
+export default Home;
