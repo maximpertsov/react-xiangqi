@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 
 import Game from '../Game';
-import GameList from '../Game/GameList';
-import LoginForm from './components/LoginForm'
+import GameList from './components/GameList';
+import LoginForm from './components/LoginForm';
 import * as client from '../../client';
 import { AutoMove } from '../../constants';
 
