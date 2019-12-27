@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 
-import Game from '../Game/Game';
+import Game from '../Game';
 import GameList from '../Game/GameList';
 import LoginForm from '../../LoginForm/LoginForm';
 import * as client from '../../client';
