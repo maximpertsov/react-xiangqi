@@ -3,7 +3,8 @@ import { jsx, css } from '@emotion/core';
 
 import { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
-import Square from '../Square';
+
+import Square from './components/Square';
 import * as logic from '../../logic';
 import * as styles from '../../commonStyles';
 
