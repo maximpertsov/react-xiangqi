@@ -3,7 +3,7 @@ import { Button, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
 
-import * as client from '../client';
+import * as client from '../../../../client';
 
 const initialForm = { formUsername: '', formPassword: '', formError: '' };
 

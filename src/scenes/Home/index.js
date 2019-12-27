@@ -3,7 +3,7 @@ import { Button, Container, Header, Segment } from 'semantic-ui-react';
 
 import Game from '../Game';
 import GameList from '../Game/GameList';
-import LoginForm from '../../LoginForm/LoginForm';
+import LoginForm from './components/LoginForm'
 import * as client from '../../client';
 import { AutoMove } from '../../constants';
 
