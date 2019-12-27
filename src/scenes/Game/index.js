@@ -94,9 +94,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       const { fromPos, toPos, pending } = selectors.getLastMove(state);
       if (!pending) return;
 
-      await client.postMoveToServer(
-        dispatch, {fromPos, toPos, gameSlug, username}
-      );
+      await client.postMove(dispatch, {fromPos, toPos, gameSlug, username});
       dispatch({ type: 'confirm_moves' });
     },
     [dispatch, gameSlug, state, username],
