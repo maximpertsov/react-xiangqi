@@ -15,7 +15,7 @@ import ConfirmMenu from './components/ConfirmMenu';
 import GameInfo from './components/GameInfo';
 import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
-import { fetchMoves } from './services/client';
+import { fetchGame, fetchMoves } from './services/client';
 
 import useGameReducer from './reducers';
 import * as selectors from './selectors';
@@ -31,16 +31,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   // Fetch data utilities
 
-  const fetchGame = useCallback(
-    async() => {
-      if (gameSlug === undefined) return;
-
-      const response = await client.getGame(gameSlug);
-      dispatch({ type: 'set_players', players: response.data.players });
-    },
-    [dispatch, gameSlug],
-  );
-
   const pollForMoveUpdate = useCallback(
     // eslint-disable-next-line complexity
     async() => {
@@ -51,7 +41,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       const response = await client.getMoveCount(gameSlug);
       if (!state.loading && state.moveCount >= response.data.move_count) return;
 
-      fetchMoves(dispatch, state, { gameSlug });
+      fetchMoves(dispatch, { gameSlug });
     },
     [dispatch, gameSlug, state, username],
   );
@@ -59,8 +49,8 @@ const Game = ({ autoMove, gameSlug, username }) => {
   // Lifecycle methods
 
   useEffect(
-    () => { fetchGame(); },
-    [fetchGame, gameSlug],
+    () => { fetchGame(dispatch, { gameSlug }); },
+    [dispatch, gameSlug],
   );
 
   useEffect(
@@ -113,14 +103,14 @@ const Game = ({ autoMove, gameSlug, username }) => {
         const { status } = await client.postMove(gameSlug, {
           username, fromPos, toPos,
         });
-        if (status !== 201) fetchMoves(dispatch, state, { gameSlug });
+        if (status !== 201) fetchMoves(dispatch, { gameSlug });
 
       } catch (error) {
         // TODO: display useful error?
-        fetchMoves(dispatch, state, { gameSlug });
+        fetchMoves(dispatch, { gameSlug });
       }
     },
-    [dispatch, gameSlug, state, username],
+    [dispatch, gameSlug, username],
   );
 
   const handleLegalMove = useCallback(
