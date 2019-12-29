@@ -40,4 +40,8 @@ export const getUserColor = ({ players }, username) => {
 export const getOtherPlayer = ({ players }, username) =>
   players.find((p) => p.name !== username);
 
+// TODO: add a state that allows players to flip their original orientation
+export const getInitialUserOrientation = ({ players, username }) =>
+  getUserColor({ players }, username) === Color.BLACK;
+
 export default {};

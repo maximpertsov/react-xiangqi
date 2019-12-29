@@ -7,7 +7,6 @@ import { useCallback, useEffect } from 'react';
 import useEventListener from '@use-it/event-listener';
 
 import Board from 'components/Board';
-import { Color } from 'services/logic/constants';
 import { getSlot } from 'services/logic/utils';
 
 import ConfirmMenu from './components/ConfirmMenu';
@@ -105,10 +104,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     dispatch({ type: 'select_move', index: idx });
   };
 
-  // TODO: add a state that allows players to flip their original orientation
-  const getInitialUserOrientation = () =>
-    selectors.getUserColor(state, username) === Color.BLACK;
-
   // TODO: move to layout class that displays board and players
   const getCurrentPlayer = () => {
     if (gameSlug === undefined) selectors.getRedPlayer(state);
@@ -192,7 +187,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
           handleLegalMove={handleLegalMove}
           lastMove={lastMoveOnSelectedBoard}
           legalMoves={getLegalMoves(state.selectedMoveIdx)}
-          reversed={getInitialUserOrientation()}
+          reversed={selectors.getInitialUserOrientation({ ...state, username })}
         />
         <div
           css={css`
