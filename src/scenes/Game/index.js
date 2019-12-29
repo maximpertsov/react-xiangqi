@@ -27,14 +27,18 @@ const Game = ({ autoMove, gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
 
   useEffect(
-    () => { client.fetchGame(dispatch, { gameSlug }); },
+    () => { client.fetchGame({ dispatch, gameSlug }); },
     [dispatch, gameSlug],
   );
 
   useEffect(
     () => {
-      const interval = client
-        .setPollMovesInterval(dispatch, {gameSlug, username, state});
+      const interval = client.setPollMovesInterval({
+        dispatch,
+        gameSlug,
+        username,
+        state,
+      });
       return () => clearInterval(interval);
     },
     [dispatch, gameSlug, state, username],
@@ -94,7 +98,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       const { fromPos, toPos, pending } = selectors.getLastMove(state);
       if (!pending) return;
 
-      await client.postMove(dispatch, {fromPos, toPos, gameSlug, username});
+      await client.postMove({ dispatch, fromPos, toPos, gameSlug, username });
       dispatch({ type: 'confirm_moves' });
     },
     [dispatch, gameSlug, state, username],
