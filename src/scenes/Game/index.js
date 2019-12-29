@@ -36,8 +36,9 @@ const Game = ({ autoMove, gameSlug, username }) => {
       const interval = client.setPollMovesInterval({
         dispatch,
         gameSlug,
+        nextMovePlayer: selectors.getNextMovePlayer(state), 
         username,
-        state,
+        ...state,
       });
       return () => clearInterval(interval);
     },
@@ -50,9 +51,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       if (autoMove === AutoMove.BOTH || autoMove === nextMoveColor) {
         const { board } = selectors.getLastMove(state);
         const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
-        dispatch({
-          type: 'add_move', board, fromSlot, toSlot, pending: false,
-        });
+        dispatch({ type: 'add_move', board, fromSlot, toSlot, pending: false });
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
