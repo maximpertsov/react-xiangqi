@@ -33,11 +33,11 @@ const Game = ({ autoMove, gameSlug, username }) => {
   useEffect(
     () => {
       const interval = client.setPollMovesInterval({
+        ...state,
         dispatch,
         gameSlug,
         nextMovePlayer: selectors.getNextMovePlayer(state),
         username,
-        ...state,
       });
       return () => clearInterval(interval);
     },
