@@ -28,8 +28,7 @@ const canUpdateMoves = ({ gameSlug, nextMovePlayer, username }) => {
 };
 
 const pollMoves = async({
-  dispatch,
-  gameSlug,
+  dispatch, gameSlug,
   loading,
   moveCount,
   nextMovePlayer,
@@ -50,18 +49,15 @@ export const setPollMovesInterval = (params) =>
   );
 
 export const postMove = async({
-  dispatch,
-  fromPos,
-  toPos,
-  gameSlug,
-  username,
+  dispatch, fromPos, toPos, gameSlug, username,
 }) => {
   if (gameSlug === undefined) return;
 
   try {
-    const { status } = await client.postMove(gameSlug, {
-      username, fromPos, toPos,
-    });
+    const { status } = await client.postMove(
+      gameSlug,
+      { username, fromPos, toPos }
+    );
     if (status !== 201) fetchMoves({ dispatch, gameSlug });
 
   } catch (error) {

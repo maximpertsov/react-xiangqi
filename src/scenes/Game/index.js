@@ -62,14 +62,14 @@ const Game = ({ autoMove, gameSlug, username }) => {
     'keydown',
     ({ key }) => {
       switch (key) {
-        case 'ArrowLeft':
-          dispatch({ type: 'select_previous_move' });
-          break;
-        case 'ArrowRight':
-          dispatch({ type: 'select_next_move' });
-          break;
-        default:
-          break;
+      case 'ArrowLeft':
+        dispatch({ type: 'select_previous_move' });
+        break;
+      case 'ArrowRight':
+        dispatch({ type: 'select_next_move' });
+        break;
+      default:
+        break;
       }
     },
   );
@@ -78,9 +78,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const handleLegalMove = useCallback(
     ({ board, fromSlot, toSlot }) => {
-      dispatch({
-        type: 'add_move', board, fromSlot, toSlot, pending: true,
-      });
+      dispatch({ type: 'add_move', board, fromSlot, toSlot, pending: true });
     },
     [dispatch],
   );

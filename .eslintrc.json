@@ -39,6 +39,10 @@
     ],
     "function-paren-newline": "off",
     "import/no-extraneous-dependencies": "off",
+    "indent": [
+      "error",
+      2
+    ],
     "max-len": [
       "error",
       {
@@ -49,6 +53,19 @@
     "object-curly-spacing": [
       "error",
       "always"
+    ],
+    "object-curly-newline": [
+      "error",
+      {
+        "minProperties": 4,
+        "multiline": true
+      }
+    ],
+    "object-property-newline": [
+      "error",
+      {
+        "allowAllPropertiesOnSameLine": true
+      }
     ],
     "object-shorthand": "error",
     "quote-props": [
