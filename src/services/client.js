@@ -9,7 +9,7 @@ axios.defaults.xsrfCookieName = 'csrftoken';
 export const ping = () =>
   axios.get('ping');
 
-export const getGameList = (username) =>
+export const getGameList = ({ username }) =>
   axios.get(`player/${username}/games`);
 
 export const getGame = ({ gameSlug }) =>
@@ -26,7 +26,7 @@ export const postMove = ({ gameSlug, username, fromPos, toPos }) => {
     player: username,
     from: fromPos,
     to: toPos,
-    type: 'move',
+    type: 'move', // TODO: remove this?
   };
   return axios.post(`game/${gameSlug}/moves`, payload);
 };

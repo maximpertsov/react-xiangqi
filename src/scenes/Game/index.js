@@ -27,7 +27,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
 
   useEffect(
-    () => { client.fetchGame({ dispatch, gameSlug }); },
+    () => client.fetchGame({ dispatch, gameSlug }),
     [dispatch, gameSlug],
   );
 
@@ -106,8 +106,8 @@ const Game = ({ autoMove, gameSlug, username }) => {
   };
 
   // TODO: add a state that allows players to flip their original orientation
-  const getInitialUserOrientation = () => selectors
-    .getUserColor(state, username) === Color.BLACK;
+  const getInitialUserOrientation = () =>
+    selectors.getUserColor(state, username) === Color.BLACK;
 
   // TODO: move to layout class that displays board and players
   const getCurrentPlayer = () => {
