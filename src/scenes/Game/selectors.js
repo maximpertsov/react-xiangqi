@@ -1,6 +1,10 @@
 import * as utils from 'services/logic/utils';
 import { Color } from 'services/logic/constants';
 
+/***************/
+/***  Moves  ***/
+/***************/
+
 export const getMove = ({ moves }, idx) =>
   moves[idx];
 
@@ -12,6 +16,10 @@ export const getNextMoveColor = ({ moves }) => {
   const { piece: lastMovedPiece } = moves[moves.length - 1];
   return utils.isRed(lastMovedPiece) ? Color.BLACK : Color.RED;
 };
+
+/*****************/
+/***  Players  ***/
+/*****************/
 
 const lookupPlayer = (players, key, value) =>
   players.find((p) => p[key] === value);
@@ -51,5 +59,34 @@ export const getCurrentPlayer = ({ gameSlug, players, username }) => {
   if (gameSlug === undefined) getRedPlayer({ players });
   return getUserPlayer({ players }, username);
 };
+
+/********************/
+/***  Game Logic  ***/
+/********************/
+
+// TODO break up function
+export const getLegalMoves = ({
+  idx,
+  gameSlug,
+  moves,
+  players,
+  username,
+  currentUserOnly = true,
+}) => {
+  const nextMoveColor = getNextMoveColor({ moves });
+  const userColor = getUserColor({ players }, username);
+  const { board } = getMove({ moves }, idx);
+  const selectUserMoves = currentUserOnly && gameSlug !== undefined;
+
+  return board
+    .legalMoves()
+    .map((toSlots, fromSlot) => {
+      if (idx !== moves.length - 1) return [];
+      if (!board.isColor(nextMoveColor, fromSlot)) return [];
+      if (selectUserMoves && !board.isColor(userColor, fromSlot)) return [];
+      return toSlots;
+    });
+};
+
 
 export default {};

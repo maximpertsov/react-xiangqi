@@ -104,22 +104,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     dispatch({ type: 'select_move', index: idx });
   };
 
-  const getLegalMoves = (idx, currentUserOnly = true) => {
-    const nextMoveColor = selectors.getNextMoveColor(state);
-    const userColor = selectors.getUserColor(state, username);
-    const { board } = selectors.getMove(state, idx);
-    const selectUserMoves = currentUserOnly && gameSlug !== undefined;
-
-    return board
-      .legalMoves()
-      .map((toSlots, fromSlot) => {
-        if (idx !== state.moves.length - 1) return [];
-        if (!board.isColor(nextMoveColor, fromSlot)) return [];
-        if (selectUserMoves && !board.isColor(userColor, fromSlot)) return [];
-        return toSlots;
-      });
-  };
-
   const active = gameSlug !== undefined && state.loading;
 
   // TODO: just pass selectedMove down instead of the board and move separately?
@@ -177,7 +161,14 @@ const Game = ({ autoMove, gameSlug, username }) => {
           nextMoveColor={selectors.getNextMoveColor(state)}
           handleLegalMove={handleLegalMove}
           lastMove={lastMoveOnSelectedBoard}
-          legalMoves={getLegalMoves(state.selectedMoveIdx)}
+          legalMoves={
+            selectors.getLegalMoves({
+              ...state,
+              idx: state.selectedMoveIdx,
+              gameSlug,
+              username,
+            })
+          }
           reversed={selectors.getInitialUserOrientation({ ...state, username })}
         />
         <div
@@ -195,7 +186,15 @@ const Game = ({ autoMove, gameSlug, username }) => {
             activePlayer={selectors.getNextMovePlayer(state)}
             userColor={selectors.getUserColor(state, username)}
             players={state.players}
-            activeLegalMoves={getLegalMoves(state.moves.length - 1, false)}
+            activeLegalMoves={
+              selectors.getLegalMoves({
+                ...state,
+                idx: state.moves.length - 1,
+                gameSlug,
+                username,
+                currentUserOnly: false,
+              })
+            }
           />
         </div>
         <ConfirmMenu
