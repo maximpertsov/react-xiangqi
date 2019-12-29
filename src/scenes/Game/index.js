@@ -104,17 +104,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     dispatch({ type: 'select_move', index: idx });
   };
 
-  // TODO: move to layout class that displays board and players
-  const getCurrentPlayer = () => {
-    if (gameSlug === undefined) selectors.getRedPlayer(state);
-    return selectors.getUserPlayer(state, username);
-  };
-
-  const getOtherPlayer = () => {
-    if (gameSlug === undefined) selectors.getBlackPlayer(state);
-    return selectors.getOtherPlayer(state, username);
-  };
-
   const getLegalMoves = (idx, currentUserOnly = true) => {
     const nextMoveColor = selectors.getNextMoveColor(state);
     const userColor = selectors.getUserColor(state, username);
@@ -179,7 +168,9 @@ const Game = ({ autoMove, gameSlug, username }) => {
             flex-direction: column;
           `}
         >
-          <Player {...getOtherPlayer()} />
+          <Player
+            {...selectors.getOtherPlayer({ ...state, gameSlug, username })}
+          />
         </div>
         <Board
           board={selectedBoard}
@@ -197,7 +188,9 @@ const Game = ({ autoMove, gameSlug, username }) => {
             flex-direction: row;
           `}
         >
-          <Player {...getCurrentPlayer()} />
+          <Player
+            {...selectors.getCurrentPlayer({ ...state, gameSlug, username })}
+          />
           <GameInfo
             activePlayer={selectors.getNextMovePlayer(state)}
             userColor={selectors.getUserColor(state, username)}
