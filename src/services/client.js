@@ -12,23 +12,23 @@ export const ping = () =>
 export const getGameList = (username) =>
   axios.get(`player/${username}/games`);
 
-export const getGame = ({ gameId }) =>
-  axios.get(`game/${gameId}`);
+export const getGame = ({ gameSlug }) =>
+  axios.get(`game/${gameSlug}`);
 
-export const getMoves = ({ gameId }) =>
-  axios.get(`game/${gameId}/moves`);
+export const getMoves = ({ gameSlug }) =>
+  axios.get(`game/${gameSlug}/moves`);
 
-export const getMoveCount = ({ gameId }) =>
-  axios.get(`game/${gameId}/move-count`);
+export const getMoveCount = ({ gameSlug }) =>
+  axios.get(`game/${gameSlug}/move-count`);
 
-export const postMove = ({ gameId, username, fromPos, toPos }) => {
+export const postMove = ({ gameSlug, username, fromPos, toPos }) => {
   const payload = {
     player: username,
-    fromPos,
-    toPos,
+    from: fromPos,
+    to: toPos,
     type: 'move',
   };
-  return axios.post(`game/${gameId}/moves`, payload);
+  return axios.post(`game/${gameSlug}/moves`, payload);
 };
 
 export async function authenticate() {

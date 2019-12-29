@@ -36,7 +36,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       const interval = client.setPollMovesInterval({
         dispatch,
         gameSlug,
-        nextMovePlayer: selectors.getNextMovePlayer(state), 
+        nextMovePlayer: selectors.getNextMovePlayer(state),
         username,
         ...state,
       });
