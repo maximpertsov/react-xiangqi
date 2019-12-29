@@ -4,7 +4,7 @@ import * as selectors from '../../selectors';
 
 const POLL_INTERVAL = 2500;
 
-export const fetchMoves = async({ dispatch, gameSlug }) => {
+export const fetchMoves = async(dispatch, { gameSlug }) => {
   if (gameSlug === undefined) {
     dispatch({ type: 'set_moves', moves: [] });
     return;
