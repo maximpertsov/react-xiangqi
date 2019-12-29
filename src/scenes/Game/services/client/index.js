@@ -8,14 +8,14 @@ export const fetchMoves = async({ dispatch, gameSlug }) => {
     return;
   }
 
-  const { data: { moves } } = await client.getMoves(gameSlug);
+  const { data: { moves } } = await client.getMoves({ gameSlug });
   dispatch({ type: 'set_moves', moves });
 };
 
 export const fetchGame = async({ dispatch, gameSlug }) => {
   if (gameSlug === undefined) return;
 
-  const { data: { players } } = await client.getGame(gameSlug);
+  const { data: { players } } = await client.getGame({ gameSlug });
   dispatch({ type: 'set_players', players });
 };
 
@@ -24,11 +24,12 @@ const canUpdateMoves = ({ gameSlug, nextMovePlayer, username }) => {
   if (username === undefined) return false;
   if (username === nextMovePlayer) return false;
 
-  return true;  
+  return true;
 };
 
 const pollMoves = async({
-  dispatch, gameSlug,
+  dispatch,
+  gameSlug,
   loading,
   moveCount,
   nextMovePlayer,
@@ -36,7 +37,7 @@ const pollMoves = async({
 }) => {
   if (!canUpdateMoves({ gameSlug, nextMovePlayer, username })) return;
 
-  const { data: { move_count } } = await client.getMoveCount(gameSlug);
+  const { data: { move_count } } = await client.getMoveCount({ gameSlug });
   if (!loading && moveCount >= move_count) return;
 
   fetchMoves({ dispatch, gameSlug });
@@ -54,10 +55,9 @@ export const postMove = async({
   if (gameSlug === undefined) return;
 
   try {
-    const { status } = await client.postMove(
-      gameSlug,
-      { username, fromPos, toPos }
-    );
+    const { status } = await client.postMove({
+      gameSlug, username, fromPos, toPos,
+    });
     if (status !== 201) fetchMoves({ dispatch, gameSlug });
 
   } catch (error) {
