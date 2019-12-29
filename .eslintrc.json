@@ -2,8 +2,7 @@
   "extends": [
     "airbnb",
     "eslint:recommended",
-    "plugin:testcafe/recommended",
-    "walmart/rules/eslint/best-practices/on"
+    "plugin:testcafe/recommended"
   ],
   "globals": {
     "document": false,
@@ -47,6 +46,11 @@
       }
     ],
     "no-underscore-dangle": "off",
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "object-shorthand": "error",
     "quote-props": [
       "error",
       "consistent-as-needed"
