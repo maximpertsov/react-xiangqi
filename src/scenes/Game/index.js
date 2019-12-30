@@ -7,7 +7,6 @@ import { useCallback, useEffect } from 'react';
 import useEventListener from '@use-it/event-listener';
 
 import Board from 'components/Board';
-import { Color } from 'services/logic/constants';
 import { getSlot } from 'services/logic/utils';
 
 import ConfirmMenu from './components/ConfirmMenu';
@@ -27,14 +26,19 @@ const Game = ({ autoMove, gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
 
   useEffect(
-    () => { client.fetchGame(dispatch, { gameSlug }); },
+    () => { client.fetchGame({ dispatch, gameSlug }); },
     [dispatch, gameSlug],
   );
 
   useEffect(
     () => {
-      const interval = client
-        .setPollMovesInterval(dispatch, {gameSlug, username, state});
+      const interval = client.setPollMovesInterval({
+        ...state,
+        dispatch,
+        gameSlug,
+        nextMovePlayer: selectors.getNextMovePlayer(state),
+        username,
+      });
       return () => clearInterval(interval);
     },
     [dispatch, gameSlug, state, username],
@@ -46,9 +50,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       if (autoMove === AutoMove.BOTH || autoMove === nextMoveColor) {
         const { board } = selectors.getLastMove(state);
         const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
-        dispatch({
-          type: 'add_move', board, fromSlot, toSlot, pending: false,
-        });
+        dispatch({ type: 'add_move', board, fromSlot, toSlot, pending: false });
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,14 +61,14 @@ const Game = ({ autoMove, gameSlug, username }) => {
     'keydown',
     ({ key }) => {
       switch (key) {
-        case 'ArrowLeft':
-          dispatch({ type: 'select_previous_move' });
-          break;
-        case 'ArrowRight':
-          dispatch({ type: 'select_next_move' });
-          break;
-        default:
-          break;
+      case 'ArrowLeft':
+        dispatch({ type: 'select_previous_move' });
+        break;
+      case 'ArrowRight':
+        dispatch({ type: 'select_next_move' });
+        break;
+      default:
+        break;
       }
     },
   );
@@ -75,9 +77,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const handleLegalMove = useCallback(
     ({ board, fromSlot, toSlot }) => {
-      dispatch({
-        type: 'add_move', board, fromSlot, toSlot, pending: true,
-      });
+      dispatch({ type: 'add_move', board, fromSlot, toSlot, pending: true });
     },
     [dispatch],
   );
@@ -94,7 +94,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       const { fromPos, toPos, pending } = selectors.getLastMove(state);
       if (!pending) return;
 
-      await client.postMove(dispatch, {fromPos, toPos, gameSlug, username});
+      await client.postMove({ dispatch, fromPos, toPos, gameSlug, username });
       dispatch({ type: 'confirm_moves' });
     },
     [dispatch, gameSlug, state, username],
@@ -104,37 +104,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     dispatch({ type: 'select_move', index: idx });
   };
 
-  // TODO: add a state that allows players to flip their original orientation
-  const getInitialUserOrientation = () => selectors
-    .getUserColor(state, username) === Color.BLACK;
-
-  // TODO: move to layout class that displays board and players
-  const getCurrentPlayer = () => {
-    if (gameSlug === undefined) selectors.getRedPlayer(state);
-    return selectors.getUserPlayer(state, username);
-  };
-
-  const getOtherPlayer = () => {
-    if (gameSlug === undefined) selectors.getBlackPlayer(state);
-    return selectors.getOtherPlayer(state, username);
-  };
-
-  const getLegalMoves = (idx, currentUserOnly = true) => {
-    const nextMoveColor = selectors.getNextMoveColor(state);
-    const userColor = selectors.getUserColor(state, username);
-    const { board } = selectors.getMove(state, idx);
-    const selectUserMoves = currentUserOnly && gameSlug !== undefined;
-
-    return board
-      .legalMoves()
-      .map((toSlots, fromSlot) => {
-        if (idx !== state.moves.length - 1) return [];
-        if (!board.isColor(nextMoveColor, fromSlot)) return [];
-        if (selectUserMoves && !board.isColor(userColor, fromSlot)) return [];
-        return toSlots;
-      });
-  };
-
   const active = gameSlug !== undefined && state.loading;
 
   // TODO: just pass selectedMove down instead of the board and move separately?
@@ -142,7 +111,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
     board: selectedBoard,
     fromPos,
     toPos,
-  } = selectors.getMove(state, state.selectedMoveIdx);
+  } = selectors.getSelectedMove(state);
   const lastMoveOnSelectedBoard = {
     fromSlot: fromPos === undefined ? undefined : getSlot(...fromPos),
     toSlot: toPos === undefined ? undefined : getSlot(...toPos),
@@ -183,15 +152,26 @@ const Game = ({ autoMove, gameSlug, username }) => {
             flex-direction: column;
           `}
         >
-          <Player {...getOtherPlayer()} />
+          <Player
+            {...selectors.getOtherPlayer(state, { gameSlug, username })}
+          />
         </div>
         <Board
           board={selectedBoard}
           nextMoveColor={selectors.getNextMoveColor(state)}
           handleLegalMove={handleLegalMove}
           lastMove={lastMoveOnSelectedBoard}
-          legalMoves={getLegalMoves(state.selectedMoveIdx)}
-          reversed={getInitialUserOrientation()}
+          legalMoves={
+            selectors.getLegalMoves(
+              state,
+              {
+                idx: state.selectedMoveIdx,
+                gameSlug,
+                username,
+              }
+            )
+          }
+          reversed={selectors.getInitialUserOrientation(state, { username })}
         />
         <div
           css={css`
@@ -201,12 +181,13 @@ const Game = ({ autoMove, gameSlug, username }) => {
             flex-direction: row;
           `}
         >
-          <Player {...getCurrentPlayer()} />
+          <Player
+            {...selectors.getCurrentPlayer(state, { gameSlug, username })}
+          />
           <GameInfo
             activePlayer={selectors.getNextMovePlayer(state)}
-            userColor={selectors.getUserColor(state, username)}
-            players={state.players}
-            activeLegalMoves={getLegalMoves(state.moves.length - 1, false)}
+            hasLegalMoves={selectors.hasLegalMoves(state)}
+            userColor={selectors.getUserColor(state, { username })}
           />
         </div>
         <ConfirmMenu

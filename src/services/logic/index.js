@@ -283,6 +283,10 @@ export default class XiangqiBoard {
     return this.filteredLegalMoves(selectFunc.bind(this));
   }
 
+  hasLegalMoves(color) {
+    return this.legalMovesByColor(color).some((toSlots) => toSlots.length > 0);
+  }
+
   captures() {
     const result = new Set();
     for (const [, toSlots] of this.legalMoves(true).entries()) {

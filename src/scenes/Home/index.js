@@ -21,7 +21,7 @@ const Home = () => {
 
   const fetchGames = useCallback(
     async() => {
-      const response = await client.getGameList(username);
+      const response = await client.getGameList({ username });
       setGames(response.data.games);
     },
     [username],
@@ -68,21 +68,21 @@ const Home = () => {
   );
 
   switch (gameSlug) {
-    case undefined:
-      return renderMenu();
-    case LOCAL:
-      return <Game />;
-    case PLAYER_VS_CPU:
-      return <Game autoMove={AutoMove.BLACK} />;
-    case CPU_VS_CPU:
-      return <Game autoMove={AutoMove.BOTH} />;
-    default:
-      return (
-        <Game
-          gameSlug={gameSlug}
-          username={username}
-        />
-      );
+  case undefined:
+    return renderMenu();
+  case LOCAL:
+    return <Game />;
+  case PLAYER_VS_CPU:
+    return <Game autoMove={AutoMove.BLACK} />;
+  case CPU_VS_CPU:
+    return <Game autoMove={AutoMove.BOTH} />;
+  default:
+    return (
+      <Game
+        gameSlug={gameSlug}
+        username={username}
+      />
+    );
   }
 };
 

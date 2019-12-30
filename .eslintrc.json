@@ -2,8 +2,7 @@
   "extends": [
     "airbnb",
     "eslint:recommended",
-    "plugin:testcafe/recommended",
-    "walmart/rules/eslint/best-practices/on"
+    "plugin:testcafe/recommended"
   ],
   "globals": {
     "document": false,
@@ -40,13 +39,36 @@
     ],
     "function-paren-newline": "off",
     "import/no-extraneous-dependencies": "off",
+    "indent": [
+      "error",
+      2
+    ],
     "max-len": [
       "error",
       {
         "code": 80
       }
     ],
+    "no-trailing-spaces": "error",
     "no-underscore-dangle": "off",
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "object-curly-newline": [
+      "error",
+      {
+        "consistent": true,
+        "multiline": true
+      }
+    ],
+    "object-property-newline": [
+      "error",
+      {
+        "allowAllPropertiesOnSameLine": true
+      }
+    ],
+    "object-shorthand": "error",
     "quote-props": [
       "error",
       "consistent-as-needed"
