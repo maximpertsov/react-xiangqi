@@ -186,19 +186,8 @@ const Game = ({ autoMove, gameSlug, username }) => {
           />
           <GameInfo
             activePlayer={selectors.getNextMovePlayer(state)}
+            hasLegalMoves={selectors.hasLegalMoves(state)}
             userColor={selectors.getUserColor(state, username)}
-            players={state.players}
-            activeLegalMoves={
-              selectors.getLegalMoves(
-                state,
-                {
-                  idx: state.moves.length - 1,
-                  gameSlug,
-                  username,
-                  currentUserOnly: false,
-                }
-              )
-            }
           />
         </div>
         <ConfirmMenu

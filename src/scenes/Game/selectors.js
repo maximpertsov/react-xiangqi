@@ -87,4 +87,10 @@ export const getLegalMoves = (
     });
 };
 
+// TODO: this isn't really a selector -- use refactor with mapStateToProps
+export const hasLegalMoves = (state) => {
+  const { board } = getLastMove(state);
+  return board.hasLegalMoves(getNextMoveColor(state));
+};
+
 export default {};

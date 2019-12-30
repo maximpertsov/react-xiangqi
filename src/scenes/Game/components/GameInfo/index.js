@@ -2,13 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
 
-const GameInfo = ({
-  activePlayer, activeLegalMoves, userColor,
-}) => {
-  const countLegalMovesByActivePlayer = () => (
-    activeLegalMoves.reduce((count, toSlots) => count + toSlots.length, 0)
-  );
-
+const GameInfo = ({ activePlayer, hasLegalMoves, userColor }) => {
   const userIsActive = () => {
     const { color } = activePlayer;
     return color === userColor;
@@ -21,8 +15,7 @@ const GameInfo = ({
       const { color } = activePlayer;
       return `${color}'s turn`;
     }
-
-    if (countLegalMovesByActivePlayer() === 0) {
+    if (!hasLegalMoves) {
       // TODO: specify if won by stalemate or checkmate
       return userIsActive() ? 'You lose!' : 'You win!';
     }
@@ -46,9 +39,7 @@ GameInfo.propTypes = {
     color: PropTypes.string.isRequired,
     name: PropTypes.string,
   }),
-  activeLegalMoves: PropTypes.arrayOf(
-    PropTypes.arrayOf(PropTypes.number),
-  ).isRequired,
+  hasLegalMoves: PropTypes.bool.isRequired,
   userColor: PropTypes.string,
 };
 
