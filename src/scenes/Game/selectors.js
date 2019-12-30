@@ -1,20 +1,23 @@
-import * as utils from 'services/logic/utils';
 import { Color } from 'services/logic/constants';
+import { isRed } from 'services/logic/utils';
 
 /***************/
 /***  Moves  ***/
 /***************/
 
-export const getMove = ({ moves }, idx) =>
-  moves[idx];
+const getMove = (moves, idx) => moves[idx];
+
+export const getSelectedMove = ({ moves, selectedMoveIdx }) =>
+  getMove(moves, selectedMoveIdx);
 
 export const getLastMove = ({ moves }) =>
-  getMove({ moves }, moves.length - 1);
+  getMove(moves, moves.length - 1);
 
 export const getNextMoveColor = ({ moves }) => {
   if (moves.length === 0) return Color.RED;
-  const { piece: lastMovedPiece } = moves[moves.length - 1];
-  return utils.isRed(lastMovedPiece) ? Color.BLACK : Color.RED;
+
+  const { piece } = getLastMove({ moves });
+  return isRed(piece) ? Color.BLACK : Color.RED;
 };
 
 /*****************/
@@ -71,7 +74,7 @@ export const getLegalMoves = (
 ) => {
   const nextMoveColor = getNextMoveColor({ moves });
   const userColor = getUserColor({ players }, username);
-  const { board } = getMove({ moves }, idx);
+  const { board } = getMove(moves, idx);
   const selectUserMoves = currentUserOnly && gameSlug !== undefined;
 
   return board
@@ -83,6 +86,5 @@ export const getLegalMoves = (
       return toSlots;
     });
 };
-
 
 export default {};
