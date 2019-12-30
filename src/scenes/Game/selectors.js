@@ -45,17 +45,17 @@ export const getUserColor = ({ players }, username) => {
   }
 };
 
-export const getOtherPlayer = ({ gameSlug, players, username }) => {
+export const getOtherPlayer = ({ players }, { gameSlug, username }) => {
   if (gameSlug === undefined) getBlackPlayer({ players });
   return players.find((p) => p.name !== username);
 };
 
 // TODO: add a state that allows players to flip their original orientation
-export const getInitialUserOrientation = ({ players, username }) =>
+export const getInitialUserOrientation = ({ players }, { username }) =>
   getUserColor({ players }, username) === Color.BLACK;
 
 // TODO: move to layout class that displays board and players
-export const getCurrentPlayer = ({ gameSlug, players, username }) => {
+export const getCurrentPlayer = ({ players }, { gameSlug, username }) => {
   if (gameSlug === undefined) getRedPlayer({ players });
   return getUserPlayer({ players }, username);
 };
@@ -65,14 +65,10 @@ export const getCurrentPlayer = ({ gameSlug, players, username }) => {
 /********************/
 
 // TODO break up function
-export const getLegalMoves = ({
-  idx,
-  gameSlug,
-  moves,
-  players,
-  username,
-  currentUserOnly = true,
-}) => {
+export const getLegalMoves = (
+  { moves, players },
+  { gameSlug, idx, username, currentUserOnly = true },
+) => {
   const nextMoveColor = getNextMoveColor({ moves });
   const userColor = getUserColor({ players }, username);
   const { board } = getMove({ moves }, idx);

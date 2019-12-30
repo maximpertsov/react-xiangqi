@@ -153,7 +153,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
           `}
         >
           <Player
-            {...selectors.getOtherPlayer({ ...state, gameSlug, username })}
+            {...selectors.getOtherPlayer(state, { gameSlug, username })}
           />
         </div>
         <Board
@@ -162,14 +162,16 @@ const Game = ({ autoMove, gameSlug, username }) => {
           handleLegalMove={handleLegalMove}
           lastMove={lastMoveOnSelectedBoard}
           legalMoves={
-            selectors.getLegalMoves({
-              ...state,
-              idx: state.selectedMoveIdx,
-              gameSlug,
-              username,
-            })
+            selectors.getLegalMoves(
+              state,
+              {
+                idx: state.selectedMoveIdx,
+                gameSlug,
+                username,
+              }
+            )
           }
-          reversed={selectors.getInitialUserOrientation({ ...state, username })}
+          reversed={selectors.getInitialUserOrientation(state, { username })}
         />
         <div
           css={css`
@@ -180,20 +182,22 @@ const Game = ({ autoMove, gameSlug, username }) => {
           `}
         >
           <Player
-            {...selectors.getCurrentPlayer({ ...state, gameSlug, username })}
+            {...selectors.getCurrentPlayer(state, { gameSlug, username })}
           />
           <GameInfo
             activePlayer={selectors.getNextMovePlayer(state)}
             userColor={selectors.getUserColor(state, username)}
             players={state.players}
             activeLegalMoves={
-              selectors.getLegalMoves({
-                ...state,
-                idx: state.moves.length - 1,
-                gameSlug,
-                username,
-                currentUserOnly: false,
-              })
+              selectors.getLegalMoves(
+                state,
+                {
+                  idx: state.moves.length - 1,
+                  gameSlug,
+                  username,
+                  currentUserOnly: false,
+                }
+              )
             }
           />
         </div>
