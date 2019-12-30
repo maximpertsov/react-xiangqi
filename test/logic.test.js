@@ -4,7 +4,9 @@ import XiangqiBoard, {
   getFile,
   getSlot,
   fromFen,
-} from '../src/services/logic';
+} from 'services/logic';
+
+import { Color } from 'services/logic/constants';
 
 const slotRankFileTests = [
   [0, 0, 0],
@@ -387,4 +389,11 @@ test.each(legalMoveTests)('finds all legal moves for %s', (fen, moves) => {
       sameElements(actual[i], []);
     }
   }
+});
+
+test('no legal moves', () => {
+  const xb = new XiangqiBoard({ fen: '3k5/9/9/9/9/9/9/9/8r/r3K4' });
+
+  expect(xb.hasLegalMoves(Color.RED)).toBe(false);
+  expect(xb.hasLegalMoves(Color.BLACK)).toBe(true);
 });
