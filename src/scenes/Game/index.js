@@ -26,7 +26,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
 
   useEffect(
-    () => client.fetchGame({ dispatch, gameSlug }),
+    () => { client.fetchGame({ dispatch, gameSlug }); },
     [dispatch, gameSlug],
   );
 
