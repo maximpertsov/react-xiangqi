@@ -30,7 +30,7 @@ const lookupPlayer = (players, key, value) =>
 export const getNextMovePlayer = ({ players, moves }) =>
   lookupPlayer(players, 'color', getNextMoveColor({ moves }));
 
-export const getUserPlayer = ({ players }, username) =>
+const getUserPlayer = ({ players }, { username }) =>
   lookupPlayer(players, 'name', username);
 
 export const getRedPlayer = ({ players }) =>
@@ -39,9 +39,9 @@ export const getRedPlayer = ({ players }) =>
 export const getBlackPlayer = ({ players }) =>
   lookupPlayer(players, 'color', Color.BLACK);
 
-export const getUserColor = ({ players }, username) => {
+export const getUserColor = ({ players }, { username }) => {
   try {
-    return getUserPlayer({ players }, username).color;
+    return getUserPlayer({ players }, { username }).color;
   } catch (e) {
     if (e instanceof TypeError) return undefined;
     throw e;
@@ -55,12 +55,12 @@ export const getOtherPlayer = ({ players }, { gameSlug, username }) => {
 
 // TODO: add a state that allows players to flip their original orientation
 export const getInitialUserOrientation = ({ players }, { username }) =>
-  getUserColor({ players }, username) === Color.BLACK;
+  getUserColor({ players }, { username }) === Color.BLACK;
 
 // TODO: move to layout class that displays board and players
 export const getCurrentPlayer = ({ players }, { gameSlug, username }) => {
   if (gameSlug === undefined) getRedPlayer({ players });
-  return getUserPlayer({ players }, username);
+  return getUserPlayer({ players }, { username });
 };
 
 /********************/
@@ -73,7 +73,7 @@ export const getLegalMoves = (
   { gameSlug, idx, username, currentUserOnly = true },
 ) => {
   const nextMoveColor = getNextMoveColor({ moves });
-  const userColor = getUserColor({ players }, username);
+  const userColor = getUserColor({ players }, { username });
   const { board } = getMove(moves, idx);
   const selectUserMoves = currentUserOnly && gameSlug !== undefined;
 

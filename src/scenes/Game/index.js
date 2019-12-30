@@ -187,7 +187,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
           <GameInfo
             activePlayer={selectors.getNextMovePlayer(state)}
             hasLegalMoves={selectors.hasLegalMoves(state)}
-            userColor={selectors.getUserColor(state, username)}
+            userColor={selectors.getUserColor(state, { username })}
           />
         </div>
         <ConfirmMenu
