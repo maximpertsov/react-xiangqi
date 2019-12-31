@@ -31,7 +31,8 @@ const SelectionIndicator = styled.div({
 
 const TargetIndicator = styled.div(({ occupied }) => ({
   ...(occupied) ? {
-    outline: `2px dotted ${SELECTION_COLOR}`,
+    backgroundColor: SELECTION_COLOR,
+    borderRadius: '50%',
     ...fillParentElement,
   } : {
     backgroundColor: SELECTION_COLOR,
