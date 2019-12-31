@@ -27,6 +27,12 @@ const Game = ({ autoMove, gameSlug, username }) => {
   const [state, gameDispatch] = useGameReducer();
   const reduxDispatch = useDispatch();
   const selectors = useSelector(({ game }) => ({
+    // base state fields
+    loading: game.loading,
+    moves: game.moves,
+    moveCount: game.moveCount,
+    players: game.players,
+    selectedMoveIdx: game.selectedMoveIdx,
     // moves
     lastMove: gameSelectors.getLastMove(game),
     selectedMove: gameSelectors.getSelectedMove(game),
@@ -64,15 +70,16 @@ const Game = ({ autoMove, gameSlug, username }) => {
   useEffect(
     () => {
       const interval = client.setPollMovesInterval({
-        ...state,
         dispatch,
         gameSlug,
+        loading: selectors.loading,
+        moveCount: selectors.moveCount,
         nextMovePlayer: selectors.nextMovePlayer,
         username,
       });
       return () => clearInterval(interval);
     },
-    [dispatch, gameSlug, selectors, state, username],
+    [dispatch, gameSlug, selectors, username],
   );
 
   useEffect(
@@ -84,7 +91,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [autoMove, dispatch, state.moves],
+    [autoMove, dispatch, selectors.moves],
   );
 
   useEventListener(
@@ -216,8 +223,8 @@ const Game = ({ autoMove, gameSlug, username }) => {
           disabled={gameSlug === undefined}
         />
         <MoveHistory
-          moves={state.moves}
-          selectedIdx={state.selectedMoveIdx}
+          moves={selectors.moves}
+          selectedIdx={selectors.selectedMoveIdx}
           handleMoveSelect={handleMoveSelect}
         />
       </div>
