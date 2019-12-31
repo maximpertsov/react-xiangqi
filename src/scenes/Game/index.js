@@ -4,7 +4,7 @@ import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
 import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
 
 import Board from 'components/Board';
@@ -26,6 +26,10 @@ import { AutoMove } from '../../constants';
 const Game = ({ autoMove, gameSlug, username }) => {
   const [state, gameDispatch] = useGameReducer();
   const reduxDispatch = useDispatch();
+  const reduxSelectors = useSelector(({ game }) => ({
+    selectedMove: selectors.getSelectedMove(game),
+    lastMove: selectors.getLastMove(game),
+  }), shallowEqual);
 
   const dispatch = useCallback(
     (params) => {
@@ -123,7 +127,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
     board: selectedBoard,
     fromPos,
     toPos,
-  } = selectors.getSelectedMove(state);
+  } = reduxSelectors.selectedMove;
   const lastMoveOnSelectedBoard = {
     fromSlot: fromPos === undefined ? undefined : getSlot(...fromPos),
     toSlot: toPos === undefined ? undefined : getSlot(...toPos),
