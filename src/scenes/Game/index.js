@@ -16,7 +16,6 @@ import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
 import * as client from './services/client';
 
-import useGameReducer from './reducers';
 import * as gameSelectors from './selectors';
 
 // TODO: seems like this needs to be a relative import
@@ -24,8 +23,7 @@ import * as gameSelectors from './selectors';
 import { AutoMove } from '../../constants';
 
 const Game = ({ autoMove, gameSlug, username }) => {
-  const [state, gameDispatch] = useGameReducer();
-  const reduxDispatch = useDispatch();
+  const dispatch = useDispatch();
   const selectors = useSelector(({ game }) => ({
     // base state fields
     loading: game.loading,
@@ -51,14 +49,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     // other
     active: gameSlug !== undefined && game.loading,
   }), shallowEqual);
-
-  const dispatch = useCallback(
-    (params) => {
-      gameDispatch(params);
-      reduxDispatch(params);
-    },
-    [gameDispatch, reduxDispatch]
-  );
 
   useEffect(
     () => {

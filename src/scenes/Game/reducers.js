@@ -1,5 +1,4 @@
 import update from 'immutability-helper';
-import { useReducer } from 'react';
 
 import XiangqiBoard, * as logic from 'services/logic';
 import { Color } from 'services/logic/constants';
@@ -128,7 +127,7 @@ const setMoves = (state, moves) => selectLastMove(
 );
 
 /* eslint-disable-next-line complexity */
-const reducer = (state, action) => {
+const reducer = (state = getInitialState(), action) => {
   switch (action.type) {
   case 'add_move':
     return addMove(
@@ -157,8 +156,4 @@ const reducer = (state, action) => {
   }
 };
 
-const useGameReducer = () => useReducer(
-  reducer, getInitialState(),
-);
-
-export default useGameReducer;
+export default reducer;
