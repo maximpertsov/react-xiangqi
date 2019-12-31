@@ -42,6 +42,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       game, { gameSlug, username }
     ),
     // game logic
+    getLegalMoves: gameSelectors.getLegalMoves(game, { gameSlug, username }),
     hasLegalMoves: gameSelectors.hasLegalMoves(game),
   }), shallowEqual);
 
@@ -205,11 +206,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
           legalMoves={
             selectors.getLegalMoves(
               state,
-              {
-                idx: state.selectedMoveIdx,
-                gameSlug,
-                username,
-              }
+              { gameSlug, username }
             )
           }
           reversed={selectors.getInitialUserOrientation(state, { username })}
