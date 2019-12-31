@@ -4,6 +4,7 @@ import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
 import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import { useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
 
 import Board from 'components/Board';
@@ -24,10 +25,14 @@ import { AutoMove } from '../../constants';
 
 const Game = ({ autoMove, gameSlug, username }) => {
   const [state, dispatch] = useGameReducer();
+  const reduxDispatch = useDispatch();
 
   useEffect(
-    () => { client.fetchGame({ dispatch, gameSlug }); },
-    [dispatch, gameSlug],
+    () => {
+      reduxDispatch({ type: 'increment_foobar' });
+      client.fetchGame({ dispatch, gameSlug });
+    },
+    [dispatch, gameSlug, reduxDispatch],
   );
 
   useEffect(
