@@ -143,8 +143,12 @@ Board.propTypes = {
   board: logic.boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
   lastMove: PropTypes.shape({
-    fromSlot: PropTypes.oneOf([undefined, PropTypes.number]),
-    toSlot: PropTypes.oneOf([undefined, PropTypes.number]),
+    fromSlot: PropTypes.oneOfType(
+      [PropTypes.oneOf([undefined]), PropTypes.number]
+    ),
+    toSlot: PropTypes.oneOfType(
+      [PropTypes.oneOf([undefined]), PropTypes.number]
+    ),
   }).isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   nextMoveColor: PropTypes.string.isRequired,
