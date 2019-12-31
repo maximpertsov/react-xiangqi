@@ -35,10 +35,11 @@ const Home = () => {
     [fetchGames, username],
   );
 
-  const renderGameList = () => (
-    username === undefined ||
-    <GameList setGameSlug={setGameSlug} games={games} />
-  );
+  const renderGameList = () => {
+    if (username !== undefined) {
+      return <GameList setGameSlug={setGameSlug} games={games} />;
+    }
+  };
 
   const renderMenu = () => (
     <Container textAlign="center">

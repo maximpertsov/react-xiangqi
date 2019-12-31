@@ -114,7 +114,7 @@ const LoginForm = ({ username, setUsername }) => {
 
 LoginForm.propTypes = {
   setUsername: PropTypes.func.isRequired,
-  username: PropTypes.func,
+  username: PropTypes.string,
 };
 
 LoginForm.defaultProps = {

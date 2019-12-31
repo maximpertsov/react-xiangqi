@@ -4,6 +4,7 @@ import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
 import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import { useCallback, useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
 
 import Board from 'components/Board';
@@ -15,46 +16,72 @@ import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
 import * as client from './services/client';
 
-import useGameReducer from './reducers';
-import * as selectors from './selectors';
+import * as gameSelectors from './selectors';
 
 // TODO: seems like this needs to be a relative import
 // because it imports from services/logic/constants
 import { AutoMove } from '../../constants';
 
 const Game = ({ autoMove, gameSlug, username }) => {
-  const [state, dispatch] = useGameReducer();
+  const dispatch = useDispatch();
+  const selectors = useSelector(({ game }) => ({
+    // base state fields
+    loading: game.loading,
+    moves: game.moves,
+    moveCount: game.moveCount,
+    players: game.players,
+    selectedMoveIdx: game.selectedMoveIdx,
+    // moves
+    lastMove: gameSelectors.getLastMove(game),
+    selectedMove: gameSelectors.getSelectedMove(game),
+    nextMoveColor: gameSelectors.getNextMoveColor(game),
+    // players
+    nextMovePlayer: gameSelectors.getNextMovePlayer(game),
+    userColor: gameSelectors.getUserColor(game, { username }),
+    otherPlayer: gameSelectors.getOtherPlayer(game, { gameSlug, username }),
+    initialUserOrientation: gameSelectors.getInitialUserOrientation(
+      game, { username }
+    ),
+    currentPlayer: gameSelectors.getCurrentPlayer(game, { gameSlug, username }),
+    // game logic
+    legalMoves: gameSelectors.getLegalMoves(game, { gameSlug, username }),
+    hasLegalMoves: gameSelectors.hasLegalMoves(game),
+    // other
+    active: gameSlug !== undefined && game.loading,
+  }), shallowEqual);
 
   useEffect(
-    () => { client.fetchGame({ dispatch, gameSlug }); },
+    () => {
+      client.fetchGame({ dispatch, gameSlug });
+    },
     [dispatch, gameSlug],
   );
 
   useEffect(
     () => {
       const interval = client.setPollMovesInterval({
-        ...state,
         dispatch,
         gameSlug,
-        nextMovePlayer: selectors.getNextMovePlayer(state),
+        loading: selectors.loading,
+        moveCount: selectors.moveCount,
+        nextMovePlayer: selectors.nextMovePlayer,
         username,
       });
       return () => clearInterval(interval);
     },
-    [dispatch, gameSlug, state, username],
+    [dispatch, gameSlug, selectors, username],
   );
 
   useEffect(
     () => {
-      const nextMoveColor = selectors.getNextMoveColor(state);
-      if (autoMove === AutoMove.BOTH || autoMove === nextMoveColor) {
-        const { board } = selectors.getLastMove(state);
-        const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
+      if (autoMove === AutoMove.BOTH || autoMove === selectors.nextMoveColor) {
+        const { board } = selectors.lastMove;
+        const [fromSlot, toSlot] = board.randomMove(selectors.nextMoveColor);
         dispatch({ type: 'add_move', board, fromSlot, toSlot, pending: false });
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [autoMove, dispatch, state.moves],
+    [autoMove, dispatch, selectors.moves],
   );
 
   useEventListener(
@@ -84,34 +111,32 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const cancelMove = useCallback(
     () => {
-      dispatch({ type: 'cancelMoves' });
+      dispatch({ type: 'cancel_moves' });
     },
     [dispatch],
   );
 
   const handleConfirmedMove = useCallback(
     async() => {
-      const { fromPos, toPos, pending } = selectors.getLastMove(state);
+      const { fromPos, toPos, pending } = selectors.lastMove;
       if (!pending) return;
 
       await client.postMove({ dispatch, fromPos, toPos, gameSlug, username });
       dispatch({ type: 'confirm_moves' });
     },
-    [dispatch, gameSlug, state, username],
+    [dispatch, gameSlug, selectors, username],
   );
 
   const handleMoveSelect = ({ idx }) => {
     dispatch({ type: 'select_move', index: idx });
   };
 
-  const active = gameSlug !== undefined && state.loading;
-
   // TODO: just pass selectedMove down instead of the board and move separately?
   const {
     board: selectedBoard,
     fromPos,
     toPos,
-  } = selectors.getSelectedMove(state);
+  } = selectors.selectedMove;
   const lastMoveOnSelectedBoard = {
     fromSlot: fromPos === undefined ? undefined : getSlot(...fromPos),
     toSlot: toPos === undefined ? undefined : getSlot(...toPos),
@@ -122,7 +147,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       as={Segment}
       basic
       blurring
-      dimmed={active}
+      dimmed={selectors.active}
       className="Game"
       css={css`
           align-items: center;
@@ -132,7 +157,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
         `}
     >
       <Dimmer
-        active={active}
+        active={selectors.active}
         page
       >
         <Loader>Loading</Loader>
@@ -153,25 +178,16 @@ const Game = ({ autoMove, gameSlug, username }) => {
           `}
         >
           <Player
-            {...selectors.getOtherPlayer(state, { gameSlug, username })}
+            {...selectors.otherPlayer}
           />
         </div>
         <Board
           board={selectedBoard}
-          nextMoveColor={selectors.getNextMoveColor(state)}
+          nextMoveColor={selectors.nextMoveColor}
           handleLegalMove={handleLegalMove}
           lastMove={lastMoveOnSelectedBoard}
-          legalMoves={
-            selectors.getLegalMoves(
-              state,
-              {
-                idx: state.selectedMoveIdx,
-                gameSlug,
-                username,
-              }
-            )
-          }
-          reversed={selectors.getInitialUserOrientation(state, { username })}
+          legalMoves={selectors.legalMoves}
+          reversed={selectors.initialUserOrientation}
         />
         <div
           css={css`
@@ -182,23 +198,23 @@ const Game = ({ autoMove, gameSlug, username }) => {
           `}
         >
           <Player
-            {...selectors.getCurrentPlayer(state, { gameSlug, username })}
+            {...selectors.currentPlayer}
           />
           <GameInfo
-            activePlayer={selectors.getNextMovePlayer(state)}
-            hasLegalMoves={selectors.hasLegalMoves(state)}
-            userColor={selectors.getUserColor(state, { username })}
+            activePlayer={selectors.nextMovePlayer}
+            hasLegalMoves={selectors.hasLegalMoves}
+            userColor={selectors.userColor}
           />
         </div>
         <ConfirmMenu
           yesHandler={handleConfirmedMove}
           noHandler={cancelMove}
-          show={selectors.getLastMove(state).pending}
+          show={selectors.lastMove.pending}
           disabled={gameSlug === undefined}
         />
         <MoveHistory
-          moves={state.moves}
-          selectedIdx={state.selectedMoveIdx}
+          moves={selectors.moves}
+          selectedIdx={selectors.selectedMoveIdx}
           handleMoveSelect={handleMoveSelect}
         />
       </div>

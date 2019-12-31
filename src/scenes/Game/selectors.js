@@ -69,20 +69,20 @@ export const getCurrentPlayer = ({ players }, { gameSlug, username }) => {
 
 // TODO break up function
 export const getLegalMoves = (
-  { moves, players },
-  { gameSlug, idx, username, currentUserOnly = true },
+  { moves, players, selectedMoveIdx },
+  { gameSlug, username },
 ) => {
   const nextMoveColor = getNextMoveColor({ moves });
   const userColor = getUserColor({ players }, { username });
-  const { board } = getMove(moves, idx);
-  const selectUserMoves = currentUserOnly && gameSlug !== undefined;
+  const { board } = getSelectedMove({ moves, selectedMoveIdx });
+  const currentUserOnly = gameSlug !== undefined;
 
   return board
     .legalMoves()
     .map((toSlots, fromSlot) => {
-      if (idx !== moves.length - 1) return [];
+      if (selectedMoveIdx !== moves.length - 1) return [];
       if (!board.isColor(nextMoveColor, fromSlot)) return [];
-      if (selectUserMoves && !board.isColor(userColor, fromSlot)) return [];
+      if (currentUserOnly && !board.isColor(userColor, fromSlot)) return [];
       return toSlots;
     });
 };

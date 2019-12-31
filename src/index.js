@@ -1,9 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import styled from '@emotion/styled';
+
 import App from './App';
+import rootReducer from './reducers';
 import * as serviceWorker from './serviceWorker';
 
+const getReduxDevExtOptions = () => {
+  if (process.env.NODE_ENV === 'development') {
+    return window.__REDUX_DEVTOOLS_EXTENSION__
+      && window.__REDUX_DEVTOOLS_EXTENSION__();
+  }
+};
+
+// TODO: add the following a final argument for development
+const store = createStore(rootReducer, getReduxDevExtOptions());
 
 const Wrapper = styled.div`
 body {
@@ -22,7 +35,14 @@ code {
 }
 `;
 
-ReactDOM.render(<Wrapper><App /></Wrapper>, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <Wrapper>
+      <App />
+    </Wrapper>
+  </Provider>,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
