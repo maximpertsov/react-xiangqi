@@ -17,7 +17,7 @@ import Player from './components/Player';
 import * as client from './services/client';
 
 import useGameReducer from './reducers';
-import * as selectors from './selectors';
+import * as gameSelectors from './selectors';
 
 // TODO: seems like this needs to be a relative import
 // because it imports from services/logic/constants
@@ -27,8 +27,8 @@ const Game = ({ autoMove, gameSlug, username }) => {
   const [state, gameDispatch] = useGameReducer();
   const reduxDispatch = useDispatch();
   const reduxSelectors = useSelector(({ game }) => ({
-    selectedMove: selectors.getSelectedMove(game),
-    lastMove: selectors.getLastMove(game),
+    getSelectedMove: gameSelectors.getSelectedMove(game),
+    getLastMove: gameSelectors.getLastMove(game),
   }), shallowEqual);
 
   const dispatch = useCallback(
@@ -38,6 +38,17 @@ const Game = ({ autoMove, gameSlug, username }) => {
     },
     [gameDispatch, reduxDispatch]
   );
+
+  // TODO: remove this once all selectors are migrated to useSelector
+  const selectors = new Proxy(reduxSelectors, {
+    get(target, name) {
+      if (!target.hasOwnProperty(name)) {
+        console.log(`Accessing ${name} through legacy selector`);
+        return gameSelectors[name];
+      }
+      return () => target[name];
+    },
+  });
 
   useEffect(
     () => {
@@ -57,7 +68,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       });
       return () => clearInterval(interval);
     },
-    [dispatch, gameSlug, state, username],
+    [dispatch, gameSlug, selectors, state, username],
   );
 
   useEffect(
@@ -113,7 +124,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       await client.postMove({ dispatch, fromPos, toPos, gameSlug, username });
       dispatch({ type: 'confirm_moves' });
     },
-    [dispatch, gameSlug, state, username],
+    [dispatch, gameSlug, selectors, state, username],
   );
 
   const handleMoveSelect = ({ idx }) => {
@@ -127,7 +138,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
     board: selectedBoard,
     fromPos,
     toPos,
-  } = reduxSelectors.selectedMove;
+  } = selectors.getSelectedMove(state);
   const lastMoveOnSelectedBoard = {
     fromSlot: fromPos === undefined ? undefined : getSlot(...fromPos),
     toSlot: toPos === undefined ? undefined : getSlot(...toPos),
