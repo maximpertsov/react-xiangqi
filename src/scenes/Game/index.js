@@ -27,8 +27,22 @@ const Game = ({ autoMove, gameSlug, username }) => {
   const [state, gameDispatch] = useGameReducer();
   const reduxDispatch = useDispatch();
   const reduxSelectors = useSelector(({ game }) => ({
-    getSelectedMove: gameSelectors.getSelectedMove(game),
+    // moves
     getLastMove: gameSelectors.getLastMove(game),
+    getSelectedMove: gameSelectors.getSelectedMove(game),
+    getNextMoveColor: gameSelectors.getNextMoveColor(game),
+    // players
+    getNextMovePlayer: gameSelectors.getNextMovePlayer(game),
+    getUserColor: gameSelectors.getUserColor(game, { username }),
+    getOtherPlayer: gameSelectors.getOtherPlayer(game, { gameSlug, username }),
+    getInitialUserOrientation: gameSelectors.getInitialUserOrientation(
+      game, { username }
+    ),
+    getCurrentPlayer: gameSelectors.getCurrentPlayer(
+      game, { gameSlug, username }
+    ),
+    // game logic
+    hasLegalMoves: gameSelectors.hasLegalMoves(game),
   }), shallowEqual);
 
   const dispatch = useCallback(
