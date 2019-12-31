@@ -31,7 +31,6 @@ const getInitialState = () => ({
   moveCount: 0,
   players: initialPlayers,
   selectedMoveIdx: 0,
-  foobar: 0,
 });
 
 // Actions
@@ -131,8 +130,6 @@ const setMoves = (state, moves) => selectLastMove(
 /* eslint-disable-next-line complexity */
 const reducer = (state = getInitialState(), action) => {
   switch (action.type) {
-  case 'increment_foobar':
-    return ({ ...state, foobar: state.foobar + 1 });
   case 'add_move':
     return addMove(
       state,

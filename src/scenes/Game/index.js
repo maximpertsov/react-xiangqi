@@ -24,15 +24,22 @@ import * as selectors from './selectors';
 import { AutoMove } from '../../constants';
 
 const Game = ({ autoMove, gameSlug, username }) => {
-  const [state, dispatch] = useGameReducer();
+  const [state, gameDispatch] = useGameReducer();
   const reduxDispatch = useDispatch();
+
+  const dispatch = useCallback(
+    (params) => {
+      gameDispatch(params);
+      reduxDispatch(params);
+    },
+    [gameDispatch, reduxDispatch]
+  );
 
   useEffect(
     () => {
-      reduxDispatch({ type: 'increment_foobar' });
       client.fetchGame({ dispatch, gameSlug });
     },
-    [dispatch, gameSlug, reduxDispatch],
+    [dispatch, gameSlug],
   );
 
   useEffect(
