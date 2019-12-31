@@ -8,10 +8,15 @@ import App from './App';
 import rootReducer from './reducers';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const getReduxDevExtOptions = () => {
+  if (process.env.NODE_ENV === 'development') {
+    return window.__REDUX_DEVTOOLS_EXTENSION__
+      && window.__REDUX_DEVTOOLS_EXTENSION__();
+  }
+};
+
+// TODO: add the following a final argument for development
+const store = createStore(rootReducer, getReduxDevExtOptions());
 
 const Wrapper = styled.div`
 body {
