@@ -42,6 +42,8 @@ const Game = ({ autoMove, gameSlug, username }) => {
     // game logic
     legalMoves: gameSelectors.getLegalMoves(game, { gameSlug, username }),
     hasLegalMoves: gameSelectors.hasLegalMoves(game),
+    // other
+    active: gameSlug !== undefined && game.loading,
   }), shallowEqual);
 
   const dispatch = useCallback(
@@ -132,8 +134,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     dispatch({ type: 'select_move', index: idx });
   };
 
-  const active = gameSlug !== undefined && state.loading;
-
   // TODO: just pass selectedMove down instead of the board and move separately?
   const {
     board: selectedBoard,
@@ -150,7 +150,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       as={Segment}
       basic
       blurring
-      dimmed={active}
+      dimmed={selectors.active}
       className="Game"
       css={css`
           align-items: center;
@@ -160,7 +160,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
         `}
     >
       <Dimmer
-        active={active}
+        active={selectors.active}
         page
       >
         <Loader>Loading</Loader>
