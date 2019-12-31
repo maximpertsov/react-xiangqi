@@ -84,7 +84,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const cancelMove = useCallback(
     () => {
-      dispatch({ type: 'cancelMoves' });
+      dispatch({ type: 'cancel_moves' });
     },
     [dispatch],
   );

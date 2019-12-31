@@ -130,30 +130,30 @@ const setMoves = (state, moves) => selectLastMove(
 /* eslint-disable-next-line complexity */
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'add_move':
-      return addMove(
-        state,
-        action.board,
-        action.fromSlot,
-        action.toSlot,
-        action.pending,
-      );
-    case 'cancelMoves':
-      return cancelMoves(state);
-    case 'confirm_moves':
-      return confirmMoves(state);
-    case 'select_move':
-      return setSelectedMove(state, action.index);
-    case 'select_previous_move':
-      return setPreviousMove(state);
-    case 'select_next_move':
-      return setNextMove(state);
-    case 'set_moves':
-      return setMoves(state, action.moves);
-    case 'set_players':
-      return ({ ...state, players: action.players });
-    default:
-      return state;
+  case 'add_move':
+    return addMove(
+      state,
+      action.board,
+      action.fromSlot,
+      action.toSlot,
+      action.pending,
+    );
+  case 'cancel_moves':
+    return cancelMoves(state);
+  case 'confirm_moves':
+    return confirmMoves(state);
+  case 'select_move':
+    return setSelectedMove(state, action.index);
+  case 'select_previous_move':
+    return setPreviousMove(state);
+  case 'select_next_move':
+    return setNextMove(state);
+  case 'set_moves':
+    return setMoves(state, action.moves);
+  case 'set_players':
+    return ({ ...state, players: action.players });
+  default:
+    return state;
   }
 };
 
