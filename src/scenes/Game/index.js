@@ -26,23 +26,21 @@ import { AutoMove } from '../../constants';
 const Game = ({ autoMove, gameSlug, username }) => {
   const [state, gameDispatch] = useGameReducer();
   const reduxDispatch = useDispatch();
-  const reduxSelectors = useSelector(({ game }) => ({
+  const selectors = useSelector(({ game }) => ({
     // moves
-    getLastMove: gameSelectors.getLastMove(game),
-    getSelectedMove: gameSelectors.getSelectedMove(game),
-    getNextMoveColor: gameSelectors.getNextMoveColor(game),
+    lastMove: gameSelectors.getLastMove(game),
+    selectedMove: gameSelectors.getSelectedMove(game),
+    nextMoveColor: gameSelectors.getNextMoveColor(game),
     // players
-    getNextMovePlayer: gameSelectors.getNextMovePlayer(game),
-    getUserColor: gameSelectors.getUserColor(game, { username }),
-    getOtherPlayer: gameSelectors.getOtherPlayer(game, { gameSlug, username }),
-    getInitialUserOrientation: gameSelectors.getInitialUserOrientation(
+    nextMovePlayer: gameSelectors.getNextMovePlayer(game),
+    userColor: gameSelectors.getUserColor(game, { username }),
+    otherPlayer: gameSelectors.getOtherPlayer(game, { gameSlug, username }),
+    initialUserOrientation: gameSelectors.getInitialUserOrientation(
       game, { username }
     ),
-    getCurrentPlayer: gameSelectors.getCurrentPlayer(
-      game, { gameSlug, username }
-    ),
+    currentPlayer: gameSelectors.getCurrentPlayer(game, { gameSlug, username }),
     // game logic
-    getLegalMoves: gameSelectors.getLegalMoves(game, { gameSlug, username }),
+    legalMoves: gameSelectors.getLegalMoves(game, { gameSlug, username }),
     hasLegalMoves: gameSelectors.hasLegalMoves(game),
   }), shallowEqual);
 
@@ -53,17 +51,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     },
     [gameDispatch, reduxDispatch]
   );
-
-  // TODO: remove this once all selectors are migrated to useSelector
-  const selectors = new Proxy(reduxSelectors, {
-    get(target, name) {
-      if (!target.hasOwnProperty(name)) {
-        console.log(`Accessing ${name} through legacy selector`);
-        return gameSelectors[name];
-      }
-      return () => target[name];
-    },
-  });
 
   useEffect(
     () => {
@@ -78,7 +65,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
         ...state,
         dispatch,
         gameSlug,
-        nextMovePlayer: selectors.getNextMovePlayer(),
+        nextMovePlayer: selectors.nextMovePlayer,
         username,
       });
       return () => clearInterval(interval);
@@ -88,10 +75,9 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   useEffect(
     () => {
-      const nextMoveColor = selectors.getNextMoveColor();
-      if (autoMove === AutoMove.BOTH || autoMove === nextMoveColor) {
-        const { board } = selectors.getLastMove();
-        const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
+      if (autoMove === AutoMove.BOTH || autoMove === selectors.nextMoveColor) {
+        const { board } = selectors.lastMove;
+        const [fromSlot, toSlot] = board.randomMove(selectors.nextMoveColor);
         dispatch({ type: 'add_move', board, fromSlot, toSlot, pending: false });
       }
     },
@@ -133,7 +119,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const handleConfirmedMove = useCallback(
     async() => {
-      const { fromPos, toPos, pending } = selectors.getLastMove();
+      const { fromPos, toPos, pending } = selectors.lastMove;
       if (!pending) return;
 
       await client.postMove({ dispatch, fromPos, toPos, gameSlug, username });
@@ -153,7 +139,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
     board: selectedBoard,
     fromPos,
     toPos,
-  } = selectors.getSelectedMove();
+  } = selectors.selectedMove;
   const lastMoveOnSelectedBoard = {
     fromSlot: fromPos === undefined ? undefined : getSlot(...fromPos),
     toSlot: toPos === undefined ? undefined : getSlot(...toPos),
@@ -195,17 +181,16 @@ const Game = ({ autoMove, gameSlug, username }) => {
           `}
         >
           <Player
-            {...selectors.getOtherPlayer()}
+            {...selectors.otherPlayer}
           />
         </div>
         <Board
           board={selectedBoard}
-          nextMoveColor={selectors.getNextMoveColor()}
+          nextMoveColor={selectors.nextMoveColor}
           handleLegalMove={handleLegalMove}
           lastMove={lastMoveOnSelectedBoard}
-          legalMoves={selectors.getLegalMoves()
-          }
-          reversed={selectors.getInitialUserOrientation()}
+          legalMoves={selectors.legalMoves}
+          reversed={selectors.initialUserOrientation}
         />
         <div
           css={css`
@@ -216,18 +201,18 @@ const Game = ({ autoMove, gameSlug, username }) => {
           `}
         >
           <Player
-            {...selectors.getCurrentPlayer()}
+            {...selectors.currentPlayer}
           />
           <GameInfo
-            activePlayer={selectors.getNextMovePlayer()}
-            hasLegalMoves={selectors.hasLegalMoves()}
-            userColor={selectors.getUserColor()}
+            activePlayer={selectors.nextMovePlayer}
+            hasLegalMoves={selectors.hasLegalMoves}
+            userColor={selectors.userColor}
           />
         </div>
         <ConfirmMenu
           yesHandler={handleConfirmedMove}
           noHandler={cancelMove}
-          show={selectors.getLastMove().pending}
+          show={selectors.lastMove.pending}
           disabled={gameSlug === undefined}
         />
         <MoveHistory
