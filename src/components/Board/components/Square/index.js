@@ -4,11 +4,11 @@ import { jsx } from '@emotion/core';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
-import XiangqiPiece from './components/Piece'
+import XiangqiPiece from './components/Piece';
 
-const LAST_MOVE_COLOR = 'rgb(170,143,121,0.3)';
-const SELECTION_GREEN = 'rgba(30,179,0,0.3)';
-const IN_CHECK_RED = 'red';
+const LAST_MOVE_COLOR = 'rgba(201,255,229,1.0)';
+const SELECTION_COLOR = 'rgba(30,179,0,0.3)';
+const IN_CHECK_COLOR = 'red';
 
 const fillParentElement = {
   height: '100%',
@@ -18,22 +18,24 @@ const fillParentElement = {
 
 const LastMoveIndicator = styled.div({
   backgroundColor: LAST_MOVE_COLOR,
+  borderRadius: '50%',
   zIndex: '-1',
   ...fillParentElement,
 });
 
 const SelectionIndicator = styled.div({
-  backgroundColor: SELECTION_GREEN,
+  backgroundColor: SELECTION_COLOR,
   zIndex: '-1',
   ...fillParentElement,
 });
 
 const TargetIndicator = styled.div(({ occupied }) => ({
   ...(occupied) ? {
-    outline: `2px dotted ${SELECTION_GREEN}`,
+    backgroundColor: SELECTION_COLOR,
+    borderRadius: '50%',
     ...fillParentElement,
   } : {
-    backgroundColor: SELECTION_GREEN,
+    backgroundColor: SELECTION_COLOR,
     borderRadius: '50%',
     height: '50%',
     width: '50%',
@@ -44,7 +46,9 @@ const TargetIndicator = styled.div(({ occupied }) => ({
 }));
 
 const KingCheckedIndicator = styled.div({
-  outline: `2px dotted ${IN_CHECK_RED}`,
+  backgroundColor: IN_CHECK_COLOR,
+  borderRadius: '50%',
+  zIndex: '-1',
   ...fillParentElement,
 });
 
