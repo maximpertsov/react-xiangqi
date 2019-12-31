@@ -46,7 +46,9 @@ const TargetIndicator = styled.div(({ occupied }) => ({
 }));
 
 const KingCheckedIndicator = styled.div({
-  outline: `2px dotted ${IN_CHECK_COLOR}`,
+  backgroundColor: IN_CHECK_COLOR,
+  borderRadius: '50%',
+  zIndex: '-1',
   ...fillParentElement,
 });
 
