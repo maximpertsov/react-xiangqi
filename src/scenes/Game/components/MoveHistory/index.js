@@ -1,11 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
 
 import * as styles from 'commonStyles';
-import * as logic from 'services/logic';
-
 import Move from './components/Move';
 
 const cssMoveColumns = (columns) => Array(columns)
@@ -35,7 +34,9 @@ const Wrapper = styled.div`
   overflow: auto;
 `;
 
-const MoveHistory = ({ moves, handleMoveSelect }) => {
+const MoveHistory = ({ handleMoveSelect }) => {
+  const moves = useSelector(({ game: { moves } }) => moves);
+
   const moveComponents = moves
     .reduce((acc, m, i) => (
       acc.concat(
@@ -65,8 +66,6 @@ const MoveHistory = ({ moves, handleMoveSelect }) => {
 };
 
 MoveHistory.propTypes = {
-  // TODO: add move proptype
-  moves: PropTypes.arrayOf(logic.boardPropType).isRequired,
   handleMoveSelect: PropTypes.func.isRequired,
 };
 

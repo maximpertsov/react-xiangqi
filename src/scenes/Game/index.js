@@ -211,7 +211,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
           disabled={gameSlug === undefined}
         />
         <MoveHistory
-          moves={selectors.moves}
           handleMoveSelect={handleMoveSelect}
         />
       </div>
