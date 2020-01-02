@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
@@ -37,9 +38,9 @@ const moveString = ({ piece, fromPos, toPos }) => {
   return `${P[piece]}${F[fromFile]}${R[fromRank]}-${F[toFile]}${R[toRank]}`;
 };
 
-const Move = ({
-  fromPos, toPos, piece, handleMoveSelect, idx, selected,
-}) => {
+const Move = ({ fromPos, toPos, piece, handleMoveSelect, idx }) => {
+  const selected = useSelector(({ game }) => game.selectedMoveIdx === idx);
+
   if (piece === null) return null;
 
   const handleClick = () => handleMoveSelect({ idx });
@@ -63,7 +64,6 @@ Move.propTypes = {
   toPos: PropTypes.arrayOf(PropTypes.number),
   piece: PropTypes.string,
   idx: PropTypes.number.isRequired,
-  selected: PropTypes.bool.isRequired,
 };
 
 Move.defaultProps = {

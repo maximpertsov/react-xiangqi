@@ -29,8 +29,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     loading: game.loading,
     moves: game.moves,
     moveCount: game.moveCount,
-    players: game.players,
-    selectedMoveIdx: game.selectedMoveIdx,
     // moves
     lastMove: gameSelectors.getLastMove(game),
     selectedMove: gameSelectors.getSelectedMove(game),
@@ -214,7 +212,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
         />
         <MoveHistory
           moves={selectors.moves}
-          selectedIdx={selectors.selectedMoveIdx}
           handleMoveSelect={handleMoveSelect}
         />
       </div>

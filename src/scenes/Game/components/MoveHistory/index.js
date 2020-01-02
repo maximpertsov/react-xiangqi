@@ -35,7 +35,7 @@ const Wrapper = styled.div`
   overflow: auto;
 `;
 
-const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
+const MoveHistory = ({ moves, handleMoveSelect }) => {
   const moveComponents = moves
     .reduce((acc, m, i) => (
       acc.concat(
@@ -49,7 +49,6 @@ const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
             fromPos={m.fromPos}
             toPos={m.toPos}
             piece={m.piece}
-            selected={selectedIdx === i}
           />,
         ],
       )),
@@ -68,7 +67,6 @@ const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
 MoveHistory.propTypes = {
   // TODO: add move proptype
   moves: PropTypes.arrayOf(logic.boardPropType).isRequired,
-  selectedIdx: PropTypes.number.isRequired,
   handleMoveSelect: PropTypes.func.isRequired,
 };
 
