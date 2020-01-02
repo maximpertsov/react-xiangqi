@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
@@ -6,8 +6,8 @@ import styled from '@emotion/styled';
 import { Color } from 'services/logic/constants';
 
 const Wrapper = styled.div(
-  ({ selected, piece }) => ({
-    textDecoration: (selected ? 'underline' : 'none'),
+  ({ isSelected, piece }) => ({
+    textDecoration: (isSelected ? 'underline' : 'none'),
     color: ('RHEAKCP'.includes(piece) ? Color.RED : Color.BLACK),
   }),
 );
@@ -32,28 +32,30 @@ const P = {
   C: '炮',
 };
 
-const moveString = ({ piece, fromPos, toPos }) => {
+const moveText = ({ piece, fromPos, toPos }) => {
   const [fromRank, fromFile] = fromPos;
   const [toRank, toFile] = toPos;
   return `${P[piece]}${F[fromFile]}${R[fromRank]}-${F[toFile]}${R[toRank]}`;
 };
 
 const Move = ({ fromPos, toPos, piece, handleMoveSelect, idx }) => {
-  const selected = useSelector(({ game }) => game.selectedMoveIdx === idx);
+  const isSelected = useSelector(({ game }) => game.selectedMoveIdx === idx);
+
+  const handleClick = useCallback(
+    () => handleMoveSelect({ idx }),
+    [handleMoveSelect, idx]
+  );
 
   if (piece === null) return null;
 
-  const handleClick = () => handleMoveSelect({ idx });
-
-  const description = moveString({ piece, fromPos, toPos });
   return (
     <Wrapper
       className="Move"
       onClick={handleClick}
-      selected={selected}
+      isSelected={isSelected}
       piece={piece}
     >
-      { description }
+      { moveText({ piece, fromPos, toPos }) }
     </Wrapper>
   );
 };
