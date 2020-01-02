@@ -112,19 +112,18 @@ const setMove = (
   return incrementMoveCount(update(state, { moves: { $push: [newMove] } }));
 };
 
-
-const setMoves = (state, moves) => selectLastMove(
-  moves.reduce(
-    (prevState, move) => setMove(prevState, move),
-    {
-      ...state,
-      moves: getInitialMovesState(),
-      moveCount: 0,
-      setSelectedMove: 0,
-      loading: false,
-    },
-  ),
-);
+const setMoves = (state, moves) =>
+  selectLastMove(
+    moves.reduce(
+      (prevState, move) => setMove(prevState, move),
+      {
+        ...state,
+        moves: getInitialMovesState(),
+        moveCount: 0,
+        loading: false,
+      },
+    ),
+  );
 
 /* eslint-disable-next-line complexity */
 const reducer = (state = getInitialState(), action) => {
