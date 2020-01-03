@@ -9,14 +9,25 @@ import { Color } from 'services/logic/constants';
 /* eslint-disable-next-line max-len */
 const DEFAULT_FEN = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
 
-const getInitialMovesState = (fen = DEFAULT_FEN) => ([
+// TODO: find out why this id starts at 3
+let nextMoveId = 0;
+
+// TODO move to action creator?
+const newMove = (moveData) => (
   {
+    ...moveData,
+    id: ++nextMoveId,
+  }
+);
+
+const getInitialMovesState = (fen = DEFAULT_FEN) => ([
+  newMove({
     piece: undefined,
     fromPos: undefined,
     toPos: undefined,
     board: new XiangqiBoard({ fen }),
     pending: false,
-  },
+  }),
 ]);
 
 const initialPlayers = [
@@ -62,16 +73,16 @@ const selectLastMove = (state) => {
 };
 
 const addMove = (state, board, fromSlot, toSlot, pending) => {
-  const newMove = {
+  const move = newMove({
     fromPos: logic.getRankFile(fromSlot),
     toPos: logic.getRankFile(toSlot),
     piece: board.getPiece(fromSlot),
     board: board.move(fromSlot, toSlot),
     pending,
-  };
+  });
   return selectLastMove(
     incrementMoveCount(
-      update(state, { moves: { $push: [newMove] } }),
+      update(state, { moves: { $push: [move] } }),
     ),
   );
 };
@@ -102,14 +113,14 @@ const setMove = (
   fromMoveIdx = undefined,
 ) => {
   const { board } = state.moves[fromMoveIdx || state.moves.length - 1];
-  const newMove = {
+  const move = newMove({
     piece: board.getPiece(fromPos, logic.RefType.RANK_FILE),
     fromPos,
     toPos,
     board: board.move(fromPos, toPos, logic.RefType.RANK_FILE),
     pending: false,
-  };
-  return incrementMoveCount(update(state, { moves: { $push: [newMove] } }));
+  });
+  return incrementMoveCount(update(state, { moves: { $push: [move] } }));
 };
 
 const setMoves = (state, moves) =>
