@@ -109,12 +109,8 @@ export const confirmMoves = (state) => {
   };
 };
 
-const setMove = (
-  state,
-  { origin: fromPos, destination: toPos },
-  fromMoveIdx = undefined,
-) => {
-  const { board } = state.moves[fromMoveIdx || state.moves.length - 1];
+const setMove = (state, { origin: fromPos, destination: toPos }) => {
+  const { board } = state.moves[state.moves.length - 1];
   const move = newMove({
     piece: board.getPiece(fromPos, logic.RefType.RANK_FILE),
     fromPos,
