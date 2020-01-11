@@ -40,7 +40,7 @@ export const getInitialState = () => ({
   moves: getInitialMovesState(),
   moveCount: 0,
   players: initialPlayers,
-  selectedMoveId: undefined,
+  selectedMoveId: nextMoveId,
 });
 
 /***************/
@@ -51,11 +51,8 @@ const incrementMoveCount = (state) => (
   { ...state, moveCount: state.moveCount + 1 }
 );
 
-const getMoveIndex = ({ moves }, moveId ) => {
-  if (moveId === undefined) return 0;
-
-  return moves.findIndex(({ id }) => id === moveId);
-};
+const getMoveIndex = ({ moves }, moveId ) =>
+  moves.findIndex(({ id }) => id === moveId);
 
 const setSelectedMoveIndex = (state, moveIndex) => {
   const { id: selectedMoveId } = state.moves[moveIndex];

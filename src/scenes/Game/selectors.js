@@ -11,11 +11,8 @@ export const getFirstMove = ({ moves }) =>
 export const getLastMove = ({ moves }) =>
   moves[moves.length - 1];
 
-export const getSelectedMove = ({ moves, selectedMoveId }) => {
-  if (selectedMoveId === undefined) return getFirstMove({ moves });
-
-  return moves.find(({ id }) => id === selectedMoveId);
-};
+export const getSelectedMove = ({ moves, selectedMoveId }) =>
+  moves.find(({ id }) => id === selectedMoveId);
 
 export const getNextMoveColor = ({ moves }) => {
   if (moves.length === 0) return Color.RED;
@@ -85,7 +82,7 @@ export const getLegalMoves = (
   return board
     .legalMoves()
     .map((toSlots, fromSlot) => {
-      if (getSelectedMove({ moves, selectedMoveId }).id !== lastMoveId) return [];
+      if (selectedMoveId !== lastMoveId) return [];
       if (!board.isColor(nextMoveColor, fromSlot)) return [];
       if (currentUserOnly && !board.isColor(userColor, fromSlot)) return [];
       return toSlots;
