@@ -125,8 +125,8 @@ const Game = ({ autoMove, gameSlug, username }) => {
     [dispatch, gameSlug, selectors, username],
   );
 
-  const handleMoveSelect = ({ idx }) => {
-    dispatch({ type: 'select_move', index: idx });
+  const handleMoveSelect = ({ moveId }) => {
+    dispatch({ type: 'select_move', moveId });
   };
 
   // TODO: just pass selectedMove down instead of the board and move separately?

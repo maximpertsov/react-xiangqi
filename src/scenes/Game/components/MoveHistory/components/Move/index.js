@@ -38,12 +38,12 @@ const moveText = ({ piece, fromPos, toPos }) => {
   return `${P[piece]}${F[fromFile]}${R[fromRank]}-${F[toFile]}${R[toRank]}`;
 };
 
-const Move = ({ fromPos, toPos, piece, handleMoveSelect, idx }) => {
-  const isSelected = useSelector(({ game }) => game.selectedMoveIdx === idx);
+const Move = ({ fromPos, toPos, piece, handleMoveSelect, moveId }) => {
+  const isSelected = useSelector(({ game }) => game.selectedMoveId === moveId);
 
   const handleClick = useCallback(
-    () => handleMoveSelect({ idx }),
-    [handleMoveSelect, idx]
+    () => handleMoveSelect({ moveId }),
+    [handleMoveSelect, moveId]
   );
 
   if (piece === null) return null;
@@ -65,7 +65,7 @@ Move.propTypes = {
   fromPos: PropTypes.arrayOf(PropTypes.number),
   toPos: PropTypes.arrayOf(PropTypes.number),
   piece: PropTypes.string,
-  idx: PropTypes.number.isRequired,
+  moveId: PropTypes.number.isRequired,
 };
 
 Move.defaultProps = {

@@ -40,7 +40,7 @@ export const getInitialState = () => ({
   moves: getInitialMovesState(),
   moveCount: 0,
   players: initialPlayers,
-  selectedMoveIdx: 0,
+  selectedMoveId: undefined,
 });
 
 /***************/
@@ -51,28 +51,32 @@ const incrementMoveCount = (state) => (
   { ...state, moveCount: state.moveCount + 1 }
 );
 
-export const setSelectedMove = (state, index) => (
-  { ...state, selectedMoveIdx: index }
-);
+const getMoveIndex = ({ moves }, moveId ) => {
+  if (moveId === undefined) return 0;
 
-export const setPreviousMove = (state) => (
-  {
-    ...state,
-    selectedMoveIdx: Math.max(state.selectedMoveIdx - 1, 0),
-  }
-);
-
-export const setNextMove = (state) => (
-  {
-    ...state,
-    selectedMoveIdx: Math.min(state.selectedMoveIdx + 1, state.moveCount),
-  }
-);
-
-const selectLastMove = (state) => {
-  const { moves } = state;
-  return setSelectedMove(state, moves.length - 1);
+  return moves.findIndex(({ id }) => id === moveId);
 };
+
+const setSelectedMoveIndex = (state, moveIndex) => {
+  const { id: selectedMoveId } = state.moves[moveIndex];
+  return { ...state, selectedMoveId };
+};
+
+export const setSelectedMove = (state, moveId) =>
+  setSelectedMoveIndex(state, getMoveIndex(state, moveId));
+
+export const setPreviousMove = (state) => {
+  const moveIndex = getMoveIndex(state, state.selectedMoveId);
+  return setSelectedMoveIndex(state, Math.max(moveIndex - 1, 0));
+};
+
+export const setNextMove = (state) => {
+  const moveIndex = getMoveIndex(state, state.selectedMoveId);
+  return setSelectedMoveIndex(state, Math.min(moveIndex + 1, state.moveCount));
+};
+
+const selectLastMove = (state) =>
+  setSelectedMoveIndex(state, state.moves.length - 1);
 
 export const addMove = (state, board, fromSlot, toSlot, pending) => {
   const move = newMove({
@@ -90,14 +94,15 @@ export const addMove = (state, board, fromSlot, toSlot, pending) => {
 };
 
 export const cancelMoves = (state) => {
-  const { moves, selectedMoveIdx } = state;
+  const { moves, selectedMoveId } = state;
   const confirmedMoves = moves.filter(({ pending }) => !pending);
+  const selectedMoveIndex = Math.min(selectedMoveId, confirmedMoves.length - 1);
 
   return {
     ...state,
     moves: confirmedMoves,
     moveCount: confirmedMoves.length,
-    selectedMoveIdx: Math.min(selectedMoveIdx, confirmedMoves.length - 1),
+    selectedMoveId: setSelectedMoveIndex(state, selectedMoveIndex),
   };
 };
 

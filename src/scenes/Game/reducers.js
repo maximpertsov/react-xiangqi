@@ -16,7 +16,7 @@ const reducer = (state = actions.getInitialState(), action) => {
   case 'confirm_moves':
     return actions.confirmMoves(state);
   case 'select_move':
-    return actions.setSelectedMove(state, action.index);
+    return actions.setSelectedMove(state, action.moveId);
   case 'select_previous_move':
     return actions.setPreviousMove(state);
   case 'select_next_move':

@@ -45,7 +45,7 @@ const MoveHistory = ({ handleMoveSelect }) => {
         [
           <Move
             key={i}
-            idx={i}
+            moveId={m.id}
             handleMoveSelect={handleMoveSelect}
             fromPos={m.fromPos}
             toPos={m.toPos}
