@@ -29,8 +29,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     loading: game.loading,
     moves: game.moves,
     moveCount: game.moveCount,
-    players: game.players,
-    selectedMoveIdx: game.selectedMoveIdx,
     // moves
     lastMove: gameSelectors.getLastMove(game),
     selectedMove: gameSelectors.getSelectedMove(game),
@@ -127,10 +125,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     [dispatch, gameSlug, selectors, username],
   );
 
-  const handleMoveSelect = ({ idx }) => {
-    dispatch({ type: 'select_move', index: idx });
-  };
-
   // TODO: just pass selectedMove down instead of the board and move separately?
   const {
     board: selectedBoard,
@@ -212,11 +206,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
           show={selectors.lastMove.pending}
           disabled={gameSlug === undefined}
         />
-        <MoveHistory
-          moves={selectors.moves}
-          selectedIdx={selectors.selectedMoveIdx}
-          handleMoveSelect={handleMoveSelect}
-        />
+        <MoveHistory />
       </div>
     </Dimmer.Dimmable>
   );

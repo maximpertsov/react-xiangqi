@@ -1,15 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
+import { tail, chunk } from 'lodash';
 
 import * as styles from 'commonStyles';
-import * as logic from 'services/logic';
+import FullMove from './components/FullMove';
 
-import Move from './components/Move';
-
-const cssMoveColumns = (columns) => Array(columns)
-  .fill('0.25fr 1fr 1fr').join(' ');
+const cssMoveColumns = (columns) =>
+  Array(columns).fill('1fr').join(' ');
 
 const Wrapper = styled.div`
   display: grid;
@@ -35,41 +34,26 @@ const Wrapper = styled.div`
   overflow: auto;
 `;
 
-const MoveHistory = ({ moves, selectedIdx, handleMoveSelect }) => {
-  const moveComponents = moves
-    .reduce((acc, m, i) => (
-      acc.concat(
-        // HACK: counting starts at second element
-        i % 2 === 1 ? [`${Math.ceil(i / 2)}.`] : [],
-        [
-          <Move
-            key={i}
-            idx={i}
-            handleMoveSelect={handleMoveSelect}
-            fromPos={m.fromPos}
-            toPos={m.toPos}
-            piece={m.piece}
-            selected={selectedIdx === i}
-          />,
-        ],
-      )),
-    [],
+const MoveHistory = () => {
+  const moves = useSelector(({ game: { moves } }) => moves);
+
+  const fullMoves = chunk(tail(moves), 2)
+    .map(([redMove, blackMove], index) =>
+      (<FullMove
+        key={index}
+        ordering={index + 1}
+        redMove={redMove}
+        blackMove={blackMove}
+      />)
     );
 
   return (
     <Segment clearing tertiary>
       <Wrapper>
-        {moveComponents}
+        {fullMoves}
       </Wrapper>
     </Segment>
   );
-};
-
-MoveHistory.propTypes = {
-  // TODO: add move proptype
-  moves: PropTypes.arrayOf(logic.boardPropType).isRequired,
-  selectedIdx: PropTypes.number.isRequired,
-  handleMoveSelect: PropTypes.func.isRequired,
 };
 
 export default MoveHistory;

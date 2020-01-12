@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 import { Color } from 'services/logic/constants';
 
-const Wrapper = styled.div(
-  ({ selected, piece }) => ({
-    textDecoration: (selected ? 'underline' : 'none'),
+const Wrapper = styled.span(
+  ({ isSelected, piece }) => ({
     color: ('RHEAKCP'.includes(piece) ? Color.RED : Color.BLACK),
+    padding: '2px',
+    textDecoration: (isSelected ? 'underline' : 'none'),
   }),
 );
 
@@ -31,39 +33,40 @@ const P = {
   C: '炮',
 };
 
-const moveString = ({ piece, fromPos, toPos }) => {
+const moveText = ({ piece, fromPos, toPos }) => {
   const [fromRank, fromFile] = fromPos;
   const [toRank, toFile] = toPos;
   return `${P[piece]}${F[fromFile]}${R[fromRank]}-${F[toFile]}${R[toRank]}`;
 };
 
-const Move = ({
-  fromPos, toPos, piece, handleMoveSelect, idx, selected,
-}) => {
+const Move = ({ fromPos, toPos, piece, moveId }) => {
+  const dispatch = useDispatch();
+  const isSelected = useSelector(({ game }) => game.selectedMoveId === moveId);
+
+  const handleClick = useCallback(
+    () => { dispatch({ type: 'select_move', moveId }); },
+    [dispatch, moveId]
+  );
+
   if (piece === null) return null;
 
-  const handleClick = () => handleMoveSelect({ idx });
-
-  const description = moveString({ piece, fromPos, toPos });
   return (
     <Wrapper
       className="Move"
       onClick={handleClick}
-      selected={selected}
+      isSelected={isSelected}
       piece={piece}
     >
-      { description }
+      { moveText({ piece, fromPos, toPos }) }
     </Wrapper>
   );
 };
 
 Move.propTypes = {
-  handleMoveSelect: PropTypes.func.isRequired,
   fromPos: PropTypes.arrayOf(PropTypes.number),
   toPos: PropTypes.arrayOf(PropTypes.number),
   piece: PropTypes.string,
-  idx: PropTypes.number.isRequired,
-  selected: PropTypes.bool.isRequired,
+  moveId: PropTypes.number.isRequired,
 };
 
 Move.defaultProps = {

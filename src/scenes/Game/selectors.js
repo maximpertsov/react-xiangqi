@@ -1,3 +1,5 @@
+import sortedIndexBy from 'lodash/sortedIndexBy';
+
 import { Color } from 'services/logic/constants';
 import { isRed } from 'services/logic/utils';
 
@@ -5,13 +7,18 @@ import { isRed } from 'services/logic/utils';
 /***  Moves  ***/
 /***************/
 
-const getMove = (moves, idx) => moves[idx];
-
-export const getSelectedMove = ({ moves, selectedMoveIdx }) =>
-  getMove(moves, selectedMoveIdx);
-
 export const getLastMove = ({ moves }) =>
-  getMove(moves, moves.length - 1);
+  moves[moves.length - 1];
+
+export const getMoveIndex = ({ moves }, moveId ) => {
+  const moveIndex = sortedIndexBy(moves, { id: moveId }, 'id');
+  if (moves[moveIndex].id === moveId) return moveIndex;
+  return -1;
+};
+
+// TODO: duplicate logic in actions.js
+export const getSelectedMove = ({ moves, selectedMoveId }) =>
+  moves[getMoveIndex({ moves }, selectedMoveId)];
 
 export const getNextMoveColor = ({ moves }) => {
   if (moves.length === 0) return Color.RED;
@@ -69,18 +76,19 @@ export const getCurrentPlayer = ({ players }, { gameSlug, username }) => {
 
 // TODO break up function
 export const getLegalMoves = (
-  { moves, players, selectedMoveIdx },
+  { moves, players, selectedMoveId },
   { gameSlug, username },
 ) => {
   const nextMoveColor = getNextMoveColor({ moves });
   const userColor = getUserColor({ players }, { username });
-  const { board } = getSelectedMove({ moves, selectedMoveIdx });
+  const { board } = getSelectedMove({ moves, selectedMoveId });
   const currentUserOnly = gameSlug !== undefined;
+  const lastMoveId = getLastMove({ moves }).id;
 
   return board
     .legalMoves()
     .map((toSlots, fromSlot) => {
-      if (selectedMoveIdx !== moves.length - 1) return [];
+      if (selectedMoveId !== lastMoveId) return [];
       if (!board.isColor(nextMoveColor, fromSlot)) return [];
       if (currentUserOnly && !board.isColor(userColor, fromSlot)) return [];
       return toSlots;
