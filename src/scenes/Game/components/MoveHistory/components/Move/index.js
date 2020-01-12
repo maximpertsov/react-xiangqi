@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
@@ -38,12 +38,13 @@ const moveText = ({ piece, fromPos, toPos }) => {
   return `${P[piece]}${F[fromFile]}${R[fromRank]}-${F[toFile]}${R[toRank]}`;
 };
 
-const Move = ({ fromPos, toPos, piece, handleMoveSelect, moveId }) => {
+const Move = ({ fromPos, toPos, piece, moveId }) => {
+  const dispatch = useDispatch();
   const isSelected = useSelector(({ game }) => game.selectedMoveId === moveId);
 
   const handleClick = useCallback(
-    () => handleMoveSelect({ moveId }),
-    [handleMoveSelect, moveId]
+    () => { dispatch({ type: 'select_move', moveId }); },
+    [dispatch, moveId]
   );
 
   if (piece === null) return null;
@@ -61,7 +62,6 @@ const Move = ({ fromPos, toPos, piece, handleMoveSelect, moveId }) => {
 };
 
 Move.propTypes = {
-  handleMoveSelect: PropTypes.func.isRequired,
   fromPos: PropTypes.arrayOf(PropTypes.number),
   toPos: PropTypes.arrayOf(PropTypes.number),
   piece: PropTypes.string,

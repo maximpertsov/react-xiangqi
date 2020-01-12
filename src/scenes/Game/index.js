@@ -125,10 +125,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     [dispatch, gameSlug, selectors, username],
   );
 
-  const handleMoveSelect = ({ moveId }) => {
-    dispatch({ type: 'select_move', moveId });
-  };
-
   // TODO: just pass selectedMove down instead of the board and move separately?
   const {
     board: selectedBoard,
@@ -210,9 +206,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
           show={selectors.lastMove.pending}
           disabled={gameSlug === undefined}
         />
-        <MoveHistory
-          handleMoveSelect={handleMoveSelect}
-        />
+        <MoveHistory />
       </div>
     </Dimmer.Dimmable>
   );

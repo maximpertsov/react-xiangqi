@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
 
@@ -34,7 +33,7 @@ const Wrapper = styled.div`
   overflow: auto;
 `;
 
-const MoveHistory = ({ handleMoveSelect }) => {
+const MoveHistory = () => {
   const moves = useSelector(({ game: { moves } }) => moves);
 
   const moveComponents = moves
@@ -46,7 +45,6 @@ const MoveHistory = ({ handleMoveSelect }) => {
           <Move
             key={i}
             moveId={m.id}
-            handleMoveSelect={handleMoveSelect}
             fromPos={m.fromPos}
             toPos={m.toPos}
             piece={m.piece}
@@ -63,10 +61,6 @@ const MoveHistory = ({ handleMoveSelect }) => {
       </Wrapper>
     </Segment>
   );
-};
-
-MoveHistory.propTypes = {
-  handleMoveSelect: PropTypes.func.isRequired,
 };
 
 export default MoveHistory;
