@@ -5,6 +5,7 @@ import { Segment } from 'semantic-ui-react';
 import { tail, chunk } from 'lodash';
 
 import * as styles from 'commonStyles';
+import Move from './components/Move';
 import FullMove from './components/FullMove';
 
 const cssMoveColumns = (columns) =>
@@ -36,16 +37,24 @@ const Wrapper = styled.div`
 
 const MoveHistory = () => {
   const moves = useSelector(({ game: { moves } }) => moves);
-
-  const fullMoves = chunk(tail(moves), 2)
-    .map(([redMove, blackMove], index) =>
-      (<FullMove
+  const moveComponents = moves.map((move, index) => (
+    <Move
+      key={index}
+      moveId={move.id}
+      fromPos={move.fromPos}
+      toPos={move.toPos}
+      piece={move.piece}
+    />
+  ));
+  const fullMoves = chunk(tail(moveComponents), 2)
+    .map(([redMove, blackMove], index) => (
+      <FullMove
         key={index}
         ordering={index + 1}
         redMove={redMove}
         blackMove={blackMove}
-      />)
-    );
+      />
+    ));
 
   return (
     <Segment clearing tertiary>
