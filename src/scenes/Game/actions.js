@@ -1,6 +1,9 @@
 import update from 'immutability-helper';
+
 import XiangqiBoard, * as logic from 'services/logic';
 import { Color } from 'services/logic/constants';
+
+import { getMoveIndex } from './selectors';
 
 // TODO: find out why this id starts at 3
 let nextMoveId = 0;
@@ -50,9 +53,6 @@ export const getInitialState = () => ({
 const incrementMoveCount = (state) => (
   { ...state, moveCount: state.moveCount + 1 }
 );
-
-const getMoveIndex = ({ moves }, moveId ) =>
-  moves.findIndex(({ id }) => id === moveId);
 
 const setSelectedMoveIndex = (state, moveIndex) => {
   const { id: selectedMoveId } = state.moves[moveIndex];

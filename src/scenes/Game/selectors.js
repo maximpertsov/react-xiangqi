@@ -1,3 +1,5 @@
+import sortedIndexBy from 'lodash/sortedIndexBy';
+
 import { Color } from 'services/logic/constants';
 import { isRed } from 'services/logic/utils';
 
@@ -11,8 +13,15 @@ export const getFirstMove = ({ moves }) =>
 export const getLastMove = ({ moves }) =>
   moves[moves.length - 1];
 
+export const getMoveIndex = ({ moves }, moveId ) => {
+  const moveIndex = sortedIndexBy(moves, { id: moveId }, 'id');
+  if (moves[moveIndex].id === moveId) return moveIndex;
+  return -1;
+};
+
+// TODO: duplicate logic in actions.js
 export const getSelectedMove = ({ moves, selectedMoveId }) =>
-  moves.find(({ id }) => id === selectedMoveId);
+  moves[getMoveIndex({ moves }, selectedMoveId)];
 
 export const getNextMoveColor = ({ moves }) => {
   if (moves.length === 0) return Color.RED;
