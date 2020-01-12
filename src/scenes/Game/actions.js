@@ -91,15 +91,13 @@ export const addMove = (state, board, fromSlot, toSlot, pending) => {
 };
 
 export const cancelMoves = (state) => {
-  const { moves, selectedMoveId } = state;
+  const { moves } = state;
   const confirmedMoves = moves.filter(({ pending }) => !pending);
-  const selectedMoveIndex = Math.min(selectedMoveId, confirmedMoves.length - 1);
 
   return {
-    ...state,
+    ...setSelectedMoveIndex(state, confirmedMoves.length - 1),
     moves: confirmedMoves,
     moveCount: confirmedMoves.length,
-    selectedMoveId: setSelectedMoveIndex(state, selectedMoveIndex),
   };
 };
 
