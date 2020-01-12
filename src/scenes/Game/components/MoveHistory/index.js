@@ -2,9 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
+import { tail, chunk } from 'lodash';
 
 import * as styles from 'commonStyles';
-import Move from './components/Move';
+import FullMove from './components/FullMove';
 
 const cssMoveColumns = (columns) => Array(columns)
   .fill('0.25fr 1fr 1fr').join(' ');
@@ -36,28 +37,20 @@ const Wrapper = styled.div`
 const MoveHistory = () => {
   const moves = useSelector(({ game: { moves } }) => moves);
 
-  const moveComponents = moves
-    .reduce((acc, m, i) => (
-      acc.concat(
-        // HACK: counting starts at second element
-        i % 2 === 1 ? [`${Math.ceil(i / 2)}.`] : [],
-        [
-          <Move
-            key={i}
-            moveId={m.id}
-            fromPos={m.fromPos}
-            toPos={m.toPos}
-            piece={m.piece}
-          />,
-        ],
-      )),
-    [],
+  const fullMoves = chunk(tail(moves), 2)
+    .map(([redMove, blackMove], index) =>
+      (<FullMove
+        key={index}
+        ordering={index + 1}
+        redMove={redMove}
+        blackMove={blackMove}
+      />)
     );
 
   return (
     <Segment clearing tertiary>
       <Wrapper>
-        {moveComponents}
+        {fullMoves}
       </Wrapper>
     </Segment>
   );
