@@ -1,24 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const FullMove = ({ ordering, redMove, blackMove }) =>
+const FullMove = ({ children, ordering }) =>
   (
     <div>
       <span>{`${ordering}. `}</span>
-      {redMove}
-      {blackMove}
+      {children}
     </div>
   );
 
-// TODO: proptypes
 FullMove.propTypes = {
-  blackMove: PropTypes.element,
-  redMove: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   ordering: PropTypes.number.isRequired,
-};
-
-FullMove.defaultProps = {
-  blackMove: undefined,
 };
 
 export default FullMove;

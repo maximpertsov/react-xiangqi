@@ -51,9 +51,10 @@ const MoveHistory = () => {
       <FullMove
         key={index}
         ordering={index + 1}
-        redMove={redMove}
-        blackMove={blackMove}
-      />
+      >
+        {redMove}
+        {blackMove}
+      </FullMove>
     ));
 
   return (
