@@ -7,9 +7,6 @@ import { isRed } from 'services/logic/utils';
 /***  Moves  ***/
 /***************/
 
-export const getFirstMove = ({ moves }) =>
-  moves[0];
-
 export const getLastMove = ({ moves }) =>
   moves[moves.length - 1];
 
