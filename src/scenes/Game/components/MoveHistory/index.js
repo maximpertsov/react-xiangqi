@@ -7,8 +7,7 @@ import { tail, chunk } from 'lodash';
 import * as styles from 'commonStyles';
 import FullMove from './components/FullMove';
 
-const cssMoveColumns = (columns) => Array(columns)
-  .fill('0.25fr 1fr 1fr').join(' ');
+const cssMoveColumns = (columns) => Array(columns).fill('1fr');
 
 const Wrapper = styled.div`
   display: grid;

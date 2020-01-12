@@ -5,10 +5,11 @@ import styled from '@emotion/styled';
 
 import { Color } from 'services/logic/constants';
 
-const Wrapper = styled.div(
+const Wrapper = styled.span(
   ({ isSelected, piece }) => ({
-    textDecoration: (isSelected ? 'underline' : 'none'),
     color: ('RHEAKCP'.includes(piece) ? Color.RED : Color.BLACK),
+    padding: '2px',
+    textDecoration: (isSelected ? 'underline' : 'none'),
   }),
 );
 

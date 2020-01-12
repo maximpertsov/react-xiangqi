@@ -4,7 +4,7 @@ import Move from '../../components/Move';
 
 const FullMove = ({ ordering, redMove, blackMove }) =>
   (<div>
-    <div>{`${ordering}.`}</div>
+    <span>{`${ordering}. `}</span>
     <Move
       key="red"
       moveId={redMove.id}
