@@ -27,7 +27,7 @@ export const getNextMoveColor = ({ moves }) => {
   return isRed(piece) ? Color.BLACK : Color.RED;
 };
 
-export const getMoveCount = ({ moves }) => 
+export const getMoveCount = ({ moves }) =>
   // First move does not count
   moves.length - 1;
 

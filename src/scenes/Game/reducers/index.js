@@ -1,5 +1,6 @@
 import { players } from 'scenes/Game/reducers/players';
 import { moves } from 'scenes/Game/reducers/moves';
+import { selectedMoveId } from 'scenes/Game/reducers/selectedMoveId';
 
 import * as actions from '../actions';
 
