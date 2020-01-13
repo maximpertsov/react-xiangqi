@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+import thunk from 'redux-thunk';
 import styled from '@emotion/styled';
 
 import App from './App';
@@ -15,8 +16,10 @@ const getReduxDevExtOptions = () => {
   }
 };
 
-// TODO: add the following a final argument for development
-const store = createStore(rootReducer, getReduxDevExtOptions());
+const store = compose(
+  applyMiddleware(thunk),
+  getReduxDevExtOptions(),
+)(createStore)(rootReducer);
 
 const Wrapper = styled.div`
 body {
