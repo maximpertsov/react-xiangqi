@@ -7,7 +7,7 @@ const initialPlayers = [
 
 export const players = (state = initialPlayers, action) => {
   switch (action.type) {
-  case 'SET_PLAYERS':
+  case 'set_players':
     return action.players;
   default:
     return state;
