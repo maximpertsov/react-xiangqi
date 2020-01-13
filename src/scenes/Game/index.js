@@ -28,7 +28,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
     // base state fields
     loading: game.loading,
     moves: game.moves,
-    moveCount: game.moveCount,
+    moveCount: gameSelectors.getMoveCount(game),
     // moves
     lastMove: gameSelectors.getLastMove(game),
     selectedMove: gameSelectors.getSelectedMove(game),

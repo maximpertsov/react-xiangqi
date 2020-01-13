@@ -3,7 +3,7 @@ import update from 'immutability-helper';
 import XiangqiBoard, * as logic from 'services/logic';
 import { Color } from 'services/logic/constants';
 
-import { getMoveIndex } from './selectors';
+import { getMoveCount, getMoveIndex } from './selectors';
 
 // TODO: find out why this id starts at 3
 let nextMoveId = 0;
@@ -41,7 +41,6 @@ const initialPlayers = [
 export const getInitialState = () => ({
   loading: true,
   moves: getInitialMovesState(),
-  moveCount: 0,
   players: initialPlayers,
   selectedMoveId: nextMoveId,
 });
@@ -49,10 +48,6 @@ export const getInitialState = () => ({
 /***************/
 /*** Actions ***/
 /***************/
-
-const incrementMoveCount = (state) => (
-  { ...state, moveCount: state.moveCount + 1 }
-);
 
 const setSelectedMoveIndex = (state, moveIndex) => {
   const { id: selectedMoveId } = state.moves[moveIndex];
@@ -69,7 +64,8 @@ export const setPreviousMove = (state) => {
 
 export const setNextMove = (state) => {
   const moveIndex = getMoveIndex(state, state.selectedMoveId);
-  return setSelectedMoveIndex(state, Math.min(moveIndex + 1, state.moveCount));
+  const moveCount = getMoveCount(state);
+  return setSelectedMoveIndex(state, Math.min(moveIndex + 1, moveCount));
 };
 
 const selectLastMove = (state) =>
@@ -84,9 +80,7 @@ export const addMove = (state, board, fromSlot, toSlot, pending) => {
     pending,
   });
   return selectLastMove(
-    incrementMoveCount(
-      update(state, { moves: { $push: [move] } }),
-    ),
+    update(state, { moves: { $push: [move] } }),
   );
 };
 
@@ -97,7 +91,6 @@ export const cancelMoves = (state) => {
   return {
     ...setSelectedMoveIndex(state, confirmedMoves.length - 1),
     moves: confirmedMoves,
-    moveCount: confirmedMoves.length,
   };
 };
 
@@ -118,7 +111,7 @@ const setMove = (state, { origin: fromPos, destination: toPos }) => {
     board: board.move(fromPos, toPos, logic.RefType.RANK_FILE),
     pending: false,
   });
-  return incrementMoveCount(update(state, { moves: { $push: [move] } }));
+  return update(state, { moves: { $push: [move] } });
 };
 
 export const setMoves = (state, moves) =>
@@ -128,7 +121,6 @@ export const setMoves = (state, moves) =>
       {
         ...state,
         moves: getInitialMovesState(),
-        moveCount: 0,
         loading: false,
       },
     ),
