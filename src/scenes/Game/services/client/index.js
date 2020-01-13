@@ -16,7 +16,7 @@ export const fetchGame = async({ dispatch, gameSlug }) => {
   if (gameSlug === undefined) return;
 
   const { data: { players } } = await client.getGame({ gameSlug });
-  dispatch({ type: 'set_players', players });
+  dispatch({ type: 'SET_PLAYERS', players });
 };
 
 const canUpdateMoves = ({ gameSlug, nextMovePlayer, username }) => {

@@ -1,4 +1,7 @@
-import * as actions from './actions';
+import { combineReducers } from 'redux';
+
+import * as actions from '../actions';
+import { players } from 'scenes/Game/reducers/players';
 
 /* eslint-disable-next-line complexity */
 const reducer = (state = actions.getInitialState(), action) => {
@@ -24,11 +27,10 @@ const reducer = (state = actions.getInitialState(), action) => {
   case 'set_moves':
     return actions.setMoves(state, action.moves);
   // TODO: handle player actions into another reducer?
-  case 'set_players':
-    return ({ ...state, players: action.players });
   default:
     return state;
   }
 };
+
 
 export default reducer;
