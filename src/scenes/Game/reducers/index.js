@@ -1,4 +1,5 @@
 import { players } from 'scenes/Game/reducers/players';
+import { moves } from 'scenes/Game/reducers/moves';
 
 import * as actions from '../actions';
 
@@ -17,14 +18,14 @@ const reducer = (state = actions.getInitialState(), action) => {
     return actions.cancelMoves(state);
   case 'confirm_moves':
     return actions.confirmMoves(state);
+  case 'set_moves':
+    return actions.setMoves(state, action.moves);
   case 'select_move':
     return actions.setSelectedMove(state, action.moveId);
   case 'select_previous_move':
     return actions.setPreviousMove(state);
   case 'select_next_move':
     return actions.setNextMove(state);
-  case 'set_moves':
-    return actions.setMoves(state, action.moves);
   // TODO: split into players
   case 'set_players':
     return { ...state, players: players(state.players, action) };

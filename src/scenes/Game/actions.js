@@ -8,7 +8,7 @@ import { getMoveCount, getMoveIndex } from './selectors';
 // TODO: find out why this id starts at 3
 let nextMoveId = 0;
 
-const newMove = (moveData) => (
+export const newMove = (moveData) => (
   {
     ...moveData,
     id: ++nextMoveId,
