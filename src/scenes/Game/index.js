@@ -7,6 +7,7 @@ import { useCallback, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
 
+import { addMove, selectMove } from 'actions';
 import Board from 'components/Board';
 import { getSlot } from 'services/logic/utils';
 
@@ -16,7 +17,6 @@ import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
 import * as client from './services/client';
 
-import { addMove, selectMove } from './actions';
 import * as gameSelectors from './selectors';
 
 import {

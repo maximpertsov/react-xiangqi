@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
+import { selectMove } from 'actions';
 import { Color } from 'services/logic/constants';
-import { selectMove } from 'scenes/Game/actions';
 
 const Wrapper = styled.span(
   ({ isSelected, piece }) => ({
