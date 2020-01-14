@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 import { Color } from 'services/logic/constants';
+import { selectMove } from 'scenes/Game/actions';
 
 const Wrapper = styled.span(
   ({ isSelected, piece }) => ({
@@ -44,7 +45,7 @@ const Move = ({ fromPos, toPos, piece, moveId }) => {
   const isSelected = useSelector(({ game }) => game.selectedMoveId === moveId);
 
   const handleClick = useCallback(
-    () => { dispatch({ type: 'select_move', moveId }); },
+    () => { dispatch(selectMove({ moveId })); },
     [dispatch, moveId]
   );
 
