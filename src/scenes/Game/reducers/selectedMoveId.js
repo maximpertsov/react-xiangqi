@@ -24,7 +24,7 @@ const selectLastMove = (state, moves) => {
   return setSelectedMoveIndex(moves, moveCount);
 };
 
-const reducer = (state = 0, action) => {
+const selectedMoveId = (state = 0, action) => {
   switch (action.type) {
   case 'select_move':
     return setSelectedMove(state, action.moves, action.moveId);
@@ -40,4 +40,4 @@ const reducer = (state = 0, action) => {
 };
 
 
-export default reducer;
+export default selectedMoveId;

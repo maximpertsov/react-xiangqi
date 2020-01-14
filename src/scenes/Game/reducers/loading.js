@@ -1,4 +1,4 @@
-export const loading = (state = false, action) => {
+const loading = (state = false, action) => {
   switch (action.type) {
   case 'toggle_loading':
     return action.loading;
@@ -7,4 +7,4 @@ export const loading = (state = false, action) => {
   }
 };
 
-export default {};
+export default loading;

@@ -55,7 +55,7 @@ const setMoves = (state, moves) =>
     initialMoves,
   );
 
-export const moves = (state = initialMoves, action) => {
+const moves = (state = initialMoves, action) => {
   switch (action.type) {
   case 'add_move':
     return addMove(
@@ -76,4 +76,4 @@ export const moves = (state = initialMoves, action) => {
   }
 };
 
-export default {};
+export default moves;

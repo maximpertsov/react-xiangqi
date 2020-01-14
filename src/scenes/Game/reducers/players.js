@@ -5,7 +5,7 @@ const initialPlayers = [
   { name: undefined, color: Color.BLACK },
 ];
 
-export const players = (state = initialPlayers, action) => {
+const players = (state = initialPlayers, action) => {
   switch (action.type) {
   case 'set_players':
     return action.players;
@@ -14,4 +14,4 @@ export const players = (state = initialPlayers, action) => {
   }
 };
 
-export default {};
+export default players;
