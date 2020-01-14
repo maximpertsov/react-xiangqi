@@ -94,13 +94,13 @@ export const getMoveById = (state, moveId) => {
 
 export const getPreviousMove = (state, moveId) => {
   const moveIndex = getMoveIndex(state, moveId);
-  return state[Math.min(moveIndex - 1, 0)];
+  return state[Math.max(moveIndex - 1, 0)];
 };
 
 export const getNextMove = (state, moveId) => {
   const moveCount = getMoveCount(state);
   const moveIndex = getMoveIndex(state, moveId);
-  return state[Math.max(moveIndex + 1, moveCount)];
+  return state[Math.min(moveIndex + 1, moveCount)];
 };
 
 export const getNextMoveColor = (state) => {
