@@ -7,7 +7,7 @@ import { useCallback, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
 
-import { addMove, selectMove } from 'actions';
+import { makeMove, selectMove } from 'actions';
 import Board from 'components/Board';
 import { getSlot } from 'services/logic/utils';
 
@@ -87,7 +87,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       if (autoMove === AutoMove.BOTH || autoMove === selectors.nextMoveColor) {
         const { board } = selectors.lastMove;
         const [fromSlot, toSlot] = board.randomMove(selectors.nextMoveColor);
-        dispatch(addMove({ board, fromSlot, toSlot, pending: false }));
+        dispatch(makeMove({ board, fromSlot, toSlot, pending: false }));
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,7 +114,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const handleLegalMove = useCallback(
     ({ board, fromSlot, toSlot }) => {
-      dispatch(addMove({ board, fromSlot, toSlot, pending: true }));
+      dispatch(makeMove({ board, fromSlot, toSlot, pending: true }));
     },
     [dispatch],
   );
