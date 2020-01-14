@@ -5,9 +5,6 @@ const setSelectedMoveIndex = (moves, moveIndex) => {
   return id;
 };
 
-const setSelectedMove = (_, moves, moveId) =>
-  setSelectedMoveIndex(moves, getMoveIndex({ moves }, moveId));
-
 const setPreviousMove = (state, moves) => {
   const moveIndex = getMoveIndex({ moves }, state);
   return setSelectedMoveIndex(moves, Math.max(moveIndex - 1, 0));
@@ -27,7 +24,7 @@ const selectLastMove = (state, moves) => {
 const selectedMoveId = (state = 0, action) => {
   switch (action.type) {
   case 'select_move':
-    return setSelectedMove(state, action.moves, action.moveId);
+    return action.moveId;
   case 'select_previous_move':
     return setPreviousMove(state, action.moves);
   case 'select_next_move':

@@ -87,10 +87,10 @@ const Game = ({ autoMove, gameSlug, username }) => {
     ({ key }) => {
       switch (key) {
       case 'ArrowLeft':
-        dispatch({ type: 'select_previous_move' });
+        dispatch({ type: 'select_previous_move', moves: selectors.moves });
         break;
       case 'ArrowRight':
-        dispatch({ type: 'select_next_move' });
+        dispatch({ type: 'select_next_move', moves: selectors.moves });
         break;
       default:
         break;
