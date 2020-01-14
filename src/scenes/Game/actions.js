@@ -5,8 +5,8 @@ import { Color } from 'services/logic/constants';
 
 import { getMoveCount, getMoveIndex } from './selectors';
 
-// TODO: find out why this id starts at 3
-let nextMoveId = 0;
+// HACK: make first move 0
+let nextMoveId = -1;
 
 export const newMove = (moveData) => (
   {

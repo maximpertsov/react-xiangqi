@@ -10,7 +10,7 @@ const initialMoves = [
     piece: undefined,
     fromPos: undefined,
     toPos: undefined,
-    board: new XiangqiBoard({ DEFAULT_FEN }),
+    board: new XiangqiBoard({ fen: DEFAULT_FEN }),
     pending: false,
   }),
 ];
