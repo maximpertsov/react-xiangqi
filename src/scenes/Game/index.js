@@ -16,6 +16,7 @@ import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
 import * as client from './services/client';
 
+import { addMove } from './actions';
 import * as gameSelectors from './selectors';
 
 // TODO: seems like this needs to be a relative import
@@ -75,7 +76,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       if (autoMove === AutoMove.BOTH || autoMove === selectors.nextMoveColor) {
         const { board } = selectors.lastMove;
         const [fromSlot, toSlot] = board.randomMove(selectors.nextMoveColor);
-        dispatch({ type: 'add_move', board, fromSlot, toSlot, pending: false });
+        dispatch(addMove({ board, fromSlot, toSlot, pending: false }));
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,7 +103,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
 
   const handleLegalMove = useCallback(
     ({ board, fromSlot, toSlot }) => {
-      dispatch({ type: 'add_move', board, fromSlot, toSlot, pending: true });
+      dispatch(addMove({ board, fromSlot, toSlot, pending: true }));
     },
     [dispatch],
   );
