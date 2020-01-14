@@ -9,4 +9,8 @@ export const addMove = ({ board, fromSlot, toSlot, pending }) => ({
   pending,
 });
 
+export const selectMove = ({ moveId }) => ({
+  type: 'select_move', moveId,
+});
+
 export default {};

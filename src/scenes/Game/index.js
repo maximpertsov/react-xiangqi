@@ -16,8 +16,17 @@ import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
 import * as client from './services/client';
 
-import { addMove } from './actions';
+import { addMove, selectMove } from './actions';
 import * as gameSelectors from './selectors';
+
+import {
+  getMoveCount,
+  getLastMove,
+  getSelectedMove,
+  getPreviousMove,
+  getNextMove,
+  getNextMoveColor,
+} from './reducers';
 
 // TODO: seems like this needs to be a relative import
 // because it imports from services/logic/constants
@@ -29,11 +38,13 @@ const Game = ({ autoMove, gameSlug, username }) => {
     // base state fields
     loading: game.loading,
     moves: game.moves,
-    moveCount: gameSelectors.getMoveCount(game),
     // moves
-    lastMove: gameSelectors.getLastMove(game),
-    selectedMove: gameSelectors.getSelectedMove(game),
-    nextMoveColor: gameSelectors.getNextMoveColor(game),
+    moveCount: getMoveCount(game),
+    lastMove: getLastMove(game),
+    selectedMove: getSelectedMove(game),
+    nextMoveColor: getNextMoveColor(game),
+    previousMove: getPreviousMove(game),
+    nextMove: getNextMove(game),
     // players
     nextMovePlayer: gameSelectors.getNextMovePlayer(game),
     userColor: gameSelectors.getUserColor(game, { username }),
@@ -88,10 +99,10 @@ const Game = ({ autoMove, gameSlug, username }) => {
     ({ key }) => {
       switch (key) {
       case 'ArrowLeft':
-        dispatch({ type: 'select_previous_move', moves: selectors.moves });
+        dispatch(selectMove({ moveId: selectors.previousMove.id }));
         break;
       case 'ArrowRight':
-        dispatch({ type: 'select_next_move', moves: selectors.moves });
+        dispatch(selectMove({ moveId: selectors.nextMove.id }));
         break;
       default:
         break;
