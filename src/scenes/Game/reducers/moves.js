@@ -17,8 +17,8 @@ const initialMoves = [{
   pending: false,
 }];
 
-// TODO: use board from previous move instead of requiring it?
-const addMove = (state, { moveId, board, fromSlot, toSlot, pending }) => {
+const addMove = (state, { moveId, fromSlot, toSlot, pending }) => {
+  const { board } = state[state.length - 1];
   const move = {
     id: moveId,
     fromPos: logic.getRankFile(fromSlot),

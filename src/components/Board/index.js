@@ -56,7 +56,7 @@ const Board = ({
       setMoveX(reversed ? fromX - toX : toX - fromX);
       setMoveY(reversed ? fromY - toY : toY - fromY);
       setTimeout(() => {
-        handleLegalMove({ board, fromSlot, toSlot });
+        handleLegalMove({ fromSlot, toSlot });
         setMoveX(0);
         setMoveY(0);
         setSelectedSlot(undefined);

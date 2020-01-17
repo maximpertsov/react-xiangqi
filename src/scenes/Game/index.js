@@ -99,7 +99,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
       if (autoMove === AutoMove.BOTH || autoMove === selectors.nextMoveColor) {
         const { board } = selectors.lastMove;
         const [fromSlot, toSlot] = board.randomMove(selectors.nextMoveColor);
-        dispatch(makeMove({ board, fromSlot, toSlot, pending: false }));
+        dispatch(makeMove({ fromSlot, toSlot, pending: false }));
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -125,8 +125,8 @@ const Game = ({ autoMove, gameSlug, username }) => {
   // Move updates
 
   const handleLegalMove = useCallback(
-    ({ board, fromSlot, toSlot }) => {
-      dispatch(makeMove({ board, fromSlot, toSlot, pending: true }));
+    ({ fromSlot, toSlot }) => {
+      dispatch(makeMove({ fromSlot, toSlot, pending: true }));
     },
     [dispatch],
   );
