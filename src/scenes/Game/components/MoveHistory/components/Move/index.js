@@ -42,7 +42,7 @@ const moveText = ({ piece, fromPos, toPos }) => {
 
 const Move = ({ fromPos, toPos, piece, moveId }) => {
   const dispatch = useDispatch();
-  const isSelected = useSelector(({ game }) => game.selectedMoveId === moveId);
+  const isSelected = useSelector((state) => state.selectedMoveId === moveId);
 
   const handleClick = useCallback(
     () => { dispatch(selectMove({ moveId })); },

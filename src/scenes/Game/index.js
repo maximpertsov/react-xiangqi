@@ -8,6 +8,15 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
 
 import { makeMove, selectMove } from 'actions';
+import {
+  getMoveCount,
+  getLastMove,
+  getSelectedMove,
+  getPreviousMove,
+  getNextMove,
+  getNextMoveColor,
+} from 'reducers';
+
 import Board from 'components/Board';
 import { getSlot } from 'services/logic/utils';
 
@@ -19,45 +28,40 @@ import * as client from './services/client';
 
 import * as gameSelectors from './selectors';
 
-import {
-  getMoveCount,
-  getLastMove,
-  getSelectedMove,
-  getPreviousMove,
-  getNextMove,
-  getNextMoveColor,
-} from './reducers';
-
 // TODO: seems like this needs to be a relative import
 // because it imports from services/logic/constants
 import { AutoMove } from '../../constants';
 
 const Game = ({ autoMove, gameSlug, username }) => {
   const dispatch = useDispatch();
-  const selectors = useSelector(({ game }) => ({
+  const selectors = useSelector((state) => ({
     // base state fields
-    loading: game.loading,
-    moves: game.moves,
+    loading: state.loading,
+    moves: state.moves,
     // moves
-    moveCount: getMoveCount(game),
-    lastMove: getLastMove(game),
-    selectedMove: getSelectedMove(game),
-    nextMoveColor: getNextMoveColor(game),
-    previousMove: getPreviousMove(game),
-    nextMove: getNextMove(game),
+    moveCount: getMoveCount(state),
+    lastMove: getLastMove(state),
+    selectedMove: getSelectedMove(state),
+    nextMoveColor: getNextMoveColor(state),
+    previousMove: getPreviousMove(state),
+    nextMove: getNextMove(state),
     // players
-    nextMovePlayer: gameSelectors.getNextMovePlayer(game),
-    userColor: gameSelectors.getUserColor(game, { username }),
-    otherPlayer: gameSelectors.getOtherPlayer(game, { gameSlug, username }),
+    nextMovePlayer: gameSelectors.getNextMovePlayer(state),
+    userColor: gameSelectors.getUserColor(state, { username }),
+    otherPlayer: gameSelectors.getOtherPlayer(state, { gameSlug, username }),
     initialUserOrientation: gameSelectors.getInitialUserOrientation(
-      game, { username }
+      state,
+      { username }
     ),
-    currentPlayer: gameSelectors.getCurrentPlayer(game, { gameSlug, username }),
+    currentPlayer: gameSelectors.getCurrentPlayer(
+      state,
+      { gameSlug, username }
+    ),
     // game logic
-    legalMoves: gameSelectors.getLegalMoves(game, { gameSlug, username }),
-    hasLegalMoves: gameSelectors.hasLegalMoves(game),
+    legalMoves: gameSelectors.getLegalMoves(state, { gameSlug, username }),
+    hasLegalMoves: gameSelectors.hasLegalMoves(state),
     // other
-    active: gameSlug !== undefined && game.loading,
+    active: gameSlug !== undefined && state.loading,
   }), shallowEqual);
 
   useEffect(

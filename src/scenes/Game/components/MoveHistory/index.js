@@ -36,7 +36,7 @@ const Wrapper = styled.div`
 `;
 
 const MoveHistory = () => {
-  const moves = useSelector(({ game: { moves } }) => moves);
+  const moves = useSelector(({ moves }) => moves);
   const moveComponents = moves.map((move, index) => (
     <Move
       key={index}

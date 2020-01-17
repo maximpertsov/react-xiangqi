@@ -4,7 +4,7 @@ import {
   getLastMove,
   getSelectedMove,
   getNextMoveColor,
-} from './reducers';
+} from 'reducers';
 
 /*****************/
 /***  Players  ***/
