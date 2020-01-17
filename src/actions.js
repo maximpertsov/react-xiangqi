@@ -42,6 +42,8 @@ export const fetchMoves = ({ gameSlug, moves }) =>
             // TODO: throw error if any moves mismatch
             if (moves[index + 1] === undefined) {
 
+              // TODO: find first missing move and reduce from there
+
               // Get board from previous move in app state
               const fromSlot = getSlot(...fromPos);
               const toSlot = getSlot(...toPos);
