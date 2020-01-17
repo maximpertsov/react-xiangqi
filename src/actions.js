@@ -36,24 +36,31 @@ export const fetchMoves = ({ gameSlug, moves }) =>
 
         dispatch(toggleLoading({ loading: true }));
 
-        fetchedMoves.forEach(
-          ({ origin: fromPos, destination: toPos }, index) => {
+        fetchedMoves.reduce(
+          (lastBoard, { origin: fromPos, destination: toPos }, index) => {
             // Check if each fetched move has a corresponding move in app state
             // TODO: throw error if any moves mismatch
             if (moves[index + 1] === undefined) {
 
-              // TODO: fix! the updates do not process fast enough
-
               // Get board from previous move in app state
-              const { board } = moves[index];
+              const fromSlot = getSlot(...fromPos);
+              const toSlot = getSlot(...toPos);
+
+              let board = undefined;
+              if (lastBoard !== undefined) { board = lastBoard.move(fromSlot, toSlot); }
+              if (moves[index] !== undefined) { board = moves[index].board; }
+
               dispatch(addMove({
                 board,
-                fromSlot: getSlot(...fromPos),
-                toSlot: getSlot(...toPos),
+                fromSlot,
+                toSlot,
                 pending: false,
               }));
+
+              return board;
             }
-          }
+          },
+          undefined,
         );
       } finally {
         dispatch(toggleLoading({ loading: false }));
