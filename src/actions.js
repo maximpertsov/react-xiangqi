@@ -27,45 +27,33 @@ export const toggleLoading = ({ loading }) => ({
   type: 'toggle_loading', loading,
 });
 
+const addFetchedMove = ({ origin: fromPos, destination: toPos }) =>
+  addMove({
+    fromSlot: getSlot(...fromPos),
+    toSlot: getSlot(...toPos),
+    pending: false,
+  });
+
 export const fetchMoves = ({ gameSlug, moves }) =>
   async(dispatch) => {
-    if (gameSlug !== undefined) {
-      try {
-        const { data: { moves: fetchedMoves } } = await getMoves({ gameSlug });
+    if (gameSlug === undefined) return;
 
-        dispatch(toggleLoading({ loading: true }));
+    let lastMoveId;
+    try {
+      dispatch(toggleLoading({ loading: true }));
 
-        fetchedMoves.reduce(
-          (lastBoard, { origin: fromPos, destination: toPos }, index) => {
-            // Check if each fetched move has a corresponding move in app state
-            // TODO: throw error if any moves mismatch
-            if (moves[index + 1] === undefined) {
-
-              // TODO: find first missing move and reduce from there
-
-              // Get board from previous move in app state
-              const fromSlot = getSlot(...fromPos);
-              const toSlot = getSlot(...toPos);
-
-              let board = undefined;
-              if (lastBoard !== undefined) { board = lastBoard.move(fromSlot, toSlot); }
-              if (moves[index] !== undefined) { board = moves[index].board; }
-
-              dispatch(addMove({
-                board,
-                fromSlot,
-                toSlot,
-                pending: false,
-              }));
-
-              return board;
-            }
-          },
-          undefined,
-        );
-      } finally {
-        dispatch(toggleLoading({ loading: false }));
-      }
+      const { data: { moves: fetchedMoves } } = await getMoves({ gameSlug });
+      lastMoveId = fetchedMoves
+        // TODO: throw error if fetched move do not match app moves
+        .filter((_, index) => moves[index + 1] === undefined)
+        .reduce((lastMoveId, fetchedMove) => {
+          const addMoveAction = addFetchedMove(fetchedMove);
+          dispatch(addMoveAction);
+          return addMoveAction.moveId;
+        }, lastMoveId);
+    } finally {
+      if (lastMoveId) dispatch(selectMove({ moveId: lastMoveId }));
+      dispatch(toggleLoading({ loading: false }));
     }
   };
 
