@@ -3,13 +3,13 @@ import * as client from 'services/client';
 const POLL_INTERVAL = 2500;
 
 export const fetchMoves = async({ dispatch, gameSlug }) => {
-  if (gameSlug === undefined) {
-    dispatch({ type: 'set_moves', moves: [] });
-    return;
-  }
-
-  const { data: { moves } } = await client.getMoves({ gameSlug });
-  dispatch({ type: 'set_moves', moves });
+  // if (gameSlug === undefined) {
+  //   dispatch({ type: 'set_moves', moves: [] });
+  //   return;
+  // }
+  //
+  // const { data: { moves } } = await client.getMoves({ gameSlug });
+  // dispatch({ type: 'set_moves', moves });
 };
 
 export const fetchGame = async({ dispatch, gameSlug }) => {

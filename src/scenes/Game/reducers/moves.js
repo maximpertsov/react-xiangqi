@@ -17,6 +17,7 @@ const initialMoves = [{
   pending: false,
 }];
 
+// TODO: use board from previous move instead of requiring it?
 const addMove = (state, { moveId, board, fromSlot, toSlot, pending }) => {
   const move = {
     id: moveId,

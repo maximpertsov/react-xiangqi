@@ -7,7 +7,7 @@ import { useCallback, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
 
-import { makeMove, selectMove } from 'actions';
+import { fetchMoves, makeMove, selectMove } from 'actions';
 import {
   getMoveCount,
   getLastMove,
@@ -69,6 +69,14 @@ const Game = ({ autoMove, gameSlug, username }) => {
       client.fetchGame({ dispatch, gameSlug });
     },
     [dispatch, gameSlug],
+  );
+
+  useEffect(
+    () => {
+      dispatch(fetchMoves({ gameSlug, moves: selectors.moves }));
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dispatch, gameSlug]
   );
 
   useEffect(
