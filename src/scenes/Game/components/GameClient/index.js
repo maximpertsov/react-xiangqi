@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 import { fetchMoves } from 'actions';
 import { getMoveCount } from 'reducers';
 
-import * as client from '../services/client';
+// TODO: move client to this level or remove?
+import * as client from '../../services/client';
 // TODO: move this into selectors collocated with reducers
-import { getNextMovePlayer } from '../selectors';
+import { getNextMovePlayer } from '../../selectors';
 
 const GameClient = ({ children, gameSlug, username }) => {
   const dispatch = useDispatch();
