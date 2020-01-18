@@ -33,8 +33,9 @@ import * as gameSelectors from './selectors';
 // because it imports from services/logic/constants
 import { AutoMove } from '../../constants';
 
-const Game = ({ autoMove, gameSlug }) => {
+const Game = ({ autoMove }) => {
   const dispatch = useDispatch();
+  const gameSlug = useSelector((state) => state.gameSlug);
   const username = useSelector((state) => state.username);
 
   const selectors = useSelector((state) => ({
@@ -51,16 +52,14 @@ const Game = ({ autoMove, gameSlug }) => {
     // players
     nextMovePlayer: gameSelectors.getNextMovePlayer(state),
     userColor: gameSelectors.getUserColor(state),
-    otherPlayer: gameSelectors.getOtherPlayer(state, { gameSlug }),
+    otherPlayer: gameSelectors.getOtherPlayer(state),
     initialUserOrientation: gameSelectors.getInitialUserOrientation(state),
-    currentPlayer: gameSelectors.getCurrentPlayer(
-      state, { gameSlug }
-    ),
+    currentPlayer: gameSelectors.getCurrentPlayer(state),
     // game logic
-    legalMoves: gameSelectors.getLegalMoves(state, { gameSlug }),
+    legalMoves: gameSelectors.getLegalMoves(state),
     hasLegalMoves: gameSelectors.hasLegalMoves(state),
     // other
-    active: gameSlug !== undefined && state.loading,
+    active: gameSlug !== null && state.loading,
   }), shallowEqual);
 
   useEffect(
@@ -130,7 +129,7 @@ const Game = ({ autoMove, gameSlug }) => {
   };
 
   return (
-    <GameClient gameSlug={gameSlug}>
+    <GameClient>
       <Dimmer.Dimmable
         as={Segment}
         basic
@@ -198,7 +197,7 @@ const Game = ({ autoMove, gameSlug }) => {
             yesHandler={handleConfirmedMove}
             noHandler={cancelMove}
             show={selectors.lastMove.pending}
-            disabled={gameSlug === undefined}
+            disabled={gameSlug === null}
           />
           <MoveHistory />
         </div>
@@ -209,12 +208,10 @@ const Game = ({ autoMove, gameSlug }) => {
 
 Game.propTypes = {
   autoMove: PropTypes.oneOf([undefined, ...Object.values(AutoMove)]),
-  gameSlug: PropTypes.string,
 };
 
 Game.defaultProps = {
   autoMove: undefined,
-  gameSlug: undefined,
 };
 
 export default Game;

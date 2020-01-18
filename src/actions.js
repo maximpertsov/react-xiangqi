@@ -36,7 +36,7 @@ const addFetchedMove = ({ origin: fromPos, destination: toPos }) =>
 
 export const fetchMoves = ({ gameSlug, moves }) =>
   async(dispatch) => {
-    if (gameSlug === undefined) return;
+    if (gameSlug === null) return;
 
     let lastMoveId;
     try {

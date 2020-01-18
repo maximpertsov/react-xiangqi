@@ -11,14 +11,16 @@ import LoginForm from './components/LoginForm';
 // TODO: absolute import?
 import { AutoMove } from '../../constants';
 
-const LOCAL = 'local';
+const MENU = 'menu';
 const PLAYER_VS_CPU = 'player_vs_cpu';
 const CPU_VS_CPU = 'cpu_vs_cpu';
 
 const Home = () => {
+  const gameSlug = useSelector((state) => state.gameSlug);
   const username = useSelector((state) => state.username);
 
-  const [gameSlug, setGameSlug] = useState(undefined);
+  // TODO: move to global state?
+  const [gameType, setGameType] = useState(MENU);
   const [games, setGames] = useState([]);
 
   const fetchGames = useCallback(
@@ -39,7 +41,7 @@ const Home = () => {
 
   const renderGameList = () => {
     if (username !== null) {
-      return <GameList setGameSlug={setGameSlug} games={games} />;
+      return <GameList games={games} />;
     }
   };
 
@@ -53,13 +55,13 @@ const Home = () => {
         </Segment>
         <Segment>
           <Header size="large">Other modes</Header>
-          <Button onClick={() => { setGameSlug(LOCAL); }}>
+          <Button onClick={() => { setGameType(null); }}>
             Solo play
           </Button>
-          <Button onClick={() => { setGameSlug(PLAYER_VS_CPU); }}>
+          <Button onClick={() => { setGameType(PLAYER_VS_CPU); }}>
             vs CPU
           </Button>
-          <Button onClick={() => { setGameSlug(CPU_VS_CPU); }}>
+          <Button onClick={() => { setGameType(CPU_VS_CPU); }}>
             CPU vs CPU
           </Button>
         </Segment>
@@ -67,17 +69,16 @@ const Home = () => {
     </Container>
   );
 
-  switch (gameSlug) {
-  case undefined:
+  switch (gameType) {
+  case MENU:
+    if (gameSlug) return <Game />;
     return renderMenu();
-  case LOCAL:
-    return <Game />;
   case PLAYER_VS_CPU:
     return <Game autoMove={AutoMove.BLACK} />;
   case CPU_VS_CPU:
     return <Game autoMove={AutoMove.BOTH} />;
   default:
-    return <Game gameSlug={gameSlug} />;
+    return <Game />;
   }
 };
 

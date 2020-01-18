@@ -1,11 +1,16 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'semantic-ui-react';
+import { useDispatch } from 'react-redux';
 
-const GameLink = ({ slug, setGameSlug }) => {
+const GameLink = ({ slug }) => {
+  const dispatch = useDispatch();
+
   const setThisGameSlug = useCallback(
-    () => setGameSlug(slug),
-    [slug, setGameSlug],
+    () => {
+      dispatch({ type: 'set_game_slug', gameSlug: slug });
+    },
+    [dispatch, slug],
   );
 
   return (
@@ -20,7 +25,6 @@ const GameLink = ({ slug, setGameSlug }) => {
 
 GameLink.propTypes = {
   slug: PropTypes.string.isRequired,
-  setGameSlug: PropTypes.func.isRequired,
 };
 
 export default GameLink;

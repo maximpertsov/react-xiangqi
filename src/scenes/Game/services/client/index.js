@@ -3,7 +3,7 @@ import * as client from 'services/client';
 const POLL_INTERVAL = 2500;
 
 export const fetchMoves = async({ dispatch, gameSlug }) => {
-  // if (gameSlug === undefined) {
+  // if (gameSlug === null) {
   //   dispatch({ type: 'set_moves', moves: [] });
   //   return;
   // }
@@ -13,15 +13,15 @@ export const fetchMoves = async({ dispatch, gameSlug }) => {
 };
 
 export const fetchGame = async({ dispatch, gameSlug }) => {
-  if (gameSlug === undefined) return;
+  if (gameSlug === null) return;
 
   const { data: { players } } = await client.getGame({ gameSlug });
   dispatch({ type: 'set_players', players });
 };
 
 const canUpdateMoves = ({ gameSlug, nextMovePlayer, username }) => {
-  if (gameSlug === undefined) return false;
-  if (username === undefined) return false;
+  if (gameSlug === null) return false;
+  if (username === null) return false;
   if (username === nextMovePlayer) return false;
 
   return true;
@@ -52,7 +52,7 @@ export const setPollMovesInterval = (params) =>
 export const postMove = async({
   dispatch, fromPos, toPos, gameSlug, username,
 }) => {
-  if (gameSlug === undefined) return;
+  if (gameSlug === null) return;
 
   try {
     const { status } = await client.postMove({

@@ -10,9 +10,10 @@ import * as client from '../../services/client';
 // TODO: move this into selectors collocated with reducers
 import { getNextMovePlayer } from '../../selectors';
 
-const GameClient = ({ children, gameSlug }) => {
+const GameClient = ({ children }) => {
   const dispatch = useDispatch();
 
+  const gameSlug = useSelector((state) => state.gameSlug);
   const loading = useSelector((state) => state.loading);
   const moves = useSelector((state) => state.moves);
   const moveCount = useSelector((state) => getMoveCount(state));
@@ -55,11 +56,6 @@ const GameClient = ({ children, gameSlug }) => {
 
 GameClient.propTypes = {
   children: PropTypes.node.isRequired,
-  gameSlug: PropTypes.string,
-};
-
-GameClient.defaultProps = {
-  gameSlug: undefined,
 };
 
 export default GameClient;
