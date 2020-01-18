@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
 
 import Game from 'scenes/Game';
 import * as client from 'services/client';
@@ -15,7 +16,8 @@ const PLAYER_VS_CPU = 'player_vs_cpu';
 const CPU_VS_CPU = 'cpu_vs_cpu';
 
 const Home = () => {
-  const [username, setUsername] = useState(undefined);
+  const username = useSelector((state) => state.username);
+
   const [gameSlug, setGameSlug] = useState(undefined);
   const [games, setGames] = useState([]);
 
@@ -29,14 +31,14 @@ const Home = () => {
 
   useEffect(
     () => {
-      if (username === undefined) return;
+      if (username === null) return;
       fetchGames();
     },
     [fetchGames, username],
   );
 
   const renderGameList = () => {
-    if (username !== undefined) {
+    if (username !== null) {
       return <GameList setGameSlug={setGameSlug} games={games} />;
     }
   };
@@ -46,10 +48,7 @@ const Home = () => {
       <Segment.Group compact>
         <Segment>
           <Header size="large">Play online</Header>
-          <LoginForm
-            username={username}
-            setUsername={setUsername}
-          />
+          <LoginForm />
           { renderGameList() }
         </Segment>
         <Segment>
