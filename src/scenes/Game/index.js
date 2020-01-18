@@ -7,7 +7,7 @@ import { useCallback, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
 
-import { fetchMoves, makeMove, selectMove } from 'actions';
+import { makeMove, selectMove } from 'actions';
 import {
   getMoveCount,
   getLastMove,
@@ -22,6 +22,7 @@ import { getSlot } from 'services/logic/utils';
 
 import ConfirmMenu from './components/ConfirmMenu';
 import GameInfo from './components/GameInfo';
+import GameClient from './components/GameClient';
 import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
 import * as client from './services/client';
@@ -63,36 +64,6 @@ const Game = ({ autoMove, gameSlug, username }) => {
     // other
     active: gameSlug !== undefined && state.loading,
   }), shallowEqual);
-
-  useEffect(
-    () => {
-      client.fetchGame({ dispatch, gameSlug });
-    },
-    [dispatch, gameSlug],
-  );
-
-  useEffect(
-    () => {
-      dispatch(fetchMoves({ gameSlug, moves: selectors.moves }));
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, gameSlug]
-  );
-
-  useEffect(
-    () => {
-      const interval = client.setPollMovesInterval({
-        dispatch,
-        gameSlug,
-        loading: selectors.loading,
-        moveCount: selectors.moveCount,
-        nextMovePlayer: selectors.nextMovePlayer,
-        username,
-      });
-      return () => clearInterval(interval);
-    },
-    [dispatch, gameSlug, selectors, username],
-  );
 
   useEffect(
     () => {
@@ -161,78 +132,80 @@ const Game = ({ autoMove, gameSlug, username }) => {
   };
 
   return (
-    <Dimmer.Dimmable
-      as={Segment}
-      basic
-      blurring
-      dimmed={selectors.active}
-      className="Game"
-      css={css`
-          align-items: center;
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-        `}
-    >
-      <Dimmer
-        active={selectors.active}
-        page
-      >
-        <Loader>Loading</Loader>
-      </Dimmer>
-      <div
+    <GameClient gameSlug={gameSlug} username={username}>
+      <Dimmer.Dimmable
+        as={Segment}
+        basic
+        blurring
+        dimmed={selectors.active}
+        className="Game"
         css={css`
-          display: flex;
-          justify-content: space-around;
-          flex-direction: column;
-        `}
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+          `}
       >
+        <Dimmer
+          active={selectors.active}
+          page
+        >
+          <Loader>Loading</Loader>
+        </Dimmer>
         <div
           css={css`
             display: flex;
-            align-items: center;
             justify-content: space-around;
             flex-direction: column;
           `}
         >
-          <Player
-            {...selectors.otherPlayer}
+          <div
+            css={css`
+              display: flex;
+              align-items: center;
+              justify-content: space-around;
+              flex-direction: column;
+            `}
+          >
+            <Player
+              {...selectors.otherPlayer}
+            />
+          </div>
+          <Board
+            board={selectedBoard}
+            nextMoveColor={selectors.nextMoveColor}
+            handleLegalMove={handleLegalMove}
+            lastMove={lastMoveOnSelectedBoard}
+            legalMoves={selectors.legalMoves}
+            reversed={selectors.initialUserOrientation}
           />
+          <div
+            css={css`
+              display: flex;
+              align-items: center;
+              justify-content: space-around;
+              flex-direction: row;
+            `}
+          >
+            <Player
+              {...selectors.currentPlayer}
+            />
+            <GameInfo
+              activePlayer={selectors.nextMovePlayer}
+              hasLegalMoves={selectors.hasLegalMoves}
+              userColor={selectors.userColor}
+            />
+          </div>
+          <ConfirmMenu
+            yesHandler={handleConfirmedMove}
+            noHandler={cancelMove}
+            show={selectors.lastMove.pending}
+            disabled={gameSlug === undefined}
+          />
+          <MoveHistory />
         </div>
-        <Board
-          board={selectedBoard}
-          nextMoveColor={selectors.nextMoveColor}
-          handleLegalMove={handleLegalMove}
-          lastMove={lastMoveOnSelectedBoard}
-          legalMoves={selectors.legalMoves}
-          reversed={selectors.initialUserOrientation}
-        />
-        <div
-          css={css`
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            flex-direction: row;
-          `}
-        >
-          <Player
-            {...selectors.currentPlayer}
-          />
-          <GameInfo
-            activePlayer={selectors.nextMovePlayer}
-            hasLegalMoves={selectors.hasLegalMoves}
-            userColor={selectors.userColor}
-          />
-        </div>
-        <ConfirmMenu
-          yesHandler={handleConfirmedMove}
-          noHandler={cancelMove}
-          show={selectors.lastMove.pending}
-          disabled={gameSlug === undefined}
-        />
-        <MoveHistory />
-      </div>
-    </Dimmer.Dimmable>
+      </Dimmer.Dimmable>
+    </GameClient>
   );
 };
 
