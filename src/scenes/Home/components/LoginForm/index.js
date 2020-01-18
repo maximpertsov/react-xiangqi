@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { Button, Form } from 'semantic-ui-react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
 
@@ -8,6 +9,8 @@ import * as client from 'services/client';
 const initialForm = { formUsername: '', formPassword: '', formError: '' };
 
 const LoginForm = ({ username, setUsername }) => {
+  const dispatch = useDispatch();
+
   const [form, setForm] = useState(initialForm);
   const [loading, setLoading] = useState(true);
 
@@ -23,9 +26,11 @@ const LoginForm = ({ username, setUsername }) => {
     (response) => {
       const { data: { access_token: accessToken } } = response;
       const { sub } = jwtDecode(accessToken);
+      dispatch({ type: 'set_username', username: sub });
+      // TODO: remove
       setUsername(sub);
     },
-    [setUsername],
+    [dispatch, setUsername],
   );
 
   useEffect(
