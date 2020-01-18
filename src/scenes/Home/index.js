@@ -77,12 +77,7 @@ const Home = () => {
   case CPU_VS_CPU:
     return <Game autoMove={AutoMove.BOTH} />;
   default:
-    return (
-      <Game
-        gameSlug={gameSlug}
-        username={username}
-      />
-    );
+    return <Game gameSlug={gameSlug} />;
   }
 };
 

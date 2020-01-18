@@ -10,13 +10,14 @@ import * as client from '../../services/client';
 // TODO: move this into selectors collocated with reducers
 import { getNextMovePlayer } from '../../selectors';
 
-const GameClient = ({ children, gameSlug, username }) => {
+const GameClient = ({ children, gameSlug }) => {
   const dispatch = useDispatch();
 
   const loading = useSelector((state) => state.loading);
   const moves = useSelector((state) => state.moves);
   const moveCount = useSelector((state) => getMoveCount(state));
   const nextMovePlayer = useSelector((state) => getNextMovePlayer(state));
+  const username = useSelector((state) => state.username);
 
   useEffect(
     () => {
@@ -55,12 +56,10 @@ const GameClient = ({ children, gameSlug, username }) => {
 GameClient.propTypes = {
   children: PropTypes.node.isRequired,
   gameSlug: PropTypes.string,
-  username: PropTypes.string,
 };
 
 GameClient.defaultProps = {
   gameSlug: undefined,
-  username: undefined,
 };
 
 export default GameClient;

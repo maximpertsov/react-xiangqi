@@ -16,7 +16,7 @@ const lookupPlayer = (players, key, value) =>
 export const getNextMovePlayer = ({ players, moves }) =>
   lookupPlayer(players, 'color', getNextMoveColor({ moves }));
 
-const getUserPlayer = ({ players }, { username }) =>
+const getUserPlayer = ({ players, username }) =>
   lookupPlayer(players, 'name', username);
 
 export const getRedPlayer = ({ players }) =>
@@ -25,28 +25,28 @@ export const getRedPlayer = ({ players }) =>
 export const getBlackPlayer = ({ players }) =>
   lookupPlayer(players, 'color', Color.BLACK);
 
-export const getUserColor = ({ players }, { username }) => {
+export const getUserColor = ({ players, username }) => {
   try {
-    return getUserPlayer({ players }, { username }).color;
+    return getUserPlayer({ players, username }).color;
   } catch (e) {
     if (e instanceof TypeError) return undefined;
     throw e;
   }
 };
 
-export const getOtherPlayer = ({ players }, { gameSlug, username }) => {
+export const getOtherPlayer = ({ players, username }, { gameSlug }) => {
   if (gameSlug === undefined) getBlackPlayer({ players });
   return players.find((p) => p.name !== username);
 };
 
 // TODO: add a state that allows players to flip their original orientation
-export const getInitialUserOrientation = ({ players }, { username }) =>
-  getUserColor({ players }, { username }) === Color.BLACK;
+export const getInitialUserOrientation = ({ players, username }) =>
+  getUserColor({ players, username }) === Color.BLACK;
 
 // TODO: move to layout class that displays board and players
-export const getCurrentPlayer = ({ players }, { gameSlug, username }) => {
+export const getCurrentPlayer = ({ players, username }, { gameSlug }) => {
   if (gameSlug === undefined) getRedPlayer({ players });
-  return getUserPlayer({ players }, { username });
+  return getUserPlayer({ players, username });
 };
 
 /********************/
@@ -55,11 +55,11 @@ export const getCurrentPlayer = ({ players }, { gameSlug, username }) => {
 
 // TODO break up function
 export const getLegalMoves = (
-  { moves, players, selectedMoveId },
-  { gameSlug, username },
+  { moves, players, selectedMoveId, username },
+  { gameSlug },
 ) => {
   const nextMoveColor = getNextMoveColor({ moves });
-  const userColor = getUserColor({ players }, { username });
+  const userColor = getUserColor({ players, username });
   const { board } = getSelectedMove({ moves, selectedMoveId });
   const currentUserOnly = gameSlug !== undefined;
   const lastMoveId = getLastMove({ moves }).id;

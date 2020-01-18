@@ -33,8 +33,10 @@ import * as gameSelectors from './selectors';
 // because it imports from services/logic/constants
 import { AutoMove } from '../../constants';
 
-const Game = ({ autoMove, gameSlug, username }) => {
+const Game = ({ autoMove, gameSlug }) => {
   const dispatch = useDispatch();
+  const username = useSelector((state) => state.username);
+
   const selectors = useSelector((state) => ({
     // base state fields
     loading: state.loading,
@@ -48,18 +50,14 @@ const Game = ({ autoMove, gameSlug, username }) => {
     nextMove: getNextMove(state),
     // players
     nextMovePlayer: gameSelectors.getNextMovePlayer(state),
-    userColor: gameSelectors.getUserColor(state, { username }),
-    otherPlayer: gameSelectors.getOtherPlayer(state, { gameSlug, username }),
-    initialUserOrientation: gameSelectors.getInitialUserOrientation(
-      state,
-      { username }
-    ),
+    userColor: gameSelectors.getUserColor(state),
+    otherPlayer: gameSelectors.getOtherPlayer(state, { gameSlug }),
+    initialUserOrientation: gameSelectors.getInitialUserOrientation(state),
     currentPlayer: gameSelectors.getCurrentPlayer(
-      state,
-      { gameSlug, username }
+      state, { gameSlug }
     ),
     // game logic
-    legalMoves: gameSelectors.getLegalMoves(state, { gameSlug, username }),
+    legalMoves: gameSelectors.getLegalMoves(state, { gameSlug }),
     hasLegalMoves: gameSelectors.hasLegalMoves(state),
     // other
     active: gameSlug !== undefined && state.loading,
@@ -132,7 +130,7 @@ const Game = ({ autoMove, gameSlug, username }) => {
   };
 
   return (
-    <GameClient gameSlug={gameSlug} username={username}>
+    <GameClient gameSlug={gameSlug}>
       <Dimmer.Dimmable
         as={Segment}
         basic
@@ -212,13 +210,11 @@ const Game = ({ autoMove, gameSlug, username }) => {
 Game.propTypes = {
   autoMove: PropTypes.oneOf([undefined, ...Object.values(AutoMove)]),
   gameSlug: PropTypes.string,
-  username: PropTypes.string,
 };
 
 Game.defaultProps = {
   autoMove: undefined,
   gameSlug: undefined,
-  username: undefined,
 };
 
 export default Game;
