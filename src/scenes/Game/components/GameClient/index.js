@@ -13,26 +13,23 @@ import { getNextMovePlayer } from '../../selectors';
 const GameClient = ({ children }) => {
   const dispatch = useDispatch();
 
-  const gameSlug = useSelector((state) => state.gameSlug);
-  const loading = useSelector((state) => state.loading);
-  const moves = useSelector((state) => state.moves);
-  const moveCount = useSelector((state) => getMoveCount(state));
-  const nextMovePlayer = useSelector((state) => getNextMovePlayer(state));
-  const username = useSelector((state) => state.username);
+  const gameSlug = useSelector(state => state.gameSlug);
+  const loading = useSelector(state => state.loading);
+  const moves = useSelector(state => state.moves);
+  const moveCount = useSelector(state => getMoveCount(state));
+  const nextMovePlayer = useSelector(state => getNextMovePlayer(state));
+  const username = useSelector(state => state.username);
 
-  useEffect(
-    () => {
-      client.fetchGame({ dispatch, gameSlug });
-    },
-    [dispatch, gameSlug],
-  );
+  useEffect(() => {
+    client.fetchGame({ dispatch, gameSlug });
+  }, [dispatch, gameSlug]);
 
   useEffect(
     () => {
       dispatch(fetchMoves({ gameSlug, moves }));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, gameSlug]
+    [dispatch, gameSlug],
   );
 
   useEffect(
