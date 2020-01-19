@@ -66,14 +66,15 @@ const Game = () => {
 
   useEffect(
     () => {
-      if (autoMove.includes(selectors.nextMoveColor)) {
-        const { board } = selectors.lastMove;
-        const [fromSlot, toSlot] = board.randomMove(selectors.nextMoveColor);
-        dispatch(makeMove({ fromSlot, toSlot, pending: false }));
-      }
+      setTimeout(() => {
+        if (autoMove.includes(selectors.nextMoveColor)) {
+          const { board } = selectors.lastMove;
+          const [fromSlot, toSlot] = board.randomMove(selectors.nextMoveColor);
+          dispatch(makeMove({ fromSlot, toSlot, pending: false }));
+        }}, 1000);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [autoMove, dispatch, selectors.moves],
+    [autoMove, dispatch, selectors.nextMoveColor],
   );
 
   useEventListener('keydown', ({ key }) => {
