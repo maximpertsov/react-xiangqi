@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 
 import GameLink from './components/GameLink';
 
-const GameList = ({ games, setGameSlug }) => {
-  const gameList = games.map((game) => (
-    <GameLink key={game.slug} slug={game.slug} setGameSlug={setGameSlug} />
-  ),
+const GameList = ({ games }) => {
+  const gameList = games.map(
+    (game) => <GameLink key={game.slug} slug={game.slug} />
   );
 
   return (
@@ -33,7 +32,6 @@ GameList.propTypes = {
   games: PropTypes.arrayOf(
     PropTypes.shape({ slug: PropTypes.string }),
   ).isRequired,
-  setGameSlug: PropTypes.func.isRequired,
 };
 
 export default GameList;
