@@ -1,27 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Container, Header, Segment } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchGames } from "actions";
+import {
+  fetchGames,
+  setAutoMoveOff,
+  setAutoMoveBlack,
+  setAutoMoveBoth,
+} from "actions";
 
 import Game from "scenes/Game";
 
 import GameList from "./components/GameList";
 import LoginForm from "./components/LoginForm";
 
-// TODO: absolute import?
-import { AutoMove } from "../../constants";
-
-const MENU = "menu";
-const PLAYER_VS_CPU = "player_vs_cpu";
-const CPU_VS_CPU = "cpu_vs_cpu";
-
 const Home = () => {
-  // TODO: Consider making this part of global state
-  const [gameType, setGameType] = useState(MENU);
-
   const dispatch = useDispatch();
-  const gameSlug = useSelector(state => state.gameSlug);
+  const showGame = useSelector(state => state.showGame);
   const username = useSelector(state => state.username);
 
   useEffect(() => {
@@ -40,21 +35,24 @@ const Home = () => {
           <Header size="large">Other modes</Header>
           <Button
             onClick={() => {
-              setGameType(null);
+              dispatch(setAutoMoveOff());
+              dispatch({ type: "toggle_show_game", showGame: true });
             }}
           >
             Solo play
           </Button>
           <Button
             onClick={() => {
-              setGameType(PLAYER_VS_CPU);
+              dispatch(setAutoMoveBlack());
+              dispatch({ type: "toggle_show_game", showGame: true });
             }}
           >
             vs CPU
           </Button>
           <Button
             onClick={() => {
-              setGameType(CPU_VS_CPU);
+              dispatch(setAutoMoveBoth());
+              dispatch({ type: "toggle_show_game", showGame: true });
             }}
           >
             CPU vs CPU
@@ -64,17 +62,8 @@ const Home = () => {
     </Container>
   );
 
-  switch (gameType) {
-    case MENU:
-      if (gameSlug) return <Game />;
-      return renderMenu();
-    case PLAYER_VS_CPU:
-      return <Game autoMove={AutoMove.BLACK} />;
-    case CPU_VS_CPU:
-      return <Game autoMove={AutoMove.BOTH} />;
-    default:
-      return <Game />;
-  }
+  if (showGame) return <Game />;
+  return renderMenu();
 };
 
 export default Home;

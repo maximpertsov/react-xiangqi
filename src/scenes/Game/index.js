@@ -1,13 +1,12 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { jsx, css } from '@emotion/core';
 
-import PropTypes from "prop-types";
-import { Dimmer, Loader, Segment } from "semantic-ui-react";
-import { useCallback, useEffect } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import useEventListener from "@use-it/event-listener";
+import { Dimmer, Loader, Segment } from 'semantic-ui-react';
+import { useCallback, useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import useEventListener from '@use-it/event-listener';
 
-import { makeMove, selectMove } from "actions";
+import { makeMove, selectMove } from 'actions';
 import {
   getMoveCount,
   getLastMove,
@@ -15,26 +14,23 @@ import {
   getPreviousMove,
   getNextMove,
   getNextMoveColor,
-} from "reducers";
+} from 'reducers';
 
-import Board from "components/Board";
-import { getSlot } from "services/logic/utils";
+import Board from 'components/Board';
+import { getSlot } from 'services/logic/utils';
 
-import ConfirmMenu from "./components/ConfirmMenu";
-import GameInfo from "./components/GameInfo";
-import GameClient from "./components/GameClient";
-import MoveHistory from "./components/MoveHistory";
-import Player from "./components/Player";
-import * as client from "./services/client";
+import ConfirmMenu from './components/ConfirmMenu';
+import GameInfo from './components/GameInfo';
+import GameClient from './components/GameClient';
+import MoveHistory from './components/MoveHistory';
+import Player from './components/Player';
+import * as client from './services/client';
 
-import * as gameSelectors from "./selectors";
+import * as gameSelectors from './selectors';
 
-// TODO: seems like this needs to be a relative import
-// because it imports from services/logic/constants
-import { AutoMove } from "../../constants";
-
-const Game = ({ autoMove }) => {
+const Game = () => {
   const dispatch = useDispatch();
+  const autoMove = useSelector(state => state.autoMove);
   const gameSlug = useSelector(state => state.gameSlug);
   const username = useSelector(state => state.username);
 
@@ -67,7 +63,7 @@ const Game = ({ autoMove }) => {
 
   useEffect(
     () => {
-      if (autoMove === AutoMove.BOTH || autoMove === selectors.nextMoveColor) {
+      if (autoMove.includes(selectors.nextMoveColor)) {
         const { board } = selectors.lastMove;
         const [fromSlot, toSlot] = board.randomMove(selectors.nextMoveColor);
         dispatch(makeMove({ fromSlot, toSlot, pending: false }));
@@ -77,12 +73,12 @@ const Game = ({ autoMove }) => {
     [autoMove, dispatch, selectors.moves],
   );
 
-  useEventListener("keydown", ({ key }) => {
+  useEventListener('keydown', ({ key }) => {
     switch (key) {
-      case "ArrowLeft":
+      case 'ArrowLeft':
         dispatch(selectMove({ moveId: selectors.previousMove.id }));
         break;
-      case "ArrowRight":
+      case 'ArrowRight':
         dispatch(selectMove({ moveId: selectors.nextMove.id }));
         break;
       default:
@@ -100,7 +96,7 @@ const Game = ({ autoMove }) => {
   );
 
   const cancelMove = useCallback(() => {
-    dispatch({ type: "cancel_moves" });
+    dispatch({ type: 'cancel_moves' });
   }, [dispatch]);
 
   const handleConfirmedMove = useCallback(async () => {
@@ -108,7 +104,7 @@ const Game = ({ autoMove }) => {
     if (!pending) return;
 
     await client.postMove({ dispatch, fromPos, toPos, gameSlug, username });
-    dispatch({ type: "confirm_moves" });
+    dispatch({ type: 'confirm_moves' });
   }, [dispatch, gameSlug, selectors, username]);
 
   // TODO: just pass selectedMove down instead of the board and move separately?
@@ -187,14 +183,6 @@ const Game = ({ autoMove }) => {
       </Dimmer.Dimmable>
     </GameClient>
   );
-};
-
-Game.propTypes = {
-  autoMove: PropTypes.oneOf([undefined, ...Object.values(AutoMove)]),
-};
-
-Game.defaultProps = {
-  autoMove: undefined,
 };
 
 export default Game;
