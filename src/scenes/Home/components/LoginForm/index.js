@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
 
 import * as client from 'services/client';
@@ -115,10 +114,6 @@ const LoginForm = () => {
   if (loading) return <div>Loading</div>;
 
   return isLoggedIn() ? renderLoggedIn() : renderLoggedOut();
-};
-
-LoginForm.propTypes = {
-  setUsername: PropTypes.func.isRequired,
 };
 
 export default LoginForm;
