@@ -10,10 +10,10 @@ import rootReducer from './reducers';
 import * as serviceWorker from './serviceWorker';
 
 const getReduxDevExtOptions = () => {
-  if (process.env.NODE_ENV === 'development') {
-    return window.__REDUX_DEVTOOLS_EXTENSION__
-      && window.__REDUX_DEVTOOLS_EXTENSION__();
-  }
+  if (!window.__REDUX_DEVTOOLS_EXTENSION__) return f => f;
+  if (process.env.NODE_ENV !== 'development') return f => f;
+
+  return window.__REDUX_DEVTOOLS_EXTENSION__();
 };
 
 const store = compose(
