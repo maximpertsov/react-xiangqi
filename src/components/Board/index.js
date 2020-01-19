@@ -1,15 +1,15 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import { jsx, css } from "@emotion/core";
 
-import { useState, useLayoutEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useLayoutEffect } from "react";
+import PropTypes from "prop-types";
 
-import * as logic from 'services/logic';
-import * as styles from 'commonStyles';
+import * as logic from "services/logic";
+import * as styles from "commonStyles";
 
-import Square from './components/Square';
+import Square from "./components/Square";
 
-import boardImg from './board-1000px.svg.png';
+import boardImg from "./board-1000px.svg.png";
 
 const ANIMATION_DELAY = 150;
 
@@ -30,24 +30,25 @@ const Board = ({
   // move updates to take longer. Annoying in development but
   // seems to be fast enough on a production build.
   useLayoutEffect(
-    () => { setSelectedSlot(undefined); },
+    () => {
+      setSelectedSlot(undefined);
+    },
     // TODO: is it too expensive to check if the board changes?
     // Can I key on another prop update?
     [board],
   );
 
-  const getPieceCode = (slot) => board.getPiece(slot) || undefined;
+  const getPieceCode = slot => board.getPiece(slot) || undefined;
 
-  const selectedCanCapture = (slot) => {
+  const selectedCanCapture = slot => {
     if (selectedSlot === undefined) return false;
     if (!board.isOccupied(selectedSlot)) return false;
     if (!board.isOccupied(slot)) return false;
     return !board.sameColor(slot, selectedSlot);
   };
 
-  const isLegalMove = (fromSlot, toSlot) => (
-    legalMoves[fromSlot].includes(toSlot)
-  );
+  const isLegalMove = (fromSlot, toSlot) =>
+    legalMoves[fromSlot].includes(toSlot);
 
   const handleMove = (fromSlot, toSlot) => {
     if (isLegalMove(fromSlot, toSlot)) {
@@ -66,7 +67,7 @@ const Board = ({
     }
   };
 
-  const handleSquareClick = (slot) => (() => {
+  const handleSquareClick = slot => () => {
     if (slot === selectedSlot) {
       setSelectedSlot(undefined);
     } else if (board.isOccupied(slot) && !selectedCanCapture(slot)) {
@@ -76,36 +77,36 @@ const Board = ({
     } else {
       setSelectedSlot(undefined);
     }
-  });
+  };
 
-  const getTargets = () => (
-    selectedSlot === undefined ? [] : legalMoves[selectedSlot]
-  );
+  const getTargets = () =>
+    selectedSlot === undefined ? [] : legalMoves[selectedSlot];
 
-  const inCheck = (slot) => {
+  const inCheck = slot => {
     if (!board.kingInCheck(nextMoveColor)) return false;
     return board.findKingSlot(nextMoveColor) === slot;
   };
 
   const getSlot = (b, i) => (reversed ? b.length - i - 1 : i);
 
-  const renderSquares = () => board.board.map((_, i, b) => {
-    const slot = getSlot(b, i);
-    // TODO: use classNames to capture multiple styles
-    return (
-      <Square
-        key={slot}
-        handleClick={handleSquareClick(slot)}
-        inCheck={inCheck(slot)}
-        inLastMove={slot === lastMove.fromSlot || slot === lastMove.toSlot}
-        pieceCode={getPieceCode(slot)}
-        selected={selectedSlot === slot}
-        targeted={getTargets().includes(slot)}
-        moveX={moveX}
-        moveY={moveY}
-      />
-    );
-  });
+  const renderSquares = () =>
+    board.board.map((_, i, b) => {
+      const slot = getSlot(b, i);
+      // TODO: use classNames to capture multiple styles
+      return (
+        <Square
+          key={slot}
+          handleClick={handleSquareClick(slot)}
+          inCheck={inCheck(slot)}
+          inLastMove={slot === lastMove.fromSlot || slot === lastMove.toSlot}
+          pieceCode={getPieceCode(slot)}
+          selected={selectedSlot === slot}
+          targeted={getTargets().includes(slot)}
+          moveX={moveX}
+          moveY={moveY}
+        />
+      );
+    });
 
   return (
     <div
@@ -143,12 +144,14 @@ Board.propTypes = {
   board: logic.boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
   lastMove: PropTypes.shape({
-    fromSlot: PropTypes.oneOfType(
-      [PropTypes.oneOf([undefined]), PropTypes.number]
-    ),
-    toSlot: PropTypes.oneOfType(
-      [PropTypes.oneOf([undefined]), PropTypes.number]
-    ),
+    fromSlot: PropTypes.oneOfType([
+      PropTypes.oneOf([undefined]),
+      PropTypes.number,
+    ]),
+    toSlot: PropTypes.oneOfType([
+      PropTypes.oneOf([undefined]),
+      PropTypes.number,
+    ]),
   }).isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   nextMoveColor: PropTypes.string.isRequired,
