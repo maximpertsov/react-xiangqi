@@ -1,20 +1,20 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import { Children } from 'react';
+import React, { Children } from 'react';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
+/* eslint-disable max-len */
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(${props => Children.count(props.children)}, 1fr);
+  text-align: center;
+  align-items: center;
+`;
+/* eslint-enable max-len */
+
 const GameMenu = ({ children }) => (
-  <div
-    className="GameMenu"
-    css={css`
-        display: grid;
-        grid-template-columns: repeat(${Children.count(children)}, 1fr);
-        text-align: center;
-        align-items: center;
-    `}
-  >
+  <Wrapper className="GameMenu">
     {children}
-  </div>
+  </Wrapper>
 );
 
 GameMenu.propTypes = {
