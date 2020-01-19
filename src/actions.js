@@ -1,4 +1,4 @@
-import { getGameList, getMoves } from 'services/client';
+import { getGame, getGameList, getMoves } from 'services/client';
 import { getSlot } from 'services/logic';
 import { Color } from 'services/logic/constants';
 
@@ -38,6 +38,15 @@ const addFetchedMove = ({ origin: fromPos, destination: toPos }) =>
     toSlot: getSlot(...toPos),
     pending: false,
   });
+
+export const fetchGame = ({ gameSlug }) => async dispatch => {
+  if (gameSlug === null) return;
+
+  const {
+    data: { players },
+  } = await getGame({ gameSlug });
+  dispatch({ type: 'set_players', players });
+};
 
 export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
   if (gameSlug === null) return;

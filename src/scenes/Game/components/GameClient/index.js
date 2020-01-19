@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { fetchMoves } from 'actions';
+import { fetchGame, fetchMoves } from 'actions';
 import { getMoveCount } from 'reducers';
 
 // TODO: move client to this level or remove?
@@ -21,7 +21,7 @@ const GameClient = ({ children }) => {
   const username = useSelector(state => state.username);
 
   useEffect(() => {
-    client.fetchGame({ dispatch, gameSlug });
+    dispatch(fetchGame({ gameSlug }));
   }, [dispatch, gameSlug]);
 
   useEffect(
