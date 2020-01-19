@@ -42,21 +42,4 @@ export const setPollMovesInterval = (params) =>
     POLL_INTERVAL
   );
 
-export const postMove = async({
-  dispatch, fromPos, toPos, gameSlug, username,
-}) => {
-  if (gameSlug === null) return;
-
-  try {
-    const { status } = await client.postMove({
-      gameSlug, username, fromPos, toPos,
-    });
-    if (status !== 201) fetchMoves({ dispatch, gameSlug });
-
-  } catch (error) {
-    // TODO: display useful error?
-    fetchMoves({ dispatch, gameSlug });
-  }
-};
-
 export default {};

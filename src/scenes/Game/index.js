@@ -6,7 +6,7 @@ import { useCallback, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
 
-import { makeMove, selectMove } from 'actions';
+import { makeMove, postMove, selectMove } from 'actions';
 import {
   getMoveCount,
   getLastMove,
@@ -24,7 +24,6 @@ import GameInfo from './components/GameInfo';
 import GameClient from './components/GameClient';
 import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
-import * as client from './services/client';
 
 import * as gameSelectors from './selectors';
 
@@ -103,7 +102,16 @@ const Game = () => {
     const { fromPos, toPos, pending } = selectors.lastMove;
     if (!pending) return;
 
-    await client.postMove({ dispatch, fromPos, toPos, gameSlug, username });
+    dispatch(
+      postMove({
+        dispatch,
+        fromPos,
+        toPos,
+        gameSlug,
+        moves: selectors.moves,
+        username,
+      }),
+    );
     dispatch({ type: 'confirm_moves' });
   }, [dispatch, gameSlug, selectors, username]);
 

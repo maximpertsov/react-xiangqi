@@ -1,4 +1,4 @@
-import { getGame, getGameList, getMoves } from 'services/client';
+import * as client from 'services/client';
 import { getSlot } from 'services/logic';
 import { Color } from 'services/logic/constants';
 
@@ -44,7 +44,7 @@ export const fetchGame = ({ gameSlug }) => async dispatch => {
 
   const {
     data: { players },
-  } = await getGame({ gameSlug });
+  } = await client.getGame({ gameSlug });
   dispatch({ type: 'set_players', players });
 };
 
@@ -57,7 +57,7 @@ export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
 
     const {
       data: { moves: fetchedMoves },
-    } = await getMoves({ gameSlug });
+    } = await client.getMoves({ gameSlug });
     lastMoveId = fetchedMoves
       // TODO: throw error if fetched move do not match app moves
       .filter((_, index) => moves[index + 1] === undefined)
@@ -69,6 +69,30 @@ export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
   } finally {
     if (lastMoveId) dispatch(selectMove({ moveId: lastMoveId }));
     dispatch(toggleLoading({ loading: false }));
+  }
+};
+
+export const postMove = ({
+  dispatch,
+  gameSlug,
+  fromPos,
+  moves,
+  toPos,
+  username,
+}) => async () => {
+  if (gameSlug === null) return;
+
+  try {
+    const { status } = await client.postMove({
+      gameSlug,
+      username,
+      fromPos,
+      toPos,
+    });
+    if (status !== 201) dispatch(fetchMoves({ gameSlug, moves }));
+  } catch (error) {
+    // TODO: display useful error?
+    dispatch(fetchMoves({ gameSlug, moves }));
   }
 };
 
@@ -86,7 +110,7 @@ export const fetchGames = ({ username }) => async dispatch => {
 
   const {
     data: { games },
-  } = await getGameList({ username });
+  } = await client.getGameList({ username });
   dispatch({ type: 'set_games', games });
 };
 
