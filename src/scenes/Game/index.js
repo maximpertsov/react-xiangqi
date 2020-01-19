@@ -55,9 +55,13 @@ const Game = () => {
       legalMoves: gameSelectors.getLegalMoves(state),
       hasLegalMoves: gameSelectors.hasLegalMoves(state),
       // other
-      active: gameSlug !== null && state.loading,
     }),
     shallowEqual,
+  );
+  // TODO: this is a massive hack -- should not rely on move count to determine
+  // if this is the initial load
+  const active = useSelector(
+    state => gameSlug !== null && state.loading && selectors.moveCount <= 1,
   );
 
   useEffect(
@@ -104,7 +108,6 @@ const Game = () => {
 
     dispatch(
       postMove({
-        dispatch,
         fromPos,
         toPos,
         gameSlug,
@@ -128,7 +131,7 @@ const Game = () => {
         as={Segment}
         basic
         blurring
-        dimmed={selectors.active}
+        dimmed={active}
         className="Game"
         css={css`
           align-items: center;
@@ -137,7 +140,7 @@ const Game = () => {
           height: 100%;
         `}
       >
-        <Dimmer active={selectors.active} page>
+        <Dimmer active={active} page>
           <Loader>Loading</Loader>
         </Dimmer>
         <div

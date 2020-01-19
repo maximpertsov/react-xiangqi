@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { fetchGame, fetchMoves } from 'actions';
+import { fetchGame, fetchMoves, pollMoves } from 'actions';
 import { getMoveCount } from 'reducers';
 
-// TODO: move client to this level or remove?
-import * as client from '../../services/client';
 // TODO: move this into selectors collocated with reducers
 import { getNextMovePlayer } from '../../selectors';
+
+const POLLING_INTERVAL = 2500;
 
 const GameClient = ({ children }) => {
   const dispatch = useDispatch();
@@ -34,18 +34,22 @@ const GameClient = ({ children }) => {
 
   useEffect(
     () => {
-      const interval = client.setPollMovesInterval({
-        dispatch,
-        gameSlug,
-        loading,
-        moveCount,
-        nextMovePlayer,
-        username,
-      });
+      const interval = setInterval(() => {
+        dispatch(
+          pollMoves({
+            gameSlug,
+            loading,
+            moves,
+            moveCount,
+            nextMovePlayer,
+            username,
+          }),
+        );
+      }, POLLING_INTERVAL);
       return () => clearInterval(interval);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, gameSlug, username],
+    [dispatch, gameSlug, nextMovePlayer, username],
   );
 
   return <div>{children}</div>;

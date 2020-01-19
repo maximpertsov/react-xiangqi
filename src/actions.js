@@ -72,14 +72,39 @@ export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
   }
 };
 
+const canUpdateMoves = ({ gameSlug, nextMovePlayer, username }) => {
+  if (gameSlug === null) return false;
+  if (username === null) return false;
+  if (username === nextMovePlayer) return false;
+
+  return true;
+};
+
+export const pollMoves = ({
+  gameSlug,
+  loading,
+  moveCount,
+  moves,
+  nextMovePlayer,
+  username,
+}) => async dispatch => {
+  if (!canUpdateMoves({ gameSlug, nextMovePlayer, username })) return;
+
+  const {
+    data: { move_count },
+  } = await client.getMoveCount({ gameSlug });
+  if (!loading && moveCount >= move_count) return;
+
+  dispatch(fetchMoves({ gameSlug, moves }));
+};
+
 export const postMove = ({
-  dispatch,
   gameSlug,
   fromPos,
   moves,
   toPos,
   username,
-}) => async () => {
+}) => async dispatch => {
   if (gameSlug === null) return;
 
   try {
