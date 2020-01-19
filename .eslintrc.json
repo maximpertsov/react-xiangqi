@@ -96,7 +96,9 @@
     ],
     "space-before-function-paren": [
       "error",
-      "never"
+      {
+        "asyncArrow": "always"
+      }
     ]
   }
 }
