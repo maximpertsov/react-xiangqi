@@ -40,23 +40,6 @@ const confirmMoves = (state) => {
   return state.map((move) => ({ ...move, pending: false }));
 };
 
-// const setMove = (state, { origin: fromPos, destination: toPos }) => {
-//   // TODO: get last move selector?
-//   const { board } = state[state.length - 1];
-//   const move = newMove({
-//     piece: board.getPiece(fromPos, logic.RefType.RANK_FILE),
-//     fromPos,
-//     toPos,
-//     board: board.move(fromPos, toPos, logic.RefType.RANK_FILE),
-//     pending: false,
-//   });
-//   return update(state, { $push: [move] });
-// };
-
-// TODO: remove this?
-// TODO: bulk increment nextMoveId counter?
-const setMoves = () => initialMoves;
-
 const moves = (state = initialMoves, action) => {
   switch (action.type) {
   case 'add_move':
@@ -65,8 +48,6 @@ const moves = (state = initialMoves, action) => {
     return cancelMoves(state);
   case 'confirm_moves':
     return confirmMoves(state);
-  case 'set_moves':
-    return setMoves(state, action.moves);
   default:
     return state;
   }
