@@ -1,31 +1,10 @@
-import sortedIndexBy from 'lodash/sortedIndexBy';
-
 import { Color } from 'services/logic/constants';
-import { isRed } from 'services/logic/utils';
 
-/***************/
-/***  Moves  ***/
-/***************/
-
-export const getLastMove = ({ moves }) =>
-  moves[moves.length - 1];
-
-export const getMoveIndex = ({ moves }, moveId ) => {
-  const moveIndex = sortedIndexBy(moves, { id: moveId }, 'id');
-  if (moves[moveIndex].id === moveId) return moveIndex;
-  return -1;
-};
-
-// TODO: duplicate logic in actions.js
-export const getSelectedMove = ({ moves, selectedMoveId }) =>
-  moves[getMoveIndex({ moves }, selectedMoveId)];
-
-export const getNextMoveColor = ({ moves }) => {
-  if (moves.length === 0) return Color.RED;
-
-  const { piece } = getLastMove({ moves });
-  return isRed(piece) ? Color.BLACK : Color.RED;
-};
+import {
+  getLastMove,
+  getSelectedMove,
+  getNextMoveColor,
+} from 'reducers';
 
 /*****************/
 /***  Players  ***/
@@ -37,7 +16,7 @@ const lookupPlayer = (players, key, value) =>
 export const getNextMovePlayer = ({ players, moves }) =>
   lookupPlayer(players, 'color', getNextMoveColor({ moves }));
 
-const getUserPlayer = ({ players }, { username }) =>
+const getUserPlayer = ({ players, username }) =>
   lookupPlayer(players, 'name', username);
 
 export const getRedPlayer = ({ players }) =>
@@ -46,28 +25,28 @@ export const getRedPlayer = ({ players }) =>
 export const getBlackPlayer = ({ players }) =>
   lookupPlayer(players, 'color', Color.BLACK);
 
-export const getUserColor = ({ players }, { username }) => {
+export const getUserColor = ({ players, username }) => {
   try {
-    return getUserPlayer({ players }, { username }).color;
+    return getUserPlayer({ players, username }).color;
   } catch (e) {
     if (e instanceof TypeError) return undefined;
     throw e;
   }
 };
 
-export const getOtherPlayer = ({ players }, { gameSlug, username }) => {
-  if (gameSlug === undefined) getBlackPlayer({ players });
+export const getOtherPlayer = ({ gameSlug, players, username }) => {
+  if (gameSlug === null) getBlackPlayer({ players });
   return players.find((p) => p.name !== username);
 };
 
 // TODO: add a state that allows players to flip their original orientation
-export const getInitialUserOrientation = ({ players }, { username }) =>
-  getUserColor({ players }, { username }) === Color.BLACK;
+export const getInitialUserOrientation = ({ players, username }) =>
+  getUserColor({ players, username }) === Color.BLACK;
 
 // TODO: move to layout class that displays board and players
-export const getCurrentPlayer = ({ players }, { gameSlug, username }) => {
-  if (gameSlug === undefined) getRedPlayer({ players });
-  return getUserPlayer({ players }, { username });
+export const getCurrentPlayer = ({ gameSlug, players, username }) => {
+  if (gameSlug === null) getRedPlayer({ players });
+  return getUserPlayer({ players, username });
 };
 
 /********************/
@@ -76,13 +55,12 @@ export const getCurrentPlayer = ({ players }, { gameSlug, username }) => {
 
 // TODO break up function
 export const getLegalMoves = (
-  { moves, players, selectedMoveId },
-  { gameSlug, username },
+  { gameSlug, moves, players, selectedMoveId, username },
 ) => {
   const nextMoveColor = getNextMoveColor({ moves });
-  const userColor = getUserColor({ players }, { username });
+  const userColor = getUserColor({ players, username });
   const { board } = getSelectedMove({ moves, selectedMoveId });
-  const currentUserOnly = gameSlug !== undefined;
+  const currentUserOnly = gameSlug !== null;
   const lastMoveId = getLastMove({ moves }).id;
 
   return board

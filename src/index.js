@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+import thunk from 'redux-thunk';
 import styled from '@emotion/styled';
 
 import App from './App';
@@ -9,14 +10,16 @@ import rootReducer from './reducers';
 import * as serviceWorker from './serviceWorker';
 
 const getReduxDevExtOptions = () => {
-  if (process.env.NODE_ENV === 'development') {
-    return window.__REDUX_DEVTOOLS_EXTENSION__
-      && window.__REDUX_DEVTOOLS_EXTENSION__();
-  }
+  if (!window.__REDUX_DEVTOOLS_EXTENSION__) return f => f;
+  if (process.env.NODE_ENV !== 'development') return f => f;
+
+  return window.__REDUX_DEVTOOLS_EXTENSION__();
 };
 
-// TODO: add the following a final argument for development
-const store = createStore(rootReducer, getReduxDevExtOptions());
+const store = compose(
+  applyMiddleware(thunk),
+  getReduxDevExtOptions(),
+)(createStore)(rootReducer);
 
 const Wrapper = styled.div`
 body {

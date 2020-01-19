@@ -1,66 +1,60 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Container, Header, Segment } from 'semantic-ui-react';
+import React, { useEffect } from "react";
+import { Button, Container, Header, Segment } from "semantic-ui-react";
+import { useDispatch, useSelector } from "react-redux";
 
-import Game from 'scenes/Game';
-import * as client from 'services/client';
+import {
+  fetchGames,
+  setAutoMoveOff,
+  setAutoMoveBlack,
+  setAutoMoveBoth,
+} from "actions";
 
-import GameList from './components/GameList';
-import LoginForm from './components/LoginForm';
+import Game from "scenes/Game";
 
-// TODO: absolute import?
-import { AutoMove } from '../../constants';
-
-const LOCAL = 'local';
-const PLAYER_VS_CPU = 'player_vs_cpu';
-const CPU_VS_CPU = 'cpu_vs_cpu';
+import GameList from "./components/GameList";
+import LoginForm from "./components/LoginForm";
 
 const Home = () => {
-  const [username, setUsername] = useState(undefined);
-  const [gameSlug, setGameSlug] = useState(undefined);
-  const [games, setGames] = useState([]);
+  const dispatch = useDispatch();
+  const showGame = useSelector(state => state.showGame);
+  const username = useSelector(state => state.username);
 
-  const fetchGames = useCallback(
-    async() => {
-      const response = await client.getGameList({ username });
-      setGames(response.data.games);
-    },
-    [username],
-  );
-
-  useEffect(
-    () => {
-      if (username === undefined) return;
-      fetchGames();
-    },
-    [fetchGames, username],
-  );
-
-  const renderGameList = () => {
-    if (username !== undefined) {
-      return <GameList setGameSlug={setGameSlug} games={games} />;
-    }
-  };
+  useEffect(() => {
+    dispatch(fetchGames({ username }));
+  }, [dispatch, username]);
 
   const renderMenu = () => (
     <Container textAlign="center">
       <Segment.Group compact>
         <Segment>
           <Header size="large">Play online</Header>
-          <LoginForm
-            username={username}
-            setUsername={setUsername}
-          />
-          { renderGameList() }
+          <LoginForm />
+          {username !== null && <GameList />}
         </Segment>
         <Segment>
           <Header size="large">Other modes</Header>
-          <Button onClick={() => { setGameSlug(LOCAL); }}>
+          <Button
+            onClick={() => {
+              dispatch(setAutoMoveOff());
+              dispatch({ type: "toggle_show_game", showGame: true });
+            }}
+          >
             Solo play
           </Button>
-          <Button onClick={() => { setGameSlug(PLAYER_VS_CPU); }}>
+          <Button
+            onClick={() => {
+              dispatch(setAutoMoveBlack());
+              dispatch({ type: "toggle_show_game", showGame: true });
+            }}
+          >
             vs CPU
           </Button>
-          <Button onClick={() => { setGameSlug(CPU_VS_CPU); }}>
+          <Button
+            onClick={() => {
+              dispatch(setAutoMoveBoth());
+              dispatch({ type: "toggle_show_game", showGame: true });
+            }}
+          >
             CPU vs CPU
           </Button>
         </Segment>
@@ -68,23 +62,8 @@ const Home = () => {
     </Container>
   );
 
-  switch (gameSlug) {
-  case undefined:
-    return renderMenu();
-  case LOCAL:
-    return <Game />;
-  case PLAYER_VS_CPU:
-    return <Game autoMove={AutoMove.BLACK} />;
-  case CPU_VS_CPU:
-    return <Game autoMove={AutoMove.BOTH} />;
-  default:
-    return (
-      <Game
-        gameSlug={gameSlug}
-        username={username}
-      />
-    );
-  }
+  if (showGame) return <Game />;
+  return renderMenu();
 };
 
 export default Home;

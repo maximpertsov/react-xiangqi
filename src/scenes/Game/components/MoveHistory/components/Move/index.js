@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
+import { selectMove } from 'actions';
 import { Color } from 'services/logic/constants';
 
 const Wrapper = styled.span(
@@ -41,10 +42,10 @@ const moveText = ({ piece, fromPos, toPos }) => {
 
 const Move = ({ fromPos, toPos, piece, moveId }) => {
   const dispatch = useDispatch();
-  const isSelected = useSelector(({ game }) => game.selectedMoveId === moveId);
+  const isSelected = useSelector((state) => state.selectedMoveId === moveId);
 
   const handleClick = useCallback(
-    () => { dispatch({ type: 'select_move', moveId }); },
+    () => { dispatch(selectMove({ moveId })); },
     [dispatch, moveId]
   );
 

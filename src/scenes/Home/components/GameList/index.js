@@ -1,39 +1,29 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import PropTypes from 'prop-types';
+import React from 'react';
+import styled from '@emotion/styled';
+import { useSelector } from 'react-redux';
 
 import GameLink from './components/GameLink';
 
-const GameList = ({ games, setGameSlug }) => {
-  const gameList = games.map((game) => (
-    <GameLink key={game.slug} slug={game.slug} setGameSlug={setGameSlug} />
-  ),
-  );
+const Wrapper = styled.div`
+  border:1px #CCC solid;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 5px;
+  width: 100%;
+`;
+
+const GameList = () => {
+  // TODO: define custom selector
+  const gameSlugs = useSelector((state) => state.games.map(({ slug }) => slug));
 
   return (
-    <div
-      className="GameList"
-      css={css`
-        border:1px #CCC solid;
-        margin-top: 15px;
-        margin-bottom: 15px;
-        padding: 5px;
-        width: 100%;
-      `}
-    >
+    <Wrapper className="GameList">
       Games in play
       <div>
-        {gameList}
+        {gameSlugs.map((slug) => <GameLink key={slug} slug={slug} />)}
       </div>
-    </div>
+    </Wrapper>
   );
-};
-
-GameList.propTypes = {
-  games: PropTypes.arrayOf(
-    PropTypes.shape({ slug: PropTypes.string }),
-  ).isRequired,
-  setGameSlug: PropTypes.func.isRequired,
 };
 
 export default GameList;

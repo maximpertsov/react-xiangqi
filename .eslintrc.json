@@ -25,7 +25,7 @@
   "rules": {
     "arrow-parens": [
       "error",
-      "always"
+      "as-needed"
     ],
     "complexity": [
       "error",
@@ -41,7 +41,10 @@
     "import/no-extraneous-dependencies": "off",
     "indent": [
       "error",
-      2
+      2,
+      {
+        "SwitchCase": 1
+      }
     ],
     "max-len": [
       "error",
@@ -93,7 +96,9 @@
     ],
     "space-before-function-paren": [
       "error",
-      "never"
+      {
+        "asyncArrow": "always"
+      }
     ]
   }
 }

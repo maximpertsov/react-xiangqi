@@ -1,13 +1,17 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { Button, Form } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 
 import * as client from 'services/client';
 
 const initialForm = { formUsername: '', formPassword: '', formError: '' };
 
-const LoginForm = ({ username, setUsername }) => {
+const LoginForm = () => {
+  const dispatch = useDispatch();
+  const username = useSelector((state) => state.username);
+
+  // TODO: should this be part of the global state?
   const [form, setForm] = useState(initialForm);
   const [loading, setLoading] = useState(true);
 
@@ -23,9 +27,9 @@ const LoginForm = ({ username, setUsername }) => {
     (response) => {
       const { data: { access_token: accessToken } } = response;
       const { sub } = jwtDecode(accessToken);
-      setUsername(sub);
+      dispatch({ type: 'set_username', username: sub });
     },
-    [setUsername],
+    [dispatch],
   );
 
   useEffect(
@@ -68,7 +72,7 @@ const LoginForm = ({ username, setUsername }) => {
     }
   };
 
-  const isLoggedIn = () => username !== undefined;
+  const isLoggedIn = () => username !== null;
 
   const renderLoggedIn = () => {
     const loggedInMessage = `Welcome ${username}`;
@@ -110,15 +114,6 @@ const LoginForm = ({ username, setUsername }) => {
   if (loading) return <div>Loading</div>;
 
   return isLoggedIn() ? renderLoggedIn() : renderLoggedOut();
-};
-
-LoginForm.propTypes = {
-  setUsername: PropTypes.func.isRequired,
-  username: PropTypes.string,
-};
-
-LoginForm.defaultProps = {
-  username: undefined,
 };
 
 export default LoginForm;
