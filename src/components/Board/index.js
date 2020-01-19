@@ -1,15 +1,15 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { jsx, css } from '@emotion/core';
 
-import { useState, useLayoutEffect } from "react";
-import PropTypes from "prop-types";
+import { useState, useLayoutEffect } from 'react';
+import PropTypes from 'prop-types';
 
-import * as logic from "services/logic";
-import * as styles from "commonStyles";
+import * as logic from 'services/logic';
+import * as styles from 'commonStyles';
 
-import Square from "./components/Square";
+import Square from './components/Square';
 
-import boardImg from "./board-1000px.svg.png";
+import boardImg from './board-1000px.svg.png';
 
 const ANIMATION_DELAY = 150;
 
