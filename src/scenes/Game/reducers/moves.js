@@ -30,26 +30,26 @@ const addMove = (state, { moveId, fromSlot, toSlot, pending }) => {
   return update(state, { $push: [move] });
 };
 
-const cancelMoves = (state) => {
+const cancelMoves = state => {
   const confirmedMoves = state.filter(({ pending }) => !pending);
 
   return confirmedMoves;
 };
 
-const confirmMoves = (state) => {
-  return state.map((move) => ({ ...move, pending: false }));
+const confirmMoves = state => {
+  return state.map(move => ({ ...move, pending: false }));
 };
 
 const moves = (state = initialMoves, action) => {
   switch (action.type) {
-  case 'add_move':
-    return addMove(state, action);
-  case 'cancel_moves':
-    return cancelMoves(state);
-  case 'confirm_moves':
-    return confirmMoves(state);
-  default:
-    return state;
+    case 'add_move':
+      return addMove(state, action);
+    case 'cancel_moves':
+      return cancelMoves(state);
+    case 'confirm_moves':
+      return confirmMoves(state);
+    default:
+      return state;
   }
 };
 
@@ -65,9 +65,9 @@ const getMoveIndex = (state, moveId) => {
   return -1;
 };
 
-export const getMoveCount = (state) => state.length - 1;
+export const getMoveCount = state => state.length - 1;
 
-export const getLastMove = (state) => state[getMoveCount(state)];
+export const getLastMove = state => state[getMoveCount(state)];
 
 export const getMoveById = (state, moveId) => {
   const moveIndex = getMoveIndex(state, moveId);
@@ -85,7 +85,7 @@ export const getNextMove = (state, moveId) => {
   return state[Math.min(moveIndex + 1, moveCount)];
 };
 
-export const getNextMoveColor = (state) => {
+export const getNextMoveColor = state => {
   if (getMoveCount(state) === 0) return Color.RED;
 
   const { piece } = getLastMove(state);
