@@ -1,8 +1,11 @@
-import { getMoves } from 'services/client';
+import { getGameList, getMoves } from 'services/client';
 import { getSlot } from 'services/logic';
 
 let nextMoveId = 0;
 
+/************/
+/*** Game ***/
+/************/
 export const addMove = ({ fromSlot, toSlot, pending }) => ({
   type: 'add_move',
   moveId: ++nextMoveId,
@@ -55,6 +58,17 @@ export const fetchMoves = ({ gameSlug, moves }) =>
       if (lastMoveId) dispatch(selectMove({ moveId: lastMoveId }));
       dispatch(toggleLoading({ loading: false }));
     }
+  };
+
+/************/
+/*** Home ***/
+/************/
+export const fetchGames = ({ username }) =>
+  async(dispatch) => {
+    if (username === null) return;
+
+    const { data: { games } }  = await getGameList({ username });
+    dispatch({ type: 'set_games', games });
   };
 
 export default {};

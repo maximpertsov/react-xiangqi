@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchGames } from 'actions';
 
 import Game from 'scenes/Game';
-import * as client from 'services/client';
 
 import GameList from './components/GameList';
 import LoginForm from './components/LoginForm';
@@ -16,34 +17,17 @@ const PLAYER_VS_CPU = 'player_vs_cpu';
 const CPU_VS_CPU = 'cpu_vs_cpu';
 
 const Home = () => {
+  // TODO: Consider making this part of global state
+  const [gameType, setGameType] = useState(MENU);
+
+  const dispatch = useDispatch();
   const gameSlug = useSelector((state) => state.gameSlug);
   const username = useSelector((state) => state.username);
 
-  // TODO: move to global state?
-  const [gameType, setGameType] = useState(MENU);
-  const [games, setGames] = useState([]);
-
-  const fetchGames = useCallback(
-    async() => {
-      const response = await client.getGameList({ username });
-      setGames(response.data.games);
-    },
-    [username],
-  );
-
   useEffect(
-    () => {
-      if (username === null) return;
-      fetchGames();
-    },
-    [fetchGames, username],
+    () => { dispatch(fetchGames({ username })); },
+    [dispatch, username],
   );
-
-  const renderGameList = () => {
-    if (username !== null) {
-      return <GameList games={games} />;
-    }
-  };
 
   const renderMenu = () => (
     <Container textAlign="center">
@@ -51,7 +35,7 @@ const Home = () => {
         <Segment>
           <Header size="large">Play online</Header>
           <LoginForm />
-          { renderGameList() }
+          { username !== null && <GameList /> }
         </Segment>
         <Segment>
           <Header size="large">Other modes</Header>

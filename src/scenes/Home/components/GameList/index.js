@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import GameLink from './components/GameLink';
 
@@ -12,26 +12,18 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const GameList = ({ games }) => {
-  // TODO: fetch instead of passing in?
-  const gameList = games.map(
-    (game) => <GameLink key={game.slug} slug={game.slug} />
-  );
+const GameList = () => {
+  // TODO: define custom selector
+  const gameSlugs = useSelector((state) => state.games.map(({ slug }) => slug));
 
   return (
     <Wrapper className="GameList">
       Games in play
       <div>
-        {gameList}
+        {gameSlugs.map((slug) => <GameLink key={slug} slug={slug} />)}
       </div>
     </Wrapper>
   );
-};
-
-GameList.propTypes = {
-  games: PropTypes.arrayOf(
-    PropTypes.shape({ slug: PropTypes.string }),
-  ).isRequired,
 };
 
 export default GameList;
