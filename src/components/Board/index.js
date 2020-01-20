@@ -2,6 +2,8 @@ import React, { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { makeMove } from 'actions';
 import { getSelectedMove } from 'reducers';
 
 import * as logic from 'services/logic';
@@ -38,7 +40,6 @@ ${styles.MEDIA_LARGE} {
 const ANIMATION_DELAY = 150;
 
 const Board = ({
-  handleLegalMove,
   legalMoves,
   nextMoveColor,
   reversed,
@@ -85,7 +86,7 @@ const Board = ({
       setMoveX(reversed ? fromX - toX : toX - fromX);
       setMoveY(reversed ? fromY - toY : toY - fromY);
       setTimeout(() => {
-        handleLegalMove({ fromSlot, toSlot });
+        dispatch(makeMove({ fromSlot, toSlot, pending: true }));
         setMoveX(0);
         setMoveY(0);
         dispatch({ type: 'set_selected_slot', selectedSlot: null });
@@ -148,7 +149,6 @@ const Board = ({
 };
 
 Board.propTypes = {
-  handleLegalMove: PropTypes.func.isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   nextMoveColor: PropTypes.string.isRequired,
   reversed: PropTypes.bool.isRequired,

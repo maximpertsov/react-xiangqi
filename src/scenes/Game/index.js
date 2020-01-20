@@ -91,13 +91,6 @@ const Game = () => {
 
   // Move updates
 
-  const handleLegalMove = useCallback(
-    ({ fromSlot, toSlot }) => {
-      dispatch(makeMove({ fromSlot, toSlot, pending: true }));
-    },
-    [dispatch],
-  );
-
   const cancelMove = useCallback(() => {
     dispatch({ type: 'cancel_moves' });
   }, [dispatch]);
@@ -155,7 +148,6 @@ const Game = () => {
           </div>
           <Board
             nextMoveColor={selectors.nextMoveColor}
-            handleLegalMove={handleLegalMove}
             legalMoves={selectors.legalMoves}
             reversed={selectors.initialUserOrientation}
           />
