@@ -1,8 +1,6 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-
-import { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 
 import * as logic from 'services/logic';
 import * as styles from 'commonStyles';
@@ -10,6 +8,30 @@ import * as styles from 'commonStyles';
 import Square from './components/Square';
 
 import boardImg from './board-1000px.svg.png';
+
+const Wrapper = styled.div`
+background-image: url(${boardImg});
+background-size: contain;
+background-repeat: no-repeat;
+background-position: top;
+display: grid;
+${styles.MEDIA_TINY} {
+  grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_TINY});
+  grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_TINY});
+}
+${styles.MEDIA_SMALL} {
+  grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_SMALL});
+  grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_SMALL});
+}
+${styles.MEDIA_MEDIUM} {
+  grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_MEDIUM});
+  grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_MEDIUM});
+}
+${styles.MEDIA_LARGE} {
+  grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_LARGE});
+  grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_LARGE});
+}
+`;
 
 const ANIMATION_DELAY = 150;
 
@@ -109,34 +131,9 @@ const Board = ({
     });
 
   return (
-    <div
-      className="Board"
-      css={css`
-        background-image: url(${boardImg});
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: top;
-        display: grid;
-        ${styles.MEDIA_TINY} {
-          grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_TINY});
-          grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_TINY});
-        }
-        ${styles.MEDIA_SMALL} {
-          grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_SMALL});
-          grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_SMALL});
-        }
-        ${styles.MEDIA_MEDIUM} {
-          grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_MEDIUM});
-          grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_MEDIUM});
-        }
-        ${styles.MEDIA_LARGE} {
-          grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_LARGE});
-          grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_LARGE});
-        }
-      `}
-    >
+    <Wrapper className="Board">
       {renderSquares()}
-    </div>
+    </Wrapper>
   );
 };
 
