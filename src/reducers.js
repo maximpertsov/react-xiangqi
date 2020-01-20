@@ -10,6 +10,8 @@ import loading from 'scenes/Game/reducers/loading';
 import moves, * as fromMoves from 'scenes/Game/reducers/moves';
 import players from 'scenes/Game/reducers/players';
 import selectedMoveId from 'scenes/Game/reducers/selectedMoveId';
+// Board
+import selectedSlot from 'components/Board/reducers/selectedSlot';
 
 const rootReducer = combineReducers({
   // Home,
@@ -23,6 +25,8 @@ const rootReducer = combineReducers({
   moves,
   players,
   selectedMoveId,
+  // Board
+  selectedSlot,
 });
 
 export default rootReducer;
