@@ -59,7 +59,7 @@ const MoveHistory = () => {
 
   return (
     <Segment clearing tertiary>
-      <Wrapper>
+      <Wrapper className="MoveHistory">
         {fullMoves}
       </Wrapper>
     </Segment>
