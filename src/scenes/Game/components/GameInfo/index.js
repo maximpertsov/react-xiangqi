@@ -5,8 +5,14 @@ import { useSelector } from 'react-redux';
 import { getNextMovePlayer, getUserColor } from 'reducers';
 
 
+// TODO: since this style also appears in the Player component,
+// TODO: consider moving to commonStyles or shared scss?
 const Wrapper = styled.div`
+align-items: center;
 color: #999;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
 `;
 
 const GameInfo = ({ hasLegalMoves }) => {
