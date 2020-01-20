@@ -139,12 +139,12 @@ const Game = () => {
             `}
           >
             <Player {...selectors.currentPlayer} />
-            <GameInfo
-              activePlayer={selectors.nextMovePlayer}
-              hasLegalMoves={selectors.hasLegalMoves}
-              userColor={selectors.userColor}
-            />
           </div>
+          <GameInfo
+            activePlayer={selectors.nextMovePlayer}
+            hasLegalMoves={selectors.hasLegalMoves}
+            userColor={selectors.userColor}
+          />
           <ConfirmMoveMenu />
           <MoveHistory />
         </div>
