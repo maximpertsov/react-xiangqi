@@ -1,11 +1,8 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-
-import { Dimmer, Loader, Segment } from 'semantic-ui-react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import styled from '@emotion/styled';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import useEventListener from '@use-it/event-listener';
-
 import { makeMove, selectMove } from 'actions';
 import {
   getMoveCount,
@@ -28,6 +25,14 @@ import MoveHistory from './components/MoveHistory';
 import Player from './components/Player';
 
 import * as gameSelectors from './selectors';
+
+const Wrapper = styled.div`
+align-items: center;
+display: flex;
+flex-direction: column;
+height: 100%;
+justify-content: space-around;
+`;
 
 const Game = () => {
   const dispatch = useDispatch();
@@ -95,24 +100,11 @@ const Game = () => {
         basic
         blurring
         dimmed={active}
-        className="Game"
-        css={css`
-          align-items: center;
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-        `}
       >
         <Dimmer active={active} page>
           <Loader>Loading</Loader>
         </Dimmer>
-        <div
-          css={css`
-            display: flex;
-            justify-content: space-around;
-            flex-direction: column;
-          `}
-        >
+        <Wrapper className="Game">
           <Player {...selectors.otherPlayer} />
           <Board
             nextMoveColor={selectors.nextMoveColor}
@@ -123,7 +115,7 @@ const Game = () => {
           <GameInfo hasLegalMoves={selectors.hasLegalMoves} />
           <ConfirmMoveMenu />
           <MoveHistory />
-        </div>
+        </Wrapper>
       </Dimmer.Dimmable>
     </GameClient>
   );
