@@ -14,6 +14,9 @@ import {
   getPreviousMove,
   getNextMove,
   getNextMoveColor,
+  getOtherPlayer,
+  getInitialUserOrientation,
+  getCurrentPlayer,
 } from 'reducers';
 
 import Board from 'components/Board';
@@ -43,11 +46,9 @@ const Game = () => {
       previousMove: getPreviousMove(state),
       nextMove: getNextMove(state),
       // players
-      nextMovePlayer: gameSelectors.getNextMovePlayer(state),
-      userColor: gameSelectors.getUserColor(state),
-      otherPlayer: gameSelectors.getOtherPlayer(state),
-      initialUserOrientation: gameSelectors.getInitialUserOrientation(state),
-      currentPlayer: gameSelectors.getCurrentPlayer(state),
+      otherPlayer: getOtherPlayer(state),
+      initialUserOrientation: getInitialUserOrientation(state),
+      currentPlayer: getCurrentPlayer(state),
       // game logic
       legalMoves: gameSelectors.getLegalMoves(state),
       hasLegalMoves: gameSelectors.hasLegalMoves(state),
@@ -86,9 +87,6 @@ const Game = () => {
         break;
     }
   });
-
-  // Move updates
-
 
   return (
     <GameClient>
@@ -140,11 +138,7 @@ const Game = () => {
           >
             <Player {...selectors.currentPlayer} />
           </div>
-          <GameInfo
-            activePlayer={selectors.nextMovePlayer}
-            hasLegalMoves={selectors.hasLegalMoves}
-            userColor={selectors.userColor}
-          />
+          <GameInfo hasLegalMoves={selectors.hasLegalMoves} />
           <ConfirmMoveMenu />
           <MoveHistory />
         </div>

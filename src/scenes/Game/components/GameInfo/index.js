@@ -1,10 +1,20 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import React from 'react';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { getNextMovePlayer, getUserColor } from 'reducers';
 
-const GameInfo = ({ activePlayer, hasLegalMoves, userColor }) => {
+
+const Wrapper = styled.div`
+color: #999;
+`;
+
+const GameInfo = ({ hasLegalMoves }) => {
+  const nextMovePlayer = useSelector(state => getNextMovePlayer(state));
+  const userColor = useSelector(state => getUserColor(state));
+
   const userIsActive = () => {
-    const { color } = activePlayer;
+    const { color } = nextMovePlayer;
     return color === userColor;
   };
 
@@ -12,7 +22,7 @@ const GameInfo = ({ activePlayer, hasLegalMoves, userColor }) => {
 
   const getMessage = () => {
     if (loadingUser()) {
-      const { color } = activePlayer;
+      const { color } = nextMovePlayer;
       return `${color}'s turn`;
     }
     if (!hasLegalMoves) {
@@ -23,29 +33,14 @@ const GameInfo = ({ activePlayer, hasLegalMoves, userColor }) => {
   };
 
   return (
-    <div
-      className="GameInfo"
-      css={css`
-        color: #999;
-      `}
-    >
+    <Wrapper className="GameInfo">
       <p>{ getMessage() }</p>
-    </div>
+    </Wrapper>
   );
 };
 
 GameInfo.propTypes = {
-  activePlayer: PropTypes.shape({
-    color: PropTypes.string.isRequired,
-    name: PropTypes.string,
-  }),
   hasLegalMoves: PropTypes.bool.isRequired,
-  userColor: PropTypes.string,
-};
-
-GameInfo.defaultProps = {
-  activePlayer: undefined,
-  userColor: undefined,
 };
 
 export default GameInfo;
