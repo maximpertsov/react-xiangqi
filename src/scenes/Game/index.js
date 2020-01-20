@@ -18,7 +18,7 @@ import {
 
 import Board from 'components/Board';
 
-import ConfirmMenu from './components/ConfirmMenu';
+import ConfirmMoveMenu from './components/ConfirmMoveMenu';
 import GameInfo from './components/GameInfo';
 import GameClient from './components/GameClient';
 import MoveHistory from './components/MoveHistory';
@@ -92,8 +92,10 @@ const Game = () => {
   // Move updates
 
   const cancelMove = useCallback(() => {
+    // HACK: select previous move before dropping the cancelled move
+    dispatch(selectMove({ moveId: selectors.previousMove.id }));
     dispatch({ type: 'cancel_moves' });
-  }, [dispatch]);
+  }, [dispatch, selectors.previousMove.id]);
 
   const handleConfirmedMove = useCallback(async () => {
     const { fromSlot, toSlot, pending } = selectors.lastMove;
@@ -166,7 +168,7 @@ const Game = () => {
               userColor={selectors.userColor}
             />
           </div>
-          <ConfirmMenu
+          <ConfirmMoveMenu
             yesHandler={handleConfirmedMove}
             noHandler={cancelMove}
             show={selectors.lastMove.pending}
