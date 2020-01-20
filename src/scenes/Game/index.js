@@ -35,7 +35,6 @@ const Game = () => {
     state => ({
       // base state fields
       loading: state.loading,
-      moves: state.moves,
       // moves
       moveCount: getMoveCount(state),
       lastMove: getLastMove(state),
