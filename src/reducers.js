@@ -82,7 +82,7 @@ export const getUserColor = ({ players, username }) => {
 };
 
 export const getOtherPlayer = ({ gameSlug, players, username }) => {
-  if (gameSlug === null) getBlackPlayer({ players });
+  if (gameSlug === null) return getBlackPlayer({ players });
   return players.find(p => p.name !== username);
 };
 
@@ -92,6 +92,6 @@ export const getInitialUserOrientation = ({ players, username }) =>
 
 // TODO: move to layout class that displays board and players
 export const getCurrentPlayer = ({ gameSlug, players, username }) => {
-  if (gameSlug === null) getRedPlayer({ players });
+  if (gameSlug === null) return getRedPlayer({ players });
   return getUserPlayer({ players, username });
 };

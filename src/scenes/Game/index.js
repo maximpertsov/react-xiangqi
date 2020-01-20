@@ -113,31 +113,13 @@ const Game = () => {
             flex-direction: column;
           `}
         >
-          <div
-            css={css`
-              display: flex;
-              align-items: center;
-              justify-content: space-around;
-              flex-direction: column;
-            `}
-          >
-            <Player {...selectors.otherPlayer} />
-          </div>
+          <Player {...selectors.otherPlayer} />
           <Board
             nextMoveColor={selectors.nextMoveColor}
             legalMoves={selectors.legalMoves}
             reversed={selectors.initialUserOrientation}
           />
-          <div
-            css={css`
-              display: flex;
-              align-items: center;
-              justify-content: space-around;
-              flex-direction: row;
-            `}
-          >
-            <Player {...selectors.currentPlayer} />
-          </div>
+          <Player {...selectors.currentPlayer} />
           <GameInfo hasLegalMoves={selectors.hasLegalMoves} />
           <ConfirmMoveMenu />
           <MoveHistory />
