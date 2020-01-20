@@ -1,34 +1,43 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { postMove, selectMove } from 'actions';
+import { getLastMove, getPreviousMove } from 'reducers';
 
 import ConfirmMenu from 'components/ConfirmMenu';
 
-const ConfirmMoveMenu = ({
-  yesHandler, noHandler, show, disabled,
-}) => {
+const ConfirmMoveMenu = () => {
+  const dispatch = useDispatch();
+
+  const gameSlug = useSelector(state => state.gameSlug);
+  const lastMove = useSelector(state => getLastMove(state));
+  const moves = useSelector(state => state.moves);
+  const previousMove = useSelector(state => getPreviousMove(state));
+  const username = useSelector(state => state.username);
+
+  const confirmMove = useCallback(async () => {
+    const { fromSlot, toSlot, pending } = lastMove;
+    if (!pending) return;
+
+    dispatch(postMove({ gameSlug, fromSlot, toSlot, moves, username }));
+    dispatch({ type: 'confirm_moves' });
+  }, [dispatch, gameSlug, lastMove, moves, username]);
+
+  const cancelMove = useCallback(() => {
+    // HACK: select previous move before dropping the cancelled move
+    dispatch(selectMove({ moveId: previousMove.id }));
+    dispatch({ type: 'cancel_moves' });
+  }, [dispatch, previousMove.id]);
+
 
   return (
     <ConfirmMenu
-      yesHandler={yesHandler}
-      noHandler={noHandler}
-      show={show}
-      disabled={disabled}
+      yesHandler={confirmMove}
+      noHandler={cancelMove}
+      show={lastMove.pending}
+      disabled={gameSlug === null}
     />
   );
-};
-
-ConfirmMoveMenu.propTypes = {
-  yesHandler: PropTypes.func,
-  noHandler: PropTypes.func,
-  show: PropTypes.bool,
-  disabled: PropTypes.bool,
-};
-
-ConfirmMoveMenu.defaultProps = {
-  yesHandler: () => {},
-  noHandler: () => {},
-  show: true,
-  disabled: false,
 };
 
 export default ConfirmMoveMenu;

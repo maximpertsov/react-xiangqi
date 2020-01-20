@@ -2,11 +2,11 @@
 import { jsx, css } from '@emotion/core';
 
 import { Dimmer, Loader, Segment } from 'semantic-ui-react';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
 
-import { makeMove, postMove, selectMove } from 'actions';
+import { makeMove, selectMove } from 'actions';
 import {
   getMoveCount,
   getLastMove,
@@ -30,7 +30,6 @@ const Game = () => {
   const dispatch = useDispatch();
   const autoMove = useSelector(state => state.autoMove);
   const gameSlug = useSelector(state => state.gameSlug);
-  const username = useSelector(state => state.username);
 
   const selectors = useSelector(
     state => ({
@@ -91,27 +90,6 @@ const Game = () => {
 
   // Move updates
 
-  const cancelMove = useCallback(() => {
-    // HACK: select previous move before dropping the cancelled move
-    dispatch(selectMove({ moveId: selectors.previousMove.id }));
-    dispatch({ type: 'cancel_moves' });
-  }, [dispatch, selectors.previousMove.id]);
-
-  const handleConfirmedMove = useCallback(async () => {
-    const { fromSlot, toSlot, pending } = selectors.lastMove;
-    if (!pending) return;
-
-    dispatch(
-      postMove({
-        fromSlot,
-        toSlot,
-        gameSlug,
-        moves: selectors.moves,
-        username,
-      }),
-    );
-    dispatch({ type: 'confirm_moves' });
-  }, [dispatch, gameSlug, selectors, username]);
 
   return (
     <GameClient>
@@ -168,12 +146,7 @@ const Game = () => {
               userColor={selectors.userColor}
             />
           </div>
-          <ConfirmMoveMenu
-            yesHandler={handleConfirmedMove}
-            noHandler={cancelMove}
-            show={selectors.lastMove.pending}
-            disabled={gameSlug === null}
-          />
+          <ConfirmMoveMenu />
           <MoveHistory />
         </div>
       </Dimmer.Dimmable>
