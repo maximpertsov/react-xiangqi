@@ -1,7 +1,7 @@
 import update from 'immutability-helper';
 import sortedIndexBy from 'lodash/sortedIndexBy';
 
-import XiangqiBoard, * as logic from 'services/logic';
+import XiangqiBoard from 'services/logic';
 import { Color } from 'services/logic/constants';
 import { isRed } from 'services/logic/utils';
 
@@ -10,9 +10,9 @@ const DEFAULT_FEN = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR
 
 const initialMoves = [{
   id: 0,
+  fromSlot: undefined,
+  toSlot: undefined,
   piece: undefined,
-  fromPos: undefined,
-  toPos: undefined,
   board: new XiangqiBoard({ fen: DEFAULT_FEN }),
   pending: false,
 }];
@@ -21,8 +21,8 @@ const addMove = (state, { moveId, fromSlot, toSlot, pending }) => {
   const { board } = state[state.length - 1];
   const move = {
     id: moveId,
-    fromPos: logic.getRankFile(fromSlot),
-    toPos: logic.getRankFile(toSlot),
+    fromSlot,
+    toSlot,
     piece: board.getPiece(fromSlot),
     board: board.move(fromSlot, toSlot),
     pending,

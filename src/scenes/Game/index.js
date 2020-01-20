@@ -103,13 +103,13 @@ const Game = () => {
   }, [dispatch]);
 
   const handleConfirmedMove = useCallback(async () => {
-    const { fromPos, toPos, pending } = selectors.lastMove;
+    const { fromSlot, toSlot, pending } = selectors.lastMove;
     if (!pending) return;
 
     dispatch(
       postMove({
-        fromPos,
-        toPos,
+        fromSlot,
+        toSlot,
         gameSlug,
         moves: selectors.moves,
         username,

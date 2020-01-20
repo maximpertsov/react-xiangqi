@@ -46,7 +46,7 @@ const Board = ({
   const dispatch = useDispatch();
   const selectedSlot = useSelector(state => state.selectedSlot);
   const {
-    board, fromPos, toPos,
+    board, fromSlot: moveFromSlot, toSlot: moveToSlot,
   } = useSelector(state => getSelectedMove(state));
 
   // TODO: use key frame animation instead of state?
@@ -118,13 +118,8 @@ const Board = ({
   const getSlot = (b, i) => (reversed ? b.length - i - 1 : i);
 
   // TODO: make this a selector
-  const inLastMove = slot => {
-    const fromSlot = fromPos === undefined ?
-      undefined : logic.getSlot(...fromPos);
-    const toSlot = toPos === undefined ?
-      undefined : logic.getSlot(...toPos);
-    return slot === fromSlot || slot === toSlot;
-  };
+  const inLastMove = slot =>
+    slot === moveFromSlot || slot === moveToSlot;
 
   const renderSquares = () =>
     board.board.map((_, i, b) => {
