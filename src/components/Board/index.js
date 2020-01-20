@@ -1,6 +1,7 @@
 import React, { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as logic from 'services/logic';
 import * as styles from 'commonStyles';
@@ -43,7 +44,10 @@ const Board = ({
   nextMoveColor,
   reversed,
 }) => {
-  const [selectedSlot, setSelectedSlot] = useState(undefined);
+  const dispatch = useDispatch();
+  const selectedSlot = useSelector(state => state.selectedSlot);
+
+  // TODO: use key frame animation instead of state?
   const [moveX, setMoveX] = useState(0);
   const [moveY, setMoveY] = useState(0);
 
@@ -53,17 +57,17 @@ const Board = ({
   // seems to be fast enough on a production build.
   useLayoutEffect(
     () => {
-      setSelectedSlot(undefined);
+      dispatch({ type: 'set_selected_slot', selectedSlot: null });
     },
     // TODO: is it too expensive to check if the board changes?
     // Can I key on another prop update?
-    [board],
+    [board, dispatch],
   );
 
   const getPieceCode = slot => board.getPiece(slot) || undefined;
 
   const selectedCanCapture = slot => {
-    if (selectedSlot === undefined) return false;
+    if (selectedSlot === null) return false;
     if (!board.isOccupied(selectedSlot)) return false;
     if (!board.isOccupied(slot)) return false;
     return !board.sameColor(slot, selectedSlot);
@@ -82,27 +86,27 @@ const Board = ({
         handleLegalMove({ fromSlot, toSlot });
         setMoveX(0);
         setMoveY(0);
-        setSelectedSlot(undefined);
+        dispatch({ type: 'set_selected_slot', selectedSlot: null });
       }, ANIMATION_DELAY);
     } else {
-      setSelectedSlot(undefined);
+      dispatch({ type: 'set_selected_slot', selectedSlot: null });
     }
   };
 
   const handleSquareClick = slot => () => {
     if (slot === selectedSlot) {
-      setSelectedSlot(undefined);
+      dispatch({ type: 'set_selected_slot', selectedSlot: null });
     } else if (board.isOccupied(slot) && !selectedCanCapture(slot)) {
-      setSelectedSlot(slot);
-    } else if (selectedSlot !== undefined) {
+      dispatch({ type: 'set_selected_slot', selectedSlot: slot });
+    } else if (selectedSlot !== null) {
       handleMove(selectedSlot, slot);
     } else {
-      setSelectedSlot(undefined);
+      dispatch({ type: 'set_selected_slot', selectedSlot: null });
     }
   };
 
   const getTargets = () =>
-    selectedSlot === undefined ? [] : legalMoves[selectedSlot];
+    selectedSlot === null ? [] : legalMoves[selectedSlot];
 
   const inCheck = slot => {
     if (!board.kingInCheck(nextMoveColor)) return false;
