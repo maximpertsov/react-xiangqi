@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { getNextMovePlayer, getUserColor } from 'reducers';
 
-
 // TODO: since this style also appears in the Player component,
 // TODO: consider moving to commonStyles or shared scss?
 const Wrapper = styled.div`
