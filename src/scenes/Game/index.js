@@ -107,7 +107,6 @@ const Game = () => {
         <Wrapper className="Game">
           <Player {...selectors.otherPlayer} />
           <Board
-            nextMoveColor={selectors.nextMoveColor}
             legalMoves={selectors.legalMoves}
             reversed={selectors.initialUserOrientation}
           />

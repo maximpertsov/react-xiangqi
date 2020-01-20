@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { makeMove } from 'actions';
-import { getSelectedMove } from 'reducers';
+import { getNextMoveColor, getSelectedMove } from 'reducers';
 
 import * as logic from 'services/logic';
 import * as styles from 'commonStyles';
@@ -39,12 +39,9 @@ ${styles.MEDIA_LARGE} {
 
 const ANIMATION_DELAY = 150;
 
-const Board = ({
-  legalMoves,
-  nextMoveColor,
-  reversed,
-}) => {
+const Board = ({ legalMoves, reversed }) => {
   const dispatch = useDispatch();
+  const nextMoveColor = useSelector(state => getNextMoveColor(state));
   const selectedSlot = useSelector(state => state.selectedSlot);
   const {
     board, fromSlot: moveFromSlot, toSlot: moveToSlot,
@@ -150,7 +147,6 @@ const Board = ({
 
 Board.propTypes = {
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-  nextMoveColor: PropTypes.string.isRequired,
   reversed: PropTypes.bool.isRequired,
 };
 
