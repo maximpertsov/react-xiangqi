@@ -17,7 +17,6 @@ import {
 } from 'reducers';
 
 import Board from 'components/Board';
-import { getSlot } from 'services/logic/utils';
 
 import ConfirmMenu from './components/ConfirmMenu';
 import GameInfo from './components/GameInfo';
@@ -119,13 +118,6 @@ const Game = () => {
     dispatch({ type: 'confirm_moves' });
   }, [dispatch, gameSlug, selectors, username]);
 
-  // TODO: just pass selectedMove down instead of the board and move separately?
-  const { board: selectedBoard, fromPos, toPos } = selectors.selectedMove;
-  const lastMoveOnSelectedBoard = {
-    fromSlot: fromPos === undefined ? undefined : getSlot(...fromPos),
-    toSlot: toPos === undefined ? undefined : getSlot(...toPos),
-  };
-
   return (
     <GameClient>
       <Dimmer.Dimmable
@@ -162,10 +154,8 @@ const Game = () => {
             <Player {...selectors.otherPlayer} />
           </div>
           <Board
-            board={selectedBoard}
             nextMoveColor={selectors.nextMoveColor}
             handleLegalMove={handleLegalMove}
-            lastMove={lastMoveOnSelectedBoard}
             legalMoves={selectors.legalMoves}
             reversed={selectors.initialUserOrientation}
           />

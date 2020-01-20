@@ -2,6 +2,7 @@ import React, { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
+import { getSelectedMove } from 'reducers';
 
 import * as logic from 'services/logic';
 import * as styles from 'commonStyles';
@@ -37,15 +38,16 @@ ${styles.MEDIA_LARGE} {
 const ANIMATION_DELAY = 150;
 
 const Board = ({
-  board,
   handleLegalMove,
-  lastMove,
   legalMoves,
   nextMoveColor,
   reversed,
 }) => {
   const dispatch = useDispatch();
   const selectedSlot = useSelector(state => state.selectedSlot);
+  const {
+    board, fromPos, toPos,
+  } = useSelector(state => getSelectedMove(state));
 
   // TODO: use key frame animation instead of state?
   const [moveX, setMoveX] = useState(0);
@@ -115,6 +117,15 @@ const Board = ({
 
   const getSlot = (b, i) => (reversed ? b.length - i - 1 : i);
 
+  // TODO: make this a selector
+  const inLastMove = slot => {
+    const fromSlot = fromPos === undefined ?
+      undefined : logic.getSlot(...fromPos);
+    const toSlot = toPos === undefined ?
+      undefined : logic.getSlot(...toPos);
+    return slot === fromSlot || slot === toSlot;
+  };
+
   const renderSquares = () =>
     board.board.map((_, i, b) => {
       const slot = getSlot(b, i);
@@ -124,7 +135,7 @@ const Board = ({
           key={slot}
           handleClick={handleSquareClick(slot)}
           inCheck={inCheck(slot)}
-          inLastMove={slot === lastMove.fromSlot || slot === lastMove.toSlot}
+          inLastMove={inLastMove(slot)}
           pieceCode={getPieceCode(slot)}
           selected={selectedSlot === slot}
           targeted={getTargets().includes(slot)}
@@ -142,18 +153,7 @@ const Board = ({
 };
 
 Board.propTypes = {
-  board: logic.boardPropType.isRequired,
   handleLegalMove: PropTypes.func.isRequired,
-  lastMove: PropTypes.shape({
-    fromSlot: PropTypes.oneOfType([
-      PropTypes.oneOf([undefined]),
-      PropTypes.number,
-    ]),
-    toSlot: PropTypes.oneOfType([
-      PropTypes.oneOf([undefined]),
-      PropTypes.number,
-    ]),
-  }).isRequired,
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   nextMoveColor: PropTypes.string.isRequired,
   reversed: PropTypes.bool.isRequired,
