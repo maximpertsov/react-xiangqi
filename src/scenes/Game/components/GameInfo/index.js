@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { getNextMovePlayer, getUserColor } from 'reducers';
+import { getHasLegalMoves, getNextMovePlayer, getUserColor } from 'reducers';
 
 // TODO: since this style also appears in the Player component,
 // TODO: consider moving to commonStyles or shared scss?
@@ -14,7 +13,8 @@ flex-direction: column;
 justify-content: space-around;
 `;
 
-const GameInfo = ({ hasLegalMoves }) => {
+const GameInfo = () => {
+  const hasLegalMoves = useSelector(state => getHasLegalMoves(state));
   const nextMovePlayer = useSelector(state => getNextMovePlayer(state));
   const userColor = useSelector(state => getUserColor(state));
 
@@ -42,10 +42,6 @@ const GameInfo = ({ hasLegalMoves }) => {
       <p>{ getMessage() }</p>
     </Wrapper>
   );
-};
-
-GameInfo.propTypes = {
-  hasLegalMoves: PropTypes.bool.isRequired,
 };
 
 export default GameInfo;

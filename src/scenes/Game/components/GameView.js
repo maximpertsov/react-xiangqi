@@ -8,8 +8,6 @@ import ConfirmMoveMenu from '../components/ConfirmMoveMenu';
 import GameInfo from '../components/GameInfo';
 import MoveHistory from '../components/MoveHistory';
 import Player from '../components/Player';
-// TODO: smell -- move to reducers
-import * as gameSelectors from '../selectors';
 
 const Wrapper = styled.div`
 align-items: center;
@@ -28,9 +26,6 @@ const GameView = () => {
     && getMoveCount(state) <= 1
   );
   const currentPlayer = useSelector(state => getCurrentPlayer(state));
-  const hasLegalMoves = useSelector(state =>
-    gameSelectors.hasLegalMoves(state));
-  const legalMoves = useSelector(state => gameSelectors.getLegalMoves(state));
   const otherPlayer =  useSelector(state => getOtherPlayer(state));
 
   return (
@@ -45,9 +40,9 @@ const GameView = () => {
       </Dimmer>
       <Wrapper className="Game">
         <Player {...otherPlayer} />
-        <Board legalMoves={legalMoves} />
+        <Board legalMoves />
         <Player {...currentPlayer} />
-        <GameInfo hasLegalMoves={hasLegalMoves} />
+        <GameInfo hasLegalMoves />
         <ConfirmMoveMenu />
         <MoveHistory />
       </Wrapper>
