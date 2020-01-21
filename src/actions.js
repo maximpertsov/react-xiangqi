@@ -1,6 +1,7 @@
 import * as client from 'services/client';
 import { getSlot } from 'services/logic';
 import { Color } from 'services/logic/constants';
+import { getRankFile } from 'services/logic/utils';
 
 /************/
 /*** Game ***/
@@ -100,9 +101,9 @@ export const pollMoves = ({
 
 export const postMove = ({
   gameSlug,
-  fromPos,
   moves,
-  toPos,
+  fromSlot,
+  toSlot,
   username,
 }) => async dispatch => {
   if (gameSlug === null) return;
@@ -111,8 +112,8 @@ export const postMove = ({
     const { status } = await client.postMove({
       gameSlug,
       username,
-      fromPos,
-      toPos,
+      fromPos: getRankFile(fromSlot),
+      toPos: getRankFile(toSlot),
     });
     if (status !== 201) dispatch(fetchMoves({ gameSlug, moves }));
   } catch (error) {

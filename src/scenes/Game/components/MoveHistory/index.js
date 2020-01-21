@@ -8,7 +8,7 @@ import * as styles from 'commonStyles';
 import Move from './components/Move';
 import FullMove from './components/FullMove';
 
-const cssMoveColumns = (columns) =>
+const cssMoveColumns = columns =>
   Array(columns).fill('1fr').join(' ');
 
 const Wrapper = styled.div`
@@ -41,8 +41,8 @@ const MoveHistory = () => {
     <Move
       key={index}
       moveId={move.id}
-      fromPos={move.fromPos}
-      toPos={move.toPos}
+      fromSlot={move.fromSlot}
+      toSlot={move.toSlot}
       piece={move.piece}
     />
   ));
@@ -59,7 +59,7 @@ const MoveHistory = () => {
 
   return (
     <Segment clearing tertiary>
-      <Wrapper>
+      <Wrapper className="MoveHistory">
         {fullMoves}
       </Wrapper>
     </Segment>

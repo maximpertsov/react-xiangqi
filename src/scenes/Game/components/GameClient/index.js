@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { fetchGame, fetchMoves, pollMoves } from 'actions';
-import { getMoveCount } from 'reducers';
-
-// TODO: move this into selectors collocated with reducers
-import { getNextMovePlayer } from '../../selectors';
+import { getMoveCount, getNextMovePlayer } from 'reducers';
 
 const POLLING_INTERVAL = 2500;
 

@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 
 import { selectMove } from 'actions';
 import { Color } from 'services/logic/constants';
+import { getRankFile } from 'services/logic/utils';
 
 const Wrapper = styled.span(
   ({ isSelected, piece }) => ({
@@ -34,15 +35,15 @@ const P = {
   C: '炮',
 };
 
-const moveText = ({ piece, fromPos, toPos }) => {
-  const [fromRank, fromFile] = fromPos;
-  const [toRank, toFile] = toPos;
+const moveText = ({ piece, fromSlot, toSlot }) => {
+  const [fromRank, fromFile] = getRankFile(fromSlot);
+  const [toRank, toFile] = getRankFile(toSlot);
   return `${P[piece]}${F[fromFile]}${R[fromRank]}-${F[toFile]}${R[toRank]}`;
 };
 
-const Move = ({ fromPos, toPos, piece, moveId }) => {
+const Move = ({ fromSlot, toSlot, piece, moveId }) => {
   const dispatch = useDispatch();
-  const isSelected = useSelector((state) => state.selectedMoveId === moveId);
+  const isSelected = useSelector(state => state.selectedMoveId === moveId);
 
   const handleClick = useCallback(
     () => { dispatch(selectMove({ moveId })); },
@@ -58,22 +59,16 @@ const Move = ({ fromPos, toPos, piece, moveId }) => {
       isSelected={isSelected}
       piece={piece}
     >
-      { moveText({ piece, fromPos, toPos }) }
+      { moveText({ piece, fromSlot, toSlot }) }
     </Wrapper>
   );
 };
 
 Move.propTypes = {
-  fromPos: PropTypes.arrayOf(PropTypes.number),
-  toPos: PropTypes.arrayOf(PropTypes.number),
-  piece: PropTypes.string,
+  fromSlot: PropTypes.number.isRequired,
+  toSlot: PropTypes.number.isRequired,
+  piece: PropTypes.string.isRequired,
   moveId: PropTypes.number.isRequired,
-};
-
-Move.defaultProps = {
-  fromPos: null,
-  toPos: null,
-  piece: null,
 };
 
 export default Move;
