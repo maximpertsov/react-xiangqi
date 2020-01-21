@@ -86,9 +86,15 @@ export const getOtherPlayer = ({ gameSlug, players, username }) => {
   return players.find(p => p.name !== username);
 };
 
-// TODO: add a state that allows players to flip their original orientation
-export const getInitialUserOrientation = ({ players, username }) =>
-  getUserColor({ players, username }) === Color.BLACK;
+export const getBottomPlayerIsRed = (
+  { reversed, players, username } = { reversed: false }
+) => {
+  // TODO: add a state that allows players to flip their original orientation
+  const userColor = getUserColor({ players, username });
+  const init = userColor === undefined
+    || getUserColor({ players, username }) === Color.RED;
+  return reversed ? !init : init;
+};
 
 // TODO: move to layout class that displays board and players
 export const getCurrentPlayer = ({ gameSlug, players, username }) => {

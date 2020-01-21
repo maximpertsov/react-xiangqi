@@ -4,7 +4,11 @@ import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { makeMove } from 'actions';
-import { getNextMoveColor, getSelectedMove } from 'reducers';
+import {
+  getBottomPlayerIsRed,
+  getNextMoveColor,
+  getSelectedMove,
+} from 'reducers';
 
 import * as logic from 'services/logic';
 import * as styles from 'commonStyles';
@@ -39,9 +43,10 @@ ${styles.MEDIA_LARGE} {
 
 const ANIMATION_DELAY = 150;
 
-const Board = ({ legalMoves, reversed }) => {
+const Board = ({ legalMoves }) => {
   const dispatch = useDispatch();
   const nextMoveColor = useSelector(state => getNextMoveColor(state));
+  const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
   const selectedSlot = useSelector(state => state.selectedSlot);
   const {
     board, fromSlot: moveFromSlot, toSlot: moveToSlot,
@@ -80,8 +85,8 @@ const Board = ({ legalMoves, reversed }) => {
     if (isLegalMove(fromSlot, toSlot)) {
       const [fromY, fromX] = logic.getRankFile(fromSlot);
       const [toY, toX] = logic.getRankFile(toSlot);
-      setMoveX(reversed ? fromX - toX : toX - fromX);
-      setMoveY(reversed ? fromY - toY : toY - fromY);
+      setMoveX(bottomPlayerIsRed ? toX - fromX : fromX - toX);
+      setMoveY(bottomPlayerIsRed ? toY - fromY : fromY - toY);
       setTimeout(() => {
         dispatch(makeMove({ fromSlot, toSlot, pending: true }));
         setMoveX(0);
@@ -113,7 +118,7 @@ const Board = ({ legalMoves, reversed }) => {
     return board.findKingSlot(nextMoveColor) === slot;
   };
 
-  const getSlot = (b, i) => (reversed ? b.length - i - 1 : i);
+  const getSlot = (b, i) => bottomPlayerIsRed ? i : b.length - i - 1;
 
   // TODO: make this a selector
   const inLastMove = slot =>
@@ -147,7 +152,6 @@ const Board = ({ legalMoves, reversed }) => {
 
 Board.propTypes = {
   legalMoves: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-  reversed: PropTypes.bool.isRequired,
 };
 
 export default Board;

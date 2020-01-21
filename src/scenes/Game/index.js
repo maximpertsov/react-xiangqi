@@ -12,7 +12,6 @@ import {
   getNextMove,
   getNextMoveColor,
   getOtherPlayer,
-  getInitialUserOrientation,
   getCurrentPlayer,
 } from 'reducers';
 
@@ -52,7 +51,6 @@ const Game = () => {
       nextMove: getNextMove(state),
       // players
       otherPlayer: getOtherPlayer(state),
-      initialUserOrientation: getInitialUserOrientation(state),
       currentPlayer: getCurrentPlayer(state),
       // game logic
       legalMoves: gameSelectors.getLegalMoves(state),
@@ -106,10 +104,7 @@ const Game = () => {
         </Dimmer>
         <Wrapper className="Game">
           <Player {...selectors.otherPlayer} />
-          <Board
-            legalMoves={selectors.legalMoves}
-            reversed={selectors.initialUserOrientation}
-          />
+          <Board legalMoves={selectors.legalMoves} />
           <Player {...selectors.currentPlayer} />
           <GameInfo hasLegalMoves={selectors.hasLegalMoves} />
           <ConfirmMoveMenu />
