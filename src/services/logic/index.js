@@ -339,6 +339,12 @@ export default class XiangqiBoard {
     return this.kingInCheck(color, this.move(fromSlot, toSlot));
   }
 
+  // Board-Slot interactions
+  inCheck({ slot, nextMoveColor }) {
+    if (!this.kingInCheck(nextMoveColor)) return false;
+    return this.findKingSlot(nextMoveColor) === slot;
+  }
+
   toFen(board = this.board) {
     const rows = [];
     board.forEach((piece, idx) => {

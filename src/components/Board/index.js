@@ -18,27 +18,27 @@ import Square from './components/Square';
 import boardImg from './board-1000px.svg.png';
 
 const Wrapper = styled.div`
-background-image: url(${boardImg});
-background-size: contain;
-background-repeat: no-repeat;
-background-position: top;
-display: grid;
-${styles.MEDIA_TINY} {
-  grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_TINY});
-  grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_TINY});
-}
-${styles.MEDIA_SMALL} {
-  grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_SMALL});
-  grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_SMALL});
-}
-${styles.MEDIA_MEDIUM} {
-  grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_MEDIUM});
-  grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_MEDIUM});
-}
-${styles.MEDIA_LARGE} {
-  grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_LARGE});
-  grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_LARGE});
-}
+  background-image: url(${boardImg});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top;
+  display: grid;
+  ${styles.MEDIA_TINY} {
+    grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_TINY});
+    grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_TINY});
+  }
+  ${styles.MEDIA_SMALL} {
+    grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_SMALL});
+    grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_SMALL});
+  }
+  ${styles.MEDIA_MEDIUM} {
+    grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_MEDIUM});
+    grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_MEDIUM});
+  }
+  ${styles.MEDIA_LARGE} {
+    grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_LARGE});
+    grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_LARGE});
+  }
 `;
 
 const ANIMATION_DELAY = 150;
@@ -50,7 +50,9 @@ const Board = () => {
   const nextMoveColor = useSelector(state => getNextMoveColor(state));
   const selectedSlot = useSelector(state => state.selectedSlot);
   const {
-    board, fromSlot: moveFromSlot, toSlot: moveToSlot,
+    board,
+    fromSlot: moveFromSlot,
+    toSlot: moveToSlot,
   } = useSelector(state => getSelectedMove(state));
 
   // TODO: use key frame animation instead of state?
@@ -114,16 +116,10 @@ const Board = () => {
   const getTargets = () =>
     selectedSlot === null ? [] : legalMoves[selectedSlot];
 
-  const inCheck = slot => {
-    if (!board.kingInCheck(nextMoveColor)) return false;
-    return board.findKingSlot(nextMoveColor) === slot;
-  };
-
-  const getSlot = (b, i) => bottomPlayerIsRed ? i : b.length - i - 1;
+  const getSlot = (b, i) => (bottomPlayerIsRed ? i : b.length - i - 1);
 
   // TODO: make this a selector
-  const inLastMove = slot =>
-    slot === moveFromSlot || slot === moveToSlot;
+  const inLastMove = slot => slot === moveFromSlot || slot === moveToSlot;
 
   const renderSquares = () =>
     board.board.map((_, i, b) => {
@@ -133,7 +129,7 @@ const Board = () => {
         <Square
           key={slot}
           handleClick={handleSquareClick(slot)}
-          inCheck={inCheck(slot)}
+          inCheck={board.inCheck({ slot, nextMoveColor })}
           inLastMove={inLastMove(slot)}
           pieceCode={getPieceCode(slot)}
           selected={selectedSlot === slot}
@@ -144,11 +140,7 @@ const Board = () => {
       );
     });
 
-  return (
-    <Wrapper className="Board">
-      {renderSquares()}
-    </Wrapper>
-  );
+  return <Wrapper className="Board">{renderSquares()}</Wrapper>;
 };
 
 export default Board;
