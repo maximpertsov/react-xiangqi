@@ -18,9 +18,7 @@ import * as utils from './utils';
 export { RefType };
 
 // TODO: re-const is ugly
-export const {
-  getSlot, getRank, getFile, getRankFile, fromFen,
-} = utils;
+export const { getSlot, getRank, getFile, getRankFile, fromFen } = utils;
 
 export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
@@ -35,7 +33,7 @@ export default class XiangqiBoard {
       return getSlot(rank, file);
     }
     if (refType === RefType.RANK_FILE_STRING) {
-      const _pos = pos.split(',').map((x) => +x);
+      const _pos = pos.split(',').map(x => +x);
       return this._slot(_pos, RefType.RANK_FILE);
     }
     throw new Error(`Invalid reference type: ${refType}`);
@@ -44,23 +42,23 @@ export default class XiangqiBoard {
   move(fromPos, toPos, refType = RefType.SLOT) {
     const fromSlot = this._slot(fromPos, refType);
     const toSlot = this._slot(toPos, refType);
-    const board = update(update(this.board, {
-      [toSlot]: { $set: this.board[fromSlot] },
-    }), {
-      [fromSlot]: { $set: null },
-    });
+    const board = update(
+      update(this.board, {
+        [toSlot]: { $set: this.board[fromSlot] },
+      }),
+      {
+        [fromSlot]: { $set: null },
+      },
+    );
     return this.new(board);
   }
 
   randomMove(color) {
     const legalMoves = this.legalMovesByColor(color);
-    const randomMoves = legalMoves.reduce(
-      (acc, toSlots, fromSlot) => {
-        if (toSlots.length === 0) return acc;
-        return acc.concat([[fromSlot, sample(toSlots)]]);
-      },
-      [],
-    );
+    const randomMoves = legalMoves.reduce((acc, toSlots, fromSlot) => {
+      if (toSlots.length === 0) return acc;
+      return acc.concat([[fromSlot, sample(toSlots)]]);
+    }, []);
     // TODO: what if no legal move exists?
     return sample(randomMoves);
   }
@@ -158,7 +156,7 @@ export default class XiangqiBoard {
     utils.orthogonalSlots(slot).forEach((firstHop, _, firstHops) => {
       if (this.isOccupied(firstHop)) return;
 
-      utils.diagonalSlots(firstHop).forEach((secondHop) => {
+      utils.diagonalSlots(firstHop).forEach(secondHop => {
         if (firstHops.includes(secondHop) || result.includes(secondHop)) return;
         this.addIfUniversallyLegal(result, slot, secondHop);
       });
@@ -169,7 +167,7 @@ export default class XiangqiBoard {
 
   legalRookMoves(slot) {
     const result = [];
-    ORTHOGONAL_MOVES.forEach((move) => {
+    ORTHOGONAL_MOVES.forEach(move => {
       let toSlot = slot;
       // eslint-disable-next-line no-constant-condition
       while (true) {
@@ -184,7 +182,7 @@ export default class XiangqiBoard {
 
   legalCannonMoves(slot) {
     const result = [];
-    ORTHOGONAL_MOVES.forEach((move) => {
+    ORTHOGONAL_MOVES.forEach(move => {
       let toSlot = slot;
       let vaulted = false;
       // eslint-disable-next-line no-constant-condition
@@ -206,7 +204,7 @@ export default class XiangqiBoard {
 
   legalElephantMoves(slot) {
     const result = [];
-    DIAGONAL_MOVES.forEach((move) => {
+    DIAGONAL_MOVES.forEach(move => {
       const firstHop = utils.tryMove(slot, ...move);
       if (this.isOccupied(firstHop) || this.crossingRiver(slot, firstHop)) {
         return;
@@ -226,21 +224,23 @@ export default class XiangqiBoard {
 
   legalAdvisorMoves(slot) {
     const result = [];
-    utils.diagonalSlots(slot, 1).filter(
-      (s) => this.inPalace(slot, s),
-    ).forEach((s) => {
-      this.addIfUniversallyLegal(result, slot, s);
-    });
+    utils
+      .diagonalSlots(slot, 1)
+      .filter(s => this.inPalace(slot, s))
+      .forEach(s => {
+        this.addIfUniversallyLegal(result, slot, s);
+      });
     return result;
   }
 
   legalKingMoves(slot) {
     const result = [];
-    utils.orthogonalSlots(slot, 1).filter(
-      (s) => this.inPalace(slot, s),
-    ).forEach((s) => {
-      this.addIfUniversallyLegal(result, slot, s);
-    });
+    utils
+      .orthogonalSlots(slot, 1)
+      .filter(s => this.inPalace(slot, s))
+      .forEach(s => {
+        this.addIfUniversallyLegal(result, slot, s);
+      });
     return result;
   }
 
@@ -257,15 +257,15 @@ export default class XiangqiBoard {
   }
 
   legalMoves(allowSelfCheck = false) {
-    const result = this.board.map(
-      (piece, slot) => this.legalMovePiece(piece, slot),
+    const result = this.board.map((piece, slot) =>
+      this.legalMovePiece(piece, slot),
     );
 
     if (allowSelfCheck) return result;
 
-    return result.map((toSlots, fromSlot) => (
-      toSlots.filter((toSlot) => (!this.checksOwnKing(fromSlot, toSlot)))
-    ));
+    return result.map((toSlots, fromSlot) =>
+      toSlots.filter(toSlot => !this.checksOwnKing(fromSlot, toSlot)),
+    );
   }
 
   filteredLegalMoves(selectFunc) {
@@ -284,13 +284,13 @@ export default class XiangqiBoard {
   }
 
   hasLegalMoves(color) {
-    return this.legalMovesByColor(color).some((toSlots) => toSlots.length > 0);
+    return this.legalMovesByColor(color).some(toSlots => toSlots.length > 0);
   }
 
   captures() {
     const result = new Set();
     for (const [, toSlots] of this.legalMoves(true).entries()) {
-      toSlots.forEach((slot) => {
+      toSlots.forEach(slot => {
         if (this.isOccupied(slot)) result.add(this.board[slot]);
       });
     }
@@ -324,10 +324,10 @@ export default class XiangqiBoard {
       ];
     }
 
-    return board.drop(
-      otherRook,
-      board.board.indexOf(otherKing),
-    ).captures().has(ownKing);
+    return board
+      .drop(otherRook, board.board.indexOf(otherKing))
+      .captures()
+      .has(ownKing);
   }
 
   // HACK: king facing logic implemented by replacing the
@@ -353,7 +353,7 @@ export default class XiangqiBoard {
         lastRow[lastRowSize - 1] += 1;
       }
     });
-    return rows.map((row) => row.join('')).join('/');
+    return rows.map(row => row.join('')).join('/');
   }
 }
 
