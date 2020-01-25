@@ -9,7 +9,7 @@ import * as images from './images';
 const Piece = ({ icon, moveX, moveY }) => {
   const moving = moveX !== 0 || moveY !== 0;
 
-  const cssTransform = (squareSize) => {
+  const cssTransform = squareSize => {
     const xTranslate = `calc(${squareSize} * ${moveX})`;
     const yTranslate = `calc(${squareSize} * ${moveY})`;
 
