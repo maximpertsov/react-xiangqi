@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { fetchGame, fetchMoves, pollMoves } from 'actions';
 import { getMoveCount, getNextMovePlayer } from 'reducers';
 
 const POLLING_INTERVAL = 2500;
 
-const GameClient = ({ children }) => {
+const GameClient = () => {
   const dispatch = useDispatch();
 
   const gameSlug = useSelector(state => state.gameSlug);
@@ -49,11 +48,7 @@ const GameClient = ({ children }) => {
     [dispatch, gameSlug, nextMovePlayer, username],
   );
 
-  return <div>{children}</div>;
-};
-
-GameClient.propTypes = {
-  children: PropTypes.node.isRequired,
+  return null;
 };
 
 export default GameClient;
