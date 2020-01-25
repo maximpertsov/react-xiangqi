@@ -10,31 +10,25 @@ import MoveHistory from '../components/MoveHistory';
 import Player from '../components/Player';
 
 const Wrapper = styled.div`
-align-items: center;
-display: flex;
-flex-direction: column;
-height: 100%;
-justify-content: space-around;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
 `;
 
 const GameView = () => {
   // TODO: this is a massive hack -- should not rely on move count to determine
   // if this is the initial load
-  const active = useSelector(state =>
-    state.gameSlug !== null
-    && state.loading
-    && getMoveCount(state) <= 1
+  const active = useSelector(
+    state =>
+      state.gameSlug !== null && state.loading && getMoveCount(state) <= 1,
   );
   const currentPlayer = useSelector(state => getCurrentPlayer(state));
-  const otherPlayer =  useSelector(state => getOtherPlayer(state));
+  const otherPlayer = useSelector(state => getOtherPlayer(state));
 
   return (
-    <Dimmer.Dimmable
-      as={Segment}
-      basic
-      blurring
-      dimmed={active}
-    >
+    <Dimmer.Dimmable as={Segment} basic blurring dimmed={active}>
       <Dimmer active={active} page>
         <Loader>Loading</Loader>
       </Dimmer>
