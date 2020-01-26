@@ -8,7 +8,7 @@ import { getRankFile } from 'services/logic/utils';
 /************/
 let nextMoveId = 0;
 
-export const addMove = ({ fromSlot, toSlot, pending }) => ({
+const addMove = ({ fromSlot, toSlot, pending }) => ({
   type: 'add_move',
   moveId: ++nextMoveId,
   fromSlot,

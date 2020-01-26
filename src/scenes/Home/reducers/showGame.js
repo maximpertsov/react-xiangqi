@@ -1,4 +1,4 @@
-const username = (state = false, action) => {
+const showGame = (state = false, action) => {
   switch (action.type) {
     case "toggle_show_game":
       return action.showGame;
@@ -7,4 +7,4 @@ const username = (state = false, action) => {
   }
 };
 
-export default username;
+export default showGame;

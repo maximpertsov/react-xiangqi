@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
-import { Button, Container, Header, Segment } from "semantic-ui-react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { Button, Container, Header, Segment } from 'semantic-ui-react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   fetchGames,
   setAutoMoveOff,
   setAutoMoveBlack,
   setAutoMoveBoth,
-} from "actions";
+} from 'actions';
 
-import Game from "scenes/Game";
+import Game from 'scenes/Game';
 
-import GameList from "./components/GameList";
-import LoginForm from "./components/LoginForm";
+import GameList from './components/GameList';
+import LoginForm from './components/LoginForm';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -36,7 +36,11 @@ const Home = () => {
           <Button
             onClick={() => {
               dispatch(setAutoMoveOff());
-              dispatch({ type: "toggle_show_game", showGame: true });
+              dispatch({ type: 'toggle_show_game', showGame: true });
+              dispatch({
+                type: 'toggle_can_move_both_colors',
+                canMoveBothColors: true,
+              });
             }}
           >
             Solo play
@@ -44,7 +48,7 @@ const Home = () => {
           <Button
             onClick={() => {
               dispatch(setAutoMoveBlack());
-              dispatch({ type: "toggle_show_game", showGame: true });
+              dispatch({ type: 'toggle_show_game', showGame: true });
             }}
           >
             vs CPU
@@ -52,7 +56,7 @@ const Home = () => {
           <Button
             onClick={() => {
               dispatch(setAutoMoveBoth());
-              dispatch({ type: "toggle_show_game", showGame: true });
+              dispatch({ type: 'toggle_show_game', showGame: true });
             }}
           >
             CPU vs CPU

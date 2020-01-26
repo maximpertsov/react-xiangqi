@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 // Home
 import autoMove from 'scenes/Home/reducers/autoMove';
+import canMoveBothColors from 'scenes/Home/reducers/canMoveBothColors';
 import games from 'scenes/Home/reducers/games';
 import gameSlug from 'scenes/Home/reducers/gameSlug';
 import showGame from 'scenes/Home/reducers/showGame';
@@ -18,6 +19,7 @@ import { Color } from 'services/logic/constants';
 const rootReducer = combineReducers({
   // Home,
   autoMove,
+  canMoveBothColors,
   games,
   gameSlug,
   showGame,
@@ -87,12 +89,13 @@ export const getOtherPlayer = ({ gameSlug, players, username }) => {
 };
 
 export const getBottomPlayerIsRed = (
-  { reversed, players, username } = { reversed: false }
+  { reversed, players, username } = { reversed: false },
 ) => {
   // TODO: add a state that allows players to flip their original orientation
   const userColor = getUserColor({ players, username });
-  const init = userColor === undefined
-    || getUserColor({ players, username }) === Color.RED;
+  const init =
+    userColor === undefined ||
+    getUserColor({ players, username }) === Color.RED;
   return reversed ? !init : init;
 };
 
@@ -102,31 +105,43 @@ export const getCurrentPlayer = ({ gameSlug, players, username }) => {
   return getUserPlayer({ players, username });
 };
 
+export const getCurrentPlayerColor = state => {
+  try {
+    return getCurrentPlayer(state).color;
+  } catch (e) {
+    if (e instanceof TypeError) return undefined;
+    throw e;
+  }
+};
+
 /********************/
 /***  Game Logic  ***/
 /********************/
 
 // TODO break up function
-export const getLegalMoves = (
-  { gameSlug, moves, players, selectedMoveId, username },
-) => {
-  const nextMoveColor = getNextMoveColor({ moves });
-  const userColor = getUserColor({ players, username });
-  const { board } = getSelectedMove({ moves, selectedMoveId });
-  const currentUserOnly = gameSlug !== null;
-  const lastMoveId = getLastMove({ moves }).id;
+export const getLegalMoves = state => {
+  const { board } = getSelectedMove(state);
+  const currentPlayerColor = getCurrentPlayerColor(state);
+  const nextMoveColor = getNextMoveColor(state);
+  const lastMove = getLastMove(state);
 
-  return board
-    .legalMoves()
-    .map((toSlots, fromSlot) => {
-      if (selectedMoveId !== lastMoveId) return [];
-      if (!board.isColor(nextMoveColor, fromSlot)) return [];
-      if (currentUserOnly && !board.isColor(userColor, fromSlot)) return [];
-      return toSlots;
-    });
+  // TODO: for now we can assume that legal moves are only allowed for the
+  // latest move. However, this will change if we ever implement an analysis
+  // board-style function.
+  if (lastMove.id !== state.selectedMoveId) return board.noLegalMoves();
+  if (!state.canMoveBothColors && currentPlayerColor !== nextMoveColor) {
+    return board.noLegalMoves();
+  }
+  return board.legalMovesByColor(nextMoveColor);
 };
 
-// TODO: this isn't really a selector -- use refactor with mapStateToProps
+export const getTargets = state => {
+  if (state.selectedSlot === null) return [];
+
+  const legalMoves = getLegalMoves(state);
+  return legalMoves[state.selectedSlot];
+};
+
 export const getHasLegalMoves = state => {
   const { board } = getLastMove(state);
   return board.hasLegalMoves(getNextMoveColor(state));
