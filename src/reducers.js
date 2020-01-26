@@ -151,3 +151,10 @@ export const getTargets = state => {
   const legalMoves = getLegalMoves(state);
   return legalMoves[state.selectedSlot];
 };
+
+export const getInCheckSlots = state => {
+  const { board } = getSelectedMove(state);
+  const nextMoveColor = getNextMoveColor(state);
+
+  return board.inCheckSlots(nextMoveColor);
+};

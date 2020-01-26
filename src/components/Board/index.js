@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { makeMove } from 'actions';
 import {
   getBottomPlayerIsRed,
-  getNextMoveColor,
+  getInCheckSlots,
   getSelectedMove,
   getLegalMoves,
   getTargets,
@@ -47,8 +47,8 @@ const ANIMATION_DELAY = 150;
 const Board = () => {
   const dispatch = useDispatch();
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
+  const inCheckSlots = useSelector(state => getInCheckSlots(state));
   const legalMoves = useSelector(state => getLegalMoves(state));
-  const nextMoveColor = useSelector(state => getNextMoveColor(state));
   const selectedSlot = useSelector(state => state.selectedSlot);
   const targets = useSelector(state => getTargets(state));
   const {
@@ -127,7 +127,7 @@ const Board = () => {
           className="Square"
           key={slot}
           handleClick={handleSquareClick(slot)}
-          inCheck={board.inCheck({ slot, nextMoveColor })}
+          inCheck={inCheckSlots.includes(slot)}
           inLastMove={inLastMove(slot)}
           pieceCode={getPieceCode(slot)}
           selected={selectedSlot === slot}
