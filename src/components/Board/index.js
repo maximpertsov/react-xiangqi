@@ -123,9 +123,9 @@ const Board = () => {
   const renderSquares = () =>
     board.board.map((_, i, b) => {
       const slot = getSlot(b, i);
-      // TODO: use classNames to capture multiple styles
       return (
         <Square
+          className="Square"
           key={slot}
           handleClick={handleSquareClick(slot)}
           inCheck={board.inCheck({ slot, nextMoveColor })}
