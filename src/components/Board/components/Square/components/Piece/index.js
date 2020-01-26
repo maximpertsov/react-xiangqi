@@ -24,7 +24,7 @@ const Wrapper = styled.img`
   display: block;
   margin: auto;
   z-index: ${props => (isMoving(props) ? 100 : 0)};
-  transition: transform 100ms ease-in-out;
+  transition: transform 50ms ease-in-out;
   ${styles.MEDIA_TINY} {
     ${props => cssTransform(styles.SQUARE_SIZE_TINY, props)};
   }
