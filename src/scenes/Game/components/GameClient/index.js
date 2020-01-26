@@ -45,7 +45,7 @@ const GameClient = () => {
       return () => clearInterval(interval);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, gameSlug, nextMovePlayer, username],
+    [dispatch, gameSlug, moves.length, username],
   );
 
   return null;
