@@ -8,6 +8,7 @@ import {
   getNextMoveColor,
   getSelectedMove,
   getLegalMoves,
+  getTargets,
 } from 'reducers';
 
 import * as logic from 'services/logic';
@@ -49,6 +50,7 @@ const Board = () => {
   const legalMoves = useSelector(state => getLegalMoves(state));
   const nextMoveColor = useSelector(state => getNextMoveColor(state));
   const selectedSlot = useSelector(state => state.selectedSlot);
+  const targets = useSelector(state => getTargets(state));
   const {
     board,
     fromSlot: moveFromSlot,
@@ -112,9 +114,6 @@ const Board = () => {
     }
   };
 
-  const getTargets = () =>
-    selectedSlot === null ? [] : legalMoves[selectedSlot];
-
   const getSlot = (b, i) => (bottomPlayerIsRed ? i : b.length - i - 1);
 
   // TODO: make this a selector
@@ -132,7 +131,7 @@ const Board = () => {
           inLastMove={inLastMove(slot)}
           pieceCode={getPieceCode(slot)}
           selected={selectedSlot === slot}
-          targeted={getTargets().includes(slot)}
+          targeted={targets.includes(slot)}
           moveX={moveX}
           moveY={moveY}
         />

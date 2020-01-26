@@ -135,6 +135,13 @@ export const getLegalMoves = state => {
   return board.legalMovesByColor(nextMoveColor);
 };
 
+export const getTargets = state => {
+  if (state.selectedSlot === null) return [];
+
+  const legalMoves = getLegalMoves(state);
+  return legalMoves[state.selectedSlot];
+};
+
 export const getHasLegalMoves = state => {
   const { board } = getLastMove(state);
   return board.hasLegalMoves(getNextMoveColor(state));
