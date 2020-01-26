@@ -6,16 +6,19 @@ import { Color } from 'services/logic/constants';
 import { isRed } from 'services/logic/utils';
 
 /* eslint-disable-next-line max-len */
-const DEFAULT_FEN = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
+const DEFAULT_FEN =
+  'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
 
-const initialMoves = [{
-  id: 0,
-  fromSlot: undefined,
-  toSlot: undefined,
-  piece: undefined,
-  board: new XiangqiBoard({ fen: DEFAULT_FEN }),
-  pending: false,
-}];
+const initialMoves = [
+  {
+    id: 0,
+    fromSlot: undefined,
+    toSlot: undefined,
+    piece: undefined,
+    board: new XiangqiBoard({ fen: DEFAULT_FEN }),
+    pending: false,
+  },
+];
 
 const addMove = (state, { moveId, fromSlot, toSlot, pending }) => {
   const { board } = state[state.length - 1];
@@ -85,9 +88,9 @@ export const getNextMove = (state, moveId) => {
   return state[Math.min(moveIndex + 1, moveCount)];
 };
 
-export const getNextMoveColor = state => {
+export const getNextMoveColor = (state, moveId) => {
   if (getMoveCount(state) === 0) return Color.RED;
 
-  const { piece } = getLastMove(state);
+  const { piece } = getMoveById(state, moveId);
   return isRed(piece) ? Color.BLACK : Color.RED;
 };

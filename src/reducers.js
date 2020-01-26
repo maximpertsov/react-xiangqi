@@ -52,8 +52,8 @@ export const getPreviousMove = ({ moves, selectedMoveId }) =>
 export const getNextMove = ({ moves, selectedMoveId }) =>
   fromMoves.getNextMove(moves, selectedMoveId);
 
-export const getNextMoveColor = ({ moves }) =>
-  fromMoves.getNextMoveColor(moves);
+export const getNextMoveColor = ({ moves, selectedMoveId }) =>
+  fromMoves.getNextMoveColor(moves, selectedMoveId);
 
 /*****************/
 /***  Players  ***/
@@ -62,8 +62,8 @@ export const getNextMoveColor = ({ moves }) =>
 const lookupPlayer = (players, key, value) =>
   players.find(p => p[key] === value);
 
-export const getNextMovePlayer = ({ players, moves }) =>
-  lookupPlayer(players, 'color', getNextMoveColor({ moves }));
+export const getNextMovePlayer = state =>
+  lookupPlayer(state.players, 'color', getNextMoveColor(state));
 
 const getUserPlayer = ({ players, username }) =>
   lookupPlayer(players, 'name', username);
@@ -135,14 +135,19 @@ export const getLegalMoves = state => {
   return board.legalMovesByColor(nextMoveColor);
 };
 
-export const getTargets = state => {
-  if (state.selectedSlot === null) return [];
-
-  const legalMoves = getLegalMoves(state);
-  return legalMoves[state.selectedSlot];
-};
-
 export const getHasLegalMoves = state => {
   const { board } = getLastMove(state);
   return board.hasLegalMoves(getNextMoveColor(state));
+};
+
+/*********************/
+/***  Board Logic  ***/
+/*********************/
+
+export const getTargets = state => {
+  if (state.selectedSlot === null) return [];
+
+  // TODO: assumes last move is active
+  const legalMoves = getLegalMoves(state);
+  return legalMoves[state.selectedSlot];
 };

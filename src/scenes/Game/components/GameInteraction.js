@@ -16,15 +16,17 @@ const GameInteraction = () => {
   const nextMove = useSelector(state => getNextMove(state));
   const nextMoveColor = useSelector(state => getNextMoveColor(state));
   const previousMove = useSelector(state => getPreviousMove(state));
+  const selectedMoveId = useSelector(state => state.selectedMoveId);
 
   useEffect(
     () => {
       setTimeout(() => {
-        if (autoMove.includes(nextMoveColor)) {
-          const { board } = lastMove;
-          const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
-          dispatch(makeMove({ fromSlot, toSlot, pending: false }));
-        }
+        if (selectedMoveId !== lastMove.id) return;
+        if (!autoMove.includes(nextMoveColor)) return;
+
+        const { board } = lastMove;
+        const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
+        dispatch(makeMove({ fromSlot, toSlot, pending: false }));
       }, 1000);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
