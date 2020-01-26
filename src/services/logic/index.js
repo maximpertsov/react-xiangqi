@@ -182,6 +182,7 @@ export default class XiangqiBoard {
 
   legalCannonMoves(slot) {
     const result = [];
+    // eslint-disable-next-line complexity
     ORTHOGONAL_MOVES.forEach(move => {
       let toSlot = slot;
       let vaulted = false;
@@ -254,6 +255,10 @@ export default class XiangqiBoard {
     if (utils.isCannon(piece)) return this.legalCannonMoves(slot);
     if (utils.isAdvisor(piece)) return this.legalAdvisorMoves(slot);
     return [];
+  }
+
+  noLegalMoves() {
+    return this.board.map(() => []);
   }
 
   legalMoves(allowSelfCheck = false) {

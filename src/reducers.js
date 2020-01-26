@@ -89,12 +89,13 @@ export const getOtherPlayer = ({ gameSlug, players, username }) => {
 };
 
 export const getBottomPlayerIsRed = (
-  { reversed, players, username } = { reversed: false }
+  { reversed, players, username } = { reversed: false },
 ) => {
   // TODO: add a state that allows players to flip their original orientation
   const userColor = getUserColor({ players, username });
-  const init = userColor === undefined
-    || getUserColor({ players, username }) === Color.RED;
+  const init =
+    userColor === undefined ||
+    getUserColor({ players, username }) === Color.RED;
   return reversed ? !init : init;
 };
 
@@ -109,23 +110,17 @@ export const getCurrentPlayer = ({ gameSlug, players, username }) => {
 /********************/
 
 // TODO break up function
-export const getLegalMoves = (
-  { gameSlug, moves, players, selectedMoveId, username },
-) => {
-  const nextMoveColor = getNextMoveColor({ moves });
-  const userColor = getUserColor({ players, username });
-  const { board } = getSelectedMove({ moves, selectedMoveId });
-  const currentUserOnly = gameSlug !== null;
-  const lastMoveId = getLastMove({ moves }).id;
+export const getLegalMoves = state => {
+  const nextMoveColor = getNextMoveColor(state);
+  const lastMove = getLastMove(state);
+  const { board } = getSelectedMove(state);
 
-  return board
-    .legalMoves()
-    .map((toSlots, fromSlot) => {
-      if (selectedMoveId !== lastMoveId) return [];
-      if (!board.isColor(nextMoveColor, fromSlot)) return [];
-      if (currentUserOnly && !board.isColor(userColor, fromSlot)) return [];
-      return toSlots;
-    });
+  // TODO: for now we can assume that legal moves are only allowed for the
+  // latest move. However, this will change if we ever implement an analysis
+  // board-style function.
+  if (lastMove.id !== state.selectedMoveId) return board.noLegalMoves();
+  if (canMoveBothColors) return board.legalMovesByColor(nextMoveColor);
+  return board.legalMoves();
 };
 
 export const getHasLegalMoves = state => {
