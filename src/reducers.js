@@ -105,22 +105,34 @@ export const getCurrentPlayer = ({ gameSlug, players, username }) => {
   return getUserPlayer({ players, username });
 };
 
+export const getCurrentPlayerColor = state => {
+  try {
+    return getCurrentPlayer(state).color;
+  } catch (e) {
+    if (e instanceof TypeError) return undefined;
+    throw e;
+  }
+};
+
 /********************/
 /***  Game Logic  ***/
 /********************/
 
 // TODO break up function
 export const getLegalMoves = state => {
+  const { board } = getSelectedMove(state);
+  const currentPlayerColor = getCurrentPlayerColor(state);
   const nextMoveColor = getNextMoveColor(state);
   const lastMove = getLastMove(state);
-  const { board } = getSelectedMove(state);
 
   // TODO: for now we can assume that legal moves are only allowed for the
   // latest move. However, this will change if we ever implement an analysis
   // board-style function.
   if (lastMove.id !== state.selectedMoveId) return board.noLegalMoves();
-  if (canMoveBothColors) return board.legalMovesByColor(nextMoveColor);
-  return board.legalMoves();
+  if (!state.canMoveBothColors && currentPlayerColor !== nextMoveColor) {
+    return board.noLegalMoves();
+  }
+  return board.legalMovesByColor(nextMoveColor);
 };
 
 export const getHasLegalMoves = state => {
