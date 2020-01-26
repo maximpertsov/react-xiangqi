@@ -55,7 +55,6 @@ const Board = () => {
     toSlot: moveToSlot,
   } = useSelector(state => getSelectedMove(state));
 
-  // TODO: use key frame animation instead of state?
   const [moveX, setMoveX] = useState(0);
   const [moveY, setMoveY] = useState(0);
 
