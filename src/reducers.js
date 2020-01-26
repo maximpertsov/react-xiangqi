@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 // Home
 import autoMove from 'scenes/Home/reducers/autoMove';
+import canMoveBothColors from 'scenes/Home/reducers/canMoveBothColors';
 import games from 'scenes/Home/reducers/games';
 import gameSlug from 'scenes/Home/reducers/gameSlug';
 import showGame from 'scenes/Home/reducers/showGame';
@@ -18,6 +19,7 @@ import { Color } from 'services/logic/constants';
 const rootReducer = combineReducers({
   // Home,
   autoMove,
+  canMoveBothColors,
   games,
   gameSlug,
   showGame,
