@@ -40,7 +40,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const BoardView = ({ handleSquareClick, moveX, moveY }) => {
+const BoardView = ({ handleSquareClick }) => {
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
   const nextMoveColor = useSelector(state => getNextMoveColor(state));
   const selectedSlot = useSelector(state => state.selectedSlot);
@@ -78,8 +78,6 @@ const BoardView = ({ handleSquareClick, moveX, moveY }) => {
           pieceCode={getPieceCode(slot)}
           selected={selectedSlot === slot}
           targeted={targets.includes(slot)}
-          moveX={moveX}
-          moveY={moveY}
         />
       );
     });
@@ -89,8 +87,6 @@ const BoardView = ({ handleSquareClick, moveX, moveY }) => {
 
 BoardView.propTypes = {
   handleSquareClick: PropTypes.func.isRequired,
-  moveX: PropTypes.number.isRequired,
-  moveY: PropTypes.number.isRequired,
 };
 
 export default BoardView;

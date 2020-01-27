@@ -3,7 +3,9 @@ import { jsx } from '@emotion/core';
 
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { useSelector } from 'react-redux';
 
+import { getIsMoving } from 'reducers';
 import XiangqiPiece from './components/Piece';
 
 const LAST_MOVE_COLOR = 'rgba(201,255,229,1.0)';
@@ -30,19 +32,21 @@ const SelectionIndicator = styled.div({
 });
 
 const TargetIndicator = styled.div(({ occupied }) => ({
-  ...(occupied) ? {
-    backgroundColor: SELECTION_COLOR,
-    borderRadius: '50%',
-    ...fillParentElement,
-  } : {
-    backgroundColor: SELECTION_COLOR,
-    borderRadius: '50%',
-    height: '50%',
-    width: '50%',
-    position: 'relative',
-    top: '50%',
-    transform: 'translateY(-50%)',
-  },
+  ...(occupied
+    ? {
+        backgroundColor: SELECTION_COLOR,
+        borderRadius: '50%',
+        ...fillParentElement,
+      }
+    : {
+        backgroundColor: SELECTION_COLOR,
+        borderRadius: '50%',
+        height: '50%',
+        width: '50%',
+        position: 'relative',
+        top: '50%',
+        transform: 'translateY(-50%)',
+      }),
 }));
 
 const KingCheckedIndicator = styled.div({
@@ -52,16 +56,23 @@ const KingCheckedIndicator = styled.div({
   ...fillParentElement,
 });
 
-
 const Square = ({
-  handleClick, pieceCode, selected, inCheck, inLastMove, targeted, moveX, moveY,
+  handleClick,
+  pieceCode,
+  selected,
+  inCheck,
+  inLastMove,
+  targeted,
 }) => {
+  const [moveX, moveY] = useSelector(state => state.animationOffset);
+  const isMoving = useSelector(state => getIsMoving(state));
   const occupied = pieceCode !== undefined;
-  const moving = moveX !== 0 || moveY !== 0;
 
   const selectedMoveX = selected ? moveX : 0;
   const selectedMoveY = selected ? moveY : 0;
 
+  /* eslint-disable jsx-a11y/no-static-element-interactions */
+  /* eslint-disable jsx-a11y/click-events-have-key-events */ 
   return (
     <div
       className="Square"
@@ -75,19 +86,20 @@ const Square = ({
       }}
     >
       {inLastMove && <LastMoveIndicator />}
-      {selected && !(moving) && <SelectionIndicator />}
-      {
-        occupied &&
-          <XiangqiPiece
-            moveX={selectedMoveX}
-            moveY={selectedMoveY}
-            code={pieceCode}
-          />
-      }
-      {targeted && !(moving) && <TargetIndicator occupied={occupied} />}
-      {inCheck && !(moving) && <KingCheckedIndicator />}
+      {selected && !isMoving && <SelectionIndicator />}
+      {occupied && (
+        <XiangqiPiece
+          moveX={selectedMoveX}
+          moveY={selectedMoveY}
+          code={pieceCode}
+        />
+      )}
+      {targeted && !isMoving && <TargetIndicator occupied={occupied} />}
+      {inCheck && !isMoving && <KingCheckedIndicator />}
     </div>
   );
+  /* eslint-enable jsx-a11y/no-static-element-interactions */
+  /* eslint-enable jsx-a11y/click-events-have-key-events */ 
 };
 
 Square.propTypes = {
@@ -97,14 +109,10 @@ Square.propTypes = {
   inCheck: PropTypes.bool.isRequired,
   inLastMove: PropTypes.bool.isRequired,
   targeted: PropTypes.bool.isRequired,
-  moveX: PropTypes.number,
-  moveY: PropTypes.number,
 };
 
 Square.defaultProps = {
   pieceCode: undefined,
-  moveX: 0,
-  moveY: 0,
 };
 
 export default Square;

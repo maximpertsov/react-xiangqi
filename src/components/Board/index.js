@@ -1,10 +1,9 @@
-import React, { useCallback, useState, useLayoutEffect } from 'react';
+import React, { useCallback, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { makeMove } from 'actions';
 import { getBottomPlayerIsRed, getSelectedMove, getLegalMoves } from 'reducers';
 
-import * as logic from 'services/logic';
 
 import BoardView from './components/BoardView';
 
@@ -16,9 +15,6 @@ const Board = () => {
   const legalMoves = useSelector(state => getLegalMoves(state));
   const selectedSlot = useSelector(state => state.selectedSlot);
   const { board } = useSelector(state => getSelectedMove(state));
-
-  const [moveX, setMoveX] = useState(0);
-  const [moveY, setMoveY] = useState(0);
 
   // NOTE: this is the synchronous version of useEffect. Using
   // this version prevents late selection clearing, but causes
@@ -51,14 +47,15 @@ const Board = () => {
   const handleMove = useCallback(
     (fromSlot, toSlot) => {
       if (isLegalMove(fromSlot, toSlot)) {
-        const [fromY, fromX] = logic.getRankFile(fromSlot);
-        const [toY, toX] = logic.getRankFile(toSlot);
-        setMoveX(bottomPlayerIsRed ? toX - fromX : fromX - toX);
-        setMoveY(bottomPlayerIsRed ? toY - fromY : fromY - toY);
+        dispatch({
+          type: 'set_animation_offset',
+          bottomPlayerIsRed,
+          fromSlot,
+          toSlot,
+        });
         setTimeout(() => {
           dispatch(makeMove({ fromSlot, toSlot, pending: true }));
-          setMoveX(0);
-          setMoveY(0);
+          dispatch({ type: 'unset_animation_offset' });
           dispatch({ type: 'set_selected_slot', selectedSlot: null });
         }, ANIMATION_DELAY);
       } else {
@@ -84,11 +81,7 @@ const Board = () => {
   );
 
   return (
-    <BoardView
-      moveX={moveX}
-      moveY={moveY}
-      handleSquareClick={handleSquareClick}
-    />
+    <BoardView handleSquareClick={handleSquareClick} />
   );
 };
 

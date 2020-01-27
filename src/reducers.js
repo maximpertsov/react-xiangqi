@@ -11,6 +11,8 @@ import moves, * as fromMoves from 'scenes/Game/reducers/moves';
 import players from 'scenes/Game/reducers/players';
 import selectedMoveId from 'scenes/Game/reducers/selectedMoveId';
 // Board
+/* eslint-disable-next-line max-len */
+import animationOffset, * as fromAnimationOffset from 'components/Board/reducers/animationOffset';
 import canMoveBothColors from 'components/Board/reducers/canMoveBothColors';
 import selectedSlot from 'components/Board/reducers/selectedSlot';
 
@@ -19,7 +21,6 @@ import { Color } from 'services/logic/constants';
 const rootReducer = combineReducers({
   // Home,
   autoMove,
-  canMoveBothColors,
   games,
   gameSlug,
   showGame,
@@ -30,6 +31,8 @@ const rootReducer = combineReducers({
   players,
   selectedMoveId,
   // Board
+  animationOffset,
+  canMoveBothColors,
   selectedSlot,
 });
 
@@ -146,3 +149,9 @@ export const getHasLegalMoves = state => {
   const { board } = getLastMove(state);
   return board.hasLegalMoves(getNextMoveColor(state));
 };
+
+/********************/
+/***  Animations  ***/
+/********************/
+export const getIsMoving = ({ animationOffset }) =>
+  fromAnimationOffset.getIsMoving(animationOffset);
