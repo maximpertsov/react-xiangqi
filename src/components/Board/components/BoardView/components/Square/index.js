@@ -2,34 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
-
-import { getIsMoving } from 'reducers';
-import { fillParentElement, SELECTION_COLOR } from 'commonStyles';
-
 import XiangqiPiece from './components/Piece';
-
-const TargetOccupiedIndicator = styled.div({
-  backgroundColor: SELECTION_COLOR,
-  borderRadius: '50%',
-  ...fillParentElement,
-});
-
-const TargetEmptyIndicator = styled.div({
-  backgroundColor: SELECTION_COLOR,
-  borderRadius: '50%',
-  height: '50%',
-  position: 'relative',
-  top: '50%',
-  transform: 'translateY(-50%)',
-  width: '50%',
-});
-
-const TargetIndicator = ({ occupied }) =>
-  occupied ? <TargetOccupiedIndicator /> : <TargetEmptyIndicator />;
-
-TargetIndicator.propTypes = {
-  occupied: PropTypes.bool.isRequired,
-};
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,15 +12,8 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const Square = ({
-  children,
-  handleClick,
-  pieceCode,
-  selected,
-  targeted,
-}) => {
+const Square = ({ children, handleClick, pieceCode, selected }) => {
   const [moveX, moveY] = useSelector(state => state.animationOffset);
-  const isMoving = useSelector(state => getIsMoving(state));
   const occupied = pieceCode !== undefined;
 
   const selectedMoveX = selected ? moveX : 0;
@@ -65,7 +31,6 @@ const Square = ({
           code={pieceCode}
         />
       )}
-      {targeted && !isMoving && <TargetIndicator occupied={occupied} />}
     </Wrapper>
   );
   /* eslint-enable jsx-a11y/no-static-element-interactions */
@@ -77,8 +42,6 @@ Square.propTypes = {
   handleClick: PropTypes.func.isRequired,
   pieceCode: PropTypes.string,
   selected: PropTypes.bool.isRequired,
-  inCheck: PropTypes.bool.isRequired,
-  targeted: PropTypes.bool.isRequired,
 };
 
 Square.defaultProps = {

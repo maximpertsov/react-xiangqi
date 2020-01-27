@@ -17,6 +17,7 @@ import Square from './components/Square';
 import LastMoveIndicator from './components/LastMoveIndicator';
 import KingInCheckIndicator from './components/KingInCheckIndicator';
 import SelectionIndicator from './components/SelectionIndicator';
+import TargetIndicator from './components/TargetIndicator';
 
 import boardImg from './assets/board-1000px.svg.png';
 
@@ -70,7 +71,7 @@ const BoardView = ({ handleSquareClick }) => {
     [moveFromSlot, moveToSlot],
   );
 
-  const kingInCheck = useCallback(
+  const kingIsInCheck = useCallback(
     slot => !isMoving && board.inCheck({ slot, nextMoveColor }),
     [board, isMoving, nextMoveColor],
   );
@@ -78,6 +79,15 @@ const BoardView = ({ handleSquareClick }) => {
   const isSelected = useCallback(slot => !isMoving && selectedSlot === slot, [
     isMoving,
     selectedSlot,
+  ]);
+
+  const isTargeted = useCallback(slot => !isMoving && targets.includes(slot), [
+    isMoving,
+    targets,
+  ]);
+
+  const isOccupied = useCallback(slot => getPieceCode(slot) !== undefined, [
+    getPieceCode,
   ]);
 
   const renderSquares = () =>
@@ -90,11 +100,11 @@ const BoardView = ({ handleSquareClick }) => {
           handleClick={handleSquareClick(slot)}
           pieceCode={getPieceCode(slot)}
           selected={selectedSlot === slot}
-          targeted={targets.includes(slot)}
         >
           {inLastMove(slot) && <LastMoveIndicator />}
+          {kingIsInCheck(slot) && <KingInCheckIndicator />}
           {isSelected(slot) && <SelectionIndicator />}
-          {kingInCheck(slot) && <KingInCheckIndicator />}
+          {isTargeted(slot) && <TargetIndicator occupied={isOccupied(slot)} />}
         </Square>
       );
     });
