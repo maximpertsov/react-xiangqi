@@ -4,18 +4,11 @@ import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 
 import { getIsMoving } from 'reducers';
-import { fillParentElement } from 'commonStyles';
+import { fillParentElement, SELECTION_COLOR } from 'commonStyles';
 
 import XiangqiPiece from './components/Piece';
 
-const SELECTION_COLOR = 'rgba(30,179,0,0.3)';
 const IN_CHECK_COLOR = 'red';
-
-const SelectionIndicator = styled.div({
-  backgroundColor: SELECTION_COLOR,
-  zIndex: '-1',
-  ...fillParentElement,
-});
 
 const TargetOccupiedIndicator = styled.div({
   backgroundColor: SELECTION_COLOR,
@@ -75,7 +68,6 @@ const Square = ({
   return (
     <Wrapper className="Square" onClick={handleClick}>
       {children}
-      {selected && !isMoving && <SelectionIndicator />}
       {occupied && (
         <XiangqiPiece
           moveX={selectedMoveX}

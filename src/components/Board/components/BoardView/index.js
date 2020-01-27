@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 import {
   getBottomPlayerIsRed,
+  getIsMoving,
   getNextMoveColor,
   getSelectedMove,
   getTargets,
@@ -14,6 +15,7 @@ import * as styles from 'commonStyles';
 
 import Square from './components/Square';
 import LastMoveIndicator from './components/LastMoveIndicator';
+import SelectionIndicator from './components/SelectionIndicator';
 
 import boardImg from './assets/board-1000px.svg.png';
 
@@ -51,6 +53,7 @@ const BoardView = ({ handleSquareClick }) => {
     fromSlot: moveFromSlot,
     toSlot: moveToSlot,
   } = useSelector(state => getSelectedMove(state));
+  const isMoving = useSelector(state => getIsMoving(state));
 
   const getPieceCode = useCallback(slot => board.getPiece(slot) || undefined, [
     board,
@@ -80,6 +83,7 @@ const BoardView = ({ handleSquareClick }) => {
           targeted={targets.includes(slot)}
         >
           {inLastMove(slot) && <LastMoveIndicator />}
+          {selectedSlot === slot && !isMoving && <SelectionIndicator />}
         </Square>
       );
     });
