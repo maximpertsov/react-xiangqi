@@ -8,4 +8,12 @@ export const SQUARE_SIZE_SMALL = '30px';
 export const SQUARE_SIZE_MEDIUM = '45px';
 export const SQUARE_SIZE_LARGE = '60px';
 
+export const SELECTION_COLOR = 'rgba(30,179,0,0.3)';
+
+export const fillParentElement = {
+  height: '100%',
+  width: '100%',
+  position: 'absolute',
+};
+
 export default {};
