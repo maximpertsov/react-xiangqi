@@ -11,6 +11,9 @@ import {
 
 import Game from 'scenes/Game';
 
+// TODO: move these to main action class
+import { toggleCanMoveBothColors, toggleShowGame } from './actions';
+
 import GameList from './components/GameList';
 import LoginForm from './components/LoginForm';
 
@@ -36,11 +39,8 @@ const Home = () => {
           <Button
             onClick={() => {
               dispatch(setAutoMoveOff());
-              dispatch({ type: 'toggle_show_game', showGame: true });
-              dispatch({
-                type: 'toggle_can_move_both_colors',
-                canMoveBothColors: true,
-              });
+              dispatch(toggleShowGame({ showGame: true }));
+              dispatch(toggleCanMoveBothColors({ canMoveBothColors: true }));
             }}
           >
             Solo play
@@ -48,7 +48,7 @@ const Home = () => {
           <Button
             onClick={() => {
               dispatch(setAutoMoveBlack());
-              dispatch({ type: 'toggle_show_game', showGame: true });
+              dispatch(toggleShowGame({ showGame: true }));
             }}
           >
             vs CPU
@@ -56,7 +56,7 @@ const Home = () => {
           <Button
             onClick={() => {
               dispatch(setAutoMoveBoth());
-              dispatch({ type: 'toggle_show_game', showGame: true });
+              dispatch(toggleShowGame({ showGame: true }));
             }}
           >
             CPU vs CPU
