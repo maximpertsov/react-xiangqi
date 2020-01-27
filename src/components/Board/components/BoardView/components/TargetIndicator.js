@@ -6,6 +6,7 @@ import { fillParentElement, SELECTION_COLOR } from 'commonStyles';
 const TargetOccupiedIndicator = styled.div({
   backgroundColor: SELECTION_COLOR,
   borderRadius: '50%',
+  zIndex: '1',
   ...fillParentElement,
 });
 
