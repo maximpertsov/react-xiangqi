@@ -4,24 +4,12 @@ import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 
 import { getIsMoving } from 'reducers';
+import { fillParentElement } from 'commonStyles';
+
 import XiangqiPiece from './components/Piece';
 
-const LAST_MOVE_COLOR = 'rgba(201,255,229,1.0)';
 const SELECTION_COLOR = 'rgba(30,179,0,0.3)';
 const IN_CHECK_COLOR = 'red';
-
-const fillParentElement = {
-  height: '100%',
-  width: '100%',
-  position: 'absolute',
-};
-
-const LastMoveIndicator = styled.div({
-  backgroundColor: LAST_MOVE_COLOR,
-  borderRadius: '50%',
-  zIndex: '-1',
-  ...fillParentElement,
-});
 
 const SelectionIndicator = styled.div({
   backgroundColor: SELECTION_COLOR,
@@ -68,9 +56,9 @@ const Wrapper = styled.div`
 `;
 
 const Square = ({
+  children,
   handleClick,
   inCheck,
-  inLastMove,
   pieceCode,
   selected,
   targeted,
@@ -86,7 +74,7 @@ const Square = ({
   /* eslint-disable jsx-a11y/click-events-have-key-events */
   return (
     <Wrapper className="Square" onClick={handleClick}>
-      {inLastMove && <LastMoveIndicator />}
+      {children}
       {selected && !isMoving && <SelectionIndicator />}
       {occupied && (
         <XiangqiPiece
@@ -104,11 +92,11 @@ const Square = ({
 };
 
 Square.propTypes = {
+  children: PropTypes.node.isRequired,
   handleClick: PropTypes.func.isRequired,
   pieceCode: PropTypes.string,
   selected: PropTypes.bool.isRequired,
   inCheck: PropTypes.bool.isRequired,
-  inLastMove: PropTypes.bool.isRequired,
   targeted: PropTypes.bool.isRequired,
 };
 

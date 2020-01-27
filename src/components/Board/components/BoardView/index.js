@@ -13,6 +13,8 @@ import {
 import * as styles from 'commonStyles';
 
 import Square from './components/Square';
+import LastMoveIndicator from './components/LastMoveIndicator';
+
 import boardImg from './assets/board-1000px.svg.png';
 
 const Wrapper = styled.div`
@@ -73,11 +75,12 @@ const BoardView = ({ handleSquareClick }) => {
           key={slot}
           handleClick={handleSquareClick(slot)}
           inCheck={board.inCheck({ slot, nextMoveColor })}
-          inLastMove={inLastMove(slot)}
           pieceCode={getPieceCode(slot)}
           selected={selectedSlot === slot}
           targeted={targets.includes(slot)}
-        />
+        >
+          {inLastMove(slot) && <LastMoveIndicator />}
+        </Square>
       );
     });
 
