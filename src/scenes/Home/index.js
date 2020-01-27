@@ -7,12 +7,11 @@ import {
   setAutoMoveOff,
   setAutoMoveBlack,
   setAutoMoveBoth,
+  toggleCanMoveBothColors,
+  toggleShowGame,
 } from 'actions';
 
 import Game from 'scenes/Game';
-
-// TODO: move these to main action class
-import { toggleCanMoveBothColors, toggleShowGame } from './actions';
 
 import GameList from './components/GameList';
 import LoginForm from './components/LoginForm';

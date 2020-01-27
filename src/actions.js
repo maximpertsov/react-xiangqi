@@ -140,4 +140,6 @@ export const fetchGames = ({ username }) => async dispatch => {
   dispatch({ type: 'set_games', games });
 };
 
+export { toggleShowGame, toggleCanMoveBothColors } from 'scenes/Home/actions';
+
 export default {};
