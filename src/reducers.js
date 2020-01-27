@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 // Home
 import autoMove from 'scenes/Home/reducers/autoMove';
-import canMoveBothColors from 'scenes/Home/reducers/canMoveBothColors';
 import games from 'scenes/Home/reducers/games';
 import gameSlug from 'scenes/Home/reducers/gameSlug';
 import showGame from 'scenes/Home/reducers/showGame';
@@ -12,6 +11,7 @@ import moves, * as fromMoves from 'scenes/Game/reducers/moves';
 import players from 'scenes/Game/reducers/players';
 import selectedMoveId from 'scenes/Game/reducers/selectedMoveId';
 // Board
+import canMoveBothColors from 'components/Board/reducers/canMoveBothColors';
 import selectedSlot from 'components/Board/reducers/selectedSlot';
 
 import { Color } from 'services/logic/constants';
