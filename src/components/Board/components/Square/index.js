@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
-
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
@@ -31,23 +29,28 @@ const SelectionIndicator = styled.div({
   ...fillParentElement,
 });
 
-const TargetIndicator = styled.div(({ occupied }) => ({
-  ...(occupied
-    ? {
-        backgroundColor: SELECTION_COLOR,
-        borderRadius: '50%',
-        ...fillParentElement,
-      }
-    : {
-        backgroundColor: SELECTION_COLOR,
-        borderRadius: '50%',
-        height: '50%',
-        width: '50%',
-        position: 'relative',
-        top: '50%',
-        transform: 'translateY(-50%)',
-      }),
-}));
+const TargetOccupiedIndicator = styled.div({
+  backgroundColor: SELECTION_COLOR,
+  borderRadius: '50%',
+  ...fillParentElement,
+});
+
+const TargetEmptyIndicator = styled.div({
+  backgroundColor: SELECTION_COLOR,
+  borderRadius: '50%',
+  height: '50%',
+  position: 'relative',
+  top: '50%',
+  transform: 'translateY(-50%)',
+  width: '50%',
+});
+
+const TargetIndicator = ({ occupied }) =>
+  occupied ? <TargetOccupiedIndicator /> : <TargetEmptyIndicator />;
+
+TargetIndicator.propTypes = {
+  occupied: PropTypes.bool.isRequired,
+};
 
 const KingCheckedIndicator = styled.div({
   backgroundColor: IN_CHECK_COLOR,
@@ -56,12 +59,20 @@ const KingCheckedIndicator = styled.div({
   ...fillParentElement,
 });
 
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+`;
+
 const Square = ({
   handleClick,
-  pieceCode,
-  selected,
   inCheck,
   inLastMove,
+  pieceCode,
+  selected,
   targeted,
 }) => {
   const [moveX, moveY] = useSelector(state => state.animationOffset);
@@ -72,19 +83,9 @@ const Square = ({
   const selectedMoveY = selected ? moveY : 0;
 
   /* eslint-disable jsx-a11y/no-static-element-interactions */
-  /* eslint-disable jsx-a11y/click-events-have-key-events */ 
+  /* eslint-disable jsx-a11y/click-events-have-key-events */
   return (
-    <div
-      className="Square"
-      onClick={handleClick}
-      css={{
-        display: 'flex',
-        justifyContent: 'center',
-        margin: '0px;',
-        padding: '0px;',
-        position: 'relative',
-      }}
-    >
+    <Wrapper className="Square" onClick={handleClick}>
       {inLastMove && <LastMoveIndicator />}
       {selected && !isMoving && <SelectionIndicator />}
       {occupied && (
@@ -96,10 +97,10 @@ const Square = ({
       )}
       {targeted && !isMoving && <TargetIndicator occupied={occupied} />}
       {inCheck && !isMoving && <KingCheckedIndicator />}
-    </div>
+    </Wrapper>
   );
   /* eslint-enable jsx-a11y/no-static-element-interactions */
-  /* eslint-enable jsx-a11y/click-events-have-key-events */ 
+  /* eslint-enable jsx-a11y/click-events-have-key-events */
 };
 
 Square.propTypes = {
