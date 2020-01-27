@@ -15,6 +15,7 @@ import * as styles from 'commonStyles';
 
 import Square from './components/Square';
 import LastMoveIndicator from './components/LastMoveIndicator';
+import KingInCheckIndicator from './components/KingInCheckIndicator';
 import SelectionIndicator from './components/SelectionIndicator';
 
 import boardImg from './assets/board-1000px.svg.png';
@@ -69,6 +70,16 @@ const BoardView = ({ handleSquareClick }) => {
     [moveFromSlot, moveToSlot],
   );
 
+  const kingInCheck = useCallback(
+    slot => !isMoving && board.inCheck({ slot, nextMoveColor }),
+    [board, isMoving, nextMoveColor],
+  );
+
+  const isSelected = useCallback(slot => !isMoving && selectedSlot === slot, [
+    isMoving,
+    selectedSlot,
+  ]);
+
   const renderSquares = () =>
     board.board.map((_, i, b) => {
       const slot = getSlot(b, i);
@@ -77,13 +88,13 @@ const BoardView = ({ handleSquareClick }) => {
           className="Square"
           key={slot}
           handleClick={handleSquareClick(slot)}
-          inCheck={board.inCheck({ slot, nextMoveColor })}
           pieceCode={getPieceCode(slot)}
           selected={selectedSlot === slot}
           targeted={targets.includes(slot)}
         >
           {inLastMove(slot) && <LastMoveIndicator />}
-          {selectedSlot === slot && !isMoving && <SelectionIndicator />}
+          {isSelected(slot) && <SelectionIndicator />}
+          {kingInCheck(slot) && <KingInCheckIndicator />}
         </Square>
       );
     });

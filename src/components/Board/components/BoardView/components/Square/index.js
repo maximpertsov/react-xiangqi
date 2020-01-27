@@ -8,8 +8,6 @@ import { fillParentElement, SELECTION_COLOR } from 'commonStyles';
 
 import XiangqiPiece from './components/Piece';
 
-const IN_CHECK_COLOR = 'red';
-
 const TargetOccupiedIndicator = styled.div({
   backgroundColor: SELECTION_COLOR,
   borderRadius: '50%',
@@ -33,13 +31,6 @@ TargetIndicator.propTypes = {
   occupied: PropTypes.bool.isRequired,
 };
 
-const KingCheckedIndicator = styled.div({
-  backgroundColor: IN_CHECK_COLOR,
-  borderRadius: '50%',
-  zIndex: '-1',
-  ...fillParentElement,
-});
-
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -51,7 +42,6 @@ const Wrapper = styled.div`
 const Square = ({
   children,
   handleClick,
-  inCheck,
   pieceCode,
   selected,
   targeted,
@@ -76,7 +66,6 @@ const Square = ({
         />
       )}
       {targeted && !isMoving && <TargetIndicator occupied={occupied} />}
-      {inCheck && !isMoving && <KingCheckedIndicator />}
     </Wrapper>
   );
   /* eslint-enable jsx-a11y/no-static-element-interactions */
