@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { makeMove } from 'actions';
 import { getBottomPlayerIsRed, getSelectedMove, getLegalMoves } from 'reducers';
 
-
 import BoardView from './components/BoardView';
 
 const ANIMATION_DELAY = 150;

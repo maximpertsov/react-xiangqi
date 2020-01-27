@@ -12,9 +12,8 @@ import {
 
 import * as styles from 'commonStyles';
 
-import Square from './Square';
-
-import boardImg from '../board-1000px.svg.png';
+import Square from './components/Square';
+import boardImg from './assets/board-1000px.svg.png';
 
 const Wrapper = styled.div`
   background-image: url(${boardImg});
