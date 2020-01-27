@@ -1,6 +1,5 @@
 import * as client from 'services/client';
 import { getSlot } from 'services/logic';
-import { Color } from 'services/logic/constants';
 import { getRankFile } from 'services/logic/utils';
 
 /************/
@@ -122,24 +121,14 @@ export const postMove = ({
   }
 };
 
-/************/
-/*** Home ***/
-/************/
-const setAutoMove = colors => ({ type: 'set_auto_move', colors });
-export const setAutoMoveOff = () => setAutoMove([]);
-export const setAutoMoveRed = () => setAutoMove([Color.RED]);
-export const setAutoMoveBlack = () => setAutoMove([Color.BLACK]);
-export const setAutoMoveBoth = () => setAutoMove([Color.RED, Color.BLACK]);
-
-export const fetchGames = ({ username }) => async dispatch => {
-  if (username === null) return;
-
-  const {
-    data: { games },
-  } = await client.getGameList({ username });
-  dispatch({ type: 'set_games', games });
-};
-
-export { toggleShowGame, toggleCanMoveBothColors } from 'scenes/Home/actions';
+export {
+  fetchGames,
+  setAutoMoveOff,
+  setAutoMoveRed,
+  setAutoMoveBlack,
+  setAutoMoveBoth,
+  toggleShowGame,
+  toggleCanMoveBothColors,
+} from 'scenes/Home/actions';
 
 export default {};
