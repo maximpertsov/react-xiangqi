@@ -14,6 +14,7 @@ import {
 import * as styles from 'commonStyles';
 
 import Square from './components/Square';
+import XiangqiPiece from './components/Piece';
 import LastMoveIndicator from './components/LastMoveIndicator';
 import KingInCheckIndicator from './components/KingInCheckIndicator';
 import SelectionIndicator from './components/SelectionIndicator';
@@ -56,6 +57,7 @@ const BoardView = ({ handleSquareClick }) => {
     toSlot: moveToSlot,
   } = useSelector(state => getSelectedMove(state));
   const isMoving = useSelector(state => getIsMoving(state));
+  const [moveX, moveY] = useSelector(state => state.animationOffset);
 
   const getPieceCode = useCallback(slot => board.getPiece(slot) || undefined, [
     board,
@@ -90,6 +92,18 @@ const BoardView = ({ handleSquareClick }) => {
     getPieceCode,
   ]);
 
+  const renderPiece = useCallback(
+    slot => (
+      <XiangqiPiece
+        code={getPieceCode(slot)}
+        moveX={selectedSlot === slot ? moveX : 0}
+        moveY={selectedSlot === slot ? moveY : 0}
+      />
+    ),
+    [getPieceCode, moveX, moveY, selectedSlot],
+  );
+
+  /* eslint-disable complexity */
   const renderSquares = () =>
     board.board.map((_, i, b) => {
       const slot = getSlot(b, i);
@@ -98,9 +112,8 @@ const BoardView = ({ handleSquareClick }) => {
           className="Square"
           key={slot}
           handleClick={handleSquareClick(slot)}
-          pieceCode={getPieceCode(slot)}
-          selected={selectedSlot === slot}
         >
+          {isOccupied(slot) && renderPiece(slot)}
           {inLastMove(slot) && <LastMoveIndicator />}
           {kingIsInCheck(slot) && <KingInCheckIndicator />}
           {isSelected(slot) && <SelectionIndicator />}
@@ -108,6 +121,7 @@ const BoardView = ({ handleSquareClick }) => {
         </Square>
       );
     });
+  /* eslint-enable complexity */
 
   return <Wrapper className="BoardView">{renderSquares()}</Wrapper>;
 };
