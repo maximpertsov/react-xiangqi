@@ -1,4 +1,6 @@
 export {
+  cancelMoves,
+  confirmMoves,
   fetchGame,
   fetchMoves,
   makeMove,

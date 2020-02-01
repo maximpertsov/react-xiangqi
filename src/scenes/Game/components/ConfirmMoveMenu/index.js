@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { postMove, selectMove } from 'actions';
+import { cancelMoves, confirmMoves, postMove, selectMove } from 'actions';
 import { getLastMove, getPreviousMove } from 'reducers';
 
 import ConfirmMenu from 'components/ConfirmMenu';
@@ -20,15 +20,14 @@ const ConfirmMoveMenu = () => {
     if (!pending) return;
 
     dispatch(postMove({ gameSlug, fromSlot, toSlot, moves, username }));
-    dispatch({ type: 'confirm_moves' });
+    dispatch(confirmMoves());
   }, [dispatch, gameSlug, lastMove, moves, username]);
 
   const cancelMove = useCallback(() => {
     // HACK: select previous move before dropping the cancelled move
     dispatch(selectMove({ moveId: previousMove.id }));
-    dispatch({ type: 'cancel_moves' });
+    dispatch(cancelMoves());
   }, [dispatch, previousMove.id]);
-
 
   return (
     <ConfirmMenu

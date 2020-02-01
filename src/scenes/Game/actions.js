@@ -24,6 +24,14 @@ export const makeMove = ({ fromSlot, toSlot, pending }) => dispatch => {
   dispatch(selectMove({ moveId }));
 };
 
+export const cancelMoves = () => ({
+  type: 'cancel_moves',
+});
+
+export const confirmMoves = () => ({
+  type: 'confirm_moves',
+});
+
 export const toggleLoading = ({ loading }) => ({
   type: 'toggle_loading',
   loading,
