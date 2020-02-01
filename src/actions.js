@@ -17,6 +17,7 @@ export {
   setAutoMoveBlack,
   setAutoMoveBoth,
   setGameSlug,
+  setForm,
   setUsername,
   toggleShowGame,
   toggleCanMoveBothColors,

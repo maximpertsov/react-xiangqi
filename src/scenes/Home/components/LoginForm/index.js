@@ -1,24 +1,22 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
-import { setUsername } from 'actions';
+import { setForm, setUsername } from 'actions';
 import * as client from 'services/client';
-
-const initialForm = { formUsername: '', formPassword: '', formError: '' };
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const username = useSelector(state => state.username);
-
-  // TODO: should this be part of the global state?
-  const [form, setForm] = useState(initialForm);
-  const [loading, setLoading] = useState(true);
+  const formUsername = useSelector(state => state.loginForm.username);
+  const formPassword = useSelector(state => state.loginForm.password);
+  const formError = useSelector(state => state.loginForm.error);
+  const loading = useSelector(state => state.loginForm.loading);
 
   const ping = useCallback(async () => {
     const { status } = await client.ping();
-    if (status === 200) setLoading(false);
-  }, [setLoading]);
+    if (status === 200) dispatch({ type: 'set_login_loading', loading: false });
+  }, [dispatch]);
 
   const handleAuthenticationSuccess = useCallback(
     response => {
@@ -49,18 +47,17 @@ const LoginForm = () => {
   );
 
   const clearState = () => {
-    setForm(prevForm => ({ ...prevForm, initialForm }));
+    dispatch(setForm({ username: '', password: '', error: '' }));
   };
 
   const handleChange = event => {
     const {
       target: { name, value },
     } = event;
-    setForm(prevForm => ({ ...prevForm, [name]: value }));
+    dispatch(setForm({ [name]: value }));
   };
 
   const handleClick = async () => {
-    const { formUsername, formPassword } = form;
     clearState();
     try {
       const response = await client.login({
@@ -69,7 +66,7 @@ const LoginForm = () => {
       });
       if (response.status === 201) handleAuthenticationSuccess(response);
     } catch (error) {
-      setForm(prevForm => ({ ...prevForm, formError: 'Login failed' }));
+      dispatch(setForm({ error: 'Login failed' }));
     }
   };
 
@@ -81,7 +78,6 @@ const LoginForm = () => {
   };
 
   const renderLoggedOut = () => {
-    const { formUsername, formPassword, formError } = form;
     return (
       <div className="LoginForm">
         <Form>
@@ -90,7 +86,7 @@ const LoginForm = () => {
             iconPosition="left"
             label="Username"
             placeholder="Username"
-            name="formUsername"
+            name="username"
             value={formUsername}
             onChange={handleChange}
           />
@@ -99,7 +95,7 @@ const LoginForm = () => {
             iconPosition="left"
             label="Password"
             type="password"
-            name="formPassword"
+            name="password"
             value={formPassword}
             onChange={handleChange}
           />

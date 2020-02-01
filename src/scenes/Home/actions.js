@@ -22,6 +22,15 @@ export const setGameSlug = ({ gameSlug }) => ({
   gameSlug,
 });
 
+export const setForm = form => dispatch => {
+  const { username, password, error } = form;
+  if (username !== undefined)
+    return dispatch({ type: 'set_login_username', username });
+  if (password !== undefined)
+    return dispatch({ type: 'set_login_password', password });
+  if (error !== undefined) return dispatch({ type: 'set_login_error', error });
+};
+
 export const setUsername = ({ username }) => ({
   type: 'set_username',
   username,
