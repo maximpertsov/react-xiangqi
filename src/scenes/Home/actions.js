@@ -17,6 +17,10 @@ export const fetchGames = ({ username }) => async dispatch => {
   dispatch({ type: 'set_games', games });
 };
 
+export const setGameSlug = ({ gameSlug }) => ({ gameSlug });
+
+export const setUsername = ({ username }) => ({ username });
+
 export const toggleShowGame = ({ showGame }) => ({
   type: 'toggle_show_game',
   showGame,

@@ -1,14 +1,15 @@
-import React, { useCallback } from "react";
-import PropTypes from "prop-types";
-import { Button } from "semantic-ui-react";
-import { useDispatch } from "react-redux";
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { Button } from 'semantic-ui-react';
+import { useDispatch } from 'react-redux';
+import { setGameSlug, toggleShowGame } from 'actions';
 
 const GameLink = ({ slug }) => {
   const dispatch = useDispatch();
 
   const setThisGameSlug = useCallback(() => {
-    dispatch({ type: "set_game_slug", gameSlug: slug });
-    dispatch({ type: "toggle_show_game", showGame: true });
+    dispatch(setGameSlug({ gameSlug: slug }));
+    dispatch(toggleShowGame({ showGame: true }));
   }, [dispatch, slug]);
 
   return (

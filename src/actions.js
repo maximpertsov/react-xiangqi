@@ -16,6 +16,8 @@ export {
   setAutoMoveRed,
   setAutoMoveBlack,
   setAutoMoveBoth,
+  setGameSlug,
+  setUsername,
   toggleShowGame,
   toggleCanMoveBothColors,
 } from 'scenes/Home/actions';
