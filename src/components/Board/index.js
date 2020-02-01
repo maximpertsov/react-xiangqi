@@ -1,7 +1,13 @@
 import React, { useCallback, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { clearSelectedSlot, makeMove, setSelectedSlot } from 'actions';
+import {
+  clearAnimationOffset,
+  clearSelectedSlot,
+  makeMove,
+  setAnimationOffset,
+  setSelectedSlot,
+} from 'actions';
 import { getBottomPlayerIsRed, getSelectedMove, getLegalMoves } from 'reducers';
 
 import BoardView from './components/BoardView';
@@ -46,15 +52,10 @@ const Board = () => {
   const handleMove = useCallback(
     (fromSlot, toSlot) => {
       if (isLegalMove(fromSlot, toSlot)) {
-        dispatch({
-          type: 'set_animation_offset',
-          bottomPlayerIsRed,
-          fromSlot,
-          toSlot,
-        });
+        dispatch(setAnimationOffset({ bottomPlayerIsRed, fromSlot, toSlot }));
         setTimeout(() => {
           dispatch(makeMove({ fromSlot, toSlot, pending: true }));
-          dispatch({ type: 'unset_animation_offset' });
+          dispatch(clearAnimationOffset());
           dispatch(clearSelectedSlot());
         }, ANIMATION_DELAY);
       } else {
