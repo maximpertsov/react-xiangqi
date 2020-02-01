@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import autoMove from 'scenes/Home/reducers/autoMove';
 import games from 'scenes/Home/reducers/games';
 import gameSlug from 'scenes/Home/reducers/gameSlug';
+import loginForm from 'scenes/Home/reducers/loginForm';
 import showGame from 'scenes/Home/reducers/showGame';
 import username from 'scenes/Home/reducers/username';
 // Game
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   autoMove,
   games,
   gameSlug,
+  loginForm,
   showGame,
   username,
   // Game

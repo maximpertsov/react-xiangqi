@@ -14,7 +14,7 @@ const animationOffset = (state = [0, 0], action) => {
   switch (action.type) {
     case 'set_animation_offset':
       return setAnimationOffset(state, action);
-    case 'unset_animation_offset':
+    case 'clear_animation_offset':
       return [0, 0];
     default:
       return state;
