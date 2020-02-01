@@ -18,4 +18,6 @@ export {
   toggleCanMoveBothColors,
 } from 'scenes/Home/actions';
 
+export { clearSelectedSlot, setSelectedSlot } from 'components/Board/actions';
+
 export default {};
