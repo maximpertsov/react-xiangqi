@@ -6,7 +6,10 @@ import configureMockStore from 'redux-mock-store';
 import App from '../src/App';
 
 const mockStore = configureMockStore();
-const store = mockStore({});
+const store = mockStore({
+  loginForm: {},
+  games: [],
+});
 
 Enzyme.configure({ adapter: new Adapter() });
 
