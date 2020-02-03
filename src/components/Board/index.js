@@ -1,4 +1,4 @@
-import React, { useCallback, useLayoutEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -21,11 +21,7 @@ const Board = () => {
   const selectedSlot = useSelector(state => state.selectedSlot);
   const { board } = useSelector(state => getSelectedMove(state));
 
-  // NOTE: this is the synchronous version of useEffect. Using
-  // this version prevents late selection clearing, but causes
-  // move updates to take longer. Annoying in development but
-  // seems to be fast enough on a production build.
-  useLayoutEffect(
+  useEffect(
     () => {
       dispatch(clearSelectedSlot());
     },
