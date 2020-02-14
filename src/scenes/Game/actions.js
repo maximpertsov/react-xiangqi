@@ -65,7 +65,7 @@ export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
     } = await client.getMoves({ gameSlug });
     lastMoveId = fetchedMoves
       // TODO: throw error if fetched move do not match app moves
-      .filter((_, index) => moves[index + 1] === undefined)
+      .filter((_, index) => index > 0 && moves[index] === undefined)
       .reduce((lastMoveId, fetchedMove) => {
         const addMoveAction = addFetchedMove(fetchedMove);
         dispatch(addMoveAction);
