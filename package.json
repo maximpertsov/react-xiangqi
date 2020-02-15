@@ -27,7 +27,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "gh-pages -t -d build",
-    "test": "jest",
+    "test": "jest --silent",
     "eject": "react-scripts eject"
   },
   "homepage": "https://xchess.xyz",

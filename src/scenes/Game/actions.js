@@ -1,6 +1,5 @@
 import * as client from 'services/client';
-import { getSlot } from 'services/logic';
-import { getRankFile } from 'services/logic/utils';
+import { decodeMove, encodeMove } from 'services/logic/square';
 
 let nextMoveId = 0;
 
@@ -37,12 +36,13 @@ export const toggleLoading = ({ loading }) => ({
   loading,
 });
 
-const addFetchedMove = ({ origin: fromPos, destination: toPos }) =>
-  addMove({
-    fromSlot: getSlot(...fromPos),
-    toSlot: getSlot(...toPos),
-    pending: false,
-  });
+const addFetchedMove = ({ move }) => {
+  let [fromSlot, toSlot] = [undefined, undefined];
+  if (move !== null) {
+    [fromSlot, toSlot] = decodeMove(move);
+  }
+  return addMove({ fromSlot, toSlot, pending: false });
+};
 
 export const fetchGame = ({ gameSlug }) => async dispatch => {
   if (gameSlug === null) return;
@@ -65,7 +65,7 @@ export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
     } = await client.getMoves({ gameSlug });
     lastMoveId = fetchedMoves
       // TODO: throw error if fetched move do not match app moves
-      .filter((_, index) => moves[index + 1] === undefined)
+      .filter((_, index) => index > 0 && moves[index] === undefined)
       .reduce((lastMoveId, fetchedMove) => {
         const addMoveAction = addFetchedMove(fetchedMove);
         dispatch(addMoveAction);
@@ -116,8 +116,7 @@ export const postMove = ({
     const { status } = await client.postMove({
       gameSlug,
       username,
-      fromPos: getRankFile(fromSlot),
-      toPos: getRankFile(toSlot),
+      move: encodeMove(fromSlot, toSlot),
     });
     if (status !== 201) dispatch(fetchMoves({ gameSlug, moves }));
   } catch (error) {

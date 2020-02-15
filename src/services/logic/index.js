@@ -14,16 +14,17 @@ import {
   DIAGONAL_MOVES,
 } from './constants';
 import * as utils from './utils';
+import { decode } from './fen';
 
 export { RefType };
 
 // TODO: re-const is ugly
-export const { getSlot, getRank, getFile, getRankFile, fromFen } = utils;
+export const { getSlot, getRank, getFile, getRankFile } = utils;
 
 export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
   constructor({ fen = EMPTY_BOARD_FEN } = {}) {
-    this.board = utils.fromFen(fen);
+    this.board = decode(fen).placement;
   }
 
   _slot(pos, refType) {

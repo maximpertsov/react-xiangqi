@@ -6,28 +6,20 @@ axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.xsrfCookieName = 'csrftoken';
 
-export const ping = () =>
-  axios.get('ping');
+export const ping = () => axios.get('ping');
 
 export const getGameList = ({ username }) =>
   axios.get(`player/${username}/games`);
 
-export const getGame = ({ gameSlug }) =>
-  axios.get(`game/${gameSlug}`);
+export const getGame = ({ gameSlug }) => axios.get(`game/${gameSlug}`);
 
-export const getMoves = ({ gameSlug }) =>
-  axios.get(`game/${gameSlug}/moves`);
+export const getMoves = ({ gameSlug }) => axios.get(`game/${gameSlug}/moves`);
 
 export const getMoveCount = ({ gameSlug }) =>
   axios.get(`game/${gameSlug}/move-count`);
 
-export const postMove = ({ gameSlug, username, fromPos, toPos }) => {
-  const payload = {
-    player: username,
-    from: fromPos,
-    to: toPos,
-    type: 'move', // TODO: remove this?
-  };
+export const postMove = ({ gameSlug, move, username }) => {
+  const payload = { move, player: username };
   return axios.post(`game/${gameSlug}/moves`, payload);
 };
 

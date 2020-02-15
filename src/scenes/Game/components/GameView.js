@@ -20,16 +20,19 @@ const Wrapper = styled.div`
 const GameView = () => {
   // TODO: this is a massive hack -- should not rely on move count to determine
   // if this is the initial load
-  const active = useSelector(
-    state =>
-      state.gameSlug !== null && state.loading && getMoveCount(state) <= 1,
-  );
+  // FIXME: the causes the loading circle to appear for each poll on black's
+  // first move!
+  // const dimmed = useSelector(
+  //   state =>
+  //     state.gameSlug !== null && state.loading && getMoveCount(state) <= 1,
+  // );
+  const dimmed = false;
   const currentPlayer = useSelector(state => getCurrentPlayer(state));
   const otherPlayer = useSelector(state => getOtherPlayer(state));
 
   return (
-    <Dimmer.Dimmable as={Segment} basic blurring dimmed={active}>
-      <Dimmer active={active} page>
+    <Dimmer.Dimmable as={Segment} basic blurring dimmed={dimmed}>
+      <Dimmer active={dimmed} page>
         <Loader>Loading</Loader>
       </Dimmer>
       <Wrapper className="Game">
