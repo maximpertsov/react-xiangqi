@@ -18,6 +18,7 @@ export const encode = slot => {
 export const encodeMove = (fromSlot, toSlot) =>
   `${encode(fromSlot)}${encode(toSlot)}`;
 
-export const decodeMove = move => move;
+export const decodeMove = move =>
+  move.match(/([a-z][0-9]+)/g).map(square => decode(square));
 
 export default {};

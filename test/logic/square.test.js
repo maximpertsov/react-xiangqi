@@ -13,5 +13,5 @@ test('convert fromSlot, toSlot to a move', () => {
 });
 
 test('convert move to (fromSlot, toSlot)', () => {
-  expect(decodeMove('b10c9')).toBe([1, 11]);
+  expect(decodeMove('b10c9')).toStrictEqual([1, 11]);
 });
