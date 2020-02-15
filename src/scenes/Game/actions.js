@@ -38,7 +38,10 @@ export const toggleLoading = ({ loading }) => ({
 });
 
 const addFetchedMove = ({ move }) => {
-  const [fromSlot, toSlot] = decodeMove(move);
+  let [fromSlot, toSlot] = [undefined, undefined];
+  if (move !== null) {
+    [fromSlot, toSlot] = decodeMove(move);
+  }
   return addMove({ fromSlot, toSlot, pending: false });
 };
 
