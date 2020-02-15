@@ -1,5 +1,6 @@
 import * as client from 'services/client';
 import { getSlot } from 'services/logic';
+import { encodeMove } from 'services/logic/square';
 import { getRankFile } from 'services/logic/utils';
 
 let nextMoveId = 0;
@@ -116,6 +117,7 @@ export const postMove = ({
     const { status } = await client.postMove({
       gameSlug,
       username,
+      move: encodeMove(fromSlot, toSlot),
       fromPos: getRankFile(fromSlot),
       toPos: getRankFile(toSlot),
     });
