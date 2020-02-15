@@ -84,14 +84,3 @@ export const diagonalSlots = (slot, radius) => {
   const steps = radius === undefined ? 1 : radius;
   return tryMarchMoves(slot, DIAGONAL_MOVES, steps);
 };
-
-// FEN
-export const fromFenRow = row =>
-  row.split('').reduce((acc, ch) => {
-    const val = +ch;
-    const newItems = Number.isNaN(val) ? [ch] : Array(val).fill(null);
-    return acc.concat(newItems);
-  }, []);
-
-export const fromFen = fen =>
-  fen.split('/').reduce((acc, row) => acc.concat(fromFenRow(row)), []);
