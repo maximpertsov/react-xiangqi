@@ -23,6 +23,6 @@ test('convert fen to board', () => {
     castling: '-',
     enPassant: '-',
     halfmoves: 0,
-    fullmoves: 0,
+    fullmoves: 1,
   });
 });
