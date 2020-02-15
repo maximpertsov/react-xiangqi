@@ -9,5 +9,5 @@ test('convert slot to square', () => {
 });
 
 test('convert fromSlot, toSlot to a move', () => {
-  expect(encodeMove(0, 11)).toBe('A10B9');
+  expect(encodeMove(1, 11)).toBe('B10C9');
 });
