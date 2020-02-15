@@ -3,8 +3,9 @@ import XiangqiBoard, {
   getRank,
   getFile,
   getSlot,
-  fromFen,
 } from 'services/logic';
+
+import { decode } from 'services/logic/fen';
 
 import { Color } from 'services/logic/constants';
 
@@ -140,7 +141,7 @@ test('converts FEN string to an array', () => {
     ...Array(9).fill(null),
     'R', 'H', 'E', 'A', 'K', 'A', 'E', 'H', 'R',
   ];
-  const actual = fromFen(fen);
+  const actual = decode(fen).placement;
   expect(actual).toStrictEqual(expected);
 });
 
