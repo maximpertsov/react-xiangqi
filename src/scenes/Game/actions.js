@@ -1,6 +1,5 @@
 import * as client from 'services/client';
-import { getSlot } from 'services/logic';
-import { encodeMove } from 'services/logic/square';
+import { decodeMove, encodeMove } from 'services/logic/square';
 import { getRankFile } from 'services/logic/utils';
 
 let nextMoveId = 0;
@@ -38,12 +37,10 @@ export const toggleLoading = ({ loading }) => ({
   loading,
 });
 
-const addFetchedMove = ({ origin: fromPos, destination: toPos }) =>
-  addMove({
-    fromSlot: getSlot(...fromPos),
-    toSlot: getSlot(...toPos),
-    pending: false,
-  });
+const addFetchedMove = ({ move }) => {
+  const [fromSlot, toSlot] = decodeMove(move);
+  return addMove({ fromSlot, toSlot, pending: false });
+};
 
 export const fetchGame = ({ gameSlug }) => async dispatch => {
   if (gameSlug === null) return;
