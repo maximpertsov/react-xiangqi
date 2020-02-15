@@ -18,4 +18,6 @@ export const encode = slot => {
 export const encodeMove = (fromSlot, toSlot) =>
   `${encode(fromSlot)}${encode(toSlot)}`;
 
+export const decodeMove = (move) => move;
+
 export default {};
