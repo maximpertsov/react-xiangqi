@@ -13,6 +13,6 @@ export const decode = square => {
   const file = FILES.indexOf(square.substring(0, 1));
 
   return getSlot(rank, file);
-}
+};
 
 export default {};
