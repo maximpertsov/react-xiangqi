@@ -1,4 +1,4 @@
-import { getRankFile } from './utils';
+import { getRankFile, getSlot } from './utils';
 
 const RANKS = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1'];
 const FILES = 'ABCDEFGHI'.split('');
@@ -8,6 +8,11 @@ export const encode = slot => {
   return `${FILES[file]}${RANKS[rank]}`;
 };
 
-export const decode = square => square;
+export const decode = square => {
+  const rank = RANKS.indexOf(square.substring(1));
+  const file = FILES.indexOf(square.substring(0, 1));
+
+  return getSlot(rank, file);
+}
 
 export default {};
