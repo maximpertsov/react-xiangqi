@@ -10,7 +10,6 @@ const GameClient = () => {
   const dispatch = useDispatch();
 
   const gameSlug = useSelector(state => state.gameSlug);
-  const loading = useSelector(state => state.loading);
   const moves = useSelector(state => state.moves);
   const moveCount = useSelector(state => getMoveCount(state));
   const nextMovePlayer = useSelector(state => getNextMovePlayer(state));
@@ -34,7 +33,6 @@ const GameClient = () => {
         dispatch(
           pollMoves({
             gameSlug,
-            loading,
             moves,
             moveCount,
             nextMovePlayer,

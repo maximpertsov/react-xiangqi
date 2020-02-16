@@ -87,7 +87,6 @@ const canUpdateMoves = ({ gameSlug, nextMovePlayer, username }) => {
 
 export const pollMoves = ({
   gameSlug,
-  loading,
   moveCount,
   moves,
   nextMovePlayer,
@@ -98,7 +97,8 @@ export const pollMoves = ({
   const {
     data: { move_count },
   } = await client.getMoveCount({ gameSlug });
-  if (!loading && moveCount > move_count) return;
+
+  if (moveCount >= move_count) return;
 
   dispatch(fetchMoves({ gameSlug, moves }));
 };
