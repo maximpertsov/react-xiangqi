@@ -98,7 +98,7 @@ export const pollMoves = ({
   const {
     data: { move_count },
   } = await client.getMoveCount({ gameSlug });
-  if (!loading && moveCount >= move_count) return;
+  if (!loading && moveCount > move_count) return;
 
   dispatch(fetchMoves({ gameSlug, moves }));
 };
