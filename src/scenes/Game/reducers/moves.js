@@ -6,7 +6,7 @@ import { Color } from 'services/logic/constants';
 import { isRed } from 'services/logic/utils';
 
 /* eslint-disable-next-line max-len */
-const DEFAULT_FEN = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
+const DEFAULT_FEN = 'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR';
 
 const initialMoves = [{
   id: 0,

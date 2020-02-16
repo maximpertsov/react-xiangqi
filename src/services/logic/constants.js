@@ -12,8 +12,8 @@ export const Color = Object.freeze({
 export const Piece = Object.freeze({
   Black: Object.freeze({
     CHARIOT: 'r',
-    HORSE: 'h',
-    ELEPHANT: 'e',
+    HORSE: 'n',
+    ELEPHANT: 'b',
     ADVISOR: 'a',
     GENERAL: 'k',
     CANNON: 'c',
@@ -21,8 +21,8 @@ export const Piece = Object.freeze({
   }),
   Red: Object.freeze({
     CHARIOT: 'R',
-    HORSE: 'H',
-    ELEPHANT: 'E',
+    HORSE: 'N',
+    ELEPHANT: 'B',
     ADVISOR: 'A',
     GENERAL: 'K',
     CANNON: 'C',
