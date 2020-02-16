@@ -19,5 +19,5 @@ test('update board placement by move', () => {
     ['R', 'N', 'B', 'A', 'K', 'A', 'B', 'N', 'R'],
   ]);
 
-  expect(makeMove(initialPlacement, 'A10A9')).toStrictEqual(expectedPlacement);
+  expect(makeMove(initialPlacement, 'a10a9')).toStrictEqual(expectedPlacement);
 });
