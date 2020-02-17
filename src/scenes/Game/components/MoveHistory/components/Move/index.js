@@ -9,7 +9,7 @@ import { getRankFile } from 'services/logic/utils';
 
 const Wrapper = styled.span(
   ({ isSelected, piece }) => ({
-    color: ('RHEAKCP'.includes(piece) ? Color.RED : Color.BLACK),
+    color: ('RNBAKCP'.includes(piece) ? Color.RED : Color.BLACK),
     padding: '2px',
     textDecoration: (isSelected ? 'underline' : 'none'),
   }),
@@ -23,10 +23,10 @@ const P = {
   P: '兵',
   r: '車',
   R: '車',
-  h: '馬',
-  H: '馬',
-  e: '象',
-  E: '相',
+  n: '馬',
+  N: '馬',
+  b: '象',
+  B: '相',
   a: '士',
   A: '仕',
   k: '將',
