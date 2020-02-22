@@ -3,21 +3,15 @@ import { decodeMove, encodeMove } from 'services/logic/square';
 
 let nextMoveId = 0;
 
-const addMove = ({ fromSlot, toSlot, pending }) => ({
-  type: 'add_move',
-  moveId: ++nextMoveId,
-  fromSlot,
-  toSlot,
-  pending,
-});
+const addMove = move => ({ ...move, type: 'add_move', moveId: ++nextMoveId });
 
 export const selectMove = ({ moveId }) => ({
   type: 'select_move',
   moveId,
 });
 
-export const makeMove = ({ fromSlot, toSlot, pending }) => dispatch => {
-  const addMoveAction = addMove({ fromSlot, toSlot, pending });
+export const makeMove = move => dispatch => {
+  const addMoveAction = addMove(move);
   const { moveId } = addMoveAction;
   dispatch(addMoveAction);
   dispatch(selectMove({ moveId }));
@@ -36,12 +30,12 @@ export const toggleLoading = ({ loading }) => ({
   loading,
 });
 
-const addFetchedMove = ({ move }) => {
+const addFetchedMove = ({ fen, legal_moves: legalMoves, move }) => {
   let [fromSlot, toSlot] = [undefined, undefined];
   if (move !== null) {
     [fromSlot, toSlot] = decodeMove(move);
   }
-  return addMove({ fromSlot, toSlot, pending: false });
+  return addMove({ fen, legalMoves, fromSlot, move, pending: false, toSlot });
 };
 
 export const fetchGame = ({ gameSlug }) => async dispatch => {

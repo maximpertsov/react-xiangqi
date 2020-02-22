@@ -17,15 +17,17 @@ const initialMoves = [{
   pending: false,
 }];
 
-const addMove = (state, { moveId, fromSlot, toSlot, pending }) => {
+const addMove = (state, action) => {
   const { board } = state[state.length - 1];
   const move = {
-    id: moveId,
-    fromSlot,
-    toSlot,
-    piece: board.getPiece(fromSlot),
-    board: board.move(fromSlot, toSlot),
-    pending,
+    id: action.moveId,
+    board: board.move(action.fromSlot, action.toSlot),
+    fen: action.fen,
+    fromSlot: action.fromSlot,
+    legalMoves: action.legalMoves,
+    piece: board.getPiece(action.fromSlot),
+    pending: action.pending,
+    toSlot: action.toSlot,
   };
   return update(state, { $push: [move] });
 };
