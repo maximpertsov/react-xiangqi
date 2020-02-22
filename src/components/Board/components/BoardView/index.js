@@ -12,6 +12,7 @@ import {
 } from 'reducers';
 
 import * as styles from 'commonStyles';
+import { encode } from 'services/logic/square';
 
 import Square from './components/Square';
 import XiangqiPiece from './components/Piece';
@@ -83,10 +84,15 @@ const BoardView = ({ handleSquareClick }) => {
     selectedSlot,
   ]);
 
-  const isTargeted = useCallback(slot => !isMoving && targets.includes(slot), [
-    isMoving,
-    targets,
-  ]);
+  const isTargeted = useCallback(
+    slot => {
+      if (isMoving) return false;
+
+      const toSquare = encode(slot);
+      return targets.some(move => move.endsWith(toSquare));
+    },
+    [isMoving, targets],
+  );
 
   const isOccupied = useCallback(slot => getPieceCode(slot) !== undefined, [
     getPieceCode,
