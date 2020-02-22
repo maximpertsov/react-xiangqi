@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { encodeMove } from 'services/logic/square';
 
 import {
   clearAnimationOffset,
@@ -8,7 +9,7 @@ import {
   setAnimationOffset,
   setSelectedSlot,
 } from 'actions';
-import { getBottomPlayerIsRed, getSelectedMove, getLegalMoves } from 'reducers';
+import { getBottomPlayerIsRed, getSelectedMove } from 'reducers';
 
 import BoardView from './components/BoardView';
 
@@ -17,9 +18,8 @@ const ANIMATION_DELAY = 150;
 const Board = () => {
   const dispatch = useDispatch();
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
-  const legalMoves = useSelector(state => getLegalMoves(state));
   const selectedSlot = useSelector(state => state.selectedSlot);
-  const { board } = useSelector(state => getSelectedMove(state));
+  const { board, legalMoves } = useSelector(state => getSelectedMove(state));
 
   useEffect(
     () => {
@@ -41,7 +41,7 @@ const Board = () => {
   );
 
   const isLegalMove = useCallback(
-    (fromSlot, toSlot) => legalMoves[fromSlot].includes(toSlot),
+    (fromSlot, toSlot) => legalMoves.includes(encodeMove(fromSlot, toSlot)),
     [legalMoves],
   );
 
