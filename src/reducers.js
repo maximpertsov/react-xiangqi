@@ -18,6 +18,7 @@ import canMoveBothColors from 'components/Board/reducers/canMoveBothColors';
 import selectedSlot from 'components/Board/reducers/selectedSlot';
 
 import { Color } from 'services/logic/constants';
+import { encode } from 'services/logic/square';
 
 const rootReducer = combineReducers({
   // Home,
@@ -123,28 +124,26 @@ export const getCurrentPlayerColor = state => {
 /***  Game Logic  ***/
 /********************/
 
-// TODO break up function
 export const getLegalMoves = state => {
-  const { board } = getSelectedMove(state);
   const currentPlayerColor = getCurrentPlayerColor(state);
   const nextMoveColor = getNextMoveColor(state);
-  const lastMove = getLastMove(state);
+  const { id: lastMoveId, legalMoves } = getLastMove(state);
 
   // TODO: for now we can assume that legal moves are only allowed for the
   // latest move. However, this will change if we ever implement an analysis
   // board-style function.
-  if (lastMove.id !== state.selectedMoveId) return board.noLegalMoves();
+  if (lastMoveId !== state.selectedMoveId) return [];
   if (!state.canMoveBothColors && currentPlayerColor !== nextMoveColor) {
-    return board.noLegalMoves();
+    return [];
   }
-  return board.legalMovesByColor(nextMoveColor);
+  return legalMoves;
 };
 
 export const getTargets = state => {
   if (state.selectedSlot === null) return [];
 
-  const legalMoves = getLegalMoves(state);
-  return legalMoves[state.selectedSlot];
+  const fromSquare = encode(state.selectedSlot);
+  return getLegalMoves(state).filter(move => move.startsWith(fromSquare));
 };
 
 export const getHasLegalMoves = state => {

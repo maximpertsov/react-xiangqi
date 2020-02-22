@@ -9,7 +9,7 @@ import {
   setAnimationOffset,
   setSelectedSlot,
 } from 'actions';
-import { getBottomPlayerIsRed, getSelectedMove } from 'reducers';
+import { getBottomPlayerIsRed, getLegalMoves, getSelectedMove } from 'reducers';
 
 import BoardView from './components/BoardView';
 
@@ -18,8 +18,9 @@ const ANIMATION_DELAY = 150;
 const Board = () => {
   const dispatch = useDispatch();
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
+  const legalMoves = useSelector(state => getLegalMoves(state));
   const selectedSlot = useSelector(state => state.selectedSlot);
-  const { board, legalMoves } = useSelector(state => getSelectedMove(state));
+  const { board } = useSelector(state => getSelectedMove(state));
 
   useEffect(
     () => {
