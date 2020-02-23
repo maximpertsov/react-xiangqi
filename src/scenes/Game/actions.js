@@ -112,9 +112,11 @@ export const postMove = ({
       username,
       move: encodeMove(fromSlot, toSlot),
     });
+    // TODO: add a single move instead of fetching all of them
     if (status !== 201) dispatch(fetchMoves({ gameSlug, moves }));
   } catch (error) {
     // TODO: display useful error?
+    // TODO: add a single move instead of fetching all of them
     dispatch(fetchMoves({ gameSlug, moves }));
   }
 };
