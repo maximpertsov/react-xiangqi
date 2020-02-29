@@ -97,6 +97,12 @@ export const pollMoves = ({
   dispatch(fetchMoves({ gameSlug, moves }));
 };
 
+export const setMove = ({ moveId, move }) => ({
+  type: 'set_move',
+  moveId,
+  move,
+});
+
 export const postMove = ({
   gameSlug,
   moves,
@@ -107,7 +113,7 @@ export const postMove = ({
   if (gameSlug === null) return;
 
   try {
-    const { status } = await client.postMove({
+    const { move, status } = await client.postMove({
       gameSlug,
       username,
       move: encodeMove(fromSlot, toSlot),
@@ -116,7 +122,7 @@ export const postMove = ({
     if (status !== 201) dispatch(fetchMoves({ gameSlug, moves }));
   } catch (error) {
     // TODO: display useful error?
-    // TODO: add a single move instead of fetching all of them
+    // TODO: cancel pending moves instead of re-fetching
     dispatch(fetchMoves({ gameSlug, moves }));
   }
 };
