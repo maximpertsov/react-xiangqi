@@ -1,5 +1,4 @@
-// TODO
-//
-// describe('game actions', () => {
-//   test('', () => {});
-// });
+describe('move reducers', () => {
+  // TODO: add a test
+  // test('', () => {});
+});
