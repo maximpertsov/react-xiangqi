@@ -2,6 +2,7 @@
   "extends": [
     "airbnb",
     "eslint:recommended",
+    "jest",
     "plugin:testcafe/recommended"
   ],
   "globals": {
