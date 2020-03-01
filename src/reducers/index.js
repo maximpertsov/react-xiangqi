@@ -8,7 +8,7 @@ import showGame from 'scenes/Home/reducers/showGame';
 import username from 'scenes/Home/reducers/username';
 // Game
 import loading from 'scenes/Game/reducers/loading';
-import moves, * as fromMoves from 'scenes/Game/reducers/moves';
+import moves, * as fromMoves from './moves';
 import players from 'scenes/Game/reducers/players';
 import selectedMoveId from 'scenes/Game/reducers/selectedMoveId';
 // Board
