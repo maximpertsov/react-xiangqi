@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import {
   getBottomPlayerIsRed,
   getIsMoving,
-  // getNextMoveColor,
   getSelectedMove,
   getTargets,
 } from 'reducers';
@@ -49,7 +48,6 @@ const Wrapper = styled.div`
 
 const BoardView = ({ handleSquareClick }) => {
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
-  // const nextMoveColor = useSelector(state => getNextMoveColor(state));
   const selectedSlot = useSelector(state => state.selectedSlot);
   const targets = useSelector(state => getTargets(state));
   const { board, move: selectedMove, givesCheck } = useSelector(state =>
