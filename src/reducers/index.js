@@ -18,7 +18,6 @@ import canMoveBothColors from 'components/Board/reducers/canMoveBothColors';
 import selectedSlot from 'components/Board/reducers/selectedSlot';
 
 import { Color } from 'services/logic/constants';
-import { encode } from 'services/logic/square';
 
 const rootReducer = combineReducers({
   // Home,
@@ -142,8 +141,9 @@ export const getLegalMoves = state => {
 export const getTargets = state => {
   if (state.selectedSlot === null) return [];
 
-  const fromSquare = encode(state.selectedSlot);
-  return getLegalMoves(state).filter(move => move.startsWith(fromSquare));
+  return getLegalMoves(state).filter(move =>
+    move.startsWith(state.selectedSlot),
+  );
 };
 
 export const getHasLegalMoves = state => {

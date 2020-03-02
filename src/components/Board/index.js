@@ -67,7 +67,7 @@ const Board = () => {
       } else if (board.isOccupied(square) && !selectedCanCapture(square)) {
         dispatch(setSelectedSlot({ selectedSlot: square }));
       } else if (selectedSlot !== null) {
-        handleMove(selectedSlot, square);
+        handleMove(`${selectedSlot}${square}`);
       } else {
         dispatch(clearSelectedSlot());
       }
