@@ -26,6 +26,6 @@ describe('placement moves', () => {
   });
 
   test('get moving piece', () => {
-    expect(getMovingPiece(initialPlacement, move)).toEqual('r');
+    expect(getMovingPiece(initialPlacement, move)).toBe('r');
   });
 });
