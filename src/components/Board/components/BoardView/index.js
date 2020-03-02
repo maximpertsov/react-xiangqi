@@ -52,7 +52,7 @@ const BoardView = ({ handleSquareClick }) => {
   const nextMoveColor = useSelector(state => getNextMoveColor(state));
   const selectedSlot = useSelector(state => state.selectedSlot);
   const targets = useSelector(state => getTargets(state));
-  const { board, move: selectedMove } = useSelector(state =>
+  const { board, move: selectedMove, givesCheck } = useSelector(state =>
     getSelectedMove(state),
   );
   const isMoving = useSelector(state => getIsMoving(state));
@@ -78,8 +78,11 @@ const BoardView = ({ handleSquareClick }) => {
   );
 
   const kingIsInCheck = useCallback(
-    slot => !isMoving && board.inCheck({ slot, nextMoveColor }),
-    [board, isMoving, nextMoveColor],
+    square => false,
+    // // TODO: add gives check selector
+    // !isMoving && board.inCheck({ slot, nextMoveColor }),
+    // [board, isMoving, nextMoveColor],
+    [],
   );
 
   const isSelected = useCallback(
@@ -124,7 +127,7 @@ const BoardView = ({ handleSquareClick }) => {
         >
           {isOccupied(square) && renderPiece(square)}
           {inLastMove(square) && <LastMoveIndicator />}
-          {kingIsInCheck(slot) && <KingInCheckIndicator />}
+          {kingIsInCheck(square) && <KingInCheckIndicator />}
           {isSelected(square) && <SelectionIndicator />}
           {isTargeted(square) && (
             <TargetIndicator occupied={isOccupied(square)} />

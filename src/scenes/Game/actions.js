@@ -30,12 +30,13 @@ export const toggleLoading = ({ loading }) => ({
   loading,
 });
 
-const addFetchedMove = ({ fen, legal_moves: legalMoves, move }) => {
-  let [fromSlot, toSlot] = [undefined, undefined];
-  if (move !== null) {
-    [fromSlot, toSlot] = decodeMove(move);
-  }
-  return addMove({ fen, legalMoves, fromSlot, move, pending: false, toSlot });
+const addFetchedMove = ({
+  fen,
+  gives_check: givesCheck,
+  legal_moves: legalMoves,
+  move,
+}) => {
+  return addMove({ fen, legalMoves, givesCheck, move, pending: false });
 };
 
 export const fetchGame = ({ gameSlug }) => async dispatch => {

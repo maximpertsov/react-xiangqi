@@ -26,11 +26,12 @@ const initialMoves = [
   },
 ];
 
-const serverMove = (state, { fen, legalMoves, move }) => {
+const serverMove = (state, { fen, givesCheck, legalMoves, move }) => {
   const board = new XiangqiBoard({ fen });
   return {
     board,
     fen,
+    givesCheck,
     legalMoves,
     // TODO: ugly, don't use board internals
     piece: getMovedPiece(board.placement, move),
