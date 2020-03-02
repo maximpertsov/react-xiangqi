@@ -16,7 +16,11 @@ import {
 import * as utils from './utils';
 import { decode as decodeFen } from './fen';
 import { makeMove } from './move';
-import { encodeMove } from './square';
+import {
+  decode as decodeSquare,
+  encode as encodeSquare,
+  encodeMove,
+} from './square';
 
 export { RefType };
 
@@ -139,7 +143,9 @@ export default class XiangqiBoard {
     return result;
   }
 
-  isOccupied(slot) {
+  isOccupied(square) {
+    const slot = decodeSquare(square);
+
     return this.placement[slot] !== null;
   }
 
@@ -147,7 +153,7 @@ export default class XiangqiBoard {
     const result = [];
 
     utils.orthogonalSlots(slot).forEach((firstHop, _, firstHops) => {
-      if (this.isOccupied(firstHop)) return;
+      if (this.isOccupied(encodeSquare(firstHop))) return;
 
       utils.diagonalSlots(firstHop).forEach(secondHop => {
         if (firstHops.includes(secondHop) || result.includes(secondHop)) return;
@@ -167,7 +173,7 @@ export default class XiangqiBoard {
         toSlot = utils.tryMove(toSlot, ...move);
         if (toSlot === null) break;
         this.addIfUniversallyLegal(result, slot, toSlot);
-        if (this.isOccupied(toSlot)) break;
+        if (this.isOccupied(encodeSquare(toSlot))) break;
       }
     });
     return result;
@@ -183,10 +189,10 @@ export default class XiangqiBoard {
       while (true) {
         toSlot = utils.tryMove(toSlot, ...move);
         if (toSlot === null) break;
-        if (vaulted && this.isOccupied(toSlot)) {
+        if (vaulted && this.isOccupied(encodeSquare(toSlot))) {
           this.addIfUniversallyLegal(result, slot, toSlot);
           break;
-        } else if (this.isOccupied(toSlot)) {
+        } else if (this.isOccupied(encodeSquare(toSlot))) {
           vaulted = true;
         } else if (!vaulted) {
           this.addIfUniversallyLegal(result, slot, toSlot);
@@ -200,7 +206,10 @@ export default class XiangqiBoard {
     const result = [];
     DIAGONAL_MOVES.forEach(move => {
       const firstHop = utils.tryMove(slot, ...move);
-      if (this.isOccupied(firstHop) || this.crossingRiver(slot, firstHop)) {
+      if (
+        this.isOccupied(encodeSquare(firstHop)) ||
+        this.crossingRiver(slot, firstHop)
+      ) {
         return;
       }
 
@@ -289,7 +298,9 @@ export default class XiangqiBoard {
     const result = new Set();
     for (const [, toSlots] of this.legalMoves(true).entries()) {
       toSlots.forEach(slot => {
-        if (this.isOccupied(slot)) result.add(this.placement[slot]);
+        if (this.isOccupied(encodeSquare(slot))) {
+          result.add(this.placement[slot]);
+        }
       });
     }
     return result;
