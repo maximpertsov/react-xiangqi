@@ -1,5 +1,6 @@
 import flatten from 'lodash/flatten';
 import { decode } from 'services/logic/fen';
+import { Color } from 'service/logic/constants'
 
 test('convert fen to board', () => {
   const fen =
@@ -20,7 +21,7 @@ test('convert fen to board', () => {
 
   expect(decode(fen)).toMatchObject({
     placement: expectedPlacement,
-    activeColor: 'w',
+    activeColor: Color.RED,
     castling: '-',
     enPassant: '-',
     halfmoves: 0,

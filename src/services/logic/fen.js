@@ -1,5 +1,6 @@
 import zipObject from 'lodash/zipObject';
 import update from 'lodash/update';
+import { Color } from 'service/logic/constants'
 
 const FEN_FIELDS = [
   'placement',
@@ -10,8 +11,19 @@ const FEN_FIELDS = [
   'fullmoves',
 ];
 
+const activeColor = (symbol) => {
+  switch (symbol) {
+    case 'w':
+      return Color.RED
+    case 'b':
+      return Color.BLACK
+    default:
+      throw new Error(`Invalid piece color ${symbol}`);
+  }
+
 const decodeFields = fen => {
   const result = zipObject(FEN_FIELDS, fen.split(' '));
+  update(result, 'activeColor', activeColor);
   update(result, 'halfmoves', parseInt);
   update(result, 'fullmoves', parseInt);
   return result;
