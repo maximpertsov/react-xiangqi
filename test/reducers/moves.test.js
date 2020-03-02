@@ -4,6 +4,9 @@ import XiangqiBoard from 'services/logic';
 describe('move reducers', () => {
   const initialFen =
     'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w';
+  const move = 'a10a9';
+  const nextFen =
+    '1nbakabnr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR b';
 
   const initialMove = {
     id: 0,
@@ -17,8 +20,7 @@ describe('move reducers', () => {
     expect(moves(undefined, {})).toEqual([initialMove]);
   });
 
-  it('should add a move by from/to slot', () => {
-    const move = 'a10a9';
+  it('should add a move by move', () => {
     const action = { type: 'add_move', move };
 
     const nextMove = {
@@ -35,15 +37,13 @@ describe('move reducers', () => {
   });
 
   it('should add a move by fen', () => {
-    const fen =
-      '1nbakabnr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR b';
-    const move = 'a10a9';
-    const action = { type: 'add_move', fen, move };
+    const action = { type: 'add_move', fen: nextFen, move };
 
     const nextMove = {
       id: undefined,
-      board: initialMove.board.move(move),
-      fen,
+      board: new XiangqiBoard({ fen: nextFen }),
+      fen: nextFen,
+      givesCheck: undefined,
       legalMoves: action.legalMoves,
       move,
       piece: 'r',
