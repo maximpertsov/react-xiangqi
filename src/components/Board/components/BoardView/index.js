@@ -123,7 +123,7 @@ const BoardView = ({ handleSquareClick }) => {
           {isOccupied(square) && renderPiece(square)}
           {inLastMove(slot) && <LastMoveIndicator />}
           {kingIsInCheck(slot) && <KingInCheckIndicator />}
-          {isSelected(slot) && <SelectionIndicator />}
+          {isSelected(square) && <SelectionIndicator />}
           {isTargeted(square) && (
             <TargetIndicator occupied={isOccupied(square)} />
           )}
