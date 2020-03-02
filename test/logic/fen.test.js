@@ -1,6 +1,6 @@
 import flatten from 'lodash/flatten';
 import { decode } from 'services/logic/fen';
-import { Color } from 'service/logic/constants'
+import { Color } from 'services/logic/constants';
 
 test('convert fen to board', () => {
   const fen =

@@ -1,6 +1,6 @@
 import zipObject from 'lodash/zipObject';
 import update from 'lodash/update';
-import { Color } from 'service/logic/constants'
+import { Color } from 'services/logic/constants';
 
 const FEN_FIELDS = [
   'placement',
@@ -11,15 +11,18 @@ const FEN_FIELDS = [
   'fullmoves',
 ];
 
-const activeColor = (symbol) => {
+const activeColor = symbol => {
   switch (symbol) {
     case 'w':
-      return Color.RED
+      return Color.RED;
     case 'b':
-      return Color.BLACK
+      return Color.BLACK;
     default:
-      throw new Error(`Invalid piece color ${symbol}`);
+      return null;
+    // TODO: throw an error if the piece color is not 'w' or 'b'
+    // throw new Error(`Invalid piece color ${symbol}`);
   }
+};
 
 const decodeFields = fen => {
   const result = zipObject(FEN_FIELDS, fen.split(' '));
