@@ -29,8 +29,10 @@ export const { getSlot, getRank, getFile, getRankFile } = utils;
 
 export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
-  constructor({ fen = EMPTY_BOARD_FEN } = {}) {
-    this.placement = decodeFen(fen).placement;
+  constructor({ fen, ...options }) {
+    const params = fen === undefined ? options : decodeFen(fen);
+    this.placement = params.placement;
+    this.activeColor = params.activeColor;
   }
 
   _slot(pos, refType) {
@@ -47,7 +49,7 @@ export default class XiangqiBoard {
   }
 
   move(move) {
-    return this.new(makeMove(this.placement, move));
+    return this.new({ placement: makeMove(this.placement, move) });
   }
 
   randomMove(color) {
@@ -62,17 +64,16 @@ export default class XiangqiBoard {
 
   drop(piece, pos, refType = RefType.SLOT) {
     const slot = this._slot(pos, refType);
-    const board = update(this.placement, {
+    const placement = update(this.placement, {
       [slot]: { $set: piece },
     });
-    return this.new(board);
+    return this.new({ placement });
   }
 
-  new(board) {
-    const options = { ...this };
-    delete options.placement;
-    options.fen = this.toFen(board);
-    return new this.constructor(options);
+  new(options) {
+    return new this.constructor(
+      options === undefined ? { ...this } : { ...options },
+    );
   }
 
   getPiece(square) {
@@ -319,7 +320,7 @@ export default class XiangqiBoard {
 
   // HACK: king facing logic implemented by replacing the
   //       opposing king with a rook
-  kingInCheck(color, board = this.new(this.placement)) {
+  kingInCheck(color, board = this.new({ placement: this.placement })) {
     let ownKing;
     let otherKing;
     let otherRook;

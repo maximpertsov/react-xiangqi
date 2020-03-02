@@ -128,7 +128,6 @@ test('convert index to file', () => {
 });
 
 test('converts FEN string to an array', () => {
-  const xb = new XiangqiBoard();
   const fen = 'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR';
   const expected = [
     'r', 'n', 'b', 'a', 'k', 'a', 'b', 'n', 'r',
