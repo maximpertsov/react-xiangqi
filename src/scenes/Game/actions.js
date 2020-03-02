@@ -1,5 +1,4 @@
 import * as client from 'services/client';
-import { decodeMove, encodeMove } from 'services/logic/square';
 
 let nextMoveId = 0;
 
