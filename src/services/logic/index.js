@@ -97,9 +97,12 @@ export default class XiangqiBoard {
     return false;
   }
 
-  sameColor(slot1, slot2) {
+  sameColor(square1, square2) {
+    const slot1 = decodeSquare(square1);
+    const slot2 = decodeSquare(square2);
     const piece1 = this.placement[slot1];
     const piece2 = this.placement[slot2];
+
     return utils.sameColor(piece1, piece2);
   }
 
@@ -122,7 +125,9 @@ export default class XiangqiBoard {
   isUniverallyLegal(fromSlot, toSlot) {
     if (toSlot === null) return false;
     if (fromSlot === toSlot) return false;
-    if (this.sameColor(fromSlot, toSlot)) return false;
+    if (this.sameColor(encodeSquare(fromSlot), encodeSquare(toSlot))) {
+      return false;
+    }
     return true;
   }
 

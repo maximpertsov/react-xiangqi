@@ -25,4 +25,17 @@ describe('board', () => {
     expect(board.isOccupied('a10')).toBe(true);
     expect(board.isOccupied('a9')).toBe(false);
   });
+
+  test('is same color', () => {
+    // two black pieces
+    expect(board.sameColor('a10', 'b10')).toBe(true);
+    // Two red pieces
+    expect(board.sameColor('a1', 'b1')).toBe(true);
+    // black and red piece
+    expect(board.sameColor('a10', 'a1')).toBe(false);
+    // black and unoccupied
+    expect(board.sameColor('a10', 'a9')).toBe(false);
+    // two unoccupied squares
+    expect(board.sameColor('a9', 'b9')).toBe(false);
+  });
 });
