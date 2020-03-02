@@ -16,8 +16,23 @@ describe('move reducers', () => {
   });
 
   it('should add a move', () => {
-    const action = { type: 'add_move' };
+    const action = {
+      fromSlot: 0,
+      toSlot: 9,
+      type: 'add_move',
+    };
 
-    expect(moves(undefined, action)).toEqual([initialMove]);
+    const nextMove = {
+      id: undefined,
+      board: initialMove.board.move(0, 9),
+      fen: undefined,
+      fromSlot: 0,
+      legalMoves: action.legalMoves,
+      piece: initialMove.board.getPiece(0),
+      pending: undefined,
+      toSlot: 9,
+    };
+
+    expect(moves(undefined, action)).toEqual([initialMove, nextMove]);
   });
 });
