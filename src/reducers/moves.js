@@ -4,6 +4,7 @@ import sortedIndexBy from 'lodash/sortedIndexBy';
 import XiangqiBoard from 'services/logic';
 import { Color } from 'services/logic/constants';
 import { isRed } from 'services/logic/utils';
+import { getMovedPiece } from 'services/logic/move';
 
 const getMoveIndex = (state, moveId) => {
   const moveIndex = sortedIndexBy(state, { id: moveId }, 'id');
@@ -26,17 +27,35 @@ const initialMoves = [
   },
 ];
 
-const addMove = (state, action) => {
+const serverMove = (state, { fen, legalMoves, move }) => {
+  const board = new XiangqiBoard({ fen });
+  return {
+    board,
+    fen,
+    legalMoves,
+    move,
+    piece: getMovedPiece(board.board, move),
+  };
+};
+
+// TODO: change slots to move
+const localMove = (state, { fromSlot, toSlot }) => {
   const { board } = state[state.length - 1];
+  return {
+    board: board.move(fromSlot, toSlot),
+    piece: board.getPiece(fromSlot),
+  };
+};
+
+const addMove = (state, action) => {
   const move = {
     id: action.moveId,
-    board: board.move(action.fromSlot, action.toSlot),
-    fen: action.fen,
     fromSlot: action.fromSlot,
-    legalMoves: action.legalMoves,
-    piece: board.getPiece(action.fromSlot),
     pending: action.pending,
     toSlot: action.toSlot,
+    ...(action.fen === undefined
+      ? localMove(state, action)
+      : serverMove(state, action)),
   };
   return update(state, { $push: [move] });
 };
