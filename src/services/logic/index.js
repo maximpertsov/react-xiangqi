@@ -153,6 +153,25 @@ export default class XiangqiBoard {
     return this.placement[slot] !== null;
   }
 
+  activeKing() {
+    let king = undefined;
+
+    switch (this.activeColor) {
+      case Color.RED:
+        king = 'K';
+        break;
+      case Color.BLACK:
+        king = 'k';
+        break;
+      default:
+        // TODO: throw error
+        return;
+    }
+
+    const kingSlot = this.placement.indexOf(king)
+    return encodeSquare(kingSlot);
+  }
+
   legalHorseMoves(slot) {
     const result = [];
 

@@ -30,9 +30,12 @@ describe('board', () => {
   });
 
   test('is active king', () => {
-    expect(board.isActiveKing('a10')).toBe(false);
-    expect(board.isActiveKing('e10')).toBe(true);
-    expect(board.isActiveKing('e1')).toBe(false);
+    expect(board.activeKing()).toBe('e1');
+
+    const newFen =
+      '1nbakabnr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR b - - 0 1';
+    const newBoard = new XiangiBoard({ fen: newFen });
+    expect(newBoard.activeKing()).toBe('e10');
   });
 
   test('move', () => {
