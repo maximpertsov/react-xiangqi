@@ -19,8 +19,7 @@ export const DEFAULT_FEN =
 const initialMoves = [
   {
     id: 0,
-    fromSlot: undefined,
-    toSlot: undefined,
+    move: null,
     piece: undefined,
     board: new XiangqiBoard({ fen: DEFAULT_FEN }),
     pending: false,
@@ -38,7 +37,6 @@ const serverMove = (state, { fen, legalMoves, move }) => {
   };
 };
 
-// TODO: change slots to move
 const localMove = (state, { move }) => {
   const { board } = state[state.length - 1];
   return {
@@ -51,10 +49,8 @@ const localMove = (state, { move }) => {
 const addMove = (state, action) => {
   const move = {
     id: action.moveId,
-    fromSlot: action.fromSlot,
     move: action.move,
     pending: action.pending,
-    toSlot: action.toSlot,
     ...(action.fen === undefined
       ? localMove(state, action)
       : serverMove(state, action)),

@@ -7,8 +7,7 @@ describe('move reducers', () => {
 
   const initialMove = {
     id: 0,
-    fromSlot: undefined,
-    toSlot: undefined,
+    move: null,
     piece: undefined,
     board: new XiangqiBoard({ fen: initialFen }),
     pending: false,
@@ -26,12 +25,10 @@ describe('move reducers', () => {
       id: undefined,
       board: initialMove.board.move(move),
       fen: undefined,
-      fromSlot: undefined,
       legalMoves: action.legalMoves,
       move,
       piece: 'r',
       pending: undefined,
-      toSlot: undefined,
     };
 
     expect(moves(undefined, action)).toEqual([initialMove, nextMove]);
@@ -46,12 +43,10 @@ describe('move reducers', () => {
       id: undefined,
       board: initialMove.board.move(move),
       fen,
-      fromSlot: undefined,
       legalMoves: action.legalMoves,
       move,
       piece: 'r',
       pending: undefined,
-      toSlot: undefined,
     };
 
     expect(moves(undefined, action)).toEqual([initialMove, nextMove]);
