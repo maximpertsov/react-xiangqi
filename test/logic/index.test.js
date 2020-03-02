@@ -29,6 +29,12 @@ describe('board', () => {
     expect(board.sameColor('a9', 'b9')).toBe(false);
   });
 
+  test('is active king', () => {
+    expect(board.isActiveKing('a10')).toBe(false);
+    expect(board.isActiveKing('e10')).toBe(true);
+    expect(board.isActiveKing('e1')).toBe(false);
+  });
+
   test('move', () => {
     expect(board.getPiece('a10')).toBe('r');
     expect(board.getPiece('a9')).toBe(null);
