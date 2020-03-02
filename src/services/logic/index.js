@@ -75,9 +75,8 @@ export default class XiangqiBoard {
     return new this.constructor(options);
   }
 
-  getPiece(pos, refType = RefType.SLOT) {
-    const slot = this._slot(pos, refType);
-    return this.placement[slot];
+  getPiece(square) {
+    return this.placement[decodeSquare(square)];
   }
 
   isRed(slot) {
