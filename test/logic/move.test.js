@@ -1,6 +1,6 @@
 import flatten from 'lodash/flatten';
 import { decode } from 'services/logic/fen';
-import { makeMove, getMovingPiece } from 'services/logic/move';
+import { makeMove, getMovingPiece, getMovedPiece } from 'services/logic/move';
 
 describe('placement moves', () => {
   const move = 'a10a9';
@@ -27,5 +27,11 @@ describe('placement moves', () => {
 
   test('get moving piece', () => {
     expect(getMovingPiece(initialPlacement, move)).toBe('r');
+  });
+
+  test('get moved piece', () => {
+    const nextPlacement = makeMove(initialPlacement, move);
+
+    expect(getMovedPiece(nextPlacement, move)).toBe('r');
   });
 });

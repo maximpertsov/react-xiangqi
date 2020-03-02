@@ -14,10 +14,10 @@ export const makeMove = (placement, move) => {
   );
 };
 
-export const getMovingPiece = (placement, move) => {
-  const [fromSlot] = decodeMove(move);
+export const getMovingPiece = (placement, move) =>
+  placement[decodeMove(move)[0]];
 
-  return placement[fromSlot];
-};
+export const getMovedPiece = (placement, move) =>
+  placement[decodeMove(move)[1]];
 
 export default {};
