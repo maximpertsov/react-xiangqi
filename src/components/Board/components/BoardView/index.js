@@ -116,8 +116,8 @@ const BoardView = ({ handleSquareClick }) => {
       return (
         <Square
           className="Square"
-          key={slot}
-          handleClick={handleSquareClick(slot)}
+          key={square}
+          handleClick={handleSquareClick(square)}
         >
           {isOccupied(slot) && renderPiece(slot)}
           {inLastMove(slot) && <LastMoveIndicator />}

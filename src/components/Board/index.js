@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { encodeMove } from 'services/logic/square';
 
 import {
   clearAnimationOffset,
@@ -32,26 +31,25 @@ const Board = () => {
   );
 
   const selectedCanCapture = useCallback(
-    slot => {
+    square => {
       if (selectedSlot === null) return false;
       if (!board.isOccupied(selectedSlot)) return false;
-      if (!board.isOccupied(slot)) return false;
-      return !board.sameColor(slot, selectedSlot);
+      if (!board.isOccupied(square)) return false;
+      return !board.sameColor(square, selectedSlot);
     },
     [board, selectedSlot],
   );
 
-  const isLegalMove = useCallback(
-    (fromSlot, toSlot) => legalMoves.includes(encodeMove(fromSlot, toSlot)),
-    [legalMoves],
-  );
+  const isLegalMove = useCallback(move => legalMoves.includes(move), [
+    legalMoves,
+  ]);
 
   const handleMove = useCallback(
-    (fromSlot, toSlot) => {
-      if (isLegalMove(fromSlot, toSlot)) {
-        dispatch(setAnimationOffset({ bottomPlayerIsRed, fromSlot, toSlot }));
+    move => {
+      if (isLegalMove(move)) {
+        dispatch(setAnimationOffset({ bottomPlayerIsRed, move }));
         setTimeout(() => {
-          dispatch(makeMove({ fromSlot, toSlot, pending: true }));
+          dispatch(makeMove({ move, pending: true }));
           dispatch(clearAnimationOffset());
           dispatch(clearSelectedSlot());
         }, ANIMATION_DELAY);
@@ -63,13 +61,13 @@ const Board = () => {
   );
 
   const handleSquareClick = useCallback(
-    slot => () => {
-      if (slot === selectedSlot) {
+    square => () => {
+      if (square === selectedSlot) {
         dispatch(clearSelectedSlot());
-      } else if (board.isOccupied(slot) && !selectedCanCapture(slot)) {
-        dispatch(setSelectedSlot({ selectedSlot: slot }));
+      } else if (board.isOccupied(square) && !selectedCanCapture(square)) {
+        dispatch(setSelectedSlot({ selectedSlot: square }));
       } else if (selectedSlot !== null) {
-        handleMove(selectedSlot, slot);
+        handleMove(selectedSlot, square);
       } else {
         dispatch(clearSelectedSlot());
       }
