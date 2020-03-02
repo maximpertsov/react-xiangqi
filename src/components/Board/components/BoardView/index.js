@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import {
   getBottomPlayerIsRed,
   getIsMoving,
-  getNextMoveColor,
+  // getNextMoveColor,
   getSelectedMove,
   getTargets,
 } from 'reducers';
@@ -49,7 +49,7 @@ const Wrapper = styled.div`
 
 const BoardView = ({ handleSquareClick }) => {
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
-  const nextMoveColor = useSelector(state => getNextMoveColor(state));
+  // const nextMoveColor = useSelector(state => getNextMoveColor(state));
   const selectedSlot = useSelector(state => state.selectedSlot);
   const targets = useSelector(state => getTargets(state));
   const { board, move: selectedMove, givesCheck } = useSelector(state =>
@@ -78,11 +78,8 @@ const BoardView = ({ handleSquareClick }) => {
   );
 
   const kingIsInCheck = useCallback(
-    square => false,
-    // // TODO: add gives check selector
-    // !isMoving && board.inCheck({ slot, nextMoveColor }),
-    // [board, isMoving, nextMoveColor],
-    [],
+    square => givesCheck && board.activeKing() == square,
+    [board, givesCheck],
   );
 
   const isSelected = useCallback(
