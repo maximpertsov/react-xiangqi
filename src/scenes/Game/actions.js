@@ -106,17 +106,16 @@ export const setMove = ({ moveId, move }) => ({
 export const postMove = ({
   gameSlug,
   moves,
-  fromSlot,
-  toSlot,
+  move,
   username,
 }) => async dispatch => {
   if (gameSlug === null) return;
 
   try {
-    const { move, status } = await client.postMove({
+    const { move: fetchedMove, status } = await client.postMove({
       gameSlug,
       username,
-      move: encodeMove(fromSlot, toSlot),
+      move,
     });
     // TODO: add a single move instead of fetching all of them
     if (status !== 201) dispatch(fetchMoves({ gameSlug, moves }));

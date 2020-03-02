@@ -4,7 +4,7 @@ import sortedIndexBy from 'lodash/sortedIndexBy';
 import XiangqiBoard from 'services/logic';
 import { Color } from 'services/logic/constants';
 import { isRed } from 'services/logic/utils';
-import { getMovedPiece } from 'services/logic/move';
+import { getMovedPiece, getMovingPiece } from 'services/logic/move';
 
 const getMoveIndex = (state, moveId) => {
   const moveIndex = sortedIndexBy(state, { id: moveId }, 'id');
@@ -34,16 +34,18 @@ const serverMove = (state, { fen, legalMoves, move }) => {
     fen,
     legalMoves,
     move,
+    // TODO: ugly, don't use board internals
     piece: getMovedPiece(board.placement, move),
   };
 };
 
 // TODO: change slots to move
-const localMove = (state, { fromSlot, toSlot }) => {
+const localMove = (state, { move }) => {
   const { board } = state[state.length - 1];
   return {
-    board: board.move(fromSlot, toSlot),
-    piece: board.getPiece(fromSlot),
+    board: board.move(move),
+    // TODO: ugly, don't use board internals
+    piece: getMovingPiece(board.placement, move),
   };
 };
 

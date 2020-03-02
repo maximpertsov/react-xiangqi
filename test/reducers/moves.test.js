@@ -19,17 +19,18 @@ describe('move reducers', () => {
   });
 
   it('should add a move by from/to slot', () => {
-    const action = { type: 'add_move', fromSlot: 0, toSlot: 9 };
+    const move = 'a10a9';
+    const action = { type: 'add_move', move };
 
     const nextMove = {
       id: undefined,
-      board: initialMove.board.move(0, 9),
+      board: initialMove.board.move(move),
       fen: undefined,
-      fromSlot: 0,
+      fromSlot: undefined,
       legalMoves: action.legalMoves,
       piece: 'r',
       pending: undefined,
-      toSlot: 9,
+      toSlot: undefined,
     };
 
     expect(moves(undefined, action)).toEqual([initialMove, nextMove]);
@@ -42,12 +43,12 @@ describe('move reducers', () => {
 
     const nextMove = {
       id: undefined,
-      board: initialMove.board.move(0, 9),
+      board: initialMove.board.move(move),
       fen,
       fromSlot: undefined,
       legalMoves: action.legalMoves,
       move,
-      piece: initialMove.board.getPiece(0),
+      piece: 'r',
       pending: undefined,
       toSlot: undefined,
     };
