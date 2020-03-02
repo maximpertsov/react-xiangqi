@@ -6,6 +6,7 @@ import XiangqiBoard, {
 } from 'services/logic';
 
 import { decode } from 'services/logic/fen';
+import { encodeMove } from 'services/logic/square';
 
 import { Color } from 'services/logic/constants';
 
@@ -155,7 +156,7 @@ test('moves a piece and returns the new board with the new position', () => {
   const fen = 'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR';
   const xb = new XiangqiBoard({ fen });
 
-  const actual = xb.move(0, 9).toFen();
+  const actual = xb.move(encodeMove(0, 9)).toFen();
   const expected = '1nbakabnr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR';
   expect(actual).toBe(expected);
 

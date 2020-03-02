@@ -14,7 +14,9 @@ import {
   DIAGONAL_MOVES,
 } from './constants';
 import * as utils from './utils';
-import { decode } from './fen';
+import { decode as decodeFen } from './fen';
+import { makeMove } from './move';
+import { encodeMove } from './square';
 
 export { RefType };
 
@@ -24,7 +26,7 @@ export const { getSlot, getRank, getFile, getRankFile } = utils;
 export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
   constructor({ fen = EMPTY_BOARD_FEN } = {}) {
-    this.placement = decode(fen).placement;
+    this.placement = decodeFen(fen).placement;
   }
 
   _slot(pos, refType) {
@@ -40,18 +42,8 @@ export default class XiangqiBoard {
     throw new Error(`Invalid reference type: ${refType}`);
   }
 
-  move(fromPos, toPos, refType = RefType.SLOT) {
-    const fromSlot = this._slot(fromPos, refType);
-    const toSlot = this._slot(toPos, refType);
-    const board = update(
-      update(this.placement, {
-        [toSlot]: { $set: this.placement[fromSlot] },
-      }),
-      {
-        [fromSlot]: { $set: null },
-      },
-    );
-    return this.new(board);
+  move(move) {
+    return this.new(makeMove(this.placement, move));
   }
 
   randomMove(color) {
@@ -342,7 +334,7 @@ export default class XiangqiBoard {
     let color;
     if (this.isBlack(fromSlot)) color = Color.BLACK;
     if (this.isRed(fromSlot)) color = Color.RED;
-    return this.kingInCheck(color, this.move(fromSlot, toSlot));
+    return this.kingInCheck(color, this.move(encodeMove(fromSlot, toSlot)));
   }
 
   // Board-Slot interactions
