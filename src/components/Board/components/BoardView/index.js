@@ -65,7 +65,7 @@ const BoardView = ({ handleSquareClick }) => {
   ]);
 
   const getSlot = useCallback(
-    (b, i) => (bottomPlayerIsRed ? i : b.length - i - 1),
+    (slots, i) => (bottomPlayerIsRed ? i : slots.length - i - 1),
     [bottomPlayerIsRed],
   );
 
@@ -85,11 +85,10 @@ const BoardView = ({ handleSquareClick }) => {
   ]);
 
   const isTargeted = useCallback(
-    slot => {
+    square => {
       if (isMoving) return false;
 
-      const toSquare = encode(slot);
-      return targets.some(move => move.endsWith(toSquare));
+      return targets.some(move => move.endsWith(square));
     },
     [isMoving, targets],
   );
@@ -111,8 +110,9 @@ const BoardView = ({ handleSquareClick }) => {
 
   /* eslint-disable complexity */
   const renderSquares = () =>
-    board.placement.map((_, i, b) => {
-      const slot = getSlot(b, i);
+    board.placement.map((_, i, slots) => {
+      const slot = getSlot(slots, i);
+      const square = encode(slot);
       return (
         <Square
           className="Square"
@@ -123,7 +123,9 @@ const BoardView = ({ handleSquareClick }) => {
           {inLastMove(slot) && <LastMoveIndicator />}
           {kingIsInCheck(slot) && <KingInCheckIndicator />}
           {isSelected(slot) && <SelectionIndicator />}
-          {isTargeted(slot) && <TargetIndicator occupied={isOccupied(slot)} />}
+          {isTargeted(square) && (
+            <TargetIndicator occupied={isOccupied(slot)} />
+          )}
         </Square>
       );
     });
