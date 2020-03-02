@@ -33,7 +33,6 @@ const serverMove = (state, { fen, legalMoves, move }) => {
     board,
     fen,
     legalMoves,
-    move,
     // TODO: ugly, don't use board internals
     piece: getMovedPiece(board.placement, move),
   };
@@ -53,6 +52,7 @@ const addMove = (state, action) => {
   const move = {
     id: action.moveId,
     fromSlot: action.fromSlot,
+    move: action.move,
     pending: action.pending,
     toSlot: action.toSlot,
     ...(action.fen === undefined

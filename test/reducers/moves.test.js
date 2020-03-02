@@ -28,6 +28,7 @@ describe('move reducers', () => {
       fen: undefined,
       fromSlot: undefined,
       legalMoves: action.legalMoves,
+      move,
       piece: 'r',
       pending: undefined,
       toSlot: undefined,

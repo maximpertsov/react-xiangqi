@@ -16,10 +16,10 @@ const ConfirmMoveMenu = () => {
   const username = useSelector(state => state.username);
 
   const confirmMove = useCallback(async () => {
-    const { fromSlot, toSlot, pending } = lastMove;
+    const { move, pending } = lastMove;
     if (!pending) return;
 
-    dispatch(postMove({ gameSlug, fromSlot, toSlot, moves, username }));
+    dispatch(postMove({ gameSlug, move, moves, username }));
     dispatch(confirmMoves());
   }, [dispatch, gameSlug, lastMove, moves, username]);
 
