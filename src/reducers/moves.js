@@ -34,7 +34,7 @@ const serverMove = (state, { fen, legalMoves, move }) => {
     fen,
     legalMoves,
     move,
-    piece: getMovedPiece(board.board, move),
+    piece: getMovedPiece(board.placement, move),
   };
 };
 

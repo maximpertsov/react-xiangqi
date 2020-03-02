@@ -111,7 +111,7 @@ const BoardView = ({ handleSquareClick }) => {
 
   /* eslint-disable complexity */
   const renderSquares = () =>
-    board.board.map((_, i, b) => {
+    board.placement.map((_, i, b) => {
       const slot = getSlot(b, i);
       return (
         <Square
