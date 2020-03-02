@@ -60,9 +60,10 @@ const BoardView = ({ handleSquareClick }) => {
   const isMoving = useSelector(state => getIsMoving(state));
   const [moveX, moveY] = useSelector(state => state.animationOffset);
 
-  const getPieceCode = useCallback(slot => board.getPiece(slot) || undefined, [
-    board,
-  ]);
+  const getPieceCode = useCallback(
+    square => board.getPiece(square) || undefined,
+    [board],
+  );
 
   const getSlot = useCallback(
     (slots, i) => (bottomPlayerIsRed ? i : slots.length - i - 1),
@@ -79,10 +80,10 @@ const BoardView = ({ handleSquareClick }) => {
     [board, isMoving, nextMoveColor],
   );
 
-  const isSelected = useCallback(slot => !isMoving && selectedSlot === slot, [
-    isMoving,
-    selectedSlot,
-  ]);
+  const isSelected = useCallback(
+    square => !isMoving && selectedSlot === square,
+    [isMoving, selectedSlot],
+  );
 
   const isTargeted = useCallback(
     square => {
@@ -93,16 +94,16 @@ const BoardView = ({ handleSquareClick }) => {
     [isMoving, targets],
   );
 
-  const isOccupied = useCallback(slot => getPieceCode(slot) !== undefined, [
+  const isOccupied = useCallback(square => getPieceCode(square) !== undefined, [
     getPieceCode,
   ]);
 
   const renderPiece = useCallback(
-    slot => (
+    square => (
       <XiangqiPiece
-        code={getPieceCode(slot)}
-        moveX={selectedSlot === slot ? moveX : 0}
-        moveY={selectedSlot === slot ? moveY : 0}
+        code={getPieceCode(square)}
+        moveX={selectedSlot === square ? moveX : 0}
+        moveY={selectedSlot === square ? moveY : 0}
       />
     ),
     [getPieceCode, moveX, moveY, selectedSlot],
@@ -119,12 +120,12 @@ const BoardView = ({ handleSquareClick }) => {
           key={square}
           handleClick={handleSquareClick(square)}
         >
-          {isOccupied(slot) && renderPiece(slot)}
+          {isOccupied(square) && renderPiece(square)}
           {inLastMove(slot) && <LastMoveIndicator />}
           {kingIsInCheck(slot) && <KingInCheckIndicator />}
           {isSelected(slot) && <SelectionIndicator />}
           {isTargeted(square) && (
-            <TargetIndicator occupied={isOccupied(slot)} />
+            <TargetIndicator occupied={isOccupied(square)} />
           )}
         </Square>
       );
