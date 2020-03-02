@@ -41,8 +41,7 @@ const MoveHistory = () => {
     <Move
       key={index}
       moveId={move.id}
-      fromSlot={move.fromSlot}
-      toSlot={move.toSlot}
+      move={move.move}
       piece={move.piece}
     />
   ));
