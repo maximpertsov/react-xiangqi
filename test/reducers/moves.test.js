@@ -1,6 +1,9 @@
+import moves, { DEFAULT_FEN } from 'reducers/moves';
+import XiangqiBoard from 'services/logic';
+
 describe('move reducers', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual([
+    expect(moves(undefined, {})).toEqual([
       {
         id: 0,
         fromSlot: undefined,
