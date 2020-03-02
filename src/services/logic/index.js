@@ -5,7 +5,6 @@ import {
   RefType,
   Color,
   Piece,
-  EMPTY_BOARD_FEN,
   RANK_COUNT,
   FILE_COUNT,
   BLACK_RIVER_BANK,

@@ -48,4 +48,3 @@ export const RED_PALACE = [
   [8, 3], [8, 4], [8, 5],
   [7, 3], [7, 4], [7, 5],
 ];
-export const EMPTY_BOARD_FEN = '9/9/9/9/9/9/9/9/9/9';
