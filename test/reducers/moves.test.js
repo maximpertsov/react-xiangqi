@@ -47,7 +47,7 @@ describe('moves reducer', () => {
       legalMoves: action.legalMoves,
       move,
       piece: 'r',
-      pending: undefined,
+      pending: false,
     };
 
     expect(moves(undefined, action)).toEqual([initialMove, nextMove]);

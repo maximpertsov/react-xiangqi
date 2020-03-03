@@ -33,7 +33,7 @@ const serverMove = (state, { fen, givesCheck, legalMoves, move }) => {
     fen,
     givesCheck,
     legalMoves,
-    // TODO: confirm move here?
+    pending: false,
     // TODO: ugly, don't use board internals
     piece: getMovedPiece(board.placement, move),
   };
