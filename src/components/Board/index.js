@@ -18,7 +18,7 @@ const Board = () => {
   const dispatch = useDispatch();
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
   const legalMoves = useSelector(state => getLegalMoves(state));
-  const selectedSlot = useSelector(state => state.selectedSlot);
+  const selectedSquare = useSelector(state => state.selectedSquare);
   const { board } = useSelector(state => getSelectedMove(state));
 
   useEffect(
@@ -32,12 +32,12 @@ const Board = () => {
 
   const selectedCanCapture = useCallback(
     square => {
-      if (selectedSlot === null) return false;
-      if (!board.isOccupied(selectedSlot)) return false;
+      if (selectedSquare === null) return false;
+      if (!board.isOccupied(selectedSquare)) return false;
       if (!board.isOccupied(square)) return false;
-      return !board.sameColor(square, selectedSlot);
+      return !board.sameColor(square, selectedSquare);
     },
-    [board, selectedSlot],
+    [board, selectedSquare],
   );
 
   const isLegalMove = useCallback(move => legalMoves.includes(move), [
@@ -62,17 +62,17 @@ const Board = () => {
 
   const handleSquareClick = useCallback(
     square => () => {
-      if (square === selectedSlot) {
+      if (square === selectedSquare) {
         dispatch(clearSelectedSlot());
       } else if (board.isOccupied(square) && !selectedCanCapture(square)) {
-        dispatch(setSelectedSlot({ selectedSlot: square }));
-      } else if (selectedSlot !== null) {
-        handleMove(`${selectedSlot}${square}`);
+        dispatch(setSelectedSlot({ selectedSquare: square }));
+      } else if (selectedSquare !== null) {
+        handleMove(`${selectedSquare}${square}`);
       } else {
         dispatch(clearSelectedSlot());
       }
     },
-    [board, dispatch, handleMove, selectedCanCapture, selectedSlot],
+    [board, dispatch, handleMove, selectedCanCapture, selectedSquare],
   );
 
   return <BoardView handleSquareClick={handleSquareClick} />;

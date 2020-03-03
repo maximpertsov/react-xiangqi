@@ -48,7 +48,7 @@ const Wrapper = styled.div`
 
 const BoardView = ({ handleSquareClick }) => {
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
-  const selectedSlot = useSelector(state => state.selectedSlot);
+  const selectedSquare = useSelector(state => state.selectedSquare);
   const targets = useSelector(state => getTargets(state));
   const { board, move: selectedMove, givesCheck } = useSelector(state =>
     getSelectedMove(state),
@@ -81,8 +81,8 @@ const BoardView = ({ handleSquareClick }) => {
   );
 
   const isSelected = useCallback(
-    square => !isMoving && selectedSlot === square,
-    [isMoving, selectedSlot],
+    square => !isMoving && selectedSquare === square,
+    [isMoving, selectedSquare],
   );
 
   const isTargeted = useCallback(
@@ -102,11 +102,11 @@ const BoardView = ({ handleSquareClick }) => {
     square => (
       <XiangqiPiece
         code={getPieceCode(square)}
-        moveX={selectedSlot === square ? moveX : 0}
-        moveY={selectedSlot === square ? moveY : 0}
+        moveX={selectedSquare === square ? moveX : 0}
+        moveY={selectedSquare === square ? moveY : 0}
       />
     ),
-    [getPieceCode, moveX, moveY, selectedSlot],
+    [getPieceCode, moveX, moveY, selectedSquare],
   );
 
   /* eslint-disable complexity */

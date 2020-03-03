@@ -1,7 +1,7 @@
 import moves from 'reducers/moves';
 import XiangqiBoard from 'services/logic';
 
-describe('move reducers', () => {
+describe('moves reducer', () => {
   const initialFen =
     'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w';
   const move = 'a10a9';

@@ -1,11 +1,11 @@
 import { decodeMove } from 'services/logic/square';
 
-export const setSelectedSlot = ({ selectedSlot }) => ({
+export const setSelectedSlot = ({ selectedSquare }) => ({
   type: 'set_selected_slot',
-  selectedSlot,
+  selectedSquare,
 });
 
-export const clearSelectedSlot = () => setSelectedSlot({ selectedSlot: null });
+export const clearSelectedSlot = () => setSelectedSlot({ selectedSquare: null });
 
 export const setAnimationOffset = ({ bottomPlayerIsRed, move }) => {
   const [fromSlot, toSlot] = decodeMove(move);

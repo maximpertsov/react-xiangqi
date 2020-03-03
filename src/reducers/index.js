@@ -15,7 +15,7 @@ import selectedMoveId from 'scenes/Game/reducers/selectedMoveId';
 /* eslint-disable-next-line max-len */
 import animationOffset, * as fromAnimationOffset from 'components/Board/reducers/animationOffset';
 import canMoveBothColors from 'components/Board/reducers/canMoveBothColors';
-import selectedSlot from 'components/Board/reducers/selectedSlot';
+import selectedSquare from './selectedSquare';
 
 import { Color } from 'services/logic/constants';
 
@@ -35,7 +35,7 @@ const rootReducer = combineReducers({
   // Board
   animationOffset,
   canMoveBothColors,
-  selectedSlot,
+  selectedSquare,
 });
 
 export default rootReducer;
@@ -139,10 +139,10 @@ export const getLegalMoves = state => {
 };
 
 export const getTargets = state => {
-  if (state.selectedSlot === null) return [];
+  if (state.selectedSquare === null) return [];
 
   return getLegalMoves(state).filter(move =>
-    move.startsWith(state.selectedSlot),
+    move.startsWith(state.selectedSquare),
   );
 };
 
