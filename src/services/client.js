@@ -23,6 +23,11 @@ export const postMove = ({ gameSlug, move, username }) => {
   return axios.post(`game/${gameSlug}/moves`, payload);
 };
 
+export const getNextFen = ({ fen, move }) => {
+  const payload = { fen, move };
+  return axios.post(`fen/moves`, payload);
+};
+
 export async function authenticate() {
   return axios.post('authenticate');
 }
