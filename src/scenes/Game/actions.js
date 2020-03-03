@@ -105,7 +105,7 @@ export const setMove = ({ moveId, ...move }) => ({
 
 export const getNextFen = ({
   fen,
-  move: { id: moveId, move },
+  move: { id: moveId, move, pending },
 }) => async dispatch => {
   try {
     const {
@@ -125,6 +125,7 @@ export const getNextFen = ({
         givesCheck,
         legalMoves,
         move: fetchedMove,
+        pending,
       }),
     );
   } catch (error) {
@@ -134,7 +135,7 @@ export const getNextFen = ({
 
 export const postMove = ({
   gameSlug,
-  move: { id: moveId, move },
+  move: { id: moveId, move, pending },
   username,
 }) => async dispatch => {
   if (gameSlug === null) return;
@@ -151,7 +152,14 @@ export const postMove = ({
       },
     } = await client.postMove({ gameSlug, move, username });
     dispatch(
-      setMove({ moveId, fen, givesCheck, legalMoves, move: fetchedMove }),
+      setMove({
+        moveId,
+        fen,
+        givesCheck,
+        legalMoves,
+        move: fetchedMove,
+        pending,
+      }),
     );
   } catch (error) {
     dispatch(cancelMoves());

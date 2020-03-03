@@ -33,7 +33,7 @@ const serverMove = (state, { fen, givesCheck, legalMoves, move }) => {
     fen,
     givesCheck,
     legalMoves,
-    pending: false,
+    // TODO: confirm move here?
     // TODO: ugly, don't use board internals
     piece: getMovedPiece(board.placement, move),
   };
@@ -76,6 +76,7 @@ const setMove = (state, action) => {
       $set: {
         id: action.moveId,
         move: action.move,
+        pending: action.pending,
         ...serverMove(state, action),
       },
     },
