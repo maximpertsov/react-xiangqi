@@ -105,7 +105,6 @@ export const setMove = ({ moveId, ...move }) => ({
 
 export const postMove = ({
   gameSlug,
-  moves,
   move: { id: moveId, move },
   username,
 }) => async dispatch => {
@@ -124,9 +123,7 @@ export const postMove = ({
     } = await client.postMove({ gameSlug, move, username });
     dispatch(setMove({ moveId, fen, givesCheck, legalMoves, move: moveName }));
   } catch (error) {
-    // TODO: display useful error?
-    // TODO: cancel pending moves instead of re-fetching
-    dispatch(fetchMoves({ gameSlug, moves }));
+    dispatch(cancelMoves());
   }
 };
 
