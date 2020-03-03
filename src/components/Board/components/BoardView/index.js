@@ -76,7 +76,7 @@ const BoardView = ({ handleSquareClick }) => {
   );
 
   const kingIsInCheck = useCallback(
-    square => givesCheck && board.activeKing() == square,
+    square => givesCheck && board.activeKing() === square,
     [board, givesCheck],
   );
 
