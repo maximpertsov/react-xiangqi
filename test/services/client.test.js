@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getNextFen } from 'services/client';
+import { getInitialMove, getNextFen } from 'services/client';
 
 describe('client', () => {
   jest.mock('axios');
@@ -13,5 +13,13 @@ describe('client', () => {
     getNextFen(payload);
 
     expect(axios.post).toHaveBeenCalledWith(`fen/moves`, payload);
+  });
+
+  test('get initial move', () => {
+    axios.get = jest.fn(() => Promise.resolve({}));
+
+    getInitialMove();
+
+    expect(axios.get).toHaveBeenCalledWith(`fen/moves`);
   });
 });

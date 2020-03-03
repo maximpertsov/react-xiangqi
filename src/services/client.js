@@ -28,6 +28,10 @@ export const getNextFen = ({ fen, move }) => {
   return axios.post(`fen/moves`, payload);
 };
 
+export const getInitialMove = () => {
+  return axios.get('fen/moves');
+};
+
 export async function authenticate() {
   return axios.post('authenticate');
 }
