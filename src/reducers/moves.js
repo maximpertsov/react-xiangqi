@@ -33,6 +33,7 @@ const serverMove = (state, { fen, givesCheck, legalMoves, move }) => {
     fen,
     givesCheck,
     legalMoves,
+    pending: false,
     // TODO: ugly, don't use board internals
     piece: getMovedPiece(board.placement, move),
   };
@@ -70,7 +71,15 @@ const confirmMoves = state => state.map(move => ({ ...move, pending: false }));
 const setMove = (state, action) => {
   const moveIndex = getMoveIndex(state, action.moveId);
 
-  return update(state, { [moveIndex]: { $set: action.move } });
+  return update(state, {
+    [moveIndex]: {
+      $set: {
+        id: action.moveId,
+        move: action.move,
+        ...serverMove(state, action),
+      },
+    },
+  });
 };
 
 const moves = (state = initialMoves, action) => {
@@ -82,7 +91,7 @@ const moves = (state = initialMoves, action) => {
     case 'confirm_moves':
       return confirmMoves(state);
     case 'set_move':
-      return setMove(state);
+      return setMove(state, action);
     default:
       return state;
   }

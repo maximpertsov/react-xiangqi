@@ -97,28 +97,32 @@ export const pollMoves = ({
   dispatch(fetchMoves({ gameSlug, moves }));
 };
 
-export const setMove = ({ moveId, move }) => ({
+export const setMove = ({ moveId, ...move }) => ({
   type: 'set_move',
   moveId,
-  move,
+  ...move,
 });
 
 export const postMove = ({
   gameSlug,
   moves,
-  move,
+  move: { id: moveId, move },
   username,
 }) => async dispatch => {
   if (gameSlug === null) return;
 
   try {
-    const { move: fetchedMove, status } = await client.postMove({
-      gameSlug,
-      username,
-      move,
-    });
-    // TODO: add a single move instead of fetching all of them
-    if (status !== 201) dispatch(fetchMoves({ gameSlug, moves }));
+    const {
+      data: {
+        move: {
+          fen,
+          legal_moves: legalMoves,
+          gives_check: givesCheck,
+          move: moveName,
+        },
+      },
+    } = await client.postMove({ gameSlug, move, username });
+    dispatch(setMove({ moveId, fen, givesCheck, legalMoves, move: moveName }));
   } catch (error) {
     // TODO: display useful error?
     // TODO: cancel pending moves instead of re-fetching

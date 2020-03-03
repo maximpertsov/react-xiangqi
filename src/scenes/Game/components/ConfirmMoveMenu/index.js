@@ -28,10 +28,9 @@ const ConfirmMoveMenu = () => {
   // }, []);
 
   const confirmMove = useCallback(async () => {
-    const { move, pending } = lastMove;
-    if (!pending) return;
+    if (!lastMove.pending) return;
 
-    confirmGameMove(move);
+    confirmGameMove(lastMove);
   }, [confirmGameMove, lastMove]);
 
   const cancelMove = useCallback(() => {
