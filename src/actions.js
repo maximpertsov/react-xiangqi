@@ -3,6 +3,7 @@ export {
   confirmMoves,
   fetchGame,
   fetchMoves,
+  getNextFen,
   makeMove,
   pollMoves,
   postMove,

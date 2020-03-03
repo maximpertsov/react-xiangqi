@@ -1,7 +1,13 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { cancelMoves, confirmMoves, postMove, selectMove } from 'actions';
+import {
+  cancelMoves,
+  confirmMoves,
+  getNextFen,
+  postMove,
+  selectMove,
+} from 'actions';
 import { getLastMove, getPreviousMove } from 'reducers';
 
 import ConfirmMenu from 'components/ConfirmMenu';
@@ -11,27 +17,30 @@ const ConfirmMoveMenu = () => {
 
   const gameSlug = useSelector(state => state.gameSlug);
   const lastMove = useSelector(state => getLastMove(state));
-  const moves = useSelector(state => state.moves);
   const previousMove = useSelector(state => getPreviousMove(state));
   const username = useSelector(state => state.username);
 
-  const confirmGameMove = useCallback(
-    move => {
-      dispatch(postMove({ gameSlug, move, moves, username }));
-      dispatch(confirmMoves());
-    },
-    [dispatch, gameSlug, moves, username],
-  );
+  const confirmGameMove = useCallback(() => {
+    dispatch(postMove({ gameSlug, move: lastMove, username }));
+    dispatch(confirmMoves());
+  }, [dispatch, gameSlug, lastMove, username]);
 
-  // const confirmFenMove = useCallback(() => {
-  //   return;
-  // }, []);
+  const confirmFenMove = useCallback(() => {
+    const { fen } = previousMove;
+
+    dispatch(getNextFen({ fen, move: lastMove }));
+    dispatch(confirmMoves());
+  }, [dispatch, lastMove, previousMove]);
 
   const confirmMove = useCallback(async () => {
     if (!lastMove.pending) return;
 
-    confirmGameMove(lastMove);
-  }, [confirmGameMove, lastMove]);
+    if (gameSlug === undefined) {
+      confirmFenMove();
+    } else {
+      confirmGameMove();
+    }
+  }, [confirmFenMove, confirmGameMove, gameSlug, lastMove.pending]);
 
   const cancelMove = useCallback(() => {
     // HACK: select previous move before dropping the cancelled move
