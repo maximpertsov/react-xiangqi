@@ -18,7 +18,6 @@ const ConfirmMoveMenu = () => {
   const confirmGameMove = useCallback(
     move => {
       dispatch(postMove({ gameSlug, move, moves, username }));
-      dispatch(confirmMoves());
     },
     [dispatch, gameSlug, moves, username],
   );
