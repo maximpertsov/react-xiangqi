@@ -103,6 +103,35 @@ export const setMove = ({ moveId, ...move }) => ({
   ...move,
 });
 
+export const getNextFen = ({
+  fen,
+  move: { id: moveId, move },
+}) => async dispatch => {
+  try {
+    const {
+      data: {
+        move: {
+          fen: fetchedFen,
+          gives_check: givesCheck,
+          legal_moves: legalMoves,
+          move: fetchedMove,
+        },
+      },
+    } = await client.getNextFen({ fen, move });
+    dispatch(
+      setMove({
+        moveId,
+        fen: fetchedFen,
+        givesCheck,
+        legalMoves,
+        move: fetchedMove,
+      }),
+    );
+  } catch (error) {
+    dispatch(cancelMoves());
+  }
+};
+
 export const postMove = ({
   gameSlug,
   move: { id: moveId, move },
@@ -115,13 +144,15 @@ export const postMove = ({
       data: {
         move: {
           fen,
-          legal_moves: legalMoves,
           gives_check: givesCheck,
-          move: moveName,
+          legal_moves: legalMoves,
+          move: fetchedMove,
         },
       },
     } = await client.postMove({ gameSlug, move, username });
-    dispatch(setMove({ moveId, fen, givesCheck, legalMoves, move: moveName }));
+    dispatch(
+      setMove({ moveId, fen, givesCheck, legalMoves, move: fetchedMove }),
+    );
   } catch (error) {
     dispatch(cancelMoves());
   }
