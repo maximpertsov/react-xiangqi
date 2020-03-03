@@ -15,13 +15,24 @@ const ConfirmMoveMenu = () => {
   const previousMove = useSelector(state => getPreviousMove(state));
   const username = useSelector(state => state.username);
 
+  const confirmGameMove = useCallback(
+    move => {
+      dispatch(postMove({ gameSlug, move, moves, username }));
+      dispatch(confirmMoves());
+    },
+    [dispatch, gameSlug, moves, username],
+  );
+
+  // const confirmFenMove = useCallback(() => {
+  //   return;
+  // }, []);
+
   const confirmMove = useCallback(async () => {
     const { move, pending } = lastMove;
     if (!pending) return;
 
-    dispatch(postMove({ gameSlug, move, moves, username }));
-    dispatch(confirmMoves());
-  }, [dispatch, gameSlug, lastMove, moves, username]);
+    confirmGameMove(move);
+  }, [confirmGameMove, lastMove]);
 
   const cancelMove = useCallback(() => {
     // HACK: select previous move before dropping the cancelled move
