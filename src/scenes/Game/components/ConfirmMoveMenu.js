@@ -35,7 +35,7 @@ const ConfirmMoveMenu = () => {
   const confirmMove = useCallback(async () => {
     if (!lastMove.pending) return;
 
-    if (gameSlug === undefined) {
+    if (gameSlug === null) {
       confirmFenMove();
     } else {
       confirmGameMove();
@@ -53,7 +53,7 @@ const ConfirmMoveMenu = () => {
       yesHandler={confirmMove}
       noHandler={cancelMove}
       show={lastMove.pending}
-      disabled={gameSlug === null}
+      disabled={false}
     />
   );
 };

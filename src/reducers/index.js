@@ -141,9 +141,11 @@ export const getLegalMoves = state => {
 export const getTargets = state => {
   if (state.selectedSquare === null) return [];
 
-  return getLegalMoves(state).filter(move =>
-    move.startsWith(state.selectedSquare),
-  );
+  const legalMoves = getLegalMoves(state);
+  // TODO: why is this undefined?
+  if (legalMoves === undefined) return false;
+
+  return legalMoves.filter(move => move.startsWith(state.selectedSquare));
 };
 
 export const getHasLegalMoves = state => {

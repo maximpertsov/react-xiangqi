@@ -56,7 +56,7 @@ export const setMove = ({ moveId, ...move }) => ({
 const setInitialMove = async ({ dispatch, moves }) => {
   // TODO: massive have to avoid having no moves to start,
   // which causes other bugs. Fix those bugs instead of having this hack.
-  if (moves[0].fen === undefined) {
+  if (moves.length === 1 && moves[0].fen === undefined) {
     const {
       data: {
         move: {
