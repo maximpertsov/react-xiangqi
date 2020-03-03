@@ -14,6 +14,7 @@ describe('moves reducer', () => {
     piece: undefined,
     board: new XiangqiBoard({ fen: initialFen }),
     pending: false,
+    legalMoves: [],
   };
 
   it('should return the initial state', () => {

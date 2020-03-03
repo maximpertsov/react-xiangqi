@@ -12,7 +12,7 @@ describe('client', () => {
     const payload = { fen, move };
     getNextFen(payload);
 
-    expect(axios.post).toHaveBeenCalledWith(`fen/moves`, payload);
+    expect(axios.post).toHaveBeenCalledWith(`fen`, payload);
   });
 
   test('get initial move', () => {
@@ -20,6 +20,6 @@ describe('client', () => {
 
     getInitialMove();
 
-    expect(axios.get).toHaveBeenCalledWith(`fen/moves`);
+    expect(axios.get).toHaveBeenCalledWith(`fen`);
   });
 });

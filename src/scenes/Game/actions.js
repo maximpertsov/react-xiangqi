@@ -47,7 +47,42 @@ export const fetchGame = ({ gameSlug }) => async dispatch => {
   dispatch({ type: 'set_players', players });
 };
 
+export const setMove = ({ moveId, ...move }) => ({
+  type: 'set_move',
+  moveId,
+  ...move,
+});
+
+const setInitialMove = async ({ dispatch, moves }) => {
+  // TODO: massive have to avoid having no moves to start,
+  // which causes other bugs. Fix those bugs instead of having this hack.
+  if (moves[0].fen === undefined) {
+    const {
+      data: {
+        move: {
+          fen,
+          gives_check: givesCheck,
+          legal_moves: legalMoves,
+          move: fetchedMove,
+        },
+      },
+    } = await client.getInitialMove();
+
+    dispatch(
+      setMove({
+        moveId: moves[0].id,
+        fen,
+        givesCheck,
+        legalMoves,
+        move: fetchedMove,
+      }),
+    );
+  }
+};
+
 export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
+  await setInitialMove({ dispatch, moves });
+
   if (gameSlug === null) return;
 
   let lastMoveId;
@@ -96,12 +131,6 @@ export const pollMoves = ({
 
   dispatch(fetchMoves({ gameSlug, moves }));
 };
-
-export const setMove = ({ moveId, ...move }) => ({
-  type: 'set_move',
-  moveId,
-  ...move,
-});
 
 export const getNextFen = ({
   fen,

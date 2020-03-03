@@ -16,13 +16,15 @@ const getMoveIndex = (state, moveId) => {
 export const DEFAULT_FEN =
   'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1';
 
+// TODO: can we remove this?
 const initialMoves = [
   {
     id: 0,
-    move: null,
-    piece: undefined,
     board: new XiangqiBoard({ fen: DEFAULT_FEN }),
+    legalMoves: [],
+    move: null,
     pending: false,
+    piece: undefined,
   },
 ];
 
@@ -35,7 +37,7 @@ const serverMove = (state, { fen, givesCheck, legalMoves, move }) => {
     legalMoves,
     pending: false,
     // TODO: ugly, don't use board internals
-    piece: getMovedPiece(board.placement, move),
+    piece: (move === null) ? null : getMovedPiece(board.placement, move),
   };
 };
 

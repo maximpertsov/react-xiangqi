@@ -25,11 +25,11 @@ export const postMove = ({ gameSlug, move, username }) => {
 
 export const getNextFen = ({ fen, move }) => {
   const payload = { fen, move };
-  return axios.post(`fen/moves`, payload);
+  return axios.post(`fen`, payload);
 };
 
 export const getInitialMove = () => {
-  return axios.get('fen/moves');
+  return axios.get('fen');
 };
 
 export async function authenticate() {
