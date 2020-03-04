@@ -134,63 +134,36 @@ export const pollMoves = ({
 
 export const getNextFen = ({
   fen,
-  move: { id: moveId, move, pending },
+  move: { id: moveId, move },
 }) => async dispatch => {
-  try {
-    const {
-      data: {
-        move: {
-          fen: fetchedFen,
-          gives_check: givesCheck,
-          legal_moves: legalMoves,
-          move: fetchedMove,
-        },
-      },
-    } = await client.getNextFen({ fen, move });
-    dispatch(
-      setMove({
-        moveId,
+  const {
+    data: {
+      move: {
         fen: fetchedFen,
-        givesCheck,
-        legalMoves,
+        gives_check: givesCheck,
+        legal_moves: legalMoves,
         move: fetchedMove,
-        pending,
-      }),
-    );
-  } catch (error) {
-    dispatch(cancelMoves());
-  }
+      },
+    },
+  } = await client.getNextFen({ fen, move });
+  dispatch(
+    setMove({
+      moveId,
+      fen: fetchedFen,
+      givesCheck,
+      legalMoves,
+      move: fetchedMove,
+    }),
+  );
 };
 
-export const postMove = ({
-  gameSlug,
-  move: { id: moveId, move, pending },
-  username,
-}) => async dispatch => {
+export const postMove = ({ gameSlug, move, username }) => async dispatch => {
   if (gameSlug === null) return;
 
   try {
-    const {
-      data: {
-        move: {
-          fen,
-          gives_check: givesCheck,
-          legal_moves: legalMoves,
-          move: fetchedMove,
-        },
-      },
-    } = await client.postMove({ gameSlug, move, username });
-    dispatch(
-      setMove({
-        moveId,
-        fen,
-        givesCheck,
-        legalMoves,
-        move: fetchedMove,
-        pending,
-      }),
-    );
+    await client.postMove({ gameSlug, move, username });
   } catch (error) {
+    // TODO: fetch moves to avoid client/server disparity?
     dispatch(cancelMoves());
   }
 };
