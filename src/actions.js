@@ -2,6 +2,7 @@ export {
   cancelMoves,
   confirmMoves,
   fetchGame,
+  fetchInitialPlacement,
   fetchMoves,
   getNextFen,
   makeMove,

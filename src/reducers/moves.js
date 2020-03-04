@@ -12,22 +12,6 @@ const getMoveIndex = (state, moveId) => {
   return -1;
 };
 
-/* eslint-disable-next-line max-len */
-export const DEFAULT_FEN =
-  'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1';
-
-// TODO: can we remove this?
-const initialMoves = [
-  {
-    id: 0,
-    board: new XiangqiBoard({ fen: DEFAULT_FEN }),
-    legalMoves: [],
-    move: null,
-    pending: false,
-    piece: undefined,
-  },
-];
-
 const serverMove = (state, { fen, givesCheck, legalMoves, move }) => {
   const board = new XiangqiBoard({ fen });
   return {
@@ -85,7 +69,7 @@ const setMove = (state, action) => {
   });
 };
 
-const moves = (state = initialMoves, action) => {
+const moves = (state = [], action) => {
   switch (action.type) {
     case 'add_move':
       return addMove(state, action);
@@ -127,7 +111,7 @@ export const getNextMove = (state, moveId) => {
 };
 
 export const getNextMoveColor = state => {
-  if (getMoveCount(state) === 0) return Color.RED;
+  if (getMoveCount(state) < 1) return Color.RED;
 
   const { piece } = getLastMove(state);
   return isRed(piece) ? Color.BLACK : Color.RED;

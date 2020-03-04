@@ -53,35 +53,23 @@ export const setMove = ({ moveId, ...move }) => ({
   ...move,
 });
 
-const setInitialMove = async ({ dispatch, moves }) => {
-  // TODO: massive have to avoid having no moves to start,
-  // which causes other bugs. Fix those bugs instead of having this hack.
-  if (moves.length === 1 && moves[0].fen === undefined) {
-    const {
-      data: {
-        move: {
-          fen,
-          gives_check: givesCheck,
-          legal_moves: legalMoves,
-          move: fetchedMove,
-        },
-      },
-    } = await client.getInitialMove();
-
-    dispatch(
-      setMove({
-        moveId: moves[0].id,
+export const fetchInitialPlacement = () => async dispatch => {
+  const {
+    data: {
+      move: {
         fen,
-        givesCheck,
-        legalMoves,
+        gives_check: givesCheck,
+        legal_moves: legalMoves,
         move: fetchedMove,
-      }),
-    );
-  }
+      },
+    },
+  } = await client.getInitialMove();
+
+  dispatch(addFetchedMove({ fen, givesCheck, legalMoves, move: fetchedMove }));
 };
 
 export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
-  await setInitialMove({ dispatch, moves });
+  // await setInitialMove({ dispatch, moves });
 
   if (gameSlug === null) return;
 

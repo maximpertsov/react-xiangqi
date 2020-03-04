@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchGame, fetchMoves, pollMoves } from 'actions';
+import {
+  fetchInitialPlacement,
+  fetchGame,
+  fetchMoves,
+  pollMoves,
+} from 'actions';
 import { getMoveCount, getNextMovePlayer } from 'reducers';
 
 const POLLING_INTERVAL = 2500;
@@ -19,8 +24,14 @@ const GameClient = () => {
     dispatch(fetchGame({ gameSlug }));
   }, [dispatch, gameSlug]);
 
+  useEffect(() => {
+    dispatch(fetchInitialPlacement());
+  }, [dispatch]);
+
   useEffect(
     () => {
+      if (moveCount === -1) return;
+
       dispatch(fetchMoves({ gameSlug, moves }));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,6 +40,18 @@ const GameClient = () => {
 
   useEffect(
     () => {
+      if (moveCount === -1) return;
+
+      dispatch(fetchMoves({ gameSlug, moves }));
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dispatch, gameSlug],
+  );
+
+  useEffect(
+    () => {
+      if (moveCount === -1) return;
+
       const interval = setInterval(() => {
         dispatch(
           pollMoves({
