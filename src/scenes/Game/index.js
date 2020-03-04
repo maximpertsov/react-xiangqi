@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { getMoveCount } from 'reducers';
 import GameClient from './components/GameClient';
 import GameInteraction from './components/GameInteraction';
 import GameView from './components/GameView';
 
 const Game = () => {
-  const moveCount = useSelector(state => getMoveCount(state));
+  // TODO: make a selector to check if moves are loaded/ready
+  const moves = useSelector(state => state.moves);
+
+  const ready = useCallback(() => {
+    if (moves.length === 0) return false;
+    if (moves[0].board === undefined) return false;
+
+    return true;
+  }, [moves]);
 
   return (
     <div>
       <GameClient />
-      {moveCount > -1 && <GameInteraction />}
-      {moveCount > -1 && <GameView />}
+      {ready && <GameInteraction />}
+      {ready && <GameView />}
     </div>
   );
 };

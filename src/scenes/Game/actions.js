@@ -55,17 +55,10 @@ export const setMove = ({ moveId, ...move }) => ({
 
 export const fetchInitialPlacement = () => async dispatch => {
   const {
-    data: {
-      move: {
-        fen,
-        gives_check: givesCheck,
-        legal_moves: legalMoves,
-        move: fetchedMove,
-      },
-    },
+    data: { move: fetchedMove },
   } = await client.getInitialMove();
 
-  dispatch(addFetchedMove({ fen, givesCheck, legalMoves, move: fetchedMove }));
+  dispatch(addFetchedMove(fetchedMove));
 };
 
 export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
