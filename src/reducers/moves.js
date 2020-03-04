@@ -12,36 +12,32 @@ const getMoveIndex = (state, moveId) => {
   return -1;
 };
 
-const serverMove = (state, { fen, givesCheck, legalMoves, move }) => {
-  const board = new XiangqiBoard({ fen });
-  return {
-    board,
-    fen,
-    givesCheck,
-    legalMoves,
-    pending: false,
-    // TODO: ugly, don't use board internals
-    piece: (move === null) ? null : getMovedPiece(board.placement, move),
-  };
-};
+const nextBoardAndPiece = (state, action) => {
+  if (action.fen !== undefined) {
+    const board = new XiangqiBoard({ fen: action.fen });
+    return {
+      board,
+      piece: (action.move === null) ?
+        null : getMovedPiece(board.placement, action.move),
+    };
+  }
 
-const localMove = (state, { move }) => {
   const { board } = state[state.length - 1];
   return {
-    board: board.move(move),
-    // TODO: ugly, don't use board internals
-    piece: getMovingPiece(board.placement, move),
+    board: board.move(action.move),
+    piece: getMovingPiece(board.placement, action.move),
   };
 };
 
 const addMove = (state, action) => {
   const move = {
     id: action.moveId,
+    givesCheck: action.givesCheck,
+    fen: action.fen,
+    legalMoves: action.legalMoves,
     move: action.move,
     pending: action.pending,
-    ...(action.fen === undefined
-      ? localMove(state, action)
-      : serverMove(state, action)),
+    ...nextBoardAndPiece(state, action),
   };
   return update(state, { $push: [move] });
 };
@@ -61,9 +57,12 @@ const setMove = (state, action) => {
     [moveIndex]: {
       $set: {
         id: action.moveId,
+        givesCheck: action.givesCheck,
+        fen: action.fen,
+        legalMoves: action.legalMoves,
         move: action.move,
         pending: action.pending,
-        ...serverMove(state, action),
+        ...nextBoardAndPiece(state, action),
       },
     },
   });
