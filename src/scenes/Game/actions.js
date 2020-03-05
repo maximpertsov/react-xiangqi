@@ -4,6 +4,12 @@ let nextMoveId = 0;
 
 const addMove = move => ({ ...move, type: 'add_move', moveId: ++nextMoveId });
 
+export const setMove = ({ moveId, ...move }) => ({
+  type: 'set_move',
+  moveId,
+  ...move,
+});
+
 export const selectMove = ({ moveId }) => ({
   type: 'select_move',
   moveId,
@@ -29,14 +35,12 @@ export const toggleLoading = ({ loading }) => ({
   loading,
 });
 
-const addFetchedMove = ({
+const transformFetchedMove = ({
   fen,
   gives_check: givesCheck,
   legal_moves: legalMoves,
   move,
-}) => {
-  return addMove({ fen, legalMoves, givesCheck, move, pending: false });
-};
+}) => ({ fen, legalMoves, givesCheck, move, pending: false });
 
 export const fetchGame = ({ gameSlug }) => async dispatch => {
   if (gameSlug === null) return;
@@ -47,23 +51,25 @@ export const fetchGame = ({ gameSlug }) => async dispatch => {
   dispatch({ type: 'set_players', players });
 };
 
-export const setMove = ({ moveId, ...move }) => ({
-  type: 'set_move',
-  moveId,
-  ...move,
-});
-
 export const fetchInitialPlacement = () => async dispatch => {
   const {
     data: { move: fetchedMove },
   } = await client.getInitialMove();
 
-  dispatch(addFetchedMove(fetchedMove));
+  dispatch(addMove(transformFetchedMove(fetchedMove)));
+};
+
+export const fetchMoveInfo = ({
+  fen,
+  move: { id: moveId, move },
+}) => async dispatch => {
+  const {
+    data: { move: fetchedMove },
+  } = await client.getNextFen({ fen, move });
+  dispatch(selectMove({ moveId, ...transformFetchedMove(fetchedMove) }));
 };
 
 export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
-  // await setInitialMove({ dispatch, moves });
-
   if (gameSlug === null) return;
 
   let lastMoveId;
@@ -77,7 +83,7 @@ export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
       // TODO: throw error if fetched move do not match app moves
       .filter((_, index) => index > 0 && moves[index] === undefined)
       .reduce((lastMoveId, fetchedMove) => {
-        const addMoveAction = addFetchedMove(fetchedMove);
+        const addMoveAction = addMove(transformFetchedMove(fetchedMove));
         dispatch(addMoveAction);
         return addMoveAction.moveId;
       }, lastMoveId);
@@ -111,31 +117,6 @@ export const pollMoves = ({
   if (moveCount >= move_count) return;
 
   dispatch(fetchMoves({ gameSlug, moves }));
-};
-
-export const getNextFen = ({
-  fen,
-  move: { id: moveId, move },
-}) => async dispatch => {
-  const {
-    data: {
-      move: {
-        fen: fetchedFen,
-        gives_check: givesCheck,
-        legal_moves: legalMoves,
-        move: fetchedMove,
-      },
-    },
-  } = await client.getNextFen({ fen, move });
-  dispatch(
-    setMove({
-      moveId,
-      fen: fetchedFen,
-      givesCheck,
-      legalMoves,
-      move: fetchedMove,
-    }),
-  );
 };
 
 export const postMove = ({
