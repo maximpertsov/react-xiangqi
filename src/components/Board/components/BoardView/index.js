@@ -11,7 +11,7 @@ import {
 } from 'reducers';
 
 import * as styles from 'commonStyles';
-import { encode } from 'services/logic/square';
+import { encode, moveToSquares } from 'services/logic/square';
 
 import Square from './components/Square';
 import XiangqiPiece from './components/Piece';
@@ -70,7 +70,7 @@ const BoardView = ({ handleSquareClick }) => {
     square => {
       if (selectedMove === null) return false;
 
-      return selectedMove.startsWith(square) || selectedMove.endsWith(square);
+      return moveToSquares(selectedMove).includes(square);
     },
     [selectedMove],
   );
@@ -89,7 +89,7 @@ const BoardView = ({ handleSquareClick }) => {
     square => {
       if (isMoving) return false;
 
-      return targets.some(move => move.endsWith(square));
+      return targets.some(move => moveToSquares(move)[1] === square);
     },
     [isMoving, targets],
   );

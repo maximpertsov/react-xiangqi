@@ -18,6 +18,7 @@ import canMoveBothColors from 'components/Board/reducers/canMoveBothColors';
 import selectedSquare from './selectedSquare';
 
 import { Color } from 'services/logic/constants';
+import { moveToSquares } from 'services/logic/square';
 
 const rootReducer = combineReducers({
   // Home,
@@ -60,7 +61,7 @@ export const getNextMove = ({ moves, selectedMoveId }) =>
 export const getNextMoveColor = ({ moves }) =>
   fromMoves.getNextMoveColor(moves);
 
-export const getMissingLegalMovesPayload = ({moves}) =>
+export const getMissingLegalMovesPayload = ({ moves }) =>
   fromMoves.getMissingLegalMovesPayload(moves);
 
 /*****************/
@@ -148,7 +149,9 @@ export const getTargets = state => {
   // TODO: why is this undefined?
   if (legalMoves === undefined) return false;
 
-  return legalMoves.filter(move => move.startsWith(state.selectedSquare));
+  return legalMoves.filter(
+    move => moveToSquares(move)[0] === state.selectedSquare,
+  );
 };
 
 export const getHasLegalMoves = state => {

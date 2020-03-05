@@ -9,6 +9,7 @@ import {
   setSelectedSlot,
 } from 'actions';
 import { getBottomPlayerIsRed, getLegalMoves, getSelectedMove } from 'reducers';
+import { squaresToMove } from 'services/logic/square';
 
 import BoardView from './components/BoardView';
 
@@ -67,7 +68,7 @@ const Board = () => {
       } else if (board.isOccupied(square) && !selectedCanCapture(square)) {
         dispatch(setSelectedSlot({ selectedSquare: square }));
       } else if (selectedSquare !== null) {
-        handleMove(`${selectedSquare}${square}`);
+        handleMove(squaresToMove(selectedSquare, square));
       } else {
         dispatch(clearSelectedSlot());
       }
