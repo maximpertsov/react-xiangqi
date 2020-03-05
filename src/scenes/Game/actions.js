@@ -138,7 +138,11 @@ export const getNextFen = ({
   );
 };
 
-export const postMove = ({ gameSlug, move, username }) => async dispatch => {
+export const postMove = ({
+  gameSlug,
+  move: { move },
+  username,
+}) => async dispatch => {
   if (gameSlug === null) return;
 
   try {
