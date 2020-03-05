@@ -18,7 +18,7 @@ describe('moves reducer', () => {
   };
 
   it('should return the initial state', () => {
-    expect(moves(undefined, {})).toEqual([initialMove]);
+    expect(moves(undefined, {})).toEqual([]);
   });
 
   it('should add a move by move', () => {
@@ -31,10 +31,9 @@ describe('moves reducer', () => {
       legalMoves: action.legalMoves,
       move,
       piece: 'r',
-      pending: undefined,
     };
 
-    expect(moves(undefined, action)).toEqual([initialMove, nextMove]);
+    expect(moves([initialMove], action)).toEqual([initialMove, nextMove]);
   });
 
   it('should add a move by fen', () => {
@@ -48,9 +47,8 @@ describe('moves reducer', () => {
       legalMoves: action.legalMoves,
       move,
       piece: 'r',
-      pending: false,
     };
 
-    expect(moves(undefined, action)).toEqual([initialMove, nextMove]);
+    expect(moves([initialMove], action)).toEqual([initialMove, nextMove]);
   });
 });
