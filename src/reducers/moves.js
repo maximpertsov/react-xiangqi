@@ -1,4 +1,5 @@
 import update from 'immutability-helper';
+import findIndex from 'lodash/findIndex';
 import sortedIndexBy from 'lodash/sortedIndexBy';
 
 import XiangqiBoard from 'services/logic';
@@ -17,8 +18,10 @@ const nextBoardAndPiece = (state, action) => {
     const board = new XiangqiBoard({ fen: action.fen });
     return {
       board,
-      piece: (action.move === null) ?
-        null : getMovedPiece(board.placement, action.move),
+      piece:
+        action.move === null
+          ? null
+          : getMovedPiece(board.placement, action.move),
     };
   }
 
@@ -114,4 +117,11 @@ export const getNextMoveColor = state => {
 
   const { piece } = getLastMove(state);
   return isRed(piece) ? Color.BLACK : Color.RED;
+};
+
+export const getMissingLegalMovesPayload = state => {
+  const index = findIndex(state, move => move.legalMoves === undefined);
+  if (index === -1) return;
+
+  return { fen: state[index - 1].fen, move: state[index] };
 };

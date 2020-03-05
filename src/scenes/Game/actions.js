@@ -4,7 +4,7 @@ let nextMoveId = 0;
 
 const addMove = move => ({ ...move, type: 'add_move', moveId: ++nextMoveId });
 
-export const setMove = ({ moveId, ...move }) => ({
+const setMove = ({ moveId, ...move }) => ({
   type: 'set_move',
   moveId,
   ...move,
@@ -40,7 +40,7 @@ const transformFetchedMove = ({
   gives_check: givesCheck,
   legal_moves: legalMoves,
   move,
-}) => ({ fen, legalMoves, givesCheck, move, pending: false });
+}) => ({ fen, legalMoves, givesCheck, move });
 
 export const fetchGame = ({ gameSlug }) => async dispatch => {
   if (gameSlug === null) return;
@@ -56,17 +56,17 @@ export const fetchInitialPlacement = () => async dispatch => {
     data: { move: fetchedMove },
   } = await client.getInitialMove();
 
-  dispatch(addMove(transformFetchedMove(fetchedMove)));
+  dispatch(addMove({ pending: false, ...transformFetchedMove(fetchedMove) }));
 };
 
 export const fetchMoveInfo = ({
   fen,
-  move: { id: moveId, move },
+  move: { id: moveId, move, pending },
 }) => async dispatch => {
   const {
     data: { move: fetchedMove },
   } = await client.getNextFen({ fen, move });
-  dispatch(selectMove({ moveId, ...transformFetchedMove(fetchedMove) }));
+  dispatch(setMove({ moveId, pending, ...transformFetchedMove(fetchedMove) }));
 };
 
 export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
@@ -83,7 +83,10 @@ export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
       // TODO: throw error if fetched move do not match app moves
       .filter((_, index) => index > 0 && moves[index] === undefined)
       .reduce((lastMoveId, fetchedMove) => {
-        const addMoveAction = addMove(transformFetchedMove(fetchedMove));
+        const addMoveAction = addMove({
+          pending: false,
+          ...transformFetchedMove(fetchedMove),
+        });
         dispatch(addMoveAction);
         return addMoveAction.moveId;
       }, lastMoveId);

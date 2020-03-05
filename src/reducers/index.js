@@ -60,6 +60,9 @@ export const getNextMove = ({ moves, selectedMoveId }) =>
 export const getNextMoveColor = ({ moves }) =>
   fromMoves.getNextMoveColor(moves);
 
+export const getMissingLegalMovesPayload = ({moves}) =>
+  fromMoves.getMissingLegalMovesPayload(moves);
+
 /*****************/
 /***  Players  ***/
 /*****************/

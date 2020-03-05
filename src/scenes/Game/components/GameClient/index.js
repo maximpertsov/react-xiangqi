@@ -3,11 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   fetchInitialPlacement,
+  fetchMoveInfo,
   fetchGame,
   fetchMoves,
   pollMoves,
 } from 'actions';
-import { getMoveCount, getNextMovePlayer } from 'reducers';
+import {
+  getMoveCount,
+  getNextMovePlayer,
+  getMissingLegalMovesPayload,
+} from 'reducers';
 
 const POLLING_INTERVAL = 2500;
 
@@ -18,6 +23,9 @@ const GameClient = () => {
   const moves = useSelector(state => state.moves);
   const moveCount = useSelector(state => getMoveCount(state));
   const nextMovePlayer = useSelector(state => getNextMovePlayer(state));
+  const missingLegalMovesPayload = useSelector(state =>
+    getMissingLegalMovesPayload(state),
+  );
   const username = useSelector(state => state.username);
 
   useEffect(() => {
@@ -25,17 +33,20 @@ const GameClient = () => {
   }, [dispatch, gameSlug]);
 
   useEffect(() => {
+    if (moveCount > -1) return;
+
     dispatch(fetchInitialPlacement());
-  }, [dispatch]);
+  }, [dispatch, moveCount]);
 
   useEffect(
     () => {
-      if (moveCount === -1) return;
+      if (moveCount < 0) return;
+      if (missingLegalMovesPayload === undefined) return;
 
-      dispatch(fetchMoves({ gameSlug, moves }));
+      dispatch(fetchMoveInfo(missingLegalMovesPayload));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, gameSlug],
+    [dispatch, moveCount],
   );
 
   useEffect(

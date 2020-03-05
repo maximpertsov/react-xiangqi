@@ -36,7 +36,7 @@ const ConfirmMoveMenu = () => {
       yesHandler={confirmMove}
       noHandler={cancelMove}
       show={lastMove.pending}
-      disabled={false}
+      disabled={gameSlug === null}
     />
   );
 };
