@@ -2,6 +2,8 @@ export {
   cancelMoves,
   confirmMoves,
   fetchGame,
+  fetchInitialPlacement,
+  fetchMoveInfo,
   fetchMoves,
   makeMove,
   pollMoves,

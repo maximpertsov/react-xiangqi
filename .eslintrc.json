@@ -2,7 +2,7 @@
   "extends": [
     "airbnb",
     "eslint:recommended",
-    "jest",
+    "plugin:jest/recommended",
     "plugin:testcafe/recommended"
   ],
   "globals": {
@@ -11,6 +11,7 @@
     "window": false
   },
   "plugins": [
+    "jest",
     "react-hooks",
     "testcafe"
   ],

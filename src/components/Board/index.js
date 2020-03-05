@@ -8,7 +8,8 @@ import {
   setAnimationOffset,
   setSelectedSlot,
 } from 'actions';
-import { getBottomPlayerIsRed, getSelectedMove, getLegalMoves } from 'reducers';
+import { getBottomPlayerIsRed, getLegalMoves, getSelectedMove } from 'reducers';
+import { squaresToMove } from 'services/logic/square';
 
 import BoardView from './components/BoardView';
 
@@ -18,7 +19,7 @@ const Board = () => {
   const dispatch = useDispatch();
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
   const legalMoves = useSelector(state => getLegalMoves(state));
-  const selectedSlot = useSelector(state => state.selectedSlot);
+  const selectedSquare = useSelector(state => state.selectedSquare);
   const { board } = useSelector(state => getSelectedMove(state));
 
   useEffect(
@@ -31,26 +32,25 @@ const Board = () => {
   );
 
   const selectedCanCapture = useCallback(
-    slot => {
-      if (selectedSlot === null) return false;
-      if (!board.isOccupied(selectedSlot)) return false;
-      if (!board.isOccupied(slot)) return false;
-      return !board.sameColor(slot, selectedSlot);
+    square => {
+      if (selectedSquare === null) return false;
+      if (!board.isOccupied(selectedSquare)) return false;
+      if (!board.isOccupied(square)) return false;
+      return !board.sameColor(square, selectedSquare);
     },
-    [board, selectedSlot],
+    [board, selectedSquare],
   );
 
-  const isLegalMove = useCallback(
-    (fromSlot, toSlot) => legalMoves[fromSlot].includes(toSlot),
-    [legalMoves],
-  );
+  const isLegalMove = useCallback(move => legalMoves.includes(move), [
+    legalMoves,
+  ]);
 
   const handleMove = useCallback(
-    (fromSlot, toSlot) => {
-      if (isLegalMove(fromSlot, toSlot)) {
-        dispatch(setAnimationOffset({ bottomPlayerIsRed, fromSlot, toSlot }));
+    move => {
+      if (isLegalMove(move)) {
+        dispatch(setAnimationOffset({ bottomPlayerIsRed, move }));
         setTimeout(() => {
-          dispatch(makeMove({ fromSlot, toSlot, pending: true }));
+          dispatch(makeMove({ move, pending: true }));
           dispatch(clearAnimationOffset());
           dispatch(clearSelectedSlot());
         }, ANIMATION_DELAY);
@@ -62,18 +62,18 @@ const Board = () => {
   );
 
   const handleSquareClick = useCallback(
-    slot => () => {
-      if (slot === selectedSlot) {
+    square => () => {
+      if (square === selectedSquare) {
         dispatch(clearSelectedSlot());
-      } else if (board.isOccupied(slot) && !selectedCanCapture(slot)) {
-        dispatch(setSelectedSlot({ selectedSlot: slot }));
-      } else if (selectedSlot !== null) {
-        handleMove(selectedSlot, slot);
+      } else if (board.isOccupied(square) && !selectedCanCapture(square)) {
+        dispatch(setSelectedSlot({ selectedSquare: square }));
+      } else if (selectedSquare !== null) {
+        handleMove(squaresToMove(selectedSquare, square));
       } else {
         dispatch(clearSelectedSlot());
       }
     },
-    [board, dispatch, handleMove, selectedCanCapture, selectedSlot],
+    [board, dispatch, handleMove, selectedCanCapture, selectedSquare],
   );
 
   return <BoardView handleSquareClick={handleSquareClick} />;

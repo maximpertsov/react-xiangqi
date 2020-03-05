@@ -8,16 +8,17 @@ import showGame from 'scenes/Home/reducers/showGame';
 import username from 'scenes/Home/reducers/username';
 // Game
 import loading from 'scenes/Game/reducers/loading';
-import moves, * as fromMoves from 'scenes/Game/reducers/moves';
+import moves, * as fromMoves from './moves';
 import players from 'scenes/Game/reducers/players';
 import selectedMoveId from 'scenes/Game/reducers/selectedMoveId';
 // Board
 /* eslint-disable-next-line max-len */
 import animationOffset, * as fromAnimationOffset from 'components/Board/reducers/animationOffset';
 import canMoveBothColors from 'components/Board/reducers/canMoveBothColors';
-import selectedSlot from 'components/Board/reducers/selectedSlot';
+import selectedSquare from './selectedSquare';
 
 import { Color } from 'services/logic/constants';
+import { moveToSquares } from 'services/logic/square';
 
 const rootReducer = combineReducers({
   // Home,
@@ -35,7 +36,7 @@ const rootReducer = combineReducers({
   // Board
   animationOffset,
   canMoveBothColors,
-  selectedSlot,
+  selectedSquare,
 });
 
 export default rootReducer;
@@ -59,6 +60,9 @@ export const getNextMove = ({ moves, selectedMoveId }) =>
 
 export const getNextMoveColor = ({ moves }) =>
   fromMoves.getNextMoveColor(moves);
+
+export const getMissingLegalMovesPayload = ({ moves }) =>
+  fromMoves.getMissingLegalMovesPayload(moves);
 
 /*****************/
 /***  Players  ***/
@@ -123,28 +127,31 @@ export const getCurrentPlayerColor = state => {
 /***  Game Logic  ***/
 /********************/
 
-// TODO break up function
 export const getLegalMoves = state => {
-  const { board } = getSelectedMove(state);
   const currentPlayerColor = getCurrentPlayerColor(state);
   const nextMoveColor = getNextMoveColor(state);
-  const lastMove = getLastMove(state);
+  const { id: lastMoveId, legalMoves } = getLastMove(state);
 
   // TODO: for now we can assume that legal moves are only allowed for the
   // latest move. However, this will change if we ever implement an analysis
   // board-style function.
-  if (lastMove.id !== state.selectedMoveId) return board.noLegalMoves();
+  if (lastMoveId !== state.selectedMoveId) return [];
   if (!state.canMoveBothColors && currentPlayerColor !== nextMoveColor) {
-    return board.noLegalMoves();
+    return [];
   }
-  return board.legalMovesByColor(nextMoveColor);
+  return legalMoves;
 };
 
 export const getTargets = state => {
-  if (state.selectedSlot === null) return [];
+  if (state.selectedSquare === null) return [];
 
   const legalMoves = getLegalMoves(state);
-  return legalMoves[state.selectedSlot];
+  // TODO: why is this undefined?
+  if (legalMoves === undefined) return false;
+
+  return legalMoves.filter(
+    move => moveToSquares(move)[0] === state.selectedSquare,
+  );
 };
 
 export const getHasLegalMoves = state => {

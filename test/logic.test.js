@@ -6,6 +6,7 @@ import XiangqiBoard, {
 } from 'services/logic';
 
 import { decode } from 'services/logic/fen';
+import { encodeMove } from 'services/logic/square';
 
 import { Color } from 'services/logic/constants';
 
@@ -127,10 +128,9 @@ test('convert index to file', () => {
 });
 
 test('converts FEN string to an array', () => {
-  const xb = new XiangqiBoard();
-  const fen = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
+  const fen = 'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR';
   const expected = [
-    'r', 'h', 'e', 'a', 'k', 'a', 'e', 'h', 'r',
+    'r', 'n', 'b', 'a', 'k', 'a', 'b', 'n', 'r',
     ...Array(9).fill(null),
     null, 'c', null, null, null, null, null, 'c', null,
     'p', null, 'p', null, 'p', null, 'p', null, 'p',
@@ -139,24 +139,24 @@ test('converts FEN string to an array', () => {
     'P', null, 'P', null, 'P', null, 'P', null, 'P',
     null, 'C', null, null, null, null, null, 'C', null,
     ...Array(9).fill(null),
-    'R', 'H', 'E', 'A', 'K', 'A', 'E', 'H', 'R',
+    'R', 'N', 'B', 'A', 'K', 'A', 'B', 'N', 'R',
   ];
   const actual = decode(fen).placement;
   expect(actual).toStrictEqual(expected);
 });
 
 test('converts FEN string to an board and back', () => {
-  const fen = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
+  const fen = 'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR';
   const xb = new XiangqiBoard({ fen });
   expect(xb.toFen()).toBe(fen);
 });
 
 test('moves a piece and returns the new board with the new position', () => {
-  const fen = 'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
+  const fen = 'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR';
   const xb = new XiangqiBoard({ fen });
 
-  const actual = xb.move(0, 9).toFen();
-  const expected = '1heakaehr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR';
+  const actual = xb.move(encodeMove(0, 9)).toFen();
+  const expected = '1nbakabnr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR';
   expect(actual).toBe(expected);
 
   // original board should be unchanged
@@ -193,7 +193,7 @@ const legalMoveTests = [
   ],
   // Initial board layout
   [
-    'rheakaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAKAEHR',
+    'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR',
     [
       // king moves
       { from: [0, 4], to: [[1, 4]] },
@@ -269,7 +269,7 @@ const legalMoveTests = [
   ],
   // Bugfix: Missing horse positions
   [
-    'rheakaehr/9/1c5c1/p1p1p1p1p/9/2P6/P3P1P1P/1CH4C1/9/R1EAKAEHR',
+    'rnbakabnr/9/1c5c1/p1p1p1p1p/9/2P6/P3P1P1P/1CN4C1/9/R1BAKABNR',
     [
       // king moves
       { from: [0, 4], to: [[1, 4]] },
@@ -338,7 +338,7 @@ const legalMoveTests = [
   ],
   // Bugfix: Horse jumps around board
   [
-    '9/9/9/9/9/9/P8/HC7/9/9',
+    '9/9/9/9/9/9/P8/NC7/9/9',
     [ // pawn moves
       { from: [6, 0], to: [[5, 0]] },
       // horse moves
@@ -355,7 +355,7 @@ const legalMoveTests = [
   ],
   // Blocked elephant
   [
-    '9/9/9/9/9/2E6/1P1p5/E8/9/9',
+    '9/9/9/9/9/2B6/1P1p5/B8/9/9',
     [
       // pawn moves
       { from: [6, 1], to: [[5, 1]] },
@@ -366,7 +366,7 @@ const legalMoveTests = [
   ],
   // King in check
   [
-    'rheakaehr/4P4/1c5c1/p1p1p1p1p/9/9/9/9/9/9',
+    'rnbakabnr/4P4/1c5c1/p1p1p1p1p/9/9/9/9/9/9',
     [
       // king moves
       { from: [0, 4], to: [[1, 4]] },

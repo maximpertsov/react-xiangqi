@@ -6,12 +6,12 @@ import { useSelector } from 'react-redux';
 import {
   getBottomPlayerIsRed,
   getIsMoving,
-  getNextMoveColor,
   getSelectedMove,
   getTargets,
 } from 'reducers';
 
 import * as styles from 'commonStyles';
+import { encode, moveToSquares } from 'services/logic/square';
 
 import Square from './components/Square';
 import XiangqiPiece from './components/Piece';
@@ -48,76 +48,85 @@ const Wrapper = styled.div`
 
 const BoardView = ({ handleSquareClick }) => {
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
-  const nextMoveColor = useSelector(state => getNextMoveColor(state));
-  const selectedSlot = useSelector(state => state.selectedSlot);
+  const selectedSquare = useSelector(state => state.selectedSquare);
   const targets = useSelector(state => getTargets(state));
-  const {
-    board,
-    fromSlot: moveFromSlot,
-    toSlot: moveToSlot,
-  } = useSelector(state => getSelectedMove(state));
+  const { board, move: selectedMove, givesCheck } = useSelector(state =>
+    getSelectedMove(state),
+  );
   const isMoving = useSelector(state => getIsMoving(state));
   const [moveX, moveY] = useSelector(state => state.animationOffset);
 
-  const getPieceCode = useCallback(slot => board.getPiece(slot) || undefined, [
-    board,
-  ]);
+  const getPieceCode = useCallback(
+    square => board.getPiece(square) || undefined,
+    [board],
+  );
 
   const getSlot = useCallback(
-    (b, i) => (bottomPlayerIsRed ? i : b.length - i - 1),
+    (slots, i) => (bottomPlayerIsRed ? i : slots.length - i - 1),
     [bottomPlayerIsRed],
   );
 
   const inLastMove = useCallback(
-    slot => slot === moveFromSlot || slot === moveToSlot,
-    [moveFromSlot, moveToSlot],
+    square => {
+      if (selectedMove === null) return false;
+
+      return moveToSquares(selectedMove).includes(square);
+    },
+    [selectedMove],
   );
 
   const kingIsInCheck = useCallback(
-    slot => !isMoving && board.inCheck({ slot, nextMoveColor }),
-    [board, isMoving, nextMoveColor],
+    square => givesCheck && board.activeKing() === square,
+    [board, givesCheck],
   );
 
-  const isSelected = useCallback(slot => !isMoving && selectedSlot === slot, [
-    isMoving,
-    selectedSlot,
-  ]);
+  const isSelected = useCallback(
+    square => !isMoving && selectedSquare === square,
+    [isMoving, selectedSquare],
+  );
 
-  const isTargeted = useCallback(slot => !isMoving && targets.includes(slot), [
-    isMoving,
-    targets,
-  ]);
+  const isTargeted = useCallback(
+    square => {
+      if (isMoving) return false;
 
-  const isOccupied = useCallback(slot => getPieceCode(slot) !== undefined, [
+      return targets.some(move => moveToSquares(move)[1] === square);
+    },
+    [isMoving, targets],
+  );
+
+  const isOccupied = useCallback(square => getPieceCode(square) !== undefined, [
     getPieceCode,
   ]);
 
   const renderPiece = useCallback(
-    slot => (
+    square => (
       <XiangqiPiece
-        code={getPieceCode(slot)}
-        moveX={selectedSlot === slot ? moveX : 0}
-        moveY={selectedSlot === slot ? moveY : 0}
+        code={getPieceCode(square)}
+        moveX={selectedSquare === square ? moveX : 0}
+        moveY={selectedSquare === square ? moveY : 0}
       />
     ),
-    [getPieceCode, moveX, moveY, selectedSlot],
+    [getPieceCode, moveX, moveY, selectedSquare],
   );
 
   /* eslint-disable complexity */
   const renderSquares = () =>
-    board.board.map((_, i, b) => {
-      const slot = getSlot(b, i);
+    board.placement.map((_, i, slots) => {
+      const slot = getSlot(slots, i);
+      const square = encode(slot);
       return (
         <Square
           className="Square"
-          key={slot}
-          handleClick={handleSquareClick(slot)}
+          key={square}
+          handleClick={handleSquareClick(square)}
         >
-          {isOccupied(slot) && renderPiece(slot)}
-          {inLastMove(slot) && <LastMoveIndicator />}
-          {kingIsInCheck(slot) && <KingInCheckIndicator />}
-          {isSelected(slot) && <SelectionIndicator />}
-          {isTargeted(slot) && <TargetIndicator occupied={isOccupied(slot)} />}
+          {isOccupied(square) && renderPiece(square)}
+          {inLastMove(square) && <LastMoveIndicator />}
+          {kingIsInCheck(square) && <KingInCheckIndicator />}
+          {isSelected(square) && <SelectionIndicator />}
+          {isTargeted(square) && (
+            <TargetIndicator occupied={isOccupied(square)} />
+          )}
         </Square>
       );
     });

@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
+import sample from 'lodash/sample';
+
 import { makeMove, selectMove } from 'actions';
 import {
   getLastMove,
@@ -20,15 +22,15 @@ const GameInteraction = () => {
   useEffect(
     () => {
       setTimeout(() => {
-        if (autoMove.includes(nextMoveColor)) {
-          const { board } = lastMove;
-          const [fromSlot, toSlot] = board.randomMove(nextMoveColor);
-          dispatch(makeMove({ fromSlot, toSlot, pending: false }));
-        }
+        if (lastMove.legalMoves === undefined) return;
+        if (!autoMove.includes(nextMoveColor)) return;
+
+        const randomMove = sample(lastMove.legalMoves);
+        dispatch(makeMove({ move: randomMove, pending: false }));
       }, 1000);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [autoMove, dispatch, nextMoveColor],
+    [autoMove, dispatch, lastMove.legalMoves, nextMoveColor],
   );
 
   useEventListener('keydown', ({ key }) => {

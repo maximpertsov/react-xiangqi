@@ -5,7 +5,6 @@ import {
   RefType,
   Color,
   Piece,
-  EMPTY_BOARD_FEN,
   RANK_COUNT,
   FILE_COUNT,
   BLACK_RIVER_BANK,
@@ -14,7 +13,13 @@ import {
   DIAGONAL_MOVES,
 } from './constants';
 import * as utils from './utils';
-import { decode } from './fen';
+import { decode as decodeFen } from './fen';
+import { makeMove } from './move';
+import {
+  decode as decodeSquare,
+  encode as encodeSquare,
+  encodeMove,
+} from './square';
 
 export { RefType };
 
@@ -23,8 +28,10 @@ export const { getSlot, getRank, getFile, getRankFile } = utils;
 
 export default class XiangqiBoard {
   // TODO can remove most of this information and parse it from the FEN string
-  constructor({ fen = EMPTY_BOARD_FEN } = {}) {
-    this.board = decode(fen).placement;
+  constructor({ fen, ...options }) {
+    const params = fen === undefined ? options : decodeFen(fen);
+    this.placement = params.placement;
+    this.activeColor = params.activeColor;
   }
 
   _slot(pos, refType) {
@@ -40,18 +47,8 @@ export default class XiangqiBoard {
     throw new Error(`Invalid reference type: ${refType}`);
   }
 
-  move(fromPos, toPos, refType = RefType.SLOT) {
-    const fromSlot = this._slot(fromPos, refType);
-    const toSlot = this._slot(toPos, refType);
-    const board = update(
-      update(this.board, {
-        [toSlot]: { $set: this.board[fromSlot] },
-      }),
-      {
-        [fromSlot]: { $set: null },
-      },
-    );
-    return this.new(board);
+  move(move) {
+    return this.new({ placement: makeMove(this.placement, move) });
   }
 
   randomMove(color) {
@@ -66,31 +63,29 @@ export default class XiangqiBoard {
 
   drop(piece, pos, refType = RefType.SLOT) {
     const slot = this._slot(pos, refType);
-    const board = update(this.board, {
+    const placement = update(this.placement, {
       [slot]: { $set: piece },
     });
-    return this.new(board);
+    return this.new({ placement });
   }
 
-  new(board) {
-    const options = { ...this };
-    delete options.board;
-    options.fen = this.toFen(board);
-    return new this.constructor(options);
+  new(options) {
+    return new this.constructor(
+      options === undefined ? { ...this } : { ...options },
+    );
   }
 
-  getPiece(pos, refType = RefType.SLOT) {
-    const slot = this._slot(pos, refType);
-    return this.board[slot];
+  getPiece(square) {
+    return this.placement[decodeSquare(square)];
   }
 
   isRed(slot) {
-    const piece = this.board[slot];
+    const piece = this.placement[slot];
     return utils.isRed(piece);
   }
 
   isBlack(slot) {
-    const piece = this.board[slot];
+    const piece = this.placement[slot];
     return utils.isBlack(piece);
   }
 
@@ -101,9 +96,12 @@ export default class XiangqiBoard {
     return false;
   }
 
-  sameColor(slot1, slot2) {
-    const piece1 = this.board[slot1];
-    const piece2 = this.board[slot2];
+  sameColor(square1, square2) {
+    const slot1 = decodeSquare(square1);
+    const slot2 = decodeSquare(square2);
+    const piece1 = this.placement[slot1];
+    const piece2 = this.placement[slot2];
+
     return utils.sameColor(piece1, piece2);
   }
 
@@ -126,7 +124,9 @@ export default class XiangqiBoard {
   isUniverallyLegal(fromSlot, toSlot) {
     if (toSlot === null) return false;
     if (fromSlot === toSlot) return false;
-    if (this.sameColor(fromSlot, toSlot)) return false;
+    if (this.sameColor(encodeSquare(fromSlot), encodeSquare(toSlot))) {
+      return false;
+    }
     return true;
   }
 
@@ -147,15 +147,36 @@ export default class XiangqiBoard {
     return result;
   }
 
-  isOccupied(slot) {
-    return this.board[slot] !== null;
+  isOccupied(square) {
+    const slot = decodeSquare(square);
+
+    return this.placement[slot] !== null;
+  }
+
+  activeKing() {
+    let king = undefined;
+
+    switch (this.activeColor) {
+      case Color.RED:
+        king = 'K';
+        break;
+      case Color.BLACK:
+        king = 'k';
+        break;
+      default:
+        // TODO: throw error
+        return;
+    }
+
+    const kingSlot = this.placement.indexOf(king)
+    return encodeSquare(kingSlot);
   }
 
   legalHorseMoves(slot) {
     const result = [];
 
     utils.orthogonalSlots(slot).forEach((firstHop, _, firstHops) => {
-      if (this.isOccupied(firstHop)) return;
+      if (this.isOccupied(encodeSquare(firstHop))) return;
 
       utils.diagonalSlots(firstHop).forEach(secondHop => {
         if (firstHops.includes(secondHop) || result.includes(secondHop)) return;
@@ -175,7 +196,7 @@ export default class XiangqiBoard {
         toSlot = utils.tryMove(toSlot, ...move);
         if (toSlot === null) break;
         this.addIfUniversallyLegal(result, slot, toSlot);
-        if (this.isOccupied(toSlot)) break;
+        if (this.isOccupied(encodeSquare(toSlot))) break;
       }
     });
     return result;
@@ -191,10 +212,10 @@ export default class XiangqiBoard {
       while (true) {
         toSlot = utils.tryMove(toSlot, ...move);
         if (toSlot === null) break;
-        if (vaulted && this.isOccupied(toSlot)) {
+        if (vaulted && this.isOccupied(encodeSquare(toSlot))) {
           this.addIfUniversallyLegal(result, slot, toSlot);
           break;
-        } else if (this.isOccupied(toSlot)) {
+        } else if (this.isOccupied(encodeSquare(toSlot))) {
           vaulted = true;
         } else if (!vaulted) {
           this.addIfUniversallyLegal(result, slot, toSlot);
@@ -208,7 +229,10 @@ export default class XiangqiBoard {
     const result = [];
     DIAGONAL_MOVES.forEach(move => {
       const firstHop = utils.tryMove(slot, ...move);
-      if (this.isOccupied(firstHop) || this.crossingRiver(slot, firstHop)) {
+      if (
+        this.isOccupied(encodeSquare(firstHop)) ||
+        this.crossingRiver(slot, firstHop)
+      ) {
         return;
       }
 
@@ -259,11 +283,11 @@ export default class XiangqiBoard {
   }
 
   noLegalMoves() {
-    return this.board.map(() => []);
+    return this.placement.map(() => []);
   }
 
   legalMoves(allowSelfCheck = false) {
-    const result = this.board.map((piece, slot) =>
+    const result = this.placement.map((piece, slot) =>
       this.legalMovePiece(piece, slot),
     );
 
@@ -297,7 +321,9 @@ export default class XiangqiBoard {
     const result = new Set();
     for (const [, toSlots] of this.legalMoves(true).entries()) {
       toSlots.forEach(slot => {
-        if (this.isOccupied(slot)) result.add(this.board[slot]);
+        if (this.isOccupied(encodeSquare(slot))) {
+          result.add(this.placement[slot]);
+        }
       });
     }
     return result;
@@ -307,12 +333,12 @@ export default class XiangqiBoard {
     let king;
     if (color === Color.BLACK) king = Piece.Black.GENERAL;
     if (color === Color.RED) king = Piece.Red.GENERAL;
-    return this.board.indexOf(king);
+    return this.placement.indexOf(king);
   }
 
   // HACK: king facing logic implemented by replacing the
   //       opposing king with a rook
-  kingInCheck(color, board = this.new(this.board)) {
+  kingInCheck(color, board = this.new({ placement: this.placement })) {
     let ownKing;
     let otherKing;
     let otherRook;
@@ -331,7 +357,7 @@ export default class XiangqiBoard {
     }
 
     return board
-      .drop(otherRook, board.board.indexOf(otherKing))
+      .drop(otherRook, board.placement.indexOf(otherKing))
       .captures()
       .has(ownKing);
   }
@@ -342,7 +368,7 @@ export default class XiangqiBoard {
     let color;
     if (this.isBlack(fromSlot)) color = Color.BLACK;
     if (this.isRed(fromSlot)) color = Color.RED;
-    return this.kingInCheck(color, this.move(fromSlot, toSlot));
+    return this.kingInCheck(color, this.move(encodeMove(fromSlot, toSlot)));
   }
 
   // Board-Slot interactions
@@ -351,9 +377,9 @@ export default class XiangqiBoard {
     return this.findKingSlot(nextMoveColor) === slot;
   }
 
-  toFen(board = this.board) {
+  toFen(placement = this.placement) {
     const rows = [];
-    board.forEach((piece, idx) => {
+    placement.forEach((piece, idx) => {
       if (idx % FILE_COUNT === 0) rows.push([]);
       const lastRow = rows[rows.length - 1];
       const lastRowSize = lastRow.length;

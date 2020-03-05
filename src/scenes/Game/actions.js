@@ -1,14 +1,13 @@
 import * as client from 'services/client';
-import { decodeMove, encodeMove } from 'services/logic/square';
 
 let nextMoveId = 0;
 
-const addMove = ({ fromSlot, toSlot, pending }) => ({
-  type: 'add_move',
-  moveId: ++nextMoveId,
-  fromSlot,
-  toSlot,
-  pending,
+const addMove = move => ({ ...move, type: 'add_move', moveId: ++nextMoveId });
+
+const setMove = ({ moveId, ...move }) => ({
+  type: 'set_move',
+  moveId,
+  ...move,
 });
 
 export const selectMove = ({ moveId }) => ({
@@ -16,8 +15,8 @@ export const selectMove = ({ moveId }) => ({
   moveId,
 });
 
-export const makeMove = ({ fromSlot, toSlot, pending }) => dispatch => {
-  const addMoveAction = addMove({ fromSlot, toSlot, pending });
+export const makeMove = move => dispatch => {
+  const addMoveAction = addMove(move);
   const { moveId } = addMoveAction;
   dispatch(addMoveAction);
   dispatch(selectMove({ moveId }));
@@ -36,13 +35,12 @@ export const toggleLoading = ({ loading }) => ({
   loading,
 });
 
-const addFetchedMove = ({ move }) => {
-  let [fromSlot, toSlot] = [undefined, undefined];
-  if (move !== null) {
-    [fromSlot, toSlot] = decodeMove(move);
-  }
-  return addMove({ fromSlot, toSlot, pending: false });
-};
+const transformFetchedMove = ({
+  fen,
+  gives_check: givesCheck,
+  legal_moves: legalMoves,
+  move,
+}) => ({ fen, legalMoves, givesCheck, move });
 
 export const fetchGame = ({ gameSlug }) => async dispatch => {
   if (gameSlug === null) return;
@@ -51,6 +49,24 @@ export const fetchGame = ({ gameSlug }) => async dispatch => {
     data: { players },
   } = await client.getGame({ gameSlug });
   dispatch({ type: 'set_players', players });
+};
+
+export const fetchInitialPlacement = () => async dispatch => {
+  const {
+    data: { move: fetchedMove },
+  } = await client.getInitialMove();
+
+  dispatch(addMove({ pending: false, ...transformFetchedMove(fetchedMove) }));
+};
+
+export const fetchMoveInfo = ({
+  fen,
+  move: { id: moveId, move, pending },
+}) => async dispatch => {
+  const {
+    data: { move: fetchedMove },
+  } = await client.getNextFen({ fen, move });
+  dispatch(setMove({ moveId, pending, ...transformFetchedMove(fetchedMove) }));
 };
 
 export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
@@ -67,7 +83,10 @@ export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
       // TODO: throw error if fetched move do not match app moves
       .filter((_, index) => index > 0 && moves[index] === undefined)
       .reduce((lastMoveId, fetchedMove) => {
-        const addMoveAction = addFetchedMove(fetchedMove);
+        const addMoveAction = addMove({
+          pending: false,
+          ...transformFetchedMove(fetchedMove),
+        });
         dispatch(addMoveAction);
         return addMoveAction.moveId;
       }, lastMoveId);
@@ -105,23 +124,16 @@ export const pollMoves = ({
 
 export const postMove = ({
   gameSlug,
-  moves,
-  fromSlot,
-  toSlot,
+  move: { move },
   username,
 }) => async dispatch => {
   if (gameSlug === null) return;
 
   try {
-    const { status } = await client.postMove({
-      gameSlug,
-      username,
-      move: encodeMove(fromSlot, toSlot),
-    });
-    if (status !== 201) dispatch(fetchMoves({ gameSlug, moves }));
+    await client.postMove({ gameSlug, move, username });
   } catch (error) {
-    // TODO: display useful error?
-    dispatch(fetchMoves({ gameSlug, moves }));
+    // TODO: fetch moves to avoid client/server disparity?
+    dispatch(cancelMoves());
   }
 };
 

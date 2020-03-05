@@ -15,10 +15,15 @@ export const encode = slot => {
   return `${FILES[file]}${RANKS[rank]}`;
 };
 
+export const squaresToMove = (fromSquare, toSquare) =>
+  `${fromSquare}${toSquare}`;
+
+export const moveToSquares = move => move.match(/([a-z][0-9]+)/g);
+
 export const encodeMove = (fromSlot, toSlot) =>
   `${encode(fromSlot)}${encode(toSlot)}`;
 
 export const decodeMove = move =>
-  move.match(/([a-z][0-9]+)/g).map(square => decode(square));
+  moveToSquares(move).map(square => decode(square));
 
 export default {};
