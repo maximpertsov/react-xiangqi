@@ -39,29 +39,18 @@ const Wrapper = styled.img`
   }
 `;
 
-const Piece = ({ icon, moveX, moveY }) => (
-  <Wrapper alt="" className="Piece" moveX={moveX} moveY={moveY} src={icon} />
+const Piece = ({ code, moveX, moveY }) => (
+  <Wrapper
+    alt=""
+    className="Piece"
+    moveX={moveX}
+    moveY={moveY}
+    src={getImageByCode(code)}
+  />
 );
 
-export const sourcePropType = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.number,
-  PropTypes.shape({
-    uri: PropTypes.string,
-    headers: PropTypes.objectOf(PropTypes.string),
-  }),
-  PropTypes.arrayOf(
-    PropTypes.shape({
-      uri: PropTypes.string,
-      width: PropTypes.number,
-      height: PropTypes.number,
-      headers: PropTypes.objectOf(PropTypes.string),
-    }),
-  ),
-]);
-
 Piece.propTypes = {
-  icon: sourcePropType.isRequired,
+  code: PropTypes.oneOf(ALL_PIECES).isRequired,
   moveX: PropTypes.number,
   moveY: PropTypes.number,
 };
@@ -71,14 +60,4 @@ Piece.defaultProps = {
   moveY: 0,
 };
 
-const XiangqiPiece = ({ code, moveX, moveY }) => {
-  return <Piece moveX={moveX} moveY={moveY} icon={getImageByCode(code)} />;
-};
-
-XiangqiPiece.propTypes = {
-  code: PropTypes.oneOf(ALL_PIECES).isRequired,
-  moveX: PropTypes.number.isRequired,
-  moveY: PropTypes.number.isRequired,
-};
-
-export default XiangqiPiece;
+export default Piece;
