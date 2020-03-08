@@ -2,6 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
+import { ALL_PIECES } from 'services/logic/constants';
+
 import * as styles from 'commonStyles';
 
 import * as images from './images';
@@ -93,22 +95,7 @@ const XiangqiPiece = ({ code, moveX, moveY }) => {
 };
 
 XiangqiPiece.propTypes = {
-  code: PropTypes.oneOf([
-    'k',
-    'a',
-    'b',
-    'n',
-    'r',
-    'c',
-    'p',
-    'K',
-    'A',
-    'B',
-    'N',
-    'R',
-    'C',
-    'P',
-  ]).isRequired,
+  code: PropTypes.oneOf(ALL_PIECES).isRequired,
 };
 
 export default XiangqiPiece;

@@ -26,5 +26,6 @@ export const Piece = Object.freeze({
 
 export const BLACK_PIECES = Object.values(Piece.Black);
 export const RED_PIECES = Object.values(Piece.Red);
+export const ALL_PIECES = BLACK_PIECES.concat(RED_PIECES);
 export const RANK_COUNT = 10;
 export const FILE_COUNT = 9;
