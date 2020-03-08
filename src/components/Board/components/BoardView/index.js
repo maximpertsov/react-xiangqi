@@ -14,7 +14,7 @@ import * as styles from 'commonStyles';
 import { encode, moveToSquares } from 'services/logic/square';
 
 import Square from './components/Square';
-import XiangqiPiece from './components/Piece';
+import Piece from './components/Piece';
 import LastMoveIndicator from './components/LastMoveIndicator';
 import KingInCheckIndicator from './components/KingInCheckIndicator';
 import SelectionIndicator from './components/SelectionIndicator';
@@ -100,7 +100,7 @@ const BoardView = ({ handleSquareClick }) => {
 
   const renderPiece = useCallback(
     square => (
-      <XiangqiPiece
+      <Piece
         code={getPieceCode(square)}
         moveX={selectedSquare === square ? moveX : 0}
         moveY={selectedSquare === square ? moveY : 0}

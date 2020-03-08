@@ -1,8 +1,8 @@
-import * as logic from 'services/logic';
+import { getRankFile } from 'services/logic/utils';
 
 const setAnimationOffset = (state, { bottomPlayerIsRed, fromSlot, toSlot }) => {
-  const [fromY, fromX] = logic.getRankFile(fromSlot);
-  const [toY, toX] = logic.getRankFile(toSlot);
+  const [fromY, fromX] = getRankFile(fromSlot);
+  const [toY, toX] = getRankFile(toSlot);
 
   return [
     bottomPlayerIsRed ? toX - fromX : fromX - toX,

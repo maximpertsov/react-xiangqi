@@ -2,9 +2,9 @@ import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
+import { ALL_PIECES } from 'services/logic/constants';
 import * as styles from 'commonStyles';
-
-import * as images from './images';
+import getImageByCode from './images';
 
 const isMoving = ({ moveX, moveY }) => moveX !== 0 || moveY !== 0;
 
@@ -39,29 +39,18 @@ const Wrapper = styled.img`
   }
 `;
 
-const Piece = ({ icon, moveX, moveY }) => (
-  <Wrapper alt="" className="Piece" moveX={moveX} moveY={moveY} src={icon} />
+const Piece = ({ code, moveX, moveY }) => (
+  <Wrapper
+    alt=""
+    className="Piece"
+    moveX={moveX}
+    moveY={moveY}
+    src={getImageByCode(code)}
+  />
 );
 
-export const sourcePropType = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.number,
-  PropTypes.shape({
-    uri: PropTypes.string,
-    headers: PropTypes.objectOf(PropTypes.string),
-  }),
-  PropTypes.arrayOf(
-    PropTypes.shape({
-      uri: PropTypes.string,
-      width: PropTypes.number,
-      height: PropTypes.number,
-      headers: PropTypes.objectOf(PropTypes.string),
-    }),
-  ),
-]);
-
 Piece.propTypes = {
-  icon: sourcePropType.isRequired,
+  code: PropTypes.oneOf(ALL_PIECES).isRequired,
   moveX: PropTypes.number,
   moveY: PropTypes.number,
 };
@@ -71,44 +60,4 @@ Piece.defaultProps = {
   moveY: 0,
 };
 
-const XiangqiPiece = ({ code, moveX, moveY }) => {
-  const pieceByCode = {
-    k: <Piece moveX={moveX} moveY={moveY} icon={images.blackGeneral} />,
-    a: <Piece moveX={moveX} moveY={moveY} icon={images.blackAdvisor} />,
-    b: <Piece moveX={moveX} moveY={moveY} icon={images.blackElephant} />,
-    n: <Piece moveX={moveX} moveY={moveY} icon={images.blackHorse} />,
-    r: <Piece moveX={moveX} moveY={moveY} icon={images.blackChariot} />,
-    c: <Piece moveX={moveX} moveY={moveY} icon={images.blackCannon} />,
-    p: <Piece moveX={moveX} moveY={moveY} icon={images.blackSoldier} />,
-    K: <Piece moveX={moveX} moveY={moveY} icon={images.redGeneral} />,
-    A: <Piece moveX={moveX} moveY={moveY} icon={images.redAdvisor} />,
-    B: <Piece moveX={moveX} moveY={moveY} icon={images.redElephant} />,
-    N: <Piece moveX={moveX} moveY={moveY} icon={images.redHorse} />,
-    R: <Piece moveX={moveX} moveY={moveY} icon={images.redChariot} />,
-    C: <Piece moveX={moveX} moveY={moveY} icon={images.redCannon} />,
-    P: <Piece moveX={moveX} moveY={moveY} icon={images.redSoldier} />,
-  };
-
-  return pieceByCode[code];
-};
-
-XiangqiPiece.propTypes = {
-  code: PropTypes.oneOf([
-    'k',
-    'a',
-    'b',
-    'n',
-    'r',
-    'c',
-    'p',
-    'K',
-    'A',
-    'B',
-    'N',
-    'R',
-    'C',
-    'P',
-  ]).isRequired,
-};
-
-export default XiangqiPiece;
+export default Piece;
