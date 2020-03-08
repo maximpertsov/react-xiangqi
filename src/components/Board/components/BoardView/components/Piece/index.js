@@ -74,28 +74,30 @@ Piece.defaultProps = {
 };
 
 const XiangqiPiece = ({ code, moveX, moveY }) => {
-  const pieceByCode = {
-    k: <Piece moveX={moveX} moveY={moveY} icon={images.blackGeneral} />,
-    a: <Piece moveX={moveX} moveY={moveY} icon={images.blackAdvisor} />,
-    b: <Piece moveX={moveX} moveY={moveY} icon={images.blackElephant} />,
-    n: <Piece moveX={moveX} moveY={moveY} icon={images.blackHorse} />,
-    r: <Piece moveX={moveX} moveY={moveY} icon={images.blackChariot} />,
-    c: <Piece moveX={moveX} moveY={moveY} icon={images.blackCannon} />,
-    p: <Piece moveX={moveX} moveY={moveY} icon={images.blackSoldier} />,
-    K: <Piece moveX={moveX} moveY={moveY} icon={images.redGeneral} />,
-    A: <Piece moveX={moveX} moveY={moveY} icon={images.redAdvisor} />,
-    B: <Piece moveX={moveX} moveY={moveY} icon={images.redElephant} />,
-    N: <Piece moveX={moveX} moveY={moveY} icon={images.redHorse} />,
-    R: <Piece moveX={moveX} moveY={moveY} icon={images.redChariot} />,
-    C: <Piece moveX={moveX} moveY={moveY} icon={images.redCannon} />,
-    P: <Piece moveX={moveX} moveY={moveY} icon={images.redSoldier} />,
+  const pieceInfoByCode = {
+    k: { icon: images.blackGeneral },
+    a: { icon: images.blackAdvisor },
+    b: { icon: images.blackElephant },
+    n: { icon: images.blackHorse },
+    r: { icon: images.blackChariot },
+    c: { icon: images.blackCannon },
+    p: { icon: images.blackSoldier },
+    K: { icon: images.redGeneral },
+    A: { icon: images.redAdvisor },
+    B: { icon: images.redElephant },
+    N: { icon: images.redHorse },
+    R: { icon: images.redChariot },
+    C: { icon: images.redCannon },
+    P: { icon: images.redSoldier },
   };
 
-  return pieceByCode[code];
+  return <Piece moveX={moveX} moveY={moveY} {...pieceInfoByCode[code]} />;
 };
 
 XiangqiPiece.propTypes = {
   code: PropTypes.oneOf(ALL_PIECES).isRequired,
+  moveX: PropTypes.number.isRequired,
+  moveY: PropTypes.number.isRequired,
 };
 
 export default XiangqiPiece;
