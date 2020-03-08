@@ -1,10 +1,8 @@
-import { RefType, Color } from './constants';
+import { Color } from './constants';
 import * as utils from './utils';
 import { decode as decodeFen } from './fen';
 import { makeMove } from './move';
 import { decode as decodeSquare, encode as encodeSquare } from './square';
-
-export { RefType };
 
 // TODO: re-const is ugly
 export const { getSlot, getRank, getFile, getRankFile } = utils;

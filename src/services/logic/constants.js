@@ -1,9 +1,3 @@
-export const RefType = Object.freeze({
-  SLOT: 0,
-  RANK_FILE: 1,
-  RANK_FILE_STRING: 2,
-});
-
 export const Color = Object.freeze({
   RED: 'red',
   BLACK: 'black',
