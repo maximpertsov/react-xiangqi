@@ -1,6 +1,5 @@
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
-import sample from 'lodash.sample';
 import {
   RefType,
   Color,
@@ -27,7 +26,6 @@ export { RefType };
 export const { getSlot, getRank, getFile, getRankFile } = utils;
 
 export default class XiangqiBoard {
-  // TODO can remove most of this information and parse it from the FEN string
   constructor({ fen, ...options }) {
     const params = fen === undefined ? options : decodeFen(fen);
     this.placement = params.placement;
@@ -49,16 +47,6 @@ export default class XiangqiBoard {
 
   move(move) {
     return this.new({ placement: makeMove(this.placement, move) });
-  }
-
-  randomMove(color) {
-    const legalMoves = this.legalMovesByColor(color);
-    const randomMoves = legalMoves.reduce((acc, toSlots, fromSlot) => {
-      if (toSlots.length === 0) return acc;
-      return acc.concat([[fromSlot, sample(toSlots)]]);
-    }, []);
-    // TODO: what if no legal move exists?
-    return sample(randomMoves);
   }
 
   drop(piece, pos, refType = RefType.SLOT) {
@@ -168,7 +156,7 @@ export default class XiangqiBoard {
         return;
     }
 
-    const kingSlot = this.placement.indexOf(king)
+    const kingSlot = this.placement.indexOf(king);
     return encodeSquare(kingSlot);
   }
 
