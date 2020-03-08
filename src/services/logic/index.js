@@ -1,11 +1,8 @@
 import { Color } from './constants';
-import * as utils from './utils';
+import { sameColor } from './utils';
 import { decode as decodeFen } from './fen';
 import { makeMove } from './move';
 import { decode as decodeSquare, encode as encodeSquare } from './square';
-
-// TODO: re-const is ugly
-export const { getSlot, getRank, getFile, getRankFile } = utils;
 
 export default class XiangqiBoard {
   constructor({ fen, ...options }) {
@@ -35,7 +32,7 @@ export default class XiangqiBoard {
     const piece1 = this.placement[slot1];
     const piece2 = this.placement[slot2];
 
-    return utils.sameColor(piece1, piece2);
+    return sameColor(piece1, piece2);
   }
 
   isOccupied(square) {
