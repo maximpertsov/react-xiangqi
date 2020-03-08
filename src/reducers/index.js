@@ -146,7 +146,7 @@ export const getTargets = state => {
   if (state.selectedSquare === null) return [];
 
   const legalMoves = getLegalMoves(state);
-  // TODO: why is this undefined?
+  // TODO: this is undefined while legal moves are still being fetched
   if (legalMoves === undefined) return false;
 
   return legalMoves.filter(
@@ -155,8 +155,8 @@ export const getTargets = state => {
 };
 
 export const getHasLegalMoves = state => {
-  const { board } = getLastMove(state);
-  return board.hasLegalMoves(getNextMoveColor(state));
+  const { legalMoves } = getLastMove(state);
+  return legalMoves && legalMoves.length > 0;
 };
 
 /********************/
