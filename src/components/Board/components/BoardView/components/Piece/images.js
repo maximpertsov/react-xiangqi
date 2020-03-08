@@ -13,19 +13,23 @@ import redGeneral from './red-general-50px.svg.png';
 import blackSoldier from './black-soldier-50px.svg.png';
 import redSoldier from './red-soldier-50px.svg.png';
 
-export {
-  blackAdvisor,
-  redAdvisor,
-  blackCannon,
-  redCannon,
-  blackChariot,
-  redChariot,
-  blackHorse,
-  redHorse,
-  blackElephant,
-  redElephant,
-  blackGeneral,
-  redGeneral,
-  blackSoldier,
-  redSoldier,
+const imageByCode = {
+  k: blackGeneral,
+  a: blackAdvisor,
+  b: blackElephant,
+  n: blackHorse,
+  r: blackChariot,
+  c: blackCannon,
+  p: blackSoldier,
+  K: redGeneral,
+  A: redAdvisor,
+  B: redElephant,
+  N: redHorse,
+  R: redChariot,
+  C: redCannon,
+  P: redSoldier,
 };
+
+const getImageByCode = code => imageByCode[code];
+
+export default getImageByCode;

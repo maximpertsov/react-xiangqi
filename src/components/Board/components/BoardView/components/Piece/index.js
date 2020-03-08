@@ -3,10 +3,8 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
 import { ALL_PIECES } from 'services/logic/constants';
-
 import * as styles from 'commonStyles';
-
-import * as images from './images';
+import getImageByCode from './images';
 
 const isMoving = ({ moveX, moveY }) => moveX !== 0 || moveY !== 0;
 
@@ -74,24 +72,7 @@ Piece.defaultProps = {
 };
 
 const XiangqiPiece = ({ code, moveX, moveY }) => {
-  const pieceInfoByCode = {
-    k: { icon: images.blackGeneral },
-    a: { icon: images.blackAdvisor },
-    b: { icon: images.blackElephant },
-    n: { icon: images.blackHorse },
-    r: { icon: images.blackChariot },
-    c: { icon: images.blackCannon },
-    p: { icon: images.blackSoldier },
-    K: { icon: images.redGeneral },
-    A: { icon: images.redAdvisor },
-    B: { icon: images.redElephant },
-    N: { icon: images.redHorse },
-    R: { icon: images.redChariot },
-    C: { icon: images.redCannon },
-    P: { icon: images.redSoldier },
-  };
-
-  return <Piece moveX={moveX} moveY={moveY} {...pieceInfoByCode[code]} />;
+  return <Piece moveX={moveX} moveY={moveY} icon={getImageByCode(code)} />;
 };
 
 XiangqiPiece.propTypes = {
