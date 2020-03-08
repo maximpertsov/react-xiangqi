@@ -1,3 +1,5 @@
+import { Piece } from 'services/logic/constants';
+
 import blackAdvisor from './black-advisor-50px.svg.png';
 import redAdvisor from './red-advisor-50px.svg.png';
 import blackCannon from './black-cannon-50px.svg.png';
@@ -14,20 +16,20 @@ import blackSoldier from './black-soldier-50px.svg.png';
 import redSoldier from './red-soldier-50px.svg.png';
 
 const imageByCode = {
-  k: blackGeneral,
-  a: blackAdvisor,
-  b: blackElephant,
-  n: blackHorse,
-  r: blackChariot,
-  c: blackCannon,
-  p: blackSoldier,
-  K: redGeneral,
-  A: redAdvisor,
-  B: redElephant,
-  N: redHorse,
-  R: redChariot,
-  C: redCannon,
-  P: redSoldier,
+  [Piece.Black.GENERAL]: blackGeneral,
+  [Piece.Black.ADVISOR]: blackAdvisor,
+  [Piece.Black.ELEPHANT]: blackElephant,
+  [Piece.Black.HORSE]: blackHorse,
+  [Piece.Black.CHARIOT]: blackChariot,
+  [Piece.Black.CANNON]: blackCannon,
+  [Piece.Black.PAWN]: blackSoldier,
+  [Piece.Red.GENERAL]: redGeneral,
+  [Piece.Red.ADVISOR]: redAdvisor,
+  [Piece.Red.ELEPHANT]: redElephant,
+  [Piece.Red.HORSE]: redHorse,
+  [Piece.Red.CHARIOT]: redChariot,
+  [Piece.Red.CANNON]: redCannon,
+  [Piece.Red.PAWN]: redSoldier,
 };
 
 const getImageByCode = code => imageByCode[code];
