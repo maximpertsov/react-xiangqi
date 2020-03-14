@@ -146,7 +146,7 @@ export const getTargets = state => {
 
   const legalMoves = getLegalMoves(state);
   // TODO: this is undefined while legal moves are still being fetched
-  if (legalMoves === undefined) return false;
+  if (legalMoves === undefined) return [];
 
   return legalMoves.filter(
     move => moveToSquares(move)[0] === state.selectedSquare,
