@@ -12,7 +12,10 @@ export default class XiangqiBoard {
   }
 
   move(move) {
-    return this.new({ placement: makeMove(this.placement, move) });
+    return this.new({
+      placement: makeMove(this.placement, move),
+      activeColor: this.activeColor === Color.RED ? Color.BLACK : Color.RED,
+    });
   }
 
   new(options) {

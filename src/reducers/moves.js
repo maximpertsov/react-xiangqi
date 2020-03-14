@@ -4,7 +4,6 @@ import sortedIndexBy from 'lodash/sortedIndexBy';
 
 import XiangqiBoard from 'services/logic';
 import { Color } from 'services/logic/constants';
-import { isRed } from 'services/logic/utils';
 import { getMovedPiece, getMovingPiece } from 'services/logic/move';
 
 const getMoveIndex = (state, moveId) => {
@@ -92,6 +91,8 @@ export default moves;
 /***  Selectors  ***/
 /*******************/
 
+export const getHasInitialPlacement = state => state.length > 0;
+
 export const getMoveCount = state => state.length - 1;
 
 export const getLastMove = state => state[getMoveCount(state)];
@@ -113,10 +114,12 @@ export const getNextMove = (state, moveId) => {
 };
 
 export const getNextMoveColor = state => {
-  if (getMoveCount(state) < 1) return Color.RED;
+  if (!getHasInitialPlacement(state)) {
+    return Color.RED;
+  }
 
-  const { piece } = getLastMove(state);
-  return isRed(piece) ? Color.BLACK : Color.RED;
+  const { board } = getLastMove(state);
+  return board.activeColor;
 };
 
 export const getMissingLegalMovesPayload = state => {
