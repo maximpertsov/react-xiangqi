@@ -1,24 +1,23 @@
 import { combineReducers } from 'redux';
+import { Color } from 'services/logic/constants';
+import { moveToSquares } from 'services/logic/square';
+
 // Home
-import autoMove from 'scenes/Home/reducers/autoMove';
-import games from 'scenes/Home/reducers/games';
-import gameSlug from 'scenes/Home/reducers/gameSlug';
+import autoMove from './autoMove';
+import games from './games';
+import gameSlug from './gameSlug';
 import loginForm from './loginForm';
-import showGame from 'scenes/Home/reducers/showGame';
-import username from 'scenes/Home/reducers/username';
+import showGame from './showGame';
+import username from './username';
 // Game
 import loading from './loading';
 import moves, * as fromMoves from './moves';
-import players from 'scenes/Game/reducers/players';
-import selectedMoveId from 'scenes/Game/reducers/selectedMoveId';
+import players from './players';
+import selectedMoveId from './selectedMoveId';
 // Board
-/* eslint-disable-next-line max-len */
-import animationOffset, * as fromAnimationOffset from 'components/Board/reducers/animationOffset';
-import canMoveBothColors from 'components/Board/reducers/canMoveBothColors';
+import animationOffset, * as fromAnimationOffset from './animationOffset';
+import canMoveBothColors from './canMoveBothColors';
 import selectedSquare from './selectedSquare';
-
-import { Color } from 'services/logic/constants';
-import { moveToSquares } from 'services/logic/square';
 
 const rootReducer = combineReducers({
   // Home,
