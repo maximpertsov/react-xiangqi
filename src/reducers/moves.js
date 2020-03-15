@@ -91,7 +91,12 @@ export default moves;
 /***  Selectors  ***/
 /*******************/
 
-export const getHasInitialPlacement = state => state.length > 0;
+export const getHasInitialPlacement = state => {
+  if (state.length === 0) return false;
+  if (state[0].board === undefined) return false;
+
+  return true;
+};
 
 export const getMoveCount = state => state.length - 1;
 
