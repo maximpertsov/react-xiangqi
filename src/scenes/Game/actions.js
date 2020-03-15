@@ -69,6 +69,8 @@ export const fetchMoveInfo = ({
   dispatch(setMove({ moveId, pending, ...transformFetchedMove(fetchedMove) }));
 };
 
+const toggleMovesFetched = () => ({ type: 'toggle_moves_fetched' });
+
 export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
   if (gameSlug === null) return;
 
@@ -90,6 +92,7 @@ export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
         dispatch(addMoveAction);
         return addMoveAction.moveId;
       }, lastMoveId);
+    dispatch(toggleMovesFetched());
   } finally {
     if (lastMoveId) dispatch(selectMove({ moveId: lastMoveId }));
     dispatch(toggleLoading({ loading: false }));

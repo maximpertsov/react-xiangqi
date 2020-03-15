@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 import { Dimmer, Loader, Segment } from 'semantic-ui-react';
-import { getMoveCount, getOtherPlayer, getCurrentPlayer } from 'reducers';
+import { getCurrentPlayer, getOtherPlayer } from 'reducers';
 import Board from 'components/Board';
 import ConfirmMoveMenu from '../components/ConfirmMoveMenu';
 import GameInfo from '../components/GameInfo';
@@ -18,21 +18,13 @@ const Wrapper = styled.div`
 `;
 
 const GameView = () => {
-  // TODO: this is a massive hack -- should not rely on move count to determine
-  // if this is the initial load
-  // FIXME: the causes the loading circle to appear for each poll on black's
-  // first move!
-  // const dimmed = useSelector(
-  //   state =>
-  //     state.gameSlug !== null && state.loading && getMoveCount(state) <= 1,
-  // );
-  const dimmed = false;
+  const movesFetched = useSelector(state => state.movesFetched);
   const currentPlayer = useSelector(state => getCurrentPlayer(state));
   const otherPlayer = useSelector(state => getOtherPlayer(state));
 
   return (
-    <Dimmer.Dimmable as={Segment} basic blurring dimmed={dimmed}>
-      <Dimmer active={dimmed} page>
+    <Dimmer.Dimmable as={Segment} basic blurring dimmed={!movesFetched}>
+      <Dimmer active={!movesFetched} page>
         <Loader>Loading</Loader>
       </Dimmer>
       <Wrapper className="Game">

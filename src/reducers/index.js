@@ -1,24 +1,24 @@
 import { combineReducers } from 'redux';
-// Home
-import autoMove from 'scenes/Home/reducers/autoMove';
-import games from 'scenes/Home/reducers/games';
-import gameSlug from 'scenes/Home/reducers/gameSlug';
-import loginForm from 'scenes/Home/reducers/loginForm';
-import showGame from 'scenes/Home/reducers/showGame';
-import username from 'scenes/Home/reducers/username';
-// Game
-import loading from 'scenes/Game/reducers/loading';
-import moves, * as fromMoves from './moves';
-import players from 'scenes/Game/reducers/players';
-import selectedMoveId from 'scenes/Game/reducers/selectedMoveId';
-// Board
-/* eslint-disable-next-line max-len */
-import animationOffset, * as fromAnimationOffset from 'components/Board/reducers/animationOffset';
-import canMoveBothColors from 'components/Board/reducers/canMoveBothColors';
-import selectedSquare from './selectedSquare';
-
 import { Color } from 'services/logic/constants';
 import { moveToSquares } from 'services/logic/square';
+
+// Home
+import autoMove from './autoMove';
+import games from './games';
+import gameSlug from './gameSlug';
+import loginForm from './loginForm';
+import showGame from './showGame';
+import username from './username';
+// Game
+import loading from './loading';
+import moves, * as fromMoves from './moves';
+import movesFetched from './movesFetched';
+import players from './players';
+import selectedMoveId from './selectedMoveId';
+// Board
+import animationOffset, * as fromAnimationOffset from './animationOffset';
+import canMoveBothColors from './canMoveBothColors';
+import selectedSquare from './selectedSquare';
 
 const rootReducer = combineReducers({
   // Home,
@@ -31,6 +31,7 @@ const rootReducer = combineReducers({
   // Game
   loading,
   moves,
+  movesFetched,
   players,
   selectedMoveId,
   // Board
@@ -44,6 +45,9 @@ export default rootReducer;
 /***************/
 /***  Moves  ***/
 /***************/
+
+export const getHasInitialPlacement = ({ moves }) =>
+  fromMoves.getHasInitialPlacement(moves);
 
 export const getMoveCount = ({ moves }) => fromMoves.getMoveCount(moves);
 
@@ -147,7 +151,7 @@ export const getTargets = state => {
 
   const legalMoves = getLegalMoves(state);
   // TODO: this is undefined while legal moves are still being fetched
-  if (legalMoves === undefined) return false;
+  if (legalMoves === undefined) return [];
 
   return legalMoves.filter(
     move => moveToSquares(move)[0] === state.selectedSquare,

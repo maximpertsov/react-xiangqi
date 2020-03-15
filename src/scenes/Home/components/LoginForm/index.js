@@ -29,6 +29,10 @@ const LoginForm = () => {
     [dispatch],
   );
 
+  const clearState = useCallback(() => {
+    dispatch(setForm({ username: '', password: '', error: '' }));
+  }, [dispatch]);
+
   useEffect(() => {
     ping();
   }, [ping]);
@@ -40,15 +44,14 @@ const LoginForm = () => {
         .then(response => {
           if (response.status === 201) handleAuthenticationSuccess(response);
         })
-        .catch(() => {});
+        .catch(() => {})
+        .finally(() => {
+          clearState();
+        });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [clearState],
   );
-
-  const clearState = () => {
-    dispatch(setForm({ username: '', password: '', error: '' }));
-  };
 
   const handleChange = event => {
     const {
@@ -58,7 +61,6 @@ const LoginForm = () => {
   };
 
   const handleClick = async () => {
-    clearState();
     try {
       const response = await client.login({
         username: formUsername,
@@ -67,6 +69,8 @@ const LoginForm = () => {
       if (response.status === 201) handleAuthenticationSuccess(response);
     } catch (error) {
       dispatch(setForm({ error: 'Login failed' }));
+    } finally {
+      clearState();
     }
   };
 
