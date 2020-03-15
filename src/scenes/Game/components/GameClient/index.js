@@ -1,13 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  fetchInitialPlacement,
-  fetchMoveInfo,
-  fetchGame,
-  fetchMoves,
-  pollMoves,
-} from 'actions';
+import { fetchInitialPlacement, fetchMoveInfo, fetchGame } from 'actions';
+import fetchMoves from 'actions/fetchMoves';
+import pollMoves from 'actions/pollMoves';
 import {
   getMoveCount,
   getNextMovePlayer,
