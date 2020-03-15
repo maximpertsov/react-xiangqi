@@ -8,7 +8,11 @@ import {
 } from 'scenes/Game/actions';
 
 const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
-  if (gameSlug === null) return;
+  if (gameSlug === null) {
+    // TODO: unnecessary?
+    dispatch(toggleMovesFetched());
+    return;
+  }
 
   let lastMoveId;
   try {

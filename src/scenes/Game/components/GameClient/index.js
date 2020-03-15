@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchInitialPlacement, fetchMoveInfo, fetchGame } from 'actions';
+import {
+  fetchInitialPlacement,
+  fetchMoveInfo,
+  fetchGame,
+  toggleMovesFetched,
+} from 'actions';
 import fetchMoves from 'actions/fetchMoves';
 import pollMoves from 'actions/pollMoves';
 import {
@@ -47,6 +52,11 @@ const GameClient = () => {
 
   useEffect(
     () => {
+      if (gameSlug === null) {
+        // TODO: hack, add a moves "fetching" state instead?
+        dispatch(toggleMovesFetched());
+        return;
+      }
       if (moveCount === -1) return;
 
       dispatch(fetchMoves({ gameSlug, moves }));
