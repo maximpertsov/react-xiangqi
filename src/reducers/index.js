@@ -12,6 +12,7 @@ import username from './username';
 // Game
 import loading from './loading';
 import moves, * as fromMoves from './moves';
+import movesFetched from './movesFetched';
 import players from './players';
 import selectedMoveId from './selectedMoveId';
 // Board
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   // Game
   loading,
   moves,
+  movesFetched,
   players,
   selectedMoveId,
   // Board
