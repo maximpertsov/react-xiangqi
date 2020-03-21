@@ -33,6 +33,7 @@ const ConfirmMoveMenu = () => {
 
   return (
     <ConfirmMenu
+      label="Confirm move?"
       yesHandler={confirmMove}
       noHandler={cancelMove}
       show={lastMove.pending}

@@ -52,9 +52,9 @@ const GameView = () => {
         <Board legalMoves />
         <ConfirmMoveMenu />
         {!isLastMovePending && renderActionsMenu()}
-        <Player {...currentPlayer} />
-        <GameInfo hasLegalMoves />
-        <MoveHistory />
+        {!isLastMovePending && <Player {...currentPlayer} />}
+        {!isLastMovePending && <GameInfo hasLegalMoves />}
+        {!isLastMovePending && <MoveHistory />}
       </Wrapper>
     </Dimmer.Dimmable>
   );

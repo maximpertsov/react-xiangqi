@@ -5,7 +5,7 @@ import { Button, Icon, Label, Segment } from 'semantic-ui-react';
 
 import GameMenu from 'components/GameMenu';
 
-const ConfirmMenu = ({ yesHandler, noHandler, show, disabled }) => {
+const ConfirmMenu = ({ label, yesHandler, noHandler, show, disabled }) => {
   useEventListener('keydown', ({ key }) => {
     if (!show) return;
 
@@ -27,7 +27,7 @@ const ConfirmMenu = ({ yesHandler, noHandler, show, disabled }) => {
 
   return (
     <Segment>
-      <Label attached='top'>Confirm move?</Label>
+      {label && <Label attached="top">{label}</Label>}
       <GameMenu>
         <Button color="green" onClick={yesHandler}>
           <Icon fitted name="check" />
@@ -41,6 +41,7 @@ const ConfirmMenu = ({ yesHandler, noHandler, show, disabled }) => {
 };
 
 ConfirmMenu.propTypes = {
+  label: PropTypes.string,
   yesHandler: PropTypes.func,
   noHandler: PropTypes.func,
   show: PropTypes.bool,
@@ -48,6 +49,7 @@ ConfirmMenu.propTypes = {
 };
 
 ConfirmMenu.defaultProps = {
+  label: null,
   yesHandler: () => {},
   noHandler: () => {},
   show: true,
