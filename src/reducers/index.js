@@ -53,6 +53,9 @@ export const getMoveCount = ({ moves }) => fromMoves.getMoveCount(moves);
 
 export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
 
+export const getIsLastMovePending = ({ moves }) =>
+  fromMoves.getIsLastMovePending(moves);
+
 export const getSelectedMove = ({ moves, selectedMoveId }) =>
   fromMoves.getMoveById(moves, selectedMoveId);
 

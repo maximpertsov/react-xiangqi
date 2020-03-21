@@ -2,7 +2,11 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 import { Button, Dimmer, Icon, Loader, Segment } from 'semantic-ui-react';
-import { getCurrentPlayer, getOtherPlayer } from 'reducers';
+import {
+  getCurrentPlayer,
+  getIsLastMovePending,
+  getOtherPlayer,
+} from 'reducers';
 import Board from 'components/Board';
 import GameMenu from 'components/GameMenu';
 import ConfirmMoveMenu from '../components/ConfirmMoveMenu';
@@ -20,6 +24,7 @@ const Wrapper = styled.div`
 
 const GameView = () => {
   const movesFetched = useSelector(state => state.movesFetched);
+  const isLastMovePending = useSelector(state => getIsLastMovePending(state));
   const currentPlayer = useSelector(state => getCurrentPlayer(state));
   const otherPlayer = useSelector(state => getOtherPlayer(state));
 
@@ -45,10 +50,10 @@ const GameView = () => {
       <Wrapper className="Game">
         <Player {...otherPlayer} />
         <Board legalMoves />
+        <ConfirmMoveMenu />
+        {!isLastMovePending && renderActionsMenu()}
         <Player {...currentPlayer} />
         <GameInfo hasLegalMoves />
-        {renderActionsMenu()}
-        <ConfirmMoveMenu />
         <MoveHistory />
       </Wrapper>
     </Dimmer.Dimmable>

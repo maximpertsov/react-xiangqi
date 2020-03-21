@@ -8,6 +8,12 @@ export const SQUARE_SIZE_SMALL = '30px';
 export const SQUARE_SIZE_MEDIUM = '45px';
 export const SQUARE_SIZE_LARGE = '60px';
 
+// TODO: generalize math?
+export const WIDTH_SIZE_TINY = '162px';
+export const WIDTH_SIZE_SMALL = '243px';
+export const WIDTH_SIZE_MEDIUM = '365px';
+export const WIDTH_SIZE_LARGE = '486px';
+
 export const SELECTION_COLOR = 'rgba(30,179,0,0.3)';
 
 export const fillParentElement = {

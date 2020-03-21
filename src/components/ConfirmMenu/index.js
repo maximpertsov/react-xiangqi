@@ -1,27 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useEventListener from '@use-it/event-listener';
-import { Button } from 'semantic-ui-react';
+import { Button, Icon, Label, Segment } from 'semantic-ui-react';
 
 import GameMenu from 'components/GameMenu';
 
-const ConfirmMenu = ({
-  yesHandler, noHandler, show, disabled,
-}) => {
-  useEventListener(
-    'keydown',
-    ({ key }) => {
-      if (!show) return;
+const ConfirmMenu = ({ yesHandler, noHandler, show, disabled }) => {
+  useEventListener('keydown', ({ key }) => {
+    if (!show) return;
 
-      switch (key) {
-        case 'Enter':
-          yesHandler();
-          break;
-        default:
-          noHandler();
-      }
-    },
-  );
+    switch (key) {
+      case 'Enter':
+        yesHandler();
+        break;
+      default:
+        noHandler();
+    }
+  });
 
   if (disabled) {
     yesHandler();
@@ -31,10 +26,17 @@ const ConfirmMenu = ({
   if (!show) return null;
 
   return (
-    <GameMenu>
-      <Button inverted color="green" onClick={yesHandler}>Confirm</Button>
-      <Button inverted color="red" onClick={noHandler}>Cancel</Button>
-    </GameMenu>
+    <Segment>
+      <Label attached='top'>Confirm move?</Label>
+      <GameMenu>
+        <Button color="green" onClick={yesHandler}>
+          <Icon fitted name="check" />
+        </Button>
+        <Button color="red" onClick={noHandler}>
+          <Icon fitted name="x" />
+        </Button>
+      </GameMenu>
+    </Segment>
   );
 };
 
