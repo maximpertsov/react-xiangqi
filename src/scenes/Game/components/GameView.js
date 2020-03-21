@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
-import { Dimmer, Loader, Segment } from 'semantic-ui-react';
+import { Button, Dimmer, Icon, Loader, Segment } from 'semantic-ui-react';
 import { getCurrentPlayer, getOtherPlayer } from 'reducers';
 import Board from 'components/Board';
+import GameMenu from 'components/GameMenu';
 import ConfirmMoveMenu from '../components/ConfirmMoveMenu';
 import GameInfo from '../components/GameInfo';
 import MoveHistory from '../components/MoveHistory';
@@ -22,6 +23,20 @@ const GameView = () => {
   const currentPlayer = useSelector(state => getCurrentPlayer(state));
   const otherPlayer = useSelector(state => getOtherPlayer(state));
 
+  const renderActionsMenu = () => (
+    <GameMenu>
+      <Button>
+        <Icon fitted name="undo" />
+      </Button>
+      <Button>
+        <Icon fitted name="handshake outline" />
+      </Button>
+      <Button>
+        <Icon fitted name="flag outline" />
+      </Button>
+    </GameMenu>
+  );
+
   return (
     <Dimmer.Dimmable as={Segment} basic blurring dimmed={!movesFetched}>
       <Dimmer active={!movesFetched} page>
@@ -32,6 +47,7 @@ const GameView = () => {
         <Board legalMoves />
         <Player {...currentPlayer} />
         <GameInfo hasLegalMoves />
+        {renderActionsMenu()}
         <ConfirmMoveMenu />
         <MoveHistory />
       </Wrapper>
