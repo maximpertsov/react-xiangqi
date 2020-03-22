@@ -4,32 +4,36 @@ import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
 import { tail, chunk } from 'lodash';
 
-import { MediaQuery } from 'commonStyles';
+import { MediaQuery, WidthSize } from 'commonStyles';
 import Move from './components/Move';
 import FullMove from './components/FullMove';
 
-const cssMoveColumns = columns =>
-  Array(columns)
+const repeatItemCSS = times =>
+  Array(times)
     .fill('1fr')
     .join(' ');
 
 const Wrapper = styled.div`
   display: grid;
   ${MediaQuery.TINY} {
-    grid-template-columns: ${cssMoveColumns(2)};
+    grid-template-columns: ${repeatItemCSS(2)};
     font-size: x-small;
+    width: ${WidthSize.TINY};
   }
   ${MediaQuery.SMALL} {
-    grid-template-columns: ${cssMoveColumns(2)};
+    grid-template-columns: ${repeatItemCSS(2)};
     font-size: x-small;
+    width: ${WidthSize.SMALL};
   }
   ${MediaQuery.MEDIUM} {
-    grid-template-columns: ${cssMoveColumns(2)};
+    grid-template-columns: ${repeatItemCSS(2)};
     font-size: small;
+    width: ${WidthSize.MEDIUM};
   }
   ${MediaQuery.LARGE} {
-    grid-template-columns: ${cssMoveColumns(3)};
+    grid-template-columns: ${repeatItemCSS(3)};
     font-size: small;
+    width: ${WidthSize.LARGE};
   }
   grid-template-rows: repeat(auto-fill, 1fr);
   font-size: small;

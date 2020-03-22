@@ -19,7 +19,7 @@ export const SquareSize = Object.freeze(
 );
 
 export const WidthSize = Object.freeze(
-  mapValues(SquarePixels, value => `${value * 9 * 0.9}px`),
+  mapValues(SquarePixels, value => `${value * 9 * 0.85}px`),
 );
 
 export const SELECTION_COLOR = 'rgba(30,179,0,0.3)';
