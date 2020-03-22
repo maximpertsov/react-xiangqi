@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 
-const FullMove = ({ children, ordering }) =>
-  (
-    <div>
-      <span>{`${ordering}. `}</span>
-      {children}
-    </div>
-  );
+const Wrapper = styled.div`
+  justify-self: center;
+`;
+
+const FullMove = ({ children, ordering }) => (
+  <Wrapper className="FullMove">
+    <span>{`${ordering}. `}</span>
+    {children}
+  </Wrapper>
+);
 
 FullMove.propTypes = {
   children: PropTypes.node.isRequired,

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
 import { ALL_PIECES } from 'services/logic/constants';
-import * as styles from 'commonStyles';
+import { MediaQuery, SquareSize } from 'commonStyles';
 import getImageByCode from './images';
 
 const isMoving = ({ moveX, moveY }) => moveX !== 0 || moveY !== 0;
@@ -25,17 +25,17 @@ const Wrapper = styled.img`
   margin: auto;
   z-index: ${props => (isMoving(props) ? 100 : 0)};
   transition: transform 50ms ease-in-out;
-  ${styles.MEDIA_TINY} {
-    ${props => cssTransform(styles.SQUARE_SIZE_TINY, props)};
+  ${MediaQuery.TINY} {
+    ${props => cssTransform(SquareSize.TINY, props)};
   }
-  ${styles.MEDIA_SMALL} {
-    ${props => cssTransform(styles.SQUARE_SIZE_SMALL, props)};
+  ${MediaQuery.SMALL} {
+    ${props => cssTransform(SquareSize.SMALL, props)};
   }
-  ${styles.MEDIA_MEDIUM} {
-    ${props => cssTransform(styles.SQUARE_SIZE_MEDIUM, props)};
+  ${MediaQuery.MEDIUM} {
+    ${props => cssTransform(SquareSize.MEDIUM, props)};
   }
-  ${styles.MEDIA_LARGE} {
-    ${props => cssTransform(styles.SQUARE_SIZE_LARGE, props)};
+  ${MediaQuery.LARGE} {
+    ${props => cssTransform(SquareSize.LARGE, props)};
   }
 `;
 

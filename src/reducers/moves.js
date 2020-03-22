@@ -102,6 +102,8 @@ export const getMoveCount = state => state.length - 1;
 
 export const getLastMove = state => state[getMoveCount(state)];
 
+export const getIsLastMovePending = state => getLastMove(state).pending;
+
 export const getMoveById = (state, moveId) => {
   const moveIndex = getMoveIndex(state, moveId);
   return state[moveIndex];

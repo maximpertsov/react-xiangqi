@@ -1,12 +1,26 @@
-export const MEDIA_TINY = '@media (max-width: 360px)';
-export const MEDIA_SMALL = '@media (min-width: 360px) and (max-width: 540px)';
-export const MEDIA_MEDIUM = '@media (min-width: 540px) and (max-width: 720px)';
-export const MEDIA_LARGE = '@media (min-width: 720px)';
+import mapValues from 'lodash/mapValues';
 
-export const SQUARE_SIZE_TINY = '20px';
-export const SQUARE_SIZE_SMALL = '30px';
-export const SQUARE_SIZE_MEDIUM = '45px';
-export const SQUARE_SIZE_LARGE = '60px';
+export const MediaQuery = Object.freeze({
+  TINY: '@media (max-width: 360px)',
+  SMALL: '@media (min-width: 360px) and (max-width: 540px)',
+  MEDIUM: '@media (min-width: 540px) and (max-width: 720px)',
+  LARGE: '@media (min-width: 720px)',
+});
+
+const SquarePixels = Object.freeze({
+  TINY: 20,
+  SMALL: 30,
+  MEDIUM: 45,
+  LARGE: 60,
+});
+
+export const SquareSize = Object.freeze(
+  mapValues(SquarePixels, value => `${value}px`),
+);
+
+export const WidthSize = Object.freeze(
+  mapValues(SquarePixels, value => `${value * 9 * 0.85}px`),
+);
 
 export const SELECTION_COLOR = 'rgba(30,179,0,0.3)';
 

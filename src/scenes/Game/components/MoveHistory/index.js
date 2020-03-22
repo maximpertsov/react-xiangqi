@@ -4,30 +4,36 @@ import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
 import { tail, chunk } from 'lodash';
 
-import * as styles from 'commonStyles';
+import { MediaQuery, WidthSize } from 'commonStyles';
 import Move from './components/Move';
 import FullMove from './components/FullMove';
 
-const cssMoveColumns = columns =>
-  Array(columns).fill('1fr').join(' ');
+const repeatItemCSS = times =>
+  Array(times)
+    .fill('1fr')
+    .join(' ');
 
 const Wrapper = styled.div`
   display: grid;
-  ${styles.MEDIA_TINY} {
-    grid-template-columns: ${cssMoveColumns(2)};
+  ${MediaQuery.TINY} {
+    grid-template-columns: ${repeatItemCSS(2)};
     font-size: x-small;
+    width: ${WidthSize.TINY};
   }
-  ${styles.MEDIA_SMALL} {
-    grid-template-columns: ${cssMoveColumns(2)};
+  ${MediaQuery.SMALL} {
+    grid-template-columns: ${repeatItemCSS(2)};
     font-size: x-small;
+    width: ${WidthSize.SMALL};
   }
-  ${styles.MEDIA_MEDIUM} {
-    grid-template-columns: ${cssMoveColumns(2)};
+  ${MediaQuery.MEDIUM} {
+    grid-template-columns: ${repeatItemCSS(2)};
     font-size: small;
+    width: ${WidthSize.MEDIUM};
   }
-  ${styles.MEDIA_LARGE} {
-    grid-template-columns: ${cssMoveColumns(3)};
+  ${MediaQuery.LARGE} {
+    grid-template-columns: ${repeatItemCSS(3)};
     font-size: small;
+    width: ${WidthSize.LARGE};
   }
   grid-template-rows: repeat(auto-fill, 1fr);
   font-size: small;
@@ -38,29 +44,20 @@ const Wrapper = styled.div`
 const MoveHistory = () => {
   const moves = useSelector(({ moves }) => moves);
   const moveComponents = moves.map((move, index) => (
-    <Move
-      key={index}
-      moveId={move.id}
-      move={move.move}
-      piece={move.piece}
-    />
+    <Move key={index} moveId={move.id} move={move.move} piece={move.piece} />
   ));
-  const fullMoves = chunk(tail(moveComponents), 2)
-    .map(([redMove, blackMove], index) => (
-      <FullMove
-        key={index}
-        ordering={index + 1}
-      >
+  const fullMoves = chunk(tail(moveComponents), 2).map(
+    ([redMove, blackMove], index) => (
+      <FullMove key={index} ordering={index + 1}>
         {redMove}
         {blackMove}
       </FullMove>
-    ));
+    ),
+  );
 
   return (
     <Segment clearing tertiary>
-      <Wrapper className="MoveHistory">
-        {fullMoves}
-      </Wrapper>
+      <Wrapper className="MoveHistory">{fullMoves}</Wrapper>
     </Segment>
   );
 };

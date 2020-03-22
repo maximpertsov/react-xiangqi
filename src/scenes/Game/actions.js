@@ -2,9 +2,13 @@ import * as client from 'services/client';
 
 let nextMoveId = 0;
 
-const addMove = move => ({ ...move, type: 'add_move', moveId: ++nextMoveId });
+export const addMove = move => ({
+  ...move,
+  type: 'add_move',
+  moveId: ++nextMoveId,
+});
 
-const setMove = ({ moveId, ...move }) => ({
+export const setMove = ({ moveId, ...move }) => ({
   type: 'set_move',
   moveId,
   ...move,
@@ -35,7 +39,8 @@ export const toggleLoading = ({ loading }) => ({
   loading,
 });
 
-const transformFetchedMove = ({
+// TODO: util?
+export const transformFetchedMove = ({
   fen,
   gives_check: givesCheck,
   legal_moves: legalMoves,
@@ -69,61 +74,7 @@ export const fetchMoveInfo = ({
   dispatch(setMove({ moveId, pending, ...transformFetchedMove(fetchedMove) }));
 };
 
-const toggleMovesFetched = () => ({ type: 'toggle_moves_fetched' });
-
-export const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
-  if (gameSlug === null) return;
-
-  let lastMoveId;
-  try {
-    dispatch(toggleLoading({ loading: true }));
-
-    const {
-      data: { moves: fetchedMoves },
-    } = await client.getMoves({ gameSlug });
-    lastMoveId = fetchedMoves
-      // TODO: throw error if fetched move do not match app moves
-      .filter((_, index) => index > 0 && moves[index] === undefined)
-      .reduce((lastMoveId, fetchedMove) => {
-        const addMoveAction = addMove({
-          pending: false,
-          ...transformFetchedMove(fetchedMove),
-        });
-        dispatch(addMoveAction);
-        return addMoveAction.moveId;
-      }, lastMoveId);
-    dispatch(toggleMovesFetched());
-  } finally {
-    if (lastMoveId) dispatch(selectMove({ moveId: lastMoveId }));
-    dispatch(toggleLoading({ loading: false }));
-  }
-};
-
-const canUpdateMoves = ({ gameSlug, nextMovePlayer, username }) => {
-  if (gameSlug === null) return false;
-  if (username === null) return false;
-  if (username === nextMovePlayer) return false;
-
-  return true;
-};
-
-export const pollMoves = ({
-  gameSlug,
-  moveCount,
-  moves,
-  nextMovePlayer,
-  username,
-}) => async dispatch => {
-  if (!canUpdateMoves({ gameSlug, nextMovePlayer, username })) return;
-
-  const {
-    data: { move_count },
-  } = await client.getMoveCount({ gameSlug });
-
-  if (moveCount >= move_count) return;
-
-  dispatch(fetchMoves({ gameSlug, moves }));
-};
+export const toggleMovesFetched = () => ({ type: 'toggle_moves_fetched' });
 
 export const postMove = ({
   gameSlug,

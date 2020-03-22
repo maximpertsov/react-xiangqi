@@ -14,6 +14,7 @@ import loading from './loading';
 import moves, * as fromMoves from './moves';
 import movesFetched from './movesFetched';
 import players from './players';
+import requestedTakeback from './requestedTakeback';
 import selectedMoveId from './selectedMoveId';
 // Board
 import animationOffset, * as fromAnimationOffset from './animationOffset';
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   moves,
   movesFetched,
   players,
+  requestedTakeback,
   selectedMoveId,
   // Board
   animationOffset,
@@ -52,6 +54,9 @@ export const getHasInitialPlacement = ({ moves }) =>
 export const getMoveCount = ({ moves }) => fromMoves.getMoveCount(moves);
 
 export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
+
+export const getIsLastMovePending = ({ moves }) =>
+  fromMoves.getIsLastMovePending(moves);
 
 export const getSelectedMove = ({ moves, selectedMoveId }) =>
   fromMoves.getMoveById(moves, selectedMoveId);

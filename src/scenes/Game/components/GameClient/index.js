@@ -5,9 +5,10 @@ import {
   fetchInitialPlacement,
   fetchMoveInfo,
   fetchGame,
-  fetchMoves,
-  pollMoves,
+  toggleMovesFetched,
 } from 'actions';
+import fetchMoves from 'actions/fetchMoves';
+import pollMoves from 'actions/pollMoves';
 import {
   getMoveCount,
   getNextMovePlayer,
@@ -51,6 +52,11 @@ const GameClient = () => {
 
   useEffect(
     () => {
+      if (gameSlug === null) {
+        // TODO: hack, add a moves "fetching" state instead?
+        dispatch(toggleMovesFetched());
+        return;
+      }
       if (moveCount === -1) return;
 
       dispatch(fetchMoves({ gameSlug, moves }));

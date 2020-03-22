@@ -4,11 +4,10 @@ export {
   fetchGame,
   fetchInitialPlacement,
   fetchMoveInfo,
-  fetchMoves,
   makeMove,
-  pollMoves,
   postMove,
   selectMove,
+  toggleMovesFetched,
   toggleLoading,
 } from 'scenes/Game/actions';
 

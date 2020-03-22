@@ -10,7 +10,7 @@ import {
   getTargets,
 } from 'reducers';
 
-import * as styles from 'commonStyles';
+import { MediaQuery, SquareSize } from 'commonStyles';
 import { encode, moveToSquares } from 'services/logic/square';
 
 import Square from './components/Square';
@@ -28,21 +28,21 @@ const Wrapper = styled.div`
   background-repeat: no-repeat;
   background-position: top;
   display: grid;
-  ${styles.MEDIA_TINY} {
-    grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_TINY});
-    grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_TINY});
+  ${MediaQuery.TINY} {
+    grid-template-rows: repeat(10, ${SquareSize.TINY});
+    grid-template-columns: repeat(9, ${SquareSize.TINY});
   }
-  ${styles.MEDIA_SMALL} {
-    grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_SMALL});
-    grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_SMALL});
+  ${MediaQuery.SMALL} {
+    grid-template-rows: repeat(10, ${SquareSize.SMALL});
+    grid-template-columns: repeat(9, ${SquareSize.SMALL});
   }
-  ${styles.MEDIA_MEDIUM} {
-    grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_MEDIUM});
-    grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_MEDIUM});
+  ${MediaQuery.MEDIUM} {
+    grid-template-rows: repeat(10, ${SquareSize.MEDIUM});
+    grid-template-columns: repeat(9, ${SquareSize.MEDIUM});
   }
-  ${styles.MEDIA_LARGE} {
-    grid-template-rows: repeat(10, ${styles.SQUARE_SIZE_LARGE});
-    grid-template-columns: repeat(9, ${styles.SQUARE_SIZE_LARGE});
+  ${MediaQuery.LARGE} {
+    grid-template-rows: repeat(10, ${SquareSize.LARGE});
+    grid-template-columns: repeat(9, ${SquareSize.LARGE});
   }
 `;
 
