@@ -14,7 +14,7 @@ import ConfirmMoveMenu from './ConfirmMoveMenu';
 import GameInfo from './GameInfo';
 import MoveHistory from './MoveHistory';
 import Player from './Player';
-import UndoButton from './UndoButton';
+import TakebackButton from './TakebackButton';
 
 const Wrapper = styled.div`
   align-items: center;
@@ -32,7 +32,7 @@ const GameView = () => {
 
   const renderActionsMenu = () => (
     <GameMenu>
-      <UndoButton />
+      <TakebackButton />
       <Button>
         <Icon fitted name="handshake outline" />
       </Button>
