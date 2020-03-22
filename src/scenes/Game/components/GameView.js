@@ -9,10 +9,12 @@ import {
 } from 'reducers';
 import Board from 'components/Board';
 import GameMenu from 'components/GameMenu';
-import ConfirmMoveMenu from '../components/ConfirmMoveMenu';
-import GameInfo from '../components/GameInfo';
-import MoveHistory from '../components/MoveHistory';
-import Player from '../components/Player';
+
+import ConfirmMoveMenu from './ConfirmMoveMenu';
+import GameInfo from './GameInfo';
+import MoveHistory from './MoveHistory';
+import Player from './Player';
+import UndoButton from './UndoButton';
 
 const Wrapper = styled.div`
   align-items: center;
@@ -30,9 +32,7 @@ const GameView = () => {
 
   const renderActionsMenu = () => (
     <GameMenu>
-      <Button>
-        <Icon fitted name="undo" />
-      </Button>
+      <UndoButton />
       <Button>
         <Icon fitted name="handshake outline" />
       </Button>
