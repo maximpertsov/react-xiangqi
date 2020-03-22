@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import * as styles from 'commonStyles';
+import { MediaQuery, WidthSize } from 'commonStyles';
 
 const Wrapper = styled.div`
   align-items: center;
@@ -11,17 +11,17 @@ const Wrapper = styled.div`
     1fr
   );
   text-align: center;
-  ${styles.MEDIA_TINY} {
-    width: ${styles.WIDTH_SIZE_TINY};
+  ${MediaQuery.TINY} {
+    width: ${WidthSize.TINY};
   }
-  ${styles.MEDIA_SMALL} {
-    width: ${styles.WIDTH_SIZE_SMALL};
+  ${MediaQuery.SMALL} {
+    width: ${WidthSize.SMALL};
   }
-  ${styles.MEDIA_MEDIUM} {
-    width: ${styles.WIDTH_SIZE_MEDIUM};
+  ${MediaQuery.MEDIUM} {
+    width: ${WidthSize.MEDIUM};
   }
-  ${styles.MEDIA_LARGE} {
-    width: ${styles.WIDTH_SIZE_LARGE};
+  ${MediaQuery.LARGE} {
+    width: ${WidthSize.LARGE};
   }
 `;
 
