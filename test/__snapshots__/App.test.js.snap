@@ -47,13 +47,28 @@ initialize {
                   "namespace": "http://www.w3.org/1999/xhtml",
                   "next": Object {
                     "attribs": Object {
-                      "class": "GameList css-edpent",
+                      "class": "GameList css-8bzhik",
                     },
                     "children": Array [
                       Object {
-                        "data": "Games in play",
+                        "attribs": Object {
+                          "class": "ui Medium header",
+                        },
+                        "children": Array [
+                          Object {
+                            "data": "Games in play",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
                         "next": Object {
-                          "attribs": Object {},
+                          "attribs": Object {
+                            "class": "css-1vrdtb6",
+                          },
                           "children": Array [],
                           "name": "div",
                           "namespace": "http://www.w3.org/1999/xhtml",
@@ -61,30 +76,65 @@ initialize {
                           "parent": [Circular],
                           "prev": [Circular],
                           "type": "tag",
-                          "x-attribsNamespace": Object {},
-                          "x-attribsPrefix": Object {},
+                          "x-attribsNamespace": Object {
+                            "class": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "class": undefined,
+                          },
                         },
                         "parent": [Circular],
                         "prev": null,
-                        "type": "text",
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "class": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "class": undefined,
+                        },
                       },
                       Object {
-                        "attribs": Object {},
+                        "attribs": Object {
+                          "class": "css-1vrdtb6",
+                        },
                         "children": Array [],
                         "name": "div",
                         "namespace": "http://www.w3.org/1999/xhtml",
                         "next": null,
                         "parent": [Circular],
                         "prev": Object {
-                          "data": "Games in play",
+                          "attribs": Object {
+                            "class": "ui Medium header",
+                          },
+                          "children": Array [
+                            Object {
+                              "data": "Games in play",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
                           "next": [Circular],
                           "parent": [Circular],
                           "prev": null,
-                          "type": "text",
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "class": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "class": undefined,
+                          },
                         },
                         "type": "tag",
-                        "x-attribsNamespace": Object {},
-                        "x-attribsPrefix": Object {},
+                        "x-attribsNamespace": Object {
+                          "class": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "class": undefined,
+                        },
                       },
                     ],
                     "name": "div",
@@ -131,13 +181,28 @@ initialize {
                 "namespace": "http://www.w3.org/1999/xhtml",
                 "next": Object {
                   "attribs": Object {
-                    "class": "GameList css-edpent",
+                    "class": "GameList css-8bzhik",
                   },
                   "children": Array [
                     Object {
-                      "data": "Games in play",
+                      "attribs": Object {
+                        "class": "ui Medium header",
+                      },
+                      "children": Array [
+                        Object {
+                          "data": "Games in play",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "text",
+                        },
+                      ],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
                       "next": Object {
-                        "attribs": Object {},
+                        "attribs": Object {
+                          "class": "css-1vrdtb6",
+                        },
                         "children": Array [],
                         "name": "div",
                         "namespace": "http://www.w3.org/1999/xhtml",
@@ -145,30 +210,65 @@ initialize {
                         "parent": [Circular],
                         "prev": [Circular],
                         "type": "tag",
-                        "x-attribsNamespace": Object {},
-                        "x-attribsPrefix": Object {},
+                        "x-attribsNamespace": Object {
+                          "class": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "class": undefined,
+                        },
                       },
                       "parent": [Circular],
                       "prev": null,
-                      "type": "text",
+                      "type": "tag",
+                      "x-attribsNamespace": Object {
+                        "class": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "class": undefined,
+                      },
                     },
                     Object {
-                      "attribs": Object {},
+                      "attribs": Object {
+                        "class": "css-1vrdtb6",
+                      },
                       "children": Array [],
                       "name": "div",
                       "namespace": "http://www.w3.org/1999/xhtml",
                       "next": null,
                       "parent": [Circular],
                       "prev": Object {
-                        "data": "Games in play",
+                        "attribs": Object {
+                          "class": "ui Medium header",
+                        },
+                        "children": Array [
+                          Object {
+                            "data": "Games in play",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
                         "next": [Circular],
                         "parent": [Circular],
                         "prev": null,
-                        "type": "text",
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "class": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "class": undefined,
+                        },
                       },
                       "type": "tag",
-                      "x-attribsNamespace": Object {},
-                      "x-attribsPrefix": Object {},
+                      "x-attribsNamespace": Object {
+                        "class": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "class": undefined,
+                      },
                     },
                   ],
                   "name": "div",
@@ -217,13 +317,28 @@ initialize {
               },
               Object {
                 "attribs": Object {
-                  "class": "GameList css-edpent",
+                  "class": "GameList css-8bzhik",
                 },
                 "children": Array [
                   Object {
-                    "data": "Games in play",
+                    "attribs": Object {
+                      "class": "ui Medium header",
+                    },
+                    "children": Array [
+                      Object {
+                        "data": "Games in play",
+                        "next": null,
+                        "parent": [Circular],
+                        "prev": null,
+                        "type": "text",
+                      },
+                    ],
+                    "name": "div",
+                    "namespace": "http://www.w3.org/1999/xhtml",
                     "next": Object {
-                      "attribs": Object {},
+                      "attribs": Object {
+                        "class": "css-1vrdtb6",
+                      },
                       "children": Array [],
                       "name": "div",
                       "namespace": "http://www.w3.org/1999/xhtml",
@@ -231,30 +346,65 @@ initialize {
                       "parent": [Circular],
                       "prev": [Circular],
                       "type": "tag",
-                      "x-attribsNamespace": Object {},
-                      "x-attribsPrefix": Object {},
+                      "x-attribsNamespace": Object {
+                        "class": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "class": undefined,
+                      },
                     },
                     "parent": [Circular],
                     "prev": null,
-                    "type": "text",
+                    "type": "tag",
+                    "x-attribsNamespace": Object {
+                      "class": undefined,
+                    },
+                    "x-attribsPrefix": Object {
+                      "class": undefined,
+                    },
                   },
                   Object {
-                    "attribs": Object {},
+                    "attribs": Object {
+                      "class": "css-1vrdtb6",
+                    },
                     "children": Array [],
                     "name": "div",
                     "namespace": "http://www.w3.org/1999/xhtml",
                     "next": null,
                     "parent": [Circular],
                     "prev": Object {
-                      "data": "Games in play",
+                      "attribs": Object {
+                        "class": "ui Medium header",
+                      },
+                      "children": Array [
+                        Object {
+                          "data": "Games in play",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "text",
+                        },
+                      ],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
                       "next": [Circular],
                       "parent": [Circular],
                       "prev": null,
-                      "type": "text",
+                      "type": "tag",
+                      "x-attribsNamespace": Object {
+                        "class": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "class": undefined,
+                      },
                     },
                     "type": "tag",
-                    "x-attribsNamespace": Object {},
-                    "x-attribsPrefix": Object {},
+                    "x-attribsNamespace": Object {
+                      "class": undefined,
+                    },
+                    "x-attribsPrefix": Object {
+                      "class": undefined,
+                    },
                   },
                 ],
                 "name": "div",
@@ -1199,13 +1349,28 @@ initialize {
                     "namespace": "http://www.w3.org/1999/xhtml",
                     "next": Object {
                       "attribs": Object {
-                        "class": "GameList css-edpent",
+                        "class": "GameList css-8bzhik",
                       },
                       "children": Array [
                         Object {
-                          "data": "Games in play",
+                          "attribs": Object {
+                            "class": "ui Medium header",
+                          },
+                          "children": Array [
+                            Object {
+                              "data": "Games in play",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
                           "next": Object {
-                            "attribs": Object {},
+                            "attribs": Object {
+                              "class": "css-1vrdtb6",
+                            },
                             "children": Array [],
                             "name": "div",
                             "namespace": "http://www.w3.org/1999/xhtml",
@@ -1213,30 +1378,65 @@ initialize {
                             "parent": [Circular],
                             "prev": [Circular],
                             "type": "tag",
-                            "x-attribsNamespace": Object {},
-                            "x-attribsPrefix": Object {},
+                            "x-attribsNamespace": Object {
+                              "class": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "class": undefined,
+                            },
                           },
                           "parent": [Circular],
                           "prev": null,
-                          "type": "text",
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "class": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "class": undefined,
+                          },
                         },
                         Object {
-                          "attribs": Object {},
+                          "attribs": Object {
+                            "class": "css-1vrdtb6",
+                          },
                           "children": Array [],
                           "name": "div",
                           "namespace": "http://www.w3.org/1999/xhtml",
                           "next": null,
                           "parent": [Circular],
                           "prev": Object {
-                            "data": "Games in play",
+                            "attribs": Object {
+                              "class": "ui Medium header",
+                            },
+                            "children": Array [
+                              Object {
+                                "data": "Games in play",
+                                "next": null,
+                                "parent": [Circular],
+                                "prev": null,
+                                "type": "text",
+                              },
+                            ],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
                             "next": [Circular],
                             "parent": [Circular],
                             "prev": null,
-                            "type": "text",
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "class": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "class": undefined,
+                            },
                           },
                           "type": "tag",
-                          "x-attribsNamespace": Object {},
-                          "x-attribsPrefix": Object {},
+                          "x-attribsNamespace": Object {
+                            "class": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "class": undefined,
+                          },
                         },
                       ],
                       "name": "div",
@@ -1283,13 +1483,28 @@ initialize {
                   "namespace": "http://www.w3.org/1999/xhtml",
                   "next": Object {
                     "attribs": Object {
-                      "class": "GameList css-edpent",
+                      "class": "GameList css-8bzhik",
                     },
                     "children": Array [
                       Object {
-                        "data": "Games in play",
+                        "attribs": Object {
+                          "class": "ui Medium header",
+                        },
+                        "children": Array [
+                          Object {
+                            "data": "Games in play",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
                         "next": Object {
-                          "attribs": Object {},
+                          "attribs": Object {
+                            "class": "css-1vrdtb6",
+                          },
                           "children": Array [],
                           "name": "div",
                           "namespace": "http://www.w3.org/1999/xhtml",
@@ -1297,30 +1512,65 @@ initialize {
                           "parent": [Circular],
                           "prev": [Circular],
                           "type": "tag",
-                          "x-attribsNamespace": Object {},
-                          "x-attribsPrefix": Object {},
+                          "x-attribsNamespace": Object {
+                            "class": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "class": undefined,
+                          },
                         },
                         "parent": [Circular],
                         "prev": null,
-                        "type": "text",
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "class": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "class": undefined,
+                        },
                       },
                       Object {
-                        "attribs": Object {},
+                        "attribs": Object {
+                          "class": "css-1vrdtb6",
+                        },
                         "children": Array [],
                         "name": "div",
                         "namespace": "http://www.w3.org/1999/xhtml",
                         "next": null,
                         "parent": [Circular],
                         "prev": Object {
-                          "data": "Games in play",
+                          "attribs": Object {
+                            "class": "ui Medium header",
+                          },
+                          "children": Array [
+                            Object {
+                              "data": "Games in play",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
                           "next": [Circular],
                           "parent": [Circular],
                           "prev": null,
-                          "type": "text",
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "class": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "class": undefined,
+                          },
                         },
                         "type": "tag",
-                        "x-attribsNamespace": Object {},
-                        "x-attribsPrefix": Object {},
+                        "x-attribsNamespace": Object {
+                          "class": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "class": undefined,
+                        },
                       },
                     ],
                     "name": "div",
@@ -1369,13 +1619,28 @@ initialize {
                 },
                 Object {
                   "attribs": Object {
-                    "class": "GameList css-edpent",
+                    "class": "GameList css-8bzhik",
                   },
                   "children": Array [
                     Object {
-                      "data": "Games in play",
+                      "attribs": Object {
+                        "class": "ui Medium header",
+                      },
+                      "children": Array [
+                        Object {
+                          "data": "Games in play",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "text",
+                        },
+                      ],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
                       "next": Object {
-                        "attribs": Object {},
+                        "attribs": Object {
+                          "class": "css-1vrdtb6",
+                        },
                         "children": Array [],
                         "name": "div",
                         "namespace": "http://www.w3.org/1999/xhtml",
@@ -1383,30 +1648,65 @@ initialize {
                         "parent": [Circular],
                         "prev": [Circular],
                         "type": "tag",
-                        "x-attribsNamespace": Object {},
-                        "x-attribsPrefix": Object {},
+                        "x-attribsNamespace": Object {
+                          "class": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "class": undefined,
+                        },
                       },
                       "parent": [Circular],
                       "prev": null,
-                      "type": "text",
+                      "type": "tag",
+                      "x-attribsNamespace": Object {
+                        "class": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "class": undefined,
+                      },
                     },
                     Object {
-                      "attribs": Object {},
+                      "attribs": Object {
+                        "class": "css-1vrdtb6",
+                      },
                       "children": Array [],
                       "name": "div",
                       "namespace": "http://www.w3.org/1999/xhtml",
                       "next": null,
                       "parent": [Circular],
                       "prev": Object {
-                        "data": "Games in play",
+                        "attribs": Object {
+                          "class": "ui Medium header",
+                        },
+                        "children": Array [
+                          Object {
+                            "data": "Games in play",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
                         "next": [Circular],
                         "parent": [Circular],
                         "prev": null,
-                        "type": "text",
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "class": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "class": undefined,
+                        },
                       },
                       "type": "tag",
-                      "x-attribsNamespace": Object {},
-                      "x-attribsPrefix": Object {},
+                      "x-attribsNamespace": Object {
+                        "class": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "class": undefined,
+                      },
                     },
                   ],
                   "name": "div",

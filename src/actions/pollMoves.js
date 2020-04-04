@@ -9,21 +9,27 @@ const canUpdateMoves = ({ gameSlug, nextMovePlayer, username }) => {
   return true;
 };
 
+const setUpdateCount = ({ updateCount }) => ({
+  type: 'set_update_count',
+  updateCount,
+});
+
 const pollMoves = ({
   gameSlug,
-  moveCount,
   moves,
   nextMovePlayer,
+  updateCount,
   username,
 }) => async dispatch => {
   if (!canUpdateMoves({ gameSlug, nextMovePlayer, username })) return;
 
   const {
-    data: { move_count },
-  } = await client.getMoveCount({ gameSlug });
+    data: { update_count: fetchedUpdateCount },
+  } = await client.poll({ gameSlug });
 
-  if (moveCount >= move_count) return;
+  if (updateCount >= fetchedUpdateCount) return;
 
+  dispatch(setUpdateCount({ updateCount: fetchedUpdateCount }));
   dispatch(fetchMoves({ gameSlug, moves }));
 };
 

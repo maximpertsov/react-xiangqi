@@ -15,8 +15,8 @@ export const getGame = ({ gameSlug }) => axios.get(`game/${gameSlug}`);
 
 export const getMoves = ({ gameSlug }) => axios.get(`game/${gameSlug}/moves`);
 
-export const getMoveCount = ({ gameSlug }) =>
-  axios.get(`game/${gameSlug}/move-count`);
+export const poll = ({ gameSlug }) =>
+  axios.get(`game/${gameSlug}/poll`);
 
 export const postMove = ({ gameSlug, move, username }) => {
   const payload = { name: 'move', move, player: username };

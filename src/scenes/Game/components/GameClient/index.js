@@ -27,6 +27,7 @@ const GameClient = () => {
   const missingLegalMovesPayload = useSelector(state =>
     getMissingLegalMovesPayload(state),
   );
+  const updateCount = useSelector(state => state.updateCount);
   const username = useSelector(state => state.username);
 
   useEffect(() => {
@@ -57,7 +58,7 @@ const GameClient = () => {
         dispatch(toggleMovesFetched());
         return;
       }
-      if (moveCount === -1) return;
+      if (moveCount > -1) return;
 
       dispatch(fetchMoves({ gameSlug, moves }));
     },
@@ -74,8 +75,8 @@ const GameClient = () => {
           pollMoves({
             gameSlug,
             moves,
-            moveCount,
             nextMovePlayer,
+            updateCount,
             username,
           }),
         );

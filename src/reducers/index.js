@@ -16,6 +16,7 @@ import movesFetched from './movesFetched';
 import players from './players';
 import requestedTakeback from './requestedTakeback';
 import selectedMoveId from './selectedMoveId';
+import updateCount from './updateCount';
 // Board
 import animationOffset, * as fromAnimationOffset from './animationOffset';
 import canMoveBothColors from './canMoveBothColors';
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
   players,
   requestedTakeback,
   selectedMoveId,
+  updateCount,
   // Board
   animationOffset,
   canMoveBothColors,
