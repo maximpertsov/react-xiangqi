@@ -13,8 +13,6 @@ export const getGameList = ({ username }) =>
 
 export const getGame = ({ gameSlug }) => axios.get(`game/${gameSlug}`);
 
-export const getMoves = ({ gameSlug }) => axios.get(`game/${gameSlug}/moves`);
-
 export const poll = ({ gameSlug }) =>
   axios.get(`game/${gameSlug}/poll`);
 

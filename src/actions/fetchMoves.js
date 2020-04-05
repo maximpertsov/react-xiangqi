@@ -20,7 +20,7 @@ const fetchMoves = ({ gameSlug, moves }) => async dispatch => {
 
     const {
       data: { moves: fetchedMoves },
-    } = await client.getMoves({ gameSlug });
+    } = await client.getGame({ gameSlug });
     lastMoveId = fetchedMoves
       // TODO: throw error if fetched move do not match app moves
       .filter((_, index) => index > 0 && moves[index] === undefined)
