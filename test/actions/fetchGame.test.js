@@ -21,6 +21,7 @@ describe('fetch game', () => {
       Promise.resolve({
         data: {
           players: [],
+          moves: [{}, {}],
         },
       }),
     );
@@ -28,6 +29,19 @@ describe('fetch game', () => {
     const gameSlug = 'ABC123';
     await store.dispatch(fetchGame({ gameSlug }));
     expect(axios.get).toHaveBeenCalledWith(`game/${gameSlug}`);
-    expect(store.getActions()).toEqual([{ type: 'set_players', players: [] }]);
+
+    const moveData = {
+      fen: undefined,
+      givesCheck: undefined,
+      legalMoves: undefined,
+      move: undefined,
+      pending: false,
+    };
+    expect(store.getActions()).toEqual([
+      { type: 'set_players', players: [] },
+      { type: 'add_move', moveId: 1, ...moveData },
+      { type: 'add_move', moveId: 2, ...moveData },
+      { type: 'select_move', moveId: 2 },
+    ]);
   });
 });
