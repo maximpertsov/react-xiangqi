@@ -5,7 +5,7 @@ const setPlayers = ({ players }) => ({
   players,
 });
 
-export const fetchGame = ({ gameSlug }) => async dispatch => {
+const fetchGame = ({ gameSlug }) => async dispatch => {
   if (gameSlug === null) return;
 
   const {
