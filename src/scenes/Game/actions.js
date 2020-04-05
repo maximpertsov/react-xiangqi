@@ -47,15 +47,6 @@ export const transformFetchedMove = ({
   move,
 }) => ({ fen, legalMoves, givesCheck, move });
 
-export const fetchGame = ({ gameSlug }) => async dispatch => {
-  if (gameSlug === null) return;
-
-  const {
-    data: { players },
-  } = await client.getGame({ gameSlug });
-  dispatch({ type: 'set_players', players });
-};
-
 export const fetchInitialPlacement = () => async dispatch => {
   const {
     data: { move: fetchedMove },

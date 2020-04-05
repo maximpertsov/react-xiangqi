@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchInitialPlacement,
   fetchMoveInfo,
-  fetchGame,
   toggleMovesFetched,
 } from 'actions';
+import fetchGame from 'actions/fetchGame';
 import fetchMoves from 'actions/fetchMoves';
 import pollMoves from 'actions/pollMoves';
 import {
