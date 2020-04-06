@@ -8,6 +8,7 @@ import {
   getHasInitialPlacement,
   getNextMovePlayer,
   getMissingLegalMovesPayload,
+  getMoveCount,
 } from 'reducers';
 
 const POLLING_INTERVAL = 2500;
@@ -19,6 +20,7 @@ const GameClient = () => {
   const hasInitialPlacement = useSelector(state =>
     getHasInitialPlacement(state),
   );
+  const moveCount = useSelector(state => getMoveCount(state));
   const nextMovePlayer = useSelector(state => getNextMovePlayer(state));
   const missingLegalMovesPayload = useSelector(state =>
     getMissingLegalMovesPayload(state),
@@ -36,14 +38,19 @@ const GameClient = () => {
     dispatch(fetchInitialPlacement());
   }, [dispatch, hasInitialPlacement]);
 
-  useEffect(() => {
-    if (!hasInitialPlacement) return;
-    if (!missingLegalMovesPayload) return;
+  useEffect(
+    () => {
+      if (!hasInitialPlacement) return;
+      if (!missingLegalMovesPayload) return;
 
-    dispatch(fetchMoveInfo(missingLegalMovesPayload));
-    // TODO: too many updates because missing legal moves is an object
-    // and useEffect is doing a deep comparison
-  }, [dispatch, hasInitialPlacement, missingLegalMovesPayload]);
+      dispatch(fetchMoveInfo(missingLegalMovesPayload));
+      // HACK: too many updates because missing legal moves is an object and
+      // useEffect is doing a deep comparison. To get around this, we exclude it
+      // from the comparison and key on the move count.
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dispatch, hasInitialPlacement, moveCount],
+  );
 
   useEffect(() => {
     if (!hasInitialPlacement) return;
