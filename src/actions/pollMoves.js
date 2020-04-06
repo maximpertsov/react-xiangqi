@@ -1,5 +1,5 @@
-import * as client from 'services/client';
-import fetchMoves from 'actions/fetchMoves';
+import { poll } from 'services/client';
+import fetchGame from 'actions/fetchGame';
 
 const canUpdateMoves = ({ gameSlug, nextMovePlayer, username }) => {
   if (gameSlug === null) return false;
@@ -16,7 +16,6 @@ const setUpdateCount = ({ updateCount }) => ({
 
 const pollMoves = ({
   gameSlug,
-  moves,
   nextMovePlayer,
   updateCount,
   username,
@@ -25,12 +24,12 @@ const pollMoves = ({
 
   const {
     data: { update_count: fetchedUpdateCount },
-  } = await client.poll({ gameSlug });
+  } = await poll({ gameSlug });
 
   if (updateCount >= fetchedUpdateCount) return;
 
   dispatch(setUpdateCount({ updateCount: fetchedUpdateCount }));
-  dispatch(fetchMoves({ gameSlug, moves }));
+  dispatch(fetchGame({ gameSlug }));
 };
 
 export default pollMoves;

@@ -1,16 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  fetchInitialPlacement,
-  fetchMoveInfo,
-  toggleMovesFetched,
-} from 'actions';
+import { fetchInitialPlacement, fetchMoveInfo } from 'actions';
 import fetchGame from 'actions/fetchGame';
-import fetchMoves from 'actions/fetchMoves';
 import pollMoves from 'actions/pollMoves';
 import {
-  getMoveCount,
+  getHasInitialPlacement,
   getNextMovePlayer,
   getMissingLegalMovesPayload,
 } from 'reducers';
@@ -21,8 +16,9 @@ const GameClient = () => {
   const dispatch = useDispatch();
 
   const gameSlug = useSelector(state => state.gameSlug);
-  const moves = useSelector(state => state.moves);
-  const moveCount = useSelector(state => getMoveCount(state));
+  const hasInitialPlacement = useSelector(state =>
+    getHasInitialPlacement(state),
+  );
   const nextMovePlayer = useSelector(state => getNextMovePlayer(state));
   const missingLegalMovesPayload = useSelector(state =>
     getMissingLegalMovesPayload(state),
@@ -35,57 +31,42 @@ const GameClient = () => {
   }, [dispatch, gameSlug]);
 
   useEffect(() => {
-    if (moveCount > -1) return;
+    if (hasInitialPlacement) return;
 
     dispatch(fetchInitialPlacement());
-  }, [dispatch, moveCount]);
+  }, [dispatch, hasInitialPlacement]);
 
-  useEffect(
-    () => {
-      if (moveCount < 0) return;
-      if (missingLegalMovesPayload === undefined) return;
+  useEffect(() => {
+    if (!hasInitialPlacement) return;
+    if (!missingLegalMovesPayload) return;
 
-      dispatch(fetchMoveInfo(missingLegalMovesPayload));
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, moveCount],
-  );
+    dispatch(fetchMoveInfo(missingLegalMovesPayload));
+    // TODO: too many updates because missing legal moves is an object
+    // and useEffect is doing a deep comparison
+  }, [dispatch, hasInitialPlacement, missingLegalMovesPayload]);
 
-  useEffect(
-    () => {
-      if (gameSlug === null) {
-        // TODO: hack, add a moves "fetching" state instead?
-        dispatch(toggleMovesFetched());
-        return;
-      }
-      if (moveCount > -1) return;
+  useEffect(() => {
+    if (!hasInitialPlacement) return;
 
-      dispatch(fetchMoves({ gameSlug, moves }));
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, gameSlug],
-  );
-
-  useEffect(
-    () => {
-      if (moveCount === -1) return;
-
-      const interval = setInterval(() => {
-        dispatch(
-          pollMoves({
-            gameSlug,
-            moves,
-            nextMovePlayer,
-            updateCount,
-            username,
-          }),
-        );
-      }, POLLING_INTERVAL);
-      return () => clearInterval(interval);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, gameSlug, nextMovePlayer, username],
-  );
+    const interval = setInterval(() => {
+      dispatch(
+        pollMoves({
+          gameSlug,
+          nextMovePlayer,
+          updateCount,
+          username,
+        }),
+      );
+    }, POLLING_INTERVAL);
+    return () => clearInterval(interval);
+  }, [
+    dispatch,
+    gameSlug,
+    hasInitialPlacement,
+    nextMovePlayer,
+    updateCount,
+    username,
+  ]);
 
   return null;
 };

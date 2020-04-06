@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Button, Dimmer, Icon, Loader, Segment } from 'semantic-ui-react';
 import {
   getCurrentPlayer,
+  getHasInitialPlacement,
   getIsLastMovePending,
   getOtherPlayer,
 } from 'reducers';
@@ -25,7 +26,9 @@ const Wrapper = styled.div`
 `;
 
 const GameView = () => {
-  const movesFetched = useSelector(state => state.movesFetched);
+  const hasInitialPlacement = useSelector(state =>
+    getHasInitialPlacement(state),
+  );
   const isLastMovePending = useSelector(state => getIsLastMovePending(state));
   const currentPlayer = useSelector(state => getCurrentPlayer(state));
   const otherPlayer = useSelector(state => getOtherPlayer(state));
@@ -43,8 +46,8 @@ const GameView = () => {
   );
 
   return (
-    <Dimmer.Dimmable as={Segment} basic blurring dimmed={!movesFetched}>
-      <Dimmer active={!movesFetched} page>
+    <Dimmer.Dimmable as={Segment} basic blurring dimmed={!hasInitialPlacement}>
+      <Dimmer active={!hasInitialPlacement} page>
         <Loader>Loading</Loader>
       </Dimmer>
       <Wrapper className="Game">
