@@ -85,6 +85,15 @@ const lookupPlayer = (players, key, value) =>
 export const getNextMovePlayer = ({ players, moves }) =>
   lookupPlayer(players, 'color', getNextMoveColor({ moves }));
 
+export const getNextMovePlayerName = ({ players, moves }) => {
+  try {
+    return getNextMovePlayer({ players, moves }).name;
+  } catch (e) {
+    if (e instanceof TypeError) return undefined;
+    throw e;
+  }
+};
+
 const getUserPlayer = ({ players, username }) =>
   lookupPlayer(players, 'name', username);
 

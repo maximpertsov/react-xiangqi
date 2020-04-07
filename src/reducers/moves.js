@@ -69,7 +69,15 @@ const setMove = (state, action) => {
     },
   });
 };
+//
+// const setNewMoves = (state, action) => {
+//   const moves = action.moves.forEach((move, index, moves) => {
+//     if (!state[index]) {
+//     }
+//   }
+// }
 
+// eslint-disable-next-line complexity
 const moves = (state = [], action) => {
   switch (action.type) {
     case 'add_move':
@@ -80,6 +88,8 @@ const moves = (state = [], action) => {
       return confirmMoves(state);
     case 'set_move':
       return setMove(state, action);
+    // case 'set_new_moves':
+    //   return setNewMoves(state, action);
     default:
       return state;
   }

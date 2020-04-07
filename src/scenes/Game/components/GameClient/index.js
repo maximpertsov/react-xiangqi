@@ -2,11 +2,10 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchInitialPlacement, fetchMoveInfo } from 'actions';
-import fetchGame from 'actions/fetchGame';
 import pollMoves from 'actions/pollMoves';
 import {
   getHasInitialPlacement,
-  getNextMovePlayer,
+  getNextMovePlayerName,
   getMissingLegalMovesPayload,
   getMoveCount,
 } from 'reducers';
@@ -21,7 +20,7 @@ const GameClient = () => {
     getHasInitialPlacement(state),
   );
   const moveCount = useSelector(state => getMoveCount(state));
-  const nextMovePlayer = useSelector(state => getNextMovePlayer(state));
+  const nextMovePlayerName = useSelector(state => getNextMovePlayerName(state));
   const missingLegalMovesPayload = useSelector(state =>
     getMissingLegalMovesPayload(state),
   );
@@ -29,17 +28,15 @@ const GameClient = () => {
   const username = useSelector(state => state.username);
 
   useEffect(() => {
-    dispatch(fetchGame({ gameSlug }));
-  }, [dispatch, gameSlug]);
-
-  useEffect(() => {
+    if (gameSlug) return;
     if (hasInitialPlacement) return;
 
     dispatch(fetchInitialPlacement());
-  }, [dispatch, hasInitialPlacement]);
+  }, [dispatch, gameSlug, hasInitialPlacement]);
 
   useEffect(
     () => {
+      if (gameSlug) return;
       if (!hasInitialPlacement) return;
       if (!missingLegalMovesPayload) return;
 
@@ -52,28 +49,18 @@ const GameClient = () => {
     [dispatch, hasInitialPlacement, moveCount],
   );
 
-  useEffect(() => {
-    if (!hasInitialPlacement) return;
-
-    const interval = setInterval(() => {
-      dispatch(
-        pollMoves({
-          gameSlug,
-          nextMovePlayer,
-          updateCount,
-          username,
-        }),
-      );
-    }, POLLING_INTERVAL);
-    return () => clearInterval(interval);
-  }, [
-    dispatch,
-    gameSlug,
-    hasInitialPlacement,
-    nextMovePlayer,
-    updateCount,
-    username,
-  ]);
+  useEffect(
+    () => {
+      const interval = setInterval(() => {
+        dispatch(
+          pollMoves({ gameSlug, nextMovePlayerName, updateCount, username }),
+        );
+      }, POLLING_INTERVAL);
+      return () => clearInterval(interval);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dispatch, nextMovePlayerName],
+  );
 
   return null;
 };
