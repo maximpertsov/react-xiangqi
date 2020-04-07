@@ -44,10 +44,10 @@ const GameClient = () => {
       if (!missingLegalMovesPayload) return;
 
       dispatch(fetchMoveInfo(missingLegalMovesPayload));
-      // HACK: too many updates because missing legal moves is an object and
-      // useEffect is doing a deep comparison. To get around this, we exclude it
-      // from the comparison and key on the move count.
     },
+    // HACK: too many updates because missing legal moves is an object and
+    // useEffect is doing a deep comparison. To get around this, we exclude it
+    // from the comparison and key on the move count.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, hasInitialPlacement, moveCount],
   );
