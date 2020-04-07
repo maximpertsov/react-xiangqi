@@ -24,6 +24,13 @@ const pollMoves = ({
 
   const { data } = await poll({ gameSlug });
 
+  const logs = [
+    `Client update: ${updateCount}`,
+    `Server updates: ${data.updateCount}`,
+    `Next move player: ${nextMovePlayerName}`,
+    `Username: ${username}`,
+  ];
+  console.log(logs.join(', '));
   if (updateCount >= data.update_count) return;
 
   dispatch(setUpdateCount({ updateCount: data.update_count }));
