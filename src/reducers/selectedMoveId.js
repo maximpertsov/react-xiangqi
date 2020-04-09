@@ -1,4 +1,4 @@
-const selectedMoveId = (state = 1, action) => {
+const selectedMoveId = (state = 0, action) => {
   switch (action.type) {
     case 'select_move':
       return action.moveId;

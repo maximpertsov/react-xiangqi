@@ -5,7 +5,7 @@ let nextMoveId = 0;
 export const addMove = move => ({
   ...move,
   type: 'add_move',
-  moveId: ++nextMoveId,
+  moveId: Infinity,
 });
 
 export const setMove = ({ moveId, ...move }) => ({
