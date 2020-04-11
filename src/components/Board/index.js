@@ -9,7 +9,11 @@ import {
   setAnimationOffset,
   setSelectedSlot,
 } from 'actions';
-import { getBottomPlayerIsRed, getLegalMoves, getSelectedMove } from 'reducers';
+import {
+  getBottomPlayerIsRed,
+  getLegalMoves,
+  getSelectedBoard,
+} from 'reducers';
 import { squaresToMove } from 'services/logic/square';
 
 import BoardView from './components/BoardView';
@@ -18,10 +22,11 @@ const ANIMATION_DELAY = 150;
 
 const Board = () => {
   const dispatch = useDispatch();
+
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
+  const board = useSelector(state => getSelectedBoard(state));
   const legalMoves = useSelector(state => getLegalMoves(state));
   const selectedSquare = useSelector(state => state.selectedSquare);
-  const { board } = useSelector(state => getSelectedMove(state));
 
   useEffect(
     () => {
@@ -29,7 +34,7 @@ const Board = () => {
     },
     // TODO: is it too expensive to check if the board changes?
     // Can I key on another prop update?
-    [board, dispatch],
+    [dispatch],
   );
 
   const selectedCanCapture = useCallback(
@@ -39,7 +44,8 @@ const Board = () => {
       if (!board.isOccupied(square)) return false;
       return !board.sameColor(square, selectedSquare);
     },
-    [board, selectedSquare],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedSquare],
   );
 
   const isLegalMove = useCallback(move => has(legalMoves, move), [legalMoves]);
@@ -72,7 +78,8 @@ const Board = () => {
         dispatch(clearSelectedSlot());
       }
     },
-    [board, dispatch, handleMove, selectedCanCapture, selectedSquare],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dispatch, handleMove, selectedCanCapture, selectedSquare],
   );
 
   return <BoardView handleSquareClick={handleSquareClick} />;
