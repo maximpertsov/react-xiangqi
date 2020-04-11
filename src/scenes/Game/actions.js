@@ -1,7 +1,5 @@
 import * as client from 'services/client';
 
-let nextMoveId = 0;
-
 export const addMove = move => ({
   ...move,
   type: 'add_move',

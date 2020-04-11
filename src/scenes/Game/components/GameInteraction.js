@@ -30,6 +30,7 @@ const GameInteraction = () => {
       }, 1000);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // TODO: update on simpler data
     [autoMove, dispatch, lastMove.legalMoves, nextMoveColor],
   );
 
