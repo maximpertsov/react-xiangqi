@@ -178,11 +178,6 @@ export const getTargets = state => {
   );
 };
 
-export const getHasLegalMoves = state => {
-  const { legalMoves } = getLastMove(state);
-  return legalMoves && legalMoves.length > 0;
-};
-
 /********************/
 /***  Animations  ***/
 /********************/
