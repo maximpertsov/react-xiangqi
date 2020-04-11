@@ -1,6 +1,7 @@
 import update from 'immutability-helper';
 import findIndex from 'lodash/findIndex';
 import sortedIndexBy from 'lodash/sortedIndexBy';
+import { decode as decodeFen } from 'services/logic/fen';
 
 import { Color } from 'services/logic/constants';
 
@@ -77,7 +78,7 @@ export default moves;
 
 export const getHasInitialPlacement = state => {
   if (state.length === 0) return false;
-  if (state[0].board === undefined) return false;
+  if (state[0].fen === undefined) return false;
 
   return true;
 };
@@ -110,8 +111,8 @@ export const getNextMoveColor = state => {
     return Color.RED;
   }
 
-  const { board } = getLastMove(state);
-  return board.activeColor;
+  const { fen } = getLastMove(state);
+  return decodeFen(fen).activeColor;
 };
 
 export const getMissingLegalMovesPayload = state => {
