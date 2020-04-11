@@ -56,9 +56,14 @@ const Move = ({ move, moveId, piece }) => {
 };
 
 Move.propTypes = {
-  move: PropTypes.string.isRequired,
+  move: PropTypes.string,
   moveId: PropTypes.number.isRequired,
-  piece: PropTypes.string.isRequired,
+  piece: PropTypes.string,
+};
+
+Move.defaultProps = {
+  move: null,
+  piece: null,
 };
 
 export default Move;
