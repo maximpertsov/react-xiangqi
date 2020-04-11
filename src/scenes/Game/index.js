@@ -15,7 +15,7 @@ const Game = () => {
     <div>
       <GameClient />
       {hasInitialPlacement && <GameInteraction />}
-      {hasInitialPlacement && <GameView />}
+      <GameView />
     </div>
   );
 };

@@ -51,15 +51,17 @@ const GameView = () => {
       <Dimmer active={!hasInitialPlacement} page>
         <Loader>Loading</Loader>
       </Dimmer>
-      <Wrapper className="Game">
-        <Player {...otherPlayer} />
-        <Board legalMoves />
-        <ConfirmMoveMenu />
-        {!isLastMovePending && renderActionsMenu()}
-        {!isLastMovePending && <Player {...currentPlayer} />}
-        {!isLastMovePending && <GameInfo hasLegalMoves />}
-        {!isLastMovePending && <MoveHistory />}
-      </Wrapper>
+      {hasInitialPlacement && (
+        <Wrapper className="Game">
+          <Player {...otherPlayer} />
+          <Board legalMoves />
+          <ConfirmMoveMenu />
+          {!isLastMovePending && renderActionsMenu()}
+          {!isLastMovePending && <Player {...currentPlayer} />}
+          {!isLastMovePending && <GameInfo hasLegalMoves />}
+          {!isLastMovePending && <MoveHistory />}
+        </Wrapper>
+      )}
     </Dimmer.Dimmable>
   );
 };
