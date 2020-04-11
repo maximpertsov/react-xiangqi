@@ -2,33 +2,12 @@ import update from 'immutability-helper';
 import findIndex from 'lodash/findIndex';
 import sortedIndexBy from 'lodash/sortedIndexBy';
 
-import XiangqiBoard from 'services/logic';
 import { Color } from 'services/logic/constants';
-import { getMovedPiece, getMovingPiece } from 'services/logic/move';
 
 const getMoveIndex = (state, moveId) => {
   const moveIndex = sortedIndexBy(state, { id: moveId }, 'id');
   if (state[moveIndex] && state[moveIndex].id === moveId) return moveIndex;
   return -1;
-};
-
-const nextBoardAndPiece = (state, action) => {
-  if (action.fen !== undefined) {
-    const board = new XiangqiBoard({ fen: action.fen });
-    return {
-      board,
-      piece:
-        action.move === null
-          ? null
-          : getMovedPiece(board.placement, action.move),
-    };
-  }
-
-  const { board } = state[state.length - 1];
-  return {
-    board: board.move(action.move),
-    piece: getMovingPiece(board.placement, action.move),
-  };
 };
 
 const addMove = (state, action) => {
@@ -39,7 +18,6 @@ const addMove = (state, action) => {
     legalMoves: action.legalMoves,
     move: action.move,
     pending: action.pending,
-    ...nextBoardAndPiece(state, action),
   };
   return update(state, { $push: [move] });
 };
@@ -64,7 +42,6 @@ const setMove = (state, action) => {
         legalMoves: action.legalMoves,
         move: action.move,
         pending: action.pending,
-        ...nextBoardAndPiece(state, action),
       },
     },
   });
