@@ -22,7 +22,7 @@ describe('fetch game', () => {
       Promise.resolve({
         data: {
           players: [],
-          moves: [{ id: 1 }, { id: 2 }],
+          moves: [{}, {}],
         },
       }),
     );
@@ -41,12 +41,9 @@ describe('fetch game', () => {
       { type: 'set_players', players: [] },
       {
         type: 'set_moves',
-        moves: [
-          { id: 1, ...moveData },
-          { id: 2, ...moveData },
-        ],
+        moves: [moveData, moveData],
       },
-      { type: 'select_move', moveId: 2 },
+      { type: 'select_move', moveId: 1 },
     ]);
   });
 });
