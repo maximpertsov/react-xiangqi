@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import has from 'lodash/has';
+import get from 'lodash/get';
 
 import {
   clearAnimationOffset,
@@ -48,14 +48,17 @@ const Board = () => {
     [selectedSquare],
   );
 
-  const isLegalMove = useCallback(move => has(legalMoves, move), [legalMoves]);
+  const legalFen = useCallback(move => get(legalMoves, move, false), [
+    legalMoves,
+  ]);
 
   const handleMove = useCallback(
     move => {
-      if (isLegalMove(move)) {
+      const fen = legalFen(move);
+      if (fen) {
         dispatch(setAnimationOffset({ bottomPlayerIsRed, move }));
         setTimeout(() => {
-          dispatch(makeMove({ move, pending: true }));
+          dispatch(makeMove({ fen, move, pending: true }));
           dispatch(clearAnimationOffset());
           dispatch(clearSelectedSlot());
         }, ANIMATION_DELAY);
@@ -63,7 +66,7 @@ const Board = () => {
         dispatch(clearSelectedSlot());
       }
     },
-    [bottomPlayerIsRed, dispatch, isLegalMove],
+    [bottomPlayerIsRed, dispatch, legalFen],
   );
 
   const handleSquareClick = useCallback(
