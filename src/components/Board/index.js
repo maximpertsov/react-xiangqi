@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import has from 'lodash/has';
 
 import {
   clearAnimationOffset,
@@ -41,9 +42,7 @@ const Board = () => {
     [board, selectedSquare],
   );
 
-  const isLegalMove = useCallback(move => legalMoves.includes(move), [
-    legalMoves,
-  ]);
+  const isLegalMove = useCallback(move => has(legalMoves, move), [legalMoves]);
 
   const handleMove = useCallback(
     move => {

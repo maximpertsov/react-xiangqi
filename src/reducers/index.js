@@ -2,6 +2,8 @@ import { combineReducers } from 'redux';
 import { Color } from 'services/logic/constants';
 import { moveToSquares } from 'services/logic/square';
 
+import keys from 'lodash/keys';
+
 // Home
 import autoMove from './autoMove';
 import games from './games';
@@ -173,7 +175,7 @@ export const getTargets = state => {
   // TODO: this is undefined while legal moves are still being fetched
   if (legalMoves === undefined) return [];
 
-  return legalMoves.filter(
+  return keys(legalMoves).filter(
     move => moveToSquares(move)[0] === state.selectedSquare,
   );
 };
