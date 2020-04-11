@@ -2,6 +2,7 @@ import axios from 'axios';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import fetchGame from 'actions/fetchGame';
+import XiangqiBoard from 'services/logic';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -21,7 +22,7 @@ describe('fetch game', () => {
       Promise.resolve({
         data: {
           players: [],
-          moves: [{}, {}],
+          moves: [{ id: 1 }, { id: 2 }],
         },
       }),
     );
@@ -30,17 +31,21 @@ describe('fetch game', () => {
     await store.dispatch(fetchGame({ gameSlug }));
     expect(axios.get).toHaveBeenCalledWith(`game/${gameSlug}`);
 
+    // TODO: stub these
     const moveData = {
-      fen: undefined,
-      givesCheck: undefined,
-      legalMoves: undefined,
-      move: undefined,
+      board: new XiangqiBoard({ fen: undefined }),
       pending: false,
+      piece: null,
     };
     expect(store.getActions()).toEqual([
       { type: 'set_players', players: [] },
-      { type: 'add_move', moveId: 1, ...moveData },
-      { type: 'add_move', moveId: 2, ...moveData },
+      {
+        type: 'set_moves',
+        moves: [
+          { id: 1, ...moveData },
+          { id: 2, ...moveData },
+        ],
+      },
       { type: 'select_move', moveId: 2 },
     ]);
   });
