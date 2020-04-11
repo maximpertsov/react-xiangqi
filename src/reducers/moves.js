@@ -33,7 +33,7 @@ const nextBoardAndPiece = (state, action) => {
 
 const addMove = (state, action) => {
   const move = {
-    id: action.moveId,
+    id: state.length,
     givesCheck: action.givesCheck,
     fen: action.fen,
     legalMoves: action.legalMoves,
@@ -70,6 +70,10 @@ const setMove = (state, action) => {
   });
 };
 
+const setMoves = (state, action) => {
+  return action.moves.map((move, index) => ({ ...move, id: index }));
+};
+
 // eslint-disable-next-line complexity
 const moves = (state = [], action) => {
   switch (action.type) {
@@ -82,7 +86,7 @@ const moves = (state = [], action) => {
     case 'set_move':
       return setMove(state, action);
     case 'set_moves':
-      return action.moves;
+      return setMoves(state, action);
     default:
       return state;
   }
