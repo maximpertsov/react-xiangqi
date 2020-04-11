@@ -20,9 +20,8 @@ const transformFetchedMove = move => {
 };
 
 const updateMoves = (dispatch, { moves }) => {
-  const newMoves = moves.map(transformFetchedMove);
-  dispatch({ type: 'set_moves', moves: newMoves });
-  dispatch(selectMove({ moveId: newMoves[newMoves.length - 1].id }));
+  dispatch({ type: 'set_moves', moves: moves.map(transformFetchedMove) });
+  dispatch(selectMove({ moveId: moves.length - 1 }));
 };
 
 const fetchGame = ({ gameSlug }) => async dispatch => {
