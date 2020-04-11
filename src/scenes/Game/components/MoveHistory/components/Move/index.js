@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
+import { decode as decodeFen } from 'services/logic/fen';
+import { getMovedPiece } from 'services/logic/move';
 import { selectMove } from 'actions';
 import { Color } from 'services/logic/constants';
 
@@ -33,7 +35,7 @@ const moveText = ({ piece, move }) => {
   return `${P[piece]}${move}`;
 };
 
-const Move = ({ move, moveId, piece }) => {
+const Move = ({ fen, move, moveId }) => {
   const dispatch = useDispatch();
   const isSelected = useSelector(state => state.selectedMoveId === moveId);
 
@@ -41,7 +43,9 @@ const Move = ({ move, moveId, piece }) => {
     dispatch(selectMove({ moveId }));
   }, [dispatch, moveId]);
 
-  if (piece === null) return null;
+  if (move === null) return null;
+
+  const piece = getMovedPiece(decodeFen(fen).placement, move);
 
   return (
     <Wrapper
@@ -56,14 +60,13 @@ const Move = ({ move, moveId, piece }) => {
 };
 
 Move.propTypes = {
+  fen: PropTypes.string.isRequired,
   move: PropTypes.string,
   moveId: PropTypes.number.isRequired,
-  piece: PropTypes.string,
 };
 
 Move.defaultProps = {
   move: null,
-  piece: null,
 };
 
 export default Move;
