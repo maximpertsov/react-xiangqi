@@ -25,7 +25,7 @@ describe('moves reducer', () => {
     const action = { type: 'add_move', move };
 
     const nextMove = {
-      id: undefined,
+      id: 1,
       board: initialMove.board.move(move),
       fen: undefined,
       legalMoves: action.legalMoves,
@@ -40,7 +40,7 @@ describe('moves reducer', () => {
     const action = { type: 'add_move', fen: nextFen, move };
 
     const nextMove = {
-      id: undefined,
+      id: 1,
       board: new XiangqiBoard({ fen: nextFen }),
       fen: nextFen,
       givesCheck: undefined,
