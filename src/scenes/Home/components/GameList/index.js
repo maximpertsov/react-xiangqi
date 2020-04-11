@@ -24,7 +24,7 @@ const GameList = () => {
 
   return (
     <Wrapper className="GameList">
-      <Header size="Medium">Games in play</Header>
+      <Header size="medium">Games in play</Header>
       <GridWrapper>
         {gameSlugs.map(slug => (
           <GameLink key={slug} slug={slug} />

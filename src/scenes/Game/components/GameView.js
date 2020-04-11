@@ -25,6 +25,7 @@ const Wrapper = styled.div`
   justify-content: space-around;
 `;
 
+// eslint-disable-next-line complexity
 const GameView = () => {
   const hasInitialPlacement = useSelector(state =>
     getHasInitialPlacement(state),
