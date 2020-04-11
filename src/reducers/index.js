@@ -60,8 +60,12 @@ export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
 export const getIsLastMovePending = ({ moves }) =>
   fromMoves.getIsLastMovePending(moves);
 
-export const getSelectedMove = ({ moves, selectedMoveId }) =>
-  fromMoves.getMoveById(moves, selectedMoveId);
+export const getSelectedMove = ({ moves, selectedMoveId }) => {
+  const result = fromMoves.getMoveById(moves, selectedMoveId);
+  if (result) return result;
+
+  return getLastMove({ moves });
+};
 
 export const getPreviousMove = ({ moves, selectedMoveId }) =>
   fromMoves.getPreviousMove(moves, selectedMoveId);

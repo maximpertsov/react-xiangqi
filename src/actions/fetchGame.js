@@ -21,8 +21,6 @@ const transformFetchedMove = move => {
 
 const updateMoves = (dispatch, { moves }) => {
   const newMoves = moves.map(transformFetchedMove);
-  // HACK: deselect move during fetch
-  dispatch(selectMove({ moveId: 0 }));
   dispatch({ type: 'set_moves', moves: newMoves });
   dispatch(selectMove({ moveId: newMoves[newMoves.length - 1].id }));
 };

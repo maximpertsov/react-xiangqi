@@ -26,7 +26,7 @@ const pollMoves = ({
 
   const logs = [
     `Client update: ${updateCount}`,
-    `Server updates: ${data.updateCount}`,
+    `Server updates: ${data.update_count}`,
     `Next move player: ${nextMovePlayerName}`,
     `Username: ${username}`,
   ];

@@ -8,7 +8,7 @@ import { getMovedPiece, getMovingPiece } from 'services/logic/move';
 
 const getMoveIndex = (state, moveId) => {
   const moveIndex = sortedIndexBy(state, { id: moveId }, 'id');
-  if (state[moveIndex].id === moveId) return moveIndex;
+  if (state[moveIndex] && state[moveIndex].id === moveId) return moveIndex;
   return -1;
 };
 
