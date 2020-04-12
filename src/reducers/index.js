@@ -66,7 +66,7 @@ export const getIsLastMovePending = ({ moves }) =>
 
 export const getSelectedMove = ({ moves, selectedMoveId }) => {
   const result = fromMoves.getMoveById(moves, selectedMoveId);
-  if (result) return result;
+  if (result !== undefined) return result;
 
   return getLastMove({ moves });
 };
@@ -75,11 +75,11 @@ export const getSelectedBoard = state => {
   return new XiangqiBoard({ fen: getSelectedMove(state).fen });
 };
 
-export const getPreviousMove = ({ moves, selectedMoveId }) =>
-  fromMoves.getPreviousMove(moves, selectedMoveId);
+export const getPreviousMove = state =>
+  fromMoves.getPreviousMove(state.moves, getSelectedMove(state).id);
 
-export const getNextMove = ({ moves, selectedMoveId }) =>
-  fromMoves.getNextMove(moves, selectedMoveId);
+export const getNextMove = state =>
+  fromMoves.getNextMove(state.moves, getSelectedMove(state).id);
 
 export const getNextMoveColor = ({ moves }) =>
   fromMoves.getNextMoveColor(moves);

@@ -1,9 +1,8 @@
 import * as client from 'services/client';
 
 export const addMove = move => ({
-  ...move,
   type: 'add_move',
-  moveId: Infinity,
+  ...move,
 });
 
 export const setMove = ({ moveId, ...move }) => ({
@@ -18,10 +17,8 @@ export const selectMove = ({ moveId }) => ({
 });
 
 export const makeMove = move => dispatch => {
-  const addMoveAction = addMove(move);
-  const { moveId } = addMoveAction;
-  dispatch(addMoveAction);
-  dispatch(selectMove({ moveId }));
+  dispatch(addMove(move));
+  dispatch(selectMove({ moveId: null }));
 };
 
 export const cancelMoves = () => ({

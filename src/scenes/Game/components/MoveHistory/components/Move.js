@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 
 import { decode as decodeFen } from 'services/logic/fen';
 import { getMovedPiece } from 'services/logic/move';
+import { getSelectedMove } from 'reducers';
 import { selectMove } from 'actions';
 import { Color } from 'services/logic/constants';
 
@@ -37,7 +38,7 @@ const moveText = ({ piece, move }) => {
 
 const Move = ({ fen, move, moveId }) => {
   const dispatch = useDispatch();
-  const isSelected = useSelector(state => state.selectedMoveId === moveId);
+  const selectedMove = useSelector(state => getSelectedMove(state));
 
   const handleClick = useCallback(() => {
     dispatch(selectMove({ moveId }));
@@ -51,7 +52,7 @@ const Move = ({ fen, move, moveId }) => {
     <Wrapper
       className="Move"
       onClick={handleClick}
-      isSelected={isSelected}
+      isSelected={selectedMove.id === moveId}
       piece={piece}
     >
       {moveText({ move, piece })}

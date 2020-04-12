@@ -1,4 +1,5 @@
 export {
+  addMove,
   cancelMoves,
   confirmMoves,
   fetchInitialPlacement,
