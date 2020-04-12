@@ -13,7 +13,9 @@ import {
   getBottomPlayerIsRed,
   getLegalMoves,
   getSelectedBoard,
+  getSelectedMove,
 } from 'reducers';
+import { isOccupied } from 'services/logic/fen';
 import { squaresToMove } from 'services/logic/square';
 
 import BoardView from './components/BoardView';
@@ -25,6 +27,7 @@ const Board = () => {
 
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
   const board = useSelector(state => getSelectedBoard(state));
+  const { fen } = useSelector(state => getSelectedMove(state));
   const legalMoves = useSelector(state => getLegalMoves(state));
   const selectedSquare = useSelector(state => state.selectedSquare);
 
@@ -40,8 +43,8 @@ const Board = () => {
   const selectedCanCapture = useCallback(
     square => {
       if (selectedSquare === null) return false;
-      if (!board.isOccupied(selectedSquare)) return false;
-      if (!board.isOccupied(square)) return false;
+      if (!isOccupied({ fen, square: selectedSquare })) return false;
+      if (!isOccupied({ fen, square })) return false;
       return !board.sameColor(square, selectedSquare);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,7 +76,7 @@ const Board = () => {
     square => () => {
       if (square === selectedSquare) {
         dispatch(clearSelectedSlot());
-      } else if (board.isOccupied(square) && !selectedCanCapture(square)) {
+      } else if (isOccupied({ fen, square }) && !selectedCanCapture(square)) {
         dispatch(setSelectedSlot({ selectedSquare: square }));
       } else if (selectedSquare !== null) {
         handleMove(squaresToMove(selectedSquare, square));
