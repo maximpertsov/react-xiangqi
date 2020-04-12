@@ -1,4 +1,5 @@
 import XiangiBoard from 'services/logic';
+import { Color } from 'services/logic/constants';
 
 describe('board', () => {
   // TODO: mock fen decoding
@@ -9,6 +10,11 @@ describe('board', () => {
   test('get piece', () => {
     expect(board.getPiece('a10')).toBe('r');
     expect(board.getPiece('a9')).toBe(null);
+  });
+
+  test('is occupied', () => {
+    expect(board.isOccupied('a10')).toBe(true);
+    expect(board.isOccupied('a9')).toBe(false);
   });
 
   test('is same color', () => {
@@ -33,4 +39,21 @@ describe('board', () => {
     expect(newBoard.activeKing()).toBe('e10');
   });
 
+  test('move', () => {
+    expect(board.activeColor).toBe(Color.RED);
+    expect(board.getPiece('a10')).toBe('r');
+    expect(board.getPiece('a9')).toBe(null);
+
+    const newBoard = board.move('a10a9');
+
+    // Initial board did not change
+    expect(board.activeColor).toBe(Color.RED);
+    expect(board.getPiece('a10')).toBe('r');
+    expect(board.getPiece('a9')).toBe(null);
+
+    // Rook has moved forward on new board
+    expect(newBoard.activeColor).toBe(Color.BLACK);
+    expect(newBoard.getPiece('a10')).toBe(null);
+    expect(newBoard.getPiece('a9')).toBe('r');
+  });
 });
