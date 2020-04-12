@@ -1,7 +1,11 @@
 import zipObject from 'lodash/zipObject';
 import update from 'lodash/update';
 import { Color } from 'services/logic/constants';
-import { decode as decodeSquare } from './square';
+import {
+  decode as decodeSquare,
+  encode as encodeSquare,
+} from 'services/logic/square';
+import { sameColor as sameColorPieces } from 'services/logic/utils';
 
 const FEN_FIELDS = [
   'placement',
@@ -49,10 +53,41 @@ export const decode = fen => {
   return result;
 };
 
-export const isOccupied = ({ fen, square }) => {
+export const isOccupied = (fen, square) => {
   const slot = decodeSquare(square);
 
   return decode(fen).placement[slot] !== null;
+};
+
+export const getPiece = (fen, square) => {
+  return decode(fen).placement[decodeSquare(square)];
+};
+
+export const sameColor = (fen, square1, square2) => {
+  const piece1 = getPiece(fen, square1);
+  const piece2 = getPiece(fen, square2);
+
+  return sameColorPieces(piece1, piece2);
+};
+
+export const activeKing = fen => {
+  const decodedFen = decode(fen);
+  let king = undefined;
+
+  switch (decodedFen.activeColor) {
+    case Color.RED:
+      king = 'K';
+      break;
+    case Color.BLACK:
+      king = 'k';
+      break;
+    default:
+      // TODO: throw error
+      return;
+  }
+
+  const kingSlot = decodedFen.placement.indexOf(king);
+  return encodeSquare(kingSlot);
 };
 
 export default {};

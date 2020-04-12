@@ -9,11 +9,8 @@ import {
   setAnimationOffset,
   setSelectedSlot,
 } from 'actions';
-import {
-  getBottomPlayerIsRed,
-  getLegalMoves,
-  getSelectedBoard,
-} from 'reducers';
+import { getBottomPlayerIsRed, getLegalMoves, getSelectedMove } from 'reducers';
+import { isOccupied, sameColor } from 'services/logic/fen';
 import { squaresToMove } from 'services/logic/square';
 
 import BoardView from './components/BoardView';
@@ -24,7 +21,7 @@ const Board = () => {
   const dispatch = useDispatch();
 
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
-  const board = useSelector(state => getSelectedBoard(state));
+  const { fen } = useSelector(state => getSelectedMove(state));
   const legalMoves = useSelector(state => getLegalMoves(state));
   const selectedSquare = useSelector(state => state.selectedSquare);
 
@@ -40,17 +37,19 @@ const Board = () => {
   const selectedCanCapture = useCallback(
     square => {
       if (selectedSquare === null) return false;
-      if (!board.isOccupied(selectedSquare)) return false;
-      if (!board.isOccupied(square)) return false;
-      return !board.sameColor(square, selectedSquare);
+      if (!isOccupied(fen, selectedSquare)) return false;
+      if (!isOccupied(fen, square)) return false;
+
+      return !sameColor(fen, square, selectedSquare);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedSquare],
+    [fen, selectedSquare],
   );
 
-  const legalFen = useCallback(move => get(legalMoves, move, false), [
-    legalMoves,
-  ]);
+  const legalFen = useCallback(
+    move => get(legalMoves, move, false),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fen, selectedSquare],
+  );
 
   const handleMove = useCallback(
     move => {
@@ -73,7 +72,7 @@ const Board = () => {
     square => () => {
       if (square === selectedSquare) {
         dispatch(clearSelectedSlot());
-      } else if (board.isOccupied(square) && !selectedCanCapture(square)) {
+      } else if (isOccupied(fen, square) && !selectedCanCapture(square)) {
         dispatch(setSelectedSlot({ selectedSquare: square }));
       } else if (selectedSquare !== null) {
         handleMove(squaresToMove(selectedSquare, square));
@@ -81,8 +80,7 @@ const Board = () => {
         dispatch(clearSelectedSlot());
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, handleMove, selectedCanCapture, selectedSquare],
+    [dispatch, fen, handleMove, selectedCanCapture, selectedSquare],
   );
 
   return <BoardView handleSquareClick={handleSquareClick} />;
