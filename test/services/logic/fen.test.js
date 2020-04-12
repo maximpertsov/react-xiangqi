@@ -46,20 +46,20 @@ describe('fen functions', () => {
     expect(isOccupied(fen, 'a10')).toBe(true);
     expect(isOccupied(fen, 'a9')).toBe(false);
   });
-  //
-  // test('is same color', () => {
-  //   // two black pieces
-  //   expect(sameColor(fen, 'a10', 'b10')).toBe(true);
-  //   // Two red pieces
-  //   expect(sameColor(fen, 'a1', 'b1')).toBe(true);
-  //   // black and red piece
-  //   expect(sameColor(fen, 'a10', 'a1')).toBe(false);
-  //   // black and unoccupied
-  //   expect(sameColor(fen, 'a10', 'a9')).toBe(false);
-  //   // two unoccupied squares
-  //   expect(sameColor(fen, 'a9', 'b9')).toBe(false);
-  // });
-  //
+
+  test('is same color', () => {
+    // two black pieces
+    expect(sameColor(fen, 'a10', 'b10')).toBe(true);
+    // Two red pieces
+    expect(sameColor(fen, 'a1', 'b1')).toBe(true);
+    // black and red piece
+    expect(sameColor(fen, 'a10', 'a1')).toBe(false);
+    // black and unoccupied
+    expect(sameColor(fen, 'a10', 'a9')).toBe(false);
+    // two unoccupied squares
+    expect(sameColor(fen, 'a9', 'b9')).toBe(false);
+  });
+
   // test('is active king', () => {
   //   expect(activeKing(fen)).toBe('e1');
   //

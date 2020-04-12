@@ -9,13 +9,8 @@ import {
   setAnimationOffset,
   setSelectedSlot,
 } from 'actions';
-import {
-  getBottomPlayerIsRed,
-  getLegalMoves,
-  getSelectedBoard,
-  getSelectedMove,
-} from 'reducers';
-import { isOccupied } from 'services/logic/fen';
+import { getBottomPlayerIsRed, getLegalMoves, getSelectedMove } from 'reducers';
+import { isOccupied, sameColor } from 'services/logic/fen';
 import { squaresToMove } from 'services/logic/square';
 
 import BoardView from './components/BoardView';
@@ -26,7 +21,6 @@ const Board = () => {
   const dispatch = useDispatch();
 
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
-  const board = useSelector(state => getSelectedBoard(state));
   const { fen } = useSelector(state => getSelectedMove(state));
   const legalMoves = useSelector(state => getLegalMoves(state));
   const selectedSquare = useSelector(state => state.selectedSquare);
@@ -45,10 +39,9 @@ const Board = () => {
       if (selectedSquare === null) return false;
       if (!isOccupied(fen, selectedSquare)) return false;
       if (!isOccupied(fen, square)) return false;
-      return !board.sameColor(square, selectedSquare);
+      return !sameColor(fen, square, selectedSquare);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedSquare],
+    [fen, selectedSquare],
   );
 
   const legalFen = useCallback(move => get(legalMoves, move, false), [
