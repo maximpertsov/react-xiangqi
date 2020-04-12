@@ -6,15 +6,14 @@ import { useSelector } from 'react-redux';
 import {
   getBottomPlayerIsRed,
   getIsMoving,
-  getSelectedBoard,
   getSelectedMove,
   getTargets,
 } from 'reducers';
 
 import { MediaQuery, SquareSize } from 'commonStyles';
 
-import { activeKing, getPiece } from 'services/logic/fen';
-import { encode, moveToSquares } from 'services/logic/square';
+import { activeKing, decode as decodeFen, getPiece } from 'services/logic/fen';
+import { encode as encodeSquare, moveToSquares } from 'services/logic/square';
 
 import Square from './components/Square';
 import Piece from './components/Piece';
@@ -56,7 +55,6 @@ const BoardView = ({ handleSquareClick }) => {
   const { fen, move: selectedMove, givesCheck } = useSelector(state =>
     getSelectedMove(state),
   );
-  const board = useSelector(state => getSelectedBoard(state));
   const isMoving = useSelector(state => getIsMoving(state));
   const [moveX, moveY] = useSelector(state => state.animationOffset);
 
@@ -115,9 +113,9 @@ const BoardView = ({ handleSquareClick }) => {
 
   /* eslint-disable complexity */
   const renderSquares = () =>
-    board.placement.map((_, i, slots) => {
+    decodeFen(fen).placement.map((_, i, slots) => {
       const slot = getSlot(slots, i);
-      const square = encode(slot);
+      const square = encodeSquare(slot);
       return (
         <Square
           className="Square"

@@ -4,8 +4,6 @@ import { moveToSquares } from 'services/logic/square';
 
 import keys from 'lodash/keys';
 
-import XiangqiBoard from 'services/logic';
-
 // Home
 import autoMove from './autoMove';
 import games from './games';
@@ -69,10 +67,6 @@ export const getSelectedMove = ({ moves, selectedMoveId }) => {
   if (result !== undefined) return result;
 
   return getLastMove({ moves });
-};
-
-export const getSelectedBoard = state => {
-  return new XiangqiBoard({ fen: getSelectedMove(state).fen });
 };
 
 export const getPreviousMove = state =>
