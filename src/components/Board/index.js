@@ -43,8 +43,8 @@ const Board = () => {
   const selectedCanCapture = useCallback(
     square => {
       if (selectedSquare === null) return false;
-      if (!isOccupied({ fen, square: selectedSquare })) return false;
-      if (!isOccupied({ fen, square })) return false;
+      if (!isOccupied(fen, selectedSquare)) return false;
+      if (!isOccupied(fen, square)) return false;
       return !board.sameColor(square, selectedSquare);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,7 +76,7 @@ const Board = () => {
     square => () => {
       if (square === selectedSquare) {
         dispatch(clearSelectedSlot());
-      } else if (isOccupied({ fen, square }) && !selectedCanCapture(square)) {
+      } else if (isOccupied(fen, square) && !selectedCanCapture(square)) {
         dispatch(setSelectedSlot({ selectedSquare: square }));
       } else if (selectedSquare !== null) {
         handleMove(squaresToMove(selectedSquare, square));

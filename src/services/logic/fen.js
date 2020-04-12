@@ -49,7 +49,7 @@ export const decode = fen => {
   return result;
 };
 
-export const isOccupied = ({ fen, square }) => {
+export const isOccupied = (fen, square) => {
   const slot = decodeSquare(square);
 
   return decode(fen).placement[slot] !== null;
