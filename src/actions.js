@@ -7,7 +7,6 @@ export {
   makeMove,
   postMove,
   selectMove,
-  toggleLoading,
 } from 'scenes/Game/actions';
 
 export {

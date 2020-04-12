@@ -12,7 +12,6 @@ import loginForm from './loginForm';
 import showGame from './showGame';
 import username from './username';
 // Game
-import loading from './loading';
 import moves, * as fromMoves from './moves';
 import players from './players';
 import requestedTakeback from './requestedTakeback';
@@ -32,7 +31,6 @@ const rootReducer = combineReducers({
   showGame,
   username,
   // Game
-  loading,
   moves,
   players,
   requestedTakeback,

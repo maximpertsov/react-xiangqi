@@ -29,11 +29,6 @@ export const confirmMoves = () => ({
   type: 'confirm_moves',
 });
 
-export const toggleLoading = ({ loading }) => ({
-  type: 'toggle_loading',
-  loading,
-});
-
 // TODO: util?
 export const transformFetchedMove = ({
   fen,
