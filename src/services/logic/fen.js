@@ -55,4 +55,8 @@ export const isOccupied = (fen, square) => {
   return decode(fen).placement[slot] !== null;
 };
 
+export const getPiece = (fen, square) => {
+  return decode(fen).placement[decodeSquare(square)];
+};
+
 export default {};

@@ -12,6 +12,7 @@ import {
 } from 'reducers';
 
 import { MediaQuery, SquareSize } from 'commonStyles';
+import { getPiece } from 'services/logic/fen';
 import { encode, moveToSquares } from 'services/logic/square';
 
 import Square from './components/Square';
@@ -59,8 +60,7 @@ const BoardView = ({ handleSquareClick }) => {
   const [moveX, moveY] = useSelector(state => state.animationOffset);
 
   const getPieceCode = useCallback(
-    square => board.getPiece(square) || undefined,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    square => getPiece(fen, square) || undefined,
     [fen],
   );
 

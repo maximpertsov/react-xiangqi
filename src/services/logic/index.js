@@ -11,10 +11,6 @@ export default class XiangqiBoard {
     this.activeColor = params.activeColor;
   }
 
-  getPiece(square) {
-    return this.placement[decodeSquare(square)];
-  }
-
   sameColor(square1, square2) {
     const slot1 = decodeSquare(square1);
     const slot2 = decodeSquare(square2);
