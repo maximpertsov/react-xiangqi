@@ -37,6 +37,12 @@ export default class XiangqiBoard {
     return sameColor(piece1, piece2);
   }
 
+  isOccupied(square) {
+    const slot = decodeSquare(square);
+
+    return this.placement[slot] !== null;
+  }
+
   activeKing() {
     let king = undefined;
 
