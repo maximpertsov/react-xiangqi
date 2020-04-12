@@ -1,6 +1,5 @@
 import flatten from 'lodash/flatten';
 import {
-  activeColor,
   activeKing,
   decode,
   getPiece,
@@ -60,20 +59,11 @@ describe('fen functions', () => {
     expect(sameColor(fen, 'a9', 'b9')).toBe(false);
   });
 
-  // test('is active king', () => {
-  //   expect(activeKing(fen)).toBe('e1');
-  //
-  //   const newFen =
-  //     '1nbakabnr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR b - - 0 1';
-  //   expect(activeKing(newFen)).toBe('e10');
-  // });
-  //
-  // test('activeColor', () => {
-  //   expect(activeColor(fen)).toBe(Color.RED);
-  //
-  //   const newFen =
-  //     '1nbakabnr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR b - - 0 1';
-  //
-  //   expect(getPiece(newFen, 'a9')).toBe('r');
-  // });
+  test('is active king', () => {
+    expect(activeKing(fen)).toBe('e1');
+
+    const newFen =
+      '1nbakabnr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR b - - 0 1';
+    expect(activeKing(newFen)).toBe('e10');
+  });
 });

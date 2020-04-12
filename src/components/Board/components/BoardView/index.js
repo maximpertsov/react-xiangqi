@@ -12,7 +12,8 @@ import {
 } from 'reducers';
 
 import { MediaQuery, SquareSize } from 'commonStyles';
-import { getPiece } from 'services/logic/fen';
+
+import { activeKing, getPiece } from 'services/logic/fen';
 import { encode, moveToSquares } from 'services/logic/square';
 
 import Square from './components/Square';
@@ -79,8 +80,7 @@ const BoardView = ({ handleSquareClick }) => {
   );
 
   const kingIsInCheck = useCallback(
-    square => givesCheck && board.activeKing() === square,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    square => givesCheck && activeKing(fen) === square,
     [fen, givesCheck],
   );
 
