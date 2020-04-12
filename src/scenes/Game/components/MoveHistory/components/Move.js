@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
+import { decode as decodeFen } from 'services/logic/fen';
+import { getMovedPiece } from 'services/logic/move';
+import { getSelectedMove } from 'reducers';
 import { selectMove } from 'actions';
 import { Color } from 'services/logic/constants';
 
@@ -33,21 +36,23 @@ const moveText = ({ piece, move }) => {
   return `${P[piece]}${move}`;
 };
 
-const Move = ({ move, moveId, piece }) => {
+const Move = ({ fen, move, moveId }) => {
   const dispatch = useDispatch();
-  const isSelected = useSelector(state => state.selectedMoveId === moveId);
+  const selectedMove = useSelector(state => getSelectedMove(state));
 
   const handleClick = useCallback(() => {
     dispatch(selectMove({ moveId }));
   }, [dispatch, moveId]);
 
-  if (piece === null) return null;
+  if (move === null) return null;
+
+  const piece = getMovedPiece(decodeFen(fen).placement, move);
 
   return (
     <Wrapper
       className="Move"
       onClick={handleClick}
-      isSelected={isSelected}
+      isSelected={selectedMove.id === moveId}
       piece={piece}
     >
       {moveText({ move, piece })}
@@ -56,9 +61,13 @@ const Move = ({ move, moveId, piece }) => {
 };
 
 Move.propTypes = {
-  move: PropTypes.string.isRequired,
+  fen: PropTypes.string.isRequired,
+  move: PropTypes.string,
   moveId: PropTypes.number.isRequired,
-  piece: PropTypes.string.isRequired,
+};
+
+Move.defaultProps = {
+  move: null,
 };
 
 export default Move;

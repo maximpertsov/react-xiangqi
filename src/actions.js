@@ -1,7 +1,7 @@
 export {
+  addMove,
   cancelMoves,
   confirmMoves,
-  fetchGame,
   fetchInitialPlacement,
   fetchMoveInfo,
   makeMove,

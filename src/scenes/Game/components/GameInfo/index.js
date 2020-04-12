@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
-import { getHasLegalMoves, getNextMovePlayer, getUserColor } from 'reducers';
+import { getLastMove, getNextMovePlayer, getUserColor } from 'reducers';
 
 // TODO: since this style also appears in the Player component,
 // TODO: consider moving to commonStyles or shared scss?
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 `;
 
 const GameInfo = () => {
-  const hasLegalMoves = useSelector(state => getHasLegalMoves(state));
+  const lastMove = useSelector(state => getLastMove(state));
   const nextMovePlayer = useSelector(state => getNextMovePlayer(state));
   const userColor = useSelector(state => getUserColor(state));
 
@@ -25,12 +25,14 @@ const GameInfo = () => {
 
   const loadingUser = () => userColor === undefined;
 
+  // eslint-disable-next-line complexity
   const getMessage = () => {
     if (loadingUser()) {
       const { color } = nextMovePlayer;
       return `${color}'s turn`;
     }
-    if (!hasLegalMoves) {
+    // TODO: get this from the server
+    if (lastMove.legalMoves && lastMove.legalMoves.length === 0) {
       // TODO: specify if won by stalemate or checkmate
       return userIsActive() ? 'You lose!' : 'You win!';
     }

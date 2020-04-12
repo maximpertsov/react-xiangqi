@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Button, Dimmer, Icon, Loader, Segment } from 'semantic-ui-react';
 import {
   getCurrentPlayer,
+  getHasInitialPlacement,
   getIsLastMovePending,
   getOtherPlayer,
 } from 'reducers';
@@ -24,8 +25,11 @@ const Wrapper = styled.div`
   justify-content: space-around;
 `;
 
+// eslint-disable-next-line complexity
 const GameView = () => {
-  const movesFetched = useSelector(state => state.movesFetched);
+  const hasInitialPlacement = useSelector(state =>
+    getHasInitialPlacement(state),
+  );
   const isLastMovePending = useSelector(state => getIsLastMovePending(state));
   const currentPlayer = useSelector(state => getCurrentPlayer(state));
   const otherPlayer = useSelector(state => getOtherPlayer(state));
@@ -43,19 +47,21 @@ const GameView = () => {
   );
 
   return (
-    <Dimmer.Dimmable as={Segment} basic blurring dimmed={!movesFetched}>
-      <Dimmer active={!movesFetched} page>
+    <Dimmer.Dimmable as={Segment} basic blurring dimmed={!hasInitialPlacement}>
+      <Dimmer active={!hasInitialPlacement} page>
         <Loader>Loading</Loader>
       </Dimmer>
-      <Wrapper className="Game">
-        <Player {...otherPlayer} />
-        <Board legalMoves />
-        <ConfirmMoveMenu />
-        {!isLastMovePending && renderActionsMenu()}
-        {!isLastMovePending && <Player {...currentPlayer} />}
-        {!isLastMovePending && <GameInfo hasLegalMoves />}
-        {!isLastMovePending && <MoveHistory />}
-      </Wrapper>
+      {hasInitialPlacement && (
+        <Wrapper className="Game">
+          <Player {...otherPlayer} />
+          <Board legalMoves />
+          <ConfirmMoveMenu />
+          {!isLastMovePending && renderActionsMenu()}
+          {!isLastMovePending && <Player {...currentPlayer} />}
+          {!isLastMovePending && <GameInfo hasLegalMoves />}
+          {!isLastMovePending && <MoveHistory />}
+        </Wrapper>
+      )}
     </Dimmer.Dimmable>
   );
 };

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
 import sample from 'lodash/sample';
+import toPairs from 'lodash/toPairs';
 
 import { makeMove, selectMove } from 'actions';
 import {
@@ -25,11 +26,12 @@ const GameInteraction = () => {
         if (lastMove.legalMoves === undefined) return;
         if (!autoMove.includes(nextMoveColor)) return;
 
-        const randomMove = sample(lastMove.legalMoves);
-        dispatch(makeMove({ move: randomMove, pending: false }));
+        const [move, fen] = sample(toPairs(lastMove.legalMoves));
+        dispatch(makeMove({ move, fen, pending: false }));
       }, 1000);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // TODO: update on simpler data
     [autoMove, dispatch, lastMove.legalMoves, nextMoveColor],
   );
 

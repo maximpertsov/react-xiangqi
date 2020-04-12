@@ -7,10 +7,10 @@ const initialPlayers = [
 
 const players = (state = initialPlayers, action) => {
   switch (action.type) {
-  case 'set_players':
-    return action.players;
-  default:
-    return state;
+    case 'set_players':
+      return action.players;
+    default:
+      return state;
   }
 };
 

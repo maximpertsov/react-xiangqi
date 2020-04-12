@@ -2,6 +2,8 @@ import { combineReducers } from 'redux';
 import { Color } from 'services/logic/constants';
 import { moveToSquares } from 'services/logic/square';
 
+import keys from 'lodash/keys';
+
 // Home
 import autoMove from './autoMove';
 import games from './games';
@@ -60,14 +62,18 @@ export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
 export const getIsLastMovePending = ({ moves }) =>
   fromMoves.getIsLastMovePending(moves);
 
-export const getSelectedMove = ({ moves, selectedMoveId }) =>
-  fromMoves.getMoveById(moves, selectedMoveId);
+export const getSelectedMove = ({ moves, selectedMoveId }) => {
+  const result = fromMoves.getMoveById(moves, selectedMoveId);
+  if (result !== undefined) return result;
 
-export const getPreviousMove = ({ moves, selectedMoveId }) =>
-  fromMoves.getPreviousMove(moves, selectedMoveId);
+  return getLastMove({ moves });
+};
 
-export const getNextMove = ({ moves, selectedMoveId }) =>
-  fromMoves.getNextMove(moves, selectedMoveId);
+export const getPreviousMove = state =>
+  fromMoves.getPreviousMove(state.moves, getSelectedMove(state).id);
+
+export const getNextMove = state =>
+  fromMoves.getNextMove(state.moves, getSelectedMove(state).id);
 
 export const getNextMoveColor = ({ moves }) =>
   fromMoves.getNextMoveColor(moves);
@@ -84,6 +90,15 @@ const lookupPlayer = (players, key, value) =>
 
 export const getNextMovePlayer = ({ players, moves }) =>
   lookupPlayer(players, 'color', getNextMoveColor({ moves }));
+
+export const getNextMovePlayerName = ({ players, moves }) => {
+  try {
+    return getNextMovePlayer({ players, moves }).name;
+  } catch (e) {
+    if (e instanceof TypeError) return undefined;
+    throw e;
+  }
+};
 
 const getUserPlayer = ({ players, username }) =>
   lookupPlayer(players, 'name', username);
@@ -146,7 +161,7 @@ export const getLegalMoves = state => {
   // TODO: for now we can assume that legal moves are only allowed for the
   // latest move. However, this will change if we ever implement an analysis
   // board-style function.
-  if (lastMoveId !== state.selectedMoveId) return [];
+  if (lastMoveId !== getSelectedMove(state).id) return [];
   if (!state.canMoveBothColors && currentPlayerColor !== nextMoveColor) {
     return [];
   }
@@ -160,14 +175,9 @@ export const getTargets = state => {
   // TODO: this is undefined while legal moves are still being fetched
   if (legalMoves === undefined) return [];
 
-  return legalMoves.filter(
+  return keys(legalMoves).filter(
     move => moveToSquares(move)[0] === state.selectedSquare,
   );
-};
-
-export const getHasLegalMoves = state => {
-  const { legalMoves } = getLastMove(state);
-  return legalMoves && legalMoves.length > 0;
 };
 
 /********************/

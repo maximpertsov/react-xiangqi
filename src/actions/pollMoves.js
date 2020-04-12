@@ -1,10 +1,10 @@
-import * as client from 'services/client';
-import fetchMoves from 'actions/fetchMoves';
+import { poll } from 'services/client';
+import fetchGame from 'actions/fetchGame';
 
-const canUpdateMoves = ({ gameSlug, nextMovePlayer, username }) => {
+const canUpdateMoves = ({ gameSlug, nextMovePlayerName, username }) => {
   if (gameSlug === null) return false;
   if (username === null) return false;
-  if (username === nextMovePlayer) return false;
+  if (username === nextMovePlayerName) return false;
 
   return true;
 };
@@ -16,21 +16,17 @@ const setUpdateCount = ({ updateCount }) => ({
 
 const pollMoves = ({
   gameSlug,
-  moves,
-  nextMovePlayer,
+  nextMovePlayerName,
   updateCount,
   username,
 }) => async dispatch => {
-  if (!canUpdateMoves({ gameSlug, nextMovePlayer, username })) return;
+  if (!canUpdateMoves({ gameSlug, nextMovePlayerName, username })) return;
 
-  const {
-    data: { update_count: fetchedUpdateCount },
-  } = await client.poll({ gameSlug });
+  const { data } = await poll({ gameSlug });
+  if (updateCount >= data.update_count) return;
 
-  if (updateCount >= fetchedUpdateCount) return;
-
-  dispatch(setUpdateCount({ updateCount: fetchedUpdateCount }));
-  dispatch(fetchMoves({ gameSlug, moves }));
+  dispatch(setUpdateCount({ updateCount: data.update_count }));
+  dispatch(fetchGame({ gameSlug }));
 };
 
 export default pollMoves;

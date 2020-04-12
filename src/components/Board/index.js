@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import get from 'lodash/get';
 
 import {
   clearAnimationOffset,
@@ -9,6 +10,7 @@ import {
   setSelectedSlot,
 } from 'actions';
 import { getBottomPlayerIsRed, getLegalMoves, getSelectedMove } from 'reducers';
+import { isOccupied, sameColor } from 'services/logic/fen';
 import { squaresToMove } from 'services/logic/square';
 
 import BoardView from './components/BoardView';
@@ -17,10 +19,11 @@ const ANIMATION_DELAY = 150;
 
 const Board = () => {
   const dispatch = useDispatch();
+
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
+  const { fen } = useSelector(state => getSelectedMove(state));
   const legalMoves = useSelector(state => getLegalMoves(state));
   const selectedSquare = useSelector(state => state.selectedSquare);
-  const { board } = useSelector(state => getSelectedMove(state));
 
   useEffect(
     () => {
@@ -28,29 +31,33 @@ const Board = () => {
     },
     // TODO: is it too expensive to check if the board changes?
     // Can I key on another prop update?
-    [board, dispatch],
+    [dispatch],
   );
 
   const selectedCanCapture = useCallback(
     square => {
       if (selectedSquare === null) return false;
-      if (!board.isOccupied(selectedSquare)) return false;
-      if (!board.isOccupied(square)) return false;
-      return !board.sameColor(square, selectedSquare);
+      if (!isOccupied(fen, selectedSquare)) return false;
+      if (!isOccupied(fen, square)) return false;
+
+      return !sameColor(fen, square, selectedSquare);
     },
-    [board, selectedSquare],
+    [fen, selectedSquare],
   );
 
-  const isLegalMove = useCallback(move => legalMoves.includes(move), [
-    legalMoves,
-  ]);
+  const legalFen = useCallback(
+    move => get(legalMoves, move, false),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fen, selectedSquare],
+  );
 
   const handleMove = useCallback(
     move => {
-      if (isLegalMove(move)) {
+      const fen = legalFen(move);
+      if (fen) {
         dispatch(setAnimationOffset({ bottomPlayerIsRed, move }));
         setTimeout(() => {
-          dispatch(makeMove({ move, pending: true }));
+          dispatch(makeMove({ fen, move, pending: true }));
           dispatch(clearAnimationOffset());
           dispatch(clearSelectedSlot());
         }, ANIMATION_DELAY);
@@ -58,14 +65,14 @@ const Board = () => {
         dispatch(clearSelectedSlot());
       }
     },
-    [bottomPlayerIsRed, dispatch, isLegalMove],
+    [bottomPlayerIsRed, dispatch, legalFen],
   );
 
   const handleSquareClick = useCallback(
     square => () => {
       if (square === selectedSquare) {
         dispatch(clearSelectedSlot());
-      } else if (board.isOccupied(square) && !selectedCanCapture(square)) {
+      } else if (isOccupied(fen, square) && !selectedCanCapture(square)) {
         dispatch(setSelectedSlot({ selectedSquare: square }));
       } else if (selectedSquare !== null) {
         handleMove(squaresToMove(selectedSquare, square));
@@ -73,7 +80,7 @@ const Board = () => {
         dispatch(clearSelectedSlot());
       }
     },
-    [board, dispatch, handleMove, selectedCanCapture, selectedSquare],
+    [dispatch, fen, handleMove, selectedCanCapture, selectedSquare],
   );
 
   return <BoardView handleSquareClick={handleSquareClick} />;

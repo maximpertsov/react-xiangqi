@@ -52,7 +52,7 @@ initialize {
                     "children": Array [
                       Object {
                         "attribs": Object {
-                          "class": "ui Medium header",
+                          "class": "ui medium header",
                         },
                         "children": Array [
                           Object {
@@ -104,7 +104,7 @@ initialize {
                         "parent": [Circular],
                         "prev": Object {
                           "attribs": Object {
-                            "class": "ui Medium header",
+                            "class": "ui medium header",
                           },
                           "children": Array [
                             Object {
@@ -186,7 +186,7 @@ initialize {
                   "children": Array [
                     Object {
                       "attribs": Object {
-                        "class": "ui Medium header",
+                        "class": "ui medium header",
                       },
                       "children": Array [
                         Object {
@@ -238,7 +238,7 @@ initialize {
                       "parent": [Circular],
                       "prev": Object {
                         "attribs": Object {
-                          "class": "ui Medium header",
+                          "class": "ui medium header",
                         },
                         "children": Array [
                           Object {
@@ -322,7 +322,7 @@ initialize {
                 "children": Array [
                   Object {
                     "attribs": Object {
-                      "class": "ui Medium header",
+                      "class": "ui medium header",
                     },
                     "children": Array [
                       Object {
@@ -374,7 +374,7 @@ initialize {
                     "parent": [Circular],
                     "prev": Object {
                       "attribs": Object {
-                        "class": "ui Medium header",
+                        "class": "ui medium header",
                       },
                       "children": Array [
                         Object {
@@ -1354,7 +1354,7 @@ initialize {
                       "children": Array [
                         Object {
                           "attribs": Object {
-                            "class": "ui Medium header",
+                            "class": "ui medium header",
                           },
                           "children": Array [
                             Object {
@@ -1406,7 +1406,7 @@ initialize {
                           "parent": [Circular],
                           "prev": Object {
                             "attribs": Object {
-                              "class": "ui Medium header",
+                              "class": "ui medium header",
                             },
                             "children": Array [
                               Object {
@@ -1488,7 +1488,7 @@ initialize {
                     "children": Array [
                       Object {
                         "attribs": Object {
-                          "class": "ui Medium header",
+                          "class": "ui medium header",
                         },
                         "children": Array [
                           Object {
@@ -1540,7 +1540,7 @@ initialize {
                         "parent": [Circular],
                         "prev": Object {
                           "attribs": Object {
-                            "class": "ui Medium header",
+                            "class": "ui medium header",
                           },
                           "children": Array [
                             Object {
@@ -1624,7 +1624,7 @@ initialize {
                   "children": Array [
                     Object {
                       "attribs": Object {
-                        "class": "ui Medium header",
+                        "class": "ui medium header",
                       },
                       "children": Array [
                         Object {
@@ -1676,7 +1676,7 @@ initialize {
                       "parent": [Circular],
                       "prev": Object {
                         "attribs": Object {
-                          "class": "ui Medium header",
+                          "class": "ui medium header",
                         },
                         "children": Array [
                           Object {
