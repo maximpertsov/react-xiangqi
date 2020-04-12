@@ -48,7 +48,7 @@ const Board = () => {
   const legalFen = useCallback(
     move => get(legalMoves, move, false),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [fen],
+    [fen, selectedSquare],
   );
 
   const handleMove = useCallback(
