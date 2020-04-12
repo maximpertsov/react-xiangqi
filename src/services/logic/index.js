@@ -1,27 +1,14 @@
 import { Color } from './constants';
 import { sameColor } from './utils';
 import { decode as decodeFen } from './fen';
-import { makeMove } from './move';
 import { decode as decodeSquare, encode as encodeSquare } from './square';
 
 export default class XiangqiBoard {
-  constructor({ fen, ...options }) {
-    const params = fen === undefined ? options : decodeFen(fen);
+  constructor({ fen }) {
+    const params = decodeFen(fen);
+
     this.placement = params.placement;
     this.activeColor = params.activeColor;
-  }
-
-  move(move) {
-    return this.new({
-      placement: makeMove(this.placement, move),
-      activeColor: this.activeColor === Color.RED ? Color.BLACK : Color.RED,
-    });
-  }
-
-  new(options) {
-    return new this.constructor(
-      options === undefined ? { ...this } : { ...options },
-    );
   }
 
   getPiece(square) {
