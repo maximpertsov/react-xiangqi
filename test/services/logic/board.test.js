@@ -29,9 +29,9 @@ describe('board', () => {
     expect(sameColor(fen, 'a1', 'b1')).toBe(true);
     // black and red piece
     expect(sameColor(fen, 'a10', 'a1')).toBe(false);
-    // black and unoccupiedfen,
+    // black and unoccupied
     expect(sameColor(fen, 'a10', 'a9')).toBe(false);
-    // two unoccupied squarfen, es
+    // two unoccupied squares
     expect(sameColor(fen, 'a9', 'b9')).toBe(false);
   });
 
@@ -52,8 +52,8 @@ describe('board', () => {
       '1nbakabnr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR b - - 0 1';
 
     // Rook has moved forward on new board
-    expect(activeColor(fen)).toBe(Color.BLACK);
-    expect(getPiece(fen, 'a10')).toBe(null);
-    expect(getPiece(fen, 'a9')).toBe('r');
+    expect(activeColor(newFen)).toBe(Color.BLACK);
+    expect(getPiece(newFen, 'a10')).toBe(null);
+    expect(getPiece(newFen, 'a9')).toBe('r');
   });
 });
