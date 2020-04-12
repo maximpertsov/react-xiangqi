@@ -39,14 +39,17 @@ const Board = () => {
       if (selectedSquare === null) return false;
       if (!isOccupied(fen, selectedSquare)) return false;
       if (!isOccupied(fen, square)) return false;
+
       return !sameColor(fen, square, selectedSquare);
     },
     [fen, selectedSquare],
   );
 
-  const legalFen = useCallback(move => get(legalMoves, move, false), [
-    legalMoves,
-  ]);
+  const legalFen = useCallback(
+    move => get(legalMoves, move, false),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fen],
+  );
 
   const handleMove = useCallback(
     move => {
@@ -77,8 +80,7 @@ const Board = () => {
         dispatch(clearSelectedSlot());
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, handleMove, selectedCanCapture, selectedSquare],
+    [dispatch, fen, handleMove, selectedCanCapture, selectedSquare],
   );
 
   return <BoardView handleSquareClick={handleSquareClick} />;
