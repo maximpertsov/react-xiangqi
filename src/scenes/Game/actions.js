@@ -60,8 +60,6 @@ export const fetchMoveInfo = ({
   dispatch(setMove({ moveId, pending, ...transformFetchedMove(fetchedMove) }));
 };
 
-export const toggleMovesFetched = () => ({ type: 'toggle_moves_fetched' });
-
 export const postMove = ({
   gameSlug,
   move: { move },
