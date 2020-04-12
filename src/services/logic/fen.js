@@ -1,6 +1,7 @@
 import zipObject from 'lodash/zipObject';
 import update from 'lodash/update';
 import { Color } from 'services/logic/constants';
+import { decode as decodeSquare } from './square';
 
 const FEN_FIELDS = [
   'placement',
@@ -46,6 +47,12 @@ export const decode = fen => {
   const result = decodeFields(fen);
   update(result, 'placement', decodePlacement);
   return result;
+};
+
+export const isOccupied = ({ fen, square }) => {
+  const slot = decodeSquare(square);
+
+  return decode(fen).placement[slot] !== null;
 };
 
 export default {};
