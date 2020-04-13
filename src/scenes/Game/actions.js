@@ -29,11 +29,6 @@ export const confirmMoves = () => ({
   type: 'confirm_moves',
 });
 
-export const toggleLoading = ({ loading }) => ({
-  type: 'toggle_loading',
-  loading,
-});
-
 // TODO: util?
 export const transformFetchedMove = ({
   fen,
@@ -59,8 +54,6 @@ export const fetchMoveInfo = ({
   } = await client.getNextFen({ fen, move });
   dispatch(setMove({ moveId, pending, ...transformFetchedMove(fetchedMove) }));
 };
-
-export const toggleMovesFetched = () => ({ type: 'toggle_moves_fetched' });
 
 export const postMove = ({
   gameSlug,

@@ -12,9 +12,7 @@ import loginForm from './loginForm';
 import showGame from './showGame';
 import username from './username';
 // Game
-import loading from './loading';
 import moves, * as fromMoves from './moves';
-import movesFetched from './movesFetched';
 import players from './players';
 import requestedTakeback from './requestedTakeback';
 import selectedMoveId from './selectedMoveId';
@@ -33,9 +31,7 @@ const rootReducer = combineReducers({
   showGame,
   username,
   // Game
-  loading,
   moves,
-  movesFetched,
   players,
   requestedTakeback,
   selectedMoveId,
