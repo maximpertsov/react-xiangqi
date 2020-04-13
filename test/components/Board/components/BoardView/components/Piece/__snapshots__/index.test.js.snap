@@ -1,0 +1,1429 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Piece moving with code A 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code B 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code C 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code K 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code N 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code P 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code R 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code a 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code b 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code c 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code k 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code n 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code p 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece moving with code r 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-rl2k4u",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code A 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code B 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code C 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code K 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code N 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code P 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code R 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code a 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code b 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code c 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code k 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code n 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code p 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`Piece with code r 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "alt": "",
+      "class": "Piece css-1aulbbe",
+      "src": "[object Object]",
+    },
+    "children": Array [],
+    "name": "img",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "alt": undefined,
+      "class": undefined,
+      "src": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
