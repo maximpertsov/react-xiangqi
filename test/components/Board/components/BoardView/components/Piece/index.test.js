@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'enzyme';
-import Piece from '../../../../../../../src/components/Board/components/BoardView/components/Piece';
-import { ALL_PIECES } from '../../../../../../../src/services/logic/constants';
+import Piece from 'components/Board/components/BoardView/components/Piece';
+import { ALL_PIECES } from 'services/logic/constants';
 
 describe('Piece', () => {
   test.each(ALL_PIECES)('with code %s', code => {
