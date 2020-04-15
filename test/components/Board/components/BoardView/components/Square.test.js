@@ -1,11 +1,11 @@
 import React from 'react';
-import { render } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import Square from 'components/Board/components/BoardView/components/Square';
 
 describe('Square', () => {
   test('renders without crashing', () => {
-    const wrapper = render(<Square />);
+    const wrapper = shallow(<Square />);
     expect(wrapper).toMatchSnapshot();
   });
 });
