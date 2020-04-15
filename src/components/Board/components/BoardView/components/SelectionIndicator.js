@@ -7,4 +7,6 @@ const SelectionIndicator = styled.div({
   ...fillParentElement,
 });
 
+SelectionIndicator.displayName = 'SelectionIndicator';
+
 export default SelectionIndicator;

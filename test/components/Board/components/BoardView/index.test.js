@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 
 import BoardView from 'components/Board/components/BoardView';
@@ -9,7 +9,6 @@ import BoardView from 'components/Board/components/BoardView';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const store = mockStore({
-  autoMove: ['black'],
   games: [],
   gameSlug: null,
   loginForm: {
@@ -133,16 +132,17 @@ const store = mockStore({
   updateCount: -1,
   animationOffset: [0, 0],
   canMoveBothColors: false,
-  selectedSquare: null,
+  selectedSquare: 'e4',
 });
 
 describe('BoardView', () => {
   test('renders without crashing', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Provider store={store}>
         <BoardView handleSquareClick={() => {}} />
       </Provider>,
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find('SelectionIndicator')).toHaveLength(1);
+    wrapper.unmount();
   });
 });
