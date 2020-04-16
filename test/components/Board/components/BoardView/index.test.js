@@ -9,16 +9,8 @@ import BoardView from 'components/Board/components/BoardView';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const store = mockStore({
-  games: [],
   gameSlug: null,
-  loginForm: {
-    username: '',
-    password: '',
-    error: '',
-    loading: false,
-  },
   showGame: true,
-  username: null,
   moves: [
     {
       id: 0,
@@ -127,11 +119,8 @@ const store = mockStore({
       color: 'black',
     },
   ],
-  requestedTakeback: false,
   selectedMoveId: null,
-  updateCount: -1,
   animationOffset: [0, 0],
-  canMoveBothColors: false,
   selectedSquare: 'e4',
 });
 
@@ -143,6 +132,9 @@ describe('BoardView', () => {
       </Provider>,
     );
     expect(wrapper.find('SelectionIndicator')).toHaveLength(1);
+    expect(
+      wrapper.find('Square').filterWhere(node => node.key() == 'e4'),
+    ).toHaveLength(1);
     wrapper.unmount();
   });
 });
