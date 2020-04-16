@@ -125,7 +125,7 @@ const store = mockStore({
 });
 
 describe('Board', () => {
-  test('renders without crashing', () => {
+  test('renders without crashing', async () => {
     const wrapper = mount(
       <Provider store={store}>
         <Board />
@@ -134,11 +134,14 @@ describe('Board', () => {
     expect(wrapper.find('SelectionIndicator')).toHaveLength(0);
 
     const e4 = wrapper.find('Square').findWhere(node => node.key() == 'e4');
-    console.log(e4.children().props());
+    console.log(store.getActions());
+    console.log(store.getState());
     e4.children().props().onClick();
     console.log(store.getActions());
-    // await new Promise(resolve => setImmediate(resolve));
-    // wrapper.update();
+    console.log(store.getState());
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+    wrapper.setProps({});
 
     expect(wrapper.find('SelectionIndicator')).toHaveLength(1);
     wrapper.unmount();
