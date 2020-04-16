@@ -25,14 +25,9 @@ const Board = () => {
   const legalMoves = useSelector(state => getLegalMoves(state));
   const selectedSquare = useSelector(state => state.selectedSquare);
 
-  useEffect(
-    () => {
-      dispatch(clearSelectedSlot());
-    },
-    // TODO: is it too expensive to check if the board changes?
-    // Can I key on another prop update?
-    [dispatch],
-  );
+  useEffect(() => {
+    dispatch(clearSelectedSlot());
+  }, [dispatch, fen]);
 
   const selectedCanCapture = useCallback(
     square => {
