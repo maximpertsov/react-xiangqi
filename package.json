@@ -29,7 +29,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "gh-pages -t -d build",
-    "test": "jest --silent",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "homepage": "https://xchess.xyz",
