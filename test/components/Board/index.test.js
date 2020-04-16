@@ -2,13 +2,18 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
+import rootReducer from 'reducers';
+
+import {
+  registerMiddlewares,
+  registerInitialStoreState,
+  buildInitialStoreState,
+} from 'redux-actions-assertions';
 
 import Board from 'components/Board';
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
-const store = mockStore({
+registerMiddlewares([thunk]);
+registerInitialStoreState({
   gameSlug: null,
   showGame: true,
   moves: [
@@ -123,25 +128,30 @@ const store = mockStore({
   animationOffset: [0, 0],
   selectedSquare: null,
 });
+const store = registerInitialStoreState(buildInitialStoreState(rootReducer));
 
 describe('Board', () => {
-  test('renders without crashing', async () => {
+  test('renders without crashing', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Board />
       </Provider>,
     );
+    // console.log(store.replaceReducer(reducer));
     expect(wrapper.find('SelectionIndicator')).toHaveLength(0);
 
     const e4 = wrapper.find('Square').findWhere(node => node.key() == 'e4');
-    console.log(store.getActions());
-    console.log(store.getState());
-    e4.children().props().onClick();
-    console.log(store.getActions());
-    console.log(store.getState());
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
-    wrapper.setProps({});
+    // console.log(store.getActions());
+    // console.log(store.getState());
+    e4.children()
+      .props()
+      .onClick();
+    // console.log(store.getActions());
+    // console.log(store.getState());
+
+    // await new Promise(resolve => setImmediate(resolve));
+    // wrapper.update();
+    // wrapper.setProps({});
 
     expect(wrapper.find('SelectionIndicator')).toHaveLength(1);
     wrapper.unmount();
