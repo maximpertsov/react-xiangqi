@@ -1,0 +1,470 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Board renders without crashing 1`] = `
+<div
+  class="BoardView css-15qugnt"
+>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  />
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="Square css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece css-1aulbbe"
+      src="[object Object]"
+    />
+  </div>
+</div>
+`;
