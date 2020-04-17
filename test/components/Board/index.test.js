@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { mount } from 'enzyme';
+import { mount, render } from 'enzyme';
 
 import { applyMiddleware, createStore, compose } from 'redux';
 import rootReducer from 'reducers';
@@ -39,7 +39,11 @@ const getBoard = (overrides = {}) => {
   );
 };
 
-describe('Board component integration tests', () => {
+describe('Board', () => {
+  test('renders without crashing', () => {
+    expect(render(getBoard())).toMatchSnapshot();
+  });
+
   test('select and deselect a square', () => {
     const wrapper = mount(getBoard());
     expect(wrapper.exists('SelectionIndicator')).toBe(false);
