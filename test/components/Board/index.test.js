@@ -27,21 +27,21 @@ const initialState = {
   selectedSquare: null,
 };
 
-const getWrapper = (overrides = {}) => {
+const getBoard = (overrides = {}) => {
   const store = compose(applyMiddleware(thunk))(createStore)(rootReducer, {
     ...initialState,
     ...overrides,
   });
-  return mount(
+  return (
     <Provider store={store}>
       <Board />
-    </Provider>,
+    </Provider>
   );
 };
 
 describe('Board component integration tests', () => {
   test('select and deselect a square', () => {
-    const wrapper = getWrapper();
+    const wrapper = mount(getBoard());
     expect(wrapper.exists('SelectionIndicator')).toBe(false);
 
     const e4 = wrapper.find('Square').findWhere(node => node.key() == 'e4');
@@ -53,6 +53,6 @@ describe('Board component integration tests', () => {
     wrapper.update();
     expect(wrapper.exists('SelectionIndicator')).toBe(false);
 
-    wrapper.unmount()
+    wrapper.unmount();
   });
 });
