@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Square renders without crashing 1`] = `
-<Styled(div)
-  className="Square"
-/>
-`;
