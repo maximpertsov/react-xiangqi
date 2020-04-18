@@ -81,5 +81,9 @@ describe('Board', () => {
   test('move a piece to another square', () => {
     const wrapper = mount(getBoard());
     expectToHavePiece(wrapper, 'e4', 'P')
+
+    clickSquare(wrapper, 'e4');
+    clickSquare(wrapper, 'e5');
+    expectToHavePiece(wrapper, 'e5', 'P')
   });
 });
