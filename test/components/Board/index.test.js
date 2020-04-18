@@ -39,6 +39,12 @@ const getBoard = (overrides = {}) => {
   );
 };
 
+const clickSquare = (wrapper, square) => {
+  const node = wrapper.find('Square').findWhere(node => node.key() == square);
+  node.children().simulate('click');
+  wrapper.update();
+}
+
 describe('Board', () => {
   test('renders without crashing', () => {
     expect(render(getBoard())).toMatchSnapshot();
@@ -48,15 +54,18 @@ describe('Board', () => {
     const wrapper = mount(getBoard());
     expect(wrapper.exists('SelectionIndicator')).toBe(false);
 
-    const e4 = wrapper.find('Square').findWhere(node => node.key() == 'e4');
-    e4.children().simulate('click');
-    wrapper.update();
+    clickSquare(wrapper, 'e4');
     expect(wrapper.exists('SelectionIndicator')).toBe(true);
 
-    e4.children().simulate('click');
-    wrapper.update();
+    clickSquare(wrapper, 'e4');
     expect(wrapper.exists('SelectionIndicator')).toBe(false);
 
     wrapper.unmount();
   });
+  //
+  // test('move a piece to another square', () => {
+  //   const wrapper = mount(getBoard());
+  //   const e4 = wrapper.find('Square').findWhere(node => node.key() == 'e4');
+  //   const e5 = wrapper.find('Square').findWhere(node => node.key() == 'e5');
+  // });
 });
