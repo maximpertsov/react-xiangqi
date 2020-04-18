@@ -10,8 +10,6 @@ const TargetOccupiedIndicator = styled.div({
   ...fillParentElement,
 });
 
-TargetOccupiedIndicator.displayName = 'TargetOccupiedIndicator';
-
 const TargetEmptyIndicator = styled.div({
   backgroundColor: SELECTION_COLOR,
   borderRadius: '50%',
@@ -22,10 +20,10 @@ const TargetEmptyIndicator = styled.div({
   width: '50%',
 });
 
-TargetEmptyIndicator.displayName = 'TargetEmptyIndicator';
-
 const TargetIndicator = ({ occupied }) =>
   occupied ? <TargetOccupiedIndicator /> : <TargetEmptyIndicator />;
+
+TargetIndicator.displayName = 'TargetIndicator'
 
 TargetIndicator.propTypes = {
   occupied: PropTypes.bool.isRequired,

@@ -48,14 +48,22 @@ const clickSquare = (wrapper, square) => {
   wrapper.update();
 };
 
-const getSelections = wrapper => wrapper.find('SelectionIndicator');
+const expectSquaresToBeSelected = (wrapper, count) => {
+  expect(wrapper.find('SelectionIndicator')).toHaveLength(count);
+}
 
-const getEmptyTargets = wrapper => wrapper.find('TargetEmptyIndicator');
+const expectSquaresToBeTargeted = (wrapper, count) => {
+  expect(wrapper.find('TargetIndicator')).toHaveLength(count);
+}
+
+const expectSquareToHave = (wrapper, square, selector) => {
+  const node = getSquareNode(wrapper, square);
+  expect(node.find(selector)).toHaveLength(1);
+};
 
 const expectToHavePiece = (wrapper, square, piece) => {
-  const node = getSquareNode(wrapper, square);
-  expect(node.find(`.Piece .${piece}`)).toHaveLength(1);
-}
+  expectSquareToHave(wrapper, square, `.Piece .${piece}`);
+};
 
 describe('Board', () => {
   test('renders without crashing', () => {
@@ -64,26 +72,26 @@ describe('Board', () => {
 
   test('select and deselect a square', () => {
     const wrapper = mount(getBoard());
-    expect(getSelections(wrapper)).toHaveLength(0);
-    expect(getEmptyTargets(wrapper)).toHaveLength(0);
+    expectSquaresToBeSelected(wrapper, 0);
+    expectSquaresToBeTargeted(wrapper, 0);
 
     clickSquare(wrapper, 'e4');
-    expect(getSelections(wrapper)).toHaveLength(1);
-    expect(getEmptyTargets(wrapper)).toHaveLength(1);
+    expectSquaresToBeSelected(wrapper, 1);
+    expectSquaresToBeTargeted(wrapper, 1);
 
     clickSquare(wrapper, 'e4');
-    expect(getSelections(wrapper)).toHaveLength(0);
-    expect(getEmptyTargets(wrapper)).toHaveLength(0);
+    expectSquaresToBeSelected(wrapper, 0);
+    expectSquaresToBeTargeted(wrapper, 0);
 
     wrapper.unmount();
   });
 
   test('move a piece to another square', () => {
     const wrapper = mount(getBoard());
-    expectToHavePiece(wrapper, 'e4', 'P')
+    expectToHavePiece(wrapper, 'e4', 'P');
 
     clickSquare(wrapper, 'e4');
     clickSquare(wrapper, 'e5');
-    expectToHavePiece(wrapper, 'e5', 'P')
+    // expectToHavePiece(wrapper, 'e5', 'P');
   });
 });
