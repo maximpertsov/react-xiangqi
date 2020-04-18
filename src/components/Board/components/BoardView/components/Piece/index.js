@@ -42,7 +42,7 @@ const Wrapper = styled.img`
 const Piece = ({ code, moveX, moveY }) => (
   <Wrapper
     alt=""
-    className="Piece"
+    className={`Piece ${code}`}
     moveX={moveX}
     moveY={moveY}
     src={getImageByCode(code)}
