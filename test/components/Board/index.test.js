@@ -52,6 +52,11 @@ const getSelections = wrapper => wrapper.find('SelectionIndicator');
 
 const getEmptyTargets = wrapper => wrapper.find('TargetEmptyIndicator');
 
+const expectToHavePiece = (wrapper, square, piece) => {
+  const node = getSquareNode(wrapper, square);
+  expect(node.find(`.Piece .${piece}`)).toHaveLength(1);
+}
+
 describe('Board', () => {
   test('renders without crashing', () => {
     expect(render(getBoard())).toMatchSnapshot();
@@ -75,7 +80,6 @@ describe('Board', () => {
 
   test('move a piece to another square', () => {
     const wrapper = mount(getBoard());
-    const e4 = getSquareNode(wrapper, 'e4');
-    const e5 = getSquareNode(wrapper, 'e5');
+    expectToHavePiece(wrapper, 'e4', 'P')
   });
 });
