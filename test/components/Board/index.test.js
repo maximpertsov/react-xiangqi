@@ -27,8 +27,10 @@ const initialState = {
   selectedSquare: null,
 };
 
+let store;
+
 const getBoard = (overrides = {}) => {
-  const store = compose(applyMiddleware(thunk))(createStore)(rootReducer, {
+  store = compose(applyMiddleware(thunk))(createStore)(rootReducer, {
     ...initialState,
     ...overrides,
   });
@@ -43,8 +45,7 @@ const getSquareNode = (wrapper, square) =>
   wrapper.find('Square').findWhere(node => node.key() == square);
 
 const clickSquare = (wrapper, square) => {
-  const node = getSquareNode(wrapper, square);
-  node.children().simulate('click');
+  getSquareNode(wrapper, square).children().simulate('click');
   wrapper.update();
 };
 
@@ -57,8 +58,7 @@ const expectSquaresToBeTargeted = (wrapper, count) => {
 }
 
 const expectSquareToHave = (wrapper, square, selector) => {
-  const node = getSquareNode(wrapper, square);
-  expect(node.find(selector)).toHaveLength(1);
+  expect(getSquareNode(wrapper, square).find(selector)).toHaveLength(1);
 };
 
 const expectToHavePiece = (wrapper, square, piece) => {
@@ -92,6 +92,7 @@ describe('Board', () => {
 
     clickSquare(wrapper, 'e4');
     clickSquare(wrapper, 'e5');
-    // expectToHavePiece(wrapper, 'e5', 'P');
+    // TODO: need to resolve all promises since moves happen in a setTimeout
+    expectToHavePiece(wrapper, 'e5', 'P');
   });
 });

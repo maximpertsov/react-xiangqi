@@ -1,3 +1,5 @@
+import { env } from 'process';
+
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import get from 'lodash/get';
@@ -15,7 +17,7 @@ import { squaresToMove } from 'services/logic/square';
 
 import BoardView from './components/BoardView';
 
-const ANIMATION_DELAY = 150;
+const ANIMATION_DELAY = env.NODE_ENV === 'test' ? 0 : 150;
 
 const Board = () => {
   const dispatch = useDispatch();
