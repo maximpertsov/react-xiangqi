@@ -39,11 +39,18 @@ const getBoard = (overrides = {}) => {
   );
 };
 
+const getSquareNode = (wrapper, square) =>
+  wrapper.find('Square').findWhere(node => node.key() == square);
+
 const clickSquare = (wrapper, square) => {
-  const node = wrapper.find('Square').findWhere(node => node.key() == square);
+  const node = getSquareNode(wrapper, square);
   node.children().simulate('click');
   wrapper.update();
-}
+};
+
+const getSelections = wrapper => wrapper.find('SelectionIndicator');
+
+const getEmptyTargets = wrapper => wrapper.find('TargetEmptyIndicator');
 
 describe('Board', () => {
   test('renders without crashing', () => {
@@ -52,20 +59,23 @@ describe('Board', () => {
 
   test('select and deselect a square', () => {
     const wrapper = mount(getBoard());
-    expect(wrapper.exists('SelectionIndicator')).toBe(false);
+    expect(getSelections(wrapper)).toHaveLength(0);
+    expect(getEmptyTargets(wrapper)).toHaveLength(0);
 
     clickSquare(wrapper, 'e4');
-    expect(wrapper.exists('SelectionIndicator')).toBe(true);
+    expect(getSelections(wrapper)).toHaveLength(1);
+    expect(getEmptyTargets(wrapper)).toHaveLength(1);
 
     clickSquare(wrapper, 'e4');
-    expect(wrapper.exists('SelectionIndicator')).toBe(false);
+    expect(getSelections(wrapper)).toHaveLength(0);
+    expect(getEmptyTargets(wrapper)).toHaveLength(0);
 
     wrapper.unmount();
   });
-  //
-  // test('move a piece to another square', () => {
-  //   const wrapper = mount(getBoard());
-  //   const e4 = wrapper.find('Square').findWhere(node => node.key() == 'e4');
-  //   const e5 = wrapper.find('Square').findWhere(node => node.key() == 'e5');
-  // });
+
+  test('move a piece to another square', () => {
+    const wrapper = mount(getBoard());
+    const e4 = getSquareNode(wrapper, 'e4');
+    const e5 = getSquareNode(wrapper, 'e5');
+  });
 });
