@@ -100,6 +100,11 @@ const BoardView = ({ handleSquareClick }) => {
     getPieceCode,
   ]);
 
+  const renderTargetIndicator = useCallback(
+    square => <TargetIndicator occupied={isOccupied(square)} />,
+    [isOccupied],
+  );
+
   const renderPiece = useCallback(
     square => (
       <Piece
@@ -111,28 +116,41 @@ const BoardView = ({ handleSquareClick }) => {
     [getPieceCode, moveX, moveY, selectedSquare],
   );
 
-  /* eslint-disable complexity */
-  const renderSquares = () =>
-    decodeFen(fen).placement.map((_, i, slots) => {
-      const slot = getSlot(slots, i);
-      const square = encodeSquare(slot);
-      return (
-        <Square
-          className="Square"
-          key={square}
-          handleClick={handleSquareClick(square)}
-        >
-          {isOccupied(square) && renderPiece(square)}
-          {inLastMove(square) && <LastMoveIndicator />}
-          {kingIsInCheck(square) && <KingInCheckIndicator />}
-          {isSelected(square) && <SelectionIndicator />}
-          {isTargeted(square) && (
-            <TargetIndicator occupied={isOccupied(square)} />
-          )}
-        </Square>
-      );
-    });
-  /* eslint-enable complexity */
+  const renderSquare = useCallback(
+    square => (
+      <Square
+        className="Square"
+        key={square}
+        handleClick={handleSquareClick(square)}
+      >
+        {isOccupied(square) && renderPiece(square)}
+        {inLastMove(square) && <LastMoveIndicator />}
+        {kingIsInCheck(square) && <KingInCheckIndicator />}
+        {isSelected(square) && <SelectionIndicator />}
+        {isTargeted(square) && renderTargetIndicator(square)}
+      </Square>
+    ),
+    [
+      handleSquareClick,
+      kingIsInCheck,
+      inLastMove,
+      isOccupied,
+      isSelected,
+      isTargeted,
+      renderPiece,
+      renderTargetIndicator,
+    ],
+  );
+
+  const renderSquares = useCallback(
+    () =>
+      decodeFen(fen).placement.map((_, i, slots) => {
+        const slot = getSlot(slots, i);
+        const square = encodeSquare(slot);
+        return renderSquare(square);
+      }),
+    [getSlot, renderSquare],
+  );
 
   return <Wrapper className="BoardView">{renderSquares()}</Wrapper>;
 };

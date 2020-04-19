@@ -9,6 +9,14 @@ import rootReducer from 'reducers';
 import Board from 'components/Board';
 
 import initialPlacementOnly from './fixtures/initialPlacementOnly.json';
+import {
+  clickSquare,
+  expectToBeEmptySquare,
+  expectToHavePiece,
+  expectSquaresToBeInLastMove,
+  expectSquaresToBeSelected,
+  expectSquaresToBeTargeted,
+} from './helpers';
 
 const initialState = {
   gameSlug: null,
@@ -27,36 +35,56 @@ const initialState = {
   selectedSquare: null,
 };
 
-const getBoard = (overrides = {}) => {
-  const store = compose(applyMiddleware(thunk))(createStore)(rootReducer, {
+const getStore = (overrides = {}) =>
+  compose(applyMiddleware(thunk))(createStore)(rootReducer, {
     ...initialState,
     ...overrides,
   });
-  return (
-    <Provider store={store}>
-      <Board />
-    </Provider>
-  );
-};
+
+const getBoard = store => (
+  <Provider store={store}>
+    <Board />
+  </Provider>
+);
 
 describe('Board', () => {
   test('renders without crashing', () => {
-    expect(render(getBoard())).toMatchSnapshot();
+    const wrapper = render(getBoard(getStore()));
+    expect(wrapper).toMatchSnapshot();
   });
 
   test('select and deselect a square', () => {
-    const wrapper = mount(getBoard());
-    expect(wrapper.exists('SelectionIndicator')).toBe(false);
+    const wrapper = mount(getBoard(getStore()));
 
-    const e4 = wrapper.find('Square').findWhere(node => node.key() == 'e4');
-    e4.children().simulate('click');
-    wrapper.update();
-    expect(wrapper.exists('SelectionIndicator')).toBe(true);
+    expectSquaresToBeSelected(wrapper, []);
+    expectSquaresToBeTargeted(wrapper, []);
 
-    e4.children().simulate('click');
-    wrapper.update();
-    expect(wrapper.exists('SelectionIndicator')).toBe(false);
+    clickSquare(wrapper, 'e4');
+    expectSquaresToBeSelected(wrapper, ['e4']);
+    expectSquaresToBeTargeted(wrapper, ['e5']);
+
+    clickSquare(wrapper, 'e4');
+    expectSquaresToBeSelected(wrapper, []);
+    expectSquaresToBeTargeted(wrapper, []);
 
     wrapper.unmount();
+  });
+
+  test('move a piece to another square', () => {
+    const store = getStore();
+    const wrapper = mount(getBoard(store));
+
+    expectToHavePiece(wrapper, 'e4', 'P');
+    expectToBeEmptySquare(wrapper, 'e5');
+    expectSquaresToBeInLastMove(wrapper, []);
+
+    clickSquare(wrapper, 'e4');
+    clickSquare(wrapper, 'e5');
+
+    expectToBeEmptySquare(wrapper, 'e4');
+    expectToHavePiece(wrapper, 'e5', 'P');
+    expectSquaresToBeInLastMove(wrapper, ['e4', 'e5']);
+
+    expect(store.getState().moves).toHaveLength(2);
   });
 });
