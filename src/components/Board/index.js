@@ -15,7 +15,7 @@ import { squaresToMove } from 'services/logic/square';
 
 import BoardView from './components/BoardView';
 
-const ANIMATION_DELAY = 150
+const ANIMATION_DELAY = 150;
 
 const Board = () => {
   const dispatch = useDispatch();
