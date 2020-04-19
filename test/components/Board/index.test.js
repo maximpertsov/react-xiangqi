@@ -54,16 +54,16 @@ describe('Board', () => {
 
   test('select and deselect a square', () => {
     const wrapper = mount(getBoard(getStore()));
-    expectSquaresToBeSelected(wrapper, 0);
-    expectSquaresToBeTargeted(wrapper, 0);
+    expectSquaresToBeSelected(wrapper, []);
+    expectSquaresToBeTargeted(wrapper, []);
 
     clickSquare(wrapper, 'e4');
-    expectSquaresToBeSelected(wrapper, 1);
-    expectSquaresToBeTargeted(wrapper, 1);
+    expectSquaresToBeSelected(wrapper, ['e4']);
+    expectSquaresToBeTargeted(wrapper, ['e5']);
 
     clickSquare(wrapper, 'e4');
-    expectSquaresToBeSelected(wrapper, 0);
-    expectSquaresToBeTargeted(wrapper, 0);
+    expectSquaresToBeSelected(wrapper, []);
+    expectSquaresToBeTargeted(wrapper, []);
 
     wrapper.unmount();
   });
