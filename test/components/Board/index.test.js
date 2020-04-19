@@ -62,12 +62,14 @@ const expectSquaresToBeTargeted = (wrapper, count) => {
   expect(wrapper.find('TargetIndicator')).toHaveLength(count);
 };
 
-const expectSquareToHave = (wrapper, square, selector) => {
-  expect(getSquareNode(wrapper, square).find(selector)).toHaveLength(1);
+const expectToHavePiece = (wrapper, square, piece) => {
+  const node = getSquareNode(wrapper, square).find(`.Piece .${piece}`)
+  expect(node).toHaveLength(1);
 };
 
-const expectToHavePiece = (wrapper, square, piece) => {
-  expectSquareToHave(wrapper, square, `.Piece .${piece}`);
+const expectToBeEmptySquare = (wrapper, square) => {
+  const node = getSquareNode(wrapper, square).find('.Piece')
+  expect(node).toHaveLength(0);
 };
 
 describe('Board', () => {
@@ -95,10 +97,15 @@ describe('Board', () => {
   test('move a piece to another square', () => {
     const store = getStore();
     const wrapper = mount(getBoard(store));
+
     expectToHavePiece(wrapper, 'e4', 'P');
+    expectToBeEmptySquare(wrapper, 'e5');
+
     clickSquare(wrapper, 'e4');
     clickSquare(wrapper, 'e5');
+
     expectToHavePiece(wrapper, 'e5', 'P');
+    expectToBeEmptySquare(wrapper, 'e4');
     expect(store.getState().moves).toHaveLength(2);
   });
 });
