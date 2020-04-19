@@ -29,19 +29,17 @@ const initialState = {
   selectedSquare: null,
 };
 
-let store;
-
-const getBoard = (overrides = {}) => {
-  store = compose(applyMiddleware(thunk))(createStore)(rootReducer, {
+const getStore = (overrides = {}) =>
+  compose(applyMiddleware(thunk))(createStore)(rootReducer, {
     ...initialState,
     ...overrides,
   });
-  return (
-    <Provider store={store}>
-      <Board />
-    </Provider>
-  );
-};
+
+const getBoard = store => (
+  <Provider store={store}>
+    <Board />
+  </Provider>
+);
 
 const getSquareNode = (wrapper, square) =>
   wrapper.find('Square').findWhere(node => node.key() == square);
@@ -74,11 +72,12 @@ const expectToHavePiece = (wrapper, square, piece) => {
 
 describe('Board', () => {
   test('renders without crashing', () => {
-    expect(render(getBoard())).toMatchSnapshot();
+    const wrapper = render(getBoard(getStore()));
+    expect(wrapper).toMatchSnapshot();
   });
 
   test('select and deselect a square', () => {
-    const wrapper = mount(getBoard());
+    const wrapper = mount(getBoard(getStore()));
     expectSquaresToBeSelected(wrapper, 0);
     expectSquaresToBeTargeted(wrapper, 0);
 
@@ -94,7 +93,8 @@ describe('Board', () => {
   });
 
   test('move a piece to another square', () => {
-    const wrapper = mount(getBoard());
+    const store = getStore();
+    const wrapper = mount(getBoard(store));
     expectToHavePiece(wrapper, 'e4', 'P');
     clickSquare(wrapper, 'e4');
     clickSquare(wrapper, 'e5');
