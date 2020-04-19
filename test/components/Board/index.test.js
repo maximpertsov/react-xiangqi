@@ -13,6 +13,7 @@ import {
   clickSquare,
   expectToBeEmptySquare,
   expectToHavePiece,
+  expectSquaresToBeInLastMove,
   expectSquaresToBeSelected,
   expectSquaresToBeTargeted,
 } from './helpers';
@@ -75,12 +76,14 @@ describe('Board', () => {
 
     expectToHavePiece(wrapper, 'e4', 'P');
     expectToBeEmptySquare(wrapper, 'e5');
+    expectSquaresToBeInLastMove(wrapper, []);
 
     clickSquare(wrapper, 'e4');
     clickSquare(wrapper, 'e5');
 
     expectToBeEmptySquare(wrapper, 'e4');
     expectToHavePiece(wrapper, 'e5', 'P');
+    expectSquaresToBeInLastMove(wrapper, ['e4', 'e5']);
 
     expect(store.getState().moves).toHaveLength(2);
   });

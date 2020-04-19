@@ -23,6 +23,11 @@ export const expectSquaresToBeTargeted = (wrapper, squares) => {
   expect(nodes).toHaveLength(squares.length);
 };
 
+export const expectSquaresToBeInLastMove = (wrapper, squares) => {
+  const nodes = getSquareNodes(wrapper, squares).find('LastMoveIndicator');
+  expect(nodes).toHaveLength(squares.length);
+};
+
 export const expectToHavePiece = (wrapper, square, piece) => {
   const node = getSquareNode(wrapper, square).find(`.Piece .${piece}`);
   expect(node).toHaveLength(1);

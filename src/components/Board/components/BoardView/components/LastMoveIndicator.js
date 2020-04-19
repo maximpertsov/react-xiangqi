@@ -10,4 +10,6 @@ const LastMoveIndicator = styled.div({
   ...fillParentElement,
 });
 
+LastMoveIndicator.displayName = 'LastMoveIndicator';
+
 export default LastMoveIndicator;
