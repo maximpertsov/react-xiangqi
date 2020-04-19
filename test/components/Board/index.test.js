@@ -99,5 +99,6 @@ describe('Board', () => {
     clickSquare(wrapper, 'e4');
     clickSquare(wrapper, 'e5');
     expectToHavePiece(wrapper, 'e5', 'P');
+    expect(store.getState().moves).toHaveLength(2);
   });
 });
