@@ -54,6 +54,7 @@ describe('Board', () => {
 
   test('select and deselect a square', () => {
     const wrapper = mount(getBoard(getStore()));
+
     expectSquaresToBeSelected(wrapper, []);
     expectSquaresToBeTargeted(wrapper, []);
 
@@ -78,8 +79,8 @@ describe('Board', () => {
     clickSquare(wrapper, 'e4');
     clickSquare(wrapper, 'e5');
 
-    expectToHavePiece(wrapper, 'e5', 'P');
     expectToBeEmptySquare(wrapper, 'e4');
+    expectToHavePiece(wrapper, 'e5', 'P');
     expect(store.getState().moves).toHaveLength(2);
   });
 });
