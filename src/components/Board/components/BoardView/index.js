@@ -100,6 +100,11 @@ const BoardView = ({ handleSquareClick }) => {
     getPieceCode,
   ]);
 
+  const renderTargetIndicator = useCallback(
+    square => <TargetIndicator occupied={isOccupied(square)} />,
+    [isOccupied],
+  );
+
   const renderPiece = useCallback(
     square => (
       <Piece
@@ -126,9 +131,7 @@ const BoardView = ({ handleSquareClick }) => {
           {inLastMove(square) && <LastMoveIndicator />}
           {kingIsInCheck(square) && <KingInCheckIndicator />}
           {isSelected(square) && <SelectionIndicator />}
-          {isTargeted(square) && (
-            <TargetIndicator occupied={isOccupied(square)} />
-          )}
+          {isTargeted(square) && renderTargetIndicator(square)}
         </Square>
       );
     });
