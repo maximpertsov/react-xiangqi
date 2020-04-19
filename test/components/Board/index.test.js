@@ -10,6 +10,8 @@ import Board from 'components/Board';
 
 import initialPlacementOnly from './fixtures/initialPlacementOnly.json';
 
+jest.useFakeTimers();
+
 const initialState = {
   gameSlug: null,
   showGame: true,
@@ -45,17 +47,22 @@ const getSquareNode = (wrapper, square) =>
   wrapper.find('Square').findWhere(node => node.key() == square);
 
 const clickSquare = (wrapper, square) => {
-  getSquareNode(wrapper, square).children().simulate('click');
+  getSquareNode(wrapper, square)
+    .children()
+    .simulate('click');
+
+  jest.runOnlyPendingTimers();
+
   wrapper.update();
 };
 
 const expectSquaresToBeSelected = (wrapper, count) => {
   expect(wrapper.find('SelectionIndicator')).toHaveLength(count);
-}
+};
 
 const expectSquaresToBeTargeted = (wrapper, count) => {
   expect(wrapper.find('TargetIndicator')).toHaveLength(count);
-}
+};
 
 const expectSquareToHave = (wrapper, square, selector) => {
   expect(getSquareNode(wrapper, square).find(selector)).toHaveLength(1);
@@ -89,10 +96,8 @@ describe('Board', () => {
   test('move a piece to another square', () => {
     const wrapper = mount(getBoard());
     expectToHavePiece(wrapper, 'e4', 'P');
-
     clickSquare(wrapper, 'e4');
     clickSquare(wrapper, 'e5');
-    // TODO: need to resolve all promises since moves happen in a setTimeout
     expectToHavePiece(wrapper, 'e5', 'P');
   });
 });
