@@ -149,7 +149,7 @@ const BoardView = ({ handleSquareClick }) => {
         const square = encodeSquare(slot);
         return renderSquare(square);
       }),
-    [getSlot, renderSquare],
+    [fen, getSlot, renderSquare],
   );
 
   return <Wrapper className="BoardView">{renderSquares()}</Wrapper>;
