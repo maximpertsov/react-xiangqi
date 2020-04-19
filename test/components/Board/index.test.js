@@ -9,8 +9,13 @@ import rootReducer from 'reducers';
 import Board from 'components/Board';
 
 import initialPlacementOnly from './fixtures/initialPlacementOnly.json';
-
-jest.useFakeTimers();
+import {
+  clickSquare,
+  expectToBeEmptySquare,
+  expectToHavePiece,
+  expectSquaresToBeSelected,
+  expectSquaresToBeTargeted,
+} from './helpers';
 
 const initialState = {
   gameSlug: null,
@@ -40,37 +45,6 @@ const getBoard = store => (
     <Board />
   </Provider>
 );
-
-const getSquareNode = (wrapper, square) =>
-  wrapper.find('Square').findWhere(node => node.key() == square);
-
-const clickSquare = (wrapper, square) => {
-  getSquareNode(wrapper, square)
-    .children()
-    .simulate('click');
-
-  jest.runOnlyPendingTimers();
-
-  wrapper.update();
-};
-
-const expectSquaresToBeSelected = (wrapper, count) => {
-  expect(wrapper.find('SelectionIndicator')).toHaveLength(count);
-};
-
-const expectSquaresToBeTargeted = (wrapper, count) => {
-  expect(wrapper.find('TargetIndicator')).toHaveLength(count);
-};
-
-const expectToHavePiece = (wrapper, square, piece) => {
-  const node = getSquareNode(wrapper, square).find(`.Piece .${piece}`)
-  expect(node).toHaveLength(1);
-};
-
-const expectToBeEmptySquare = (wrapper, square) => {
-  const node = getSquareNode(wrapper, square).find('.Piece')
-  expect(node).toHaveLength(0);
-};
 
 describe('Board', () => {
   test('renders without crashing', () => {
