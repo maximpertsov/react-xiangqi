@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+
+import isEqual from 'lodash/isEqual';
 
 import { decode as decodeFen } from 'services/logic/fen';
 import { getMovedPiece } from 'services/logic/move';
@@ -38,7 +40,7 @@ const moveText = ({ piece, move }) => {
 
 const Move = ({ fen, move, moveId }) => {
   const dispatch = useDispatch();
-  const selectedMove = useSelector(state => getSelectedMove(state), shallowEqual);
+  const selectedMove = useSelector(state => getSelectedMove(state), isEqual);
 
   const handleClick = useCallback(() => {
     dispatch(selectMove({ moveId }));

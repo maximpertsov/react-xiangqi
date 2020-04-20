@@ -119,6 +119,7 @@ const BoardView = ({ handleSquareClick }) => {
   );
 
   const renderSquare = useCallback(
+    // eslint-disable-next-line complexity
     square => (
       <Square
         className="Square"

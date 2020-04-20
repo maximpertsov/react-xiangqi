@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { Button, Form } from 'semantic-ui-react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import { setForm, setUsername } from 'actions';
 import * as client from 'services/client';

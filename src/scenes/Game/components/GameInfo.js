@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getLastMove, getNextMovePlayer, getUserColor } from 'reducers';
+import isEqual from 'lodash/isEqual';
 
 // TODO: since this style also appears in the Player component,
 // TODO: consider moving to commonStyles or shared scss?
@@ -14,8 +15,8 @@ const Wrapper = styled.div`
 `;
 
 const GameInfo = () => {
-  const lastMove = useSelector(state => getLastMove(state), shallowEqual);
-  const nextMovePlayer = useSelector(state => getNextMovePlayer(state), shallowEqual);
+  const lastMove = useSelector(state => getLastMove(state), isEqual);
+  const nextMovePlayer = useSelector(state => getNextMovePlayer(state), isEqual);
   const userColor = useSelector(state => getUserColor(state));
 
   const userIsActive = () => {
