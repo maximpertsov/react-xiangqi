@@ -13,16 +13,15 @@ export const getGameList = ({ username }) =>
 
 export const getGame = ({ gameSlug }) => axios.get(`game/${gameSlug}`);
 
-export const poll = ({ gameSlug }) =>
-  axios.get(`game/${gameSlug}/poll`);
+export const poll = ({ gameSlug }) => axios.get(`game/${gameSlug}/poll`);
 
 export const postMove = ({ gameSlug, move, username }) => {
   const payload = { name: 'move', move, player: username };
   return axios.post(`game/${gameSlug}/events`, payload);
 };
 
-export const getNextFen = ({ fen, move }) => {
-  const payload = { fen, move };
+export const getMoveData = ({ fen }) => {
+  const payload = { fen };
   return axios.post(`fen`, payload);
 };
 

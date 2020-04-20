@@ -41,7 +41,7 @@ const GameClient = () => {
     () => {
       if (gameSlug) return;
       if (!hasInitialPlacement) return;
-      if (!fetchMissingMoveData) return;
+      if (!firstMoveWithMissingData) return;
 
       dispatch(fetchMissingMoveData(firstMoveWithMissingData));
     },

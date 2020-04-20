@@ -1,6 +1,6 @@
 import camelCase from 'lodash/camelCase';
 import mapKeys from 'lodash/mapKeys';
-import { getInitialMove, getNextFen } from 'services/client';
+import { getInitialMove, getMoveData } from 'services/client';
 
 const transformFetchedData = data =>
   mapKeys(data, (value, key) => camelCase(key));
@@ -21,7 +21,7 @@ export const fetchMissingMoveData = ({
   id: moveId,
   move,
 }) => async dispatch => {
-  const { data } = await getNextFen({ fen });
+  const { data } = await getMoveData({ fen });
 
   dispatch({
     type: 'set_move',
