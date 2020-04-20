@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import {
   fetchGames,

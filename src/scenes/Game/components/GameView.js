@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { Button, Dimmer, Icon, Loader, Segment } from 'semantic-ui-react';
 import {
   getCurrentPlayer,
@@ -31,8 +31,8 @@ const GameView = () => {
     getHasInitialPlacement(state),
   );
   const isLastMovePending = useSelector(state => getIsLastMovePending(state));
-  const currentPlayer = useSelector(state => getCurrentPlayer(state));
-  const otherPlayer = useSelector(state => getOtherPlayer(state));
+  const currentPlayer = useSelector(state => getCurrentPlayer(state), shallowEqual);
+  const otherPlayer = useSelector(state => getOtherPlayer(state), shallowEqual);
 
   const renderActionsMenu = () => (
     <GameMenu>

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import useEventListener from '@use-it/event-listener';
 import sample from 'lodash/sample';
 import toPairs from 'lodash/toPairs';
@@ -14,11 +14,11 @@ import {
 
 const GameInteraction = () => {
   const dispatch = useDispatch();
-  const autoMove = useSelector(state => state.autoMove);
-  const lastMove = useSelector(state => getLastMove(state));
-  const nextMove = useSelector(state => getNextMove(state));
+  const autoMove = useSelector(state => state.autoMove, shallowEqual);
+  const lastMove = useSelector(state => getLastMove(state), shallowEqual);
+  const nextMove = useSelector(state => getNextMove(state), shallowEqual);
   const nextMoveColor = useSelector(state => getNextMoveColor(state));
-  const previousMove = useSelector(state => getPreviousMove(state));
+  const previousMove = useSelector(state => getPreviousMove(state), shallowEqual);
 
   useEffect(
     () => {

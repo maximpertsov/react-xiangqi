@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
@@ -38,7 +38,7 @@ const moveText = ({ piece, move }) => {
 
 const Move = ({ fen, move, moveId }) => {
   const dispatch = useDispatch();
-  const selectedMove = useSelector(state => getSelectedMove(state));
+  const selectedMove = useSelector(state => getSelectedMove(state), shallowEqual);
 
   const handleClick = useCallback(() => {
     dispatch(selectMove({ moveId }));

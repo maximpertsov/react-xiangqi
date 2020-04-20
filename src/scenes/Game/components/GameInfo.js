@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { getLastMove, getNextMovePlayer, getUserColor } from 'reducers';
 
 // TODO: since this style also appears in the Player component,
@@ -14,8 +14,8 @@ const Wrapper = styled.div`
 `;
 
 const GameInfo = () => {
-  const lastMove = useSelector(state => getLastMove(state));
-  const nextMovePlayer = useSelector(state => getNextMovePlayer(state));
+  const lastMove = useSelector(state => getLastMove(state), shallowEqual);
+  const nextMovePlayer = useSelector(state => getNextMovePlayer(state), shallowEqual);
   const userColor = useSelector(state => getUserColor(state));
 
   const userIsActive = () => {

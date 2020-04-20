@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
 import { tail, chunk } from 'lodash';

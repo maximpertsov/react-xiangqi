@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Button, Icon } from 'semantic-ui-react';
 import requestTakeback from 'actions/requestTakeback';
 import cancelTakeback from 'actions/cancelTakeback';
