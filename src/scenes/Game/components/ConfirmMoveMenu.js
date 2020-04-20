@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { cancelMoves, confirmMoves, postMove, selectMove } from 'actions';
-import { getLastMove, getPreviousMove } from 'reducers';
+import { cancelMoves, confirmMoves, postMove } from 'actions';
+import { getLastMove } from 'reducers';
 
 import isEqual from 'lodash/isEqual';
 
