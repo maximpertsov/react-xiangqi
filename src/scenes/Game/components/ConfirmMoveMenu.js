@@ -28,10 +28,8 @@ const ConfirmMoveMenu = () => {
   }, [confirmGameMove, lastMove.pending]);
 
   const cancelMove = useCallback(() => {
-    // HACK: select previous move before dropping the cancelled move
-    dispatch(selectMove({ moveId: previousMove.id }));
     dispatch(cancelMoves());
-  }, [dispatch, previousMove.id]);
+  }, [dispatch]);
 
   return (
     <ConfirmMenu
