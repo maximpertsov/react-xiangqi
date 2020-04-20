@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import get from 'lodash/get';
+import isEqual from 'lodash/isEqual';
 
 import {
   clearAnimationOffset,
@@ -21,8 +22,8 @@ const Board = () => {
   const dispatch = useDispatch();
 
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
-  const { fen } = useSelector(state => getSelectedMove(state));
-  const legalMoves = useSelector(state => getLegalMoves(state));
+  const { fen } = useSelector(state => getSelectedMove(state), isEqual);
+  const legalMoves = useSelector(state => getLegalMoves(state), isEqual);
   const selectedSquare = useSelector(state => state.selectedSquare);
 
   useEffect(() => {

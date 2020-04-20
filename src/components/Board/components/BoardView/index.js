@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector } from 'react-redux';
+import isEqual from 'lodash/isEqual';
 
 import {
   getBottomPlayerIsRed,
@@ -51,12 +52,13 @@ const Wrapper = styled.div`
 const BoardView = ({ handleSquareClick }) => {
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
   const selectedSquare = useSelector(state => state.selectedSquare);
-  const targets = useSelector(state => getTargets(state));
-  const { fen, move: selectedMove, givesCheck } = useSelector(state =>
-    getSelectedMove(state),
+  const targets = useSelector(state => getTargets(state), isEqual);
+  const { fen, move: selectedMove, givesCheck } = useSelector(
+    state => getSelectedMove(state),
+    isEqual,
   );
   const isMoving = useSelector(state => getIsMoving(state));
-  const [moveX, moveY] = useSelector(state => state.animationOffset);
+  const [moveX, moveY] = useSelector(state => state.animationOffset, isEqual);
 
   const getPieceCode = useCallback(
     square => getPiece(fen, square) || undefined,
