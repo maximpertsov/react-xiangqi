@@ -13,7 +13,6 @@ const ConfirmMoveMenu = () => {
 
   const gameSlug = useSelector(state => state.gameSlug);
   const lastMove = useSelector(state => getLastMove(state), isEqual);
-  const previousMove = useSelector(state => getPreviousMove(state), isEqual);
   const username = useSelector(state => state.username);
 
   const confirmGameMove = useCallback(() => {
