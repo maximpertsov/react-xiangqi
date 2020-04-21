@@ -53,16 +53,13 @@ const BoardView = ({ handleSquareClick }) => {
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
   const selectedSquare = useSelector(state => state.selectedSquare);
   const targets = useSelector(state => getTargets(state), isEqual);
-  const { fen, move: selectedMove, givesCheck } = useSelector(
-    state => getSelectedMove(state),
-    isEqual,
-  );
+  const selectedMove = useSelector(state => getSelectedMove(state), isEqual);
   const isMoving = useSelector(state => getIsMoving(state));
   const [moveX, moveY] = useSelector(state => state.animationOffset, isEqual);
 
   const getPieceCode = useCallback(
-    square => getPiece(fen, square) || undefined,
-    [fen],
+    square => getPiece(selectedMove.fen, square) || undefined,
+    [selectedMove.fen],
   );
 
   const getSlot = useCallback(
@@ -72,16 +69,17 @@ const BoardView = ({ handleSquareClick }) => {
 
   const inLastMove = useCallback(
     square => {
-      if (selectedMove === null) return false;
+      if (selectedMove.move === null) return false;
 
-      return moveToSquares(selectedMove).includes(square);
+      return moveToSquares(selectedMove.move).includes(square);
     },
-    [selectedMove],
+    [selectedMove.move],
   );
 
   const kingIsInCheck = useCallback(
-    square => givesCheck && activeKing(fen) === square,
-    [fen, givesCheck],
+    square =>
+      selectedMove.givesCheck && activeKing(selectedMove.fen) === square,
+    [selectedMove.fen, selectedMove.givesCheck],
   );
 
   const isSelected = useCallback(
@@ -147,12 +145,12 @@ const BoardView = ({ handleSquareClick }) => {
 
   const renderSquares = useCallback(
     () =>
-      decodeFen(fen).placement.map((_, i, slots) => {
+      decodeFen(selectedMove.fen).placement.map((_, i, slots) => {
         const slot = getSlot(slots, i);
         const square = encodeSquare(slot);
         return renderSquare(square);
       }),
-    [fen, getSlot, renderSquare],
+    [getSlot, renderSquare, selectedMove.fen],
   );
 
   return <Wrapper className="BoardView">{renderSquares()}</Wrapper>;
