@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import { Segment } from 'semantic-ui-react';
-import { tail, chunk } from 'lodash';
+import { tail, chunk, isEqual } from 'lodash';
 
 import { MediaQuery, WidthSize } from 'commonStyles';
 import Move from './components/Move';
@@ -42,7 +42,8 @@ const Wrapper = styled.div`
 `;
 
 const MoveHistory = () => {
-  const moves = useSelector(({ moves }) => moves);
+  const moves = useSelector(({ moves }) => moves, isEqual);
+
   const moveComponents = moves.map((move, index) => (
     <Move key={index} moveId={move.id} move={move.move} fen={move.fen} />
   ));

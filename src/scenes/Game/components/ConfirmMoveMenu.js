@@ -4,14 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { cancelMoves, confirmMoves, postMove, selectMove } from 'actions';
 import { getLastMove, getPreviousMove } from 'reducers';
 
+import isEqual from 'lodash/isEqual';
+
 import ConfirmMenu from 'components/ConfirmMenu';
 
 const ConfirmMoveMenu = () => {
   const dispatch = useDispatch();
 
   const gameSlug = useSelector(state => state.gameSlug);
-  const lastMove = useSelector(state => getLastMove(state));
-  const previousMove = useSelector(state => getPreviousMove(state));
+  const lastMove = useSelector(state => getLastMove(state), isEqual);
+  const previousMove = useSelector(state => getPreviousMove(state), isEqual);
   const username = useSelector(state => state.username);
 
   const confirmGameMove = useCallback(() => {

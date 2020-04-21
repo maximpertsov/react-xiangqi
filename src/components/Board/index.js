@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import get from 'lodash/get';
+import isEqual from 'lodash/isEqual';
 
 import {
   clearAnimationOffset,
@@ -21,29 +22,29 @@ const Board = () => {
   const dispatch = useDispatch();
 
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
-  const { fen } = useSelector(state => getSelectedMove(state));
-  const legalMoves = useSelector(state => getLegalMoves(state));
+  const legalMoves = useSelector(state => getLegalMoves(state), isEqual);
+  const selectedMove = useSelector(state => getSelectedMove(state), isEqual);
   const selectedSquare = useSelector(state => state.selectedSquare);
 
   useEffect(() => {
     dispatch(clearSelectedSlot());
-  }, [dispatch, fen]);
+  }, [dispatch, selectedMove.fen]);
 
   const selectedCanCapture = useCallback(
     square => {
       if (selectedSquare === null) return false;
-      if (!isOccupied(fen, selectedSquare)) return false;
-      if (!isOccupied(fen, square)) return false;
+      if (!isOccupied(selectedMove.fen, selectedSquare)) return false;
+      if (!isOccupied(selectedMove.fen, square)) return false;
 
-      return !sameColor(fen, square, selectedSquare);
+      return !sameColor(selectedMove.fen, square, selectedSquare);
     },
-    [fen, selectedSquare],
+    [selectedMove.fen, selectedSquare],
   );
 
   const legalFen = useCallback(
     move => get(legalMoves, move, false),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [fen, selectedSquare],
+    [selectedMove.fen, selectedSquare],
   );
 
   const handleMove = useCallback(
@@ -67,7 +68,10 @@ const Board = () => {
     square => () => {
       if (square === selectedSquare) {
         dispatch(clearSelectedSlot());
-      } else if (isOccupied(fen, square) && !selectedCanCapture(square)) {
+      } else if (
+        isOccupied(selectedMove.fen, square) &&
+        !selectedCanCapture(square)
+      ) {
         dispatch(setSelectedSlot({ selectedSquare: square }));
       } else if (selectedSquare !== null) {
         handleMove(squaresToMove(selectedSquare, square));
@@ -75,7 +79,13 @@ const Board = () => {
         dispatch(clearSelectedSlot());
       }
     },
-    [dispatch, fen, handleMove, selectedCanCapture, selectedSquare],
+    [
+      dispatch,
+      handleMove,
+      selectedCanCapture,
+      selectedMove.fen,
+      selectedSquare,
+    ],
   );
 
   return <BoardView handleSquareClick={handleSquareClick} />;

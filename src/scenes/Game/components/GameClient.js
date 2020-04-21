@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import isEqual from 'lodash/isEqual';
+
 import { fetchInitialPlacement, fetchMoveInfo } from 'actions';
 import pollMoves from 'actions/pollMoves';
 import {
@@ -21,8 +23,9 @@ const GameClient = () => {
   );
   const moveCount = useSelector(state => getMoveCount(state));
   const nextMovePlayerName = useSelector(state => getNextMovePlayerName(state));
-  const missingLegalMovesPayload = useSelector(state =>
-    getMissingLegalMovesPayload(state),
+  const missingLegalMovesPayload = useSelector(
+    state => getMissingLegalMovesPayload(state),
+    isEqual,
   );
   const updateCount = useSelector(state => state.updateCount);
   const username = useSelector(state => state.username);
