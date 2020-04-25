@@ -26,6 +26,9 @@ const addPosition = (state, action) =>
     $push: [{ ...pick(action, positionFields), id: state.length }],
   });
 
+const removePosition = (state, action) =>
+  state.filter(({ id }) => action.id !== id);
+
 const cancelPendingPosition = state =>
   state.filter(({ pending }, index, currentState) => {
     if (index < currentState.length - 1) return true;
@@ -61,6 +64,8 @@ const positions = (state = [], action) => {
   switch (action.type) {
     case 'add_position':
       return addPosition(state, action);
+    case 'remove_position':
+      return removePosition(state, action);
     case 'cancel_pending_position':
       return cancelPendingPosition(state);
     case 'confirm_moves':

@@ -24,6 +24,21 @@ describe('positions reducer', () => {
     expect(positions(currentState, action)).toEqual(expectedNewState);
   });
 
+  it('should remove given position', () => {
+    const action = { type: 'remove_position', id: 1 };
+
+    const currentState = [
+      { id: 0, move: null },
+      { id: 1, move: 'a1a2' },
+      { id: 2, move: 'a10a9' },
+    ];
+    const expectedNewState = [
+      { id: 0, move: null },
+      { id: 2, move: 'a10a9' },
+    ];
+    expect(positions(currentState, action)).toEqual(expectedNewState);
+  });
+
   describe('cancel pending positions', () => {
     const action = { type: 'cancel_pending_position' };
 
