@@ -74,8 +74,8 @@ export const getNextMove = state =>
 export const getNextMoveColor = ({ moves }) =>
   fromMoves.getNextMoveColor(moves);
 
-export const getMissingLegalMovesPayload = ({ moves }) =>
-  fromMoves.getMissingLegalMovesPayload(moves);
+export const getFirstMoveWithMissingData = ({ moves }) =>
+  fromMoves.getFirstMoveWithMissingData(moves);
 
 /*****************/
 /***  Players  ***/

@@ -115,9 +115,9 @@ export const getNextMoveColor = state => {
   return decodeFen(fen).activeColor;
 };
 
-export const getMissingLegalMovesPayload = state => {
+export const getFirstMoveWithMissingData = state => {
   const index = findIndex(state, move => move.legalMoves === undefined);
   if (index === -1) return;
 
-  return { fen: state[index - 1].fen, move: state[index] };
+  return state[index];
 };

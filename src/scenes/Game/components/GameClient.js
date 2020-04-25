@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import isEqual from 'lodash/isEqual';
 
-import { fetchInitialPlacement, fetchMoveInfo } from 'actions';
+import { fetchInitialPlacement, fetchMissingMoveData } from 'actions/fetchFen';
 import pollMoves from 'actions/pollMoves';
 import {
   getHasInitialPlacement,
   getNextMovePlayerName,
-  getMissingLegalMovesPayload,
+  getFirstMoveWithMissingData,
   getMoveCount,
 } from 'reducers';
 
@@ -23,8 +23,8 @@ const GameClient = () => {
   );
   const moveCount = useSelector(state => getMoveCount(state));
   const nextMovePlayerName = useSelector(state => getNextMovePlayerName(state));
-  const missingLegalMovesPayload = useSelector(
-    state => getMissingLegalMovesPayload(state),
+  const firstMoveWithMissingData = useSelector(
+    state => getFirstMoveWithMissingData(state),
     isEqual,
   );
   const updateCount = useSelector(state => state.updateCount);
@@ -41,13 +41,14 @@ const GameClient = () => {
     () => {
       if (gameSlug) return;
       if (!hasInitialPlacement) return;
-      if (!missingLegalMovesPayload) return;
+      if (!firstMoveWithMissingData) return;
 
-      dispatch(fetchMoveInfo(missingLegalMovesPayload));
+      dispatch(fetchMissingMoveData(firstMoveWithMissingData));
     },
     // HACK: too many updates because missing legal moves is an object and
     // useEffect is doing a deep comparison. To get around this, we exclude it
     // from the comparison and key on the move count.
+    //
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, hasInitialPlacement, moveCount],
   );

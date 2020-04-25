@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { cancelMoves, confirmMoves, postMove, selectMove } from 'actions';
-import { getLastMove, getPreviousMove } from 'reducers';
+import { cancelMoves, confirmMoves, postMove } from 'actions';
+import { getLastMove } from 'reducers';
 
 import isEqual from 'lodash/isEqual';
 
@@ -13,7 +13,6 @@ const ConfirmMoveMenu = () => {
 
   const gameSlug = useSelector(state => state.gameSlug);
   const lastMove = useSelector(state => getLastMove(state), isEqual);
-  const previousMove = useSelector(state => getPreviousMove(state), isEqual);
   const username = useSelector(state => state.username);
 
   const confirmGameMove = useCallback(() => {
@@ -28,10 +27,8 @@ const ConfirmMoveMenu = () => {
   }, [confirmGameMove, lastMove.pending]);
 
   const cancelMove = useCallback(() => {
-    // HACK: select previous move before dropping the cancelled move
-    dispatch(selectMove({ moveId: previousMove.id }));
     dispatch(cancelMoves());
-  }, [dispatch, previousMove.id]);
+  }, [dispatch]);
 
   return (
     <ConfirmMenu
