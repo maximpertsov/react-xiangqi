@@ -1,6 +1,8 @@
 import update from 'immutability-helper';
 import findIndex from 'lodash/findIndex';
+import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
+import last from 'lodash/last';
 import sortedIndexBy from 'lodash/sortedIndexBy';
 import { decode as decodeFen } from 'services/logic/fen';
 
@@ -21,10 +23,13 @@ const positionFields = [
   'pending',
 ];
 
-const addPosition = (state, action) =>
-  update(state, {
-    $push: [{ ...pick(action, positionFields), id: state.length }],
+const addPosition = (state, action) => {
+  const nextId = isEmpty(state) ? 0 : last(state).id + 1;
+
+  return update(state, {
+    $push: [{ ...pick(action, positionFields), id: nextId }],
   });
+};
 
 const removePosition = (state, action) =>
   state.filter(({ id }) => action.id !== id);

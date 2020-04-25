@@ -5,23 +5,39 @@ describe('positions reducer', () => {
     expect(positions(undefined, {})).toEqual([]);
   });
 
-  it('should add a positions', () => {
+  describe('add position', () => {
     const action = { type: 'add_position' };
 
-    const currentState = [{ id: 0 }];
-    const expectedNewState = [
-      { id: 0 },
-      {
-        id: 1,
-        fen: undefined,
-        givesCheck: undefined,
-        legalPositions: undefined,
-        move: undefined,
-        pending: undefined,
-      },
-    ];
+    it('should add the first position with id = 0', () => {
+      const currentState = [];
+      const expectedNewState = [
+        {
+          id: 0,
+          fen: undefined,
+          givesCheck: undefined,
+          legalPositions: undefined,
+          move: undefined,
+          pending: undefined,
+        },
+      ];
+      expect(positions(currentState, action)).toEqual(expectedNewState);
+    });
 
-    expect(positions(currentState, action)).toEqual(expectedNewState);
+    it('should add a position with an incremented id', () => {
+      const currentState = [{ id: 0 }];
+      const expectedNewState = [
+        { id: 0 },
+        {
+          id: 1,
+          fen: undefined,
+          givesCheck: undefined,
+          legalPositions: undefined,
+          move: undefined,
+          pending: undefined,
+        },
+      ];
+      expect(positions(currentState, action)).toEqual(expectedNewState);
+    });
   });
 
   it('should remove given position', () => {
