@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ConfirmPositionMenu confirm closes the method 1`] = `null`;
+
 exports[`ConfirmPositionMenu renders without crashing 1`] = `
 <div
   class="ui segment"

@@ -43,4 +43,20 @@ describe('ConfirmPositionMenu', () => {
     const wrapper = render(getComponent(getStore()));
     expect(wrapper).toMatchSnapshot();
   });
+
+  test('confirm closes the method', () => {
+    const store = getStore();
+    const wrapper = mount(getComponent(store));
+
+    // Click confirm
+    wrapper.find('.button.green').simulate('click');
+    jest.runOnlyPendingTimers();
+    wrapper.update();
+
+    // Test actions with mockStore
+    expect(store.getState().pendingPositionId).toBe(null);
+    expect(wrapper.render()).toMatchSnapshot()
+
+    wrapper.unmount();
+  });
 });
