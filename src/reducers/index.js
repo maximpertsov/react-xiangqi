@@ -66,10 +66,10 @@ export const getSelectedMove = ({ moves, selectedMoveId }) => {
 };
 
 export const getPreviousMove = state =>
-  fromPositions.getPreviousMove(state.moves, getSelectedMove(state).id);
+  fromPositions.getPreviousMove(state.positions, getSelectedMove(state).id);
 
 export const getNextMove = state =>
-  fromPositions.getNextMove(state.moves, getSelectedMove(state).id);
+  fromPositions.getNextMove(state.positions, getSelectedMove(state).id);
 
 export const getNextMoveColor = ({ moves }) =>
   fromPositions.getNextMoveColor(moves);
