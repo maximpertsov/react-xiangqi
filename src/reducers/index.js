@@ -14,6 +14,7 @@ import username from './username';
 // Game
 import positions, * as fromPositions from './positions';
 import players from './players';
+import pendingPositionId from './pendingPositionId';
 import requestedTakeback from './requestedTakeback';
 import selectedMoveId from './selectedMoveId';
 import updateCount from './updateCount';
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   // Game
   positions,
   players,
+  pendingPositionId,
   requestedTakeback,
   selectedMoveId,
   updateCount,
