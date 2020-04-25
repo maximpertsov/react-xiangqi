@@ -8,3 +8,5 @@ const pendingPositionId = (state = null, action) => {
 };
 
 export default pendingPositionId;
+
+export const getHasPendingPosition = state => state !== null;

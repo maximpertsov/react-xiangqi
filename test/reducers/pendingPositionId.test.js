@@ -1,4 +1,4 @@
-import reducer from 'reducers/pendingPositionId';
+import reducer, { getHasPendingPosition } from 'reducers/pendingPositionId';
 
 describe('positions reducer', () => {
   it('should return the default state', () => {
@@ -11,5 +11,12 @@ describe('positions reducer', () => {
     const currentState = null;
     const expectedNewState = 1;
     expect(reducer(currentState, action)).toEqual(expectedNewState);
+  });
+});
+
+describe('positions selector', () => {
+  it('should indicate if a position is pending', () => {
+    expect(getHasPendingPosition(null)).toBeFalsy();
+    expect(getHasPendingPosition(0)).toBeTruthy();
   });
 });
