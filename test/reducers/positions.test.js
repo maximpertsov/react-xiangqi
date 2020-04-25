@@ -5,14 +5,12 @@ describe('positions reducer', () => {
     expect(positions(undefined, {})).toEqual([]);
   });
 
-  it('should add a move', () => {
+  it('should add a positions', () => {
     const action = { type: 'add_position' };
 
-    const firstPosition = { id: 0 };
-    const currentState = [firstPosition];
-
+    const currentState = [{ id: 0 }];
     const expectedNewState = [
-      firstPosition,
+      { id: 0 },
       {
         id: 1,
         fen: undefined,
@@ -24,5 +22,29 @@ describe('positions reducer', () => {
     ];
 
     expect(positions(currentState, action)).toEqual(expectedNewState);
+  });
+
+  describe('cancel pending positions', () => {
+    const action = { type: 'cancel_pending_position' };
+
+    it('should the last position if it is pending', () => {
+      const currentState = [
+        { id: 0, pending: false },
+        { id: 1, pending: true },
+      ];
+      const expectedNewState = [{ id: 0, pending: false }];
+
+      expect(positions(currentState, action)).toEqual(expectedNewState);
+    });
+
+    it('should not cancel a pending position that is not the last move', () => {
+      const currentState = [
+        { id: 0, pending: true },
+        { id: 1, pending: false },
+      ];
+      const expectedNewState = currentState;
+
+      expect(positions(currentState, action)).toEqual(expectedNewState);
+    });
   });
 });

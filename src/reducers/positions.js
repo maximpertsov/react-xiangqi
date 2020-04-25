@@ -26,11 +26,12 @@ const addPosition = (state, action) =>
     $push: [{ ...pick(action, positionFields), id: state.length }],
   });
 
-const cancelMoves = state => {
-  const confirmedMoves = state.filter(({ pending }) => !pending);
+const cancelPendingPosition = state =>
+  state.filter(({ pending }, index, currentState) => {
+    if (index < currentState.length - 1) return true;
 
-  return confirmedMoves;
-};
+    return !pending;
+  });
 
 const confirmMoves = state => state.map(move => ({ ...move, pending: false }));
 
@@ -60,8 +61,8 @@ const positions = (state = [], action) => {
   switch (action.type) {
     case 'add_position':
       return addPosition(state, action);
-    case 'cancel_moves':
-      return cancelMoves(state);
+    case 'cancel_pending_position':
+      return cancelPendingPosition(state);
     case 'confirm_moves':
       return confirmMoves(state);
     case 'set_move':
