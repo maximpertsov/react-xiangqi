@@ -1,5 +1,5 @@
 export {
-  addMove,
+  addPosition,
   cancelMoves,
   confirmMoves,
   makeMove,

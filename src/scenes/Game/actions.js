@@ -1,7 +1,7 @@
 import * as client from 'services/client';
 
-export const addMove = move => ({
-  type: 'add_move',
+export const addPosition = move => ({
+  type: 'add_position',
   ...move,
 });
 
@@ -17,7 +17,7 @@ export const selectMove = ({ moveId }) => ({
 });
 
 export const makeMove = move => dispatch => {
-  dispatch(addMove(move));
+  dispatch(addPosition(move));
   dispatch(selectMove({ moveId: null }));
 };
 
