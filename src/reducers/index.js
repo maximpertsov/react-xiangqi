@@ -48,21 +48,21 @@ export default rootReducer;
 /***  Moves  ***/
 /***************/
 
-export const getHasInitialPlacement = ({ moves }) =>
-  fromPositions.getHasInitialPlacement(moves);
+export const getHasInitialPlacement = ({ positions }) =>
+  fromPositions.getHasInitialPlacement(positions);
 
-export const getMoveCount = ({ moves }) => fromPositions.getMoveCount(moves);
+export const getMoveCount = ({ positions }) => fromPositions.getMoveCount(positions);
 
-export const getLastMove = ({ moves }) => fromPositions.getLastMove(moves);
+export const getLastMove = ({ positions }) => fromPositions.getLastMove(positions);
 
-export const getIsLastMovePending = ({ moves }) =>
-  fromPositions.getIsLastMovePending(moves);
+export const getIsLastMovePending = ({ positions }) =>
+  fromPositions.getIsLastMovePending(positions);
 
-export const getSelectedMove = ({ moves, selectedMoveId }) => {
-  const result = fromPositions.getMoveById(moves, selectedMoveId);
+export const getSelectedMove = ({ positions, selectedMoveId }) => {
+  const result = fromPositions.getMoveById(positions, selectedMoveId);
   if (result !== undefined) return result;
 
-  return getLastMove({ moves });
+  return getLastMove({ positions });
 };
 
 export const getPreviousMove = state =>
@@ -71,11 +71,11 @@ export const getPreviousMove = state =>
 export const getNextMove = state =>
   fromPositions.getNextMove(state.positions, getSelectedMove(state).id);
 
-export const getNextMoveColor = ({ moves }) =>
-  fromPositions.getNextMoveColor(moves);
+export const getNextMoveColor = ({ positions }) =>
+  fromPositions.getNextMoveColor(positions);
 
-export const getFirstMoveWithMissingData = ({ moves }) =>
-  fromPositions.getFirstMoveWithMissingData(moves);
+export const getFirstMoveWithMissingData = ({ positions }) =>
+  fromPositions.getFirstMoveWithMissingData(positions);
 
 /*****************/
 /***  Players  ***/
@@ -84,12 +84,12 @@ export const getFirstMoveWithMissingData = ({ moves }) =>
 const lookupPlayer = (players, key, value) =>
   players.find(p => p[key] === value);
 
-export const getNextMovePlayer = ({ players, moves }) =>
-  lookupPlayer(players, 'color', getNextMoveColor({ moves }));
+export const getNextMovePlayer = ({ players, positions }) =>
+  lookupPlayer(players, 'color', getNextMoveColor({ positions }));
 
-export const getNextMovePlayerName = ({ players, moves }) => {
+export const getNextMovePlayerName = ({ players, positions }) => {
   try {
-    return getNextMovePlayer({ players, moves }).name;
+    return getNextMovePlayer({ players, positions }).name;
   } catch (e) {
     if (e instanceof TypeError) return undefined;
     throw e;
@@ -154,7 +154,7 @@ export const getLegalMoves = state => {
   const nextMoveColor = getNextMoveColor(state);
   const { id: lastMoveId, legalMoves } = getLastMove(state);
 
-  // TODO: for now we can assume that legal moves are only allowed for the
+  // TODO: for now we can assume that legal positions are only allowed for the
   // latest move. However, this will change if we ever implement an analysis
   // board-style function.
   if (lastMoveId !== getSelectedMove(state).id) return [];
@@ -168,7 +168,7 @@ export const getTargets = state => {
   if (state.selectedSquare === null) return [];
 
   const legalMoves = getLegalMoves(state);
-  // TODO: this is undefined while legal moves are still being fetched
+  // TODO: this is undefined while legal positions are still being fetched
   if (legalMoves === undefined) return [];
 
   return keys(legalMoves).filter(
