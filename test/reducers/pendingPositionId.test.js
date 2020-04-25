@@ -6,7 +6,7 @@ describe('positions reducer', () => {
   });
 
   it('should update the pending position id', () => {
-    const action = { type: 'update_pending_position', id: 1 };
+    const action = { type: 'update_pending_position', value: 1 };
 
     const currentState = null;
     const expectedNewState = 1;

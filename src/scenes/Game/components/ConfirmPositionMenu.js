@@ -14,7 +14,7 @@ const ConfirmPositionMenu = () => {
 
   const confirmPosition = useCallback(async () => {
     // TODO: Not implemented yet
-    dispatch({ type: 'update_pending_position', pendingPositionId: null });
+    dispatch({ type: 'update_pending_position', value: null });
 
     // TODO: Post to server
   }, [dispatch]);
