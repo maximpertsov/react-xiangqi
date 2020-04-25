@@ -12,7 +12,7 @@ import loginForm from './loginForm';
 import showGame from './showGame';
 import username from './username';
 // Game
-import moves, * as fromMoves from './moves';
+import positions, * as fromPositions from './positions';
 import players from './players';
 import requestedTakeback from './requestedTakeback';
 import selectedMoveId from './selectedMoveId';
@@ -31,7 +31,7 @@ const rootReducer = combineReducers({
   showGame,
   username,
   // Game
-  moves,
+  positions,
   players,
   requestedTakeback,
   selectedMoveId,
@@ -49,33 +49,33 @@ export default rootReducer;
 /***************/
 
 export const getHasInitialPlacement = ({ moves }) =>
-  fromMoves.getHasInitialPlacement(moves);
+  fromPositions.getHasInitialPlacement(moves);
 
-export const getMoveCount = ({ moves }) => fromMoves.getMoveCount(moves);
+export const getMoveCount = ({ moves }) => fromPositions.getMoveCount(moves);
 
-export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
+export const getLastMove = ({ moves }) => fromPositions.getLastMove(moves);
 
 export const getIsLastMovePending = ({ moves }) =>
-  fromMoves.getIsLastMovePending(moves);
+  fromPositions.getIsLastMovePending(moves);
 
 export const getSelectedMove = ({ moves, selectedMoveId }) => {
-  const result = fromMoves.getMoveById(moves, selectedMoveId);
+  const result = fromPositions.getMoveById(moves, selectedMoveId);
   if (result !== undefined) return result;
 
   return getLastMove({ moves });
 };
 
 export const getPreviousMove = state =>
-  fromMoves.getPreviousMove(state.moves, getSelectedMove(state).id);
+  fromPositions.getPreviousMove(state.moves, getSelectedMove(state).id);
 
 export const getNextMove = state =>
-  fromMoves.getNextMove(state.moves, getSelectedMove(state).id);
+  fromPositions.getNextMove(state.moves, getSelectedMove(state).id);
 
 export const getNextMoveColor = ({ moves }) =>
-  fromMoves.getNextMoveColor(moves);
+  fromPositions.getNextMoveColor(moves);
 
 export const getFirstMoveWithMissingData = ({ moves }) =>
-  fromMoves.getFirstMoveWithMissingData(moves);
+  fromPositions.getFirstMoveWithMissingData(moves);
 
 /*****************/
 /***  Players  ***/

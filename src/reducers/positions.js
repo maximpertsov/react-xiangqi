@@ -1,5 +1,6 @@
 import update from 'immutability-helper';
 import findIndex from 'lodash/findIndex';
+import pick from 'lodash/pick';
 import sortedIndexBy from 'lodash/sortedIndexBy';
 import { decode as decodeFen } from 'services/logic/fen';
 
@@ -11,17 +12,19 @@ const getMoveIndex = (state, moveId) => {
   return -1;
 };
 
-const addMove = (state, action) => {
-  const move = {
-    id: state.length,
-    givesCheck: action.givesCheck,
-    fen: action.fen,
-    legalMoves: action.legalMoves,
-    move: action.move,
-    pending: action.pending,
-  };
-  return update(state, { $push: [move] });
-};
+const positionFields = [
+  'id',
+  'fen',
+  'givesCheck',
+  'legalMoves',
+  'move',
+  'pending',
+];
+
+const addPosition = (state, action) =>
+  update(state, {
+    $push: [{ ...pick(action, positionFields), id: state.length }],
+  });
 
 const cancelMoves = state => {
   const confirmedMoves = state.filter(({ pending }) => !pending);
@@ -53,10 +56,10 @@ const setMoves = (state, action) => {
 };
 
 // eslint-disable-next-line complexity
-const moves = (state = [], action) => {
+const positions = (state = [], action) => {
   switch (action.type) {
-    case 'add_move':
-      return addMove(state, action);
+    case 'add_position':
+      return addPosition(state, action);
     case 'cancel_moves':
       return cancelMoves(state);
     case 'confirm_moves':
@@ -70,7 +73,7 @@ const moves = (state = [], action) => {
   }
 };
 
-export default moves;
+export default positions;
 
 /*******************/
 /***  Selectors  ***/
