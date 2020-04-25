@@ -21,7 +21,7 @@ import {
 const initialState = {
   gameSlug: null,
   showGame: true,
-  moves: initialPlacementOnly,
+  positions: initialPlacementOnly,
   players: [
     {
       color: 'red',
@@ -53,6 +53,7 @@ describe('Board', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  // eslint-disable-next-line jest/expect-expect
   test('select and deselect a square', () => {
     const wrapper = mount(getBoard(getStore()));
 
@@ -85,6 +86,6 @@ describe('Board', () => {
     expectToHavePiece(wrapper, 'e5', 'P');
     expectSquaresToBeInLastMove(wrapper, ['e4', 'e5']);
 
-    expect(store.getState().moves).toHaveLength(2);
+    expect(store.getState().positions).toHaveLength(2);
   });
 });
