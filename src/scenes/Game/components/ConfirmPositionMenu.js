@@ -16,9 +16,8 @@ const ConfirmPositionMenu = () => {
   // const username = useSelector(state => state.username);
 
   const confirmPosition = useCallback(async () => {
-    dispatch({ type: 'update_pending_position', value: null });
-
     // TODO: Post to server
+    dispatch({ type: 'update_pending_position', value: null });
   }, [dispatch]);
 
   const cancelPosition = useCallback(() => {
