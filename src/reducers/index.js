@@ -14,7 +14,7 @@ import username from './username';
 // Game
 import positions, * as fromPositions from './positions';
 import players from './players';
-import pendingPositionId from './pendingPositionId';
+import pendingPositionId, * as fromPendingPositionId from './pendingPositionId';
 import requestedTakeback from './requestedTakeback';
 import selectedMoveId from './selectedMoveId';
 import updateCount from './updateCount';
@@ -53,9 +53,11 @@ export default rootReducer;
 export const getHasInitialPlacement = ({ positions }) =>
   fromPositions.getHasInitialPlacement(positions);
 
-export const getMoveCount = ({ positions }) => fromPositions.getMoveCount(positions);
+export const getMoveCount = ({ positions }) =>
+  fromPositions.getMoveCount(positions);
 
-export const getLastMove = ({ positions }) => fromPositions.getLastMove(positions);
+export const getLastMove = ({ positions }) =>
+  fromPositions.getLastMove(positions);
 
 export const getIsLastMovePending = ({ positions }) =>
   fromPositions.getIsLastMovePending(positions);
@@ -183,3 +185,9 @@ export const getTargets = state => {
 /********************/
 export const getIsMoving = ({ animationOffset }) =>
   fromAnimationOffset.getIsMoving(animationOffset);
+
+/*************************/
+/***  PendingPosition  ***/
+/*************************/
+export const getHasPendingPosition = ({ pendingPositionId }) =>
+  fromPendingPositionId.getHasPendingPosition(pendingPositionId);

@@ -9,10 +9,10 @@ import rootReducer from 'reducers';
 import ConfirmPositionMenu from 'scenes/Game/components/ConfirmPositionMenu';
 
 const initialState = {
-  gameSlug: null,
+  gameSlug: 'ABC123',
   showGame: true,
   positions: [{ id: 0 }, { id: 1 }],
-  pendingPositionId: null,
+  pendingPositionId: 0,
   players: [
     {
       color: 'red',
