@@ -71,7 +71,7 @@ const positions = (state = [], action) => {
       return addPosition(state, action);
     case 'remove_position':
       return removePosition(state, action);
-    case 'cancel_pending_position':
+    case 'cancel_moves':
       return cancelPendingPosition(state);
     case 'confirm_moves':
       return confirmMoves(state);

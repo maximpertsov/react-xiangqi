@@ -54,28 +54,4 @@ describe('positions reducer', () => {
     ];
     expect(positions(currentState, action)).toEqual(expectedNewState);
   });
-
-  describe('cancel pending positions', () => {
-    const action = { type: 'cancel_pending_position' };
-
-    it('should the last position if it is pending', () => {
-      const currentState = [
-        { id: 0, pending: false },
-        { id: 1, pending: true },
-      ];
-      const expectedNewState = [{ id: 0, pending: false }];
-
-      expect(positions(currentState, action)).toEqual(expectedNewState);
-    });
-
-    it('should not cancel a pending position that is not the last move', () => {
-      const currentState = [
-        { id: 0, pending: true },
-        { id: 1, pending: false },
-      ];
-      const expectedNewState = currentState;
-
-      expect(positions(currentState, action)).toEqual(expectedNewState);
-    });
-  });
 });
