@@ -29,19 +29,4 @@ export const confirmMoves = () => ({
   type: 'confirm_moves',
 });
 
-export const postMove = ({
-  gameSlug,
-  move: { move },
-  username,
-}) => async dispatch => {
-  if (gameSlug === null) return;
-
-  try {
-    await client.postMove({ gameSlug, move, username });
-  } catch (error) {
-    // TODO: fetch moves to avoid client/server disparity?
-    dispatch(cancelMoves());
-  }
-};
-
 export default {};
