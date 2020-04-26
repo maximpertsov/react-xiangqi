@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { mount, render } from 'enzyme';
@@ -24,6 +25,7 @@ const initialState = {
   selectedMoveId: null,
   animationOffset: [0, 0],
   selectedSquare: null,
+  username: 'user',
 };
 
 const getStore = (overrides = {}) =>
@@ -45,6 +47,9 @@ describe('ConfirmPositionMenu', () => {
   });
 
   test('confirm closes the method', () => {
+    jest.mock('axios');
+    axios.post = jest.fn(() => Promise.resolve({}));
+
     const store = getStore();
     const wrapper = mount(getComponent(store));
 
@@ -53,9 +58,37 @@ describe('ConfirmPositionMenu', () => {
     jest.runOnlyPendingTimers();
     wrapper.update();
 
-    // Test actions with mockStore
+    // TODO: Test actions with mockStore
+
+    // Calls API
+    expect(axios.post).toHaveBeenCalledWith('game/ABC123/events', {
+      name: 'move',
+      move: { id: 1 },
+      player: 'user',
+    });
+
+    // Confirm state
     expect(store.getState().pendingPositionId).toBe(null);
-    expect(wrapper.render()).toMatchSnapshot()
+    expect(wrapper.render()).toMatchSnapshot();
+
+    wrapper.unmount();
+  });
+
+  test('cancel removes the last move and closes the method', () => {
+    const store = getStore();
+    const wrapper = mount(getComponent(store));
+
+    // Click confirm
+    wrapper.find('.button.red').simulate('click');
+    jest.runOnlyPendingTimers();
+    wrapper.update();
+
+    // TODO: Test actions with mockStore
+
+    // Confirm state
+    expect(store.getState().pendingPositionId).toBe(null);
+    expect(store.getState().positions).toEqual([{ id: 0 }]);
+    expect(wrapper.render()).toMatchSnapshot();
 
     wrapper.unmount();
   });

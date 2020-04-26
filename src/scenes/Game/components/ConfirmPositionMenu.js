@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { cancelMoves, confirmMoves, postMove } from 'actions';
+import { postMove } from 'actions';
+import { getHasPendingPosition, getLastMove } from 'reducers';
 
-import { getHasPendingPosition } from 'reducers';
+import isEqual from 'lodash/isEqual';
 
 import ConfirmMenu from 'components/ConfirmMenu';
 
@@ -12,17 +13,22 @@ const ConfirmPositionMenu = () => {
 
   const gameSlug = useSelector(state => state.gameSlug);
   const hasPendingPosition = useSelector(state => getHasPendingPosition(state));
-  const pendingPositionId = useSelector(state => state.pendingPositionId);
-  // const username = useSelector(state => state.username);
+  const lastMove = useSelector(state => getLastMove(state), isEqual);
+  const username = useSelector(state => state.username);
 
-  const confirmPosition = useCallback(async () => {
-    // TODO: Post to server
-    dispatch({ type: 'update_pending_position', value: null });
-  }, [dispatch]);
+  const confirmPosition = useCallback(
+    async () => {
+      dispatch(postMove({ gameSlug, move: lastMove, username }));
+      dispatch({ type: 'update_pending_position', value: null });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dispatch, gameSlug, lastMove.id, username],
+  );
 
   const cancelPosition = useCallback(() => {
-    dispatch({ type: 'remove_position', id: pendingPositionId });
-  }, [dispatch, pendingPositionId]);
+    dispatch({ type: 'update_pending_position', value: null });
+    dispatch({ type: 'remove_position', id: lastMove.id });
+  }, [dispatch, lastMove.id]);
 
   return (
     <ConfirmMenu

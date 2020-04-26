@@ -3,6 +3,7 @@ import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import last from 'lodash/last';
+import reject from 'lodash/reject';
 import sortedIndexBy from 'lodash/sortedIndexBy';
 import { decode as decodeFen } from 'services/logic/fen';
 
@@ -32,7 +33,7 @@ const addPosition = (state, action) => {
 };
 
 const removePosition = (state, action) =>
-  state.filter(({ id }) => action.id !== id);
+  reject(state, ({ id }) => action.id === id);
 
 const cancelPendingPosition = state =>
   state.filter(({ pending }, index, currentState) => {
