@@ -15,7 +15,7 @@ describe('positions reducer', () => {
           id: 0,
           fen: undefined,
           givesCheck: undefined,
-          legalPositions: undefined,
+          legalMoves: undefined,
           move: undefined,
           pending: undefined,
         },
@@ -31,12 +31,11 @@ describe('positions reducer', () => {
           id: 1,
           fen: undefined,
           givesCheck: undefined,
-          legalPositions: undefined,
+          legalMoves: undefined,
           move: undefined,
-          pending: undefined,
         },
       ];
-      expect(positions(currentState, action)).toEqual(expectedNewState);
+      expect(positions(currentState, action)).toStrictEqual(expectedNewState);
     });
   });
 

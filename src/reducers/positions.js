@@ -1,10 +1,13 @@
 import update from 'immutability-helper';
+
 import findIndex from 'lodash/findIndex';
+import fromPairs from 'lodash/fromPairs';
 import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import last from 'lodash/last';
 import reject from 'lodash/reject';
 import sortedIndexBy from 'lodash/sortedIndexBy';
+
 import { decode as decodeFen } from 'services/logic/fen';
 
 import { Color } from 'services/logic/constants';
@@ -15,20 +18,19 @@ const getMoveIndex = (state, moveId) => {
   return -1;
 };
 
-const positionFields = [
-  'id',
-  'fen',
-  'givesCheck',
-  'legalMoves',
-  'move',
-  'pending',
-];
+const positionFields = ['id', 'fen', 'givesCheck', 'legalMoves', 'move'];
+
+const createPosition = (properties, overrides = {}) => ({
+  ...fromPairs(positionFields.map(field => [field, undefined])),
+  ...pick(properties, positionFields),
+  ...overrides,
+});
 
 const addPosition = (state, action) => {
   const nextId = isEmpty(state) ? 0 : last(state).id + 1;
 
   return update(state, {
-    $push: [{ ...pick(action, positionFields), id: nextId }],
+    $push: [createPosition(action, { id: nextId })],
   });
 };
 

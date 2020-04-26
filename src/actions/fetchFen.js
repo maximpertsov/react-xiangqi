@@ -11,7 +11,6 @@ export const fetchInitialPlacement = () => async dispatch => {
   dispatch({
     type: 'add_position',
     move: null,
-    pending: false,
     ...transformFetchedData(data),
   });
 };
