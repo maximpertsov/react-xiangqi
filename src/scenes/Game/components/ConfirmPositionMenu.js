@@ -12,8 +12,8 @@ const ConfirmPositionMenu = () => {
   const dispatch = useDispatch();
 
   const gameSlug = useSelector(state => state.gameSlug);
-  const lastPositionIsPending = useSelector(
-    state => state.lastPositionIsPending,
+  const showConfirmMoveMenu = useSelector(
+    state => state.showConfirmMoveMenu,
   );
   const lastMove = useSelector(state => getLastMove(state), isEqual);
   const username = useSelector(state => state.username);
@@ -21,14 +21,14 @@ const ConfirmPositionMenu = () => {
   const confirmPosition = useCallback(
     async () => {
       dispatch(createMoveOnServer({ gameSlug, position: lastMove, username }));
-      dispatch({ type: 'update_last_position_is_pending', value: false });
+      dispatch({ type: 'toggle_show_confirm_move_menu', value: false });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, gameSlug, lastMove.id, username],
   );
 
   const cancelPosition = useCallback(() => {
-    dispatch({ type: 'update_last_position_is_pending', value: false });
+    dispatch({ type: 'toggle_show_confirm_move_menu', value: false });
     dispatch({ type: 'remove_position', id: lastMove.id });
   }, [dispatch, lastMove.id]);
 
@@ -37,7 +37,7 @@ const ConfirmPositionMenu = () => {
       label="Confirm move?"
       yesHandler={confirmPosition}
       noHandler={cancelPosition}
-      show={lastPositionIsPending}
+      show={showConfirmMoveMenu}
       disabled={gameSlug === null}
     />
   );

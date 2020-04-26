@@ -12,7 +12,7 @@ import loginForm from './loginForm';
 import showGame from './showGame';
 import username from './username';
 // Game
-import lastPositionIsPending from './lastPositionIsPending';
+import showConfirmMoveMenu from './showConfirmMoveMenu';
 import positions, * as fromPositions from './positions';
 import players from './players';
 import requestedTakeback from './requestedTakeback';
@@ -34,7 +34,7 @@ const rootReducer = combineReducers({
   // Game
   positions,
   players,
-  lastPositionIsPending,
+  showConfirmMoveMenu,
   requestedTakeback,
   selectedMoveId,
   updateCount,

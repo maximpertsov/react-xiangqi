@@ -1,4 +1,4 @@
-import reducer from 'reducers/lastPositionIsPending';
+import reducer from 'reducers/showConfirmMoveMenu';
 
 describe('positions reducer', () => {
   it('should return the default state', () => {
@@ -6,7 +6,7 @@ describe('positions reducer', () => {
   });
 
   it('should update the pending position id', () => {
-    const action = { type: 'update_last_position_is_pending', value: true };
+    const action = { type: 'toggle_show_confirm_move_menu', value: true };
 
     const currentState = false;
     expect(reducer(currentState, action)).toBeTruthy();

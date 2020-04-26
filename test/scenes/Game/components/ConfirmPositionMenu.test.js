@@ -12,7 +12,7 @@ import ConfirmPositionMenu from 'scenes/Game/components/ConfirmPositionMenu';
 const initialState = {
   animationOffset: [0, 0],
   gameSlug: 'ABC123',
-  lastPositionIsPending: true,
+  showConfirmMoveMenu: true,
   positions: [
     { id: 0, move: null },
     { id: 1, move: 'a1a2' },
@@ -70,7 +70,7 @@ describe('ConfirmPositionMenu', () => {
     });
 
     // Confirm state
-    expect(store.getState().lastPositionIsPending).toBe(false);
+    expect(store.getState().showConfirmMoveMenu).toBe(false);
     expect(wrapper.render()).toMatchSnapshot();
 
     spy.mockRestore();
@@ -90,7 +90,7 @@ describe('ConfirmPositionMenu', () => {
     // TODO: Test actions with mockStore
 
     // Confirm state
-    expect(store.getState().lastPositionIsPending).toBe(false);
+    expect(store.getState().showConfirmMoveMenu).toBe(false);
     expect(store.getState().positions).toEqual([{ id: 0, move: null }]);
     expect(wrapper.render()).toMatchSnapshot();
 
