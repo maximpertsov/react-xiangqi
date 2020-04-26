@@ -1,4 +1,4 @@
-import positions, { getMoveById } from 'reducers/positions';
+import positions, { getLastMove, getMoveById } from 'reducers/positions';
 
 describe('positions reducer', () => {
   it('should return the default state', () => {
@@ -67,5 +67,14 @@ describe('positions selectors', () => {
     expect(getMoveById(state, 1)).toEqual(undefined);
     expect(getMoveById(state, 2)).toEqual({ id: 2, move: 'a1a2' });
     expect(getMoveById(state, 3)).toEqual({ id: 3, move: 'a10a9' });
+  });
+
+  test('select last move', () => {
+    const state = [
+      { id: 0, move: null },
+      { id: 2, move: 'a1a2' },
+      { id: 3, move: 'a10a9' },
+    ];
+    expect(getLastMove(state)).toEqual({ id: 3, move: 'a10a9' });
   });
 });
