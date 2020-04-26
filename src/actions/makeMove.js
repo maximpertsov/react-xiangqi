@@ -1,4 +1,4 @@
-import { addPosition, selectMove } from 'scenes/Game/actions';
+import { addPosition, selectMove } from 'actions';
 
 const makeMove = position => dispatch => {
   dispatch(addPosition(position));
