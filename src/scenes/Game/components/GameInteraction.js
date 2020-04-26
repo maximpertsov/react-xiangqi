@@ -5,7 +5,8 @@ import isEqual from 'lodash/isEqual';
 import sample from 'lodash/sample';
 import toPairs from 'lodash/toPairs';
 
-import { makeMove, selectMove } from 'actions';
+import makeMove from 'actions/makeMove';
+import { selectMove } from 'actions';
 import {
   getLastMove,
   getPreviousMove,
