@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { postMove } from 'actions';
+import createMoveOnServer from 'actions/createMoveOnServer';
 import { getHasPendingPosition, getLastMove } from 'reducers';
 
 import isEqual from 'lodash/isEqual';
@@ -18,7 +18,7 @@ const ConfirmPositionMenu = () => {
 
   const confirmPosition = useCallback(
     async () => {
-      dispatch(postMove({ gameSlug, move: lastMove, username }));
+      dispatch(createMoveOnServer({ gameSlug, position: lastMove, username }));
       dispatch({ type: 'update_pending_position', value: null });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

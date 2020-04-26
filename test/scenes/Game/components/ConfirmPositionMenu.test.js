@@ -1,18 +1,21 @@
 import React from 'react';
-import axios from 'axios';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { mount, render } from 'enzyme';
 
 import { applyMiddleware, createStore, compose } from 'redux';
 import rootReducer from 'reducers';
+import * as createMoveOnServer from 'actions/createMoveOnServer';
 
 import ConfirmPositionMenu from 'scenes/Game/components/ConfirmPositionMenu';
 
 const initialState = {
   gameSlug: 'ABC123',
   showGame: true,
-  positions: [{ id: 0 }, { id: 1 }],
+  positions: [
+    { id: 0, move: null },
+    { id: 1, move: 'a1a2' },
+  ],
   pendingPositionId: 0,
   players: [
     {
@@ -47,8 +50,7 @@ describe('ConfirmPositionMenu', () => {
   });
 
   test('confirm closes the method', () => {
-    jest.mock('axios');
-    axios.post = jest.fn(() => Promise.resolve({}));
+    const spy = jest.spyOn(createMoveOnServer, 'default');
 
     const store = getStore();
     const wrapper = mount(getComponent(store));
@@ -61,15 +63,17 @@ describe('ConfirmPositionMenu', () => {
     // TODO: Test actions with mockStore
 
     // Calls API
-    expect(axios.post).toHaveBeenCalledWith('game/ABC123/events', {
-      name: 'move',
-      move: { id: 1 },
-      player: 'user',
+    expect(spy).toHaveBeenCalledWith({
+      gameSlug: 'ABC123',
+      position: { id: 1, move: 'a1a2' },
+      username: 'user',
     });
 
     // Confirm state
     expect(store.getState().pendingPositionId).toBe(null);
     expect(wrapper.render()).toMatchSnapshot();
+
+    spy.mockRestore();
 
     wrapper.unmount();
   });
@@ -87,7 +91,7 @@ describe('ConfirmPositionMenu', () => {
 
     // Confirm state
     expect(store.getState().pendingPositionId).toBe(null);
-    expect(store.getState().positions).toEqual([{ id: 0 }]);
+    expect(store.getState().positions).toEqual([{ id: 0, move: null }]);
     expect(wrapper.render()).toMatchSnapshot();
 
     wrapper.unmount();
