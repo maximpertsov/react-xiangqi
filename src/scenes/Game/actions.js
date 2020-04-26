@@ -14,11 +14,6 @@ export const selectMove = ({ moveId }) => ({
   moveId,
 });
 
-export const makeMove = move => dispatch => {
-  dispatch(addPosition(move));
-  dispatch(selectMove({ moveId: null }));
-};
-
 export const cancelMoves = () => ({
   type: 'cancel_moves',
 });

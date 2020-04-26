@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import get from 'lodash/get';
 import isEqual from 'lodash/isEqual';
 
+import makeMove from 'actions/makeMove';
 import {
   clearAnimationOffset,
   clearSelectedSlot,
-  makeMove,
   setAnimationOffset,
   setSelectedSlot,
 } from 'actions';
