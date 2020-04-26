@@ -7,7 +7,7 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import rootReducer from 'reducers';
 import * as createMoveOnServer from 'actions/createMoveOnServer';
 
-import ConfirmPositionMenu from 'scenes/Game/components/ConfirmPositionMenu';
+import ConfirmMoveMenu from 'scenes/Game/components/ConfirmMoveMenu';
 
 const initialState = {
   animationOffset: [0, 0],
@@ -39,11 +39,11 @@ const getStore = (overrides = {}) =>
 
 const getComponent = store => (
   <Provider store={store}>
-    <ConfirmPositionMenu />
+    <ConfirmMoveMenu />
   </Provider>
 );
 
-describe('ConfirmPositionMenu', () => {
+describe('ConfirmMoveMenu', () => {
   test('renders without crashing', () => {
     const wrapper = render(getComponent(getStore()));
     expect(wrapper).toMatchSnapshot();

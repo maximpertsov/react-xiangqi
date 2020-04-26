@@ -1,5 +1,3 @@
-import * as client from 'services/client';
-
 export const addPosition = move => ({
   type: 'add_position',
   ...move,

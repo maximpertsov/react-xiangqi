@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ConfirmPositionMenu cancel removes the last move and closes the method 1`] = `null`;
+exports[`ConfirmMoveMenu cancel removes the last move and closes the method 1`] = `null`;
 
-exports[`ConfirmPositionMenu confirm closes the method 1`] = `null`;
+exports[`ConfirmMoveMenu confirm closes the method 1`] = `null`;
 
-exports[`ConfirmPositionMenu renders without crashing 1`] = `
+exports[`ConfirmMoveMenu renders without crashing 1`] = `
 <div
   class="ui segment"
 >
