@@ -12,9 +12,9 @@ import loginForm from './loginForm';
 import showGame from './showGame';
 import username from './username';
 // Game
+import lastPositionIsPending from './lastPositionIsPending';
 import positions, * as fromPositions from './positions';
 import players from './players';
-import pendingPositionId, * as fromPendingPositionId from './pendingPositionId';
 import requestedTakeback from './requestedTakeback';
 import selectedMoveId from './selectedMoveId';
 import updateCount from './updateCount';
@@ -34,7 +34,7 @@ const rootReducer = combineReducers({
   // Game
   positions,
   players,
-  pendingPositionId,
+  lastPositionIsPending,
   requestedTakeback,
   selectedMoveId,
   updateCount,
@@ -185,9 +185,3 @@ export const getTargets = state => {
 /********************/
 export const getIsMoving = ({ animationOffset }) =>
   fromAnimationOffset.getIsMoving(animationOffset);
-
-/*************************/
-/***  PendingPosition  ***/
-/*************************/
-export const getHasPendingPosition = ({ pendingPositionId }) =>
-  fromPendingPositionId.getHasPendingPosition(pendingPositionId);
