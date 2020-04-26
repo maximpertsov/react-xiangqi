@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfirmMoveMenu cancel removes the last move and closes the method 1`] = `null`;
+
+exports[`ConfirmMoveMenu confirm closes the method 1`] = `null`;
+
+exports[`ConfirmMoveMenu renders without crashing 1`] = `
+<div
+  class="ui segment"
+>
+  <div
+    class="ui top attached label"
+  >
+    Confirm move?
+  </div>
+  <div
+    class="GameMenu css-kva90l"
+  >
+    <button
+      class="ui green button"
+    >
+      <i
+        aria-hidden="true"
+        class="check fitted icon"
+      />
+    </button>
+    <button
+      class="ui red button"
+    >
+      <i
+        aria-hidden="true"
+        class="x fitted icon"
+      />
+    </button>
+  </div>
+</div>
+`;

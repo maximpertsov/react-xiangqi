@@ -12,7 +12,8 @@ import loginForm from './loginForm';
 import showGame from './showGame';
 import username from './username';
 // Game
-import moves, * as fromMoves from './moves';
+import showConfirmMoveMenu from './showConfirmMoveMenu';
+import positions, * as fromPositions from './positions';
 import players from './players';
 import requestedTakeback from './requestedTakeback';
 import selectedMoveId from './selectedMoveId';
@@ -31,8 +32,9 @@ const rootReducer = combineReducers({
   showGame,
   username,
   // Game
-  moves,
+  positions,
   players,
+  showConfirmMoveMenu,
   requestedTakeback,
   selectedMoveId,
   updateCount,
@@ -48,34 +50,36 @@ export default rootReducer;
 /***  Moves  ***/
 /***************/
 
-export const getHasInitialPlacement = ({ moves }) =>
-  fromMoves.getHasInitialPlacement(moves);
+export const getHasInitialPlacement = ({ positions }) =>
+  fromPositions.getHasInitialPlacement(positions);
 
-export const getMoveCount = ({ moves }) => fromMoves.getMoveCount(moves);
+export const getMoveCount = ({ positions }) =>
+  fromPositions.getMoveCount(positions);
 
-export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
+export const getLastMove = ({ positions }) =>
+  fromPositions.getLastMove(positions);
 
-export const getIsLastMovePending = ({ moves }) =>
-  fromMoves.getIsLastMovePending(moves);
+export const getIsLastMovePending = ({ positions }) =>
+  fromPositions.getIsLastMovePending(positions);
 
-export const getSelectedMove = ({ moves, selectedMoveId }) => {
-  const result = fromMoves.getMoveById(moves, selectedMoveId);
+export const getSelectedMove = ({ positions, selectedMoveId }) => {
+  const result = fromPositions.getMoveById(positions, selectedMoveId);
   if (result !== undefined) return result;
 
-  return getLastMove({ moves });
+  return getLastMove({ positions });
 };
 
 export const getPreviousMove = state =>
-  fromMoves.getPreviousMove(state.moves, getSelectedMove(state).id);
+  fromPositions.getPreviousMove(state.positions, getSelectedMove(state).id);
 
 export const getNextMove = state =>
-  fromMoves.getNextMove(state.moves, getSelectedMove(state).id);
+  fromPositions.getNextMove(state.positions, getSelectedMove(state).id);
 
-export const getNextMoveColor = ({ moves }) =>
-  fromMoves.getNextMoveColor(moves);
+export const getNextMoveColor = ({ positions }) =>
+  fromPositions.getNextMoveColor(positions);
 
-export const getFirstMoveWithMissingData = ({ moves }) =>
-  fromMoves.getFirstMoveWithMissingData(moves);
+export const getFirstMoveWithMissingData = ({ positions }) =>
+  fromPositions.getFirstMoveWithMissingData(positions);
 
 /*****************/
 /***  Players  ***/
@@ -84,12 +88,12 @@ export const getFirstMoveWithMissingData = ({ moves }) =>
 const lookupPlayer = (players, key, value) =>
   players.find(p => p[key] === value);
 
-export const getNextMovePlayer = ({ players, moves }) =>
-  lookupPlayer(players, 'color', getNextMoveColor({ moves }));
+export const getNextMovePlayer = ({ players, positions }) =>
+  lookupPlayer(players, 'color', getNextMoveColor({ positions }));
 
-export const getNextMovePlayerName = ({ players, moves }) => {
+export const getNextMovePlayerName = ({ players, positions }) => {
   try {
-    return getNextMovePlayer({ players, moves }).name;
+    return getNextMovePlayer({ players, positions }).name;
   } catch (e) {
     if (e instanceof TypeError) return undefined;
     throw e;
@@ -154,7 +158,7 @@ export const getLegalMoves = state => {
   const nextMoveColor = getNextMoveColor(state);
   const { id: lastMoveId, legalMoves } = getLastMove(state);
 
-  // TODO: for now we can assume that legal moves are only allowed for the
+  // TODO: for now we can assume that legal positions are only allowed for the
   // latest move. However, this will change if we ever implement an analysis
   // board-style function.
   if (lastMoveId !== getSelectedMove(state).id) return [];
@@ -168,7 +172,7 @@ export const getTargets = state => {
   if (state.selectedSquare === null) return [];
 
   const legalMoves = getLegalMoves(state);
-  // TODO: this is undefined while legal moves are still being fetched
+  // TODO: this is undefined while legal positions are still being fetched
   if (legalMoves === undefined) return [];
 
   return keys(legalMoves).filter(

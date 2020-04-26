@@ -1,9 +1,7 @@
 export {
-  addMove,
+  addPosition,
   cancelMoves,
   confirmMoves,
-  makeMove,
-  postMove,
   selectMove,
 } from 'scenes/Game/actions';
 

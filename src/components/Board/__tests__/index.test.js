@@ -9,19 +9,11 @@ import rootReducer from 'reducers';
 import Board from 'components/Board';
 
 import initialPlacementOnly from './fixtures/initialPlacementOnly.json';
-import {
-  clickSquare,
-  expectToBeEmptySquare,
-  expectToHavePiece,
-  expectSquaresToBeInLastMove,
-  expectSquaresToBeSelected,
-  expectSquaresToBeTargeted,
-} from './helpers';
 
 const initialState = {
   gameSlug: null,
   showGame: true,
-  moves: initialPlacementOnly,
+  positions: initialPlacementOnly,
   players: [
     {
       color: 'red',
@@ -47,12 +39,55 @@ const getBoard = store => (
   </Provider>
 );
 
+// Helper functions
+
+const getSquareNodes = (wrapper, squares) =>
+  wrapper.find('Square').findWhere(node => squares.includes(node.key()));
+
+const getSquareNode = (wrapper, square) => getSquareNodes(wrapper, [square]);
+
+const clickSquare = (wrapper, square) => {
+  getSquareNode(wrapper, square)
+    .children()
+    .simulate('click');
+
+  jest.runOnlyPendingTimers();
+
+  wrapper.update();
+};
+
+const expectSquaresToBeSelected = (wrapper, squares) => {
+  const nodes = getSquareNodes(wrapper, squares).find('SelectionIndicator');
+  expect(nodes).toHaveLength(squares.length);
+};
+
+const expectSquaresToBeTargeted = (wrapper, squares) => {
+  const nodes = getSquareNodes(wrapper, squares).find('TargetIndicator');
+  expect(nodes).toHaveLength(squares.length);
+};
+
+const expectSquaresToBeInLastMove = (wrapper, squares) => {
+  const nodes = getSquareNodes(wrapper, squares).find('LastMoveIndicator');
+  expect(nodes).toHaveLength(squares.length);
+};
+
+const expectToHavePiece = (wrapper, square, piece) => {
+  const node = getSquareNode(wrapper, square).find(`.Piece .${piece}`);
+  expect(node).toHaveLength(1);
+};
+
+const expectToBeEmptySquare = (wrapper, square) => {
+  const node = getSquareNode(wrapper, square).find('.Piece');
+  expect(node).toHaveLength(0);
+};
+
 describe('Board', () => {
   test('renders without crashing', () => {
     const wrapper = render(getBoard(getStore()));
     expect(wrapper).toMatchSnapshot();
   });
 
+  // eslint-disable-next-line jest/expect-expect
   test('select and deselect a square', () => {
     const wrapper = mount(getBoard(getStore()));
 
@@ -85,6 +120,6 @@ describe('Board', () => {
     expectToHavePiece(wrapper, 'e5', 'P');
     expectSquaresToBeInLastMove(wrapper, ['e4', 'e5']);
 
-    expect(store.getState().moves).toHaveLength(2);
+    expect(store.getState().positions).toHaveLength(2);
   });
 });

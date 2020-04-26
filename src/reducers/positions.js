@@ -1,6 +1,13 @@
 import update from 'immutability-helper';
+
 import findIndex from 'lodash/findIndex';
+import fromPairs from 'lodash/fromPairs';
+import isEmpty from 'lodash/isEmpty';
+import pick from 'lodash/pick';
+import last from 'lodash/last';
+import reject from 'lodash/reject';
 import sortedIndexBy from 'lodash/sortedIndexBy';
+
 import { decode as decodeFen } from 'services/logic/fen';
 
 import { Color } from 'services/logic/constants';
@@ -11,23 +18,31 @@ const getMoveIndex = (state, moveId) => {
   return -1;
 };
 
-const addMove = (state, action) => {
-  const move = {
-    id: state.length,
-    givesCheck: action.givesCheck,
-    fen: action.fen,
-    legalMoves: action.legalMoves,
-    move: action.move,
-    pending: action.pending,
-  };
-  return update(state, { $push: [move] });
+const positionFields = ['id', 'fen', 'givesCheck', 'legalMoves', 'move'];
+
+const createPosition = (properties, overrides = {}) => ({
+  ...fromPairs(positionFields.map(field => [field, undefined])),
+  ...pick(properties, positionFields),
+  ...overrides,
+});
+
+const addPosition = (state, action) => {
+  const nextId = isEmpty(state) ? 0 : last(state).id + 1;
+
+  return update(state, {
+    $push: [createPosition(action, { id: nextId })],
+  });
 };
 
-const cancelMoves = state => {
-  const confirmedMoves = state.filter(({ pending }) => !pending);
+const removePosition = (state, action) =>
+  reject(state, ({ id }) => action.id === id);
 
-  return confirmedMoves;
-};
+const cancelPendingPosition = state =>
+  state.filter(({ pending }, index, currentState) => {
+    if (index < currentState.length - 1) return true;
+
+    return !pending;
+  });
 
 const confirmMoves = state => state.map(move => ({ ...move, pending: false }));
 
@@ -53,12 +68,14 @@ const setMoves = (state, action) => {
 };
 
 // eslint-disable-next-line complexity
-const moves = (state = [], action) => {
+const positions = (state = [], action) => {
   switch (action.type) {
-    case 'add_move':
-      return addMove(state, action);
+    case 'add_position':
+      return addPosition(state, action);
+    case 'remove_position':
+      return removePosition(state, action);
     case 'cancel_moves':
-      return cancelMoves(state);
+      return cancelPendingPosition(state);
     case 'confirm_moves':
       return confirmMoves(state);
     case 'set_move':
@@ -70,7 +87,7 @@ const moves = (state = [], action) => {
   }
 };
 
-export default moves;
+export default positions;
 
 /*******************/
 /***  Selectors  ***/

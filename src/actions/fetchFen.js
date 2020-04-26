@@ -9,9 +9,8 @@ export const fetchInitialPlacement = () => async dispatch => {
   const { data } = await getInitialMove();
 
   dispatch({
-    type: 'add_move',
+    type: 'add_position',
     move: null,
-    pending: false,
     ...transformFetchedData(data),
   });
 };
