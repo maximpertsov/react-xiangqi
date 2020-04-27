@@ -1,3 +1,5 @@
+import { createActions } from 'redux-actions';
+
 export const addPosition = move => ({
   type: 'add_position',
   ...move,
@@ -28,4 +30,10 @@ export {
   setSelectedSlot,
 } from 'components/Board/actions';
 
-export default {};
+export default createActions({
+  GAME: {
+    POSITIONS: {
+      ADD: undefined,
+    },
+  },
+});
