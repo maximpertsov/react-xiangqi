@@ -14,12 +14,4 @@ export const selectMove = ({ moveId }) => ({
   moveId,
 });
 
-export const cancelMoves = () => ({
-  type: 'cancel_moves',
-});
-
-export const confirmMoves = () => ({
-  type: 'confirm_moves',
-});
-
 export default {};

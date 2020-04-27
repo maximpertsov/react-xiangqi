@@ -37,15 +37,6 @@ const addPosition = (state, action) => {
 const removePosition = (state, action) =>
   reject(state, ({ id }) => action.id === id);
 
-const cancelPendingPosition = state =>
-  state.filter(({ pending }, index, currentState) => {
-    if (index < currentState.length - 1) return true;
-
-    return !pending;
-  });
-
-const confirmMoves = state => state.map(move => ({ ...move, pending: false }));
-
 const setMove = (state, action) => {
   const moveIndex = getMoveIndex(state, action.moveId);
 
@@ -74,10 +65,6 @@ const positions = (state = [], action) => {
       return addPosition(state, action);
     case 'remove_position':
       return removePosition(state, action);
-    case 'cancel_moves':
-      return cancelPendingPosition(state);
-    case 'confirm_moves':
-      return confirmMoves(state);
     case 'set_move':
       return setMove(state, action);
     case 'set_moves':
