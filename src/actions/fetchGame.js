@@ -2,7 +2,7 @@ import camelCase from 'lodash/camelCase';
 import mapKeys from 'lodash/mapKeys';
 
 import { getGame } from 'services/client';
-import { selectMove } from 'scenes/Game/actions';
+import { selectMove } from 'actions';
 
 const updatePlayers = (dispatch, { players }) => {
   dispatch({ type: 'set_players', players });
