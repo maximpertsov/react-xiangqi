@@ -12,7 +12,7 @@ test('make a move', async () => {
   await store.dispatch(makeMove({ move: 'a1a2' }));
 
   expect(store.getActions()).toEqual([
-    { type: 'add_position', move: 'a1a2' },
+    { type: 'GAME/POSITIONS/ADD', payload: { move: 'a1a2' } },
     { type: 'select_move', moveId: null },
     { type: 'toggle_show_confirm_move_menu', value: true },
   ]);

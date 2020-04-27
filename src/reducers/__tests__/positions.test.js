@@ -6,7 +6,7 @@ describe('positions reducer', () => {
   });
 
   describe('add position', () => {
-    const action = { type: 'add_position' };
+    const action = { type: 'GAME/POSITIONS/ADD', payload: {}  };
 
     it('should add the first position with id = 0', () => {
       const currentState = [];

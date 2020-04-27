@@ -1,8 +1,4 @@
-import actions, { addPosition } from 'actions';
-
-test('add position', () => {
-  expect(addPosition({})).toStrictEqual({ type: 'add_position' });
-});
+import actions from 'actions';
 
 test('add game position', () => {
   expect(actions.game.positions.add({})).toStrictEqual({

@@ -61,8 +61,8 @@ const setMoves = (state, action) => {
 // eslint-disable-next-line complexity
 const positions = (state = [], action) => {
   switch (action.type) {
-    case 'add_position':
-      return addPosition(state, action);
+    case 'GAME/POSITIONS/ADD':
+      return addPosition(state, action.payload);
     case 'remove_position':
       return removePosition(state, action);
     case 'set_move':

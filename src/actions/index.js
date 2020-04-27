@@ -1,10 +1,5 @@
 import { createActions } from 'redux-actions';
 
-export const addPosition = move => ({
-  type: 'add_position',
-  ...move,
-});
-
 export const selectMove = ({ moveId }) => ({
   type: 'select_move',
   moveId,
