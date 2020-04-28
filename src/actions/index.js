@@ -30,5 +30,8 @@ export default createActions({
     POSITIONS: {
       ADD: undefined,
     },
+    SELECTED_POSITION: {
+      SET: undefined,
+    },
   },
 });

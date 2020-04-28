@@ -6,3 +6,10 @@ test('add game position', () => {
     payload: {},
   });
 });
+
+test('select move', () => {
+  expect(actions.game.selectedPosition.set(0)).toStrictEqual({
+    type: 'GAME/SELECTED_POSITION/SET',
+    payload: 0,
+  });
+});
