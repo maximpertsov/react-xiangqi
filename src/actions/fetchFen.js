@@ -1,13 +1,13 @@
 import camelCase from 'lodash/camelCase';
 import mapKeys from 'lodash/mapKeys';
-import { getInitialMove, getMoveData } from 'services/client';
+import { getInitialPosition, getMoveData } from 'services/client';
 import actions from 'actions';
 
 const transformFetchedData = data =>
   mapKeys(data, (value, key) => camelCase(key));
 
-export const fetchInitialPlacement = () => async dispatch => {
-  const { data } = await getInitialMove();
+export const fetchInitialPosition = () => async dispatch => {
+  const { data } = await getInitialPosition();
 
   dispatch(
     actions.game.positions.add({
