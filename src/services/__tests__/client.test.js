@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { getInitialMove, getMoveData } from 'services/client';
+import { getInitialPosition, getMoveData } from 'services/client';
+
+jest.mock('axios');
 
 describe('client', () => {
-  jest.mock('axios');
-
   test('get next move from fen', () => {
     axios.post = jest.fn(() => Promise.resolve({}));
 
@@ -14,11 +14,16 @@ describe('client', () => {
     expect(axios.post).toHaveBeenCalledWith(`fen`, payload);
   });
 
-  test('get initial move', () => {
-    axios.get = jest.fn(() => Promise.resolve({}));
+  test('get initial move', async () => {
+    axios.get.mockResolvedValue({
+      status: 200,
+      data: {},
+    });
 
-    getInitialMove();
-
+    expect(await getInitialPosition()).toStrictEqual({
+      status: 200,
+      data: {},
+    });
     expect(axios.get).toHaveBeenCalledWith(`fen`);
   });
 });

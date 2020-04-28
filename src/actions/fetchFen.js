@@ -1,6 +1,7 @@
 import camelCase from 'lodash/camelCase';
 import mapKeys from 'lodash/mapKeys';
 import { getInitialMove, getMoveData } from 'services/client';
+import actions from 'actions';
 
 const transformFetchedData = data =>
   mapKeys(data, (value, key) => camelCase(key));
@@ -8,11 +9,12 @@ const transformFetchedData = data =>
 export const fetchInitialPlacement = () => async dispatch => {
   const { data } = await getInitialMove();
 
-  dispatch({
-    type: 'add_position',
-    move: null,
-    ...transformFetchedData(data),
-  });
+  dispatch(
+    actions.game.positions.add({
+      move: null,
+      ...transformFetchedData(data),
+    }),
+  );
 };
 
 export const fetchMissingMoveData = ({

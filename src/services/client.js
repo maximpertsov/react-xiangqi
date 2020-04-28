@@ -1,10 +1,26 @@
 import axios from 'axios';
 
+import camelCase from 'lodash/camelCase';
+import isArray from 'lodash/isArray';
+import isPlainObject from 'lodash/isPlainObject';
+import mapKeys from 'lodash/mapKeys';
+
 axios.defaults.baseURL = process.env.REACT_APP_BASE_API_URL;
 axios.defaults.timeout = 1000;
 axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.xsrfCookieName = 'csrftoken';
+
+const camelCaseData = data => {
+  if (isArray(data)) return data.map(camelCaseData);
+  if (isPlainObject(data)) return mapKeys(data, (value, key) => camelCase(key));
+  return data;
+};
+
+axios.interceptors.response.use(
+  response => ({ ...response, data: camelCaseData(response.data) }),
+  error => Promise.reject(error),
+);
 
 export const ping = () => axios.get('ping');
 
@@ -25,9 +41,7 @@ export const getMoveData = ({ fen }) => {
   return axios.post(`fen`, payload);
 };
 
-export const getInitialMove = () => {
-  return axios.get('fen');
-};
+export const getInitialPosition = () => axios.get('fen');
 
 export async function authenticate() {
   return axios.post('authenticate');
