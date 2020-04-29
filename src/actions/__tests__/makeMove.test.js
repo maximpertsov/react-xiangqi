@@ -1,12 +1,7 @@
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
-
 import makeMove from 'actions/makeMove';
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
-
 test('make a move', async () => {
+  // eslint-disable-next-line no-undef
   const store = mockStore({});
 
   await store.dispatch(makeMove({ move: 'a1a2' }));

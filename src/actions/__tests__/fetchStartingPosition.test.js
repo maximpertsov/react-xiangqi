@@ -1,14 +1,10 @@
 import axios from 'axios';
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
 import fetchStartingPosition from 'actions/fetchStartingPosition';
-
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
 
 jest.mock('axios');
 
 test('fetch starting position', async () => {
+  // eslint-disable-next-line no-undef
   const store = mockStore({});
   axios.get.mockResolvedValue({ data: {} });
 

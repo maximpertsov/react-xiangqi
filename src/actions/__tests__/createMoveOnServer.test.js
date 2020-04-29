@@ -1,12 +1,6 @@
 import axios from 'axios';
 import createMoveOnServer from 'actions/createMoveOnServer';
-
 import actions from 'actions';
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
-
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
 
 jest.mock('axios');
 
@@ -15,6 +9,7 @@ describe('create move on server', () => {
     jest.restoreAllMocks();
   });
 
+  // eslint-disable-next-line no-undef
   const store = mockStore({});
   const position = { id: 1, move: 'a1a2' };
   const username = 'user';

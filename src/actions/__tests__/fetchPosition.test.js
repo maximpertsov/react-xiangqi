@@ -1,14 +1,10 @@
 import axios from 'axios';
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
 import fetchPosition from 'actions/fetchPosition';
-
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
 
 jest.mock('axios');
 
 test('fetch position', async () => {
+  // eslint-disable-next-line no-undef
   const store = mockStore({});
   axios.post.mockResolvedValue({
     data: { fen: 'FEN', legalMoves: {}, givesCheck: false },
