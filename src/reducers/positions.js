@@ -20,39 +20,29 @@ const getMoveIndex = (state, moveId) => {
 
 const positionFields = ['id', 'fen', 'givesCheck', 'legalMoves', 'move'];
 
-const createPosition = (properties, overrides = {}) => ({
+const createPosition = properties => ({
   ...fromPairs(positionFields.map(field => [field, undefined])),
   ...pick(properties, positionFields),
-  ...overrides,
 });
 
-const addPosition = (state, action) => {
+const addPosition = (state, payload) => {
   const nextId = isEmpty(state) ? 0 : last(state).id + 1;
 
   return update(state, {
-    $push: [createPosition(action, { id: nextId })],
+    $push: [createPosition({ ...payload, id: nextId })],
   });
 };
 
 const removePosition = (state, action) =>
   reject(state, ({ id }) => action.id === id);
 
-const setMove = (state, action) => {
-  const moveIndex = getMoveIndex(state, action.moveId);
-
-  return update(state, {
-    [moveIndex]: {
-      $set: {
-        id: action.moveId,
-        givesCheck: action.givesCheck,
-        fen: action.fen,
-        legalMoves: action.legalMoves,
-        move: action.move,
-        pending: action.pending,
-      },
-    },
+const updatePosition = (state, payload) =>
+  state.map(position => {
+    if (payload.id === position.id) {
+      return createPosition({ ...position, ...payload });
+    }
+    return position;
   });
-};
 
 const setMoves = (state, action) => {
   return action.moves.map((move, index) => ({ ...move, id: index }));
@@ -65,8 +55,8 @@ const positions = (state = [], action) => {
       return addPosition(state, action.payload);
     case 'remove_position':
       return removePosition(state, action);
-    case 'set_move':
-      return setMove(state, action);
+    case 'GAME/POSITIONS/UPDATE':
+      return updatePosition(state, action.payload);
     case 'set_moves':
       return setMoves(state, action);
     default:

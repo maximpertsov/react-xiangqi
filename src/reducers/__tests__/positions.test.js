@@ -1,12 +1,12 @@
 import positions, { getLastMove, getMoveById } from 'reducers/positions';
 
-const createMove = (options = {}) => ({
+const createPosition = (properties = {}) => ({
   id: undefined,
   fen: undefined,
   givesCheck: undefined,
   legalMoves: undefined,
   move: undefined,
-  ...options,
+  ...properties,
 });
 
 describe('positions reducer', () => {
@@ -19,13 +19,16 @@ describe('positions reducer', () => {
 
     it('should add the first position with id = 0', () => {
       const currentState = [];
-      const expectedNewState = [createMove({ id: 0 })];
+      const expectedNewState = [createPosition({ id: 0 })];
       expect(positions(currentState, action)).toEqual(expectedNewState);
     });
 
     it('should add a position with an incremented id', () => {
-      const currentState = [createMove({ id: 0 })];
-      const expectedNewState = [createMove({ id: 0 }), createMove({ id: 1 })];
+      const currentState = [createPosition({ id: 0 })];
+      const expectedNewState = [
+        createPosition({ id: 0 }),
+        createPosition({ id: 1 }),
+      ];
       expect(positions(currentState, action)).toStrictEqual(expectedNewState);
     });
   });
@@ -34,28 +37,32 @@ describe('positions reducer', () => {
     const action = { type: 'remove_position', id: 1 };
 
     const currentState = [
-      createMove({ id: 0, move: null }),
-      createMove({ id: 1, move: 'a1a2' }),
-      createMove({ id: 2, move: 'a10a9' }),
+      createPosition({ id: 0, move: null }),
+      createPosition({ id: 1, move: 'a1a2' }),
+      createPosition({ id: 2, move: 'a10a9' }),
     ];
     const expectedNewState = [
-      createMove({ id: 0, move: null }),
-      createMove({ id: 2, move: 'a10a9' }),
+      createPosition({ id: 0, move: null }),
+      createPosition({ id: 2, move: 'a10a9' }),
     ];
     expect(positions(currentState, action)).toEqual(expectedNewState);
   });
 
-  it.skip('should update the given position', () => {
-    const action = { type: 'GAME/POSITIONS/UPDATE', id: 1 };
+  it('should update the given position', () => {
+    const action = {
+      type: 'GAME/POSITIONS/UPDATE',
+      payload: { id: 1, move: 'b1a3' },
+    };
 
     const currentState = [
-      { id: 0, move: null },
-      { id: 1, move: 'a1a2' },
-      { id: 2, move: 'a10a9' },
+      createPosition({ id: 0, givesCheck: false, move: null }),
+      createPosition({ id: 1, givesCheck: false, move: 'a1a2' }),
+      createPosition({ id: 2, givesCheck: false, move: 'a10a9' }),
     ];
     const expectedNewState = [
-      { id: 0, move: null },
-      { id: 2, move: 'a10a9' },
+      createPosition({ id: 0, givesCheck: false, move: null }),
+      createPosition({ id: 1, givesCheck: false, move: 'b1a3' }),
+      createPosition({ id: 2, givesCheck: false, move: 'a10a9' }),
     ];
     expect(positions(currentState, action)).toEqual(expectedNewState);
   });
