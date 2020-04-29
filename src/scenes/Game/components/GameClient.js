@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import isEqual from 'lodash/isEqual';
 
-import { fetchInitialPlacement, fetchMissingMoveData } from 'actions/fetchFen';
+import { fetchMissingMoveData } from 'actions/fetchFen';
+import fetchStartingPosition from 'actions/fetchStartingPosition';
 import pollMoves from 'actions/pollMoves';
 import {
   getHasInitialPlacement,
@@ -34,7 +35,7 @@ const GameClient = () => {
     if (gameSlug) return;
     if (hasInitialPlacement) return;
 
-    dispatch(fetchInitialPlacement());
+    dispatch(fetchStartingPosition());
   }, [dispatch, gameSlug, hasInitialPlacement]);
 
   useEffect(

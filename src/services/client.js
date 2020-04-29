@@ -41,8 +41,6 @@ export const getMoveData = ({ fen }) => {
   return axios.post(`fen`, payload);
 };
 
-export const getInitialPosition = () => axios.get('fen');
-
 export async function authenticate() {
   return axios.post('authenticate');
 }
@@ -52,4 +50,6 @@ export async function login({ username, password }) {
   return axios.post('login', payload);
 }
 
-export default {};
+const client = axios;
+
+export default client;
