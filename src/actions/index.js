@@ -29,6 +29,7 @@ export default createActions({
   GAME: {
     POSITIONS: {
       ADD: undefined,
+      UPDATE: undefined,
     },
     SELECTED_POSITION: {
       SET: undefined,

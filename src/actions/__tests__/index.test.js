@@ -7,6 +7,13 @@ test('add game position', () => {
   });
 });
 
+test('update game position', () => {
+  expect(actions.game.positions.update({})).toStrictEqual({
+    type: 'GAME/POSITIONS/UPDATE',
+    payload: {},
+  });
+});
+
 test('select move', () => {
   expect(actions.game.selectedPosition.set(0)).toStrictEqual({
     type: 'GAME/SELECTED_POSITION/SET',

@@ -36,11 +36,6 @@ export const postMove = ({ gameSlug, move, username }) => {
   return axios.post(`game/${gameSlug}/events`, payload);
 };
 
-export const getMoveData = ({ fen }) => {
-  const payload = { fen };
-  return axios.post(`fen`, payload);
-};
-
 export async function authenticate() {
   return axios.post('authenticate');
 }
