@@ -8,7 +8,8 @@ const postMove = ({ gameSlug, move, username }) => {
 
 const createMoveOnServer = ({
   gameSlug,
-  position: { id, move },
+  id,
+  move,
   username,
 }) => async dispatch => {
   if (gameSlug === null) return;

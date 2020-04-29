@@ -65,7 +65,8 @@ describe('ConfirmMoveMenu', () => {
     // Calls API
     expect(spy).toHaveBeenCalledWith({
       gameSlug: 'ABC123',
-      position: { id: 1, move: 'a1a2' },
+      id: 1,
+      move: 'a1a2',
       username: 'user',
     });
 

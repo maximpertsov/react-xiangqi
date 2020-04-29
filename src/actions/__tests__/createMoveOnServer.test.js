@@ -25,7 +25,12 @@ describe('create move on server', () => {
     test('action does not make an API request', async () => {
       const spy = jest.spyOn(axios, 'post');
       await store.dispatch(
-        createMoveOnServer({ gameSlug, position, username }),
+        createMoveOnServer({
+          gameSlug,
+          id: position.id,
+          move: position.move,
+          username,
+        }),
       );
       expect(spy).toHaveBeenCalledTimes(0);
     });
@@ -38,7 +43,12 @@ describe('create move on server', () => {
       const spy = jest.spyOn(axios, 'post').mockResolvedValue({ status: 200 });
 
       await store.dispatch(
-        createMoveOnServer({ gameSlug, position, username }),
+        createMoveOnServer({
+          gameSlug,
+          id: position.id,
+          move: position.move,
+          username,
+        }),
       );
 
       expect(spy).toHaveBeenCalledWith('game/ABC123/events', {
@@ -52,7 +62,12 @@ describe('create move on server', () => {
       const spy = jest.spyOn(axios, 'post').mockRejectedValue({ status: 400 });
 
       await store.dispatch(
-        createMoveOnServer({ gameSlug, position, username }),
+        createMoveOnServer({
+          gameSlug,
+          id: position.id,
+          move: position.move,
+          username,
+        }),
       );
 
       expect(spy).toHaveBeenCalledWith('game/ABC123/events', {
@@ -61,7 +76,7 @@ describe('create move on server', () => {
         player: username,
       });
 
-      expect(store.getActions()).toEqual([
+      expect(store.getActions()).toStrictEqual([
         actions.game.positions.remove({ id: 1 }),
       ]);
     });
