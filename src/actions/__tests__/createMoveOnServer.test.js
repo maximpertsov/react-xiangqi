@@ -1,6 +1,7 @@
 import createMoveOnServer from 'actions/createMoveOnServer';
 import * as client from 'services/client';
 
+import actions from 'actions';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 
@@ -62,7 +63,9 @@ describe('create move on server', () => {
         username,
       });
 
-      expect(store.getActions()).toEqual([{ type: 'remove_position', id: 1 }]);
+      expect(store.getActions()).toEqual([
+        actions.game.positions.remove({ id: 1 }),
+      ]);
     });
   });
 });

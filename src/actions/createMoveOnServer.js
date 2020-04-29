@@ -1,3 +1,4 @@
+import actions from 'actions';
 import { postMove } from 'services/client';
 
 const createMoveOnServer = ({
@@ -11,7 +12,7 @@ const createMoveOnServer = ({
     await postMove({ gameSlug, move, username });
   } catch (error) {
     // TODO: fetch moves to avoid client/server disparity?
-    dispatch({ type: 'remove_position', id });
+    dispatch(actions.game.positions.remove({ id }));
   }
 };
 

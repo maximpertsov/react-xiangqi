@@ -33,8 +33,8 @@ const addPosition = (state, payload) => {
   });
 };
 
-const removePosition = (state, action) =>
-  reject(state, ({ id }) => action.id === id);
+const removePosition = (state, payload) =>
+  reject(state, ({ id }) => payload.id === id);
 
 const updatePosition = (state, payload) =>
   state.map(position => {
@@ -53,8 +53,8 @@ const positions = (state = [], action) => {
   switch (action.type) {
     case 'GAME/POSITIONS/ADD':
       return addPosition(state, action.payload);
-    case 'remove_position':
-      return removePosition(state, action);
+    case 'GAME/POSITIONS/REMOVE':
+      return removePosition(state, action.payload);
     case 'GAME/POSITIONS/UPDATE':
       return updatePosition(state, action.payload);
     case 'set_moves':

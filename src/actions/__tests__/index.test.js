@@ -14,6 +14,13 @@ test('update game position', () => {
   });
 });
 
+test('remove game position', () => {
+  expect(actions.game.positions.remove({})).toStrictEqual({
+    type: 'GAME/POSITIONS/REMOVE',
+    payload: {},
+  });
+});
+
 test('select move', () => {
   expect(actions.game.selectedPosition.set(0)).toStrictEqual({
     type: 'GAME/SELECTED_POSITION/SET',

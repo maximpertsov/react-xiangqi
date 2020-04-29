@@ -34,7 +34,7 @@ describe('positions reducer', () => {
   });
 
   it('should remove given position', () => {
-    const action = { type: 'remove_position', id: 1 };
+    const action = { type: 'GAME/POSITIONS/REMOVE', payload: { id: 1 } };
 
     const currentState = [
       createPosition({ id: 0, move: null }),

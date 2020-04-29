@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import actions from 'actions';
 import createMoveOnServer from 'actions/createMoveOnServer';
 import { getLastMove } from 'reducers';
 
@@ -29,7 +30,7 @@ const ConfirmMoveMenu = () => {
 
   const cancelPosition = useCallback(() => {
     dispatch({ type: 'toggle_show_confirm_move_menu', value: false });
-    dispatch({ type: 'remove_position', id: lastMove.id });
+    dispatch(actions.game.positions.remove({ id: lastMove.id }));
   }, [dispatch, lastMove.id]);
 
   return (
