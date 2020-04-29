@@ -27,8 +27,6 @@ export const ping = () => axios.get('ping');
 export const getGameList = ({ username }) =>
   axios.get(`player/${username}/games`);
 
-export const getGame = ({ gameSlug }) => axios.get(`game/${gameSlug}`);
-
 export const poll = ({ gameSlug }) => axios.get(`game/${gameSlug}/poll`);
 
 export async function authenticate() {

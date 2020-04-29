@@ -1,10 +1,7 @@
 import axios from 'axios';
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
 import fetchGame from 'actions/fetchGame';
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
+jest.mock('axios');
 
 describe('fetch game', () => {
   const store = mockStore({});
@@ -12,31 +9,26 @@ describe('fetch game', () => {
   test('do nothing if the game slug is null', async () => {
     await store.dispatch(fetchGame({ gameSlug: null }));
 
+    expect(axios.get).not.toHaveBeenCalled();
     expect(store.getActions()).toEqual([]);
   });
 
   test('fetch game if slug is provided', async () => {
-    jest.mock('axios');
-    axios.get = jest.fn(() =>
-      Promise.resolve({
-        data: {
-          players: [],
-          moves: [{}, {}],
-        },
-      }),
-    );
+    axios.get.mockResolvedValue({
+      data: {
+        players: [],
+        moves: [{}, {}],
+      },
+    });
 
-    const gameSlug = 'ABC123';
-    await store.dispatch(fetchGame({ gameSlug }));
-    expect(axios.get).toHaveBeenCalledWith(`game/${gameSlug}`);
+    await store.dispatch(fetchGame({ gameSlug: 'ABC123' }));
 
-    // TODO: stub these
-    const moveData = { pending: false };
+    expect(axios.get).toHaveBeenCalledWith('game/ABC123');
     expect(store.getActions()).toEqual([
       { type: 'set_players', players: [] },
       {
         type: 'set_moves',
-        moves: [moveData, moveData],
+        moves: [{}, {}],
       },
       { type: 'select_move', moveId: 1 },
     ]);
