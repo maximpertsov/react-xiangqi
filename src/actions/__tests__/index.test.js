@@ -1,29 +1,16 @@
 import actions from 'actions';
 
-test('add game position', () => {
-  expect(actions.game.positions.add({})).toStrictEqual({
-    type: 'GAME/POSITIONS/ADD',
-    payload: {},
-  });
-});
-
-test('update game position', () => {
-  expect(actions.game.positions.update({})).toStrictEqual({
-    type: 'GAME/POSITIONS/UPDATE',
-    payload: {},
-  });
-});
-
-test('remove game position', () => {
-  expect(actions.game.positions.remove({})).toStrictEqual({
-    type: 'GAME/POSITIONS/REMOVE',
-    payload: {},
-  });
-});
-
-test('select move', () => {
-  expect(actions.game.selectedPosition.set(0)).toStrictEqual({
-    type: 'GAME/SELECTED_POSITION/SET',
-    payload: 0,
-  });
-});
+/* eslint-disable max-len */
+test.each`
+  creator                              | action                          | data
+  ${actions.game.positions.add}        | ${'GAME/POSITIONS/ADD'}         | ${{}}
+  ${actions.game.positions.update}     | ${'GAME/POSITIONS/UPDATE'}      | ${{}}
+  ${actions.game.positions.remove}     | ${'GAME/POSITIONS/REMOVE'}      | ${{}}
+  ${actions.game.selectedPosition.set} | ${'GAME/SELECTED_POSITION/SET'} | ${0}
+`(
+  '$action creator returns proper action payload',
+  ({ creator, action, data }) => {
+    expect(creator(data)).toStrictEqual({ type: action, payload: data });
+  },
+);
+/* eslint-enable max-len */
