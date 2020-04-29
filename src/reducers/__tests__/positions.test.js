@@ -66,6 +66,26 @@ describe('positions reducer', () => {
     ];
     expect(positions(currentState, action)).toEqual(expectedNewState);
   });
+
+  it('should set positions from the payload', () => {
+    const action = {
+      type: 'GAME/POSITIONS/SET',
+      payload: {
+        positions: [{ move: null }, { move: 'b1a3' }],
+      },
+    };
+
+    const currentState = [
+      createPosition({ id: 0, move: null }),
+      createPosition({ id: 1, move: 'a1a2' }),
+      createPosition({ id: 2, move: 'a10a9' }),
+    ];
+    const expectedNewState = [
+      createPosition({ id: 0, move: null }),
+      createPosition({ id: 1, move: 'b1a3' }),
+    ];
+    expect(positions(currentState, action)).toEqual(expectedNewState);
+  });
 });
 
 describe('positions selectors', () => {

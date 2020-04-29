@@ -6,6 +6,7 @@ test.each`
   ${actions.game.positions.add}        | ${'GAME/POSITIONS/ADD'}         | ${{}}
   ${actions.game.positions.update}     | ${'GAME/POSITIONS/UPDATE'}      | ${{}}
   ${actions.game.positions.remove}     | ${'GAME/POSITIONS/REMOVE'}      | ${{}}
+  ${actions.game.positions.set}        | ${'GAME/POSITIONS/SET'}         | ${{ positions: [] }}
   ${actions.game.selectedPosition.set} | ${'GAME/SELECTED_POSITION/SET'} | ${0}
 `(
   '$action creator returns proper action payload',

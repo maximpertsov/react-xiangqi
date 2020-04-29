@@ -31,6 +31,7 @@ export default createActions({
       ADD: undefined,
       REMOVE: undefined,
       UPDATE: undefined,
+      SET: undefined,
     },
     SELECTED_POSITION: {
       SET: undefined,

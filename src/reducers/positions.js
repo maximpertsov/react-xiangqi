@@ -44,8 +44,10 @@ const updatePosition = (state, payload) =>
     return position;
   });
 
-const setMoves = (state, action) => {
-  return action.moves.map((move, index) => ({ ...move, id: index }));
+const setPositions = (state, payload) => {
+  return payload.positions.map((move, index) =>
+    createPosition({ ...move, id: index }),
+  );
 };
 
 // eslint-disable-next-line complexity
@@ -57,8 +59,8 @@ const positions = (state = [], action) => {
       return removePosition(state, action.payload);
     case 'GAME/POSITIONS/UPDATE':
       return updatePosition(state, action.payload);
-    case 'set_moves':
-      return setMoves(state, action);
+    case 'GAME/POSITIONS/SET':
+      return setPositions(state, action.payload);
     default:
       return state;
   }

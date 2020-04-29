@@ -11,25 +11,27 @@ describe('fetch game', () => {
     await store.dispatch(fetchGame({ gameSlug: null }));
 
     expect(axios.get).not.toHaveBeenCalled();
-    expect(store.getActions()).toEqual([]);
+    expect(store.getActions()).toStrictEqual([]);
   });
 
   test('fetch game if slug is provided', async () => {
     axios.get.mockResolvedValue({
       data: {
         players: [],
-        moves: [{}, {}],
+        positions: [{}, {}],
       },
     });
 
     await store.dispatch(fetchGame({ gameSlug: 'ABC123' }));
 
     expect(axios.get).toHaveBeenCalledWith('game/ABC123');
-    expect(store.getActions()).toEqual([
+    expect(store.getActions()).toStrictEqual([
       { type: 'set_players', players: [] },
       {
-        type: 'set_moves',
-        moves: [{}, {}],
+        type: 'GAME/POSITIONS/SET',
+        payload: {
+          positions: [{}, {}],
+        },
       },
       { type: 'select_move', moveId: 1 },
     ]);
