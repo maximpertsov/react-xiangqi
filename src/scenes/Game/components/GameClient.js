@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import isEqual from 'lodash/isEqual';
 
-import { fetchMissingMoveData } from 'actions/fetchFen';
 import fetchStartingPosition from 'actions/fetchStartingPosition';
+import fetchPosition from 'actions/fetchPosition';
 import pollMoves from 'actions/pollMoves';
 import {
   getHasInitialPlacement,
@@ -44,7 +44,7 @@ const GameClient = () => {
       if (!hasInitialPlacement) return;
       if (!firstMoveWithMissingData) return;
 
-      dispatch(fetchMissingMoveData(firstMoveWithMissingData));
+      dispatch(fetchPosition(firstMoveWithMissingData));
     },
     // HACK: too many updates because missing legal moves is an object and
     // useEffect is doing a deep comparison. To get around this, we exclude it
