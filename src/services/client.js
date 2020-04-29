@@ -31,11 +31,6 @@ export const getGame = ({ gameSlug }) => axios.get(`game/${gameSlug}`);
 
 export const poll = ({ gameSlug }) => axios.get(`game/${gameSlug}/poll`);
 
-export const postMove = ({ gameSlug, move, username }) => {
-  const payload = { name: 'move', move, player: username };
-  return axios.post(`game/${gameSlug}/events`, payload);
-};
-
 export async function authenticate() {
   return axios.post('authenticate');
 }

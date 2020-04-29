@@ -1,5 +1,10 @@
 import actions from 'actions';
-import { postMove } from 'services/client';
+import client from 'services/client';
+
+const postMove = ({ gameSlug, move, username }) => {
+  const payload = { name: 'move', move, player: username };
+  return client.post(`game/${gameSlug}/events`, payload);
+};
 
 const createMoveOnServer = ({
   gameSlug,
