@@ -5,10 +5,10 @@ import styled from '@emotion/styled';
 
 import isEqual from 'lodash/isEqual';
 
+import actions from 'actions';
 import { decode as decodeFen } from 'services/logic/fen';
 import { getMovedPiece } from 'services/logic/move';
 import { getSelectedMove } from 'reducers';
-import { selectMove } from 'actions';
 import { Color } from 'services/logic/constants';
 
 const Wrapper = styled.span(({ isSelected, piece }) => ({
@@ -43,7 +43,7 @@ const Move = ({ fen, move, moveId }) => {
   const selectedMove = useSelector(state => getSelectedMove(state), isEqual);
 
   const handleClick = useCallback(() => {
-    dispatch(selectMove({ moveId }));
+    dispatch(actions.game.selectedPosition.set(moveId));
   }, [dispatch, moveId]);
 
   if (move === null) return null;

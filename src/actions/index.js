@@ -1,10 +1,5 @@
 import { createActions } from 'redux-actions';
 
-export const selectMove = ({ moveId }) => ({
-  type: 'select_move',
-  moveId,
-});
-
 export {
   fetchGames,
   setAutoMoveOff,

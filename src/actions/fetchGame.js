@@ -1,5 +1,5 @@
 import client from 'services/client';
-import actions, { selectMove } from 'actions';
+import actions from 'actions';
 
 const getGame = ({ gameSlug }) => client.get(`game/${gameSlug}`);
 
@@ -9,7 +9,7 @@ const updatePlayers = (dispatch, { players }) => {
 
 const setPositions = (dispatch, { positions }) => {
   dispatch(actions.game.positions.set({ positions }));
-  dispatch(selectMove({ moveId: positions.length - 1 }));
+  dispatch(actions.game.selectedPosition.set(positions.length - 1));
 };
 
 const fetchGame = ({ gameSlug }) => async dispatch => {

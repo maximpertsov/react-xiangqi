@@ -1,7 +1,7 @@
 const selectedMoveId = (state = null, action) => {
   switch (action.type) {
-    case 'select_move':
-      return action.moveId;
+    case 'GAME/SELECTED_POSITION/SET':
+      return action.payload;
     default:
       return state;
   }

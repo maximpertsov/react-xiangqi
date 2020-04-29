@@ -6,7 +6,7 @@ import sample from 'lodash/sample';
 import toPairs from 'lodash/toPairs';
 
 import makeMove from 'actions/makeMove';
-import { selectMove } from 'actions';
+import actions from 'actions';
 import {
   getLastMove,
   getPreviousMove,
@@ -40,10 +40,10 @@ const GameInteraction = () => {
   useEventListener('keydown', ({ key }) => {
     switch (key) {
       case 'ArrowLeft':
-        dispatch(selectMove({ moveId: previousMove.id }));
+        dispatch(actions.game.selectedPosition.set(previousMove.id));
         break;
       case 'ArrowRight':
-        dispatch(selectMove({ moveId: nextMove.id }));
+        dispatch(actions.game.selectedPosition.set(nextMove.id));
         break;
       default:
         break;

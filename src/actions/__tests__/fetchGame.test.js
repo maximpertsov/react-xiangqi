@@ -33,7 +33,7 @@ describe('fetch game', () => {
           positions: [{}, {}],
         },
       },
-      { type: 'select_move', moveId: 1 },
+      { type: 'GAME/SELECTED_POSITION/SET', payload: 1 },
     ]);
   });
 });
