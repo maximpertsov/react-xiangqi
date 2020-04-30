@@ -1,5 +1,5 @@
 import actions from 'actions';
-import positions, { getLastMove, getMoveById } from 'reducers/positions';
+import reducer, { getLastMove, getMoveById } from 'reducers/positions';
 
 const createPosition = (properties = {}) => ({
   id: undefined,
@@ -89,7 +89,7 @@ describe('position reducers', () => {
 
   test.each(table)('%s', (name, data) => {
     const { action, currentState, expectedNewState } = data;
-    expect(positions(currentState, action)).toStrictEqual(expectedNewState);
+    expect(reducer(currentState, action)).toStrictEqual(expectedNewState);
   });
 });
 

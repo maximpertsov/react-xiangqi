@@ -1,13 +1,28 @@
 import actions from 'actions';
-import selectedMoveId from 'reducers/selectedMoveId';
+import reducer from 'reducers/selectedMoveId';
 
-describe('selected move id reducer', () => {
-  it('returns the initial state', () => {
-    expect(selectedMoveId(undefined, {})).toBe(null);
-  });
+describe('selected move reducers', () => {
+  const table = [
+    [
+      'return the default state',
+      {
+        action: {},
+        currentState: undefined,
+        expectedNewState: null,
+      },
+    ],
+    [
+      'sets the selected move',
+      {
+        action: actions.game.selectedPosition.set(1),
+        currentState: [],
+        expectedNewState: 1,
+      },
+    ],
+  ];
 
-  it('sets the selected move', () => {
-    const action = actions.game.selectedPosition.set(1);
-    expect(selectedMoveId(0, action)).toEqual(1);
+  test.each(table)('%s', (name, data) => {
+    const { action, currentState, expectedNewState } = data;
+    expect(reducer(currentState, action)).toStrictEqual(expectedNewState);
   });
 });
