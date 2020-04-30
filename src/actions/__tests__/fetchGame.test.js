@@ -1,4 +1,5 @@
 import axios from 'axios';
+import actions from 'actions';
 import fetchGame from 'actions/fetchGame';
 
 jest.mock('axios');
@@ -27,13 +28,8 @@ describe('fetch game', () => {
     expect(axios.get).toHaveBeenCalledWith('game/ABC123');
     expect(store.getActions()).toStrictEqual([
       { type: 'set_players', players: [] },
-      {
-        type: 'GAME/POSITIONS/SET',
-        payload: {
-          positions: [{}, {}],
-        },
-      },
-      { type: 'GAME/SELECTED_POSITION/SET', payload: 1 },
+      actions.game.positions.set({ positions: [{}, {}] }),
+      actions.game.selectedPosition.set(1),
     ]);
   });
 });

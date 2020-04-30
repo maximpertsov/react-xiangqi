@@ -1,3 +1,4 @@
+import actions from 'actions';
 import makeMove from 'actions/makeMove';
 
 test('make a move', async () => {
@@ -6,9 +7,9 @@ test('make a move', async () => {
 
   await store.dispatch(makeMove({ move: 'a1a2' }));
 
-  expect(store.getActions()).toEqual([
-    { type: 'GAME/POSITIONS/ADD', payload: { move: 'a1a2' } },
-    { type: 'GAME/SELECTED_POSITION/SET', payload: null },
+  expect(store.getActions()).toStrictEqual([
+    actions.game.positions.add({ move: 'a1a2' }),
+    actions.game.selectedPosition.set(null),
     { type: 'toggle_show_confirm_move_menu', value: true },
   ]);
 });

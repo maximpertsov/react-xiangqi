@@ -1,4 +1,5 @@
 import axios from 'axios';
+import actions from 'actions';
 import fetchStartingPosition from 'actions/fetchStartingPosition';
 
 jest.mock('axios');
@@ -11,7 +12,7 @@ test('fetch starting position', async () => {
   await store.dispatch(fetchStartingPosition());
 
   expect(axios.get).toHaveBeenCalledWith('fen');
-  expect(store.getActions()).toEqual([
-    { type: 'GAME/POSITIONS/ADD', payload: { move: null } },
+  expect(store.getActions()).toStrictEqual([
+    actions.game.positions.add({ move: null }),
   ]);
 });
