@@ -72,7 +72,7 @@ describe('create move on server', () => {
       });
 
       expect(store.getActions()).toStrictEqual([
-        actions.game.positions.remove({ id: 1 }),
+        actions.game.positions.remove(1),
       ]);
     });
   });

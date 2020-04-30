@@ -31,7 +31,7 @@ const ConfirmMoveMenu = () => {
 
   const cancelPosition = useCallback(() => {
     dispatch({ type: 'toggle_show_confirm_move_menu', value: false });
-    dispatch(actions.game.positions.remove({ id: lastMove.id }));
+    dispatch(actions.game.positions.remove(lastMove.id));
   }, [dispatch, lastMove.id]);
 
   return (

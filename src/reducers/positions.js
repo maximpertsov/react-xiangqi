@@ -33,8 +33,8 @@ const addPosition = (state, payload) => {
   });
 };
 
-const removePosition = (state, payload) =>
-  reject(state, ({ id }) => payload.id === id);
+const removePosition = (state, id) =>
+  reject(state, position => position.id === id);
 
 const updatePosition = (state, payload) =>
   state.map(position => {
@@ -44,8 +44,8 @@ const updatePosition = (state, payload) =>
     return position;
   });
 
-const setPositions = (state, payload) => {
-  return payload.map((move, index) => createPosition({ ...move, id: index }));
+const setPositions = (state, positions) => {
+  return positions.map((move, index) => createPosition({ ...move, id: index }));
 };
 
 // eslint-disable-next-line complexity

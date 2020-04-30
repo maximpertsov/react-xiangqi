@@ -18,7 +18,7 @@ const createMoveOnServer = ({
     await postMove({ gameSlug, move, username });
   } catch (error) {
     // TODO: fetch moves to avoid client/server disparity?
-    dispatch(actions.game.positions.remove({ id }));
+    dispatch(actions.game.positions.remove(id));
   }
 };
 
