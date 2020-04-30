@@ -1,6 +1,5 @@
 import actions from 'actions';
 import positions, { getLastMove, getMoveById } from 'reducers/positions';
-import pick from 'lodash/pick';
 
 const createPosition = (properties = {}) => ({
   id: undefined,
@@ -12,73 +11,61 @@ const createPosition = (properties = {}) => ({
 });
 
 describe('position reducers', () => {
-  const table = [
-    {
-      name: 'return the default state',
-      action: {},
-      currentState: undefined,
-      expectedNewState: [],
-    },
-    {
-      name: 'add the first position with id = 0',
-      action: actions.game.positions.add({}),
-      currentState: [],
-      expectedNewState: [createPosition({ id: 0 })],
-    },
-    {
-      name: 'add a position with an incremented id',
-      action: actions.game.positions.add({}),
-      currentState: [createPosition({ id: 0 })],
-      expectedNewState: [createPosition({ id: 0 }), createPosition({ id: 1 })],
-    },
-    {
-      name: 'remove a position',
-      action: actions.game.positions.remove(1),
-      currentState: [
+  test.each([
+    ['return the default state', {}, undefined, []],
+    [
+      'add the first position with id = 0',
+      actions.game.positions.add({}),
+      [],
+      [createPosition({ id: 0 })],
+    ],
+    [
+      'add a position with an incremented id',
+      actions.game.positions.add({}),
+      [createPosition({ id: 0 })],
+      [createPosition({ id: 0 }), createPosition({ id: 1 })],
+    ],
+    [
+      'remove a position',
+      actions.game.positions.remove(1),
+      [
         createPosition({ id: 0, move: null }),
         createPosition({ id: 1, move: 'a1a2' }),
         createPosition({ id: 2, move: 'a10a9' }),
       ],
-      expectedNewState: [
+      [
         createPosition({ id: 0, move: null }),
         createPosition({ id: 2, move: 'a10a9' }),
       ],
-    },
-    {
-      name: 'update a position',
-      action: actions.game.positions.update({ id: 1, move: 'b1a3' }),
-      currentState: [
+    ],
+    [
+      'update a position',
+      actions.game.positions.update({ id: 1, move: 'b1a3' }),
+      [
         createPosition({ id: 0, givesCheck: false, move: null }),
         createPosition({ id: 1, givesCheck: false, move: 'a1a2' }),
         createPosition({ id: 2, givesCheck: false, move: 'a10a9' }),
       ],
-      expectedNewState: [
+      [
         createPosition({ id: 0, givesCheck: false, move: null }),
         createPosition({ id: 1, givesCheck: false, move: 'b1a3' }),
         createPosition({ id: 2, givesCheck: false, move: 'a10a9' }),
       ],
-    },
-    {
-      name: 'set positions from the payload',
-      action: actions.game.positions.set([{ move: null }, { move: 'b1a3' }]),
-      currentState: [
+    ],
+    [
+      'set positions from the payload',
+      actions.game.positions.set([{ move: null }, { move: 'b1a3' }]),
+      [
         createPosition({ id: 0, move: null }),
         createPosition({ id: 1, move: 'a1a2' }),
         createPosition({ id: 2, move: 'a10a9' }),
       ],
-      expectedNewState: [
+      [
         createPosition({ id: 0, move: null }),
         createPosition({ id: 1, move: 'b1a3' }),
       ],
-    },
-  ];
-
-  test.each(
-    
-      table.map(t =>
-        Object.values(pick(t, ['name', 'action', 'currentState', 'expectedNewState'])),
-      ),
-  )('%s', (_, action, currentState, expectedNewState) => {
+    ],
+  ])('%s', (_, action, currentState, expectedNewState) => {
     expect(positions(currentState, action)).toStrictEqual(expectedNewState);
   });
 });
