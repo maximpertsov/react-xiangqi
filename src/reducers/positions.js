@@ -45,9 +45,7 @@ const updatePosition = (state, payload) =>
   });
 
 const setPositions = (state, payload) => {
-  return payload.positions.map((move, index) =>
-    createPosition({ ...move, id: index }),
-  );
+  return payload.map((move, index) => createPosition({ ...move, id: index }));
 };
 
 // eslint-disable-next-line complexity

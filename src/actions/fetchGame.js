@@ -8,7 +8,7 @@ const updatePlayers = (dispatch, { players }) => {
 };
 
 const setPositions = (dispatch, { positions }) => {
-  dispatch(actions.game.positions.set({ positions }));
+  dispatch(actions.game.positions.set(positions));
   dispatch(actions.game.selectedPosition.set(positions.length - 1));
 };
 

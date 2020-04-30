@@ -66,9 +66,10 @@ describe('positions reducer', () => {
   });
 
   it('should set positions from the payload', () => {
-    const action = actions.game.positions.set({
-      positions: [{ move: null }, { move: 'b1a3' }],
-    });
+    const action = actions.game.positions.set([
+      { move: null },
+      { move: 'b1a3' },
+    ]);
 
     const currentState = [
       createPosition({ id: 0, move: null }),
