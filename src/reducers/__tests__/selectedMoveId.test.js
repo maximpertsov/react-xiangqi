@@ -1,3 +1,4 @@
+import actions from 'actions';
 import selectedMoveId from 'reducers/selectedMoveId';
 
 describe('selected move id reducer', () => {
@@ -6,8 +7,7 @@ describe('selected move id reducer', () => {
   });
 
   it('sets the selected move', () => {
-    const action = { type: 'GAME/SELECTED_POSITION/SET', payload: 1 };
-
+    const action = actions.game.selectedPosition.set(1);
     expect(selectedMoveId(0, action)).toEqual(1);
   });
 });
