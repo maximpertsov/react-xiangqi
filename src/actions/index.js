@@ -15,9 +15,7 @@ export {
 
 export {
   clearAnimationOffset,
-  clearSelectedSlot,
   setAnimationOffset,
-  setSelectedSlot,
 } from 'components/Board/actions';
 
 export default createActions({
@@ -29,6 +27,11 @@ export default createActions({
       SET: undefined,
     },
     SELECTED_POSITION: {
+      SET: undefined,
+    },
+  },
+  BOARD: {
+    SELECTED_SQUARE: {
       SET: undefined,
     },
   },

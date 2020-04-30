@@ -4,11 +4,9 @@ import get from 'lodash/get';
 import isEqual from 'lodash/isEqual';
 
 import makeMove from 'actions/makeMove';
-import {
+import actions, {
   clearAnimationOffset,
-  clearSelectedSlot,
   setAnimationOffset,
-  setSelectedSlot,
 } from 'actions';
 import { getBottomPlayerIsRed, getLegalMoves, getSelectedMove } from 'reducers';
 import { isOccupied, sameColor } from 'services/logic/fen';
@@ -27,7 +25,7 @@ const Board = () => {
   const selectedSquare = useSelector(state => state.selectedSquare);
 
   useEffect(() => {
-    dispatch(clearSelectedSlot());
+    dispatch(actions.board.selectedSquare.set(null));
   }, [dispatch, selectedMove.fen]);
 
   const selectedCanCapture = useCallback(
@@ -55,10 +53,10 @@ const Board = () => {
         setTimeout(() => {
           dispatch(makeMove({ fen, move, pending: true }));
           dispatch(clearAnimationOffset());
-          dispatch(clearSelectedSlot());
+          dispatch(actions.board.selectedSquare.set(null));
         }, ANIMATION_DELAY);
       } else {
-        dispatch(clearSelectedSlot());
+        dispatch(actions.board.selectedSquare.set(null));
       }
     },
     [bottomPlayerIsRed, dispatch, legalFen],
@@ -67,16 +65,16 @@ const Board = () => {
   const handleSquareClick = useCallback(
     square => () => {
       if (square === selectedSquare) {
-        dispatch(clearSelectedSlot());
+        dispatch(actions.board.selectedSquare.set(null));
       } else if (
         isOccupied(selectedMove.fen, square) &&
         !selectedCanCapture(square)
       ) {
-        dispatch(setSelectedSlot({ selectedSquare: square }));
+        dispatch(actions.board.selectedSquare.set(square));
       } else if (selectedSquare !== null) {
         handleMove(squaresToMove(selectedSquare, square));
       } else {
-        dispatch(clearSelectedSlot());
+        dispatch(actions.board.selectedSquare.set(null));
       }
     },
     [

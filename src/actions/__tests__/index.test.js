@@ -8,6 +8,7 @@ test.each`
   ${actions.game.positions.remove}     | ${'GAME/POSITIONS/REMOVE'}      | ${0}
   ${actions.game.positions.set}        | ${'GAME/POSITIONS/SET'}         | ${[]}
   ${actions.game.selectedPosition.set} | ${'GAME/SELECTED_POSITION/SET'} | ${0}
+  ${actions.board.selectedSquare.set}  | ${'BOARD/SELECTED_SQUARE/SET'}  | ${'a1a2'}
 `(
   '$action creator returns proper action payload',
   ({ creator, action, data }) => {
