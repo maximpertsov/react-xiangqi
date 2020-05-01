@@ -17,11 +17,6 @@ export const fetchGames = ({ username }) => async dispatch => {
   dispatch({ type: 'set_games', games });
 };
 
-export const setGameSlug = ({ gameSlug }) => ({
-  type: 'set_game_slug',
-  gameSlug,
-});
-
 export const setForm = form => dispatch => {
   const { username, password, error } = form;
   if (username !== undefined) {

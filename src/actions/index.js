@@ -6,7 +6,6 @@ export {
   setAutoMoveRed,
   setAutoMoveBlack,
   setAutoMoveBoth,
-  setGameSlug,
   setForm,
   setUsername,
   toggleShowGame,
@@ -20,9 +19,6 @@ export {
 
 export default createActions({
   GAME: {
-    SHOW_CONFIRM_MOVE_MENU: {
-      SET: undefined,
-    },
     PLAYERS: {
       SET: undefined,
     },
@@ -33,6 +29,12 @@ export default createActions({
       SET: undefined,
     },
     SELECTED_POSITION: {
+      SET: undefined,
+    },
+    SHOW_CONFIRM_MOVE_MENU: {
+      SET: undefined,
+    },
+    SLUG: {
       SET: undefined,
     },
   },
