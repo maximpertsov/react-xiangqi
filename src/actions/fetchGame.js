@@ -7,7 +7,7 @@ const setPlayers = (dispatch, { players }) => {
   dispatch(actions.game.players.set(players));
 };
 
-const setPositions = (dispatch, { positions }) => {
+const setPositions = (dispatch, { moves: positions }) => {
   dispatch(actions.game.positions.set(positions));
   dispatch(actions.game.selectedPosition.set(positions.length - 1));
 };
