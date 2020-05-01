@@ -12,6 +12,7 @@ axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.xsrfCookieName = 'csrftoken';
 
+// TODO: add a test for this
 const deepCamelCase = data => {
   if (isPlainObject(data)) {
     const pairs = toPairs(data).map(([key, value]) => [
