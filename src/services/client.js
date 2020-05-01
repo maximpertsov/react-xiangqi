@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import camelCase from 'lodash/camelCase';
+import _camelCase from 'lodash/camelCase';
 import isArray from 'lodash/isArray';
 import isPlainObject from 'lodash/isPlainObject';
 import fromPairs from 'lodash/fromPairs';
@@ -12,11 +12,18 @@ axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.xsrfCookieName = 'csrftoken';
 
+const camelCase = string =>
+  // Lodash's camel-casing function is too aggressive.
+  // For example, it transforms move keys such as 'a1a2'
+  // into 'a1A2'. This function makes sure that camel-casing
+  // is only performed on strings that include an underscore
+  // character.
+  string.includes('_') ? _camelCase(string) : string;
+
 // TODO: add a test for this
 const deepCamelCase = data => {
   if (isPlainObject(data)) {
     const pairs = toPairs(data).map(([key, value]) => [
-      // TODO: don't camel case legal moves or change on server
       camelCase(key),
       deepCamelCase(value),
     ]);
