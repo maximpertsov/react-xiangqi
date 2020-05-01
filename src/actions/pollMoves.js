@@ -23,9 +23,9 @@ const pollMoves = ({
   if (!canUpdateMoves({ gameSlug, nextMovePlayerName, username })) return;
 
   const { data } = await poll({ gameSlug });
-  if (updateCount >= data.update_count) return;
+  if (updateCount >= data.updateCount) return;
 
-  dispatch(setUpdateCount({ updateCount: data.update_count }));
+  dispatch(setUpdateCount({ updateCount: data.updateCount }));
   dispatch(fetchGame({ gameSlug }));
 };
 
