@@ -5,7 +5,7 @@ import { moveToSquares } from 'services/logic/square';
 
 import keys from 'lodash/keys';
 
-import { handleAction, handleActions } from 'redux-actions';
+import { handleAction, combineActions } from 'redux-actions';
 
 // Home
 import games from './games';
@@ -61,11 +61,12 @@ const rootReducer = combineReducers({
     -1,
   ),
   // Board
-  animationOffset: handleActions(
-    {
-      [actions.board.animationOffset.set]: (state, action) => action.payload,
-      [actions.board.animationOffset.clear]: () => [0, 0],
-    },
+  animationOffset: handleAction(
+    combineActions(
+      actions.board.animationOffset.set,
+      actions.board.animationOffset.clear,
+    ),
+    (state, action) => action.payload,
     [0, 0],
   ),
   canMoveBothColors: handleAction(
