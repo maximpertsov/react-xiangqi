@@ -4,10 +4,8 @@ import get from 'lodash/get';
 import isEqual from 'lodash/isEqual';
 
 import makeMove from 'actions/makeMove';
-import actions, {
-  clearAnimationOffset,
-  setAnimationOffset,
-} from 'actions';
+import actions from 'actions';
+import animateMove from 'actions/animateMove';
 import { getBottomPlayerIsRed, getLegalMoves, getSelectedMove } from 'reducers';
 import { isOccupied, sameColor } from 'services/logic/fen';
 import { squaresToMove } from 'services/logic/square';
@@ -49,10 +47,10 @@ const Board = () => {
     move => {
       const fen = legalFen(move);
       if (fen) {
-        dispatch(setAnimationOffset({ bottomPlayerIsRed, move }));
+        dispatch(animateMove({ bottomPlayerIsRed, move }));
         setTimeout(() => {
           dispatch(makeMove({ fen, move, pending: true }));
-          dispatch(clearAnimationOffset());
+          dispatch(actions.board.animationOffset.clear());
           dispatch(actions.board.selectedSquare.set(null));
         }, ANIMATION_DELAY);
       } else {

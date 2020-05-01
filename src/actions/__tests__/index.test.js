@@ -11,6 +11,8 @@ test.each`
   ${actions.game.selectedPosition.set}    | ${'GAME/SELECTED_POSITION/SET'}      | ${0}
   ${actions.game.showConfirmMoveMenu.set} | ${'GAME/SHOW_CONFIRM_MOVE_MENU/SET'} | ${true}
   ${actions.game.slug.set}                | ${'GAME/SLUG/SET'}                   | ${'ABC123'}
+  ${actions.board.animationOffset.set}    | ${'BOARD/ANIMATION_OFFSET/SET'}      | ${{}}
+  ${actions.board.animationOffset.clear}  | ${'BOARD/ANIMATION_OFFSET/CLEAR'}    | ${[0, 0]}
   ${actions.board.selectedSquare.set}     | ${'BOARD/SELECTED_SQUARE/SET'}       | ${'a1a2'}
 `(
   '$action creator returns proper action payload',

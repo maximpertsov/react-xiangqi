@@ -3,6 +3,32 @@ import reducer from 'reducers';
 import toPairs from 'lodash/toPairs';
 
 const tables = {
+  animationOffset: [
+    [
+      'return the default state',
+      {
+        action: {},
+        currentState: undefined,
+        expectedNewState: [0, 0],
+      },
+    ],
+    [
+      'set the animation offset',
+      {
+        action: actions.board.animationOffset.set([1, 1]),
+        currentState: [0, 0],
+        expectedNewState: [1, 1],
+      },
+    ],
+    [
+      'clear the animation offset',
+      {
+        action: actions.board.animationOffset.clear(),
+        currentState: undefined,
+        expectedNewState: [0, 0],
+      },
+    ],
+  ],
   autoMove: [
     [
       'return the default state',

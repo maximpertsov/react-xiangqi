@@ -4,7 +4,7 @@ import { moveToSquares } from 'services/logic/square';
 
 import keys from 'lodash/keys';
 
-import { handleAction } from 'redux-actions';
+import { handleAction, handleActions } from 'redux-actions';
 
 // Home
 import games from './games';
@@ -51,7 +51,13 @@ const rootReducer = combineReducers({
     -1,
   ),
   // Board
-  animationOffset,
+  animationOffset: handleActions(
+    {
+      'BOARD/ANIMATION_OFFSET/SET': (state, action) => action.payload,
+      'BOARD/ANIMATION_OFFSET/CLEAR': () => [0, 0],
+    },
+    [0, 0],
+  ),
   canMoveBothColors: handleAction(
     'toggle_can_move_both_colors',
     (state, action) => action.canMoveBothColors,

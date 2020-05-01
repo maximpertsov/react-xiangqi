@@ -12,11 +12,6 @@ export {
   toggleCanMoveBothColors,
 } from 'scenes/Home/actions';
 
-export {
-  clearAnimationOffset,
-  setAnimationOffset,
-} from 'components/Board/actions';
-
 export default createActions({
   GAME: {
     PLAYERS: {
@@ -39,6 +34,10 @@ export default createActions({
     },
   },
   BOARD: {
+    ANIMATION_OFFSET: {
+      SET: undefined,
+      CLEAR: () => [0, 0],
+    },
     SELECTED_SQUARE: {
       SET: undefined,
     },
