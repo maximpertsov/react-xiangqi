@@ -7,42 +7,56 @@ import keys from 'lodash/keys';
 import { handleAction } from 'redux-actions';
 
 // Home
-import autoMove from './autoMove';
 import games from './games';
 import loginForm from './loginForm';
-import showGame from './showGame';
-import username from './username';
 // Game
 import positions, * as fromPositions from './positions';
 import players from './players';
-import requestedTakeback from './requestedTakeback';
-import updateCount from './updateCount';
 // Board
 import animationOffset, * as fromAnimationOffset from './animationOffset';
-import canMoveBothColors from './canMoveBothColors';
 
 const basicReducer = (type, defaultState) =>
   handleAction(type, (state, action) => action.payload, defaultState);
 
 const rootReducer = combineReducers({
   // Home,
-  autoMove,
+  autoMove: handleAction('set_auto_move', (state, action) => action.colors, []),
   games,
   gameSlug: basicReducer('GAME/SLUG/SET', null),
   loginForm,
-  showGame,
-  username,
+  showGame: handleAction(
+    'toggle_show_game',
+    (state, action) => action.showGame,
+    false,
+  ),
+  username: handleAction(
+    'set_username',
+    (state, action) => action.username,
+    null,
+  ),
   // Game
   positions,
   players,
   showConfirmMoveMenu: basicReducer('GAME/SHOW_CONFIRM_MOVE_MENU/SET', false),
-  requestedTakeback,
+  requestedTakeback: handleAction(
+    'set_requested_takeback',
+    (state, action) => action.requestedTakeback,
+    false,
+  ),
   // TODO: rename to selectedPositionId
   selectedMoveId: basicReducer('GAME/SELECTED_POSITION/SET', null),
-  updateCount,
+  updateCount: handleAction(
+    'set_update_count',
+    (state, action) => action.updateCount,
+    -1,
+  ),
   // Board
   animationOffset,
-  canMoveBothColors,
+  canMoveBothColors: handleAction(
+    'toggle_can_move_both_colors',
+    (state, action) => action.canMoveBothColors,
+    false,
+  ),
   selectedSquare: basicReducer('BOARD/SELECTED_SQUARE/SET', null),
 });
 
