@@ -21,6 +21,60 @@ const tables = {
       },
     ],
   ],
+  selectedMoveId: [
+    [
+      'return the default state',
+      {
+        action: {},
+        currentState: undefined,
+        expectedNewState: null,
+      },
+    ],
+    [
+      'sets the selected move',
+      {
+        action: actions.game.selectedPosition.set(1),
+        currentState: null,
+        expectedNewState: 1,
+      },
+    ],
+  ],
+  selectedSquare: [
+    [
+      'return the default state',
+      {
+        action: {},
+        currentState: undefined,
+        expectedNewState: null,
+      },
+    ],
+    [
+      'set the selected square',
+      {
+        action: actions.board.selectedSquare.set('a1a2'),
+        currentState: null,
+        expectedNewState: 'a1a2',
+      },
+    ],
+  ],
+  showConfirmMoveMenu: [
+    [
+      'return the default state',
+      {
+        action: {},
+        currentState: undefined,
+        expectedNewState: false,
+      },
+    ],
+    [
+      'toggle showing the confirm move menu',
+      {
+        action: actions.game.showConfirmMoveMenu.set(true),
+        currentState: false,
+        expectedNewState: true,
+      },
+    ],
+  ],
 };
 
 describe.each(toPairs(tables))('%s reducer', (stateField, table) => {

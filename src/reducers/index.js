@@ -13,39 +13,37 @@ import loginForm from './loginForm';
 import showGame from './showGame';
 import username from './username';
 // Game
-import showConfirmMoveMenu from './showConfirmMoveMenu';
 import positions, * as fromPositions from './positions';
 import players from './players';
 import requestedTakeback from './requestedTakeback';
-import selectedMoveId from './selectedMoveId';
 import updateCount from './updateCount';
 // Board
 import animationOffset, * as fromAnimationOffset from './animationOffset';
 import canMoveBothColors from './canMoveBothColors';
-import selectedSquare from './selectedSquare';
 
-const standardReducer = (type, defaultState) =>
+const basicReducer = (type, defaultState) =>
   handleAction(type, (state, action) => action.payload, defaultState);
 
 const rootReducer = combineReducers({
   // Home,
   autoMove,
   games,
-  gameSlug: standardReducer('GAME/SLUG/SET', null),
+  gameSlug: basicReducer('GAME/SLUG/SET', null),
   loginForm,
   showGame,
   username,
   // Game
   positions,
   players,
-  showConfirmMoveMenu,
+  showConfirmMoveMenu: basicReducer('GAME/SHOW_CONFIRM_MOVE_MENU/SET', false),
   requestedTakeback,
-  selectedMoveId,
+  // TODO: rename to selectedPositionId
+  selectedMoveId: basicReducer('GAME/SELECTED_POSITION/SET', null),
   updateCount,
   // Board
   animationOffset,
   canMoveBothColors,
-  selectedSquare,
+  selectedSquare: basicReducer('BOARD/SELECTED_SQUARE/SET', null),
 });
 
 export default rootReducer;
