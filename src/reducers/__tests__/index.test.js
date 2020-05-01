@@ -1,13 +1,13 @@
 import actions from 'actions';
 import reducer from 'reducers';
+import toPairs from 'lodash/toPairs';
 
-describe('game slug reducer', () => {
-  const table = [
+const tables = {
+  gameSlug: [
     [
       'return the default state',
       {
         action: {},
-        field: 'gameSlug',
         currentState: undefined,
         expectedNewState: null,
       },
@@ -16,16 +16,17 @@ describe('game slug reducer', () => {
       'set the game slug',
       {
         action: actions.game.slug.set('ABC123'),
-        field: 'gameSlug',
         currentState: null,
         expectedNewState: 'ABC123',
       },
     ],
-  ];
+  ],
+};
 
+describe.each(toPairs(tables))('%s reducer', (stateField, table) => {
   test.each(table)('%s', (name, data) => {
-    const { action, field, currentState, expectedNewState } = data;
-    const result = reducer({ [field]: currentState }, action)[field];
+    const { action, currentState, expectedNewState } = data;
+    const result = reducer({ [stateField]: currentState }, action)[stateField];
     expect(result).toStrictEqual(expectedNewState);
   });
 });

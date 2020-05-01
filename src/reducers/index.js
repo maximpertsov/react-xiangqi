@@ -4,10 +4,11 @@ import { moveToSquares } from 'services/logic/square';
 
 import keys from 'lodash/keys';
 
+import { handleAction } from 'redux-actions';
+
 // Home
 import autoMove from './autoMove';
 import games from './games';
-import gameSlug from './gameSlug';
 import loginForm from './loginForm';
 import showGame from './showGame';
 import username from './username';
@@ -23,11 +24,14 @@ import animationOffset, * as fromAnimationOffset from './animationOffset';
 import canMoveBothColors from './canMoveBothColors';
 import selectedSquare from './selectedSquare';
 
+const standardReducer = (type, defaultState) =>
+  handleAction(type, (state, action) => action.payload, defaultState);
+
 const rootReducer = combineReducers({
   // Home,
   autoMove,
   games,
-  gameSlug,
+  gameSlug: standardReducer('GAME/SLUG/SET', null),
   loginForm,
   showGame,
   username,
