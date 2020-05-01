@@ -1,3 +1,4 @@
+import actions from 'actions';
 import { combineReducers } from 'redux';
 import { Color } from 'services/logic/constants';
 import { moveToSquares } from 'services/logic/square';
@@ -15,14 +16,15 @@ import players from './players';
 // Board
 import * as fromAnimationOffset from './animationOffset';
 
-const basicReducer = (type, defaultState) =>
-  handleAction(type, (state, action) => action.payload, defaultState);
-
 const rootReducer = combineReducers({
   // Home,
   autoMove: handleAction('set_auto_move', (state, action) => action.colors, []),
   games,
-  gameSlug: basicReducer('GAME/SLUG/SET', null),
+  gameSlug: handleAction(
+    actions.game.slug.set,
+    (state, action) => action.payload,
+    null,
+  ),
   loginForm,
   showGame: handleAction(
     'toggle_show_game',
@@ -37,14 +39,22 @@ const rootReducer = combineReducers({
   // Game
   positions,
   players,
-  showConfirmMoveMenu: basicReducer('GAME/SHOW_CONFIRM_MOVE_MENU/SET', false),
+  showConfirmMoveMenu: handleAction(
+    actions.game.showConfirmMoveMenu.set,
+    (state, action) => action.payload,
+    false,
+  ),
   requestedTakeback: handleAction(
     'set_requested_takeback',
     (state, action) => action.requestedTakeback,
     false,
   ),
   // TODO: rename to selectedPositionId
-  selectedMoveId: basicReducer('GAME/SELECTED_POSITION/SET', null),
+  selectedMoveId: handleAction(
+    actions.game.selectedPosition.set,
+    (state, action) => action.payload,
+    null,
+  ),
   updateCount: handleAction(
     'set_update_count',
     (state, action) => action.updateCount,
@@ -53,8 +63,8 @@ const rootReducer = combineReducers({
   // Board
   animationOffset: handleActions(
     {
-      'BOARD/ANIMATION_OFFSET/SET': (state, action) => action.payload,
-      'BOARD/ANIMATION_OFFSET/CLEAR': () => [0, 0],
+      [actions.board.animationOffset.set]: (state, action) => action.payload,
+      [actions.board.animationOffset.clear]: () => [0, 0],
     },
     [0, 0],
   ),
@@ -63,7 +73,11 @@ const rootReducer = combineReducers({
     (state, action) => action.canMoveBothColors,
     false,
   ),
-  selectedSquare: basicReducer('BOARD/SELECTED_SQUARE/SET', null),
+  selectedSquare: handleAction(
+    actions.board.selectedSquare.set,
+    (state, action) => action.payload,
+    null,
+  ),
 });
 
 export default rootReducer;
