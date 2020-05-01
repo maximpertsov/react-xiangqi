@@ -20,10 +20,8 @@ const LoginForm = () => {
 
   const handleAuthenticationSuccess = useCallback(
     response => {
-      const {
-        data: { access_token: accessToken },
-      } = response;
-      const { sub } = jwtDecode(accessToken);
+      const { data } = response;
+      const { sub } = jwtDecode(data.accessToken);
       dispatch(setUsername({ username: sub }));
     },
     [dispatch],
