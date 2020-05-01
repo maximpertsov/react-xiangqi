@@ -19,7 +19,7 @@ describe('fetch game', () => {
     axios.get.mockResolvedValue({
       data: {
         players: [],
-        positions: [{}, {}],
+        moves: [{}, {}],
       },
     });
 
