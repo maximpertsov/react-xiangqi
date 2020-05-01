@@ -26,11 +26,11 @@ const ConfirmMoveMenu = () => {
         username,
       }),
     );
-    dispatch({ type: 'toggle_show_confirm_move_menu', value: false });
+    dispatch(actions.game.showConfirmMoveMenu.set(false));
   }, [dispatch, gameSlug, lastMove.id, lastMove.move, username]);
 
   const cancelPosition = useCallback(() => {
-    dispatch({ type: 'toggle_show_confirm_move_menu', value: false });
+    dispatch(actions.game.showConfirmMoveMenu.set(false));
     dispatch(actions.game.positions.remove(lastMove.id));
   }, [dispatch, lastMove.id]);
 

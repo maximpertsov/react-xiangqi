@@ -20,6 +20,9 @@ export {
 
 export default createActions({
   GAME: {
+    SHOW_CONFIRM_MOVE_MENU: {
+      SET: undefined,
+    },
     POSITIONS: {
       ADD: undefined,
       REMOVE: undefined,

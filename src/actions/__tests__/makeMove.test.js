@@ -10,6 +10,6 @@ test('make a move', async () => {
   expect(store.getActions()).toStrictEqual([
     actions.game.positions.add({ move: 'a1a2' }),
     actions.game.selectedPosition.set(null),
-    { type: 'toggle_show_confirm_move_menu', value: true },
+    actions.game.showConfirmMoveMenu.set(true),
   ]);
 });
