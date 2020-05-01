@@ -13,7 +13,7 @@ import loginForm from './loginForm';
 import positions, * as fromPositions from './positions';
 import players from './players';
 // Board
-import animationOffset, * as fromAnimationOffset from './animationOffset';
+import * as fromAnimationOffset from './animationOffset';
 
 const basicReducer = (type, defaultState) =>
   handleAction(type, (state, action) => action.payload, defaultState);
