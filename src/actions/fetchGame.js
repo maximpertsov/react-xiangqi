@@ -3,8 +3,8 @@ import actions from 'actions';
 
 const getGame = ({ gameSlug }) => client.get(`game/${gameSlug}`);
 
-const updatePlayers = (dispatch, { players }) => {
-  dispatch({ type: 'set_players', players });
+const setPlayers = (dispatch, { players }) => {
+  dispatch(actions.game.players.set(players));
 };
 
 const setPositions = (dispatch, { positions }) => {
@@ -16,7 +16,7 @@ const fetchGame = ({ gameSlug }) => async dispatch => {
   if (gameSlug === null) return;
 
   const { data } = await getGame({ gameSlug });
-  updatePlayers(dispatch, data);
+  setPlayers(dispatch, data);
   setPositions(dispatch, data);
 };
 

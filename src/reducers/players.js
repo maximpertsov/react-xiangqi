@@ -7,8 +7,8 @@ const initialPlayers = [
 
 const players = (state = initialPlayers, action) => {
   switch (action.type) {
-    case 'set_players':
-      return action.players;
+    case 'GAME/PLAYERS/SET':
+      return action.payload;
     default:
       return state;
   }

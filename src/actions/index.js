@@ -23,6 +23,9 @@ export default createActions({
     SHOW_CONFIRM_MOVE_MENU: {
       SET: undefined,
     },
+    PLAYERS: {
+      SET: undefined,
+    },
     POSITIONS: {
       ADD: undefined,
       REMOVE: undefined,
