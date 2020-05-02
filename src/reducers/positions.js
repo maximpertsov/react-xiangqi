@@ -20,68 +20,45 @@ const getMoveIndex = (state, moveId) => {
 
 const positionFields = ['id', 'fen', 'givesCheck', 'legalMoves', 'move'];
 
-const createPosition = (properties, overrides = {}) => ({
+const createPosition = properties => ({
   ...fromPairs(positionFields.map(field => [field, undefined])),
   ...pick(properties, positionFields),
-  ...overrides,
 });
 
-const addPosition = (state, action) => {
+const addPosition = (state, payload) => {
   const nextId = isEmpty(state) ? 0 : last(state).id + 1;
 
   return update(state, {
-    $push: [createPosition(action, { id: nextId })],
+    $push: [createPosition({ ...payload, id: nextId })],
   });
 };
 
-const removePosition = (state, action) =>
-  reject(state, ({ id }) => action.id === id);
+const removePosition = (state, id) =>
+  reject(state, position => position.id === id);
 
-const cancelPendingPosition = state =>
-  state.filter(({ pending }, index, currentState) => {
-    if (index < currentState.length - 1) return true;
-
-    return !pending;
+const updatePosition = (state, payload) =>
+  state.map(position => {
+    if (payload.id === position.id) {
+      return createPosition({ ...position, ...payload });
+    }
+    return position;
   });
 
-const confirmMoves = state => state.map(move => ({ ...move, pending: false }));
-
-const setMove = (state, action) => {
-  const moveIndex = getMoveIndex(state, action.moveId);
-
-  return update(state, {
-    [moveIndex]: {
-      $set: {
-        id: action.moveId,
-        givesCheck: action.givesCheck,
-        fen: action.fen,
-        legalMoves: action.legalMoves,
-        move: action.move,
-        pending: action.pending,
-      },
-    },
-  });
-};
-
-const setMoves = (state, action) => {
-  return action.moves.map((move, index) => ({ ...move, id: index }));
+const setPositions = (state, positions) => {
+  return positions.map((move, index) => createPosition({ ...move, id: index }));
 };
 
 // eslint-disable-next-line complexity
 const positions = (state = [], action) => {
   switch (action.type) {
-    case 'add_position':
-      return addPosition(state, action);
-    case 'remove_position':
-      return removePosition(state, action);
-    case 'cancel_moves':
-      return cancelPendingPosition(state);
-    case 'confirm_moves':
-      return confirmMoves(state);
-    case 'set_move':
-      return setMove(state, action);
-    case 'set_moves':
-      return setMoves(state, action);
+    case 'GAME/POSITIONS/ADD':
+      return addPosition(state, action.payload);
+    case 'GAME/POSITIONS/REMOVE':
+      return removePosition(state, action.payload);
+    case 'GAME/POSITIONS/UPDATE':
+      return updatePosition(state, action.payload);
+    case 'GAME/POSITIONS/SET':
+      return setPositions(state, action.payload);
     default:
       return state;
   }

@@ -1,19 +1,15 @@
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
-
+import actions from 'actions';
 import makeMove from 'actions/makeMove';
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
-
 test('make a move', async () => {
+  // eslint-disable-next-line no-undef
   const store = mockStore({});
 
   await store.dispatch(makeMove({ move: 'a1a2' }));
 
-  expect(store.getActions()).toEqual([
-    { type: 'add_position', move: 'a1a2' },
-    { type: 'select_move', moveId: null },
-    { type: 'toggle_show_confirm_move_menu', value: true },
+  expect(store.getActions()).toStrictEqual([
+    actions.game.positions.add({ move: 'a1a2' }),
+    actions.game.selectedPosition.set(null),
+    actions.game.showConfirmMoveMenu.set(true),
   ]);
 });

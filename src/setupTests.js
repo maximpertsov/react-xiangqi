@@ -1,6 +1,9 @@
 import React from 'react';
 import 'regenerator-runtime/runtime';
 
+import thunk from 'redux-thunk';
+import configureMockStore from 'redux-mock-store';
+
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -20,3 +23,6 @@ jest.useFakeTimers();
 afterEach(() => {
   jest.clearAllTimers();
 });
+
+// Utilities
+global.mockStore = configureMockStore([thunk])

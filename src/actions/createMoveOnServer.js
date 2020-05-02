@@ -1,8 +1,15 @@
-import { postMove } from 'services/client';
+import actions from 'actions';
+import client from 'services/client';
+
+const postMove = ({ gameSlug, move, username }) => {
+  const payload = { name: 'move', move, player: username };
+  return client.post(`game/${gameSlug}/events`, payload);
+};
 
 const createMoveOnServer = ({
   gameSlug,
-  position: { id, move },
+  id,
+  move,
   username,
 }) => async dispatch => {
   if (gameSlug === null) return;
@@ -11,7 +18,7 @@ const createMoveOnServer = ({
     await postMove({ gameSlug, move, username });
   } catch (error) {
     // TODO: fetch moves to avoid client/server disparity?
-    dispatch({ type: 'remove_position', id });
+    dispatch(actions.game.positions.remove(id));
   }
 };
 

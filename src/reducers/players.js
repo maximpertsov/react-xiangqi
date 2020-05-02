@@ -1,17 +1,15 @@
+import { handleAction } from 'redux-actions';
 import { Color } from 'services/logic/constants';
 
-const initialPlayers = [
+const initialState = [
   { name: undefined, color: Color.RED },
   { name: undefined, color: Color.BLACK },
 ];
 
-const players = (state = initialPlayers, action) => {
-  switch (action.type) {
-    case 'set_players':
-      return action.players;
-    default:
-      return state;
-  }
-};
+const players = handleAction(
+  'GAME/PLAYERS/SET',
+  (state, action) => action.payload,
+  initialState,
+);
 
 export default players;

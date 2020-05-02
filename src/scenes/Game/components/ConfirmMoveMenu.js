@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import actions from 'actions';
 import createMoveOnServer from 'actions/createMoveOnServer';
 import { getLastMove } from 'reducers';
 
@@ -12,24 +13,25 @@ const ConfirmMoveMenu = () => {
   const dispatch = useDispatch();
 
   const gameSlug = useSelector(state => state.gameSlug);
-  const showConfirmMoveMenu = useSelector(
-    state => state.showConfirmMoveMenu,
-  );
+  const showConfirmMoveMenu = useSelector(state => state.showConfirmMoveMenu);
   const lastMove = useSelector(state => getLastMove(state), isEqual);
   const username = useSelector(state => state.username);
 
-  const confirmPosition = useCallback(
-    async () => {
-      dispatch(createMoveOnServer({ gameSlug, position: lastMove, username }));
-      dispatch({ type: 'toggle_show_confirm_move_menu', value: false });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, gameSlug, lastMove.id, username],
-  );
+  const confirmPosition = useCallback(async () => {
+    dispatch(
+      createMoveOnServer({
+        gameSlug,
+        id: lastMove.id,
+        move: lastMove.move,
+        username,
+      }),
+    );
+    dispatch(actions.game.showConfirmMoveMenu.set(false));
+  }, [dispatch, gameSlug, lastMove.id, lastMove.move, username]);
 
   const cancelPosition = useCallback(() => {
-    dispatch({ type: 'toggle_show_confirm_move_menu', value: false });
-    dispatch({ type: 'remove_position', id: lastMove.id });
+    dispatch(actions.game.showConfirmMoveMenu.set(false));
+    dispatch(actions.game.positions.remove(lastMove.id));
   }, [dispatch, lastMove.id]);
 
   return (

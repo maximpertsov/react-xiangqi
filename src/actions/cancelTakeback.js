@@ -1,11 +1,8 @@
-const unsetRequestedTakeback = () => ({
-  type: 'set_requested_takeback',
-  requestedTakeback: false,
-});
+import actions from 'actions';
 
 const cancelTakeback = ({ gameSlug, username }) => async dispatch => {
   // post cancelUndoRequest(gameSlug, username)
-  dispatch(unsetRequestedTakeback());
+  dispatch(actions.game.requestedTakeback.set(false));
 };
 
 export default cancelTakeback;

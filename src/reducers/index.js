@@ -1,47 +1,96 @@
+import actions from 'actions';
 import { combineReducers } from 'redux';
 import { Color } from 'services/logic/constants';
 import { moveToSquares } from 'services/logic/square';
 
 import keys from 'lodash/keys';
 
+import { handleAction, combineActions } from 'redux-actions';
+
 // Home
-import autoMove from './autoMove';
-import games from './games';
-import gameSlug from './gameSlug';
 import loginForm from './loginForm';
-import showGame from './showGame';
-import username from './username';
 // Game
-import showConfirmMoveMenu from './showConfirmMoveMenu';
 import positions, * as fromPositions from './positions';
 import players from './players';
-import requestedTakeback from './requestedTakeback';
-import selectedMoveId from './selectedMoveId';
-import updateCount from './updateCount';
 // Board
-import animationOffset, * as fromAnimationOffset from './animationOffset';
-import canMoveBothColors from './canMoveBothColors';
-import selectedSquare from './selectedSquare';
+import * as fromAnimationOffset from './animationOffset';
 
 const rootReducer = combineReducers({
   // Home,
-  autoMove,
-  games,
-  gameSlug,
+  autoMove: handleAction(
+    combineActions(
+      actions.home.autoMove.set.off,
+      actions.home.autoMove.set.red,
+      actions.home.autoMove.set.black,
+      actions.home.autoMove.set.both,
+    ),
+    (state, action) => action.payload,
+    [],
+  ),
+  games: handleAction(
+    actions.home.games.set,
+    (state, action) => action.payload,
+    [],
+  ),
+  gameSlug: handleAction(
+    actions.game.slug.set,
+    (state, action) => action.payload,
+    null,
+  ),
   loginForm,
-  showGame,
-  username,
+  showGame: handleAction(
+    actions.home.showGame.set,
+    (state, action) => action.payload,
+    false,
+  ),
+  username: handleAction(
+    actions.home.username.set,
+    (state, action) => action.payload,
+    null,
+  ),
   // Game
   positions,
   players,
-  showConfirmMoveMenu,
-  requestedTakeback,
-  selectedMoveId,
-  updateCount,
+  showConfirmMoveMenu: handleAction(
+    actions.game.showConfirmMoveMenu.set,
+    (state, action) => action.payload,
+    false,
+  ),
+  requestedTakeback: handleAction(
+    actions.game.requestedTakeback.set,
+    (state, action) => action.payload,
+    false,
+  ),
+  // TODO: rename to selectedPositionId
+  selectedMoveId: handleAction(
+    actions.game.selectedPosition.set,
+    (state, action) => action.payload,
+    null,
+  ),
+  updateCount: handleAction(
+    actions.game.updateCount.set,
+    (state, action) => action.payload,
+    -1,
+  ),
   // Board
-  animationOffset,
-  canMoveBothColors,
-  selectedSquare,
+  animationOffset: handleAction(
+    combineActions(
+      actions.board.animationOffset.set,
+      actions.board.animationOffset.clear,
+    ),
+    (state, action) => action.payload,
+    [0, 0],
+  ),
+  canMoveBothColors: handleAction(
+    actions.game.canMoveBothColors.set,
+    (state, action) => action.payload,
+    false,
+  ),
+  selectedSquare: handleAction(
+    actions.board.selectedSquare.set,
+    (state, action) => action.payload,
+    null,
+  ),
 });
 
 export default rootReducer;

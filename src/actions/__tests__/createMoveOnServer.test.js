@@ -1,17 +1,15 @@
+import axios from 'axios';
 import createMoveOnServer from 'actions/createMoveOnServer';
-import * as client from 'services/client';
+import actions from 'actions';
 
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
-
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
+jest.mock('axios');
 
 describe('create move on server', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
+  // eslint-disable-next-line no-undef
   const store = mockStore({});
   const position = { id: 1, move: 'a1a2' };
   const username = 'user';
@@ -20,9 +18,14 @@ describe('create move on server', () => {
     const gameSlug = null;
 
     test('action does not make an API request', async () => {
-      const spy = jest.spyOn(client, 'postMove');
+      const spy = jest.spyOn(axios, 'post');
       await store.dispatch(
-        createMoveOnServer({ gameSlug, position, username }),
+        createMoveOnServer({
+          gameSlug,
+          id: position.id,
+          move: position.move,
+          username,
+        }),
       );
       expect(spy).toHaveBeenCalledTimes(0);
     });
@@ -32,37 +35,45 @@ describe('create move on server', () => {
     const gameSlug = 'ABC123';
 
     test('successful request', async () => {
-      const spy = jest
-        .spyOn(client, 'postMove')
-        .mockImplementation(() => Promise.resolve({ status: 200 }));
+      const spy = jest.spyOn(axios, 'post').mockResolvedValue({ status: 200 });
 
       await store.dispatch(
-        createMoveOnServer({ gameSlug, position, username }),
+        createMoveOnServer({
+          gameSlug,
+          id: position.id,
+          move: position.move,
+          username,
+        }),
       );
 
-      expect(spy).toHaveBeenCalledWith({
-        gameSlug,
+      expect(spy).toHaveBeenCalledWith('game/ABC123/events', {
+        name: 'move',
         move: position.move,
-        username,
+        player: username,
       });
     });
 
     test('failed request', async () => {
-      const spy = jest
-        .spyOn(client, 'postMove')
-        .mockImplementation(() => Promise.reject({ status: 400 }));
+      const spy = jest.spyOn(axios, 'post').mockRejectedValue({ status: 400 });
 
       await store.dispatch(
-        createMoveOnServer({ gameSlug, position, username }),
+        createMoveOnServer({
+          gameSlug,
+          id: position.id,
+          move: position.move,
+          username,
+        }),
       );
 
-      expect(spy).toHaveBeenCalledWith({
-        gameSlug,
+      expect(spy).toHaveBeenCalledWith('game/ABC123/events', {
+        name: 'move',
         move: position.move,
-        username,
+        player: username,
       });
 
-      expect(store.getActions()).toEqual([{ type: 'remove_position', id: 1 }]);
+      expect(store.getActions()).toStrictEqual([
+        actions.game.positions.remove(1),
+      ]);
     });
   });
 });

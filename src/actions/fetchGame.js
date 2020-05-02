@@ -1,30 +1,23 @@
-import camelCase from 'lodash/camelCase';
-import mapKeys from 'lodash/mapKeys';
+import client from 'services/client';
+import actions from 'actions';
 
-import { getGame } from 'services/client';
-import { selectMove } from 'scenes/Game/actions';
+const getGame = ({ gameSlug }) => client.get(`game/${gameSlug}`);
 
-const updatePlayers = (dispatch, { players }) => {
-  dispatch({ type: 'set_players', players });
+const setPlayers = (dispatch, { players }) => {
+  dispatch(actions.game.players.set(players));
 };
 
-const transformFetchedMove = move => {
-  const data = mapKeys(move, (value, key) => camelCase(key));
-
-  return { pending: false, ...data };
-};
-
-const updateMoves = (dispatch, { moves }) => {
-  dispatch({ type: 'set_moves', moves: moves.map(transformFetchedMove) });
-  dispatch(selectMove({ moveId: moves.length - 1 }));
+const setPositions = (dispatch, { moves: positions }) => {
+  dispatch(actions.game.positions.set(positions));
+  dispatch(actions.game.selectedPosition.set(positions.length - 1));
 };
 
 const fetchGame = ({ gameSlug }) => async dispatch => {
   if (gameSlug === null) return;
 
   const { data } = await getGame({ gameSlug });
-  updatePlayers(dispatch, data);
-  updateMoves(dispatch, data);
+  setPlayers(dispatch, data);
+  setPositions(dispatch, data);
 };
 
 export default fetchGame;

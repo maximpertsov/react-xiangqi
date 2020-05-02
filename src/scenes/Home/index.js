@@ -2,14 +2,8 @@ import React, { useEffect } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  fetchGames,
-  setAutoMoveOff,
-  setAutoMoveBlack,
-  setAutoMoveBoth,
-  toggleCanMoveBothColors,
-  toggleShowGame,
-} from 'actions';
+import actions from 'actions';
+import fetchUserGames from 'actions/fetchUserGames';
 
 import Game from 'scenes/Game';
 
@@ -22,7 +16,7 @@ const Home = () => {
   const username = useSelector(state => state.username);
 
   useEffect(() => {
-    dispatch(fetchGames({ username }));
+    dispatch(fetchUserGames({ username }));
   }, [dispatch, username]);
 
   const renderMenu = () => (
@@ -37,25 +31,25 @@ const Home = () => {
           <Header size="large">Other modes</Header>
           <Button
             onClick={() => {
-              dispatch(setAutoMoveOff());
-              dispatch(toggleShowGame({ showGame: true }));
-              dispatch(toggleCanMoveBothColors({ canMoveBothColors: true }));
+              dispatch(actions.home.autoMove.set.off());
+              dispatch(actions.home.showGame.set(true));
+              dispatch(actions.game.canMoveBothColors.set(true));
             }}
           >
             Solo play
           </Button>
           <Button
             onClick={() => {
-              dispatch(setAutoMoveBlack());
-              dispatch(toggleShowGame({ showGame: true }));
+              dispatch(actions.home.autoMove.set.black());
+              dispatch(actions.home.showGame.set(true));
             }}
           >
             vs CPU
           </Button>
           <Button
             onClick={() => {
-              dispatch(setAutoMoveBoth());
-              dispatch(toggleShowGame({ showGame: true }));
+              dispatch(actions.home.autoMove.set.both());
+              dispatch(actions.home.showGame.set(true));
             }}
           >
             CPU vs CPU
