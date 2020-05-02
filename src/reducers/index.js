@@ -19,7 +19,12 @@ import * as fromAnimationOffset from './animationOffset';
 const rootReducer = combineReducers({
   // Home,
   autoMove: handleAction(
-    actions.home.autoMove.set,
+    combineActions(
+      actions.home.autoMove.set.off,
+      actions.home.autoMove.set.red,
+      actions.home.autoMove.set.black,
+      actions.home.autoMove.set.both,
+    ),
     (state, action) => action.payload,
     [],
   ),

@@ -2,11 +2,8 @@ import React, { useEffect } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
+import actions, {
   fetchGames,
-  setAutoMoveOff,
-  setAutoMoveBlack,
-  setAutoMoveBoth,
   toggleCanMoveBothColors,
   toggleShowGame,
 } from 'actions';
@@ -37,7 +34,7 @@ const Home = () => {
           <Header size="large">Other modes</Header>
           <Button
             onClick={() => {
-              dispatch(setAutoMoveOff());
+              dispatch(actions.home.autoMove.set.off());
               dispatch(toggleShowGame({ showGame: true }));
               dispatch(toggleCanMoveBothColors({ canMoveBothColors: true }));
             }}
@@ -46,7 +43,7 @@ const Home = () => {
           </Button>
           <Button
             onClick={() => {
-              dispatch(setAutoMoveBlack());
+              dispatch(actions.home.autoMove.set.black());
               dispatch(toggleShowGame({ showGame: true }));
             }}
           >
@@ -54,7 +51,7 @@ const Home = () => {
           </Button>
           <Button
             onClick={() => {
-              dispatch(setAutoMoveBoth());
+              dispatch(actions.home.autoMove.set.both());
               dispatch(toggleShowGame({ showGame: true }));
             }}
           >

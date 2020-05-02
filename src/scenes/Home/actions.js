@@ -1,13 +1,6 @@
 import * as client from 'services/client';
 import { Color } from 'services/logic/constants';
 
-const setAutoMove = colors => ({ type: 'set_auto_move', colors });
-
-export const setAutoMoveOff = () => setAutoMove([]);
-export const setAutoMoveRed = () => setAutoMove([Color.RED]);
-export const setAutoMoveBlack = () => setAutoMove([Color.BLACK]);
-export const setAutoMoveBoth = () => setAutoMove([Color.RED, Color.BLACK]);
-
 export const fetchGames = ({ username }) => async dispatch => {
   if (username === null) return;
 

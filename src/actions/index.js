@@ -1,11 +1,8 @@
 import { createActions } from 'redux-actions';
+import { Color } from 'services/logic/constants';
 
 export {
   fetchGames,
-  setAutoMoveOff,
-  setAutoMoveRed,
-  setAutoMoveBlack,
-  setAutoMoveBoth,
   setForm,
   setUsername,
   toggleShowGame,
@@ -53,7 +50,12 @@ export default createActions({
   },
   HOME: {
     AUTO_MOVE: {
-      SET: undefined,
+      SET: {
+        OFF: () => [],
+        RED: () => [Color.RED],
+        BLACK: () => [Color.BLACK],
+        BOTH: () => [Color.RED, Color.BLACK],
+      },
     },
     SHOW_GAME: {
       SET: undefined,

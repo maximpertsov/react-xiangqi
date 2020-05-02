@@ -39,11 +39,35 @@ const tables = {
       },
     ],
     [
-      'set the auto move type',
+      'set auto move off',
       {
-        action: actions.home.autoMove.set(['black']),
+        action: actions.home.autoMove.set.off(),
+        currentState: [],
+        expectedNewState: [],
+      },
+    ],
+    [
+      'set auto move red',
+      {
+        action: actions.home.autoMove.set.red(),
+        currentState: [],
+        expectedNewState: ['red'],
+      },
+    ],
+    [
+      'set auto move black',
+      {
+        action: actions.home.autoMove.set.black(),
         currentState: [],
         expectedNewState: ['black'],
+      },
+    ],
+    [
+      'set auto move both colors',
+      {
+        action: actions.home.autoMove.set.both(),
+        currentState: [],
+        expectedNewState: ['red', 'black'],
       },
     ],
   ],
