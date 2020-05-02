@@ -42,7 +42,7 @@ const Wrapper = styled.img`
 
 const Piece = ({ code, moveX, moveY }) => {
   const [{ opacity }, dragRef] = useDrag({
-    item: { type: 'SQUARE' },
+    item: { type: 'PIECE' },
     collect: monitor => ({
       opacity: monitor.isDragging() ? 0.5 : 1,
     }),
