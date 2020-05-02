@@ -23,8 +23,6 @@ import TargetIndicator from './TargetIndicator';
 const Square = ({ handleSquareClick, square }) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'PIECE',
-    drop: () => true,
-    canDrop: () => true,
     collect: monitor => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),

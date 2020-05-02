@@ -1,9 +1,6 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-
-// background-color: ${props => props.isOver ? 'rgba(255, 255, 153, 0.7)' : 'none'};
-// border-radius: 50%;
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,11 +10,11 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const SquareView = ({ children, handleClick }) => (
-  <Wrapper className="SquareView" onClick={handleClick}>
+const SquareView = forwardRef(({ children, handleClick }, ref) => (
+  <Wrapper className="SquareView" onClick={handleClick} ref={ref}>
     {children}
   </Wrapper>
-);
+));
 
 SquareView.propTypes = {
   children: PropTypes.node.isRequired,
