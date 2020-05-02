@@ -5,7 +5,7 @@ exports[`Board renders without crashing 1`] = `
   class="BoardView css-1uxgy54"
 >
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -15,7 +15,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -25,7 +25,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -35,7 +35,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -45,7 +45,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -55,7 +55,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -65,7 +65,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -75,7 +75,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -85,7 +85,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -95,37 +95,37 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -135,22 +135,22 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -160,10 +160,10 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -173,10 +173,10 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -186,10 +186,10 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -199,10 +199,10 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -212,10 +212,10 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -225,61 +225,61 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -289,10 +289,10 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -302,10 +302,10 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -315,10 +315,10 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -328,10 +328,10 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -341,10 +341,10 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -354,22 +354,22 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -379,37 +379,37 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   />
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -419,7 +419,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -429,7 +429,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -439,7 +439,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -449,7 +449,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -459,7 +459,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -469,7 +469,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -479,7 +479,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
@@ -489,7 +489,7 @@ exports[`Board renders without crashing 1`] = `
     />
   </div>
   <div
-    class="Square css-1nk37qx"
+    class="SquareView css-8516zs"
   >
     <img
       alt=""
