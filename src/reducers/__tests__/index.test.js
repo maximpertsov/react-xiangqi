@@ -101,9 +101,9 @@ const tables = {
     [
       'set games',
       {
-        action: { type: 'set_games', games: [] },
+        action: actions.home.games.set([{ slug: 'ABC123' }]),
         currentState: null,
-        expectedNewState: [],
+        expectedNewState: [{ slug: 'ABC123' }],
       },
     ],
   ],

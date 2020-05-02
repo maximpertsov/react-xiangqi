@@ -8,7 +8,6 @@ import keys from 'lodash/keys';
 import { handleAction, combineActions } from 'redux-actions';
 
 // Home
-import games from './games';
 import loginForm from './loginForm';
 // Game
 import positions, * as fromPositions from './positions';
@@ -28,7 +27,11 @@ const rootReducer = combineReducers({
     (state, action) => action.payload,
     [],
   ),
-  games,
+  games: handleAction(
+    actions.home.games.set,
+    (state, action) => action.payload,
+    [],
+  ),
   gameSlug: handleAction(
     actions.game.slug.set,
     (state, action) => action.payload,

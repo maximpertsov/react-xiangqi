@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import actions, { fetchGames } from 'actions';
+import actions from 'actions';
+import fetchUserGames from 'actions/fetchUserGames';
 
 import Game from 'scenes/Game';
 
@@ -15,7 +16,7 @@ const Home = () => {
   const username = useSelector(state => state.username);
 
   useEffect(() => {
-    dispatch(fetchGames({ username }));
+    dispatch(fetchUserGames({ username }));
   }, [dispatch, username]);
 
   const renderMenu = () => (

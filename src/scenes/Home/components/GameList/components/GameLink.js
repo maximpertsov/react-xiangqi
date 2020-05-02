@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
-import actions, { toggleShowGame } from 'actions';
+import actions from 'actions';
 
 import styled from '@emotion/styled';
 
@@ -15,7 +15,7 @@ const GameLink = ({ slug }) => {
 
   const setThisGameSlug = useCallback(() => {
     dispatch(actions.game.slug.set(slug));
-    dispatch(toggleShowGame({ showGame: true }));
+    dispatch(actions.home.showGame.set(true));
   }, [dispatch, slug]);
 
   return (

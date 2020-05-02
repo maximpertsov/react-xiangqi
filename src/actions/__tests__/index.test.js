@@ -23,6 +23,7 @@ test.each`
   ${home.autoMove.set.red}        | ${'HOME/AUTO_MOVE/SET/RED'}          | ${['red']}
   ${home.autoMove.set.black}      | ${'HOME/AUTO_MOVE/SET/BLACK'}        | ${['black']}
   ${home.autoMove.set.both}       | ${'HOME/AUTO_MOVE/SET/BOTH'}         | ${['red', 'black']}
+  ${home.games.set}               | ${'HOME/GAMES/SET'}                  | ${[{}]}
   ${home.username.set}            | ${'HOME/USERNAME/SET'}               | ${'user'}
   ${home.showGame.set}            | ${'HOME/SHOW_GAME/SET'}              | ${true}
 `(

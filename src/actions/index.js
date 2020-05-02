@@ -1,7 +1,7 @@
 import { createActions } from 'redux-actions';
 import { Color } from 'services/logic/constants';
 
-export { fetchGames, setForm } from 'scenes/Home/actions';
+export { setForm } from 'scenes/Home/actions';
 
 export default createActions({
   BOARD: {
@@ -50,6 +50,9 @@ export default createActions({
         BLACK: () => [Color.BLACK],
         BOTH: () => [Color.RED, Color.BLACK],
       },
+    },
+    GAMES: {
+      SET: undefined,
     },
     SHOW_GAME: {
       SET: undefined,

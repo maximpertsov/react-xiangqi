@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
-import { setForm, setUsername } from 'actions';
+import actions, { setForm } from 'actions';
 import * as client from 'services/client';
 
 const LoginForm = () => {
@@ -22,7 +22,7 @@ const LoginForm = () => {
     response => {
       const { data } = response;
       const { sub } = jwtDecode(data.accessToken);
-      dispatch(setUsername({ username: sub }));
+      dispatch(actions.home.username.set(sub));
     },
     [dispatch],
   );
