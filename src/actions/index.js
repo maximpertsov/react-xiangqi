@@ -1,13 +1,7 @@
 import { createActions } from 'redux-actions';
 import { Color } from 'services/logic/constants';
 
-export {
-  fetchGames,
-  setForm,
-  setUsername,
-  toggleShowGame,
-  toggleCanMoveBothColors,
-} from 'scenes/Home/actions';
+export { fetchGames, setForm } from 'scenes/Home/actions';
 
 export default createActions({
   BOARD: {

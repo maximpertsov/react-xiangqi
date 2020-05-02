@@ -2,11 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import actions, {
-  fetchGames,
-  toggleCanMoveBothColors,
-  toggleShowGame,
-} from 'actions';
+import actions, { fetchGames } from 'actions';
 
 import Game from 'scenes/Game';
 
@@ -35,8 +31,8 @@ const Home = () => {
           <Button
             onClick={() => {
               dispatch(actions.home.autoMove.set.off());
-              dispatch(toggleShowGame({ showGame: true }));
-              dispatch(toggleCanMoveBothColors({ canMoveBothColors: true }));
+              dispatch(actions.home.showGame.set(true));
+              dispatch(actions.game.canMoveBothColors.set(true));
             }}
           >
             Solo play
@@ -44,7 +40,7 @@ const Home = () => {
           <Button
             onClick={() => {
               dispatch(actions.home.autoMove.set.black());
-              dispatch(toggleShowGame({ showGame: true }));
+              dispatch(actions.home.showGame.set(true));
             }}
           >
             vs CPU
@@ -52,7 +48,7 @@ const Home = () => {
           <Button
             onClick={() => {
               dispatch(actions.home.autoMove.set.both());
-              dispatch(toggleShowGame({ showGame: true }));
+              dispatch(actions.home.showGame.set(true));
             }}
           >
             CPU vs CPU

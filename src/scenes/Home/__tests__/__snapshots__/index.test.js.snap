@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home click solo play without crashing 1`] = `
+<div
+  class="ui center aligned container"
+>
+  <div
+    class="ui compact segments"
+  >
+    <div
+      class="ui segment"
+    >
+      <div
+        class="ui large header"
+      >
+        Play online
+      </div>
+      <div>
+        Loading
+      </div>
+    </div>
+    <div
+      class="ui segment"
+    >
+      <div
+        class="ui large header"
+      >
+        Other modes
+      </div>
+      <button
+        class="ui button"
+      >
+        Solo play
+      </button>
+      <button
+        class="ui button"
+      >
+        vs CPU
+      </button>
+      <button
+        class="ui button"
+      >
+        CPU vs CPU
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Home click solo play without crashing 2`] = `
+<div>
+  <div
+    class="ui basic segment blurring dimmed dimmable"
+  />
+</div>
+`;
