@@ -23,8 +23,7 @@ import KingInCheckIndicator from './components/KingInCheckIndicator';
 import SelectionIndicator from './components/SelectionIndicator';
 import TargetIndicator from './components/TargetIndicator';
 
-// import boardImg from './assets/board-1000px.svg.png';
-import boardImg from './assets/board-1000px-black.png';
+import boardImg from './assets/board-1000px.svg.png';
 
 const Wrapper = styled.div`
   background-image: url(${boardImg});
