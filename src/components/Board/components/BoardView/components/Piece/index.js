@@ -29,7 +29,10 @@ const Wrapper = styled.img`
   ${MediaQuery.LARGE} {
     ${props => cssTransform(SquareSize.LARGE, props)};
   }
+  -webkit-user-select: none;
+  -khtml-user-select: none;
   -moz-user-select: none;
+  -o-user-select: none;
   display: block;
   margin: auto;
   max-height: 80%;
