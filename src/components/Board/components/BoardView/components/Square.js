@@ -23,12 +23,7 @@ import TargetIndicator from './TargetIndicator';
 const Square = ({ handleSquareClick, square }) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'PIECE',
-    drop: () => {
-      // HACK: run square click side-effects
-      handleSquareClick(square)();
-
-      return undefined;
-    },
+    drop: () => { handleSquareClick(square)(); },
     collect: monitor => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
