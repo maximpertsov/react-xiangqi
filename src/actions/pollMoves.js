@@ -1,3 +1,4 @@
+import actions from 'actions';
 import { poll } from 'services/client';
 import fetchGame from 'actions/fetchGame';
 
@@ -8,11 +9,6 @@ const canUpdateMoves = ({ gameSlug, nextMovePlayerName, username }) => {
 
   return true;
 };
-
-const setUpdateCount = ({ updateCount }) => ({
-  type: 'set_update_count',
-  updateCount,
-});
 
 const pollMoves = ({
   gameSlug,
@@ -25,7 +21,7 @@ const pollMoves = ({
   const { data } = await poll({ gameSlug });
   if (updateCount >= data.updateCount) return;
 
-  dispatch(setUpdateCount({ updateCount: data.updateCount }));
+  dispatch(actions.game.updateCount.set(data.updateCount));
   dispatch(fetchGame({ gameSlug }));
 };
 
