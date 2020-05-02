@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
+import { useDrag } from 'react-dnd';
 
 import { ALL_PIECES } from 'services/logic/constants';
 import { MediaQuery, SquareSize } from 'commonStyles';
@@ -16,15 +17,6 @@ const cssTransform = (squareSize, { moveX, moveY }) => {
 };
 
 const Wrapper = styled.img`
-  pointer-events: none;
-  user-select: none;
-  -moz-user-select: none;
-  max-height: 80%;
-  max-width: 80%;
-  display: block;
-  margin: auto;
-  z-index: ${props => (isMoving(props) ? 100 : 0)};
-  transition: transform 50ms ease-in-out;
   ${MediaQuery.TINY} {
     ${props => cssTransform(SquareSize.TINY, props)};
   }
@@ -37,17 +29,37 @@ const Wrapper = styled.img`
   ${MediaQuery.LARGE} {
     ${props => cssTransform(SquareSize.LARGE, props)};
   }
+  -moz-user-select: none;
+  display: block;
+  margin: auto;
+  max-height: 80%;
+  max-width: 80%;
+  opacity: ${props => props.opacity};
+  transition: transform 50ms ease-in-out;
+  user-select: none;
+  z-index: ${props => (isMoving(props) ? 100 : 0)};
 `;
 
-const Piece = ({ code, moveX, moveY }) => (
-  <Wrapper
-    alt=""
-    className={`Piece ${code}`}
-    moveX={moveX}
-    moveY={moveY}
-    src={getImageByCode(code)}
-  />
-);
+const Piece = ({ code, moveX, moveY }) => {
+  const [{ opacity }, dragRef] = useDrag({
+    item: { type: 'SQUARE' },
+    collect: monitor => ({
+      opacity: monitor.isDragging() ? 0.5 : 1,
+    }),
+  });
+
+  return (
+    <Wrapper
+      alt=""
+      className={`Piece ${code}`}
+      moveX={moveX}
+      moveY={moveY}
+      opacity={opacity}
+      ref={dragRef}
+      src={getImageByCode(code)}
+    />
+  );
+};
 
 Piece.propTypes = {
   code: PropTypes.oneOf(ALL_PIECES).isRequired,
