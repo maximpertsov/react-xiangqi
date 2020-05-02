@@ -18,7 +18,11 @@ import * as fromAnimationOffset from './animationOffset';
 
 const rootReducer = combineReducers({
   // Home,
-  autoMove: handleAction('set_auto_move', (state, action) => action.colors, []),
+  autoMove: handleAction(
+    actions.home.autoMove.set,
+    (state, action) => action.payload,
+    [],
+  ),
   games,
   gameSlug: handleAction(
     actions.game.slug.set,
@@ -27,13 +31,13 @@ const rootReducer = combineReducers({
   ),
   loginForm,
   showGame: handleAction(
-    'toggle_show_game',
-    (state, action) => action.showGame,
+    actions.home.showGame.set,
+    (state, action) => action.payload,
     false,
   ),
   username: handleAction(
-    'set_username',
-    (state, action) => action.username,
+    actions.home.username.set,
+    (state, action) => action.payload,
     null,
   ),
   // Game
@@ -45,8 +49,8 @@ const rootReducer = combineReducers({
     false,
   ),
   requestedTakeback: handleAction(
-    'set_requested_takeback',
-    (state, action) => action.requestedTakeback,
+    actions.game.requestedTakeback.set,
+    (state, action) => action.payload,
     false,
   ),
   // TODO: rename to selectedPositionId
@@ -56,8 +60,8 @@ const rootReducer = combineReducers({
     null,
   ),
   updateCount: handleAction(
-    'set_update_count',
-    (state, action) => action.updateCount,
+    actions.game.updateCount.set,
+    (state, action) => action.payload,
     -1,
   ),
   // Board
@@ -70,8 +74,8 @@ const rootReducer = combineReducers({
     [0, 0],
   ),
   canMoveBothColors: handleAction(
-    'toggle_can_move_both_colors',
-    (state, action) => action.canMoveBothColors,
+    actions.game.canMoveBothColors.set,
+    (state, action) => action.payload,
     false,
   ),
   selectedSquare: handleAction(

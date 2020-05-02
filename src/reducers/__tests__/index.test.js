@@ -41,10 +41,7 @@ const tables = {
     [
       'set the auto move type',
       {
-        action: {
-          type: 'set_auto_move',
-          colors: ['black'],
-        },
+        action: actions.home.autoMove.set(['black']),
         currentState: [],
         expectedNewState: ['black'],
       },
@@ -62,10 +59,7 @@ const tables = {
     [
       'toggle can move both colors',
       {
-        action: {
-          type: 'toggle_can_move_both_colors',
-          canMoveBothColors: true,
-        },
+        action: actions.game.canMoveBothColors.set(true),
         currentState: false,
         expectedNewState: true,
       },
@@ -119,10 +113,7 @@ const tables = {
     [
       'toggle requested takeback',
       {
-        action: {
-          type: 'set_requested_takeback',
-          requestedTakeback: true,
-        },
+        action: actions.game.requestedTakeback.set(true),
         currentState: false,
         expectedNewState: true,
       },
@@ -194,10 +185,7 @@ const tables = {
     [
       'toggle show game',
       {
-        action: {
-          type: 'toggle_show_game',
-          showGame: true,
-        },
+        action: actions.home.showGame.set(true),
         currentState: false,
         expectedNewState: true,
       },
@@ -215,10 +203,7 @@ const tables = {
     [
       'set the update count',
       {
-        action: {
-          type: 'set_update_count',
-          updateCount: 3,
-        },
+        action: actions.game.updateCount.set(3),
         currentState: -1,
         expectedNewState: 3,
       },
@@ -236,10 +221,7 @@ const tables = {
     [
       'set the username',
       {
-        action: {
-          type: 'set_username',
-          username: 'user',
-        },
+        action: actions.home.username.set('user'),
         currentState: null,
         expectedNewState: 'user',
       },

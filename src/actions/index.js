@@ -13,7 +13,22 @@ export {
 } from 'scenes/Home/actions';
 
 export default createActions({
+  BOARD: {
+    ANIMATION_OFFSET: {
+      SET: undefined,
+      CLEAR: () => [0, 0],
+    },
+    SELECTED_SQUARE: {
+      SET: undefined,
+    },
+  },
   GAME: {
+    CAN_MOVE_BOTH_COLORS: {
+      SET: undefined,
+    },
+    REQUESTED_TAKEBACK: {
+      SET: undefined,
+    },
     PLAYERS: {
       SET: undefined,
     },
@@ -32,13 +47,18 @@ export default createActions({
     SLUG: {
       SET: undefined,
     },
-  },
-  BOARD: {
-    ANIMATION_OFFSET: {
+    UPDATE_COUNT: {
       SET: undefined,
-      CLEAR: () => [0, 0],
     },
-    SELECTED_SQUARE: {
+  },
+  HOME: {
+    AUTO_MOVE: {
+      SET: undefined,
+    },
+    SHOW_GAME: {
+      SET: undefined,
+    },
+    USERNAME: {
       SET: undefined,
     },
   },
