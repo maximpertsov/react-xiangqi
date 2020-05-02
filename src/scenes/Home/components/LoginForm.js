@@ -2,7 +2,8 @@ import React, { useCallback, useEffect } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
-import actions, { setForm } from 'actions';
+import actions from 'actions';
+import updateLoginForm from 'actions/updateLoginForm';
 import * as client from 'services/client';
 
 const LoginForm = () => {
@@ -15,7 +16,9 @@ const LoginForm = () => {
 
   const ping = useCallback(async () => {
     const { status } = await client.ping();
-    if (status === 200) dispatch({ type: 'set_login_loading', loading: false });
+    if (status === 200) {
+      dispatch(actions.home.loginForm.loading.set(false));
+    }
   }, [dispatch]);
 
   const handleAuthenticationSuccess = useCallback(
@@ -28,7 +31,7 @@ const LoginForm = () => {
   );
 
   const clearState = useCallback(() => {
-    dispatch(setForm({ username: '', password: '', error: '' }));
+    dispatch(updateLoginForm({ username: '', password: '', error: '' }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -55,7 +58,7 @@ const LoginForm = () => {
     const {
       target: { name, value },
     } = event;
-    dispatch(setForm({ [name]: value }));
+    dispatch(updateLoginForm({ [name]: value }));
   };
 
   const handleClick = async () => {
@@ -66,7 +69,7 @@ const LoginForm = () => {
       });
       if (response.status === 201) handleAuthenticationSuccess(response);
     } catch (error) {
-      dispatch(setForm({ error: 'Login failed' }));
+      dispatch(updateLoginForm({ error: 'Login failed' }));
     } finally {
       clearState();
     }

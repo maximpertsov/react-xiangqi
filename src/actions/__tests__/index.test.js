@@ -24,7 +24,11 @@ test.each`
   ${home.autoMove.set.black}      | ${'HOME/AUTO_MOVE/SET/BLACK'}        | ${['black']}
   ${home.autoMove.set.both}       | ${'HOME/AUTO_MOVE/SET/BOTH'}         | ${['red', 'black']}
   ${home.games.set}               | ${'HOME/GAMES/SET'}                  | ${[{}]}
-  ${home.username.set}            | ${'HOME/USERNAME/SET'}               | ${'user'}
+  ${home.loginForm.username.set}  | ${'HOME/LOGIN_FORM/USERNAME/SET'}    | ${'user123'}
+  ${home.loginForm.password.set}  | ${'HOME/LOGIN_FORM/PASSWORD/SET'}    | ${'pass123'}
+  ${home.loginForm.error.set}     | ${'HOME/LOGIN_FORM/ERROR/SET'}       | ${'failed!'}
+  ${home.loginForm.loading.set}   | ${'HOME/LOGIN_FORM/LOADING/SET'}     | ${true}
+  ${home.username.set}            | ${'HOME/USERNAME/SET'}               | ${'user123'}
   ${home.showGame.set}            | ${'HOME/SHOW_GAME/SET'}              | ${true}
 `(
   '$action creator returns proper action payload',

@@ -1,8 +1,6 @@
 import { createActions } from 'redux-actions';
 import { Color } from 'services/logic/constants';
 
-export { setForm } from 'scenes/Home/actions';
-
 export default createActions({
   BOARD: {
     ANIMATION_OFFSET: {
@@ -53,6 +51,20 @@ export default createActions({
     },
     GAMES: {
       SET: undefined,
+    },
+    LOGIN_FORM: {
+      USERNAME: {
+        SET: undefined,
+      },
+      PASSWORD: {
+        SET: undefined,
+      },
+      ERROR: {
+        SET: undefined,
+      },
+      LOADING: {
+        SET: undefined,
+      },
     },
     SHOW_GAME: {
       SET: undefined,

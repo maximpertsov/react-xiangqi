@@ -1,5 +1,7 @@
 import actions from 'actions';
 import reducer from 'reducers';
+import get from 'lodash/get';
+import set from 'lodash/set';
 import toPairs from 'lodash/toPairs';
 
 const tables = {
@@ -122,6 +124,78 @@ const tables = {
         action: actions.game.slug.set('ABC123'),
         currentState: null,
         expectedNewState: 'ABC123',
+      },
+    ],
+  ],
+  ['loginForm.username']: [
+    [
+      'return the default state',
+      {
+        action: {},
+        currentState: undefined,
+        expectedNewState: '',
+      },
+    ],
+    [
+      'set the login form username',
+      {
+        action: actions.home.loginForm.username.set('user123'),
+        currentState: '',
+        expectedNewState: 'user123',
+      },
+    ],
+  ],
+  ['loginForm.password']: [
+    [
+      'return the default state',
+      {
+        action: {},
+        currentState: undefined,
+        expectedNewState: '',
+      },
+    ],
+    [
+      'set the login form password',
+      {
+        action: actions.home.loginForm.password.set('pass123'),
+        currentState: '',
+        expectedNewState: 'pass123',
+      },
+    ],
+  ],
+  ['loginForm.error']: [
+    [
+      'return the default state',
+      {
+        action: {},
+        currentState: undefined,
+        expectedNewState: '',
+      },
+    ],
+    [
+      'set the login form error',
+      {
+        action: actions.home.loginForm.error.set('failed!'),
+        currentState: '',
+        expectedNewState: 'failed!',
+      },
+    ],
+  ],
+  ['loginForm.loading']: [
+    [
+      'return the default state',
+      {
+        action: {},
+        currentState: undefined,
+        expectedNewState: true,
+      },
+    ],
+    [
+      'set the login form loading',
+      {
+        action: actions.home.loginForm.loading.set(false),
+        currentState: true,
+        expectedNewState: false,
       },
     ],
   ],
@@ -253,10 +327,13 @@ const tables = {
   ],
 };
 
-describe.each(toPairs(tables))('%s reducer', (stateField, table) => {
+describe.each(toPairs(tables))('%s reducer', (key, table) => {
   test.each(table)('%s', (name, data) => {
     const { action, currentState, expectedNewState } = data;
-    const result = reducer({ [stateField]: currentState }, action)[stateField];
+
+    const globalState = {};
+    set(globalState, key, currentState);
+    const result = get(reducer(globalState, action), key);
     expect(result).toStrictEqual(expectedNewState);
   });
 });
