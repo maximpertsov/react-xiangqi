@@ -26,11 +26,6 @@ import TargetIndicator from './components/TargetIndicator';
 import boardImg from './assets/board-1000px.svg.png';
 
 const Wrapper = styled.div`
-  background-image: url(${boardImg});
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: top;
-  display: grid;
   ${MediaQuery.TINY} {
     grid-template-rows: repeat(10, ${SquareSize.TINY});
     grid-template-columns: repeat(9, ${SquareSize.TINY});
@@ -47,6 +42,11 @@ const Wrapper = styled.div`
     grid-template-rows: repeat(10, ${SquareSize.LARGE});
     grid-template-columns: repeat(9, ${SquareSize.LARGE});
   }
+  background-image: url(${boardImg});
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: grid;
 `;
 
 const BoardView = ({ handleSquareClick }) => {
@@ -120,9 +120,9 @@ const BoardView = ({ handleSquareClick }) => {
     // eslint-disable-next-line complexity
     square => (
       <Square
-        className="Square"
         key={square}
         handleClick={handleSquareClick(square)}
+        square={square}
       >
         {isOccupied(square) && renderPiece(square)}
         {inLastMove(square) && <LastMoveIndicator />}
