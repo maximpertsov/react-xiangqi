@@ -1,7 +1,10 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
+import actions from 'actions';
 
 import { ALL_PIECES } from 'services/logic/constants';
 import { MediaQuery, SquareSize } from 'commonStyles';
@@ -43,9 +46,13 @@ const Wrapper = styled.img`
   z-index: ${props => (isMoving(props) ? 100 : 0)};
 `;
 
-const Piece = ({ code, moveX, moveY }) => {
+const Piece = ({ code, moveX, moveY, square }) => {
+  const dispatch = useDispatch();
+
   const [{ opacity }, dragRef] = useDrag({
     item: { type: 'PIECE' },
+    begin: () => dispatch(actions.board.selectedSquare.set(square)),
+    end: () => dispatch(actions.board.selectedSquare.set(null)),
     collect: monitor => ({
       opacity: monitor.isDragging() ? 0.5 : 1,
     }),
@@ -68,6 +75,7 @@ Piece.propTypes = {
   code: PropTypes.oneOf(ALL_PIECES).isRequired,
   moveX: PropTypes.number,
   moveY: PropTypes.number,
+  square: PropTypes.string.isRequired,
 };
 
 Piece.defaultProps = {

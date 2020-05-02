@@ -78,6 +78,7 @@ const Square = ({ handleSquareClick, square }) => {
         code={pieceCode}
         moveX={selectedSquare === square ? moveX : 0}
         moveY={selectedSquare === square ? moveY : 0}
+        square={square}
       />
     ),
     [moveX, moveY, pieceCode, selectedSquare, square],
