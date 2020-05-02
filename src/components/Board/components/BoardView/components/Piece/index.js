@@ -54,7 +54,7 @@ const Piece = ({ code, moveX, moveY, square }) => {
     begin: () => dispatch(actions.board.selectedSquare.set(square)),
     end: () => dispatch(actions.board.selectedSquare.set(null)),
     collect: monitor => ({
-      opacity: monitor.isDragging() ? 0.5 : 1,
+      opacity: monitor.isDragging() ? 0.3 : 1,
     }),
   });
 
