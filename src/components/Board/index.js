@@ -51,7 +51,7 @@ const Board = () => {
       if (fen) {
         dispatch(animateMove({ bottomPlayerIsRed, move }));
         setTimeout(() => {
-          dispatch(makeMove({ fen, move, pending: true }));
+          dispatch(makeMove({ fen, move }));
           dispatch(actions.board.animationOffset.clear());
           dispatch(actions.board.selectedSquare.set(null));
         }, ANIMATION_DELAY);
