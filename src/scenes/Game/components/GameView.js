@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
-
 import isEqual from 'lodash/isEqual';
 import { Button, Dimmer, Icon, Loader, Segment } from 'semantic-ui-react';
+
 import {
   getCurrentPlayer,
   getHasInitialPlacement,
@@ -11,12 +11,18 @@ import {
 } from 'reducers';
 import Board from 'components/Board';
 import GameMenu from 'components/GameMenu';
-
 import ConfirmMoveMenu from './ConfirmMoveMenu';
 import GameInfo from './GameInfo';
 import MoveHistory from './MoveHistory';
 import Player from './Player';
 import TakebackButton from './TakebackButton';
+
+const mapStateToProps = state => ({
+  currentPlayer: getCurrentPlayer(state),
+  hasInitialPlacement: getHasInitialPlacement(state),
+  otherPlayer: getOtherPlayer(state),
+  showConfirmMoveMenu: state.showConfirmMoveMenu,
+});
 
 const Wrapper = styled.div`
   align-items: center;
@@ -28,12 +34,12 @@ const Wrapper = styled.div`
 
 // eslint-disable-next-line complexity
 const GameView = () => {
-  const hasInitialPlacement = useSelector(state =>
-    getHasInitialPlacement(state),
-  );
-  const showConfirmMoveMenu = useSelector(state => state.showConfirmMoveMenu);
-  const currentPlayer = useSelector(state => getCurrentPlayer(state), isEqual);
-  const otherPlayer = useSelector(state => getOtherPlayer(state), isEqual);
+  const {
+    hasInitialPlacement,
+    showConfirmMoveMenu,
+    currentPlayer,
+    otherPlayer,
+  } = useSelector(state => mapStateToProps(state), isEqual);
 
   const renderActionsMenu = () => (
     <GameMenu>
