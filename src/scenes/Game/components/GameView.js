@@ -7,7 +7,6 @@ import { Button, Dimmer, Icon, Loader, Segment } from 'semantic-ui-react';
 import {
   getCurrentPlayer,
   getHasInitialPlacement,
-  getIsLastMovePending,
   getOtherPlayer,
 } from 'reducers';
 import Board from 'components/Board';
@@ -32,7 +31,7 @@ const GameView = () => {
   const hasInitialPlacement = useSelector(state =>
     getHasInitialPlacement(state),
   );
-  const isLastMovePending = useSelector(state => getIsLastMovePending(state));
+  const showConfirmMoveMenu = useSelector(state => state.showConfirmMoveMenu);
   const currentPlayer = useSelector(state => getCurrentPlayer(state), isEqual);
   const otherPlayer = useSelector(state => getOtherPlayer(state), isEqual);
 
@@ -58,10 +57,10 @@ const GameView = () => {
           <Player {...otherPlayer} />
           <Board legalMoves />
           <ConfirmMoveMenu />
-          {!isLastMovePending && renderActionsMenu()}
-          {!isLastMovePending && <Player {...currentPlayer} />}
-          {!isLastMovePending && <GameInfo hasLegalMoves />}
-          {!isLastMovePending && <MoveHistory />}
+          {!showConfirmMoveMenu && renderActionsMenu()}
+          {!showConfirmMoveMenu && <Player {...currentPlayer} />}
+          {!showConfirmMoveMenu && <GameInfo hasLegalMoves />}
+          {!showConfirmMoveMenu && <MoveHistory />}
         </Wrapper>
       )}
     </Dimmer.Dimmable>

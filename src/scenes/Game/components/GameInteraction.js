@@ -29,7 +29,7 @@ const GameInteraction = () => {
         if (!autoMove.includes(nextMoveColor)) return;
 
         const [move, fen] = sample(toPairs(lastMove.legalMoves));
-        dispatch(makeMove({ move, fen, pending: false }));
+        dispatch(makeMove({ move, fen }));
       }, 1000);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

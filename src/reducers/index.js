@@ -108,9 +108,6 @@ export const getMoveCount = ({ positions }) =>
 export const getLastMove = ({ positions }) =>
   fromPositions.getLastMove(positions);
 
-export const getIsLastMovePending = ({ positions }) =>
-  fromPositions.getIsLastMovePending(positions);
-
 export const getSelectedMove = ({ positions, selectedMoveId }) => {
   const result = fromPositions.getMoveById(positions, selectedMoveId);
   if (result !== undefined) return result;
