@@ -47,7 +47,7 @@ const clickSquare = ({
   ) {
     dispatch(actions.board.selectedSquare.set(square));
   } else if (selectedSquare !== null) {
-    handleMove({
+    handleMove(dispatch, {
       bottomPlayerIsRed,
       legalMoves,
       move: squaresToMove(selectedSquare, square),
