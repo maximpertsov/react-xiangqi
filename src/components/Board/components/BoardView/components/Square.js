@@ -1,17 +1,22 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import isEqual from 'lodash/isEqual';
 
+import clickSquare from 'actions/clickSquare';
 import { activeKing, getPiece } from 'services/logic/fen';
 import { moveToSquares } from 'services/logic/square';
-
-import { getIsMoving, getSelectedMove, getTargets } from 'reducers';
+import {
+  getBottomPlayerIsRed,
+  getIsMoving,
+  getLegalMoves,
+  getSelectedMove,
+  getTargets,
+} from 'reducers';
 
 import SquareView from './SquareView';
 import Piece from './Piece';
-
 import DropIndicator from './DropIndicator';
 import LastMoveIndicator from './LastMoveIndicator';
 import KingInCheckIndicator from './KingInCheckIndicator';
@@ -21,20 +26,38 @@ import TargetIndicator from './TargetIndicator';
 // TODO make handle square click an action?
 // eslint-disable-next-line complexity
 const Square = ({ handleSquareClick, square }) => {
+  const dispatch = useDispatch();
+
+  const [moveX, moveY] = useSelector(state => state.animationOffset, isEqual);
+  const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
+  const legalMoves = useSelector(state => getLegalMoves(state), isEqual);
+  const isMoving = useSelector(state => getIsMoving(state));
+  const selectedMove = useSelector(state => getSelectedMove(state), isEqual);
+  const selectedSquare = useSelector(state => state.selectedSquare);
+  const targets = useSelector(state => getTargets(state), isEqual);
+
+  const handleClick = () => {
+    dispatch(
+      clickSquare({
+        bottomPlayerIsRed,
+        legalMoves,
+        square,
+        selectedMove,
+        selectedSquare,
+      }),
+    );
+  };
+
   const [{ isOver }, drop] = useDrop({
     accept: 'PIECE',
-    drop: () => { handleSquareClick(square)(); },
+    drop: () => {
+      handleClick();
+    },
     collect: monitor => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
     }),
   });
-
-  const [moveX, moveY] = useSelector(state => state.animationOffset, isEqual);
-  const isMoving = useSelector(state => getIsMoving(state));
-  const selectedMove = useSelector(state => getSelectedMove(state), isEqual);
-  const selectedSquare = useSelector(state => state.selectedSquare);
-  const targets = useSelector(state => getTargets(state), isEqual);
 
   const pieceCode = useMemo(
     () => getPiece(selectedMove.fen, square) || undefined,
@@ -86,7 +109,7 @@ const Square = ({ handleSquareClick, square }) => {
   );
 
   return (
-    <SquareView handleClick={handleSquareClick(square)} ref={drop}>
+    <SquareView handleClick={handleClick} ref={drop}>
       {isOccupied && renderPiece()}
       {isOver && isTargeted && <DropIndicator />}
       {isInLastMove && <LastMoveIndicator />}
