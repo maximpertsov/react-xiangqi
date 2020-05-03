@@ -7,71 +7,79 @@ import isEqual from 'lodash/isEqual';
 
 import { activeKing, getPiece, isOccupied } from 'services/logic/fen';
 import { moveToSquares } from 'services/logic/square';
-
 import { getIsMoving, getSelectedMove, getTargets } from 'reducers';
-
 import SquareView from './SquareView';
 import Piece from './Piece';
-
 import DropIndicator from './DropIndicator';
 import LastMoveIndicator from './LastMoveIndicator';
 import KingInCheckIndicator from './KingInCheckIndicator';
 import SelectionIndicator from './SelectionIndicator';
 import TargetIndicator from './TargetIndicator';
 
-const getPieceCode = (selectedMove, square) =>
+const getPieceCode = ({ selectedMove, square }) =>
   getPiece(selectedMove.fen, square) || undefined;
 
-const getIsOccupied = (selectedMove, square) =>
+const getIsOccupied = ({ selectedMove, square }) =>
   isOccupied(selectedMove.fen, square);
 
-const getIsInLastMove = (selectedMove, square) => {
+const getIsInLastMove = ({ selectedMove, square }) => {
   if (selectedMove.move === null) return false;
 
   return moveToSquares(selectedMove.move).includes(square);
 };
 
-const getIsKingInCheck = (selectedMove, square) => {
+const getIsKingInCheck = ({ selectedMove, square }) => {
   if (!selectedMove.givesCheck) return false;
 
   return activeKing(selectedMove.fen) === square;
 };
 
-const getSelectedMoveSquareDetails = createSelector(
+const getIsSelected = ({ isMoving, selectedSquare, square }) => {
+  if (isMoving) return false;
+
+  return selectedSquare === square;
+};
+
+const getIsTargeted = ({ isMoving, targets, square }) => {
+  if (isMoving) return false;
+
+  // TODO: remove index access?
+  return targets.some(move => moveToSquares(move)[1] === square);
+};
+
+const getAnimationOffset = ({ animationOffset, selectedSquare, square }) => {
+  const [offsetX, offsetY] = animationOffset;
+
+  return {
+    moveX: selectedSquare === square ? offsetX : 0,
+    moveY: selectedSquare === square ? offsetY : 0,
+  };
+};
+
+const mapStateToProps = createSelector(
+  state => state.animationOffset,
+  state => getIsMoving(state),
   state => getSelectedMove(state),
-  (_, square) => square,
-
-  (selectedMove, square) => ({
-    pieceCode: getPieceCode(selectedMove, square),
-    isOccupied: getIsOccupied(selectedMove, square),
-    isInLastMove: getIsInLastMove(selectedMove, square),
-    isKingInCheck: getIsKingInCheck(selectedMove, square),
-  }),
-);
-
-const getIsSelected = createSelector(
-  state => getIsMoving(state),
   state => state.selectedSquare,
-  (_, square) => square,
-
-  (isMoving, selectedSquare, square) => {
-    if (isMoving) return false;
-
-    return selectedSquare === square;
-  },
-);
-
-const getIsTargeted = createSelector(
-  state => getIsMoving(state),
   state => getTargets(state),
   (_, square) => square,
 
-  (isMoving, targets, square) => {
-    if (isMoving) return false;
-
-    // TODO: remove index access?
-    return targets.some(move => moveToSquares(move)[1] === square);
-  },
+  (
+    animationOffset,
+    isMoving,
+    selectedMove,
+    selectedSquare,
+    targets,
+    square,
+  ) => ({
+    ...getAnimationOffset({ animationOffset, selectedSquare, square }),
+    pieceCode: getPieceCode({ selectedMove, square }),
+    isOccupied: getIsOccupied({ selectedMove, square }),
+    isInLastMove: getIsInLastMove({ selectedMove, square }),
+    isKingInCheck: getIsKingInCheck({ selectedMove, square }),
+    isSelected: getIsSelected({ isMoving, selectedSquare, square }),
+    isTargeted: getIsTargeted({ isMoving, targets, square }),
+  }),
 );
 
 // TODO make handle square click an action?
@@ -88,16 +96,17 @@ const Square = ({ handleSquareClick, square }) => {
     }),
   });
 
-  const [moveX, moveY] = useSelector(state => state.animationOffset, isEqual);
-  const selectedSquare = useSelector(state => state.selectedSquare);
-
   // Component selectors
-  const { pieceCode, isOccupied, isInLastMove, isKingInCheck } = useSelector(
-    state => getSelectedMoveSquareDetails(state, square),
-    isEqual,
-  );
-  const isSelected = useSelector(state => getIsSelected(state, square));
-  const isTargeted = useSelector(state => getIsTargeted(state, square));
+  const {
+    moveX,
+    moveY,
+    pieceCode,
+    isOccupied,
+    isInLastMove,
+    isKingInCheck,
+    isSelected,
+    isTargeted,
+  } = useSelector(state => mapStateToProps(state, square), isEqual);
 
   const renderTargetIndicator = useCallback(
     () => <TargetIndicator occupied={isOccupied} />,
@@ -106,14 +115,9 @@ const Square = ({ handleSquareClick, square }) => {
 
   const renderPiece = useCallback(
     () => (
-      <Piece
-        code={pieceCode}
-        moveX={selectedSquare === square ? moveX : 0}
-        moveY={selectedSquare === square ? moveY : 0}
-        square={square}
-      />
+      <Piece code={pieceCode} moveX={moveX} moveY={moveY} square={square} />
     ),
-    [moveX, moveY, pieceCode, selectedSquare, square],
+    [moveX, moveY, pieceCode, square],
   );
 
   return (
