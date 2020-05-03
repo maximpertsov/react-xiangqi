@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
@@ -108,16 +108,10 @@ const Square = ({ handleSquareClick, square }) => {
     isTargeted,
   } = useSelector(state => mapStateToProps(state, square), isEqual);
 
-  const renderTargetIndicator = useCallback(
-    () => <TargetIndicator occupied={isOccupied} />,
-    [isOccupied],
-  );
+  const renderTargetIndicator = () => <TargetIndicator occupied={isOccupied} />;
 
-  const renderPiece = useCallback(
-    () => (
-      <Piece code={pieceCode} moveX={moveX} moveY={moveY} square={square} />
-    ),
-    [moveX, moveY, pieceCode, square],
+  const renderPiece = () => (
+    <Piece code={pieceCode} moveX={moveX} moveY={moveY} square={square} />
   );
 
   return (
