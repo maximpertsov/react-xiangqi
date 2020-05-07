@@ -24,9 +24,7 @@ const LoginForm = () => {
   const handleAuthenticationSuccess = useCallback(
     response => {
       const { data } = response;
-      console.log(data);
       const { sub } = jwtDecode(data.access);
-      console.log(sub);
       dispatch(actions.home.username.set(sub));
     },
     [dispatch],
