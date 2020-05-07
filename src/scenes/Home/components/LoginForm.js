@@ -24,7 +24,9 @@ const LoginForm = () => {
   const handleAuthenticationSuccess = useCallback(
     response => {
       const { data } = response;
-      const { sub } = jwtDecode(data.accessToken);
+      console.log(data);
+      const { sub } = jwtDecode(data.access);
+      console.log(sub);
       dispatch(actions.home.username.set(sub));
     },
     [dispatch],
@@ -43,7 +45,9 @@ const LoginForm = () => {
       client
         .authenticate()
         .then(response => {
-          if (response.status === 201) handleAuthenticationSuccess(response);
+          if (response.status === 200) {
+            handleAuthenticationSuccess(response);
+          }
         })
         .catch(() => {})
         .finally(() => {
@@ -67,7 +71,9 @@ const LoginForm = () => {
         username: formUsername,
         password: formPassword,
       });
-      if (response.status === 201) handleAuthenticationSuccess(response);
+      if (response.status === 200) {
+        handleAuthenticationSuccess(response);
+      }
     } catch (error) {
       dispatch(updateLoginForm({ error: 'Login failed' }));
     } finally {

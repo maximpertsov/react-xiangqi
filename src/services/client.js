@@ -45,12 +45,12 @@ export const ping = () => axios.get('ping');
 export const poll = ({ gameSlug }) => axios.get(`game/${gameSlug}/poll`);
 
 export async function authenticate() {
-  return axios.post('authenticate');
+  return axios.post('token/refresh');
 }
 
 export async function login({ username, password }) {
   const payload = { username, password };
-  return axios.post('login', payload);
+  return axios.post('token/obtain', payload);
 }
 
 const client = axios;
