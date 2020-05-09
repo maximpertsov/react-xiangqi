@@ -22,22 +22,13 @@ const LoginForm = () => {
     }
   }, [dispatch]);
 
-  const clearState = useCallback(() => {
-    dispatch(updateLoginForm({ username: '', password: '', error: '' }));
-  }, [dispatch]);
-
   useEffect(() => {
     ping();
   }, [ping]);
 
-  useEffect(
-    () => {
-      dispatch(authenticate());
-      clearState();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [clearState],
-  );
+  useEffect(() => {
+    dispatch(authenticate());
+  }, [dispatch]);
 
   const handleChange = event => {
     const {
@@ -53,7 +44,6 @@ const LoginForm = () => {
         password: formPassword,
       }),
     );
-    clearState();
   };
 
   const isLoggedIn = () => username !== null;
