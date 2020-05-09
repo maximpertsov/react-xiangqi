@@ -31,6 +31,9 @@ describe('login', () => {
     expect(axios.post).toHaveBeenCalledWith('token/obtain', credentials);
     expect(spys.authenticate).toHaveBeenCalledWith();
     expect(spys.updateLoginForm).toHaveBeenCalledWith({
+      error: '',
+    });
+    expect(spys.updateLoginForm).toHaveBeenCalledWith({
       username: '',
       password: '',
     });

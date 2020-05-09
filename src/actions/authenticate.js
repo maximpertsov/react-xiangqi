@@ -7,6 +7,7 @@ import client, { isSuccess } from 'services/client';
 const handleAuthenticationSuccess = (dispatch, { access }) => {
   const { sub } = jwtDecode(access);
   dispatch(actions.home.username.set(sub));
+  dispatch(updateLoginForm({ error: '' }));
 };
 
 const authenticate = () => async dispatch => {

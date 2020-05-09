@@ -37,6 +37,9 @@ describe('obtain a token', () => {
       expect.arrayContaining([actions.home.username.set('user123')]),
     );
     expect(spys.updateLoginForm).toHaveBeenCalledWith({
+      error: '',
+    });
+    expect(spys.updateLoginForm).toHaveBeenCalledWith({
       username: '',
       password: '',
     });

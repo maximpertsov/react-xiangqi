@@ -11,6 +11,7 @@ const login = ({ username, password }) => async dispatch => {
 
     if (isSuccess(response)) {
       dispatch(authenticate());
+      dispatch(updateLoginForm({ error: '' }));
     }
   } catch (error) {
     dispatch(updateLoginForm({ error: 'Login failed' }));
