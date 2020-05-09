@@ -45,10 +45,6 @@ export const ping = () => axios.get('ping');
 
 export const poll = ({ gameSlug }) => axios.get(`game/${gameSlug}/poll`);
 
-export async function login({ username, password }) {
-  const payload = { username, password };
-  return axios.post('token/obtain', payload); }
-
 const client = axios;
 
 export default client;

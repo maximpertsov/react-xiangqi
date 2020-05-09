@@ -3,6 +3,7 @@ import { Button, Form } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 import authenticate from 'actions/authenticate';
+import login from 'actions/login';
 import updateLoginForm from 'actions/updateLoginForm';
 import * as client from 'services/client';
 
@@ -45,20 +46,14 @@ const LoginForm = () => {
     dispatch(updateLoginForm({ [name]: value }));
   };
 
-  const handleClick = async () => {
-    try {
-      const response = await client.login({
+  const handleClick = () => {
+    dispatch(
+      login({
         username: formUsername,
         password: formPassword,
-      });
-      if (response.status === 200) {
-        dispatch(authenticate());
-      }
-    } catch (error) {
-      dispatch(updateLoginForm({ error: 'Login failed' }));
-    } finally {
-      clearState();
-    }
+      }),
+    );
+    clearState();
   };
 
   const isLoggedIn = () => username !== null;
