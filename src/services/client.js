@@ -48,11 +48,6 @@ export async function authenticate() {
   return axios.post('token/refresh');
 }
 
-export async function login({ username, password }) {
-  const payload = { username, password };
-  return axios.post('token/obtain', payload);
-}
-
 const client = axios;
 
 export default client;
