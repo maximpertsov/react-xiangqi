@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import _camelCase from 'lodash/camelCase';
+import inRange from 'lodash/inRange';
 import isArray from 'lodash/isArray';
 import isPlainObject from 'lodash/isPlainObject';
 import fromPairs from 'lodash/fromPairs';
@@ -44,10 +45,8 @@ export const ping = () => axios.get('ping');
 
 export const poll = ({ gameSlug }) => axios.get(`game/${gameSlug}/poll`);
 
-export async function authenticate() {
-  return axios.post('token/refresh');
-}
-
 const client = axios;
 
 export default client;
+
+export const isSuccess = response => inRange(response.status, 200, 299);
