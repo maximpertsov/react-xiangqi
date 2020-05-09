@@ -1,5 +1,6 @@
 import client, { isSuccess } from 'services/client';
 import authenticate from 'actions/authenticate';
+import updateLoginForm from 'actions/updateLoginForm';
 
 const login = ({ username, password }) => async dispatch => {
   try {
@@ -12,7 +13,7 @@ const login = ({ username, password }) => async dispatch => {
       dispatch(authenticate());
     }
   } catch (error) {
-    return;
+    dispatch(updateLoginForm({ error: 'Login failed' }));
   }
 };
 
