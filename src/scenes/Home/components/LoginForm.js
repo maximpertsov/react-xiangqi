@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
-import jwtDecode from 'jwt-decode';
 import actions from 'actions';
+import authenticate from 'actions/authenticate';
 import updateLoginForm from 'actions/updateLoginForm';
 import * as client from 'services/client';
 
@@ -21,15 +21,6 @@ const LoginForm = () => {
     }
   }, [dispatch]);
 
-  const handleAuthenticationSuccess = useCallback(
-    response => {
-      const { data } = response;
-      const { sub } = jwtDecode(data.access);
-      dispatch(actions.home.username.set(sub));
-    },
-    [dispatch],
-  );
-
   const clearState = useCallback(() => {
     dispatch(updateLoginForm({ username: '', password: '', error: '' }));
   }, [dispatch]);
@@ -40,17 +31,8 @@ const LoginForm = () => {
 
   useEffect(
     () => {
-      client
-        .authenticate()
-        .then(response => {
-          if (response.status === 200) {
-            handleAuthenticationSuccess(response);
-          }
-        })
-        .catch(() => {})
-        .finally(() => {
-          clearState();
-        });
+      dispatch(authenticate());
+      clearState();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [clearState],
@@ -70,7 +52,7 @@ const LoginForm = () => {
         password: formPassword,
       });
       if (response.status === 200) {
-        handleAuthenticationSuccess(response);
+        dispatch(authenticate());
       }
     } catch (error) {
       dispatch(updateLoginForm({ error: 'Login failed' }));
