@@ -14,6 +14,8 @@ const login = ({ username, password }) => async dispatch => {
     }
   } catch (error) {
     dispatch(updateLoginForm({ error: 'Login failed' }));
+  } finally {
+    dispatch(updateLoginForm({ username: '', password: '' }));
   }
 };
 

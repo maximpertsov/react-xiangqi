@@ -1,4 +1,5 @@
 import axios from 'axios';
+import values from 'lodash/values';
 
 import login from 'actions/login';
 import * as authenticate from 'actions/authenticate';
@@ -13,30 +14,41 @@ describe('login', () => {
     username: 'user123',
     password: 'securepass',
   };
+  const spys = {};
+
+  afterEach(() => {
+    store.clearActions();
+    values(spys).forEach(spy => spy.mockRestore());
+  });
 
   test('successful login', async () => {
-    axios.post.mockResolvedValue({
-      status: 200,
-    });
-    const spy = jest.spyOn(authenticate, 'default');
+    axios.post.mockResolvedValue({ status: 200 });
+    spys.authenticate = jest.spyOn(authenticate, 'default');
+    spys.updateLoginForm = jest.spyOn(updateLoginForm, 'default');
+
     await store.dispatch(login(credentials));
 
     expect(axios.post).toHaveBeenCalledWith('token/obtain', credentials);
-    expect(spy).toHaveBeenCalledWith();
-
-    spy.mockRestore();
+    expect(spys.authenticate).toHaveBeenCalledWith();
+    expect(spys.updateLoginForm).toHaveBeenCalledWith({
+      username: '',
+      password: '',
+    });
   });
 
   test('failed login', async () => {
-    axios.post.mockRejectedValue({
-      status: 400,
-    });
-    const spy = jest.spyOn(updateLoginForm, 'default');
+    axios.post.mockRejectedValue({ status: 400 });
+    spys.updateLoginForm = jest.spyOn(updateLoginForm, 'default');
 
     await store.dispatch(login(credentials));
-    expect(axios.post).toHaveBeenCalledWith('token/obtain', credentials);
-    expect(spy).toHaveBeenCalledWith({ error: 'Login failed' });
 
-    spy.mockRestore();
+    expect(axios.post).toHaveBeenCalledWith('token/obtain', credentials);
+    expect(spys.updateLoginForm).toHaveBeenCalledWith({
+      error: 'Login failed',
+    });
+    expect(spys.updateLoginForm).toHaveBeenCalledWith({
+      username: '',
+      password: '',
+    });
   });
 });
