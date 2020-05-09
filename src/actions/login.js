@@ -1,5 +1,19 @@
-import client from 'services/client';
+import client, { isSuccess } from 'services/client';
+import authenticate from 'actions/authenticate';
 
-async function login({ username, password }) {
-  const payload = { username, password };
-  return axios.post('token/obtain', payload); }
+const login = ({ username, password }) => async dispatch => {
+  try {
+    const response = await client.post('token/obtain', {
+      username,
+      password,
+    });
+
+    if (isSuccess(response)) {
+      dispatch(authenticate());
+    }
+  } catch (error) {
+    return;
+  }
+};
+
+export default login;
