@@ -1,5 +1,7 @@
 import jwtDecode from 'jwt-decode';
+
 import actions from 'actions';
+import updateLoginForm from 'actions/updateLoginForm';
 import client, { isSuccess } from 'services/client';
 
 const handleAuthenticationSuccess = (dispatch, { access }) => {
@@ -16,6 +18,8 @@ const authenticate = () => async dispatch => {
     }
   } catch (error) {
     return;
+  } finally {
+    dispatch(updateLoginForm({ username: '', password: '' }));
   }
 };
 
