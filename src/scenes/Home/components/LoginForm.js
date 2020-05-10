@@ -1,58 +1,39 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
-import jwtDecode from 'jwt-decode';
-import actions from 'actions';
+import { createSelector } from 'reselect';
+import isEqual from 'lodash/isEqual';
+
+import authenticate from 'actions/authenticate';
+import login from 'actions/login';
 import updateLoginForm from 'actions/updateLoginForm';
-import * as client from 'services/client';
+
+const mapStateToProps = createSelector(
+  state => state.loginForm,
+  state => state.username,
+
+  (loginForm, username) => ({
+    isLoggedIn: username !== null,
+    formUsername: loginForm.username,
+    formPassword: loginForm.password,
+    formError: loginForm.error,
+    username,
+  }),
+);
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const username = useSelector(state => state.username);
-  const formUsername = useSelector(state => state.loginForm.username);
-  const formPassword = useSelector(state => state.loginForm.password);
-  const formError = useSelector(state => state.loginForm.error);
-  const loading = useSelector(state => state.loginForm.loading);
-
-  const ping = useCallback(async () => {
-    const { status } = await client.ping();
-    if (status === 200) {
-      dispatch(actions.home.loginForm.loading.set(false));
-    }
-  }, [dispatch]);
-
-  const handleAuthenticationSuccess = useCallback(
-    response => {
-      const { data } = response;
-      const { sub } = jwtDecode(data.accessToken);
-      dispatch(actions.home.username.set(sub));
-    },
-    [dispatch],
-  );
-
-  const clearState = useCallback(() => {
-    dispatch(updateLoginForm({ username: '', password: '', error: '' }));
-  }, [dispatch]);
+  const {
+    isLoggedIn,
+    formUsername,
+    formPassword,
+    formError,
+    username,
+  } = useSelector(state => mapStateToProps(state), isEqual);
 
   useEffect(() => {
-    ping();
-  }, [ping]);
-
-  useEffect(
-    () => {
-      client
-        .authenticate()
-        .then(response => {
-          if (response.status === 201) handleAuthenticationSuccess(response);
-        })
-        .catch(() => {})
-        .finally(() => {
-          clearState();
-        });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [clearState],
-  );
+    dispatch(authenticate());
+  }, [dispatch]);
 
   const handleChange = event => {
     const {
@@ -61,21 +42,14 @@ const LoginForm = () => {
     dispatch(updateLoginForm({ [name]: value }));
   };
 
-  const handleClick = async () => {
-    try {
-      const response = await client.login({
+  const handleClick = () => {
+    dispatch(
+      login({
         username: formUsername,
         password: formPassword,
-      });
-      if (response.status === 201) handleAuthenticationSuccess(response);
-    } catch (error) {
-      dispatch(updateLoginForm({ error: 'Login failed' }));
-    } finally {
-      clearState();
-    }
+      }),
+    );
   };
-
-  const isLoggedIn = () => username !== null;
 
   const renderLoggedIn = () => {
     const loggedInMessage = `Welcome ${username}`;
@@ -111,9 +85,7 @@ const LoginForm = () => {
     );
   };
 
-  if (loading) return <div>Loading</div>;
-
-  return isLoggedIn() ? renderLoggedIn() : renderLoggedOut();
+  return isLoggedIn ? renderLoggedIn() : renderLoggedOut();
 };
 
 export default LoginForm;
