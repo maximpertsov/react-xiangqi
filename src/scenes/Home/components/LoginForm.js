@@ -1,19 +1,39 @@
 import React, { useCallback, useEffect } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
+import isEqual from 'lodash/isEqual';
+
 import actions from 'actions';
 import authenticate from 'actions/authenticate';
 import login from 'actions/login';
 import updateLoginForm from 'actions/updateLoginForm';
 import * as client from 'services/client';
 
+const mapStateToProps = createSelector(
+  state => state.loginForm,
+  state => state.username,
+
+  (loginForm, username) => ({
+    isLoggedIn: username !== null,
+    formUsername: loginForm.username,
+    formPassword: loginForm.password,
+    formError: loginForm.error,
+    loading: loginForm.loading,
+    username,
+  }),
+);
+
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const username = useSelector(state => state.username);
-  const formUsername = useSelector(state => state.loginForm.username);
-  const formPassword = useSelector(state => state.loginForm.password);
-  const formError = useSelector(state => state.loginForm.error);
-  const loading = useSelector(state => state.loginForm.loading);
+  const {
+    isLoggedIn,
+    formUsername,
+    formPassword,
+    formError,
+    loading,
+    username,
+  } = useSelector(state => mapStateToProps(state), isEqual);
 
   const ping = useCallback(async () => {
     const { status } = await client.ping();
@@ -45,8 +65,6 @@ const LoginForm = () => {
       }),
     );
   };
-
-  const isLoggedIn = () => username !== null;
 
   const renderLoggedIn = () => {
     const loggedInMessage = `Welcome ${username}`;
@@ -84,7 +102,7 @@ const LoginForm = () => {
 
   if (loading) return <div>Loading</div>;
 
-  return isLoggedIn() ? renderLoggedIn() : renderLoggedOut();
+  return isLoggedIn ? renderLoggedIn() : renderLoggedOut();
 };
 
 export default LoginForm;

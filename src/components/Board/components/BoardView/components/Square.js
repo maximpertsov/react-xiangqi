@@ -62,7 +62,7 @@ const mapStateToProps = createSelector(
   state => getSelectedMove(state),
   state => state.selectedSquare,
   state => getTargets(state),
-  (_, square) => square,
+  (_, props) => props.square,
 
   (
     animationOffset,
@@ -106,7 +106,7 @@ const Square = ({ handleSquareClick, square }) => {
     isKingInCheck,
     isSelected,
     isTargeted,
-  } = useSelector(state => mapStateToProps(state, square), isEqual);
+  } = useSelector(state => mapStateToProps(state, { square }), isEqual);
 
   const renderTargetIndicator = () => <TargetIndicator occupied={isOccupied} />;
 
