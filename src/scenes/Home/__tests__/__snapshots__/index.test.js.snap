@@ -15,8 +15,60 @@ exports[`Home click solo play without crashing 1`] = `
       >
         Play online
       </div>
-      <div>
-        Loading
+      <div
+        class="LoginForm"
+      >
+        <form
+          class="ui form"
+        >
+          <div
+            class="field"
+          >
+            <label>
+              Username
+            </label>
+            <div
+              class="ui left icon input"
+            >
+              <input
+                name="username"
+                placeholder="Username"
+                type="text"
+                value=""
+              />
+              <i
+                aria-hidden="true"
+                class="user icon"
+              />
+            </div>
+          </div>
+          <div
+            class="field"
+          >
+            <label>
+              Password
+            </label>
+            <div
+              class="ui left icon input"
+            >
+              <input
+                name="password"
+                type="password"
+                value=""
+              />
+              <i
+                aria-hidden="true"
+                class="lock icon"
+              />
+            </div>
+          </div>
+          <button
+            class="ui primary button"
+          >
+            Login
+          </button>
+        </form>
+        <div />
       </div>
     </div>
     <div
