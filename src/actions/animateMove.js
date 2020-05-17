@@ -1,9 +1,9 @@
 import actions from 'actions';
-import { decodeMove } from 'services/logic/square';
+import { decodeFan } from 'services/logic/square';
 import { getRankFile } from 'services/logic/utils';
 
 const animateMove = ({ bottomPlayerIsRed, move }) => dispatch => {
-  const [fromSlot, toSlot] = decodeMove(move);
+  const [fromSlot, toSlot] = decodeFan(move);
   const [fromY, fromX] = getRankFile(fromSlot);
   const [toY, toX] = getRankFile(toSlot);
 

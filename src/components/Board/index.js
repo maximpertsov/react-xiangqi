@@ -10,7 +10,7 @@ import actions from 'actions';
 import animateMove from 'actions/animateMove';
 import { getBottomPlayerIsRed, getLegalMoves, getSelectedMove } from 'reducers';
 import { isOccupied, sameColor } from 'services/logic/fen';
-import { squaresToMove } from 'services/logic/square';
+import { squaresToFan } from 'services/logic/square';
 
 import BoardView from './components/BoardView';
 
@@ -72,7 +72,7 @@ const Board = () => {
       ) {
         dispatch(actions.board.selectedSquare.set(square));
       } else if (selectedSquare !== null) {
-        handleMove(squaresToMove(selectedSquare, square));
+        handleMove(squaresToFan(selectedSquare, square));
       } else {
         dispatch(actions.board.selectedSquare.set(null));
       }

@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 
 import { activeKing, getPiece, isOccupied } from 'services/logic/fen';
-import { moveToSquares } from 'services/logic/square';
+import { fanToSquares } from 'services/logic/square';
 import { getIsMoving, getSelectedMove, getTargets } from 'reducers';
 import SquareView from './SquareView';
 import Piece from './Piece';
@@ -25,7 +25,7 @@ const getIsOccupied = ({ selectedMove, square }) =>
 const getIsInLastMove = ({ selectedMove, square }) => {
   if (selectedMove.move === null) return false;
 
-  return moveToSquares(selectedMove.move).includes(square);
+  return fanToSquares(selectedMove.move).includes(square);
 };
 
 const getIsKingInCheck = ({ selectedMove, square }) => {
@@ -44,7 +44,7 @@ const getIsTargeted = ({ isMoving, targets, square }) => {
   if (isMoving) return false;
 
   // TODO: remove index access?
-  return targets.some(move => moveToSquares(move)[1] === square);
+  return targets.some(move => fanToSquares(move)[1] === square);
 };
 
 const getAnimationOffset = ({ animationOffset, selectedSquare, square }) => {
