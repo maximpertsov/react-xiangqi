@@ -13,7 +13,7 @@ const initialState = {
   animationOffset: [0, 0],
   gameSlug: 'ABC123',
   showConfirmMoveMenu: true,
-  positions: [
+  moves: [
     { id: 0, fan: null },
     { id: 1, fan: 'a1a2' },
   ],
@@ -92,7 +92,7 @@ describe('ConfirmMoveMenu', () => {
 
     // Confirm state
     expect(store.getState().showConfirmMoveMenu).toBe(false);
-    expect(store.getState().positions).toEqual([{ id: 0, fan: null }]);
+    expect(store.getState().moves).toEqual([{ id: 0, fan: null }]);
     expect(wrapper.render()).toMatchSnapshot();
 
     wrapper.unmount();

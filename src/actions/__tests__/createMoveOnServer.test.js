@@ -11,7 +11,7 @@ describe('create move on server', () => {
 
   // eslint-disable-next-line no-undef
   const store = mockStore({});
-  const position = { id: 1, fan: 'a1a2' };
+  const move = { id: 1, fan: 'a1a2' };
   const username = 'user';
 
   describe('not a persisted game', () => {
@@ -22,8 +22,8 @@ describe('create move on server', () => {
       await store.dispatch(
         createMoveOnServer({
           gameSlug,
-          id: position.id,
-          fan: position.fan,
+          id: move.id,
+          fan: move.fan,
           username,
         }),
       );
@@ -40,8 +40,8 @@ describe('create move on server', () => {
       await store.dispatch(
         createMoveOnServer({
           gameSlug,
-          id: position.id,
-          fan: position.fan,
+          id: move.id,
+          fan: move.fan,
           username,
         }),
       );
@@ -49,7 +49,7 @@ describe('create move on server', () => {
       expect(spy).toHaveBeenCalledWith('game/ABC123/events', {
         name: 'move',
         // TODO: update after server API update
-        move: position.fan,
+        move: move.fan,
         player: username,
       });
     });
@@ -60,8 +60,8 @@ describe('create move on server', () => {
       await store.dispatch(
         createMoveOnServer({
           gameSlug,
-          id: position.id,
-          fan: position.fan,
+          id: move.id,
+          fan: move.fan,
           username,
         }),
       );
@@ -69,12 +69,12 @@ describe('create move on server', () => {
       expect(spy).toHaveBeenCalledWith('game/ABC123/events', {
         name: 'move',
         // TODO: update after server API update
-        move: position.fan,
+        move: move.fan,
         player: username,
       });
 
       expect(store.getActions()).toStrictEqual([
-        actions.game.positions.remove(1),
+        actions.game.moves.remove(1),
       ]);
     });
   });

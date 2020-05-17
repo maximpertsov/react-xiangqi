@@ -40,10 +40,10 @@ const GameInteraction = () => {
   useEventListener('keydown', ({ key }) => {
     switch (key) {
       case 'ArrowLeft':
-        dispatch(actions.game.selectedPosition.set(previousMove.id));
+        dispatch(actions.game.selectedMove.set(previousMove.id));
         break;
       case 'ArrowRight':
-        dispatch(actions.game.selectedPosition.set(nextMove.id));
+        dispatch(actions.game.selectedMove.set(nextMove.id));
         break;
       default:
         break;

@@ -61,9 +61,9 @@ const rootReducer = combineReducers({
     (state, action) => action.payload,
     false,
   ),
-  // TODO: rename to selectedPositionId
+  // TODO: rename to selectedMoveId
   selectedMoveId: handleAction(
-    actions.game.selectedPosition.set,
+    actions.game.selectedMove.set,
     (state, action) => action.payload,
     null,
   ),
@@ -99,33 +99,33 @@ export default rootReducer;
 /***  Moves  ***/
 /***************/
 
-export const getHasInitialPlacement = ({ positions }) =>
-  fromMoves.getHasInitialPlacement(positions);
+export const getHasInitialPlacement = ({ moves }) =>
+  fromMoves.getHasInitialPlacement(moves);
 
-export const getMoveCount = ({ positions }) =>
-  fromMoves.getMoveCount(positions);
+export const getMoveCount = ({ moves }) =>
+  fromMoves.getMoveCount(moves);
 
-export const getLastMove = ({ positions }) =>
-  fromMoves.getLastMove(positions);
+export const getLastMove = ({ moves }) =>
+  fromMoves.getLastMove(moves);
 
-export const getSelectedMove = ({ positions, selectedMoveId }) => {
-  const result = fromMoves.getMoveById(positions, selectedMoveId);
+export const getSelectedMove = ({ moves, selectedMoveId }) => {
+  const result = fromMoves.getMoveById(moves, selectedMoveId);
   if (result !== undefined) return result;
 
-  return getLastMove({ positions });
+  return getLastMove({ moves });
 };
 
 export const getPreviousMove = state =>
-  fromMoves.getPreviousMove(state.positions, getSelectedMove(state).id);
+  fromMoves.getPreviousMove(state.moves, getSelectedMove(state).id);
 
 export const getNextMove = state =>
-  fromMoves.getNextMove(state.positions, getSelectedMove(state).id);
+  fromMoves.getNextMove(state.moves, getSelectedMove(state).id);
 
-export const getNextMoveColor = ({ positions }) =>
-  fromMoves.getNextMoveColor(positions);
+export const getNextMoveColor = ({ moves }) =>
+  fromMoves.getNextMoveColor(moves);
 
-export const getFirstMoveWithMissingData = ({ positions }) =>
-  fromMoves.getFirstMoveWithMissingData(positions);
+export const getFirstMoveWithMissingData = ({ moves }) =>
+  fromMoves.getFirstMoveWithMissingData(moves);
 
 /*****************/
 /***  Players  ***/
@@ -134,12 +134,12 @@ export const getFirstMoveWithMissingData = ({ positions }) =>
 const lookupPlayer = (players, key, value) =>
   players.find(p => p[key] === value);
 
-export const getNextMovePlayer = ({ players, positions }) =>
-  lookupPlayer(players, 'color', getNextMoveColor({ positions }));
+export const getNextMovePlayer = ({ players, moves }) =>
+  lookupPlayer(players, 'color', getNextMoveColor({ moves }));
 
-export const getNextMovePlayerName = ({ players, positions }) => {
+export const getNextMovePlayerName = ({ players, moves }) => {
   try {
-    return getNextMovePlayer({ players, positions }).name;
+    return getNextMovePlayer({ players, moves }).name;
   } catch (e) {
     if (e instanceof TypeError) return undefined;
     throw e;
@@ -204,7 +204,7 @@ export const getLegalMoves = state => {
   const nextMoveColor = getNextMoveColor(state);
   const { id: lastMoveId, legalMoves } = getLastMove(state);
 
-  // TODO: for now we can assume that legal positions are only allowed for the
+  // TODO: for now we can assume that legal moves are only allowed for the
   // latest move. However, this will change if we ever implement an analysis
   // board-style function.
   if (lastMoveId !== getSelectedMove(state).id) return [];
@@ -218,7 +218,7 @@ export const getTargets = state => {
   if (state.selectedSquare === null) return [];
 
   const legalMoves = getLegalMoves(state);
-  // TODO: this is undefined while legal positions are still being fetched
+  // TODO: this is undefined while legal moves are still being fetched
   if (legalMoves === undefined) return [];
 
   return keys(legalMoves).filter(

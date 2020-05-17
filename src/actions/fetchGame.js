@@ -7,9 +7,9 @@ const setPlayers = (dispatch, { players }) => {
   dispatch(actions.game.players.set(players));
 };
 
-const setPositions = (dispatch, { moves: positions }) => {
-  dispatch(actions.game.positions.set(positions));
-  dispatch(actions.game.selectedPosition.set(positions.length - 1));
+const setMoves = (dispatch, { moves }) => {
+  dispatch(actions.game.moves.set(moves));
+  dispatch(actions.game.selectedMove.set(moves.length - 1));
 };
 
 const fetchGame = ({ gameSlug }) => async dispatch => {
@@ -17,7 +17,7 @@ const fetchGame = ({ gameSlug }) => async dispatch => {
 
   const { data } = await getGame({ gameSlug });
   setPlayers(dispatch, data);
-  setPositions(dispatch, data);
+  setMoves(dispatch, data);
 };
 
 export default fetchGame;

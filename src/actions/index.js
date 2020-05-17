@@ -21,13 +21,13 @@ export default createActions({
     PLAYERS: {
       SET: undefined,
     },
-    POSITIONS: {
+    MOVES: {
       ADD: undefined,
       REMOVE: undefined,
       UPDATE: undefined,
       SET: undefined,
     },
-    SELECTED_POSITION: {
+    SELECTED_MOVE: {
       SET: undefined,
     },
     SHOW_CONFIRM_MOVE_MENU: {

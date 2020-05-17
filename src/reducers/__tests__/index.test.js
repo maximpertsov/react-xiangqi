@@ -229,7 +229,7 @@ const tables = {
     [
       'sets the selected move',
       {
-        action: actions.game.selectedPosition.set(1),
+        action: actions.game.selectedMove.set(1),
         currentState: null,
         expectedNewState: 1,
       },

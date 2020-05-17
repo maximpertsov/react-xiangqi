@@ -42,17 +42,17 @@ const Wrapper = styled.div`
 `;
 
 const MoveHistory = () => {
-  const positions = useSelector(state => state.positions, isEqual);
+  const moves = useSelector(state => state.moves, isEqual);
 
-  const positionComponents = positions.map((position, index) => (
+  const moveComponents = moves.map((move, index) => (
     <Move
       key={index}
-      moveId={position.id}
-      fan={position.fan}
-      fen={position.fen}
+      moveId={move.id}
+      fan={move.fan}
+      fen={move.fen}
     />
   ));
-  const fullMoves = chunk(tail(positionComponents), 2).map(
+  const fullMoves = chunk(tail(moveComponents), 2).map(
     ([redMove, blackMove], index) => (
       <FullMove key={index} ordering={index + 1}>
         {redMove}

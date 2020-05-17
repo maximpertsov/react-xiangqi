@@ -4,7 +4,7 @@ import fetchStartingPosition from 'actions/fetchStartingPosition';
 
 jest.mock('axios');
 
-test('fetch starting position', async () => {
+test('fetch starting move', async () => {
   // eslint-disable-next-line no-undef
   const store = mockStore({});
   axios.get.mockResolvedValue({ data: {} });
@@ -13,6 +13,6 @@ test('fetch starting position', async () => {
 
   expect(axios.get).toHaveBeenCalledWith('fen');
   expect(store.getActions()).toStrictEqual([
-    actions.game.positions.add({ fan: null }),
+    actions.game.moves.add({ fan: null }),
   ]);
 });
