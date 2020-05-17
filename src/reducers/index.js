@@ -10,7 +10,7 @@ import { handleAction, combineActions } from 'redux-actions';
 // Home
 import loginForm from './loginForm';
 // Game
-import positions, * as fromPositions from './positions';
+import moves, * as fromMoves from './moves';
 import players from './players';
 // Board
 import * as fromAnimationOffset from './animationOffset';
@@ -49,7 +49,7 @@ const rootReducer = combineReducers({
     null,
   ),
   // Game
-  positions,
+  moves,
   players,
   showConfirmMoveMenu: handleAction(
     actions.game.showConfirmMoveMenu.set,
@@ -100,32 +100,32 @@ export default rootReducer;
 /***************/
 
 export const getHasInitialPlacement = ({ positions }) =>
-  fromPositions.getHasInitialPlacement(positions);
+  fromMoves.getHasInitialPlacement(positions);
 
 export const getMoveCount = ({ positions }) =>
-  fromPositions.getMoveCount(positions);
+  fromMoves.getMoveCount(positions);
 
 export const getLastMove = ({ positions }) =>
-  fromPositions.getLastMove(positions);
+  fromMoves.getLastMove(positions);
 
 export const getSelectedMove = ({ positions, selectedMoveId }) => {
-  const result = fromPositions.getMoveById(positions, selectedMoveId);
+  const result = fromMoves.getMoveById(positions, selectedMoveId);
   if (result !== undefined) return result;
 
   return getLastMove({ positions });
 };
 
 export const getPreviousMove = state =>
-  fromPositions.getPreviousMove(state.positions, getSelectedMove(state).id);
+  fromMoves.getPreviousMove(state.positions, getSelectedMove(state).id);
 
 export const getNextMove = state =>
-  fromPositions.getNextMove(state.positions, getSelectedMove(state).id);
+  fromMoves.getNextMove(state.positions, getSelectedMove(state).id);
 
 export const getNextMoveColor = ({ positions }) =>
-  fromPositions.getNextMoveColor(positions);
+  fromMoves.getNextMoveColor(positions);
 
 export const getFirstMoveWithMissingData = ({ positions }) =>
-  fromPositions.getFirstMoveWithMissingData(positions);
+  fromMoves.getFirstMoveWithMissingData(positions);
 
 /*****************/
 /***  Players  ***/
