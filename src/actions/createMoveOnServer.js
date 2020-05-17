@@ -1,24 +1,25 @@
 import actions from 'actions';
 import client from 'services/client';
 
-const postMove = ({ gameSlug, move, username }) => {
-  const payload = { name: 'move', move, player: username };
+const postMove = ({ gameSlug, fan, username }) => {
+  // TODO: change `move:` after data model update on server
+  const payload = { name: 'move', move: fan, player: username };
   return client.post(`game/${gameSlug}/events`, payload);
 };
 
 const createMoveOnServer = ({
   gameSlug,
   id,
-  move,
+  fan,
   username,
 }) => async dispatch => {
   if (gameSlug === null) return;
 
   try {
-    await postMove({ gameSlug, move, username });
+    await postMove({ gameSlug, fan, username });
   } catch (error) {
     // TODO: fetch moves to avoid client/server disparity?
-    dispatch(actions.game.positions.remove(id));
+    dispatch(actions.game.moves.remove(id));
   }
 };
 

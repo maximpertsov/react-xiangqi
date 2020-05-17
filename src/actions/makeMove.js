@@ -1,8 +1,8 @@
 import actions from 'actions';
 
-const makeMove = position => dispatch => {
-  dispatch(actions.game.positions.add(position));
-  dispatch(actions.game.selectedPosition.set(null));
+const makeMove = move => dispatch => {
+  dispatch(actions.game.moves.add(move));
+  dispatch(actions.game.selectedMove.set(null));
   dispatch(actions.game.showConfirmMoveMenu.set(true));
 };
 

@@ -15,15 +15,17 @@ export const encode = slot => {
   return `${FILES[file]}${RANKS[rank]}`;
 };
 
-export const squaresToMove = (fromSquare, toSquare) =>
+// TODO: this could be become inconsisten with the server, consider removing
+// and replacing dependencies with something more stable
+export const squaresToFan = (fromSquare, toSquare) =>
   `${fromSquare}${toSquare}`;
 
-export const moveToSquares = move => move.match(/([a-z][0-9]+)/g);
+export const fanToSquares = fan => fan.match(/([a-z][0-9]+)/g);
 
-export const encodeMove = (fromSlot, toSlot) =>
+export const encodeFan = (fromSlot, toSlot) =>
   `${encode(fromSlot)}${encode(toSlot)}`;
 
-export const decodeMove = move =>
-  moveToSquares(move).map(square => decode(square));
+export const decodeFan = fan =>
+  fanToSquares(fan).map(square => decode(square));
 
 export default {};

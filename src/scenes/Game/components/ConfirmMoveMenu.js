@@ -17,28 +17,28 @@ const ConfirmMoveMenu = () => {
   const lastMove = useSelector(state => getLastMove(state), isEqual);
   const username = useSelector(state => state.username);
 
-  const confirmPosition = useCallback(async () => {
+  const confirmMove = useCallback(async () => {
     dispatch(
       createMoveOnServer({
         gameSlug,
         id: lastMove.id,
-        move: lastMove.move,
+        fan: lastMove.fan,
         username,
       }),
     );
     dispatch(actions.game.showConfirmMoveMenu.set(false));
-  }, [dispatch, gameSlug, lastMove.id, lastMove.move, username]);
+  }, [dispatch, gameSlug, lastMove.id, lastMove.fan, username]);
 
-  const cancelPosition = useCallback(() => {
+  const cancelMove = useCallback(() => {
     dispatch(actions.game.showConfirmMoveMenu.set(false));
-    dispatch(actions.game.positions.remove(lastMove.id));
+    dispatch(actions.game.moves.remove(lastMove.id));
   }, [dispatch, lastMove.id]);
 
   return (
     <ConfirmMenu
       label="Confirm move?"
-      yesHandler={confirmPosition}
-      noHandler={cancelPosition}
+      yesHandler={confirmMove}
+      noHandler={cancelMove}
       show={showConfirmMoveMenu}
       disabled={gameSlug === null}
     />

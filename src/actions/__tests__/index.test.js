@@ -11,11 +11,11 @@ test.each`
   ${game.requestedTakeback.set}   | ${'GAME/REQUESTED_TAKEBACK/SET'}     | ${true}
   ${game.canMoveBothColors.set}   | ${'GAME/CAN_MOVE_BOTH_COLORS/SET'}   | ${true}
   ${game.players.set}             | ${'GAME/PLAYERS/SET'}                | ${[{}, {}]}
-  ${game.positions.add}           | ${'GAME/POSITIONS/ADD'}              | ${{}}
-  ${game.positions.update}        | ${'GAME/POSITIONS/UPDATE'}           | ${{}}
-  ${game.positions.remove}        | ${'GAME/POSITIONS/REMOVE'}           | ${0}
-  ${game.positions.set}           | ${'GAME/POSITIONS/SET'}              | ${[]}
-  ${game.selectedPosition.set}    | ${'GAME/SELECTED_POSITION/SET'}      | ${0}
+  ${game.moves.add}           | ${'GAME/MOVES/ADD'}              | ${{}}
+  ${game.moves.update}        | ${'GAME/MOVES/UPDATE'}           | ${{}}
+  ${game.moves.remove}        | ${'GAME/MOVES/REMOVE'}           | ${0}
+  ${game.moves.set}           | ${'GAME/MOVES/SET'}              | ${[]}
+  ${game.selectedMove.set}    | ${'GAME/SELECTED_MOVE/SET'}      | ${0}
   ${game.showConfirmMoveMenu.set} | ${'GAME/SHOW_CONFIRM_MOVE_MENU/SET'} | ${true}
   ${game.slug.set}                | ${'GAME/SLUG/SET'}                   | ${'ABC123'}
   ${game.updateCount.set}         | ${'GAME/UPDATE_COUNT/SET'}           | ${10}

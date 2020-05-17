@@ -13,7 +13,7 @@ import initialPlacementOnly from './fixtures/initialPlacementOnly.json';
 const initialState = {
   gameSlug: null,
   showGame: true,
-  positions: initialPlacementOnly,
+  moves: initialPlacementOnly,
   players: [
     {
       color: 'red',
@@ -120,6 +120,6 @@ describe('Board', () => {
     expectToHavePiece(wrapper, 'e5', 'P');
     expectSquaresToBeInLastMove(wrapper, ['e4', 'e5']);
 
-    expect(store.getState().positions).toHaveLength(2);
+    expect(store.getState().moves).toHaveLength(2);
   });
 });

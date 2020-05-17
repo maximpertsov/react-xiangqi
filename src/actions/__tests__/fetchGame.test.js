@@ -28,8 +28,8 @@ describe('fetch game', () => {
     expect(axios.get).toHaveBeenCalledWith('game/ABC123');
     expect(store.getActions()).toStrictEqual([
       actions.game.players.set([]),
-      actions.game.positions.set([{}, {}]),
-      actions.game.selectedPosition.set(1),
+      actions.game.moves.set([{}, {}]),
+      actions.game.selectedMove.set(1),
     ]);
   });
 });

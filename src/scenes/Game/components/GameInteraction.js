@@ -28,8 +28,8 @@ const GameInteraction = () => {
         if (lastMove.legalMoves === undefined) return;
         if (!autoMove.includes(nextMoveColor)) return;
 
-        const [move, fen] = sample(toPairs(lastMove.legalMoves));
-        dispatch(makeMove({ move, fen }));
+        const [fan, fen] = sample(toPairs(lastMove.legalMoves));
+        dispatch(makeMove({ fan, fen }));
       }, 1000);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,10 +40,10 @@ const GameInteraction = () => {
   useEventListener('keydown', ({ key }) => {
     switch (key) {
       case 'ArrowLeft':
-        dispatch(actions.game.selectedPosition.set(previousMove.id));
+        dispatch(actions.game.selectedMove.set(previousMove.id));
         break;
       case 'ArrowRight':
-        dispatch(actions.game.selectedPosition.set(nextMove.id));
+        dispatch(actions.game.selectedMove.set(nextMove.id));
         break;
       default:
         break;

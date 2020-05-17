@@ -18,53 +18,53 @@ const getMoveIndex = (state, moveId) => {
   return -1;
 };
 
-const positionFields = ['id', 'fen', 'givesCheck', 'legalMoves', 'move'];
+const moveFields = ['id', 'fen', 'givesCheck', 'legalMoves', 'fan'];
 
-const createPosition = properties => ({
-  ...fromPairs(positionFields.map(field => [field, undefined])),
-  ...pick(properties, positionFields),
+const createMove = properties => ({
+  ...fromPairs(moveFields.map(field => [field, undefined])),
+  ...pick(properties, moveFields),
 });
 
-const addPosition = (state, payload) => {
+const addMove = (state, payload) => {
   const nextId = isEmpty(state) ? 0 : last(state).id + 1;
 
   return update(state, {
-    $push: [createPosition({ ...payload, id: nextId })],
+    $push: [createMove({ ...payload, id: nextId })],
   });
 };
 
-const removePosition = (state, id) =>
-  reject(state, position => position.id === id);
+const removeMove = (state, id) =>
+  reject(state, move => move.id === id);
 
-const updatePosition = (state, payload) =>
-  state.map(position => {
-    if (payload.id === position.id) {
-      return createPosition({ ...position, ...payload });
+const updateMove = (state, payload) =>
+  state.map(move => {
+    if (payload.id === move.id) {
+      return createMove({ ...move, ...payload });
     }
-    return position;
+    return move;
   });
 
-const setPositions = (state, positions) => {
-  return positions.map((move, index) => createPosition({ ...move, id: index }));
+const setMoves = (state, moves) => {
+  return moves.map((move, index) => createMove({ ...move, id: index }));
 };
 
 // eslint-disable-next-line complexity
-const positions = (state = [], action) => {
+const moves = (state = [], action) => {
   switch (action.type) {
-    case 'GAME/POSITIONS/ADD':
-      return addPosition(state, action.payload);
-    case 'GAME/POSITIONS/REMOVE':
-      return removePosition(state, action.payload);
-    case 'GAME/POSITIONS/UPDATE':
-      return updatePosition(state, action.payload);
-    case 'GAME/POSITIONS/SET':
-      return setPositions(state, action.payload);
+    case 'GAME/MOVES/ADD':
+      return addMove(state, action.payload);
+    case 'GAME/MOVES/REMOVE':
+      return removeMove(state, action.payload);
+    case 'GAME/MOVES/UPDATE':
+      return updateMove(state, action.payload);
+    case 'GAME/MOVES/SET':
+      return setMoves(state, action.payload);
     default:
       return state;
   }
 };
 
-export default positions;
+export default moves;
 
 /*******************/
 /***  Selectors  ***/
