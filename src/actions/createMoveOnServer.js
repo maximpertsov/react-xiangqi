@@ -3,7 +3,7 @@ import client from 'services/client';
 
 const postMove = ({ gameSlug, fan, username }) => {
   // TODO: change `move:` after data model update on server
-  const payload = { name: 'move', move: fan, player: username };
+  const payload = { name: 'move', fan, player: username };
   return client.post(`game/${gameSlug}/events`, payload);
 };
 
