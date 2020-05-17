@@ -18,7 +18,7 @@ const getMoveIndex = (state, moveId) => {
   return -1;
 };
 
-const positionFields = ['id', 'fen', 'givesCheck', 'legalMoves', 'move'];
+const positionFields = ['id', 'fen', 'givesCheck', 'legalMoves', 'fan'];
 
 const createPosition = properties => ({
   ...fromPairs(positionFields.map(field => [field, undefined])),

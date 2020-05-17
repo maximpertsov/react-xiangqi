@@ -222,7 +222,7 @@ export const getTargets = state => {
   if (legalMoves === undefined) return [];
 
   return keys(legalMoves).filter(
-    move => fanToSquares(move)[0] === state.selectedSquare,
+    fan => fanToSquares(fan)[0] === state.selectedSquare,
   );
 };
 

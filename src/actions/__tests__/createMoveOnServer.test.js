@@ -11,7 +11,7 @@ describe('create move on server', () => {
 
   // eslint-disable-next-line no-undef
   const store = mockStore({});
-  const position = { id: 1, move: 'a1a2' };
+  const position = { id: 1, fan: 'a1a2' };
   const username = 'user';
 
   describe('not a persisted game', () => {
@@ -23,7 +23,7 @@ describe('create move on server', () => {
         createMoveOnServer({
           gameSlug,
           id: position.id,
-          move: position.move,
+          fan: position.fan,
           username,
         }),
       );
@@ -41,14 +41,15 @@ describe('create move on server', () => {
         createMoveOnServer({
           gameSlug,
           id: position.id,
-          move: position.move,
+          fan: position.fan,
           username,
         }),
       );
 
       expect(spy).toHaveBeenCalledWith('game/ABC123/events', {
         name: 'move',
-        move: position.move,
+        // TODO: update after server API update
+        move: position.fan,
         player: username,
       });
     });
@@ -60,14 +61,15 @@ describe('create move on server', () => {
         createMoveOnServer({
           gameSlug,
           id: position.id,
-          move: position.move,
+          fan: position.fan,
           username,
         }),
       );
 
       expect(spy).toHaveBeenCalledWith('game/ABC123/events', {
         name: 'move',
-        move: position.move,
+        // TODO: update after server API update
+        move: position.fan,
         player: username,
       });
 

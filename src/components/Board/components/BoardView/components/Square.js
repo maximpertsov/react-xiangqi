@@ -23,9 +23,9 @@ const getIsOccupied = ({ selectedMove, square }) =>
   isOccupied(selectedMove.fen, square);
 
 const getIsInLastMove = ({ selectedMove, square }) => {
-  if (selectedMove.move === null) return false;
+  if (selectedMove.fan === null) return false;
 
-  return fanToSquares(selectedMove.move).includes(square);
+  return fanToSquares(selectedMove.fan).includes(square);
 };
 
 const getIsKingInCheck = ({ selectedMove, square }) => {
@@ -44,7 +44,7 @@ const getIsTargeted = ({ isMoving, targets, square }) => {
   if (isMoving) return false;
 
   // TODO: remove index access?
-  return targets.some(move => fanToSquares(move)[1] === square);
+  return targets.some(fan => fanToSquares(fan)[1] === square);
 };
 
 const getAnimationOffset = ({ animationOffset, selectedSquare, square }) => {

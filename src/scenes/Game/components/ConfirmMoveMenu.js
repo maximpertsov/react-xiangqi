@@ -22,12 +22,12 @@ const ConfirmMoveMenu = () => {
       createMoveOnServer({
         gameSlug,
         id: lastMove.id,
-        move: lastMove.move,
+        fan: lastMove.fan,
         username,
       }),
     );
     dispatch(actions.game.showConfirmMoveMenu.set(false));
-  }, [dispatch, gameSlug, lastMove.id, lastMove.move, username]);
+  }, [dispatch, gameSlug, lastMove.id, lastMove.fan, username]);
 
   const cancelPosition = useCallback(() => {
     dispatch(actions.game.showConfirmMoveMenu.set(false));

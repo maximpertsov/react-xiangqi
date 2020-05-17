@@ -45,7 +45,12 @@ const MoveHistory = () => {
   const positions = useSelector(state => state.positions, isEqual);
 
   const positionComponents = positions.map((position, index) => (
-    <Move key={index} moveId={position.id} move={position.move} fen={position.fen} />
+    <Move
+      key={index}
+      moveId={position.id}
+      fan={position.fan}
+      fen={position.fen}
+    />
   ));
   const fullMoves = chunk(tail(positionComponents), 2).map(
     ([redMove, blackMove], index) => (

@@ -40,18 +40,18 @@ const Board = () => {
   );
 
   const legalFen = useCallback(
-    move => get(legalMoves, move, false),
+    fan => get(legalMoves, fan, false),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectedMove.fen, selectedSquare],
   );
 
   const handleMove = useCallback(
-    move => {
-      const fen = legalFen(move);
+    fan => {
+      const fen = legalFen(fan);
       if (fen) {
-        dispatch(animateMove({ bottomPlayerIsRed, move }));
+        dispatch(animateMove({ bottomPlayerIsRed, fan }));
         setTimeout(() => {
-          dispatch(makeMove({ fen, move }));
+          dispatch(makeMove({ fen, fan }));
           dispatch(actions.board.animationOffset.clear());
           dispatch(actions.board.selectedSquare.set(null));
         }, ANIMATION_DELAY);
