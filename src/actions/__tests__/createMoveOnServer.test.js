@@ -48,8 +48,7 @@ describe('create move on server', () => {
 
       expect(spy).toHaveBeenCalledWith('game/ABC123/events', {
         name: 'move',
-        // TODO: update after server API update
-        move: move.fan,
+        fan: move.fan,
         player: username,
       });
     });
@@ -68,8 +67,7 @@ describe('create move on server', () => {
 
       expect(spy).toHaveBeenCalledWith('game/ABC123/events', {
         name: 'move',
-        // TODO: update after server API update
-        move: move.fan,
+        fan: move.fan,
         player: username,
       });
 
