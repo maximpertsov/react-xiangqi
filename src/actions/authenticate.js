@@ -4,9 +4,9 @@ import actions from 'actions';
 import updateLoginForm from 'actions/updateLoginForm';
 import client, { isSuccess } from 'services/client';
 
-const handleAuthenticationSuccess = (dispatch, { access }) => {
-  const { sub } = jwtDecode(access);
-  dispatch(actions.home.username.set(sub));
+const handleAuthenticationSuccess = (dispatch, { token }) => {
+  const { username } = jwtDecode(token);
+  dispatch(actions.home.username.set(username));
   dispatch(updateLoginForm({ error: '' }));
 };
 
