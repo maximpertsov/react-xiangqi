@@ -23,11 +23,12 @@ const ConfirmMoveMenu = () => {
         gameSlug,
         id: lastMove.id,
         fan: lastMove.fan,
+        fen: lastMove.fen,
         username,
       }),
     );
     dispatch(actions.game.showConfirmMoveMenu.set(false));
-  }, [dispatch, gameSlug, lastMove.id, lastMove.fan, username]);
+  }, [dispatch, gameSlug, lastMove.id, lastMove.fan, lastMove.fen, username]);
 
   const cancelMove = useCallback(() => {
     dispatch(actions.game.showConfirmMoveMenu.set(false));

@@ -13,7 +13,7 @@ test('fetch move', async () => {
 
   await store.dispatch(fetchPosition({ fen: 'FEN', id: 1, fan: 'a1a2' }));
 
-  expect(axios.post).toHaveBeenCalledWith('fen', { fen: 'FEN' });
+  expect(axios.post).toHaveBeenCalledWith('position', { fen: 'FEN' });
   expect(store.getActions()).toStrictEqual([
     actions.game.moves.update({
       id: 1,

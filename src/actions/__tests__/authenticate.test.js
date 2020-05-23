@@ -23,10 +23,10 @@ describe('obtain a token', () => {
     axios.post.mockResolvedValue({
       status: 200,
       data: {
-        access: 'accessToken',
+        token: 'accessToken',
       },
     });
-    jwtDecode.mockImplementationOnce(() => ({ sub: 'user123' }));
+    jwtDecode.mockImplementationOnce(() => ({ username: 'user123' }));
     spys.updateLoginForm = jest.spyOn(updateLoginForm, 'default');
 
     await store.dispatch(authenticate());
