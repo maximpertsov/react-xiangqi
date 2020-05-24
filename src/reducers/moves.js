@@ -18,7 +18,7 @@ const getMoveIndex = (state, moveId) => {
   return -1;
 };
 
-const moveFields = ['id', 'fen', 'givesCheck', 'legalMoves', 'fan'];
+const moveFields = ['id', 'fen', 'givesCheck', 'legalMoves', 'uci'];
 
 const createMove = properties => ({
   ...fromPairs(moveFields.map(field => [field, undefined])),

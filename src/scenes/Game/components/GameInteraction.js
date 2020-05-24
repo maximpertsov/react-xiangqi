@@ -28,8 +28,8 @@ const GameInteraction = () => {
         if (lastMove.legalMoves === undefined) return;
         if (!autoMove.includes(nextMoveColor)) return;
 
-        const [fan, fen] = sample(toPairs(lastMove.legalMoves));
-        dispatch(makeMove({ fan, fen }));
+        const [uci, fen] = sample(toPairs(lastMove.legalMoves));
+        dispatch(makeMove({ uci, fen }));
       }, 1000);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

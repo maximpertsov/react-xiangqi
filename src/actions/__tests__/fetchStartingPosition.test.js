@@ -13,6 +13,6 @@ test('fetch starting move', async () => {
 
   expect(axios.post).toHaveBeenCalledWith('starting-position');
   expect(store.getActions()).toStrictEqual([
-    actions.game.moves.add({ fan: null }),
+    actions.game.moves.add({ uci: null }),
   ]);
 });

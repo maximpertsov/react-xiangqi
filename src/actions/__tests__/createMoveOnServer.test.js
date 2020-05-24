@@ -11,7 +11,7 @@ describe('create move on server', () => {
 
   // eslint-disable-next-line no-undef
   const store = mockStore({});
-  const move = { id: 1, fan: 'a1a2', fen: 'FEN' };
+  const move = { id: 1, uci: 'a1a2', fen: 'FEN' };
   const username = 'user';
 
   describe('not a persisted game', () => {
@@ -23,7 +23,7 @@ describe('create move on server', () => {
         createMoveOnServer({
           gameSlug,
           id: move.id,
-          fan: move.fan,
+          uci: move.uci,
           fen: move.fen,
           username,
         }),
@@ -42,7 +42,7 @@ describe('create move on server', () => {
         createMoveOnServer({
           gameSlug,
           id: move.id,
-          fan: move.fan,
+          uci: move.uci,
           fen: move.fen,
           username,
         }),
@@ -52,7 +52,7 @@ describe('create move on server', () => {
         name: 'move',
         game: gameSlug,
         payload: {
-          fan: move.fan,
+          uci: move.uci,
           fen: move.fen,
           player: username,
         },
@@ -66,7 +66,7 @@ describe('create move on server', () => {
         createMoveOnServer({
           gameSlug,
           id: move.id,
-          fan: move.fan,
+          uci: move.uci,
           fen: move.fen,
           username,
         }),
@@ -76,7 +76,7 @@ describe('create move on server', () => {
         name: 'move',
         game: gameSlug,
         payload: {
-          fan: move.fan,
+          uci: move.uci,
           fen: move.fen,
           player: username,
         },
