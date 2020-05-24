@@ -16,7 +16,10 @@ const Wrapper = styled.div`
 
 const GameInfo = () => {
   const lastMove = useSelector(state => getLastMove(state), isEqual);
-  const nextMovePlayer = useSelector(state => getNextMovePlayer(state), isEqual);
+  const nextMovePlayer = useSelector(
+    state => getNextMovePlayer(state),
+    isEqual,
+  );
   const userColor = useSelector(state => getUserColor(state));
 
   const userIsActive = () => {
@@ -24,19 +27,28 @@ const GameInfo = () => {
     return color === userColor;
   };
 
-  const loadingUser = () => userColor === undefined;
-
+  // TODO: move this logic into a selector
   // eslint-disable-next-line complexity
   const getMessage = () => {
-    if (loadingUser()) {
-      const { color } = nextMovePlayer;
-      return `${color}'s turn`;
+    const { color } = nextMovePlayer;
+
+    if (lastMove.gameResult) {
+      const {
+        gameResult: [redScore, blackScore],
+      } = lastMove;
+      if (redScore === 1) {
+        if (color === 'red') return 'You lose!';
+        if (color === 'black') return 'You win!';
+      }
+      if (blackScore === 1) {
+        if (color === 'red') return 'You win!';
+        if (color === 'black') return 'You lose!';
+      }
+      if (redScore === 0.5 && blackScore === 0.5) {
+        return 'Draw!';
+      }
     }
-    // TODO: get this from the server
-    if (lastMove.legalMoves && lastMove.legalMoves.length === 0) {
-      // TODO: specify if won by stalemate or checkmate
-      return userIsActive() ? 'You lose!' : 'You win!';
-    }
+
     return userIsActive() ? 'Your turn' : 'Waiting for opponent';
   };
 
