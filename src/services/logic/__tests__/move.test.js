@@ -3,7 +3,7 @@ import { decode } from 'services/logic/fen';
 import { makeMove, getMovingPiece, getMovedPiece } from 'services/logic/move';
 
 describe('placement moves', () => {
-  const fan = 'a10a9';
+  const uci = 'a10a9';
   const fen =
     'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1';
   const initialPlacement = decode(fen).placement;
@@ -22,16 +22,16 @@ describe('placement moves', () => {
       ['R', 'N', 'B', 'A', 'K', 'A', 'B', 'N', 'R'],
     ]);
 
-    expect(makeMove(initialPlacement, fan)).toStrictEqual(expectedPlacement);
+    expect(makeMove(initialPlacement, uci)).toStrictEqual(expectedPlacement);
   });
 
   test('get moving piece', () => {
-    expect(getMovingPiece(initialPlacement, fan)).toBe('r');
+    expect(getMovingPiece(initialPlacement, uci)).toBe('r');
   });
 
   test('get moved piece', () => {
-    const nextPlacement = makeMove(initialPlacement, fan);
+    const nextPlacement = makeMove(initialPlacement, uci);
 
-    expect(getMovedPiece(nextPlacement, fan)).toBe('r');
+    expect(getMovedPiece(nextPlacement, uci)).toBe('r');
   });
 });

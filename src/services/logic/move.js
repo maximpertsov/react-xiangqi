@@ -1,8 +1,8 @@
 import update from 'immutability-helper';
-import { decodeFan } from 'services/logic/square';
+import { decodeUci } from 'services/logic/square';
 
-export const makeMove = (placement, fan) => {
-  const [fromSlot, toSlot] = decodeFan(fan);
+export const makeMove = (placement, uci) => {
+  const [fromSlot, toSlot] = decodeUci(uci);
 
   return update(
     update(placement, {
@@ -14,10 +14,10 @@ export const makeMove = (placement, fan) => {
   );
 };
 
-export const getMovingPiece = (placement, fan) =>
-  placement[decodeFan(fan)[0]];
+export const getMovingPiece = (placement, uci) =>
+  placement[decodeUci(uci)[0]];
 
-export const getMovedPiece = (placement, fan) =>
-  placement[decodeFan(fan)[1]];
+export const getMovedPiece = (placement, uci) =>
+  placement[decodeUci(uci)[1]];
 
 export default {};

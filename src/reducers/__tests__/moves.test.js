@@ -6,7 +6,7 @@ const createMove = (properties = {}) => ({
   fen: undefined,
   givesCheck: undefined,
   legalMoves: undefined,
-  fan: undefined,
+  uci: undefined,
   ...properties,
 });
 
@@ -44,44 +44,44 @@ describe('move reducers', () => {
       {
         action: actions.game.moves.remove(1),
         currentState: [
-          createMove({ id: 0, fan: null }),
-          createMove({ id: 1, fan: 'a1a2' }),
-          createMove({ id: 2, fan: 'a10a9' }),
+          createMove({ id: 0, uci: null }),
+          createMove({ id: 1, uci: 'a1a2' }),
+          createMove({ id: 2, uci: 'a10a9' }),
         ],
         expectedNewState: [
-          createMove({ id: 0, fan: null }),
-          createMove({ id: 2, fan: 'a10a9' }),
+          createMove({ id: 0, uci: null }),
+          createMove({ id: 2, uci: 'a10a9' }),
         ],
       },
     ],
     [
       'update a move',
       {
-        action: actions.game.moves.update({ id: 1, fan: 'b1a3' }),
+        action: actions.game.moves.update({ id: 1, uci: 'b1a3' }),
         currentState: [
-          createMove({ id: 0, givesCheck: false, fan: null }),
-          createMove({ id: 1, givesCheck: false, fan: 'a1a2' }),
-          createMove({ id: 2, givesCheck: false, fan: 'a10a9' }),
+          createMove({ id: 0, givesCheck: false, uci: null }),
+          createMove({ id: 1, givesCheck: false, uci: 'a1a2' }),
+          createMove({ id: 2, givesCheck: false, uci: 'a10a9' }),
         ],
         expectedNewState: [
-          createMove({ id: 0, givesCheck: false, fan: null }),
-          createMove({ id: 1, givesCheck: false, fan: 'b1a3' }),
-          createMove({ id: 2, givesCheck: false, fan: 'a10a9' }),
+          createMove({ id: 0, givesCheck: false, uci: null }),
+          createMove({ id: 1, givesCheck: false, uci: 'b1a3' }),
+          createMove({ id: 2, givesCheck: false, uci: 'a10a9' }),
         ],
       },
     ],
     [
       'set moves from the payload',
       {
-        action: actions.game.moves.set([{ fan: null }, { fan: 'b1a3' }]),
+        action: actions.game.moves.set([{ uci: null }, { uci: 'b1a3' }]),
         currentState: [
-          createMove({ id: 0, fan: null }),
-          createMove({ id: 1, fan: 'a1a2' }),
-          createMove({ id: 2, fan: 'a10a9' }),
+          createMove({ id: 0, uci: null }),
+          createMove({ id: 1, uci: 'a1a2' }),
+          createMove({ id: 2, uci: 'a10a9' }),
         ],
         expectedNewState: [
-          createMove({ id: 0, fan: null }),
-          createMove({ id: 1, fan: 'b1a3' }),
+          createMove({ id: 0, uci: null }),
+          createMove({ id: 1, uci: 'b1a3' }),
         ],
       },
     ],
@@ -96,22 +96,22 @@ describe('move reducers', () => {
 describe('moves selectors', () => {
   test('select move by id', () => {
     const state = [
-      { id: 0, fan: null },
-      { id: 2, fan: 'a1a2' },
-      { id: 3, fan: 'a10a9' },
+      { id: 0, uci: null },
+      { id: 2, uci: 'a1a2' },
+      { id: 3, uci: 'a10a9' },
     ];
-    expect(getMoveById(state, 0)).toStrictEqual({ id: 0, fan: null });
+    expect(getMoveById(state, 0)).toStrictEqual({ id: 0, uci: null });
     expect(getMoveById(state, 1)).toStrictEqual(undefined);
-    expect(getMoveById(state, 2)).toStrictEqual({ id: 2, fan: 'a1a2' });
-    expect(getMoveById(state, 3)).toStrictEqual({ id: 3, fan: 'a10a9' });
+    expect(getMoveById(state, 2)).toStrictEqual({ id: 2, uci: 'a1a2' });
+    expect(getMoveById(state, 3)).toStrictEqual({ id: 3, uci: 'a10a9' });
   });
 
   test('select last move', () => {
     const state = [
-      { id: 0, fan: null },
-      { id: 2, fan: 'a1a2' },
-      { id: 3, fan: 'a10a9' },
+      { id: 0, uci: null },
+      { id: 2, uci: 'a1a2' },
+      { id: 3, uci: 'a10a9' },
     ];
-    expect(getLastMove(state)).toStrictEqual({ id: 3, fan: 'a10a9' });
+    expect(getLastMove(state)).toStrictEqual({ id: 3, uci: 'a10a9' });
   });
 });

@@ -48,7 +48,7 @@ const MoveHistory = () => {
     <Move
       key={index}
       moveId={move.id}
-      fan={move.fan}
+      uci={move.uci}
       fen={move.fen}
     />
   ));

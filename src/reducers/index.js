@@ -1,7 +1,7 @@
 import actions from 'actions';
 import { combineReducers } from 'redux';
 import { Color } from 'services/logic/constants';
-import { fanToSquares } from 'services/logic/square';
+import { uciToSquares } from 'services/logic/square';
 
 import keys from 'lodash/keys';
 
@@ -222,7 +222,7 @@ export const getTargets = state => {
   if (legalMoves === undefined) return [];
 
   return keys(legalMoves).filter(
-    fan => fanToSquares(fan)[0] === state.selectedSquare,
+    uci => uciToSquares(uci)[0] === state.selectedSquare,
   );
 };
 

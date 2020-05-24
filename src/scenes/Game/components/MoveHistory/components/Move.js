@@ -34,11 +34,11 @@ const P = {
   C: '炮',
 };
 
-const moveText = ({ fan, piece }) => {
-  return `${P[piece]}${fan}`;
+const moveText = ({ uci, piece }) => {
+  return `${P[piece]}${uci}`;
 };
 
-const Move = ({ fan, fen, moveId }) => {
+const Move = ({ uci, fen, moveId }) => {
   const dispatch = useDispatch();
   const selectedMove = useSelector(state => getSelectedMove(state), isEqual);
 
@@ -46,9 +46,9 @@ const Move = ({ fan, fen, moveId }) => {
     dispatch(actions.game.selectedMove.set(moveId));
   }, [dispatch, moveId]);
 
-  if (fan === null) return null;
+  if (uci === null) return null;
 
-  const piece = getMovedPiece(decodeFen(fen).placement, fan);
+  const piece = getMovedPiece(decodeFen(fen).placement, uci);
 
   return (
     <Wrapper
@@ -57,19 +57,19 @@ const Move = ({ fan, fen, moveId }) => {
       isSelected={selectedMove.id === moveId}
       piece={piece}
     >
-      {moveText({ fan, piece })}
+      {moveText({ uci, piece })}
     </Wrapper>
   );
 };
 
 Move.propTypes = {
   fen: PropTypes.string.isRequired,
-  fan: PropTypes.string,
+  uci: PropTypes.string,
   moveId: PropTypes.number.isRequired,
 };
 
 Move.defaultProps = {
-  fan: null,
+  uci: null,
 };
 
 export default Move;

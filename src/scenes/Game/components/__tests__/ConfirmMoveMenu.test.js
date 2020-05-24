@@ -14,8 +14,8 @@ const initialState = {
   gameSlug: 'ABC123',
   showConfirmMoveMenu: true,
   moves: [
-    { id: 0, fan: null, fen: 'FEN0' },
-    { id: 1, fan: 'a1a2', fen: 'FEN1' },
+    { id: 0, uci: null, fen: 'FEN0' },
+    { id: 1, uci: 'a1a2', fen: 'FEN1' },
   ],
   players: [
     {
@@ -66,7 +66,7 @@ describe('ConfirmMoveMenu', () => {
     expect(spy).toHaveBeenCalledWith({
       gameSlug: 'ABC123',
       id: 1,
-      fan: 'a1a2',
+      uci: 'a1a2',
       fen: 'FEN1',
       username: 'user',
     });
@@ -93,7 +93,7 @@ describe('ConfirmMoveMenu', () => {
 
     // Confirm state
     expect(store.getState().showConfirmMoveMenu).toBe(false);
-    expect(store.getState().moves).toEqual([{ id: 0, fan: null, fen: 'FEN0' }]);
+    expect(store.getState().moves).toEqual([{ id: 0, uci: null, fen: 'FEN0' }]);
     expect(wrapper.render()).toMatchSnapshot();
 
     wrapper.unmount();

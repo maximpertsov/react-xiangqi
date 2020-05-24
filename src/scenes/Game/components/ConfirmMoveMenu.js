@@ -22,13 +22,13 @@ const ConfirmMoveMenu = () => {
       createMoveOnServer({
         gameSlug,
         id: lastMove.id,
-        fan: lastMove.fan,
+        uci: lastMove.uci,
         fen: lastMove.fen,
         username,
       }),
     );
     dispatch(actions.game.showConfirmMoveMenu.set(false));
-  }, [dispatch, gameSlug, lastMove.id, lastMove.fan, lastMove.fen, username]);
+  }, [dispatch, gameSlug, lastMove.id, lastMove.uci, lastMove.fen, username]);
 
   const cancelMove = useCallback(() => {
     dispatch(actions.game.showConfirmMoveMenu.set(false));

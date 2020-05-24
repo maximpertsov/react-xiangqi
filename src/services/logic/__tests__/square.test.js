@@ -1,10 +1,10 @@
 import {
   encode,
-  encodeFan,
-  fanToSquares,
-  squaresToFan,
+  encodeUci,
+  uciToSquares,
+  squaresToUci,
   decode,
-  decodeFan,
+  decodeUci,
 } from 'services/logic/square';
 
 test('convert square to slot', () => {
@@ -16,17 +16,17 @@ test('convert slot to square', () => {
 });
 
 test('convert squares to a move', () => {
-  expect(squaresToFan('b10', 'c9')).toBe('b10c9');
+  expect(squaresToUci('b10', 'c9')).toBe('b10c9');
 });
 
 test('convert move to squares', () => {
-  expect(fanToSquares('b10c9')).toStrictEqual(['b10', 'c9']);
+  expect(uciToSquares('b10c9')).toStrictEqual(['b10', 'c9']);
 });
 
 test('convert fromSlot, toSlot to a move', () => {
-  expect(encodeFan(1, 11)).toBe('b10c9');
+  expect(encodeUci(1, 11)).toBe('b10c9');
 });
 
 test('convert move to (fromSlot, toSlot)', () => {
-  expect(decodeFan('b10c9')).toStrictEqual([1, 11]);
+  expect(decodeUci('b10c9')).toStrictEqual([1, 11]);
 });

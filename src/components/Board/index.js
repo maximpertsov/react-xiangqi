@@ -10,7 +10,7 @@ import actions from 'actions';
 import animateMove from 'actions/animateMove';
 import { getBottomPlayerIsRed, getLegalMoves, getSelectedMove } from 'reducers';
 import { isOccupied, sameColor } from 'services/logic/fen';
-import { squaresToFan } from 'services/logic/square';
+import { squaresToUci } from 'services/logic/square';
 
 import BoardView from './components/BoardView';
 
@@ -40,18 +40,18 @@ const Board = () => {
   );
 
   const legalFen = useCallback(
-    fan => get(legalMoves, fan, false),
+    uci => get(legalMoves, uci, false),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectedMove.fen, selectedSquare],
   );
 
   const handleMove = useCallback(
-    fan => {
-      const fen = legalFen(fan);
+    uci => {
+      const fen = legalFen(uci);
       if (fen) {
-        dispatch(animateMove({ bottomPlayerIsRed, fan }));
+        dispatch(animateMove({ bottomPlayerIsRed, uci }));
         setTimeout(() => {
-          dispatch(makeMove({ fen, fan }));
+          dispatch(makeMove({ fen, uci }));
           dispatch(actions.board.animationOffset.clear());
           dispatch(actions.board.selectedSquare.set(null));
         }, ANIMATION_DELAY);
@@ -72,7 +72,7 @@ const Board = () => {
       ) {
         dispatch(actions.board.selectedSquare.set(square));
       } else if (selectedSquare !== null) {
-        handleMove(squaresToFan(selectedSquare, square));
+        handleMove(squaresToUci(selectedSquare, square));
       } else {
         dispatch(actions.board.selectedSquare.set(null));
       }
