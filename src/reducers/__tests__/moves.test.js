@@ -3,6 +3,7 @@ import reducer, { getLastMove, getMoveById } from 'reducers/moves';
 
 const createMove = (properties = {}) => ({
   id: undefined,
+  gameResult: undefined,
   fen: undefined,
   givesCheck: undefined,
   legalMoves: undefined,

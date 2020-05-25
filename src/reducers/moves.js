@@ -18,7 +18,14 @@ const getMoveIndex = (state, moveId) => {
   return -1;
 };
 
-const moveFields = ['id', 'fen', 'givesCheck', 'legalMoves', 'uci'];
+const moveFields = [
+  'id',
+  'fen',
+  'gameResult',
+  'givesCheck',
+  'legalMoves',
+  'uci',
+];
 
 const createMove = properties => ({
   ...fromPairs(moveFields.map(field => [field, undefined])),
@@ -33,8 +40,7 @@ const addMove = (state, payload) => {
   });
 };
 
-const removeMove = (state, id) =>
-  reject(state, move => move.id === id);
+const removeMove = (state, id) => reject(state, move => move.id === id);
 
 const updateMove = (state, payload) =>
   state.map(move => {
