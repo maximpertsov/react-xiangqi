@@ -1,10 +1,7 @@
 import zipObject from 'lodash/zipObject';
 import update from 'lodash/update';
 import { Color } from 'services/logic/constants';
-import {
-  decodeSquare,
-  encodeSquare,
-} from 'services/logic/square';
+import { decodeSquare, encodeSquare } from 'services/logic/square';
 import { sameColor as sameColorPieces } from 'services/logic/utils';
 
 const FEN_FIELDS = [
@@ -88,6 +85,11 @@ export const activeKing = fen => {
 
   const kingSlot = decodedFen.placement.indexOf(king);
   return encodeSquare(kingSlot);
+};
+
+export const moveOrder = fen => {
+  const { activeColor, fullmoves } = decodeFen(fen);
+  return fullmoves * 2 - (activeColor === Color.RED ? 1 : 0);
 };
 
 export default {};

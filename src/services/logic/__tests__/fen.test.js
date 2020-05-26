@@ -4,6 +4,7 @@ import {
   decodeFen,
   getPiece,
   isOccupied,
+  moveOrder,
   sameColor,
 } from 'services/logic/fen';
 import { Color } from 'services/logic/constants';
@@ -88,5 +89,10 @@ describe('fen functions', () => {
   test('is active king', () => {
     expect(activeKing(initialFen)).toBe('e1');
     expect(activeKing(rookMoveFen)).toBe('e10');
+  });
+
+  test('move order', () => {
+    expect(moveOrder(initialFen)).toBe(1);
+    expect(moveOrder(rookMoveFen)).toBe(2);
   });
 });
