@@ -8,7 +8,7 @@ import last from 'lodash/last';
 import reject from 'lodash/reject';
 import sortedIndexBy from 'lodash/sortedIndexBy';
 
-import { decode as decodeFen } from 'services/logic/fen';
+import { decodeFen } from 'services/logic/fen';
 
 import { Color } from 'services/logic/constants';
 

@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import isEqual from 'lodash/isEqual';
 
 import actions from 'actions';
-import { decode as decodeFen } from 'services/logic/fen';
+import { decodeFen } from 'services/logic/fen';
 import { getMovedPiece } from 'services/logic/move';
 import { getSelectedMove } from 'reducers';
 import { Color } from 'services/logic/constants';

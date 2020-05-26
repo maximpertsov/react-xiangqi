@@ -1,7 +1,7 @@
 import flatten from 'lodash/flatten';
 import {
   activeKing,
-  decode,
+  decodeFen,
   getPiece,
   isOccupied,
   sameColor,
@@ -15,7 +15,7 @@ describe('fen functions', () => {
     '1nbakabnr/r8/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR b - - 0 1';
 
   test('convert fen to board', () => {
-    expect(decode(initialFen)).toMatchObject({
+    expect(decodeFen(initialFen)).toMatchObject({
       placement: flatten([
         ['r', 'n', 'b', 'a', 'k', 'a', 'b', 'n', 'r'],
         Array(9).fill(null),
@@ -35,7 +35,7 @@ describe('fen functions', () => {
       fullmoves: 1,
     });
 
-    expect(decode(rookMoveFen)).toMatchObject({
+    expect(decodeFen(rookMoveFen)).toMatchObject({
       placement: flatten([
         [null, 'n', 'b', 'a', 'k', 'a', 'b', 'n', 'r'],
         ['r', ...Array(8).fill(null)],

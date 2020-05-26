@@ -1,18 +1,18 @@
 import {
-  encode,
+  encodeSquare,
   encodeUci,
   uciToSquares,
   squaresToUci,
-  decode,
+  decodeSquare,
   decodeUci,
 } from 'services/logic/square';
 
 test('convert square to slot', () => {
-  expect(decode('a10')).toBe(0);
+  expect(decodeSquare('a10')).toBe(0);
 });
 
 test('convert slot to square', () => {
-  expect(encode(0)).toBe('a10');
+  expect(encodeSquare(0)).toBe('a10');
 });
 
 test('convert squares to a move', () => {
