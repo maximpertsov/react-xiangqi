@@ -107,6 +107,7 @@ export const getNextMoveColor = state => {
   return decodeFen(fen).activeColor;
 };
 
+// TODO: use find instead
 export const getFirstMoveWithMissingData = state => {
   const index = findIndex(state, move => move.legalMoves === undefined);
   if (index === -1) return;
