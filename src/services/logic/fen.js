@@ -2,8 +2,8 @@ import zipObject from 'lodash/zipObject';
 import update from 'lodash/update';
 import { Color } from 'services/logic/constants';
 import {
-  decode as decodeSquare,
-  encode as encodeSquare,
+  decodeSquare,
+  encodeSquare,
 } from 'services/logic/square';
 import { sameColor as sameColorPieces } from 'services/logic/utils';
 
