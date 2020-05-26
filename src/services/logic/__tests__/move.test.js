@@ -1,12 +1,12 @@
 import flatten from 'lodash/flatten';
-import { decode } from 'services/logic/fen';
+import { decodeFen } from 'services/logic/fen';
 import { makeMove, getMovingPiece, getMovedPiece } from 'services/logic/move';
 
 describe('placement moves', () => {
   const uci = 'a10a9';
   const fen =
     'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1';
-  const initialPlacement = decode(fen).placement;
+  const initialPlacement = decodeFen(fen).placement;
 
   test('update board placement by move', () => {
     const expectedPlacement = flatten([

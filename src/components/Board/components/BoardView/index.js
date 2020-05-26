@@ -6,7 +6,7 @@ import isEqual from 'lodash/isEqual';
 
 import { getBottomPlayerIsRed, getSelectedMove } from 'reducers';
 import { MediaQuery, SquareSize } from 'commonStyles';
-import { decode as decodeFen } from 'services/logic/fen';
+import { decodeFen } from 'services/logic/fen';
 import { encode as encodeSquare } from 'services/logic/square';
 import Square from './components/Square';
 import boardImg from './assets/board-1000px.svg.png';

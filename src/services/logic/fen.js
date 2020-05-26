@@ -47,7 +47,7 @@ const decodeRow = row =>
 const decodePlacement = placement =>
   placement.split('/').reduce((acc, row) => acc.concat(decodeRow(row)), []);
 
-export const decode = fen => {
+export const decodeFen = fen => {
   const result = decodeFields(fen);
   update(result, 'placement', decodePlacement);
   return result;
@@ -56,11 +56,11 @@ export const decode = fen => {
 export const isOccupied = (fen, square) => {
   const slot = decodeSquare(square);
 
-  return decode(fen).placement[slot] !== null;
+  return decodeFen(fen).placement[slot] !== null;
 };
 
 export const getPiece = (fen, square) => {
-  return decode(fen).placement[decodeSquare(square)];
+  return decodeFen(fen).placement[decodeSquare(square)];
 };
 
 export const sameColor = (fen, square1, square2) => {
@@ -71,7 +71,7 @@ export const sameColor = (fen, square1, square2) => {
 };
 
 export const activeKing = fen => {
-  const decodedFen = decode(fen);
+  const decodedFen = decodeFen(fen);
   let king = undefined;
 
   switch (decodedFen.activeColor) {
