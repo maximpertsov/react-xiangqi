@@ -27,7 +27,7 @@ export default createActions({
       UPDATE: undefined,
       SET: undefined,
     },
-    SELECTED_MOVE: {
+    SELECTED_FEN: {
       SET: undefined,
     },
     SHOW_CONFIRM_MOVE_MENU: {

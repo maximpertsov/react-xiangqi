@@ -43,7 +43,7 @@ const Move = ({ uci, fen, moveId }) => {
   const selectedMove = useSelector(state => getSelectedMove(state), isEqual);
 
   const handleClick = useCallback(() => {
-    dispatch(actions.game.selectedMove.set(moveId));
+    dispatch(actions.game.selectedFen.set(moveId));
   }, [dispatch, moveId]);
 
   if (uci === null) return null;

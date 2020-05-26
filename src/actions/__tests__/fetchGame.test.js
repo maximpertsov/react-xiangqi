@@ -29,7 +29,7 @@ describe('fetch game', () => {
     expect(store.getActions()).toStrictEqual([
       actions.game.players.set([]),
       actions.game.moves.set([{}, {}]),
-      actions.game.selectedMove.set(1),
+      actions.game.selectedFen.set(1),
     ]);
   });
 });

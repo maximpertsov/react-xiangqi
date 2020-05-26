@@ -61,9 +61,8 @@ const rootReducer = combineReducers({
     (state, action) => action.payload,
     false,
   ),
-  // TODO: rename to selectedMoveId
-  selectedMoveId: handleAction(
-    actions.game.selectedMove.set,
+  selectedFen: handleAction(
+    actions.game.selectedFen.set,
     (state, action) => action.payload,
     null,
   ),
@@ -102,24 +101,22 @@ export default rootReducer;
 export const getHasInitialPlacement = ({ moves }) =>
   fromMoves.getHasInitialPlacement(moves);
 
-export const getMoveCount = ({ moves }) =>
-  fromMoves.getMoveCount(moves);
+export const getMoveCount = ({ moves }) => fromMoves.getMoveCount(moves);
 
-export const getLastMove = ({ moves }) =>
-  fromMoves.getLastMove(moves);
+export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
 
-export const getSelectedMove = ({ moves, selectedMoveId }) => {
-  const result = fromMoves.getMoveById(moves, selectedMoveId);
+export const getSelectedMove = ({ moves, fen }) => {
+  const result = fromMoves.getMoveByFen(moves, fen);
   if (result !== undefined) return result;
 
   return getLastMove({ moves });
 };
 
 export const getPreviousMove = state =>
-  fromMoves.getPreviousMove(state.moves, getSelectedMove(state).id);
+  fromMoves.getPreviousMove(state.moves, getSelectedMove(state).fen);
 
 export const getNextMove = state =>
-  fromMoves.getNextMove(state.moves, getSelectedMove(state).id);
+  fromMoves.getNextMove(state.moves, getSelectedMove(state).fen);
 
 export const getNextMoveColor = ({ moves }) =>
   fromMoves.getNextMoveColor(moves);

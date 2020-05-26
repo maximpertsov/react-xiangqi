@@ -9,7 +9,7 @@ test('make a move', async () => {
 
   expect(store.getActions()).toStrictEqual([
     actions.game.moves.add({ uci: 'a1a2' }),
-    actions.game.selectedMove.set(null),
+    actions.game.selectedFen.set(null),
     actions.game.showConfirmMoveMenu.set(true),
   ]);
 });

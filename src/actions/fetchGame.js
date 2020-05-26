@@ -9,7 +9,7 @@ const setPlayers = (dispatch, { players }) => {
 
 const setMoves = (dispatch, { moves }) => {
   dispatch(actions.game.moves.set(moves));
-  dispatch(actions.game.selectedMove.set(moves.length - 1));
+  dispatch(actions.game.selectedFen.set(moves.length - 1));
 };
 
 const fetchGame = ({ gameSlug }) => async dispatch => {
