@@ -6,17 +6,11 @@ import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import last from 'lodash/last';
 import reject from 'lodash/reject';
-import sortedIndexBy from 'lodash/sortedIndexBy';
+import find from 'lodash/find';
 
-import { decodeFen } from 'services/logic/fen';
+import { decodeFen, moveOrder } from 'services/logic/fen';
 
 import { Color } from 'services/logic/constants';
-
-const getMoveIndex = (state, moveId) => {
-  const moveIndex = sortedIndexBy(state, { id: moveId }, 'id');
-  if (state[moveIndex] && state[moveIndex].id === moveId) return moveIndex;
-  return -1;
-};
 
 const moveFields = [
   'id',
@@ -87,20 +81,21 @@ export const getMoveCount = state => state.length - 1;
 
 export const getLastMove = state => state[getMoveCount(state)];
 
-export const getMoveById = (state, moveId) => {
-  const moveIndex = getMoveIndex(state, moveId);
-  return state[moveIndex];
+// TODO: consider putting moves in an object to speed up this lookup
+export const getMoveByFen = (state, fen) => find(state, ['fen', fen]);
+
+export const getPreviousMove = (state, fen) => {
+  const order = moveOrder(fen);
+  const result = find(state, ({ fen }) => moveOrder(fen) === order - 1);
+
+  return result || getMoveByFen(fen);
 };
 
-export const getPreviousMove = (state, moveId) => {
-  const moveIndex = getMoveIndex(state, moveId);
-  return state[Math.max(moveIndex - 1, 0)];
-};
+export const getNextMove = (state, fen) => {
+  const order = moveOrder(fen);
+  const result = find(state, ({ fen }) => moveOrder(fen) === order + 1);
 
-export const getNextMove = (state, moveId) => {
-  const moveCount = getMoveCount(state);
-  const moveIndex = getMoveIndex(state, moveId);
-  return state[Math.min(moveIndex + 1, moveCount)];
+  return result || getMoveByFen(fen);
 };
 
 export const getNextMoveColor = state => {
