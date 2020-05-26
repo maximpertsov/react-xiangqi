@@ -68,10 +68,10 @@ export const sameColor = (fen, square1, square2) => {
 };
 
 export const activeKing = fen => {
-  const decodedFen = decodeFen(fen);
+  const { activeColor, placement } = decodeFen(fen);
   let king = undefined;
 
-  switch (decodedFen.activeColor) {
+  switch (activeColor) {
     case Color.RED:
       king = 'K';
       break;
@@ -83,7 +83,7 @@ export const activeKing = fen => {
       return;
   }
 
-  const kingSlot = decodedFen.placement.indexOf(king);
+  const kingSlot = placement.indexOf(king);
   return encodeSquare(kingSlot);
 };
 
