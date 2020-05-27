@@ -1,10 +1,10 @@
 import update from 'immutability-helper';
 
-import findIndex from 'lodash/findIndex';
-import fromPairs from 'lodash/fromPairs';
-import pick from 'lodash/pick';
-import reject from 'lodash/reject';
-import find from 'lodash/find';
+import find from 'lodash/fp/find';
+import findIndex from 'lodash/fp/findIndex';
+import fromPairs from 'lodash/fp/fromPairs';
+import pick from 'lodash/fp/pick';
+import reject from 'lodash/fp/reject';
 
 import { decodeFen, moveOrder } from 'services/logic/fen';
 
@@ -14,7 +14,7 @@ const moveFields = ['fen', 'gameResult', 'givesCheck', 'legalMoves', 'uci'];
 
 const createMove = properties => ({
   ...fromPairs(moveFields.map(field => [field, undefined])),
-  ...pick(properties, moveFields),
+  ...pick(moveFields, properties),
 });
 
 const addMove = (state, payload) => {
@@ -24,7 +24,7 @@ const addMove = (state, payload) => {
   });
 };
 
-const removeMove = (state, fen) => reject(state, move => move.fen === fen);
+const removeMove = (state, fen) => reject(['fen', fen], state);
 
 const updateMove = (state, payload) =>
   state.map(move => {
@@ -70,18 +70,18 @@ export const getMoveCount = state => state.length - 1;
 export const getLastMove = state => state[getMoveCount(state)];
 
 // TODO: consider putting moves in an object to speed up this lookup
-export const getMoveByFen = (state, fen) => find(state, ['fen', fen]);
+export const getMoveByFen = (state, fen) => find(['fen', fen], state);
 
 export const getPreviousMove = (state, fen) => {
   const order = moveOrder(fen);
-  const result = find(state, ({ fen }) => moveOrder(fen) === order - 1);
+  const result = find(({ fen }) => moveOrder(fen) === order - 1, state);
 
   return result || getMoveByFen(fen);
 };
 
 export const getNextMove = (state, fen) => {
   const order = moveOrder(fen);
-  const result = find(state, ({ fen }) => moveOrder(fen) === order + 1);
+  const result = find(({ fen }) => moveOrder(fen) === order + 1, state);
 
   return result || getMoveByFen(fen);
 };
@@ -97,7 +97,7 @@ export const getNextMoveColor = state => {
 
 // TODO: use find instead
 export const getFirstMoveWithMissingData = state => {
-  const index = findIndex(state, move => move.legalMoves === undefined);
+  const index = findIndex(move => move.legalMoves === undefined, state);
   if (index === -1) return;
 
   return state[index];
