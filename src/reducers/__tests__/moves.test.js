@@ -121,6 +121,7 @@ describe('moves selectors', () => {
   });
 
   test('select last move', () => {
+    // TODO: move to manual mock
     fenFactory.moveOrder.mockImplementation(fen => +fen.match(/\d+/)[0]);
 
     const state = [
