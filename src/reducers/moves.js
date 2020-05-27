@@ -2,9 +2,12 @@ import update from 'immutability-helper';
 
 import find from 'lodash/fp/find';
 import findIndex from 'lodash/fp/findIndex';
+import flow from 'lodash/fp/flow';
 import fromPairs from 'lodash/fp/fromPairs';
 import pick from 'lodash/fp/pick';
 import reject from 'lodash/fp/reject';
+import sortBy from 'lodash/fp/sortBy';
+import tail from 'lodash/fp/tail';
 
 import { decodeFen, moveOrder } from 'services/logic/fen';
 
@@ -67,7 +70,11 @@ export const getHasInitialPlacement = state => {
 
 export const getMoveCount = state => state.length - 1;
 
-export const getLastMove = state => state[getMoveCount(state)];
+export const getLastMove = state =>
+  flow(
+    sortBy(({ fen }) => moveOrder(fen)),
+    tail,
+  )(state);
 
 // TODO: consider putting moves in an object to speed up this lookup
 export const getMoveByFen = (state, fen) => find(['fen', fen], state);

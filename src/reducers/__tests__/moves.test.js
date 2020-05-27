@@ -1,5 +1,8 @@
 import actions from 'actions';
 import reducer, { getLastMove, getMoveByFen } from 'reducers/moves';
+import * as fenFactory from 'services/logic/fen';
+
+jest.mock('services/logic/fen');
 
 const createMove = (properties = {}) => ({
   gameResult: undefined,
@@ -101,18 +104,29 @@ describe('moves selectors', () => {
       { fen: 'FEN3', uci: 'a10a9' },
     ];
     /* eslint-disable max-len */
-    expect(getMoveByFen(state, 'FEN0')).toStrictEqual({ fen: 'FEN0', uci: null });
+    expect(getMoveByFen(state, 'FEN0')).toStrictEqual({
+      fen: 'FEN0',
+      uci: null,
+    });
     expect(getMoveByFen(state, 'FEN1')).toStrictEqual(undefined);
-    expect(getMoveByFen(state, 'FEN2')).toStrictEqual({ fen: 'FEN2', uci: 'a1a2' });
-    expect(getMoveByFen(state, 'FEN3')).toStrictEqual({ fen: 'FEN3', uci: 'a10a9' });
+    expect(getMoveByFen(state, 'FEN2')).toStrictEqual({
+      fen: 'FEN2',
+      uci: 'a1a2',
+    });
+    expect(getMoveByFen(state, 'FEN3')).toStrictEqual({
+      fen: 'FEN3',
+      uci: 'a10a9',
+    });
     /* eslint-enable max-len */
   });
 
   test('select last move', () => {
+    fenFactory.moveOrder.mockImplementation(fen => fen.split(' ')[1]);
+
     const state = [
-      { fen: 'FEN0', uci: null },
-      { fen: 'FEN2', uci: 'a1a2' },
-      { fen: 'FEN3', uci: 'a10a9' },
+      { fen: 'FEN 0', uci: null },
+      { fen: 'FEN 3', uci: 'a10a9' },
+      { fen: 'FEN 2', uci: 'a1a2' },
     ];
     expect(getLastMove(state)).toStrictEqual({ fen: 'FEN3', uci: 'a10a9' });
   });
