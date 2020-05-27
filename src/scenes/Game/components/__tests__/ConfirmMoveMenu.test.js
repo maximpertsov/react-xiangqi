@@ -25,7 +25,7 @@ const initialState = {
       color: 'black',
     },
   ],
-  selectedMoveId: null,
+  selectedFen: null,
   selectedSquare: null,
   showGame: true,
   username: 'user',

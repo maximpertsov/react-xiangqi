@@ -199,12 +199,12 @@ export const getCurrentPlayerColor = state => {
 export const getLegalMoves = state => {
   const currentPlayerColor = getCurrentPlayerColor(state);
   const nextMoveColor = getNextMoveColor(state);
-  const { id: lastMoveId, legalMoves } = getLastMove(state);
+  const { fen: lastMoveFen, legalMoves } = getLastMove(state);
 
   // TODO: for now we can assume that legal moves are only allowed for the
   // latest move. However, this will change if we ever implement an analysis
   // board-style function.
-  if (lastMoveId !== getSelectedMove(state).id) return [];
+  if (lastMoveFen !== getSelectedMove(state).fen) return [];
   if (!state.canMoveBothColors && currentPlayerColor !== nextMoveColor) {
     return [];
   }

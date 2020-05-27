@@ -22,7 +22,7 @@ const initialState = {
       color: 'black',
     },
   ],
-  selectedMoveId: null,
+  selectedFen: null,
   animationOffset: [0, 0],
   selectedSquare: null,
 };
