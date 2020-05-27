@@ -2,9 +2,7 @@ import update from 'immutability-helper';
 
 import findIndex from 'lodash/findIndex';
 import fromPairs from 'lodash/fromPairs';
-import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
-import last from 'lodash/last';
 import reject from 'lodash/reject';
 import find from 'lodash/find';
 
@@ -12,14 +10,7 @@ import { decodeFen, moveOrder } from 'services/logic/fen';
 
 import { Color } from 'services/logic/constants';
 
-const moveFields = [
-  'id',
-  'fen',
-  'gameResult',
-  'givesCheck',
-  'legalMoves',
-  'uci',
-];
+const moveFields = ['fen', 'gameResult', 'givesCheck', 'legalMoves', 'uci'];
 
 const createMove = properties => ({
   ...fromPairs(moveFields.map(field => [field, undefined])),
@@ -27,26 +18,23 @@ const createMove = properties => ({
 });
 
 const addMove = (state, payload) => {
-  const nextId = isEmpty(state) ? 0 : last(state).id + 1;
-
+  // TODO: duplicate FEN?
   return update(state, {
-    $push: [createMove({ ...payload, id: nextId })],
+    $push: [createMove({ ...payload })],
   });
 };
 
-const removeMove = (state, id) => reject(state, move => move.id === id);
+const removeMove = (state, fen) => reject(state, move => move.fen === fen);
 
 const updateMove = (state, payload) =>
   state.map(move => {
-    if (payload.id === move.id) {
+    if (payload.fen === move.fen) {
       return createMove({ ...move, ...payload });
     }
     return move;
   });
 
-const setMoves = (state, moves) => {
-  return moves.map((move, index) => createMove({ ...move, id: index }));
-};
+const setMoves = (state, moves) => moves.map(createMove);
 
 // eslint-disable-next-line complexity
 const moves = (state = [], action) => {
