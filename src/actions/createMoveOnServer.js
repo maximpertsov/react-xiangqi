@@ -13,7 +13,6 @@ const postMove = ({ gameSlug, uci, fen, username }) => {
 
 const createMoveOnServer = ({
   gameSlug,
-  id,
   uci,
   fen,
   username,
@@ -24,7 +23,7 @@ const createMoveOnServer = ({
     await postMove({ gameSlug, uci, fen, username });
   } catch (error) {
     // TODO: fetch moves to avoid client/server disparity?
-    dispatch(actions.game.moves.remove(id));
+    dispatch(actions.game.moves.remove(fen));
   }
 };
 

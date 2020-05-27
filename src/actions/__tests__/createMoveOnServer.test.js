@@ -11,7 +11,7 @@ describe('create move on server', () => {
 
   // eslint-disable-next-line no-undef
   const store = mockStore({});
-  const move = { id: 1, uci: 'a1a2', fen: 'FEN' };
+  const move = { uci: 'a1a2', fen: 'FEN' };
   const username = 'user';
 
   describe('not a persisted game', () => {
@@ -22,7 +22,6 @@ describe('create move on server', () => {
       await store.dispatch(
         createMoveOnServer({
           gameSlug,
-          id: move.id,
           uci: move.uci,
           fen: move.fen,
           username,
@@ -41,7 +40,6 @@ describe('create move on server', () => {
       await store.dispatch(
         createMoveOnServer({
           gameSlug,
-          id: move.id,
           uci: move.uci,
           fen: move.fen,
           username,
@@ -65,7 +63,6 @@ describe('create move on server', () => {
       await store.dispatch(
         createMoveOnServer({
           gameSlug,
-          id: move.id,
           uci: move.uci,
           fen: move.fen,
           username,
@@ -82,7 +79,9 @@ describe('create move on server', () => {
         },
       });
 
-      expect(store.getActions()).toStrictEqual([actions.game.moves.remove(1)]);
+      expect(store.getActions()).toStrictEqual([
+        actions.game.moves.remove(move.fen),
+      ]);
     });
   });
 });
