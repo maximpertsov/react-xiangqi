@@ -121,12 +121,12 @@ describe('moves selectors', () => {
   });
 
   test('select last move', () => {
-    fenFactory.moveOrder.mockImplementation(fen => fen.split(' ')[1]);
+    fenFactory.moveOrder.mockImplementation(fen => +fen.match(/\d+/)[0]);
 
     const state = [
-      { fen: 'FEN 0', uci: null },
-      { fen: 'FEN 3', uci: 'a10a9' },
-      { fen: 'FEN 2', uci: 'a1a2' },
+      { fen: 'FEN0', uci: null },
+      { fen: 'FEN3', uci: 'a10a9' },
+      { fen: 'FEN2', uci: 'a1a2' },
     ];
     expect(getLastMove(state)).toStrictEqual({ fen: 'FEN3', uci: 'a10a9' });
   });
