@@ -1,6 +1,5 @@
 import actions from 'actions';
 import reducer, { getLastMove, getMoveByFen } from 'reducers/moves';
-import * as fenFactory from 'services/logic/fen';
 
 jest.mock('services/logic/fen');
 
@@ -121,9 +120,6 @@ describe('moves selectors', () => {
   });
 
   test('select last move', () => {
-    // TODO: move to manual mock
-    fenFactory.moveOrder.mockImplementation(fen => +fen.match(/\d+/)[0]);
-
     const state = [
       { fen: 'FEN0', uci: null },
       { fen: 'FEN3', uci: 'a10a9' },
