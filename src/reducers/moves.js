@@ -1,7 +1,6 @@
 import update from 'immutability-helper';
 
 import find from 'lodash/fp/find';
-import findIndex from 'lodash/fp/findIndex';
 import flow from 'lodash/fp/flow';
 import fromPairs from 'lodash/fp/fromPairs';
 import last from 'lodash/fp/last';
@@ -75,6 +74,7 @@ export const getLastMove = state =>
 // TODO: consider putting moves in an object to speed up this lookup
 export const getMoveByFen = (state, fen) => find(['fen', fen], state);
 
+// fen => props.fen?
 export const getPreviousMove = (state, fen) => {
   const order = moveOrder(fen);
   const result = find(({ fen }) => moveOrder(fen) === order - 1, state);
@@ -82,6 +82,7 @@ export const getPreviousMove = (state, fen) => {
   return result || getMoveByFen(fen);
 };
 
+// fen => props.fen?
 export const getNextMove = (state, fen) => {
   const order = moveOrder(fen);
   const result = find(({ fen }) => moveOrder(fen) === order + 1, state);
@@ -89,6 +90,7 @@ export const getNextMove = (state, fen) => {
   return result || getMoveByFen(fen);
 };
 
+// TODO: add a test
 export const getNextMoveColor = state => {
   if (!getHasInitialPlacement(state)) {
     return Color.RED;
@@ -98,7 +100,6 @@ export const getNextMoveColor = state => {
   return decodeFen(fen).activeColor;
 };
 
-// TODO: use find instead
 export const getFirstMoveWithMissingData = state =>
   flow(
     sortBy(({ fen }) => moveOrder(fen)),
