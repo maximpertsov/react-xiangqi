@@ -4,7 +4,10 @@ import reducer, {
   getHasInitialPlacement,
   getLastMove,
   getMoveByFen,
+  getNextMoveColor,
 } from 'reducers/moves';
+
+import { Color } from 'services/logic/constants';
 
 jest.mock('services/logic/fen');
 
@@ -137,6 +140,18 @@ describe('moves selectors', () => {
 
     test.each(table)('%s', (_, state, expected) => {
       expect(getHasInitialPlacement(state)).toBe(expected);
+    });
+  });
+
+  describe('next move color', () => {
+    const table = [
+      ['no moves', [{ uci: null }], Color.RED],
+      ['black moves', [{ fen: 'FEN0 w' }], Color.BLACK],
+      ['now red moves', [{ fen: 'FEN1 b' }, { fen: 'FEN0 w' }], Color.RED],
+    ];
+
+    test.each(table)('%s', (_, state, expected) => {
+      expect(getNextMoveColor(state)).toBe(expected);
     });
   });
 

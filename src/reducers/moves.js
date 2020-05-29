@@ -92,11 +92,10 @@ export const getNextMove = (state, fen) => {
 
 // TODO: add a test
 export const getNextMoveColor = state => {
-  if (!getHasInitialPlacement(state)) {
-    return Color.RED;
-  }
+  const lastMove = getLastMove(state);
+  if (!lastMove) return Color.RED;
 
-  const { fen } = getLastMove(state);
+  const { fen } = lastMove;
   return decodeFen(fen).activeColor;
 };
 
