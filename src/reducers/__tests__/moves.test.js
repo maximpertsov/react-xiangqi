@@ -1,5 +1,9 @@
 import actions from 'actions';
-import reducer, { getLastMove, getMoveByFen } from 'reducers/moves';
+import reducer, {
+  getHasInitialPlacement,
+  getLastMove,
+  getMoveByFen,
+} from 'reducers/moves';
 
 jest.mock('services/logic/fen');
 
@@ -103,19 +107,14 @@ describe('moves selectors', () => {
       { fen: 'FEN3', uci: 'a10a9' },
     ];
     /* eslint-disable max-len */
-    expect(getMoveByFen(state, 'FEN0')).toStrictEqual({
-      fen: 'FEN0',
-      uci: null,
-    });
+    // prettier-ignore
+    expect(getMoveByFen(state, 'FEN0')).toStrictEqual({ fen: 'FEN0', uci: null });
+    // prettier-ignore
     expect(getMoveByFen(state, 'FEN1')).toStrictEqual(undefined);
-    expect(getMoveByFen(state, 'FEN2')).toStrictEqual({
-      fen: 'FEN2',
-      uci: 'a1a2',
-    });
-    expect(getMoveByFen(state, 'FEN3')).toStrictEqual({
-      fen: 'FEN3',
-      uci: 'a10a9',
-    });
+    // prettier-ignore
+    expect(getMoveByFen(state, 'FEN2')).toStrictEqual({ fen: 'FEN2', uci: 'a1a2' });
+    // prettier-ignore
+    expect(getMoveByFen(state, 'FEN3')).toStrictEqual({ fen: 'FEN3', uci: 'a10a9' });
     /* eslint-enable max-len */
   });
 
@@ -126,5 +125,20 @@ describe('moves selectors', () => {
       { fen: 'FEN2', uci: 'a1a2' },
     ];
     expect(getLastMove(state)).toStrictEqual({ fen: 'FEN3', uci: 'a10a9' });
+  });
+
+  test('has initial placement', () => {
+    const state = [{ fen: 'FEN0', uci: null }];
+    expect(getHasInitialPlacement(state)).toBe(true);
+  });
+
+  test('no initial placement', () => {
+    const state = [{ uci: null }];
+    expect(getHasInitialPlacement(state)).toBe(false);
+  });
+
+  test('no initial move', () => {
+    const state = [];
+    expect(getHasInitialPlacement(state)).toBe(false);
   });
 });

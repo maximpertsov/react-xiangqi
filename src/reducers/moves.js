@@ -61,12 +61,8 @@ export default moves;
 /***  Selectors  ***/
 /*******************/
 
-export const getHasInitialPlacement = state => {
-  if (state.length === 0) return false;
-  if (state[0].fen === undefined) return false;
-
-  return true;
-};
+export const getHasInitialPlacement = state =>
+  state.some(({ fen }) => fen !== undefined);
 
 export const getMoveCount = state => state.length - 1;
 
