@@ -1,5 +1,6 @@
 import actions from 'actions';
 import reducer, {
+  getFirstMoveWithMissingData,
   getHasInitialPlacement,
   getLastMove,
   getMoveByFen,
@@ -140,5 +141,17 @@ describe('moves selectors', () => {
   test('no initial move', () => {
     const state = [];
     expect(getHasInitialPlacement(state)).toBe(false);
+  });
+
+  test('first move with missing data', () => {
+    const state = [
+      { fen: 'FEN0', uci: null, legalMoves: ['a1a2'] },
+      { fen: 'FEN3', uci: 'a10a9' },
+      { fen: 'FEN2', uci: 'a1a2' },
+    ];
+    expect(getFirstMoveWithMissingData(state)).toStrictEqual({
+      fen: 'FEN2',
+      uci: 'a1a2',
+    });
   });
 });

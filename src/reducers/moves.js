@@ -62,7 +62,7 @@ export default moves;
 /*******************/
 
 export const getHasInitialPlacement = state =>
-  state.some(({ fen }) => fen !== undefined);
+  state.some(({ fen }) => !!fen);
 
 export const getMoveCount = state => state.length - 1;
 
@@ -99,9 +99,8 @@ export const getNextMoveColor = state => {
 };
 
 // TODO: use find instead
-export const getFirstMoveWithMissingData = state => {
-  const index = findIndex(move => move.legalMoves === undefined, state);
-  if (index === -1) return;
-
-  return state[index];
-};
+export const getFirstMoveWithMissingData = state =>
+  flow(
+    sortBy(({ fen }) => moveOrder(fen)),
+    find(move => !move.legalMoves),
+  )(state);
