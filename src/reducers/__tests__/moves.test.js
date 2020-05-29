@@ -128,19 +128,16 @@ describe('moves selectors', () => {
     expect(getLastMove(state)).toStrictEqual({ fen: 'FEN3', uci: 'a10a9' });
   });
 
-  test('has initial placement', () => {
-    const state = [{ fen: 'FEN0', uci: null }];
-    expect(getHasInitialPlacement(state)).toBe(true);
-  });
+  describe('has initial placement', () => {
+    const table = [
+      ['has move with placement', [{ fen: 'FEN0', uci: null }], true],
+      ['has move without placement', [{ uci: null }], false],
+      ['no moves', [], false],
+    ];
 
-  test('no initial placement', () => {
-    const state = [{ uci: null }];
-    expect(getHasInitialPlacement(state)).toBe(false);
-  });
-
-  test('no initial move', () => {
-    const state = [];
-    expect(getHasInitialPlacement(state)).toBe(false);
+    test.each(table)('%s', (_, state, expected) => {
+      expect(getHasInitialPlacement(state)).toBe(expected);
+    });
   });
 
   test('first move with missing data', () => {
