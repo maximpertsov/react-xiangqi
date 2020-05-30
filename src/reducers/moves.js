@@ -8,7 +8,7 @@ import pick from 'lodash/fp/pick';
 import reject from 'lodash/fp/reject';
 import sortBy from 'lodash/fp/sortBy';
 
-import { activeColor, decodeFen, moveOrder } from 'services/logic/fen';
+import { activeColor, moveOrder } from 'services/logic/fen';
 
 import { Color } from 'services/logic/constants';
 
