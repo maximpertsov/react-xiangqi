@@ -145,9 +145,9 @@ describe('moves selectors', () => {
 
   describe('next move color', () => {
     const table = [
-      ['no moves', [{ uci: null }], Color.RED],
-      ['black moves', [{ fen: 'FEN0 w' }], Color.BLACK],
-      ['now red moves', [{ fen: 'FEN1 b' }, { fen: 'FEN0 w' }], Color.RED],
+      ['no moves', [], Color.RED],
+      ['red moves', [{ fen: 'FEN0 w' }], Color.RED],
+      ['black moves', [{ fen: 'FEN1 b' }, { fen: 'FEN0 w' }], Color.BLACK],
     ];
 
     test.each(table)('%s', (_, state, expected) => {

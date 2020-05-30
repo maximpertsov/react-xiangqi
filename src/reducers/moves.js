@@ -8,7 +8,7 @@ import pick from 'lodash/fp/pick';
 import reject from 'lodash/fp/reject';
 import sortBy from 'lodash/fp/sortBy';
 
-import { decodeFen, moveOrder } from 'services/logic/fen';
+import { activeColor, decodeFen, moveOrder } from 'services/logic/fen';
 
 import { Color } from 'services/logic/constants';
 
@@ -96,7 +96,7 @@ export const getNextMoveColor = state => {
   if (!lastMove) return Color.RED;
 
   const { fen } = lastMove;
-  return decodeFen(fen).activeColor;
+  return activeColor(fen);
 };
 
 export const getFirstMoveWithMissingData = state =>

@@ -1,5 +1,6 @@
 import flatten from 'lodash/flatten';
 import {
+  activeColor,
   activeKing,
   decodeFen,
   getPiece,
@@ -63,6 +64,11 @@ describe('fen functions', () => {
 
     expect(getPiece(rookMoveFen, 'a10')).toBe(null);
     expect(getPiece(rookMoveFen, 'a9')).toBe('r');
+  });
+
+  test('active color', () => {
+    expect(activeColor(initialFen)).toBe(Color.RED);
+    expect(activeColor(rookMoveFen)).toBe(Color.BLACK);
   });
 
   test('is occupied', () => {
