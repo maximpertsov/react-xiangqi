@@ -105,9 +105,8 @@ export const getMoveCount = ({ moves }) => fromMoves.getMoveCount(moves);
 
 export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
 
-export const getSelectedMove = ({ moves, fen }) => {
-  // TODO: not selecting moves other than the last one!
-  const result = fromMoves.getMoveByFen(moves, fen);
+export const getSelectedMove = ({ moves, selectedFen }) => {
+  const result = fromMoves.getMoveByFen(moves, selectedFen);
   if (result !== undefined) return result;
 
   return getLastMove({ moves });
