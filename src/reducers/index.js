@@ -101,8 +101,6 @@ export default rootReducer;
 export const getHasInitialPlacement = ({ moves }) =>
   fromMoves.getHasInitialPlacement(moves);
 
-export const getMoveCount = ({ moves }) => fromMoves.getMoveCount(moves);
-
 export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
 
 export const getSelectedMove = ({ moves, selectedFen }) => {

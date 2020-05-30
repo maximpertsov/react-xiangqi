@@ -63,8 +63,6 @@ export default moves;
 
 export const getHasInitialPlacement = state => state.some(({ fen }) => !!fen);
 
-export const getMoveCount = state => state.length - 1;
-
 export const getLastMove = state =>
   flow(
     sortBy(({ fen }) => moveOrder(fen)),
