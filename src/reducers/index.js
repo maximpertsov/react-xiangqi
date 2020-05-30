@@ -123,8 +123,8 @@ export const getNextMove = state =>
 export const getNextMoveColor = ({ moves }) =>
   fromMoves.getNextMoveColor(moves);
 
-export const getFirstMoveWithMissingData = ({ moves }) =>
-  fromMoves.getFirstMoveWithMissingData(moves);
+export const getFirstFenWithoutLegalMoves = ({ moves }) =>
+  fromMoves.getFirstFenWithoutLegalMoves(moves);
 
 /*****************/
 /***  Players  ***/

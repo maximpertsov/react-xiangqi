@@ -1,6 +1,6 @@
 import actions from 'actions';
 import reducer, {
-  getFirstMoveWithMissingData,
+  getFirstFenWithoutLegalMoves,
   getHasInitialPlacement,
   getLastMove,
   getMoveByFen,
@@ -161,9 +161,6 @@ describe('moves selectors', () => {
       { fen: 'FEN3', uci: 'a10a9' },
       { fen: 'FEN2', uci: 'a1a2' },
     ];
-    expect(getFirstMoveWithMissingData(state)).toStrictEqual({
-      fen: 'FEN2',
-      uci: 'a1a2',
-    });
+    expect(getFirstFenWithoutLegalMoves(state)).toStrictEqual('FEN2');
   });
 });

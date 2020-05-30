@@ -11,12 +11,11 @@ test('fetch move', async () => {
     data: { fen: 'FEN', legalMoves: {}, givesCheck: false },
   });
 
-  await store.dispatch(fetchPosition({ fen: 'FEN', uci: 'a1a2' }));
+  await store.dispatch(fetchPosition({ fen: 'FEN' }));
 
   expect(axios.post).toHaveBeenCalledWith('position', { fen: 'FEN' });
   expect(store.getActions()).toStrictEqual([
     actions.game.moves.update({
-      uci: 'a1a2',
       fen: 'FEN',
       legalMoves: {},
       givesCheck: false,

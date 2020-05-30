@@ -9,8 +9,7 @@ import pollMoves from 'actions/pollMoves';
 import {
   getHasInitialPlacement,
   getNextMovePlayerName,
-  getFirstMoveWithMissingData,
-  getMoveCount,
+  getFirstFenWithoutLegalMoves,
 } from 'reducers';
 
 const POLLING_INTERVAL = 2500;
@@ -22,10 +21,9 @@ const GameClient = () => {
   const hasInitialPlacement = useSelector(state =>
     getHasInitialPlacement(state),
   );
-  const moveCount = useSelector(state => getMoveCount(state));
   const nextMovePlayerName = useSelector(state => getNextMovePlayerName(state));
-  const firstMoveWithMissingData = useSelector(
-    state => getFirstMoveWithMissingData(state),
+  const firstFenWithoutLegalMoves = useSelector(
+    state => getFirstFenWithoutLegalMoves(state),
     isEqual,
   );
   const updateCount = useSelector(state => state.updateCount);
@@ -38,21 +36,13 @@ const GameClient = () => {
     dispatch(fetchStartingPosition());
   }, [dispatch, gameSlug, hasInitialPlacement]);
 
-  useEffect(
-    () => {
-      if (gameSlug) return;
-      if (!hasInitialPlacement) return;
-      if (!firstMoveWithMissingData) return;
+  useEffect(() => {
+    if (gameSlug) return;
+    if (!hasInitialPlacement) return;
+    if (!firstFenWithoutLegalMoves) return;
 
-      dispatch(fetchPosition(firstMoveWithMissingData));
-    },
-    // HACK: too many updates because missing legal moves is an object and
-    // useEffect is doing a deep comparison. To get around this, we exclude it
-    // from the comparison and key on the move count.
-    //
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, hasInitialPlacement, moveCount],
-  );
+    dispatch(fetchPosition({ fen: firstFenWithoutLegalMoves }));
+  }, [dispatch, firstFenWithoutLegalMoves, gameSlug, hasInitialPlacement]);
 
   useEffect(
     () => {

@@ -3,6 +3,7 @@ import update from 'immutability-helper';
 import find from 'lodash/fp/find';
 import flow from 'lodash/fp/flow';
 import fromPairs from 'lodash/fp/fromPairs';
+import get from 'lodash/fp/get';
 import last from 'lodash/fp/last';
 import pick from 'lodash/fp/pick';
 import reject from 'lodash/fp/reject';
@@ -60,8 +61,7 @@ export default moves;
 /***  Selectors  ***/
 /*******************/
 
-export const getHasInitialPlacement = state =>
-  state.some(({ fen }) => !!fen);
+export const getHasInitialPlacement = state => state.some(({ fen }) => !!fen);
 
 export const getMoveCount = state => state.length - 1;
 
@@ -99,8 +99,9 @@ export const getNextMoveColor = state => {
   return activeColor(fen);
 };
 
-export const getFirstMoveWithMissingData = state =>
+export const getFirstFenWithoutLegalMoves = state =>
   flow(
     sortBy(({ fen }) => moveOrder(fen)),
     find(move => !move.legalMoves),
+    get('fen'),
   )(state);
