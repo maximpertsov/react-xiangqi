@@ -112,9 +112,11 @@ export const getSelectedMove = ({ moves, selectedFen }) => {
   return getLastMove({ moves });
 };
 
+// TODO: fix bug related to going too far
 export const getPreviousMove = state =>
   fromMoves.getPreviousMove(state.moves, getSelectedMove(state).fen);
 
+// TODO: fix bug related to going too far
 export const getNextMove = state =>
   fromMoves.getNextMove(state.moves, getSelectedMove(state).fen);
 
