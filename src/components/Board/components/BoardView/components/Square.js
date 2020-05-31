@@ -23,7 +23,7 @@ const getIsOccupied = ({ selectedMove, square }) =>
   isOccupied(selectedMove.fen, square);
 
 const getIsInLastMove = ({ selectedMove, square }) => {
-  if (selectedMove.uci === null) return false;
+  if (!selectedMove.uci) return false;
 
   return uciToSquares(selectedMove.uci).includes(square);
 };
