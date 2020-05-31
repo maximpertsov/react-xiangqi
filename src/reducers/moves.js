@@ -70,23 +70,9 @@ export const getLastMove = state =>
   )(state);
 
 // TODO: consider putting moves in an object to speed up this lookup
+// TODO: consider moving out of move selectors since it requires more
+// information than just the move state?
 export const getMoveByFen = (state, fen) => find(['fen', fen], state);
-
-// fen => props.fen?
-export const getPreviousMove = (state, fen) => {
-  const order = moveOrder(fen);
-  const result = find(({ fen }) => moveOrder(fen) === order - 1, state);
-
-  return result || getMoveByFen(fen);
-};
-
-// fen => props.fen?
-export const getNextMove = (state, fen) => {
-  const order = moveOrder(fen);
-  const result = find(({ fen }) => moveOrder(fen) === order + 1, state);
-
-  return result || getMoveByFen(fen);
-};
 
 // TODO: add a test
 export const getNextMoveColor = state => {

@@ -1,5 +1,10 @@
 import { Color } from 'services/logic/constants';
 import { uciToSquares } from 'services/logic/square';
+import { moveOrder } from 'services/logic/fen';
+
+import find from 'lodash/fp/find';
+import flow from 'lodash/fp/flow';
+import get from 'lodash/fp/get';
 
 import keys from 'lodash/keys';
 
@@ -24,13 +29,27 @@ export const getSelectedMove = ({ moves, selectedFen }) => {
   return getLastMove({ moves });
 };
 
-// TODO: fix bug related to going too far
-export const getPreviousMove = state =>
-  fromMoves.getPreviousMove(state.moves, getSelectedMove(state).fen);
+export const getPreviousMoveFen = state => {
+  const { fen } = getSelectedMove(state);
+  const order = moveOrder(fen);
+  const result = flow(
+    find(move => moveOrder(move.fen) === order - 1),
+    get('fen'),
+  )(state.moves);
 
-// TODO: fix bug related to going too far
-export const getNextMove = state =>
-  fromMoves.getNextMove(state.moves, getSelectedMove(state).fen);
+  return result || fen;
+};
+
+export const getNextMoveFen = state => {
+  const { fen } = getSelectedMove(state);
+  const order = moveOrder(fen);
+  const result = flow(
+    find(move => moveOrder(move.fen) === order + 1),
+    get('fen'),
+  )(state.moves);
+
+  return result || fen;
+};
 
 export const getNextMoveColor = ({ moves }) =>
   fromMoves.getNextMoveColor(moves);
