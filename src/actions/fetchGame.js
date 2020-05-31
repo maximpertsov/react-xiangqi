@@ -8,7 +8,6 @@ const setPlayers = (dispatch, { players }) => {
 };
 
 const setMoves = (dispatch, { moves }) => {
-  console.log(moves);
   dispatch(actions.game.moves.set(moves));
 };
 

@@ -29,7 +29,6 @@ describe('fetch game', () => {
     expect(store.getActions()).toStrictEqual([
       actions.game.players.set([]),
       actions.game.moves.set([{}, {}]),
-      actions.game.selectedFen.set(1),
     ]);
   });
 });
