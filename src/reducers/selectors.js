@@ -25,7 +25,7 @@ export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
 export const getSelectedMove = ({ moves, currentMoveFen, selectedFen }) =>
   find(['fen', selectedFen], moves) ||
   find(['fen', currentMoveFen], moves) ||
-  getLastMove({ moves });
+  getLastMove({ moves }); // TODO: get rid of last move fall-back?
 
 export const getPreviousMoveFen = state => {
   const { fen } = getSelectedMove(state);

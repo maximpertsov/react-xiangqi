@@ -9,6 +9,7 @@ const setPlayers = (dispatch, { players }) => {
 
 const setMoves = (dispatch, { moves }) => {
   dispatch(actions.game.moves.set(moves));
+  dispatch(actions.game.selectedFen.set(moves[moves.length - 1].fen));
 };
 
 const setCurrentMoveFen = (dispatch, { currentMoveFen }) => {
@@ -19,6 +20,7 @@ const fetchGame = ({ gameSlug }) => async dispatch => {
   if (gameSlug === null) return;
 
   const { data } = await getGame({ gameSlug });
+
   setPlayers(dispatch, data);
   setMoves(dispatch, data);
   setCurrentMoveFen(dispatch, data);
