@@ -14,10 +14,6 @@ const setMoves = (dispatch, { moves }) => {
   dispatch(actions.game.moves.set(moves));
 };
 
-const setCurrentMoveFen = (dispatch, { currentMoveFen }) => {
-  dispatch(actions.game.currentMoveFen.set(currentMoveFen));
-};
-
 const fetchGame = ({ gameSlug }) => async dispatch => {
   if (gameSlug === null) return;
 
@@ -25,7 +21,6 @@ const fetchGame = ({ gameSlug }) => async dispatch => {
 
   setPlayers(dispatch, data);
   setMoves(dispatch, data);
-  setCurrentMoveFen(dispatch, data);
 };
 
 export default fetchGame;

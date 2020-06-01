@@ -18,11 +18,7 @@ describe('fetch game', () => {
   test('fetch game if slug is provided', async () => {
     const moves = [{}, { fen: 'FEN1' }];
     axios.get.mockResolvedValue({
-      data: {
-        players: [],
-        moves,
-        currentMoveFen: 'FEN1',
-      },
+      data: { players: [], moves },
     });
 
     await store.dispatch(fetchGame({ gameSlug: 'ABC123' }));
@@ -32,7 +28,6 @@ describe('fetch game', () => {
       actions.game.players.set([]),
       actions.game.selectedFen.set('FEN1'),
       actions.game.moves.set(moves),
-      actions.game.currentMoveFen.set('FEN1'),
     ]);
   });
 });
