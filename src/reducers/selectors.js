@@ -8,9 +8,7 @@ import get from 'lodash/fp/get';
 
 import keys from 'lodash/keys';
 
-// Game
 import * as fromMoves from './moves';
-// Board
 import * as fromAnimationOffset from './animationOffset';
 
 /***************/
@@ -22,31 +20,31 @@ export const getHasInitialPlacement = ({ moves }) =>
 
 export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
 
-export const getSelectedMove = ({ moves, currentMoveFen, selectedFen }) =>
-  find(['fen', selectedFen], moves) ||
-  find(['fen', currentMoveFen], moves) ||
-  getLastMove({ moves }); // TODO: get rid of last move fall-back?
+export const getSelectedMove = ({ moves, selectedFen }) =>
+  find(['fen', selectedFen], moves) || {};
 
 export const getPreviousMoveFen = state => {
-  const { fen } = getSelectedMove(state);
-  const order = moveOrder(fen);
+  if (!state.selectedFen) return;
+
+  const order = moveOrder(state.selectedFen);
   const result = flow(
     find(move => moveOrder(move.fen) === order - 1),
     get('fen'),
   )(state.moves);
 
-  return result || fen;
+  return result || state.selectedFen;
 };
 
 export const getNextMoveFen = state => {
-  const { fen } = getSelectedMove(state);
-  const order = moveOrder(fen);
+  if (!state.selectedFen) return;
+
+  const order = moveOrder(state.selectedFen);
   const result = flow(
     find(move => moveOrder(move.fen) === order + 1),
     get('fen'),
   )(state.moves);
 
-  return result || fen;
+  return result || state.selectedFen;
 };
 
 export const getNextMoveColor = ({ moves }) =>
@@ -135,7 +133,7 @@ export const getLegalMoves = state => {
   // TODO: for now we can assume that legal moves are only allowed for the
   // latest move. However, this will change if we ever implement an analysis
   // board-style function.
-  if (lastMoveFen !== getSelectedMove(state).fen) return [];
+  if (lastMoveFen !== state.selectedFen) return [];
   if (!state.canMoveBothColors && currentPlayerColor !== nextMoveColor) {
     return [];
   }

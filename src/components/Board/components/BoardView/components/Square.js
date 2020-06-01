@@ -16,11 +16,17 @@ import KingInCheckIndicator from './KingInCheckIndicator';
 import SelectionIndicator from './SelectionIndicator';
 import TargetIndicator from './TargetIndicator';
 
-const getPieceCode = ({ selectedMove, square }) =>
-  getPiece(selectedMove.fen, square) || undefined;
+const getPieceCode = ({ selectedMove, square }) => {
+  if (!selectedMove.fen) return;
 
-const getIsOccupied = ({ selectedMove, square }) =>
-  isOccupied(selectedMove.fen, square);
+  return getPiece(selectedMove.fen, square) || undefined;
+};
+
+const getIsOccupied = ({ selectedMove, square }) => {
+  if (!selectedMove.fen) return false;
+
+  return isOccupied(selectedMove.fen, square);
+};
 
 const getIsInLastMove = ({ selectedMove, square }) => {
   if (!selectedMove.uci) return false;

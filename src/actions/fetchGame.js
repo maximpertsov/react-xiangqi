@@ -1,6 +1,8 @@
 import client from 'services/client';
 import actions from 'actions';
 
+import last from 'lodash/fp/last';
+
 const getGame = ({ gameSlug }) => client.get(`game/${gameSlug}`);
 
 const setPlayers = (dispatch, { players }) => {
@@ -8,8 +10,8 @@ const setPlayers = (dispatch, { players }) => {
 };
 
 const setMoves = (dispatch, { moves }) => {
+  dispatch(actions.game.selectedFen.set(last(moves).fen));
   dispatch(actions.game.moves.set(moves));
-  dispatch(actions.game.selectedFen.set(moves[moves.length - 1].fen));
 };
 
 const setCurrentMoveFen = (dispatch, { currentMoveFen }) => {
