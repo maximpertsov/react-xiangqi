@@ -60,6 +60,11 @@ const rootReducer = combineReducers({
     (state, action) => action.payload,
     null,
   ),
+  currentMoveFen: handleAction(
+    actions.game.currentMoveFen.set,
+    (state, action) => action.payload,
+    null,
+  ),
   updateCount: handleAction(
     actions.game.updateCount.set,
     (state, action) => action.payload,

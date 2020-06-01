@@ -20,6 +20,7 @@ describe('fetch game', () => {
       data: {
         players: [],
         moves: [{}, {}],
+        currentMoveFen: 'FEN0',
       },
     });
 
@@ -29,6 +30,7 @@ describe('fetch game', () => {
     expect(store.getActions()).toStrictEqual([
       actions.game.players.set([]),
       actions.game.moves.set([{}, {}]),
+      actions.game.currentMoveFen.set('FEN0'),
     ]);
   });
 });
