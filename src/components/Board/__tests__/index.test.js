@@ -22,7 +22,7 @@ const initialState = {
       color: 'black',
     },
   ],
-  selectedFen: null,
+  selectedFen: initialPlacementOnly[0].fen,
   animationOffset: [0, 0],
   selectedSquare: null,
 };
