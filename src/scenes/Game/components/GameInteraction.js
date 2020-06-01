@@ -9,8 +9,8 @@ import makeMove from 'actions/makeMove';
 import actions from 'actions';
 import {
   getLastMove,
-  getPreviousMove,
-  getNextMove,
+  getPreviousMoveFen,
+  getNextMoveFen,
   getNextMoveColor,
 } from 'reducers';
 
@@ -18,9 +18,12 @@ const GameInteraction = () => {
   const dispatch = useDispatch();
   const autoMove = useSelector(state => state.autoMove, isEqual);
   const lastMove = useSelector(state => getLastMove(state), isEqual);
-  const nextMove = useSelector(state => getNextMove(state), isEqual);
+  const nextMoveFen = useSelector(state => getNextMoveFen(state), isEqual);
   const nextMoveColor = useSelector(state => getNextMoveColor(state));
-  const previousMove = useSelector(state => getPreviousMove(state), isEqual);
+  const previousMoveFen = useSelector(
+    state => getPreviousMoveFen(state),
+    isEqual,
+  );
 
   useEffect(
     () => {
@@ -40,10 +43,10 @@ const GameInteraction = () => {
   useEventListener('keydown', ({ key }) => {
     switch (key) {
       case 'ArrowLeft':
-        dispatch(actions.game.selectedFen.set(previousMove.fen));
+        dispatch(actions.game.selectedFen.set(previousMoveFen));
         break;
       case 'ArrowRight':
-        dispatch(actions.game.selectedFen.set(nextMove.fen));
+        dispatch(actions.game.selectedFen.set(nextMoveFen));
         break;
       default:
         break;
