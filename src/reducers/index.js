@@ -7,7 +7,6 @@ import { handleAction, combineActions } from 'redux-actions';
 import loginForm from './loginForm';
 // Game
 import moves from './moves';
-import players from './players';
 
 const rootReducer = combineReducers({
   // Home,
@@ -43,8 +42,17 @@ const rootReducer = combineReducers({
     null,
   ),
   // Game
+  blackPlayer: handleAction(
+    actions.game.blackPlayer.set,
+    (state, action) => action.payload,
+    {},
+  ),
+  redPlayer: handleAction(
+    actions.game.redPlayer.set,
+    (state, action) => action.payload,
+    {},
+  ),
   moves,
-  players,
   showConfirmMoveMenu: handleAction(
     actions.game.showConfirmMoveMenu.set,
     (state, action) => action.payload,

@@ -10,7 +10,6 @@ test.each`
   ${board.selectedSquare.set}     | ${'BOARD/SELECTED_SQUARE/SET'}       | ${'a1a2'}
   ${game.requestedTakeback.set}   | ${'GAME/REQUESTED_TAKEBACK/SET'}     | ${true}
   ${game.canMoveBothColors.set}   | ${'GAME/CAN_MOVE_BOTH_COLORS/SET'}   | ${true}
-  ${game.players.set}             | ${'GAME/PLAYERS/SET'}                | ${[{}, {}]}
   ${game.moves.add}               | ${'GAME/MOVES/ADD'}                  | ${{}}
   ${game.moves.update}            | ${'GAME/MOVES/UPDATE'}               | ${{}}
   ${game.moves.remove}            | ${'GAME/MOVES/REMOVE'}               | ${0}

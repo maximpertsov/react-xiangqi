@@ -5,8 +5,9 @@ import last from 'lodash/fp/last';
 
 const getGame = ({ gameSlug }) => client.get(`game/${gameSlug}`);
 
-const setPlayers = (dispatch, { players }) => {
-  dispatch(actions.game.players.set(players));
+const setPlayers = (dispatch, { redPlayer, blackPlayer }) => {
+  dispatch(actions.game.redPlayer.set(redPlayer));
+  dispatch(actions.game.blackPlayer.set(blackPlayer));
 };
 
 const setMoves = (dispatch, { moves }) => {
