@@ -22,8 +22,10 @@ export const getHasInitialPlacement = ({ moves }) =>
 
 export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
 
-export const getSelectedMove = ({ moves, selectedFen }) =>
-  find(['fen', selectedFen], moves) || getLastMove({ moves });
+export const getSelectedMove = ({ moves, currentMoveFen, selectedFen }) =>
+  find(['fen', selectedFen], moves) ||
+  find(['fen', currentMoveFen], moves) ||
+  getLastMove({ moves });
 
 export const getPreviousMoveFen = state => {
   const { fen } = getSelectedMove(state);

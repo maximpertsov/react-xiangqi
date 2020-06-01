@@ -29,6 +29,15 @@ describe('get selected move', () => {
       uci: 'a10a9',
     });
   });
+
+  test('selected fen is null and current move fen is available', () => {
+    expect(
+      getSelectedMove({ ...state, currentMoveFen: 'FEN0', selectedFen: null }),
+    ).toStrictEqual({
+      fen: 'FEN0',
+      uci: null,
+    });
+  });
 });
 
 describe('get moves around selected fen', () => {
