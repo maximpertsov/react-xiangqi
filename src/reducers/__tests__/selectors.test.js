@@ -1,6 +1,35 @@
-import { getPreviousMoveFen, getNextMoveFen } from 'reducers/selectors';
+import {
+  getSelectedMove,
+  getPreviousMoveFen,
+  getNextMoveFen,
+} from 'reducers/selectors';
 
 jest.mock('services/logic/fen');
+
+describe('get selected move', () => {
+  const state = {
+    selectedFen: 'FEN1',
+    moves: [
+      { fen: 'FEN0', uci: null },
+      { fen: 'FEN2', uci: 'a10a9' },
+      { fen: 'FEN1', uci: 'a1a2' },
+    ],
+  };
+
+  test('get selected fen', () => {
+    expect(getSelectedMove(state)).toStrictEqual({
+      fen: 'FEN1',
+      uci: 'a1a2',
+    });
+  });
+
+  test('selected fen is null', () => {
+    expect(getSelectedMove({ ...state, selectedFen: null })).toStrictEqual({
+      fen: 'FEN2',
+      uci: 'a10a9',
+    });
+  });
+});
 
 describe('get moves around selected fen', () => {
   const state = {

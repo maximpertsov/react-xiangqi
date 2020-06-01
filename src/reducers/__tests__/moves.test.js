@@ -3,7 +3,6 @@ import reducer, {
   getFirstFenWithoutLegalMoves,
   getHasInitialPlacement,
   getLastMove,
-  getMoveByFen,
   getNextMoveColor,
 } from 'reducers/moves';
 
@@ -104,24 +103,6 @@ describe('move reducers', () => {
 });
 
 describe('moves selectors', () => {
-  test('select move by fen', () => {
-    const state = [
-      { fen: 'FEN0', uci: null },
-      { fen: 'FEN2', uci: 'a1a2' },
-      { fen: 'FEN3', uci: 'a10a9' },
-    ];
-    /* eslint-disable max-len */
-    // prettier-ignore
-    expect(getMoveByFen(state, 'FEN0')).toStrictEqual({ fen: 'FEN0', uci: null });
-    // prettier-ignore
-    expect(getMoveByFen(state, 'FEN1')).toStrictEqual(undefined);
-    // prettier-ignore
-    expect(getMoveByFen(state, 'FEN2')).toStrictEqual({ fen: 'FEN2', uci: 'a1a2' });
-    // prettier-ignore
-    expect(getMoveByFen(state, 'FEN3')).toStrictEqual({ fen: 'FEN3', uci: 'a10a9' });
-    /* eslint-enable max-len */
-  });
-
   test('select last move', () => {
     const state = [
       { fen: 'FEN0', uci: null },
