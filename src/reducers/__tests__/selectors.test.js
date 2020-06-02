@@ -1,7 +1,12 @@
+import { Color } from 'services/logic/constants';
 import {
   getSelectedMove,
   getPreviousMoveFen,
   getNextMoveFen,
+  getNextMovePlayer,
+  getUserColor,
+  getCurrentPlayer,
+  getOpponent,
 } from 'reducers/selectors';
 
 jest.mock('services/logic/fen');
@@ -57,4 +62,41 @@ describe('get moves around selected fen', () => {
   });
 
   // TODO: what if there is a gap in moves?
+});
+
+describe('players', () => {
+  const state = {
+    redPlayer: { name: 'alice' },
+    blackPlayer: { name: 'bob' },
+  };
+
+  test('next player is red', () => {
+    const moves = [{ fen: 'FEN0 w' }];
+    expect(getNextMovePlayer({ ...state, moves })).toStrictEqual({
+      name: 'alice',
+    });
+  });
+
+  test('next player is black', () => {
+    const moves = [{ fen: 'FEN1 b' }, { fen: 'FEN0 w' }];
+    expect(getNextMovePlayer({ ...state, moves })).toStrictEqual({
+      name: 'bob',
+    });
+  });
+
+  test('user player is red', () => {
+    const newState = { ...state, username: 'alice' };
+
+    expect(getUserColor(newState)).toBe(Color.RED);
+    expect(getCurrentPlayer(newState)).toStrictEqual({ name: 'alice' });
+    expect(getOpponent(newState)).toStrictEqual({ name: 'bob' });
+  });
+
+  test('current player is black', () => {
+    const newState = { ...state, username: 'bob' };
+
+    expect(getUserColor(newState)).toBe(Color.BLACK);
+    expect(getCurrentPlayer(newState)).toStrictEqual({ name: 'bob' });
+    expect(getOpponent(newState)).toStrictEqual({ name: 'alice' });
+  });
 });

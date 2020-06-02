@@ -57,42 +57,56 @@ export const getFirstFenWithoutLegalMoves = ({ moves }) =>
 /***  Players  ***/
 /*****************/
 
-const lookupPlayer = (players, key, value) =>
-  players.find(p => p[key] === value);
-
-export const getNextMovePlayer = ({ players, moves }) =>
-  lookupPlayer(players, 'color', getNextMoveColor({ moves }));
-
-export const getNextMovePlayerName = ({ players, moves }) => {
-  try {
-    return getNextMovePlayer({ players, moves }).name;
-  } catch (e) {
-    if (e instanceof TypeError) return undefined;
-    throw e;
+export const getNextMovePlayer = state => {
+  switch (getNextMoveColor(state)) {
+    case Color.RED:
+      return state.redPlayer;
+    case Color.BLACK:
+      return state.blackPlayer;
+    default:
+      return {};
   }
 };
 
-const getUserPlayer = ({ players, username }) =>
-  lookupPlayer(players, 'name', username);
-
-export const getRedPlayer = ({ players }) =>
-  lookupPlayer(players, 'color', Color.RED);
-
-export const getBlackPlayer = ({ players }) =>
-  lookupPlayer(players, 'color', Color.BLACK);
-
-export const getUserColor = ({ players, username }) => {
-  try {
-    return getUserPlayer({ players, username }).color;
-  } catch (e) {
-    if (e instanceof TypeError) return undefined;
-    throw e;
+export const getUserColor = state => {
+  switch (state.username) {
+    case get('name', state.redPlayer):
+      return Color.RED;
+    case get('name', state.blackPlayer):
+      return Color.BLACK;
+    default:
+      return;
   }
 };
 
-export const getOtherPlayer = ({ gameSlug, players, username }) => {
-  if (gameSlug === null) return getBlackPlayer({ players });
-  return players.find(p => p.name !== username);
+export const getCurrentPlayer = state => {
+  if (!state.username) {
+    return state.redPlayer || {};
+  }
+
+  switch (getUserColor(state)) {
+    case Color.RED:
+      return state.redPlayer;
+    case Color.BLACK:
+      return state.blackPlayer;
+    default:
+      return {};
+  }
+};
+
+export const getOpponent = state => {
+  if (!state.username) {
+    return state.blackPlayer || {};
+  }
+
+  switch (getUserColor(state)) {
+    case Color.RED:
+      return state.blackPlayer;
+    case Color.BLACK:
+      return state.redPlayer;
+    default:
+      return {};
+  }
 };
 
 export const getBottomPlayerIsRed = (
@@ -104,21 +118,6 @@ export const getBottomPlayerIsRed = (
     userColor === undefined ||
     getUserColor({ players, username }) === Color.RED;
   return reversed ? !init : init;
-};
-
-// TODO: move to layout class that displays board and players
-export const getCurrentPlayer = ({ gameSlug, players, username }) => {
-  if (gameSlug === null) return getRedPlayer({ players });
-  return getUserPlayer({ players, username });
-};
-
-export const getCurrentPlayerColor = state => {
-  try {
-    return getCurrentPlayer(state).color;
-  } catch (e) {
-    if (e instanceof TypeError) return undefined;
-    throw e;
-  }
 };
 
 /********************/

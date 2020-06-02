@@ -8,7 +8,7 @@ import fetchPosition from 'actions/fetchPosition';
 import pollMoves from 'actions/pollMoves';
 import {
   getHasInitialPlacement,
-  getNextMovePlayerName,
+  getNextMovePlayer,
   getFirstFenWithoutLegalMoves,
 } from 'reducers';
 
@@ -21,7 +21,10 @@ const GameClient = () => {
   const hasInitialPlacement = useSelector(state =>
     getHasInitialPlacement(state),
   );
-  const nextMovePlayerName = useSelector(state => getNextMovePlayerName(state));
+  const nextMovePlayer = useSelector(
+    state => getNextMovePlayer(state),
+    isEqual,
+  );
   const firstFenWithoutLegalMoves = useSelector(
     state => getFirstFenWithoutLegalMoves(state),
     isEqual,
@@ -48,13 +51,18 @@ const GameClient = () => {
     () => {
       const interval = setInterval(() => {
         dispatch(
-          pollMoves({ gameSlug, nextMovePlayerName, updateCount, username }),
+          pollMoves({
+            gameSlug,
+            nextMovePlayerName: nextMovePlayer.name,
+            updateCount,
+            username,
+          }),
         );
       }, POLLING_INTERVAL);
       return () => clearInterval(interval);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, nextMovePlayerName],
+    [dispatch, nextMovePlayer.name],
   );
 
   return null;
