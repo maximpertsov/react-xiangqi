@@ -7,6 +7,7 @@ import {
   getUserColor,
   getCurrentPlayer,
   getOpponent,
+  getBottomPlayerIsRed,
 } from 'reducers/selectors';
 
 jest.mock('services/logic/fen');
@@ -90,6 +91,7 @@ describe('players', () => {
     expect(getUserColor(newState)).toBe(Color.RED);
     expect(getCurrentPlayer(newState)).toStrictEqual({ name: 'alice' });
     expect(getOpponent(newState)).toStrictEqual({ name: 'bob' });
+    expect(getBottomPlayerIsRed(newState)).toBe(true);
   });
 
   test('current player is black', () => {
@@ -98,5 +100,6 @@ describe('players', () => {
     expect(getUserColor(newState)).toBe(Color.BLACK);
     expect(getCurrentPlayer(newState)).toStrictEqual({ name: 'bob' });
     expect(getOpponent(newState)).toStrictEqual({ name: 'alice' });
+    expect(getBottomPlayerIsRed(newState)).toBe(false);
   });
 });

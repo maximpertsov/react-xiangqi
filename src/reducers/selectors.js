@@ -6,6 +6,7 @@ import find from 'lodash/fp/find';
 import flow from 'lodash/fp/flow';
 import get from 'lodash/fp/get';
 
+import isEqual from 'lodash/isEqual';
 import keys from 'lodash/keys';
 
 import * as fromMoves from './moves';
@@ -109,15 +110,9 @@ export const getOpponent = state => {
   }
 };
 
-export const getBottomPlayerIsRed = (
-  { reversed, players, username } = { reversed: false },
-) => {
-  // TODO: add a state that allows players to flip their original orientation
-  const userColor = getUserColor({ players, username });
-  const init =
-    userColor === undefined ||
-    getUserColor({ players, username }) === Color.RED;
-  return reversed ? !init : init;
+// TODO: add a state that allows players to flip their original orientation
+export const getBottomPlayerIsRed = state => {
+  return getUserColor(state) !== Color.BLACK;
 };
 
 /********************/
@@ -125,18 +120,15 @@ export const getBottomPlayerIsRed = (
 /********************/
 
 export const getLegalMoves = state => {
-  const currentPlayerColor = getCurrentPlayerColor(state);
-  const nextMoveColor = getNextMoveColor(state);
-  const { fen: lastMoveFen, legalMoves } = getLastMove(state);
+  const lastMove = getLastMove(state);
+  if (lastMove.fen !== state.selectedFen) return [];
+  if (state.canMoveBothColors) return lastMove.legalMoves;
 
-  // TODO: for now we can assume that legal moves are only allowed for the
-  // latest move. However, this will change if we ever implement an analysis
-  // board-style function.
-  if (lastMoveFen !== state.selectedFen) return [];
-  if (!state.canMoveBothColors && currentPlayerColor !== nextMoveColor) {
-    return [];
-  }
-  return legalMoves;
+  const nextMovePlayer = getNextMovePlayer(state);
+  const currentPlayer = getCurrentPlayer(state);
+  if (isEqual(nextMovePlayer, currentPlayer)) return lastMove.legalMoves;
+
+  return [];
 };
 
 export const getTargets = state => {

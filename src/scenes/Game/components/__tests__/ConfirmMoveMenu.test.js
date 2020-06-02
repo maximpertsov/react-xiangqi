@@ -17,14 +17,6 @@ const initialState = {
     { uci: null, fen: 'FEN0' },
     { uci: 'a1a2', fen: 'FEN1' },
   ],
-  players: [
-    {
-      color: 'red',
-    },
-    {
-      color: 'black',
-    },
-  ],
   selectedFen: null,
   selectedSquare: null,
   showGame: true,

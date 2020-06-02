@@ -7,7 +7,7 @@ import { Button, Dimmer, Icon, Loader, Segment } from 'semantic-ui-react';
 import {
   getCurrentPlayer,
   getHasInitialPlacement,
-  getOtherPlayer,
+  getOpponent,
 } from 'reducers';
 import Board from 'components/Board';
 import GameMenu from 'components/GameMenu';
@@ -20,7 +20,7 @@ import TakebackButton from './TakebackButton';
 const mapStateToProps = state => ({
   currentPlayer: getCurrentPlayer(state),
   hasInitialPlacement: getHasInitialPlacement(state),
-  otherPlayer: getOtherPlayer(state),
+  opponent: getOpponent(state),
   showConfirmMoveMenu: state.showConfirmMoveMenu,
 });
 
@@ -38,7 +38,7 @@ const GameView = () => {
     hasInitialPlacement,
     showConfirmMoveMenu,
     currentPlayer,
-    otherPlayer,
+    opponent,
   } = useSelector(state => mapStateToProps(state), isEqual);
 
   const renderActionsMenu = () => (
@@ -60,7 +60,7 @@ const GameView = () => {
       </Dimmer>
       {hasInitialPlacement && (
         <Wrapper className="Game">
-          <Player {...otherPlayer} />
+          <Player {...opponent} />
           <Board legalMoves />
           <ConfirmMoveMenu />
           {!showConfirmMoveMenu && renderActionsMenu()}
