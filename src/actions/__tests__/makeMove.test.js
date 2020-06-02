@@ -5,11 +5,11 @@ test('make a move', async () => {
   // eslint-disable-next-line no-undef
   const store = mockStore({});
 
-  await store.dispatch(makeMove({ uci: 'a1a2' }));
+  await store.dispatch(makeMove({ fen: 'FEN1', uci: 'a1a2' }));
 
   expect(store.getActions()).toStrictEqual([
-    actions.game.moves.add({ uci: 'a1a2' }),
-    actions.game.selectedMove.set(null),
+    actions.game.moves.add({ fen: 'FEN1', uci: 'a1a2' }),
+    actions.game.selectedFen.set('FEN1'),
     actions.game.showConfirmMoveMenu.set(true),
   ]);
 });

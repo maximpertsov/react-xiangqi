@@ -1,10 +1,7 @@
 import zipObject from 'lodash/zipObject';
 import update from 'lodash/update';
 import { Color } from 'services/logic/constants';
-import {
-  decodeSquare,
-  encodeSquare,
-} from 'services/logic/square';
+import { decodeSquare, encodeSquare } from 'services/logic/square';
 import { sameColor as sameColorPieces } from 'services/logic/utils';
 
 const FEN_FIELDS = [
@@ -16,7 +13,7 @@ const FEN_FIELDS = [
   'fullmoves',
 ];
 
-const activeColor = symbol => {
+const _activeColor = symbol => {
   switch (symbol) {
     case 'w':
       return Color.RED;
@@ -31,7 +28,7 @@ const activeColor = symbol => {
 
 const decodeFields = fen => {
   const result = zipObject(FEN_FIELDS, fen.split(' '));
-  update(result, 'activeColor', activeColor);
+  update(result, 'activeColor', _activeColor);
   update(result, 'halfmoves', parseInt);
   update(result, 'fullmoves', parseInt);
   return result;
@@ -59,9 +56,10 @@ export const isOccupied = (fen, square) => {
   return decodeFen(fen).placement[slot] !== null;
 };
 
-export const getPiece = (fen, square) => {
-  return decodeFen(fen).placement[decodeSquare(square)];
-};
+export const getPiece = (fen, square) =>
+  decodeFen(fen).placement[decodeSquare(square)];
+
+export const activeColor = fen => decodeFen(fen).activeColor;
 
 export const sameColor = (fen, square1, square2) => {
   const piece1 = getPiece(fen, square1);
@@ -71,10 +69,10 @@ export const sameColor = (fen, square1, square2) => {
 };
 
 export const activeKing = fen => {
-  const decodedFen = decodeFen(fen);
+  const { activeColor, placement } = decodeFen(fen);
   let king = undefined;
 
-  switch (decodedFen.activeColor) {
+  switch (activeColor) {
     case Color.RED:
       king = 'K';
       break;
@@ -86,8 +84,13 @@ export const activeKing = fen => {
       return;
   }
 
-  const kingSlot = decodedFen.placement.indexOf(king);
+  const kingSlot = placement.indexOf(king);
   return encodeSquare(kingSlot);
+};
+
+export const moveOrder = fen => {
+  const { activeColor, fullmoves } = decodeFen(fen);
+  return fullmoves * 2 - (activeColor === Color.RED ? 1 : 0);
 };
 
 export default {};

@@ -2,9 +2,8 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
-import isEqual from 'lodash/isEqual';
 
-import { getBottomPlayerIsRed, getSelectedMove } from 'reducers';
+import { getBottomPlayerIsRed } from 'reducers';
 import { MediaQuery, SquareSize } from 'commonStyles';
 import { decodeFen } from 'services/logic/fen';
 import { encodeSquare } from 'services/logic/square';
@@ -37,29 +36,29 @@ const Wrapper = styled.div`
 
 const BoardView = ({ handleSquareClick }) => {
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
-  const selectedMove = useSelector(state => getSelectedMove(state), isEqual);
+  const selectedFen = useSelector(state => state.selectedFen);
 
   const getSlot = useCallback(
     (slots, i) => (bottomPlayerIsRed ? i : slots.length - i - 1),
     [bottomPlayerIsRed],
   );
 
-  const renderSquares = useCallback(
-    () =>
-      decodeFen(selectedMove.fen).placement.map((_, i, slots) => {
-        const slot = getSlot(slots, i);
-        const square = encodeSquare(slot);
+  const renderSquares = useCallback(() => {
+    if (!selectedFen) return;
 
-        return (
-          <Square
-            key={square}
-            handleSquareClick={handleSquareClick}
-            square={square}
-          />
-        );
-      }),
-    [getSlot, handleSquareClick, selectedMove.fen],
-  );
+    return decodeFen(selectedFen).placement.map((_, i, slots) => {
+      const slot = getSlot(slots, i);
+      const square = encodeSquare(slot);
+
+      return (
+        <Square
+          key={square}
+          handleSquareClick={handleSquareClick}
+          square={square}
+        />
+      );
+    });
+  }, [getSlot, handleSquareClick, selectedFen]);
 
   return <Wrapper className="BoardView">{renderSquares()}</Wrapper>;
 };

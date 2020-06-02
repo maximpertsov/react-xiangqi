@@ -1,8 +1,16 @@
 import actions from 'actions';
-import reducer, { getLastMove, getMoveById } from 'reducers/moves';
+import reducer, {
+  getFirstFenWithoutLegalMoves,
+  getHasInitialPlacement,
+  getLastMove,
+  getNextMoveColor,
+} from 'reducers/moves';
+
+import { Color } from 'services/logic/constants';
+
+jest.mock('services/logic/fen');
 
 const createMove = (properties = {}) => ({
-  id: undefined,
   gameResult: undefined,
   fen: undefined,
   givesCheck: undefined,
@@ -22,52 +30,52 @@ describe('move reducers', () => {
       },
     ],
     [
-      'add the first move with id = 0',
+      'add the first move',
       {
-        action: actions.game.moves.add({}),
+        action: actions.game.moves.add({ fen: 'FEN0' }),
         currentState: [],
-        expectedNewState: [createMove({ id: 0 })],
+        expectedNewState: [createMove({ fen: 'FEN0' })],
       },
     ],
     [
-      'add a move with an incremented id',
+      'add the second move',
       {
-        action: actions.game.moves.add({}),
-        currentState: [createMove({ id: 0 })],
+        action: actions.game.moves.add({ fen: 'FEN1' }),
+        currentState: [createMove({ fen: 'FEN0' })],
         expectedNewState: [
-          createMove({ id: 0 }),
-          createMove({ id: 1 }),
+          createMove({ fen: 'FEN0' }),
+          createMove({ fen: 'FEN1' }),
         ],
       },
     ],
     [
       'remove a move',
       {
-        action: actions.game.moves.remove(1),
+        action: actions.game.moves.remove('FEN1'),
         currentState: [
-          createMove({ id: 0, uci: null }),
-          createMove({ id: 1, uci: 'a1a2' }),
-          createMove({ id: 2, uci: 'a10a9' }),
+          createMove({ fen: 'FEN0', uci: null }),
+          createMove({ fen: 'FEN1', uci: 'a1a2' }),
+          createMove({ fen: 'FEN2', uci: 'a10a9' }),
         ],
         expectedNewState: [
-          createMove({ id: 0, uci: null }),
-          createMove({ id: 2, uci: 'a10a9' }),
+          createMove({ fen: 'FEN0', uci: null }),
+          createMove({ fen: 'FEN2', uci: 'a10a9' }),
         ],
       },
     ],
     [
       'update a move',
       {
-        action: actions.game.moves.update({ id: 1, uci: 'b1a3' }),
+        action: actions.game.moves.update({ fen: 'FEN1', uci: 'b1a3' }),
         currentState: [
-          createMove({ id: 0, givesCheck: false, uci: null }),
-          createMove({ id: 1, givesCheck: false, uci: 'a1a2' }),
-          createMove({ id: 2, givesCheck: false, uci: 'a10a9' }),
+          createMove({ fen: 'FEN0', givesCheck: false, uci: null }),
+          createMove({ fen: 'FEN1', givesCheck: false, uci: 'a1a2' }),
+          createMove({ fen: 'FEN2', givesCheck: false, uci: 'a10a9' }),
         ],
         expectedNewState: [
-          createMove({ id: 0, givesCheck: false, uci: null }),
-          createMove({ id: 1, givesCheck: false, uci: 'b1a3' }),
-          createMove({ id: 2, givesCheck: false, uci: 'a10a9' }),
+          createMove({ fen: 'FEN0', givesCheck: false, uci: null }),
+          createMove({ fen: 'FEN1', givesCheck: false, uci: 'b1a3' }),
+          createMove({ fen: 'FEN2', givesCheck: false, uci: 'a10a9' }),
         ],
       },
     ],
@@ -76,13 +84,13 @@ describe('move reducers', () => {
       {
         action: actions.game.moves.set([{ uci: null }, { uci: 'b1a3' }]),
         currentState: [
-          createMove({ id: 0, uci: null }),
-          createMove({ id: 1, uci: 'a1a2' }),
-          createMove({ id: 2, uci: 'a10a9' }),
+          createMove({ uci: null }),
+          createMove({ uci: 'a1a2' }),
+          createMove({ uci: 'a10a9' }),
         ],
         expectedNewState: [
-          createMove({ id: 0, uci: null }),
-          createMove({ id: 1, uci: 'b1a3' }),
+          createMove({ uci: null }),
+          createMove({ uci: 'b1a3' }),
         ],
       },
     ],
@@ -95,24 +103,45 @@ describe('move reducers', () => {
 });
 
 describe('moves selectors', () => {
-  test('select move by id', () => {
-    const state = [
-      { id: 0, uci: null },
-      { id: 2, uci: 'a1a2' },
-      { id: 3, uci: 'a10a9' },
-    ];
-    expect(getMoveById(state, 0)).toStrictEqual({ id: 0, uci: null });
-    expect(getMoveById(state, 1)).toStrictEqual(undefined);
-    expect(getMoveById(state, 2)).toStrictEqual({ id: 2, uci: 'a1a2' });
-    expect(getMoveById(state, 3)).toStrictEqual({ id: 3, uci: 'a10a9' });
-  });
-
   test('select last move', () => {
     const state = [
-      { id: 0, uci: null },
-      { id: 2, uci: 'a1a2' },
-      { id: 3, uci: 'a10a9' },
+      { fen: 'FEN0', uci: null },
+      { fen: 'FEN3', uci: 'a10a9' },
+      { fen: 'FEN2', uci: 'a1a2' },
     ];
-    expect(getLastMove(state)).toStrictEqual({ id: 3, uci: 'a10a9' });
+    expect(getLastMove(state)).toStrictEqual({ fen: 'FEN3', uci: 'a10a9' });
+  });
+
+  describe('has initial placement', () => {
+    const table = [
+      ['has move with placement', [{ fen: 'FEN0', uci: null }], true],
+      ['has move without placement', [{ uci: null }], false],
+      ['no moves', [], false],
+    ];
+
+    test.each(table)('%s', (_, state, expected) => {
+      expect(getHasInitialPlacement(state)).toBe(expected);
+    });
+  });
+
+  describe('next move color', () => {
+    const table = [
+      ['no moves', [], Color.RED],
+      ['red moves', [{ fen: 'FEN0 w' }], Color.RED],
+      ['black moves', [{ fen: 'FEN1 b' }, { fen: 'FEN0 w' }], Color.BLACK],
+    ];
+
+    test.each(table)('%s', (_, state, expected) => {
+      expect(getNextMoveColor(state)).toBe(expected);
+    });
+  });
+
+  test('first move with missing data', () => {
+    const state = [
+      { fen: 'FEN0', uci: null, legalMoves: ['a1a2'] },
+      { fen: 'FEN3', uci: 'a10a9' },
+      { fen: 'FEN2', uci: 'a1a2' },
+    ];
+    expect(getFirstFenWithoutLegalMoves(state)).toStrictEqual('FEN2');
   });
 });

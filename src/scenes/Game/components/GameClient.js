@@ -8,9 +8,8 @@ import fetchPosition from 'actions/fetchPosition';
 import pollMoves from 'actions/pollMoves';
 import {
   getHasInitialPlacement,
-  getNextMovePlayerName,
-  getFirstMoveWithMissingData,
-  getMoveCount,
+  getNextMovePlayer,
+  getFirstFenWithoutLegalMoves,
 } from 'reducers';
 
 const POLLING_INTERVAL = 2500;
@@ -22,10 +21,12 @@ const GameClient = () => {
   const hasInitialPlacement = useSelector(state =>
     getHasInitialPlacement(state),
   );
-  const moveCount = useSelector(state => getMoveCount(state));
-  const nextMovePlayerName = useSelector(state => getNextMovePlayerName(state));
-  const firstMoveWithMissingData = useSelector(
-    state => getFirstMoveWithMissingData(state),
+  const nextMovePlayer = useSelector(
+    state => getNextMovePlayer(state),
+    isEqual,
+  );
+  const firstFenWithoutLegalMoves = useSelector(
+    state => getFirstFenWithoutLegalMoves(state),
     isEqual,
   );
   const updateCount = useSelector(state => state.updateCount);
@@ -38,33 +39,30 @@ const GameClient = () => {
     dispatch(fetchStartingPosition());
   }, [dispatch, gameSlug, hasInitialPlacement]);
 
-  useEffect(
-    () => {
-      if (gameSlug) return;
-      if (!hasInitialPlacement) return;
-      if (!firstMoveWithMissingData) return;
+  useEffect(() => {
+    if (gameSlug) return;
+    if (!hasInitialPlacement) return;
+    if (!firstFenWithoutLegalMoves) return;
 
-      dispatch(fetchPosition(firstMoveWithMissingData));
-    },
-    // HACK: too many updates because missing legal moves is an object and
-    // useEffect is doing a deep comparison. To get around this, we exclude it
-    // from the comparison and key on the move count.
-    //
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, hasInitialPlacement, moveCount],
-  );
+    dispatch(fetchPosition({ fen: firstFenWithoutLegalMoves }));
+  }, [dispatch, firstFenWithoutLegalMoves, gameSlug, hasInitialPlacement]);
 
   useEffect(
     () => {
       const interval = setInterval(() => {
         dispatch(
-          pollMoves({ gameSlug, nextMovePlayerName, updateCount, username }),
+          pollMoves({
+            gameSlug,
+            nextMovePlayerName: nextMovePlayer.name,
+            updateCount,
+            username,
+          }),
         );
       }, POLLING_INTERVAL);
       return () => clearInterval(interval);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, nextMovePlayerName],
+    [dispatch, nextMovePlayer.name],
   );
 
   return null;

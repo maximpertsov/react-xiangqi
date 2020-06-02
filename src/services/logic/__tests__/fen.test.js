@@ -1,9 +1,11 @@
 import flatten from 'lodash/flatten';
 import {
+  activeColor,
   activeKing,
   decodeFen,
   getPiece,
   isOccupied,
+  moveOrder,
   sameColor,
 } from 'services/logic/fen';
 import { Color } from 'services/logic/constants';
@@ -64,6 +66,11 @@ describe('fen functions', () => {
     expect(getPiece(rookMoveFen, 'a9')).toBe('r');
   });
 
+  test('active color', () => {
+    expect(activeColor(initialFen)).toBe(Color.RED);
+    expect(activeColor(rookMoveFen)).toBe(Color.BLACK);
+  });
+
   test('is occupied', () => {
     expect(isOccupied(initialFen, 'a10')).toBe(true);
     expect(isOccupied(initialFen, 'a9')).toBe(false);
@@ -88,5 +95,10 @@ describe('fen functions', () => {
   test('is active king', () => {
     expect(activeKing(initialFen)).toBe('e1');
     expect(activeKing(rookMoveFen)).toBe('e10');
+  });
+
+  test('move order', () => {
+    expect(moveOrder(initialFen)).toBe(1);
+    expect(moveOrder(rookMoveFen)).toBe(2);
   });
 });

@@ -8,7 +8,7 @@ import isEqual from 'lodash/isEqual';
 import makeMove from 'actions/makeMove';
 import actions from 'actions';
 import animateMove from 'actions/animateMove';
-import { getBottomPlayerIsRed, getLegalMoves, getSelectedMove } from 'reducers';
+import { getBottomPlayerIsRed, getLegalMoves } from 'reducers';
 import { isOccupied, sameColor } from 'services/logic/fen';
 import { squaresToUci } from 'services/logic/square';
 
@@ -21,28 +21,29 @@ const Board = () => {
 
   const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
   const legalMoves = useSelector(state => getLegalMoves(state), isEqual);
-  const selectedMove = useSelector(state => getSelectedMove(state), isEqual);
+  const selectedFen = useSelector(state => state.selectedFen);
   const selectedSquare = useSelector(state => state.selectedSquare);
 
   useEffect(() => {
     dispatch(actions.board.selectedSquare.set(null));
-  }, [dispatch, selectedMove.fen]);
+  }, [dispatch, selectedFen]);
 
   const selectedCanCapture = useCallback(
     square => {
       if (selectedSquare === null) return false;
-      if (!isOccupied(selectedMove.fen, selectedSquare)) return false;
-      if (!isOccupied(selectedMove.fen, square)) return false;
+      if (!isOccupied(selectedFen, selectedSquare)) return false;
+      if (!isOccupied(selectedFen, square)) return false;
 
-      return !sameColor(selectedMove.fen, square, selectedSquare);
+      return !sameColor(selectedFen, square, selectedSquare);
     },
-    [selectedMove.fen, selectedSquare],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedFen, selectedSquare],
   );
 
   const legalFen = useCallback(
     uci => get(legalMoves, uci, false),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedMove.fen, selectedSquare],
+    [selectedFen, selectedSquare],
   );
 
   const handleMove = useCallback(
@@ -67,7 +68,7 @@ const Board = () => {
       if (square === selectedSquare) {
         dispatch(actions.board.selectedSquare.set(null));
       } else if (
-        isOccupied(selectedMove.fen, square) &&
+        isOccupied(selectedFen, square) &&
         !selectedCanCapture(square)
       ) {
         dispatch(actions.board.selectedSquare.set(square));
@@ -77,13 +78,7 @@ const Board = () => {
         dispatch(actions.board.selectedSquare.set(null));
       }
     },
-    [
-      dispatch,
-      handleMove,
-      selectedCanCapture,
-      selectedMove.fen,
-      selectedSquare,
-    ],
+    [dispatch, handleMove, selectedCanCapture, selectedFen, selectedSquare],
   );
 
   return (

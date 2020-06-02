@@ -16,20 +16,19 @@ describe('fetch game', () => {
   });
 
   test('fetch game if slug is provided', async () => {
+    const moves = [{}, { fen: 'FEN1' }];
     axios.get.mockResolvedValue({
-      data: {
-        players: [],
-        moves: [{}, {}],
-      },
+      data: { blackPlayer: {}, redPlayer: {}, moves },
     });
 
     await store.dispatch(fetchGame({ gameSlug: 'ABC123' }));
 
     expect(axios.get).toHaveBeenCalledWith('game/ABC123');
     expect(store.getActions()).toStrictEqual([
-      actions.game.players.set([]),
-      actions.game.moves.set([{}, {}]),
-      actions.game.selectedMove.set(1),
+      actions.game.redPlayer.set({}),
+      actions.game.blackPlayer.set({}),
+      actions.game.selectedFen.set('FEN1'),
+      actions.game.moves.set(moves),
     ]);
   });
 });

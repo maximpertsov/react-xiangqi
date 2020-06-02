@@ -14,15 +14,7 @@ const initialState = {
   gameSlug: null,
   showGame: true,
   moves: initialPlacementOnly,
-  players: [
-    {
-      color: 'red',
-    },
-    {
-      color: 'black',
-    },
-  ],
-  selectedMoveId: null,
+  selectedFen: initialPlacementOnly[0].fen,
   animationOffset: [0, 0],
   selectedSquare: null,
 };

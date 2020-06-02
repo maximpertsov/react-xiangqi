@@ -217,7 +217,7 @@ const tables = {
       },
     ],
   ],
-  selectedMoveId: [
+  selectedFen: [
     [
       'return the default state',
       {
@@ -229,9 +229,9 @@ const tables = {
     [
       'sets the selected move',
       {
-        action: actions.game.selectedMove.set(1),
+        action: actions.game.selectedFen.set('FEN'),
         currentState: null,
-        expectedNewState: 1,
+        expectedNewState: 'FEN',
       },
     ],
   ],

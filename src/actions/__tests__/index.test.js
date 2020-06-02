@@ -10,12 +10,11 @@ test.each`
   ${board.selectedSquare.set}     | ${'BOARD/SELECTED_SQUARE/SET'}       | ${'a1a2'}
   ${game.requestedTakeback.set}   | ${'GAME/REQUESTED_TAKEBACK/SET'}     | ${true}
   ${game.canMoveBothColors.set}   | ${'GAME/CAN_MOVE_BOTH_COLORS/SET'}   | ${true}
-  ${game.players.set}             | ${'GAME/PLAYERS/SET'}                | ${[{}, {}]}
-  ${game.moves.add}           | ${'GAME/MOVES/ADD'}              | ${{}}
-  ${game.moves.update}        | ${'GAME/MOVES/UPDATE'}           | ${{}}
-  ${game.moves.remove}        | ${'GAME/MOVES/REMOVE'}           | ${0}
-  ${game.moves.set}           | ${'GAME/MOVES/SET'}              | ${[]}
-  ${game.selectedMove.set}    | ${'GAME/SELECTED_MOVE/SET'}      | ${0}
+  ${game.moves.add}               | ${'GAME/MOVES/ADD'}                  | ${{}}
+  ${game.moves.update}            | ${'GAME/MOVES/UPDATE'}               | ${{}}
+  ${game.moves.remove}            | ${'GAME/MOVES/REMOVE'}               | ${0}
+  ${game.moves.set}               | ${'GAME/MOVES/SET'}                  | ${[]}
+  ${game.selectedFen.set}         | ${'GAME/SELECTED_FEN/SET'}           | ${'FEN'}
   ${game.showConfirmMoveMenu.set} | ${'GAME/SHOW_CONFIRM_MOVE_MENU/SET'} | ${true}
   ${game.slug.set}                | ${'GAME/SLUG/SET'}                   | ${'ABC123'}
   ${game.updateCount.set}         | ${'GAME/UPDATE_COUNT/SET'}           | ${10}

@@ -12,13 +12,13 @@ export default createActions({
     },
   },
   GAME: {
+    BLACK_PLAYER: {
+      SET: undefined,
+    },
     CAN_MOVE_BOTH_COLORS: {
       SET: undefined,
     },
     REQUESTED_TAKEBACK: {
-      SET: undefined,
-    },
-    PLAYERS: {
       SET: undefined,
     },
     MOVES: {
@@ -27,7 +27,10 @@ export default createActions({
       UPDATE: undefined,
       SET: undefined,
     },
-    SELECTED_MOVE: {
+    RED_PLAYER: {
+      SET: undefined,
+    },
+    SELECTED_FEN: {
       SET: undefined,
     },
     SHOW_CONFIRM_MOVE_MENU: {

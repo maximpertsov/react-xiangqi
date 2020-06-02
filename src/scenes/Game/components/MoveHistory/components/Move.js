@@ -38,13 +38,13 @@ const moveText = ({ uci, piece }) => {
   return `${P[piece]}${uci}`;
 };
 
-const Move = ({ uci, fen, moveId }) => {
+const Move = ({ uci, fen }) => {
   const dispatch = useDispatch();
   const selectedMove = useSelector(state => getSelectedMove(state), isEqual);
 
   const handleClick = useCallback(() => {
-    dispatch(actions.game.selectedMove.set(moveId));
-  }, [dispatch, moveId]);
+    dispatch(actions.game.selectedFen.set(fen));
+  }, [dispatch, fen]);
 
   if (uci === null) return null;
 
@@ -54,7 +54,7 @@ const Move = ({ uci, fen, moveId }) => {
     <Wrapper
       className="Move"
       onClick={handleClick}
-      isSelected={selectedMove.id === moveId}
+      isSelected={selectedMove.fen === fen}
       piece={piece}
     >
       {moveText({ uci, piece })}
@@ -65,7 +65,6 @@ const Move = ({ uci, fen, moveId }) => {
 Move.propTypes = {
   fen: PropTypes.string.isRequired,
   uci: PropTypes.string,
-  moveId: PropTypes.number.isRequired,
 };
 
 Move.defaultProps = {

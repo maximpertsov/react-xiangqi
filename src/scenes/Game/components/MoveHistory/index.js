@@ -47,7 +47,6 @@ const MoveHistory = () => {
   const moveComponents = moves.map((move, index) => (
     <Move
       key={index}
-      moveId={move.id}
       uci={move.uci}
       fen={move.fen}
     />
