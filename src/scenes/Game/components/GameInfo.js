@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
-import { getLastMove, getNextMovePlayer, getUserColor } from 'reducers';
+import { getLastMove, getNextMovePlayer, getCurrentPlayer } from 'reducers';
 import isEqual from 'lodash/isEqual';
+
+import { Color } from 'services/logic/constants';
 
 // TODO: since this style also appears in the Player component,
 // TODO: consider moving to commonStyles or shared scss?
@@ -20,11 +22,12 @@ const GameInfo = () => {
     state => getNextMovePlayer(state),
     isEqual,
   );
-  const userColor = useSelector(state => getUserColor(state));
+  const currentPlayer = useSelector(state => getCurrentPlayer(state), isEqual);
+  const username = useSelector(state => getCurrentPlayer(state));
 
-  const userIsActive = () => {
-    const { color } = nextMovePlayer;
-    return color === userColor;
+  const isCurrentPlayerTurn = () => {
+    if (!username) return nextMovePlayer.color === Color.RED;
+    return isEqual(nextMovePlayer, currentPlayer);
   };
 
   // TODO: move this logic into a selector
@@ -37,19 +40,19 @@ const GameInfo = () => {
         gameResult: [redScore, blackScore],
       } = lastMove;
       if (redScore === 1) {
-        if (color === 'red') return 'You lose!';
-        if (color === 'black') return 'You win!';
+        if (color === Color.RED) return 'You lose!';
+        if (color === Color.BLACK) return 'You win!';
       }
       if (blackScore === 1) {
-        if (color === 'red') return 'You win!';
-        if (color === 'black') return 'You lose!';
+        if (color === Color.RED) return 'You win!';
+        if (color === Color.BLACK) return 'You lose!';
       }
       if (redScore === 0.5 && blackScore === 0.5) {
         return 'Draw!';
       }
     }
 
-    return userIsActive() ? 'Your turn' : 'Waiting for opponent';
+    return isCurrentPlayerTurn() ? 'Your turn' : 'Waiting for opponent';
   };
 
   return (
