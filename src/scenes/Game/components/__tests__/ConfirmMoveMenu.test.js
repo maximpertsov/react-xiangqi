@@ -85,6 +85,7 @@ describe('ConfirmMoveMenu', () => {
     // Confirm state
     expect(store.getState().showConfirmMoveMenu).toBe(false);
     expect(store.getState().moves).toStrictEqual([{ uci: null, fen: 'FEN0' }]);
+    expect(store.getState().selectedFen).toBe('FEN0');
     expect(wrapper.render()).toMatchSnapshot();
 
     wrapper.unmount();

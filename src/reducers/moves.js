@@ -5,6 +5,7 @@ import flow from 'lodash/fp/flow';
 import fromPairs from 'lodash/fp/fromPairs';
 import get from 'lodash/fp/get';
 import last from 'lodash/fp/last';
+import nth from 'lodash/fp/nth';
 import pick from 'lodash/fp/pick';
 import reject from 'lodash/fp/reject';
 import sortBy from 'lodash/fp/sortBy';
@@ -67,6 +68,12 @@ export const getLastMove = state =>
   flow(
     sortBy(({ fen }) => moveOrder(fen)),
     last,
+  )(state);
+
+export const getSecondToLastMove = state =>
+  flow(
+    sortBy(({ fen }) => moveOrder(fen)),
+    nth(-2),
   )(state);
 
 // TODO: add a test

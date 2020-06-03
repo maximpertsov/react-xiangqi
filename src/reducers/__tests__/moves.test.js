@@ -3,6 +3,7 @@ import reducer, {
   getFirstFenWithoutLegalMoves,
   getHasInitialPlacement,
   getLastMove,
+  getSecondToLastMove,
   getNextMoveColor,
 } from 'reducers/moves';
 
@@ -110,6 +111,18 @@ describe('moves selectors', () => {
       { fen: 'FEN2', uci: 'a1a2' },
     ];
     expect(getLastMove(state)).toStrictEqual({ fen: 'FEN3', uci: 'a10a9' });
+  });
+
+  test('select second to last move', () => {
+    const state = [
+      { fen: 'FEN0', uci: null },
+      { fen: 'FEN3', uci: 'a10a9' },
+      { fen: 'FEN2', uci: 'a1a2' },
+    ];
+    expect(getSecondToLastMove(state)).toStrictEqual({
+      fen: 'FEN2',
+      uci: 'a1a2',
+    });
   });
 
   describe('has initial placement', () => {
