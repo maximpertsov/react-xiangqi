@@ -19,7 +19,10 @@ import * as fromAnimationOffset from './animationOffset';
 export const getHasInitialPlacement = ({ moves }) =>
   fromMoves.getHasInitialPlacement(moves);
 
-export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves);
+export const getLastMove = ({ moves }) => fromMoves.getLastMove(moves) || {};
+
+export const getSecondToLastMove = ({ moves }) =>
+  fromMoves.getSecondToLastMove(moves) || {};
 
 export const getSelectedMove = ({ moves, selectedFen }) =>
   find(['fen', selectedFen], moves) || {};

@@ -17,7 +17,7 @@ const initialState = {
     { uci: null, fen: 'FEN0' },
     { uci: 'a1a2', fen: 'FEN1' },
   ],
-  selectedFen: null,
+  selectedFen: 'FEN1',
   selectedSquare: null,
   showGame: true,
   username: 'user',
@@ -85,6 +85,7 @@ describe('ConfirmMoveMenu', () => {
     // Confirm state
     expect(store.getState().showConfirmMoveMenu).toBe(false);
     expect(store.getState().moves).toStrictEqual([{ uci: null, fen: 'FEN0' }]);
+    expect(store.getState().selectedFen).toBe('FEN0');
     expect(wrapper.render()).toMatchSnapshot();
 
     wrapper.unmount();

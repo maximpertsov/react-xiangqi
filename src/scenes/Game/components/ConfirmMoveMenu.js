@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import actions from 'actions';
 import createMoveOnServer from 'actions/createMoveOnServer';
-import { getLastMove } from 'reducers';
+import { getLastMove, getSecondToLastMove } from 'reducers';
 
 import isEqual from 'lodash/isEqual';
 
@@ -15,6 +15,10 @@ const ConfirmMoveMenu = () => {
   const gameSlug = useSelector(state => state.gameSlug);
   const showConfirmMoveMenu = useSelector(state => state.showConfirmMoveMenu);
   const lastMove = useSelector(state => getLastMove(state), isEqual);
+  const secondToLastMove = useSelector(
+    state => getSecondToLastMove(state),
+    isEqual,
+  );
   const username = useSelector(state => state.username);
 
   const confirmMove = useCallback(async () => {
@@ -32,7 +36,8 @@ const ConfirmMoveMenu = () => {
   const cancelMove = useCallback(() => {
     dispatch(actions.game.showConfirmMoveMenu.set(false));
     dispatch(actions.game.moves.remove(lastMove.fen));
-  }, [dispatch, lastMove.fen]);
+    dispatch(actions.game.selectedFen.set(secondToLastMove.fen));
+  }, [dispatch, lastMove.fen, secondToLastMove.fen]);
 
   return (
     <ConfirmMenu
