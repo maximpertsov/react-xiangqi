@@ -4,18 +4,13 @@ import { mount } from 'enzyme';
 
 import GameInfo from 'scenes/Game/components/GameInfo';
 
-const state = {
+const defaultState = {
   animationOffset: [0, 0],
   gameSlug: 'ABC123',
-  showConfirmMoveMenu: true,
-  moves: [
-    { uci: null, fen: 'FEN0' },
-    { uci: 'a1a2', fen: 'FEN1' },
-  ],
-  selectedFen: 'FEN1',
-  selectedSquare: null,
   showGame: true,
-  username: 'user',
+  redPlayer: { name: 'alice' },
+  blackPlayer: { name: 'bob' },
+  username: 'alice',
 };
 
 const componentWithStore = (component, state) => (
@@ -24,10 +19,30 @@ const componentWithStore = (component, state) => (
 );
 
 describe('GameInfo', () => {
-  test('renders without crashing', () => {
+  test('Your turn', () => {
+    const state = {
+      ...defaultState,
+      moves: [{ fen: 'FEN0 w' }],
+    };
     const wrapper = mount(componentWithStore(<GameInfo />, state));
     expect(wrapper.containsMatchingElement(<p>Your turn</p>)).toBeTruthy();
-    expect(wrapper.render()).toMatchSnapshot();
     wrapper.unmount();
   });
+
+  test('Waiting for opponent', () => {
+    const state = {
+      ...defaultState,
+      moves: [{ fen: 'FEN0 w' }, { fen: 'FEN1 b' }],
+    };
+    const wrapper = mount(componentWithStore(<GameInfo />, state));
+    expect(
+      wrapper.containsMatchingElement(<p>Waiting for opponent</p>),
+    ).toBeTruthy();
+    wrapper.unmount();
+  });
+
+  test.todo('win');
+  test.todo('lose');
+  test.todo('draw');
+  test.todo('sessionless');
 });
