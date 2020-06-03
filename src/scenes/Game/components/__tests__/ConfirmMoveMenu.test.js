@@ -17,7 +17,7 @@ const initialState = {
     { uci: null, fen: 'FEN0' },
     { uci: 'a1a2', fen: 'FEN1' },
   ],
-  selectedFen: null,
+  selectedFen: 'FEN1',
   selectedSquare: null,
   showGame: true,
   username: 'user',
