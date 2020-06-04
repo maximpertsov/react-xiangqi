@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { createSelector } from 'reselect';
 import { useSelector } from 'react-redux';
-import { getLastMove, getNextMovePlayer, getCurrentPlayer } from 'reducers';
+import { getNextMovePlayer, getCurrentPlayer } from 'reducers';
+
 import isEqual from 'lodash/isEqual';
 
 import { Color } from 'services/logic/constants';
 
-// TODO: since this style also appears in the Player component,
-// TODO: consider moving to commonStyles or shared scss?
 const Wrapper = styled.div`
   align-items: center;
   color: #999;
@@ -16,48 +16,73 @@ const Wrapper = styled.div`
   justify-content: space-around;
 `;
 
+// eslint-disable-next-line complexity
+const getGameOverMessage = ({
+  blackPlayer,
+  blackScore,
+  redPlayer,
+  redScore,
+}) => {
+  if (redScore === 1) return `${redPlayer.name} wins!`;
+  if (blackScore === 1) return `${blackPlayer.name} wins!`;
+  if (redScore === 0.5 && blackScore === 0.5) return 'Draw!';
+};
+
+const getGameInProgressMessage = ({
+  currentPlayer,
+  nextMovePlayer,
+  username,
+}) => {
+  if (!username && nextMovePlayer.color === Color.RED) {
+    return 'Your turn';
+  }
+  if (isEqual(nextMovePlayer, currentPlayer)) {
+    return 'Your turn';
+  }
+
+  return 'Waiting for opponent';
+};
+
+const mapStateToProps = createSelector(
+  state => state.blackPlayer,
+  state => state.blackScore,
+  state => state.redPlayer,
+  state => state.redScore,
+  state => state.username,
+  state => getCurrentPlayer(state),
+  state => getNextMovePlayer(state),
+
+  (
+    blackPlayer,
+    blackScore,
+    redPlayer,
+    redScore,
+    username,
+    currentPlayer,
+    nextMovePlayer,
+  ) => ({
+    gameOverMessage: getGameOverMessage({
+      blackPlayer,
+      blackScore,
+      redPlayer,
+      redScore,
+    }),
+    gameInProgressMessage: getGameInProgressMessage({
+      currentPlayer,
+      nextMovePlayer,
+      username,
+    }),
+  }),
+);
+
 const GameInfo = () => {
-  const lastMove = useSelector(state => getLastMove(state), isEqual);
-  const nextMovePlayer = useSelector(
-    state => getNextMovePlayer(state),
+  const { gameOverMessage, gameInProgressMessage } = useSelector(
+    mapStateToProps,
     isEqual,
   );
-  const currentPlayer = useSelector(state => getCurrentPlayer(state), isEqual);
-  const username = useSelector(state => getCurrentPlayer(state));
-
-  const isCurrentPlayerTurn = () => {
-    if (!username) return nextMovePlayer.color === Color.RED;
-    return isEqual(nextMovePlayer, currentPlayer);
-  };
-
-  // TODO: move this logic into a selector
-  // eslint-disable-next-line complexity
-  const getMessage = () => {
-    const { color } = nextMovePlayer;
-
-    if (lastMove.gameResult) {
-      const {
-        gameResult: [redScore, blackScore],
-      } = lastMove;
-      if (redScore === 1) {
-        if (color === Color.RED) return 'You lose!';
-        if (color === Color.BLACK) return 'You win!';
-      }
-      if (blackScore === 1) {
-        if (color === Color.RED) return 'You win!';
-        if (color === Color.BLACK) return 'You lose!';
-      }
-      if (redScore === 0.5 && blackScore === 0.5) {
-        return 'Draw!';
-      }
-    }
-
-    return isCurrentPlayerTurn() ? 'Your turn' : 'Waiting for opponent';
-  };
-
   return (
     <Wrapper className="GameInfo">
-      <p>{getMessage()}</p>
+      <p>{gameOverMessage || gameInProgressMessage}</p>
     </Wrapper>
   );
 };

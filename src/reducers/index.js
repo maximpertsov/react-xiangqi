@@ -45,12 +45,12 @@ const rootReducer = combineReducers({
   blackPlayer: handleAction(
     actions.game.blackPlayer.set,
     (state, action) => action.payload,
-    {},
+    { name: 'black' },
   ),
   redPlayer: handleAction(
     actions.game.redPlayer.set,
     (state, action) => action.payload,
-    {},
+    { name: 'red' },
   ),
   moves,
   showConfirmMoveMenu: handleAction(
