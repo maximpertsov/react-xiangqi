@@ -48,10 +48,20 @@ const rootReducer = combineReducers({
     (state, action) => action.payload,
     { name: 'black', color: Color.BLACK },
   ),
+  blackScore: handleAction(
+    actions.game.blackScore.set,
+    (state, action) => action.payload,
+    0.0,
+  ),
   redPlayer: handleAction(
     actions.game.redPlayer.set,
     (state, action) => action.payload,
     { name: 'red', color: Color.RED },
+  ),
+  redScore: handleAction(
+    actions.game.redScore.set,
+    (state, action) => action.payload,
+    0.0,
   ),
   moves,
   showConfirmMoveMenu: handleAction(
