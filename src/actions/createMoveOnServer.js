@@ -19,12 +19,9 @@ const createMoveOnServer = ({
 }) => async dispatch => {
   if (gameSlug === null) return;
 
-  try {
-    await postMove({ gameSlug, uci, fen, username });
-  } catch (error) {
-    // TODO: fetch moves to avoid client/server disparity?
-    dispatch(actions.game.moves.remove(fen));
-  }
+  postMove({ gameSlug, uci, fen, username }).catch(() =>
+    dispatch(actions.game.moves.remove(fen)),
+  );
 };
 
 export default createMoveOnServer;
