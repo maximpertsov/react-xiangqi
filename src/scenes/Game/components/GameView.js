@@ -16,6 +16,7 @@ import GameInfo from './GameInfo';
 import MoveHistory from './MoveHistory';
 import Player from './Player';
 import TakebackButton from './TakebackButton';
+import DrawButton from './DrawButton';
 
 const mapStateToProps = state => ({
   currentPlayer: getCurrentPlayer(state),
@@ -44,9 +45,7 @@ const GameView = () => {
   const renderActionsMenu = () => (
     <GameMenu>
       <TakebackButton />
-      <Button>
-        <Icon fitted name="handshake outline" />
-      </Button>
+      <DrawButton />
       <Button>
         <Icon fitted name="flag outline" />
       </Button>

@@ -9,7 +9,7 @@ const TakebackButton = () => {
 
   const gameSlug = useSelector(state => state.gameSlug);
   const requestedTakeback = useSelector(state => state.requestedTakeback);
-  const username = useSelector(state => state.gameSlug);
+  const username = useSelector(state => state.username);
 
   const sendTakebackRequest = useCallback(() => {
     dispatch(requestTakeback({ gameSlug, username }));

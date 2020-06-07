@@ -30,6 +30,9 @@ export default createActions({
       UPDATE: undefined,
       SET: undefined,
     },
+    OPEN_DRAW_OFFER: {
+      SET: undefined,
+    },
     RED_PLAYER: {
       SET: undefined,
     },

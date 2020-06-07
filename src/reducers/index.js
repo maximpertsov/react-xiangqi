@@ -53,6 +53,11 @@ const rootReducer = combineReducers({
     (state, action) => action.payload,
     0.0,
   ),
+  openDrawOffer: handleAction(
+    actions.game.openDrawOffer.set,
+    (state, action) => action.payload,
+    null,
+  ),
   redPlayer: handleAction(
     actions.game.redPlayer.set,
     (state, action) => action.payload,
