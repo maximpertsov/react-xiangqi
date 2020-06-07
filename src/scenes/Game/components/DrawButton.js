@@ -17,20 +17,31 @@ const DrawButton = () => {
 
   // TODO: move to own module
   const send = useCallback(() => {
-    const payload = {
-      game: gameSlug,
-      name: 'offered_draw',
-      payload: { username: currentPlayer.name },
-    };
-    client.post(`game/events`, payload);
+    dispatch(actions.game.openDrawOffer.set(currentPlayer.name));
 
-    // dispatch(actions.game.openDrawOffer.set(currentPlayer.name));
-  }, [currentPlayer.name, gameSlug]);
+    if (gameSlug) {
+      const payload = {
+        game: gameSlug,
+        name: 'offered_draw',
+        payload: { username: currentPlayer.name },
+      };
+      client.post(`game/events`, payload);
+    }
+  }, [currentPlayer.name, dispatch, gameSlug]);
 
   // TODO: move to own module
   const cancel = useCallback(() => {
     dispatch(actions.game.openDrawOffer.set(null));
-  }, [dispatch]);
+
+    if (gameSlug) {
+      const payload = {
+        game: gameSlug,
+        name: 'canceled_draw',
+        payload: { username: currentPlayer.name },
+      };
+      client.post(`game/events`, payload);
+    }
+  }, [currentPlayer.name, dispatch, gameSlug]);
 
   const renderButton = () => (
     <Button onClick={send}>
