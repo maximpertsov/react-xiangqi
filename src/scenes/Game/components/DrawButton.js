@@ -90,7 +90,7 @@ const DrawButton = () => {
       <Button compact>
         <Icon name="handshake outline" />
       </Button>
-      <Button color="green"onClick={accept}>
+      <Button color="green" onClick={accept}>
         Accept
       </Button>
       <Button color="red" onClick={reject}>
