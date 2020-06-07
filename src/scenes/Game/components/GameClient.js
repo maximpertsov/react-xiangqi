@@ -6,11 +6,7 @@ import isEqual from 'lodash/isEqual';
 import fetchStartingPosition from 'actions/fetchStartingPosition';
 import fetchPosition from 'actions/fetchPosition';
 import pollMoves from 'actions/pollMoves';
-import {
-  getHasInitialPlacement,
-  getNextMovePlayer,
-  getFirstFenWithoutLegalMoves,
-} from 'reducers';
+import { getHasInitialPlacement, getFirstFenWithoutLegalMoves } from 'reducers';
 
 const POLLING_INTERVAL = 2500;
 
@@ -20,10 +16,6 @@ const GameClient = () => {
   const gameSlug = useSelector(state => state.gameSlug);
   const hasInitialPlacement = useSelector(state =>
     getHasInitialPlacement(state),
-  );
-  const nextMovePlayer = useSelector(
-    state => getNextMovePlayer(state),
-    isEqual,
   );
   const firstFenWithoutLegalMoves = useSelector(
     state => getFirstFenWithoutLegalMoves(state),
@@ -47,23 +39,18 @@ const GameClient = () => {
     dispatch(fetchPosition({ fen: firstFenWithoutLegalMoves }));
   }, [dispatch, firstFenWithoutLegalMoves, gameSlug, hasInitialPlacement]);
 
-  useEffect(
-    () => {
-      const interval = setInterval(() => {
-        dispatch(
-          pollMoves({
-            gameSlug,
-            nextMovePlayerName: nextMovePlayer.name,
-            updateCount,
-            username,
-          }),
-        );
-      }, POLLING_INTERVAL);
-      return () => clearInterval(interval);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, nextMovePlayer.name],
-  );
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(
+        pollMoves({
+          gameSlug,
+          updateCount,
+          username,
+        }),
+      );
+    }, POLLING_INTERVAL);
+    return () => clearInterval(interval);
+  }, [dispatch, gameSlug, updateCount, username]);
 
   return null;
 };
