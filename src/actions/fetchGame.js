@@ -24,6 +24,8 @@ const fetchGame = ({ gameSlug }) => async dispatch => {
 
   setPlayers(dispatch, data);
   setMoves(dispatch, data);
+
+  dispatch(actions.game.openDrawOffer.set(data.openDrawOffer));
 };
 
 export default fetchGame;

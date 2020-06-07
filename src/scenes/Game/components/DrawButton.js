@@ -2,19 +2,32 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Icon } from 'semantic-ui-react';
 
+// TODO: move to own module
+import client from 'services/client';
+
 import actions from 'actions';
 import { getCurrentPlayer } from 'reducers';
 
 const DrawButton = () => {
   const dispatch = useDispatch();
 
-  const openDrawOffer = useSelector(state => state.openDrawOffer);
   const currentPlayer = useSelector(state => getCurrentPlayer(state));
+  const gameSlug = useSelector(state => state.gameSlug);
+  const openDrawOffer = useSelector(state => state.openDrawOffer);
 
+  // TODO: move to own module
   const send = useCallback(() => {
-    dispatch(actions.game.openDrawOffer.set(currentPlayer.name));
-  }, [currentPlayer.name, dispatch]);
+    const payload = {
+      game: gameSlug,
+      name: 'offered_draw',
+      payload: { username: currentPlayer.name },
+    };
+    client.post(`game/events`, payload);
 
+    // dispatch(actions.game.openDrawOffer.set(currentPlayer.name));
+  }, [currentPlayer.name, gameSlug]);
+
+  // TODO: move to own module
   const cancel = useCallback(() => {
     dispatch(actions.game.openDrawOffer.set(null));
   }, [dispatch]);
