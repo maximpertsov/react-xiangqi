@@ -6,7 +6,7 @@ import { Button, Icon } from 'semantic-ui-react';
 import client from 'services/client';
 
 import actions from 'actions';
-import { getCurrentPlayer } from 'reducers';
+import { getCurrentPlayer, getOpponent } from 'reducers';
 
 const DrawButton = () => {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ const DrawButton = () => {
   const currentPlayer = useSelector(state => getCurrentPlayer(state));
   const gameSlug = useSelector(state => state.gameSlug);
   const openDrawOffer = useSelector(state => state.openDrawOffer);
+  const opponent = useSelector(state => getOpponent(state));
 
   // TODO: move to own module
   const send = useCallback(() => {
@@ -43,6 +44,19 @@ const DrawButton = () => {
     }
   }, [currentPlayer.name, dispatch, gameSlug]);
 
+  const accept = useCallback(() => {
+    dispatch(actions.game.openDrawOffer.set(null));
+
+    if (gameSlug) {
+      const payload = {
+        game: gameSlug,
+        name: 'accepted_draw',
+        payload: { username: currentPlayer.name },
+      };
+      client.post(`game/events`, payload);
+    }
+  }, [currentPlayer.name, dispatch, gameSlug]);
+
   const renderButton = () => (
     <Button onClick={send}>
       <Icon fitted name="handshake outline" />
@@ -56,7 +70,15 @@ const DrawButton = () => {
     </Button>
   );
 
-  if (openDrawOffer) return renderCancelButton();
+  const renderAcceptButton = () => (
+    <Button color="green" icon labelPosition="left" onClick={accept}>
+      <Icon name="handshake outline" />
+      Accept
+    </Button>
+  );
+
+  if (openDrawOffer == currentPlayer.name) return renderCancelButton();
+  if (openDrawOffer == opponent.name) return renderAcceptButton();
   return renderButton();
 };
 
