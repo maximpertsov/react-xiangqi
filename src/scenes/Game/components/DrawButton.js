@@ -31,6 +31,20 @@ const DrawButton = () => {
   }, [currentPlayer.name, dispatch, gameSlug]);
 
   // TODO: move to own module
+  const reject = useCallback(() => {
+    dispatch(actions.game.openDrawOffer.set(null));
+
+    if (gameSlug) {
+      const payload = {
+        game: gameSlug,
+        name: 'rejected_draw',
+        payload: { username: currentPlayer.name },
+      };
+      client.post(`game/events`, payload);
+    }
+  }, [currentPlayer.name, dispatch, gameSlug]);
+
+  // TODO: move to own module
   const cancel = useCallback(() => {
     dispatch(actions.game.openDrawOffer.set(null));
 
@@ -44,6 +58,7 @@ const DrawButton = () => {
     }
   }, [currentPlayer.name, dispatch, gameSlug]);
 
+  // TODO: move to own module
   const accept = useCallback(() => {
     dispatch(actions.game.openDrawOffer.set(null));
 
@@ -70,15 +85,22 @@ const DrawButton = () => {
     </Button>
   );
 
-  const renderAcceptButton = () => (
-    <Button color="green" icon labelPosition="left" onClick={accept}>
-      <Icon name="handshake outline" />
-      Accept
-    </Button>
+  const renderAcceptOrRejectButton = () => (
+    <Button.Group>
+      <Button compact>
+        <Icon name="handshake outline" />
+      </Button>
+      <Button color="green"onClick={accept}>
+        Accept
+      </Button>
+      <Button color="red" onClick={reject}>
+        Reject
+      </Button>
+    </Button.Group>
   );
 
-  if (openDrawOffer == currentPlayer.name) return renderCancelButton();
-  if (openDrawOffer == opponent.name) return renderAcceptButton();
+  if (openDrawOffer === currentPlayer.name) return renderCancelButton();
+  if (openDrawOffer === opponent.name) return renderAcceptOrRejectButton();
   return renderButton();
 };
 
