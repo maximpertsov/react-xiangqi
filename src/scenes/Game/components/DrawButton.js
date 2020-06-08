@@ -1,11 +1,8 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Icon } from 'semantic-ui-react';
 
-// TODO: move to own module
-import client from 'services/client';
-
-import actions from 'actions';
+import draw from 'actions/draw';
 import { getCurrentPlayer, getOpponent } from 'reducers';
 
 const DrawButton = () => {
@@ -16,64 +13,24 @@ const DrawButton = () => {
   const openDrawOffer = useSelector(state => state.openDrawOffer);
   const opponent = useSelector(state => getOpponent(state));
 
-  // TODO: move to own module
-  const send = useCallback(() => {
-    dispatch(actions.game.openDrawOffer.set(currentPlayer.name));
+  const request = () => {
+    dispatch(draw.request({ gameSlug, username: currentPlayer.name }));
+  };
 
-    if (gameSlug) {
-      const payload = {
-        game: gameSlug,
-        name: 'offered_draw',
-        payload: { username: currentPlayer.name },
-      };
-      client.post(`game/events`, payload);
-    }
-  }, [currentPlayer.name, dispatch, gameSlug]);
+  const reject = () => {
+    dispatch(draw.reject({ gameSlug, username: currentPlayer.name }));
+  };
 
-  // TODO: move to own module
-  const reject = useCallback(() => {
-    dispatch(actions.game.openDrawOffer.set(null));
+  const cancel = () => {
+    dispatch(draw.cancel({ gameSlug, username: currentPlayer.name }));
+  };
 
-    if (gameSlug) {
-      const payload = {
-        game: gameSlug,
-        name: 'rejected_draw',
-        payload: { username: currentPlayer.name },
-      };
-      client.post(`game/events`, payload);
-    }
-  }, [currentPlayer.name, dispatch, gameSlug]);
-
-  // TODO: move to own module
-  const cancel = useCallback(() => {
-    dispatch(actions.game.openDrawOffer.set(null));
-
-    if (gameSlug) {
-      const payload = {
-        game: gameSlug,
-        name: 'canceled_draw',
-        payload: { username: currentPlayer.name },
-      };
-      client.post(`game/events`, payload);
-    }
-  }, [currentPlayer.name, dispatch, gameSlug]);
-
-  // TODO: move to own module
-  const accept = useCallback(() => {
-    dispatch(actions.game.openDrawOffer.set(null));
-
-    if (gameSlug) {
-      const payload = {
-        game: gameSlug,
-        name: 'accepted_draw',
-        payload: { username: currentPlayer.name },
-      };
-      client.post(`game/events`, payload);
-    }
-  }, [currentPlayer.name, dispatch, gameSlug]);
+  const accept = () => {
+    dispatch(draw.accept({ gameSlug, username: currentPlayer.name }));
+  };
 
   const renderButton = () => (
-    <Button onClick={send}>
+    <Button onClick={request}>
       <Icon fitted name="handshake outline" />
     </Button>
   );
