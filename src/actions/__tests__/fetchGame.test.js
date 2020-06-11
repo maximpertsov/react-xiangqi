@@ -21,6 +21,7 @@ describe('fetch game', () => {
       data: {
         blackPlayer: {},
         blackScore: 1.0,
+        openDrawOffer: 'user1',
         redPlayer: {},
         redScore: 0.0,
         moves,
@@ -37,6 +38,7 @@ describe('fetch game', () => {
       actions.game.blackScore.set(1.0),
       actions.game.selectedFen.set('FEN1'),
       actions.game.moves.set(moves),
+      actions.game.openDrawOffer.set('user1'),
     ]);
   });
 });
