@@ -41,8 +41,34 @@ describe('GameInfo', () => {
     wrapper.unmount();
   });
 
-  test.todo('win');
-  test.todo('lose');
-  test.todo('draw');
-  test.todo('sessionless');
+  test('Red wins', () => {
+    const state = {
+      ...defaultState,
+      redScore: 1,
+    };
+    const wrapper = mount(componentWithStore(<GameInfo />, state));
+    expect(wrapper.containsMatchingElement(<p>alice wins!</p>)).toBeTruthy();
+    wrapper.unmount();
+  });
+
+  test('Black wins', () => {
+    const state = {
+      ...defaultState,
+      blackScore: 1,
+    };
+    const wrapper = mount(componentWithStore(<GameInfo />, state));
+    expect(wrapper.containsMatchingElement(<p>bob wins!</p>)).toBeTruthy();
+    wrapper.unmount();
+  });
+
+  test('Draw', () => {
+    const state = {
+      ...defaultState,
+      redScore: 0.5,
+      blackScore: 0.5,
+    };
+    const wrapper = mount(componentWithStore(<GameInfo />, state));
+    expect(wrapper.containsMatchingElement(<p>Draw!</p>)).toBeTruthy();
+    wrapper.unmount();
+  });
 });

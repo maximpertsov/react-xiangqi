@@ -15,6 +15,9 @@ export default createActions({
     BLACK_PLAYER: {
       SET: undefined,
     },
+    BLACK_SCORE: {
+      SET: undefined,
+    },
     CAN_MOVE_BOTH_COLORS: {
       SET: undefined,
     },
@@ -27,7 +30,13 @@ export default createActions({
       UPDATE: undefined,
       SET: undefined,
     },
+    OPEN_DRAW_OFFER: {
+      SET: undefined,
+    },
     RED_PLAYER: {
+      SET: undefined,
+    },
+    RED_SCORE: {
       SET: undefined,
     },
     SELECTED_FEN: {

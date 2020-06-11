@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 import { Color } from 'services/logic/constants';
 
 const Wrapper = styled.div`
-align-items: center;
-color: ${props => props.color === Color.RED ? 'red' : 'black' };
-display: flex;
-flex-direction: column;
-justify-content: space-around;
+  align-items: center;
+  color: ${props => (props.color === Color.RED ? 'red' : 'black')};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 `;
 
 const Player = ({ name, color }) => (
+  // TODO: colors aren't part of player model anymore!
   <Wrapper className="Player" color={color}>
     {`${color === Color.RED ? '帥' : '將'} ${name || ''}`}
   </Wrapper>

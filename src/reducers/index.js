@@ -1,5 +1,6 @@
 import actions from 'actions';
 import { combineReducers } from 'redux';
+import { Color } from 'services/logic/constants';
 
 import { handleAction, combineActions } from 'redux-actions';
 
@@ -45,12 +46,27 @@ const rootReducer = combineReducers({
   blackPlayer: handleAction(
     actions.game.blackPlayer.set,
     (state, action) => action.payload,
-    {},
+    { name: 'black', color: Color.BLACK },
+  ),
+  blackScore: handleAction(
+    actions.game.blackScore.set,
+    (state, action) => action.payload,
+    0.0,
+  ),
+  openDrawOffer: handleAction(
+    actions.game.openDrawOffer.set,
+    (state, action) => action.payload,
+    null,
   ),
   redPlayer: handleAction(
     actions.game.redPlayer.set,
     (state, action) => action.payload,
-    {},
+    { name: 'red', color: Color.RED },
+  ),
+  redScore: handleAction(
+    actions.game.redScore.set,
+    (state, action) => action.payload,
+    0.0,
   ),
   moves,
   showConfirmMoveMenu: handleAction(
