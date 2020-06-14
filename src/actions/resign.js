@@ -11,8 +11,8 @@ const postResignEvent = ({ gameSlug, username }) => {
   client.post(`game/events`, payload);
 };
 
-const send = ({ gameSlug, username }) => dispatch => {
-  dispatch(postResignEvent({ gameSlug, username }));
+const send = ({ gameSlug, username }) => () => {
+  postResignEvent({ gameSlug, username });
 };
 
 export default { send };
