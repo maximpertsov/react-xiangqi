@@ -21,9 +21,6 @@ export default createActions({
     CAN_MOVE_BOTH_COLORS: {
       SET: undefined,
     },
-    REQUESTED_TAKEBACK: {
-      SET: undefined,
-    },
     MOVES: {
       ADD: undefined,
       REMOVE: undefined,
@@ -31,6 +28,9 @@ export default createActions({
       SET: undefined,
     },
     OPEN_DRAW_OFFER: {
+      SET: undefined,
+    },
+    OPEN_TAKEBACK_OFFER: {
       SET: undefined,
     },
     RED_PLAYER: {

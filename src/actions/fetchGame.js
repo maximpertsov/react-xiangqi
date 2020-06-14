@@ -26,6 +26,7 @@ const fetchGame = ({ gameSlug }) => async dispatch => {
   setMoves(dispatch, data);
 
   dispatch(actions.game.openDrawOffer.set(data.openDrawOffer));
+  dispatch(actions.game.openTakebackOffer.set(data.openTakebackOffer));
 };
 
 export default fetchGame;

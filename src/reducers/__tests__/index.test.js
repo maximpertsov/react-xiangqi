@@ -199,24 +199,6 @@ const tables = {
       },
     ],
   ],
-  requestedTakeback: [
-    [
-      'return the default state',
-      {
-        action: {},
-        currentState: undefined,
-        expectedNewState: false,
-      },
-    ],
-    [
-      'toggle requested takeback',
-      {
-        action: actions.game.requestedTakeback.set(true),
-        currentState: false,
-        expectedNewState: true,
-      },
-    ],
-  ],
   selectedFen: [
     [
       'return the default state',
