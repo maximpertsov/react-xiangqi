@@ -21,9 +21,6 @@ export default createActions({
     CAN_MOVE_BOTH_COLORS: {
       SET: undefined,
     },
-    REQUESTED_TAKEBACK: {
-      SET: undefined,
-    },
     MOVES: {
       ADD: undefined,
       REMOVE: undefined,

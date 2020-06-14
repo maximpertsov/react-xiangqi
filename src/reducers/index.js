@@ -79,11 +79,6 @@ const rootReducer = combineReducers({
     (state, action) => action.payload,
     false,
   ),
-  requestedTakeback: handleAction(
-    actions.game.requestedTakeback.set,
-    (state, action) => action.payload,
-    false,
-  ),
   selectedFen: handleAction(
     actions.game.selectedFen.set,
     (state, action) => action.payload,

@@ -22,6 +22,7 @@ describe('fetch game', () => {
         blackPlayer: {},
         blackScore: 1.0,
         openDrawOffer: 'user1',
+        openTakebackOffer: 'user1',
         redPlayer: {},
         redScore: 0.0,
         moves,
@@ -39,6 +40,7 @@ describe('fetch game', () => {
       actions.game.selectedFen.set('FEN1'),
       actions.game.moves.set(moves),
       actions.game.openDrawOffer.set('user1'),
+      actions.game.openTakebackOffer.set('user1'),
     ]);
   });
 });
