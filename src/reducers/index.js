@@ -58,6 +58,11 @@ const rootReducer = combineReducers({
     (state, action) => action.payload,
     null,
   ),
+  openTakebackOffer: handleAction(
+    actions.game.openTakebackOffer.set,
+    (state, action) => action.payload,
+    null,
+  ),
   redPlayer: handleAction(
     actions.game.redPlayer.set,
     (state, action) => action.payload,

@@ -33,6 +33,9 @@ export default createActions({
     OPEN_DRAW_OFFER: {
       SET: undefined,
     },
+    OPEN_TAKEBACK_OFFER: {
+      SET: undefined,
+    },
     RED_PLAYER: {
       SET: undefined,
     },
