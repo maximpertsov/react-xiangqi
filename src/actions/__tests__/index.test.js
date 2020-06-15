@@ -8,7 +8,6 @@ test.each`
   ${board.animationOffset.set}    | ${'BOARD/ANIMATION_OFFSET/SET'}      | ${{}}
   ${board.animationOffset.clear}  | ${'BOARD/ANIMATION_OFFSET/CLEAR'}    | ${[0, 0]}
   ${board.selectedSquare.set}     | ${'BOARD/SELECTED_SQUARE/SET'}       | ${'a1a2'}
-  ${game.canMoveBothColors.set}   | ${'GAME/CAN_MOVE_BOTH_COLORS/SET'}   | ${true}
   ${game.moves.add}               | ${'GAME/MOVES/ADD'}                  | ${{}}
   ${game.moves.update}            | ${'GAME/MOVES/UPDATE'}               | ${{}}
   ${game.moves.remove}            | ${'GAME/MOVES/REMOVE'}               | ${0}

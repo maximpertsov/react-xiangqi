@@ -6,7 +6,7 @@ import { getNextMovePlayer, getCurrentPlayer } from 'reducers';
 
 import isEqual from 'lodash/isEqual';
 
-import { Color } from 'services/logic/constants';
+import { Team } from 'services/logic/constants';
 
 const Wrapper = styled.div`
   align-items: center;
@@ -33,7 +33,7 @@ const getGameInProgressMessage = ({
   nextMovePlayer,
   username,
 }) => {
-  if (!username && nextMovePlayer.color === Color.RED) {
+  if (!username && nextMovePlayer.team === Team.RED) {
     return 'Your turn';
   }
   if (isEqual(nextMovePlayer, currentPlayer)) {

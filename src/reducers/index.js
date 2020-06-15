@@ -1,6 +1,6 @@
 import actions from 'actions';
 import { combineReducers } from 'redux';
-import { Color } from 'services/logic/constants';
+import { Team } from 'services/logic/constants';
 
 import { handleAction, combineActions } from 'redux-actions';
 
@@ -46,7 +46,7 @@ const rootReducer = combineReducers({
   blackPlayer: handleAction(
     actions.game.blackPlayer.set,
     (state, action) => action.payload,
-    { name: 'black', color: Color.BLACK },
+    { name: 'black', team: Team.BLACK },
   ),
   blackScore: handleAction(
     actions.game.blackScore.set,
@@ -66,7 +66,7 @@ const rootReducer = combineReducers({
   redPlayer: handleAction(
     actions.game.redPlayer.set,
     (state, action) => action.payload,
-    { name: 'red', color: Color.RED },
+    { name: 'red', team: Team.RED },
   ),
   redScore: handleAction(
     actions.game.redScore.set,
@@ -98,8 +98,8 @@ const rootReducer = combineReducers({
     (state, action) => action.payload,
     [0, 0],
   ),
-  canMoveBothColors: handleAction(
-    actions.game.canMoveBothColors.set,
+  canMoveBothTeams: handleAction(
+    actions.game.canMoveBothTeams.set,
     (state, action) => action.payload,
     false,
   ),

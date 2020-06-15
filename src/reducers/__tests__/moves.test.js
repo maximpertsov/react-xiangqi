@@ -4,10 +4,10 @@ import reducer, {
   getHasInitialPlacement,
   getLastMove,
   getSecondToLastMove,
-  getNextMoveColor,
+  getNextMoveTeam,
 } from 'reducers/moves';
 
-import { Color } from 'services/logic/constants';
+import { Team } from 'services/logic/constants';
 
 jest.mock('services/logic/fen');
 
@@ -137,15 +137,15 @@ describe('moves selectors', () => {
     });
   });
 
-  describe('next move color', () => {
+  describe('next move team', () => {
     const table = [
-      ['no moves', [], Color.RED],
-      ['red moves', [{ fen: 'FEN0 w' }], Color.RED],
-      ['black moves', [{ fen: 'FEN1 b' }, { fen: 'FEN0 w' }], Color.BLACK],
+      ['no moves', [], Team.RED],
+      ['red moves', [{ fen: 'FEN0 w' }], Team.RED],
+      ['black moves', [{ fen: 'FEN1 b' }, { fen: 'FEN0 w' }], Team.BLACK],
     ];
 
     test.each(table)('%s', (_, state, expected) => {
-      expect(getNextMoveColor(state)).toBe(expected);
+      expect(getNextMoveTeam(state)).toBe(expected);
     });
   });
 

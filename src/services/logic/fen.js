@@ -1,34 +1,34 @@
 import zipObject from 'lodash/zipObject';
 import update from 'lodash/update';
-import { Color } from 'services/logic/constants';
+import { Team } from 'services/logic/constants';
 import { decodeSquare, encodeSquare } from 'services/logic/square';
-import { sameColor as sameColorPieces } from 'services/logic/utils';
+import { sameTeam as sameTeamPieces } from 'services/logic/utils';
 
 const FEN_FIELDS = [
   'placement',
-  'activeColor',
+  'activeTeam',
   'castling',
   'enPassant',
   'halfmoves',
   'fullmoves',
 ];
 
-const _activeColor = symbol => {
+const _activeTeam = symbol => {
   switch (symbol) {
     case 'w':
-      return Color.RED;
+      return Team.RED;
     case 'b':
-      return Color.BLACK;
+      return Team.BLACK;
     default:
       return null;
-    // TODO: throw an error if the piece color is not 'w' or 'b'
-    // throw new Error(`Invalid piece color ${symbol}`);
+    // TODO: throw an error if the piece team is not 'w' or 'b'
+    // throw new Error(`Invalid piece team ${symbol}`);
   }
 };
 
 const decodeFields = fen => {
   const result = zipObject(FEN_FIELDS, fen.split(' '));
-  update(result, 'activeColor', _activeColor);
+  update(result, 'activeTeam', _activeTeam);
   update(result, 'halfmoves', parseInt);
   update(result, 'fullmoves', parseInt);
   return result;
@@ -59,24 +59,24 @@ export const isOccupied = (fen, square) => {
 export const getPiece = (fen, square) =>
   decodeFen(fen).placement[decodeSquare(square)];
 
-export const activeColor = fen => decodeFen(fen).activeColor;
+export const activeTeam = fen => decodeFen(fen).activeTeam;
 
-export const sameColor = (fen, square1, square2) => {
+export const sameTeam = (fen, square1, square2) => {
   const piece1 = getPiece(fen, square1);
   const piece2 = getPiece(fen, square2);
 
-  return sameColorPieces(piece1, piece2);
+  return sameTeamPieces(piece1, piece2);
 };
 
 export const activeKing = fen => {
-  const { activeColor, placement } = decodeFen(fen);
+  const { activeTeam, placement } = decodeFen(fen);
   let king = undefined;
 
-  switch (activeColor) {
-    case Color.RED:
+  switch (activeTeam) {
+    case Team.RED:
       king = 'K';
       break;
-    case Color.BLACK:
+    case Team.BLACK:
       king = 'k';
       break;
     default:
@@ -89,8 +89,8 @@ export const activeKing = fen => {
 };
 
 export const moveOrder = fen => {
-  const { activeColor, fullmoves } = decodeFen(fen);
-  return fullmoves * 2 - (activeColor === Color.RED ? 1 : 0);
+  const { activeTeam, fullmoves } = decodeFen(fen);
+  return fullmoves * 2 - (activeTeam === Team.RED ? 1 : 0);
 };
 
 export default {};

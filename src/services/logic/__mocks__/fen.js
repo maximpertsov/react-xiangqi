@@ -1,10 +1,10 @@
-import { Color } from 'services/logic/constants';
+import { Team } from 'services/logic/constants';
 
-export const activeColor = jest.fn(fen => {
+export const activeTeam = jest.fn(fen => {
   if (!fen) return;
 
   const symbol = fen.match(/ ([wb]) ?/)[1];
-  return { w: Color.RED, b: Color.BLACK }[symbol];
+  return { w: Team.RED, b: Team.BLACK }[symbol];
 });
 
 export const moveOrder = jest.fn(fen => {

@@ -1,10 +1,10 @@
-import { Color } from 'services/logic/constants';
+import { Team } from 'services/logic/constants';
 import {
   getSelectedMove,
   getPreviousMoveFen,
   getNextMoveFen,
   getNextMovePlayer,
-  getUserColor,
+  getUserTeam,
   getCurrentPlayer,
   getOpponent,
   getBottomPlayerIsRed,
@@ -88,7 +88,7 @@ describe('players', () => {
   test('user player is red', () => {
     const newState = { ...state, username: 'alice' };
 
-    expect(getUserColor(newState)).toBe(Color.RED);
+    expect(getUserTeam(newState)).toBe(Team.RED);
     expect(getCurrentPlayer(newState)).toStrictEqual({ name: 'alice' });
     expect(getOpponent(newState)).toStrictEqual({ name: 'bob' });
     expect(getBottomPlayerIsRed(newState)).toBe(true);
@@ -97,7 +97,7 @@ describe('players', () => {
   test('current player is black', () => {
     const newState = { ...state, username: 'bob' };
 
-    expect(getUserColor(newState)).toBe(Color.BLACK);
+    expect(getUserTeam(newState)).toBe(Team.BLACK);
     expect(getCurrentPlayer(newState)).toStrictEqual({ name: 'bob' });
     expect(getOpponent(newState)).toStrictEqual({ name: 'alice' });
     expect(getBottomPlayerIsRed(newState)).toBe(false);

@@ -1,5 +1,5 @@
 import { createActions } from 'redux-actions';
-import { Color } from 'services/logic/constants';
+import { Team } from 'services/logic/constants';
 
 export default createActions({
   BOARD: {
@@ -18,7 +18,7 @@ export default createActions({
     BLACK_SCORE: {
       SET: undefined,
     },
-    CAN_MOVE_BOTH_COLORS: {
+    CAN_MOVE_BOTH_TEAMS: {
       SET: undefined,
     },
     MOVES: {
@@ -56,9 +56,9 @@ export default createActions({
     AUTO_MOVE: {
       SET: {
         OFF: () => [],
-        RED: () => [Color.RED],
-        BLACK: () => [Color.BLACK],
-        BOTH: () => [Color.RED, Color.BLACK],
+        RED: () => [Team.RED],
+        BLACK: () => [Team.BLACK],
+        BOTH: () => [Team.RED, Team.BLACK],
       },
     },
     GAMES: {

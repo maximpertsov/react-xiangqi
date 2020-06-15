@@ -1,14 +1,14 @@
 import flatten from 'lodash/flatten';
 import {
-  activeColor,
+  activeTeam,
   activeKing,
   decodeFen,
   getPiece,
   isOccupied,
   moveOrder,
-  sameColor,
+  sameTeam,
 } from 'services/logic/fen';
-import { Color } from 'services/logic/constants';
+import { Team } from 'services/logic/constants';
 
 describe('fen functions', () => {
   const initialFen =
@@ -30,7 +30,7 @@ describe('fen functions', () => {
         Array(9).fill(null),
         ['R', 'N', 'B', 'A', 'K', 'A', 'B', 'N', 'R'],
       ]),
-      activeColor: Color.RED,
+      activeTeam: Team.RED,
       castling: '-',
       enPassant: '-',
       halfmoves: 0,
@@ -50,7 +50,7 @@ describe('fen functions', () => {
         Array(9).fill(null),
         ['R', 'N', 'B', 'A', 'K', 'A', 'B', 'N', 'R'],
       ]),
-      activeColor: Color.BLACK,
+      activeTeam: Team.BLACK,
       castling: '-',
       enPassant: '-',
       halfmoves: 0,
@@ -66,9 +66,9 @@ describe('fen functions', () => {
     expect(getPiece(rookMoveFen, 'a9')).toBe('r');
   });
 
-  test('active color', () => {
-    expect(activeColor(initialFen)).toBe(Color.RED);
-    expect(activeColor(rookMoveFen)).toBe(Color.BLACK);
+  test('active team', () => {
+    expect(activeTeam(initialFen)).toBe(Team.RED);
+    expect(activeTeam(rookMoveFen)).toBe(Team.BLACK);
   });
 
   test('is occupied', () => {
@@ -79,17 +79,17 @@ describe('fen functions', () => {
     expect(isOccupied(rookMoveFen, 'a9')).toBe(true);
   });
 
-  test('is same color', () => {
+  test('is same team', () => {
     // two black pieces
-    expect(sameColor(initialFen, 'a10', 'b10')).toBe(true);
+    expect(sameTeam(initialFen, 'a10', 'b10')).toBe(true);
     // Two red pieces
-    expect(sameColor(initialFen, 'a1', 'b1')).toBe(true);
+    expect(sameTeam(initialFen, 'a1', 'b1')).toBe(true);
     // black and red piece
-    expect(sameColor(initialFen, 'a10', 'a1')).toBe(false);
+    expect(sameTeam(initialFen, 'a10', 'a1')).toBe(false);
     // black and unoccupied
-    expect(sameColor(initialFen, 'a10', 'a9')).toBe(false);
+    expect(sameTeam(initialFen, 'a10', 'a9')).toBe(false);
     // two unoccupied squares
-    expect(sameColor(initialFen, 'a9', 'b9')).toBe(false);
+    expect(sameTeam(initialFen, 'a9', 'b9')).toBe(false);
   });
 
   test('is active king', () => {
