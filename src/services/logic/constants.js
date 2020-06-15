@@ -1,4 +1,4 @@
-export const Color = Object.freeze({
+export const Team = Object.freeze({
   RED: 'red',
   BLACK: 'black',
 });

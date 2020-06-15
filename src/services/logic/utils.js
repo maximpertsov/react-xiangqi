@@ -6,8 +6,8 @@ export const getRank = slot => Math.floor(slot / FILE_COUNT);
 export const getFile = slot => slot % FILE_COUNT;
 export const getRankFile = slot => [getRank(slot), getFile(slot)];
 
-// Colors
+// Teams
 export const isBlack = piece => BLACK_PIECES.includes(piece);
 export const isRed = piece => RED_PIECES.includes(piece);
-export const sameColor = (piece1, piece2) =>
+export const sameTeam = (piece1, piece2) =>
   (isRed(piece1) && isRed(piece2)) || (isBlack(piece1) && isBlack(piece2));

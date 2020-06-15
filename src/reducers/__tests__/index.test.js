@@ -65,7 +65,7 @@ const tables = {
       },
     ],
     [
-      'set auto move both colors',
+      'set auto move both teams',
       {
         action: actions.home.autoMove.set.both(),
         currentState: [],
@@ -73,7 +73,7 @@ const tables = {
       },
     ],
   ],
-  canMoveBothColors: [
+  canMoveBothTeams: [
     [
       'return the default state',
       {
@@ -83,9 +83,9 @@ const tables = {
       },
     ],
     [
-      'toggle can move both colors',
+      'toggle can move both teams',
       {
-        action: actions.game.canMoveBothColors.set(true),
+        action: actions.game.canMoveBothTeams.set(true),
         currentState: false,
         expectedNewState: true,
       },

@@ -10,9 +10,9 @@ import pick from 'lodash/fp/pick';
 import reject from 'lodash/fp/reject';
 import sortBy from 'lodash/fp/sortBy';
 
-import { activeColor, moveOrder } from 'services/logic/fen';
+import { activeTeam, moveOrder } from 'services/logic/fen';
 
-import { Color } from 'services/logic/constants';
+import { Team } from 'services/logic/constants';
 
 const moveFields = ['fen', 'gameResult', 'givesCheck', 'legalMoves', 'uci'];
 
@@ -77,12 +77,12 @@ export const getSecondToLastMove = state =>
   )(state);
 
 // TODO: add a test
-export const getNextMoveColor = state => {
+export const getNextMoveTeam = state => {
   const lastMove = getLastMove(state);
-  if (!lastMove) return Color.RED;
+  if (!lastMove) return Team.RED;
 
   const { fen } = lastMove;
-  return activeColor(fen);
+  return activeTeam(fen);
 };
 
 export const getFirstFenWithoutLegalMoves = state =>

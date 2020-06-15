@@ -11,7 +11,7 @@ import {
   getLastMove,
   getPreviousMoveFen,
   getNextMoveFen,
-  getNextMoveColor,
+  getNextMoveTeam,
 } from 'reducers';
 
 const GameInteraction = () => {
@@ -19,7 +19,7 @@ const GameInteraction = () => {
   const autoMove = useSelector(state => state.autoMove, isEqual);
   const lastMove = useSelector(state => getLastMove(state), isEqual);
   const nextMoveFen = useSelector(state => getNextMoveFen(state), isEqual);
-  const nextMoveColor = useSelector(state => getNextMoveColor(state));
+  const nextMoveTeam = useSelector(state => getNextMoveTeam(state));
   const previousMoveFen = useSelector(
     state => getPreviousMoveFen(state),
     isEqual,
@@ -29,7 +29,7 @@ const GameInteraction = () => {
     () => {
       setTimeout(() => {
         if (lastMove.legalMoves === undefined) return;
-        if (!autoMove.includes(nextMoveColor)) return;
+        if (!autoMove.includes(nextMoveTeam)) return;
 
         const [uci, fen] = sample(toPairs(lastMove.legalMoves));
         dispatch(makeMove({ uci, fen }));
@@ -37,7 +37,7 @@ const GameInteraction = () => {
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     // TODO: update on simpler data
-    [autoMove, dispatch, lastMove.legalMoves, nextMoveColor],
+    [autoMove, dispatch, lastMove.legalMoves, nextMoveTeam],
   );
 
   useEventListener('keydown', ({ key }) => {

@@ -33,7 +33,7 @@ const Home = () => {
             onClick={() => {
               dispatch(actions.home.autoMove.set.off());
               dispatch(actions.home.showGame.set(true));
-              dispatch(actions.game.canMoveBothColors.set(true));
+              dispatch(actions.game.canMoveBothTeams.set(true));
             }}
           >
             Solo play

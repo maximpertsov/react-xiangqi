@@ -9,10 +9,10 @@ import actions from 'actions';
 import { decodeFen } from 'services/logic/fen';
 import { getMovedPiece } from 'services/logic/move';
 import { getSelectedMove } from 'reducers';
-import { Color } from 'services/logic/constants';
+import { Team } from 'services/logic/constants';
 
 const Wrapper = styled.span(({ isSelected, piece }) => ({
-  color: 'RNBAKCP'.includes(piece) ? Color.RED : Color.BLACK,
+  color: 'RNBAKCP'.includes(piece) ? Team.RED : Team.BLACK,
   padding: '2px',
   textDecoration: isSelected ? 'underline' : 'none',
 }));

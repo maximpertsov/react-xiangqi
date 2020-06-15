@@ -9,7 +9,7 @@ import makeMove from 'actions/makeMove';
 import actions from 'actions';
 import animateMove from 'actions/animateMove';
 import { getBottomPlayerIsRed, getLegalMoves } from 'reducers';
-import { isOccupied, sameColor } from 'services/logic/fen';
+import { isOccupied, sameTeam } from 'services/logic/fen';
 import { squaresToUci } from 'services/logic/square';
 
 import BoardView from './components/BoardView';
@@ -34,7 +34,7 @@ const Board = () => {
       if (!isOccupied(selectedFen, selectedSquare)) return false;
       if (!isOccupied(selectedFen, square)) return false;
 
-      return !sameColor(selectedFen, square, selectedSquare);
+      return !sameTeam(selectedFen, square, selectedSquare);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectedFen, selectedSquare],
