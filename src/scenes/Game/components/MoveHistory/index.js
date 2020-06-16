@@ -33,11 +33,7 @@ const Wrapper = styled.div`
 const MoveHistory = () => {
   const moves = useSelector(state => state.moves, isEqual);
   const moveComponents = moves.map((move, index) => (
-    <Move
-      key={index}
-      uci={move.uci}
-      fen={move.fen}
-    />
+    <Move key={index} uci={move.uci} fen={move.fen} />
   ));
   const fullMoves = chunk(tail(moveComponents), 2).map(
     ([redMove, blackMove], index) => (
