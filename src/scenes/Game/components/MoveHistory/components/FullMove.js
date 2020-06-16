@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 const Wrapper = styled.div`
+  flex: 0 0 auto;
   justify-self: center;
 `;
 

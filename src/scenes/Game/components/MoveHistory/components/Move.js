@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
@@ -40,11 +40,18 @@ const moveText = ({ uci, piece }) => {
 
 const Move = ({ uci, fen }) => {
   const dispatch = useDispatch();
+  const ref = useRef();
   const selectedMove = useSelector(state => getSelectedMove(state), isEqual);
 
   const handleClick = useCallback(() => {
     dispatch(actions.game.selectedFen.set(fen));
   }, [dispatch, fen]);
+
+  useEffect(() => {
+    if (selectedMove.fen === fen) {
+      ref.current.scrollIntoView();
+    }
+  }, [fen, selectedMove.fen]);
 
   if (uci === null) return null;
 
@@ -55,6 +62,7 @@ const Move = ({ uci, fen }) => {
       className="Move"
       onClick={handleClick}
       isSelected={selectedMove.fen === fen}
+      ref={ref}
       piece={piece}
     >
       {moveText({ uci, piece })}
