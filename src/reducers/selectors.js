@@ -64,9 +64,9 @@ export const getFirstFenWithoutLegalMoves = ({ moves }) =>
 export const getNextMovePlayer = state => {
   switch (getNextMoveTeam(state)) {
     case Team.RED:
-      return state.redPlayer;
+      return state.player1;
     case Team.BLACK:
-      return state.blackPlayer;
+      return state.player2;
     default:
       return {};
   }
@@ -74,9 +74,9 @@ export const getNextMovePlayer = state => {
 
 export const getUserTeam = state => {
   switch (state.username) {
-    case get('name', state.redPlayer):
+    case get('name', state.player1):
       return Team.RED;
-    case get('name', state.blackPlayer):
+    case get('name', state.player2):
       return Team.BLACK;
     default:
       return;
@@ -85,14 +85,14 @@ export const getUserTeam = state => {
 
 export const getCurrentPlayer = state => {
   if (!state.username) {
-    return state.redPlayer || {};
+    return state.player1 || {};
   }
 
   switch (getUserTeam(state)) {
     case Team.RED:
-      return state.redPlayer;
+      return state.player1;
     case Team.BLACK:
-      return state.blackPlayer;
+      return state.player2;
     default:
       return {};
   }
@@ -100,14 +100,14 @@ export const getCurrentPlayer = state => {
 
 export const getOpponent = state => {
   if (!state.username) {
-    return state.blackPlayer || {};
+    return state.player2 || {};
   }
 
   switch (getUserTeam(state)) {
     case Team.RED:
-      return state.blackPlayer;
+      return state.player2;
     case Team.BLACK:
-      return state.redPlayer;
+      return state.player1;
     default:
       return {};
   }

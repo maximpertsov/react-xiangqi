@@ -12,10 +12,10 @@ export default createActions({
     },
   },
   GAME: {
-    BLACK_PLAYER: {
+    PLAYER2: {
       SET: undefined,
     },
-    BLACK_SCORE: {
+    SCORE2: {
       SET: undefined,
     },
     CAN_MOVE_BOTH_TEAMS: {
@@ -33,10 +33,10 @@ export default createActions({
     OPEN_TAKEBACK_OFFER: {
       SET: undefined,
     },
-    RED_PLAYER: {
+    PLAYER1: {
       SET: undefined,
     },
-    RED_SCORE: {
+    SCORE1: {
       SET: undefined,
     },
     SELECTED_FEN: {

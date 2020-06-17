@@ -36,10 +36,10 @@ const MoveHistory = () => {
     <Move key={index} uci={move.uci} fen={move.fen} />
   ));
   const fullMoves = chunk(tail(moveComponents), 2).map(
-    ([redMove, blackMove], index) => (
+    ([player1Move, player2Move], index) => (
       <FullMove key={index} ordering={index + 1}>
-        {redMove}
-        {blackMove}
+        {player1Move}
+        {player2Move}
       </FullMove>
     ),
   );

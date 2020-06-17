@@ -43,13 +43,13 @@ const rootReducer = combineReducers({
     null,
   ),
   // Game
-  blackPlayer: handleAction(
-    actions.game.blackPlayer.set,
+  player2: handleAction(
+    actions.game.player2.set,
     (state, action) => action.payload,
     { name: 'black', team: Team.BLACK },
   ),
-  blackScore: handleAction(
-    actions.game.blackScore.set,
+  score2: handleAction(
+    actions.game.score2.set,
     (state, action) => action.payload,
     0.0,
   ),
@@ -63,13 +63,13 @@ const rootReducer = combineReducers({
     (state, action) => action.payload,
     null,
   ),
-  redPlayer: handleAction(
-    actions.game.redPlayer.set,
+  player1: handleAction(
+    actions.game.player1.set,
     (state, action) => action.payload,
     { name: 'red', team: Team.RED },
   ),
-  redScore: handleAction(
-    actions.game.redScore.set,
+  score1: handleAction(
+    actions.game.score1.set,
     (state, action) => action.payload,
     0.0,
   ),
