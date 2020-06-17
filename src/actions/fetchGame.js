@@ -6,10 +6,10 @@ import last from 'lodash/fp/last';
 const getGame = ({ gameSlug }) => client.get(`game/${gameSlug}`);
 
 const setPlayers = (dispatch, data) => {
-  dispatch(actions.game.redPlayer.set(data.redPlayer));
-  dispatch(actions.game.redScore.set(data.redScore));
-  dispatch(actions.game.blackPlayer.set(data.blackPlayer));
-  dispatch(actions.game.blackScore.set(data.blackScore));
+  dispatch(actions.game.player1.set(data.player1));
+  dispatch(actions.game.score1.set(data.score1));
+  dispatch(actions.game.player2.set(data.player2));
+  dispatch(actions.game.score2.set(data.score2));
 };
 
 const setMoves = (dispatch, { moves }) => {

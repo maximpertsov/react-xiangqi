@@ -67,8 +67,8 @@ describe('get moves around selected fen', () => {
 
 describe('players', () => {
   const state = {
-    redPlayer: { name: 'alice' },
-    blackPlayer: { name: 'bob' },
+    player1: { name: 'alice' },
+    player2: { name: 'bob' },
   };
 
   test('next player is red', () => {

@@ -18,14 +18,14 @@ const Wrapper = styled.div`
 
 // eslint-disable-next-line complexity
 const getGameOverMessage = ({
-  blackPlayer,
-  blackScore,
-  redPlayer,
-  redScore,
+  player2,
+  score2,
+  player1,
+  score1,
 }) => {
-  if (redScore === 1) return `${redPlayer.name} wins!`;
-  if (blackScore === 1) return `${blackPlayer.name} wins!`;
-  if (redScore === 0.5 && blackScore === 0.5) return 'Draw!';
+  if (score1 === 1) return `${player1.name} wins!`;
+  if (score2 === 1) return `${player2.name} wins!`;
+  if (score1 === 0.5 && score2 === 0.5) return 'Draw!';
 };
 
 const getGameInProgressMessage = ({
@@ -44,28 +44,28 @@ const getGameInProgressMessage = ({
 };
 
 const mapStateToProps = createSelector(
-  state => state.blackPlayer,
-  state => state.blackScore,
-  state => state.redPlayer,
-  state => state.redScore,
+  state => state.player2,
+  state => state.score2,
+  state => state.player1,
+  state => state.score1,
   state => state.username,
   state => getCurrentPlayer(state),
   state => getNextMovePlayer(state),
 
   (
-    blackPlayer,
-    blackScore,
-    redPlayer,
-    redScore,
+    player2,
+    score2,
+    player1,
+    score1,
     username,
     currentPlayer,
     nextMovePlayer,
   ) => ({
     gameOverMessage: getGameOverMessage({
-      blackPlayer,
-      blackScore,
-      redPlayer,
-      redScore,
+      player2,
+      score2,
+      player1,
+      score1,
     }),
     gameInProgressMessage: getGameInProgressMessage({
       currentPlayer,

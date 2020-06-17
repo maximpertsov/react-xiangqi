@@ -19,12 +19,12 @@ describe('fetch game', () => {
     const moves = [{}, { fen: 'FEN1' }];
     axios.get.mockResolvedValue({
       data: {
-        blackPlayer: {},
-        blackScore: 1.0,
+        player2: {},
+        score2: 1.0,
         openDrawOffer: 'user1',
         openTakebackOffer: 'user1',
-        redPlayer: {},
-        redScore: 0.0,
+        player1: {},
+        score1: 0.0,
         moves,
       },
     });
@@ -33,10 +33,10 @@ describe('fetch game', () => {
 
     expect(axios.get).toHaveBeenCalledWith('game/ABC123');
     expect(store.getActions()).toStrictEqual([
-      actions.game.redPlayer.set({}),
-      actions.game.redScore.set(0.0),
-      actions.game.blackPlayer.set({}),
-      actions.game.blackScore.set(1.0),
+      actions.game.player1.set({}),
+      actions.game.score1.set(0.0),
+      actions.game.player2.set({}),
+      actions.game.score2.set(1.0),
       actions.game.selectedFen.set('FEN1'),
       actions.game.moves.set(moves),
       actions.game.openDrawOffer.set('user1'),
