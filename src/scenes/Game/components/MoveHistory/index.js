@@ -8,48 +8,32 @@ import { MediaQuery, WidthSize } from 'commonStyles';
 import Move from './components/Move';
 import FullMove from './components/FullMove';
 
-const repeatItemCSS = times =>
-  Array(times)
-    .fill('1fr')
-    .join(' ');
-
 const Wrapper = styled.div`
-  display: grid;
   ${MediaQuery.TINY} {
-    grid-template-columns: ${repeatItemCSS(2)};
     font-size: x-small;
     width: ${WidthSize.TINY};
   }
   ${MediaQuery.SMALL} {
-    grid-template-columns: ${repeatItemCSS(2)};
     font-size: x-small;
     width: ${WidthSize.SMALL};
   }
   ${MediaQuery.MEDIUM} {
-    grid-template-columns: ${repeatItemCSS(2)};
     font-size: small;
     width: ${WidthSize.MEDIUM};
   }
   ${MediaQuery.LARGE} {
-    grid-template-columns: ${repeatItemCSS(3)};
     font-size: small;
     width: ${WidthSize.LARGE};
   }
-  grid-template-rows: repeat(auto-fill, 1fr);
-  font-size: small;
-  max-height: 10vh;
-  overflow: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 `;
 
 const MoveHistory = () => {
   const moves = useSelector(state => state.moves, isEqual);
-
   const moveComponents = moves.map((move, index) => (
-    <Move
-      key={index}
-      uci={move.uci}
-      fen={move.fen}
-    />
+    <Move key={index} uci={move.uci} fen={move.fen} />
   ));
   const fullMoves = chunk(tail(moveComponents), 2).map(
     ([player1Move, player2Move], index) => (
