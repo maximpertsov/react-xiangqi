@@ -37,7 +37,7 @@
     "test": "jest",
     "eject": "react-scripts eject"
   },
-  "homepage": "https://xchess.xyz",
+  "homepage": "https://xchi.online",
   "eslintConfig": {
     "extends": "react-app"
   },
