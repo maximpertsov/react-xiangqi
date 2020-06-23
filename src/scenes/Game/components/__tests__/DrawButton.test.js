@@ -1,21 +1,33 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import * as redux from 'react-redux';
 import { shallow } from 'enzyme';
+import values from 'lodash/values';
 
 import DrawButton from 'scenes/Game/components/DrawButton';
 
-// eslint-disable-next-line no-undef
-const store = mockStore({});
-
 const getComponent = store => (
-  <Provider store={store}>
+  <redux.Provider store={store}>
     <DrawButton />
-  </Provider>
+  </redux.Provider>
 );
 
 describe('DrawButton', () => {
+  // eslint-disable-next-line no-undef
+  const store = mockStore({});
+  const spys = {};
+
+  afterEach(() => {
+    store.clearActions();
+    values(spys).forEach(spy => spy.mockRestore());
+  });
+
   test('renders without crashing', () => {
-    const wrapper = shallow(getComponent(store)).dive().dive();
+    spys.useDispatch = jest.spyOn(redux, 'useDispatch');
+    spys.useDispatch.mockReturnValue(store.dispatch);
+
+    const wrapper = shallow(getComponent(store))
+      .dive()
+      .dive();
     expect(wrapper).toMatchSnapshot();
   });
 });
