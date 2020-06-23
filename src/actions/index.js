@@ -21,6 +21,12 @@ export default createActions({
     CAN_MOVE_BOTH_TEAMS: {
       SET: undefined,
     },
+    CONFIRMING_DRAW: {
+      SET: undefined,
+    },
+    CONFIRMING_RESIGN: {
+      SET: undefined,
+    },
     MOVES: {
       ADD: undefined,
       REMOVE: undefined,
