@@ -16,15 +16,19 @@ describe('DrawButton', () => {
   const store = mockStore({});
   const spys = {};
 
+  beforeEach(() => {
+    spys.useDispatch = jest.spyOn(redux, 'useDispatch');
+    spys.useDispatch.mockReturnValue(store.dispatch);
+    spys.useDispatch = jest.spyOn(redux, 'useSelector');
+    spys.useDispatch.mockImplementation(callback => callback(store));
+  });
+
   afterEach(() => {
     store.clearActions();
     values(spys).forEach(spy => spy.mockRestore());
   });
 
   test('renders without crashing', () => {
-    spys.useDispatch = jest.spyOn(redux, 'useDispatch');
-    spys.useDispatch.mockReturnValue(store.dispatch);
-
     const wrapper = shallow(getComponent(store))
       .dive()
       .dive();
