@@ -88,6 +88,8 @@ describe('DrawButton', () => {
 
     const wrapper = getWrappedComponent(store);
     expect(wrapper).toMatchSnapshot();
+
+    fail('test button press');
   });
 
   test('accept or reject button', () => {
@@ -96,5 +98,7 @@ describe('DrawButton', () => {
 
     const wrapper = getWrappedComponent(store);
     expect(wrapper).toMatchSnapshot();
+
+    fail('test both button presses');
   });
 });
