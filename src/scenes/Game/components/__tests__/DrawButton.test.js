@@ -2,27 +2,35 @@ import React from 'react';
 import * as redux from 'react-redux';
 import { shallow } from 'enzyme';
 import values from 'lodash/values';
+import * as selectors from 'reducers/selectors';
 
 import DrawButton from 'scenes/Game/components/DrawButton';
 
-const getComponent = store => (
-  <redux.Provider store={store}>
-    <DrawButton />
-  </redux.Provider>
-);
+const getWrappedComponent = store =>
+  shallow(
+    <redux.Provider store={store}>
+      <DrawButton />
+    </redux.Provider>,
+  )
+    .dive()
+    .dive();
 
 describe('DrawButton', () => {
-  // eslint-disable-next-line no-undef
-  const store = mockStore({
-    confirmingDraw: true,
-  });
-  const spys = {};
+  let store = mockStore({});
+  let spys = {};
 
   beforeEach(() => {
     spys.useDispatch = jest.spyOn(redux, 'useDispatch');
     spys.useDispatch.mockReturnValue(store.dispatch);
-    spys.useDispatch = jest.spyOn(redux, 'useSelector');
-    spys.useDispatch.mockImplementation(callback => callback(store.getState()));
+
+    spys.useSelector = jest.spyOn(redux, 'useSelector');
+    spys.useSelector.mockImplementation(callback => callback(store.getState()));
+
+    spys.getCurrentPlayer = jest.spyOn(selectors, 'getCurrentPlayer');
+    spys.getCurrentPlayer.mockReturnValue({ name: 'currentPlayer' });
+
+    spys.getOpponent = jest.spyOn(selectors, 'getOpponent');
+    spys.getOpponent.mockReturnValue({ name: 'opponent' });
   });
 
   afterEach(() => {
@@ -30,10 +38,29 @@ describe('DrawButton', () => {
     values(spys).forEach(spy => spy.mockRestore());
   });
 
-  test('renders without crashing', () => {
-    const wrapper = shallow(getComponent(store))
-      .dive()
-      .dive();
+  test('renders default button', () => {
+    const wrapper = getWrappedComponent(store);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  test('renders a confirmation button', () => {
+    store = mockStore({ confirmingDraw: true });
+
+    const wrapper = getWrappedComponent(store);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  test('renders a cancel button', () => {
+    store = mockStore({ openDrawOffer: 'currentPlayer' });
+
+    const wrapper = getWrappedComponent(store);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  test('renders an accept or reject button', () => {
+    store = mockStore({ openDrawOffer: 'opponent' });
+
+    const wrapper = getWrappedComponent(store);
     expect(wrapper).toMatchSnapshot();
   });
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DrawButton renders without crashing 1`] = `
+exports[`DrawButton renders a cancel button 1`] = `
 <Button
   as="button"
   color="red"
@@ -13,5 +13,64 @@ exports[`DrawButton renders without crashing 1`] = `
     name="handshake outline"
   />
   Cancel
+</Button>
+`;
+
+exports[`DrawButton renders a confirmation button 1`] = `
+<Button
+  as="button"
+  circular={true}
+  color="yellow"
+  icon={true}
+  labelPosition="left"
+  onClick={[Function]}
+>
+  <Icon
+    as="i"
+    fitted={true}
+    name="handshake outline"
+  />
+  Confirm?
+</Button>
+`;
+
+exports[`DrawButton renders an accept or reject button 1`] = `
+<ButtonGroup>
+  <Button
+    as="button"
+    compact={true}
+  >
+    <Icon
+      as="i"
+      name="handshake outline"
+    />
+  </Button>
+  <Button
+    as="button"
+    color="green"
+    onClick={[Function]}
+  >
+    Accept
+  </Button>
+  <Button
+    as="button"
+    color="red"
+    onClick={[Function]}
+  >
+    Reject
+  </Button>
+</ButtonGroup>
+`;
+
+exports[`DrawButton renders default button 1`] = `
+<Button
+  as="button"
+  onClick={[Function]}
+>
+  <Icon
+    as="i"
+    fitted={true}
+    name="handshake outline"
+  />
 </Button>
 `;
