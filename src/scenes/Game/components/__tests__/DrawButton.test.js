@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import values from 'lodash/values';
 import * as selectors from 'reducers/selectors';
 
+import actions from 'actions';
 import DrawButton from 'scenes/Game/components/DrawButton';
 
 const getWrappedComponent = store =>
@@ -38,26 +39,39 @@ describe('DrawButton', () => {
     values(spys).forEach(spy => spy.mockRestore());
   });
 
-  test('renders default button', () => {
+  test('default button', () => {
     const wrapper = getWrappedComponent(store);
     expect(wrapper).toMatchSnapshot();
+
+    wrapper.find('Button').simulate('click');
+
+    expect(store.getActions()).toStrictEqual([
+      actions.game.confirmingDraw.set(true),
+    ]);
+
+    jest.runOnlyPendingTimers();
+
+    expect(store.getActions()).toStrictEqual([
+      actions.game.confirmingDraw.set(true),
+      actions.game.confirmingDraw.set(false),
+    ]);
   });
 
-  test('renders a confirmation button', () => {
+  test('confirmation button', () => {
     store = mockStore({ confirmingDraw: true });
 
     const wrapper = getWrappedComponent(store);
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('renders a cancel button', () => {
+  test('cancel button', () => {
     store = mockStore({ openDrawOffer: 'currentPlayer' });
 
     const wrapper = getWrappedComponent(store);
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('renders an accept or reject button', () => {
+  test('accept or reject button', () => {
     store = mockStore({ openDrawOffer: 'opponent' });
 
     const wrapper = getWrappedComponent(store);
