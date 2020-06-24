@@ -18,10 +18,10 @@ const getWrappedComponent = store =>
     .dive();
 
 describe('DrawButton', () => {
-  let store = mockStore({});
+  let store = {};
   let spys = {};
 
-  beforeEach(() => {
+  const setup = () => {
     spys.useDispatch = jest.spyOn(redux, 'useDispatch');
     spys.useDispatch.mockReturnValue(store.dispatch);
 
@@ -33,7 +33,7 @@ describe('DrawButton', () => {
 
     spys.getOpponent = jest.spyOn(selectors, 'getOpponent');
     spys.getOpponent.mockReturnValue({ name: 'opponent' });
-  });
+  };
 
   afterEach(() => {
     store.clearActions();
@@ -41,6 +41,9 @@ describe('DrawButton', () => {
   });
 
   test('default button', () => {
+    store = mockStore({});
+    setup();
+
     const wrapper = getWrappedComponent(store);
     expect(wrapper).toMatchSnapshot();
 
@@ -60,7 +63,10 @@ describe('DrawButton', () => {
 
   test('confirmation button', () => {
     store = mockStore({ confirmingDraw: true });
+    setup();
+
     spys.requestDraw = jest.spyOn(draw, 'request');
+    spys.requestDraw.mockReturnValue(() => {});
 
     const wrapper = getWrappedComponent(store);
     expect(wrapper).toMatchSnapshot();
@@ -71,7 +77,6 @@ describe('DrawButton', () => {
       gameSlug: undefined,
       username: 'currentPlayer',
     });
-    // TODO: why won't this action register?
     expect(store.getActions()).toStrictEqual([
       actions.game.confirmingDraw.set(false),
     ]);
@@ -79,6 +84,7 @@ describe('DrawButton', () => {
 
   test('cancel button', () => {
     store = mockStore({ openDrawOffer: 'currentPlayer' });
+    setup();
 
     const wrapper = getWrappedComponent(store);
     expect(wrapper).toMatchSnapshot();
@@ -86,6 +92,7 @@ describe('DrawButton', () => {
 
   test('accept or reject button', () => {
     store = mockStore({ openDrawOffer: 'opponent' });
+    setup();
 
     const wrapper = getWrappedComponent(store);
     expect(wrapper).toMatchSnapshot();
