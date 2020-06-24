@@ -13,14 +13,16 @@ const getComponent = store => (
 
 describe('DrawButton', () => {
   // eslint-disable-next-line no-undef
-  const store = mockStore({});
+  const store = mockStore({
+    confirmingDraw: true,
+  });
   const spys = {};
 
   beforeEach(() => {
     spys.useDispatch = jest.spyOn(redux, 'useDispatch');
     spys.useDispatch.mockReturnValue(store.dispatch);
     spys.useDispatch = jest.spyOn(redux, 'useSelector');
-    spys.useDispatch.mockImplementation(callback => callback(store));
+    spys.useDispatch.mockImplementation(callback => callback(store.getState()));
   });
 
   afterEach(() => {
