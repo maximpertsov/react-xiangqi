@@ -5,6 +5,7 @@ import values from 'lodash/values';
 import * as selectors from 'reducers/selectors';
 
 import actions from 'actions';
+import draw from 'actions/draw';
 import DrawButton from 'scenes/Game/components/DrawButton';
 
 const getWrappedComponent = store =>
@@ -59,9 +60,21 @@ describe('DrawButton', () => {
 
   test('confirmation button', () => {
     store = mockStore({ confirmingDraw: true });
+    spys.requestDraw = jest.spyOn(draw, 'request');
 
     const wrapper = getWrappedComponent(store);
     expect(wrapper).toMatchSnapshot();
+
+    wrapper.find('Button').simulate('click');
+
+    expect(spys.requestDraw).toHaveBeenCalledWith({
+      gameSlug: undefined,
+      username: 'currentPlayer',
+    });
+    // TODO: why won't this action register?
+    expect(store.getActions()).toStrictEqual([
+      actions.game.confirmingDraw.set(false),
+    ]);
   });
 
   test('cancel button', () => {

@@ -41,28 +41,24 @@ const DrawButton = () => {
     dispatch(draw.accept({ gameSlug, username: currentPlayer.name }));
   };
 
-  const renderButton = () => {
-    if (confirmingDraw) {
-      return (
-        <Button
-          circular
-          color="yellow"
-          icon
-          labelPosition="left"
-          onClick={confirmRequest}
-        >
-          <Icon fitted name="handshake outline" />
-          Confirm?
-        </Button>
-      );
-    }
+  const renderButton = () => (
+    <Button onClick={request}>
+      <Icon fitted name="handshake outline" />
+    </Button>
+  );
 
-    return (
-      <Button onClick={request}>
-        <Icon fitted name="handshake outline" />
-      </Button>
-    );
-  };
+  const renderConfirmButton = () => (
+    <Button
+      circular
+      color="yellow"
+      icon
+      labelPosition="left"
+      onClick={confirmRequest}
+    >
+      <Icon fitted name="handshake outline" />
+      Confirm?
+    </Button>
+  );
 
   const renderCancelButton = () => (
     <Button color="red" icon labelPosition="left" onClick={cancel}>
@@ -87,6 +83,7 @@ const DrawButton = () => {
 
   if (openDrawOffer === currentPlayer.name) return renderCancelButton();
   if (openDrawOffer === opponent.name) return renderAcceptOrRejectButton();
+  if (confirmingDraw) return renderConfirmButton();
   return renderButton();
 };
 
