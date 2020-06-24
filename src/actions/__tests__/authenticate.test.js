@@ -10,7 +10,6 @@ jest.mock('axios');
 jest.mock('jwt-decode');
 
 describe('obtain a token', () => {
-  // eslint-disable-next-line no-undef
   const store = mockStore({});
   const spys = {};
 

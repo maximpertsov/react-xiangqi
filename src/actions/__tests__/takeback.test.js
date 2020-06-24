@@ -6,7 +6,6 @@ import takeback from 'actions/takeback';
 jest.mock('axios');
 
 describe('takeback', () => {
-  // eslint-disable-next-line no-undef
   const store = mockStore({});
 
   afterEach(() => {

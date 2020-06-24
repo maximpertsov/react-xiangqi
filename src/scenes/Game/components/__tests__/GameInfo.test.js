@@ -14,7 +14,6 @@ const defaultState = {
 };
 
 const componentWithStore = (component, state) => (
-  // eslint-disable-next-line no-undef
   <Provider store={mockStore(state)}>{component}</Provider>
 );
 

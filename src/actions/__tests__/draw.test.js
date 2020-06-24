@@ -5,7 +5,6 @@ import draw from 'actions/draw';
 jest.mock('axios');
 
 describe('draw', () => {
-  // eslint-disable-next-line no-undef
   const store = mockStore({});
 
   afterEach(() => {
