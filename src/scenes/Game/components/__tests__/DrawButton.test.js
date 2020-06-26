@@ -18,7 +18,7 @@ const getWrappedComponent = store =>
     .dive();
 
 describe('DrawButton', () => {
-  let store = {};
+  let store;
   let spys = {};
 
   beforeEach(() => {
@@ -113,17 +113,45 @@ describe('DrawButton', () => {
       store = mockStore({ openDrawOffer: 'opponent' });
     });
 
-    test('click', () => {
+    beforeEach(() => {
+      spys.acceptDraw = jest.spyOn(draw, 'accept');
+      spys.acceptDraw.mockReturnValue(() => {});
+      spys.rejectDraw = jest.spyOn(draw, 'reject');
+      spys.rejectDraw.mockReturnValue(() => {});
+    });
+
+    test('snapshot', () => {
       const wrapper = getWrappedComponent(store);
       expect(wrapper).toMatchSnapshot();
+    });
 
-      wrapper.find('Button').find({ color: 'green' }).simulate('click');
+    test('click accept', () => {
+      const wrapper = getWrappedComponent(store);
 
-      // expect(spys.cancelDraw).toHaveBeenCalledWith({
-      //   gameSlug: undefined,
-      //   username: 'currentPlayer',
-      // });
-      // expect(store.getActions()).toStrictEqual([]);
+      wrapper
+        .find('Button')
+        .find({ color: 'green' })
+        .simulate('click');
+
+      expect(spys.acceptDraw).toHaveBeenCalledWith({
+        gameSlug: undefined,
+        username: 'currentPlayer',
+      });
+      expect(store.getActions()).toStrictEqual([]);
+    });
+
+    test('click reject', () => {
+      const wrapper = getWrappedComponent(store);
+      wrapper
+        .find('Button')
+        .find({ color: 'red' })
+        .simulate('click');
+
+      expect(spys.rejectDraw).toHaveBeenCalledWith({
+        gameSlug: undefined,
+        username: 'currentPlayer',
+      });
+      expect(store.getActions()).toStrictEqual([]);
     });
   });
 });

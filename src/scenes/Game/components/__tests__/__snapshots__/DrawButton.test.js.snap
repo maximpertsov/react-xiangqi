@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DrawButton accept or reject button click 1`] = `
+exports[`DrawButton accept or reject button snapshot 1`] = `
 <ButtonGroup>
   <Button
     as="button"
