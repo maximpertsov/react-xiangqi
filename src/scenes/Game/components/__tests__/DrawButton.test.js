@@ -8,7 +8,7 @@ import actions from 'actions';
 import draw from 'actions/draw';
 import DrawButton from 'scenes/Game/components/DrawButton';
 
-const getWrappedComponent = store =>
+const getShallowWrappedComponent = store =>
   shallow(
     <redux.Provider store={store}>
       <DrawButton />
@@ -19,6 +19,7 @@ const getWrappedComponent = store =>
 
 describe('DrawButton', () => {
   let store;
+  let wrapper;
   let spys = {};
 
   beforeEach(() => {
@@ -33,6 +34,8 @@ describe('DrawButton', () => {
 
     spys.getOpponent = jest.spyOn(selectors, 'getOpponent');
     spys.getOpponent.mockReturnValue({ name: 'opponent' });
+
+    wrapper = getShallowWrappedComponent(store);
   });
 
   afterEach(() => {
@@ -45,10 +48,11 @@ describe('DrawButton', () => {
       store = mockStore({});
     });
 
-    test('click', () => {
-      const wrapper = getWrappedComponent(store);
+    test('snapshot', () => {
       expect(wrapper).toMatchSnapshot();
+    });
 
+    test('click', () => {
       wrapper.find('Button').simulate('click');
 
       expect(store.getActions()).toStrictEqual([
@@ -67,14 +71,18 @@ describe('DrawButton', () => {
   describe('confirmation button', () => {
     beforeAll(() => {
       store = mockStore({ confirmingDraw: true });
+    });
+
+    beforeEach(() => {
       spys.requestDraw = jest.spyOn(draw, 'request');
       spys.requestDraw.mockReturnValue(() => {});
     });
 
-    test('click', () => {
-      const wrapper = getWrappedComponent(store);
+    test('snapshot', () => {
       expect(wrapper).toMatchSnapshot();
+    });
 
+    test('click', () => {
       wrapper.find('Button').simulate('click');
 
       expect(spys.requestDraw).toHaveBeenCalledWith({
@@ -90,14 +98,18 @@ describe('DrawButton', () => {
   describe('cancel button', () => {
     beforeAll(() => {
       store = mockStore({ openDrawOffer: 'currentPlayer' });
+    });
+
+    beforeEach(() => {
       spys.cancelDraw = jest.spyOn(draw, 'cancel');
       spys.cancelDraw.mockReturnValue(() => {});
     });
 
-    test('click', () => {
-      const wrapper = getWrappedComponent(store);
+    test('snapshot', () => {
       expect(wrapper).toMatchSnapshot();
+    });
 
+    test('click', () => {
       wrapper.find('Button').simulate('click');
 
       expect(spys.cancelDraw).toHaveBeenCalledWith({
@@ -121,13 +133,10 @@ describe('DrawButton', () => {
     });
 
     test('snapshot', () => {
-      const wrapper = getWrappedComponent(store);
       expect(wrapper).toMatchSnapshot();
     });
 
     test('click accept', () => {
-      const wrapper = getWrappedComponent(store);
-
       wrapper
         .find('Button')
         .find({ color: 'green' })
@@ -141,7 +150,6 @@ describe('DrawButton', () => {
     });
 
     test('click reject', () => {
-      const wrapper = getWrappedComponent(store);
       wrapper
         .find('Button')
         .find({ color: 'red' })

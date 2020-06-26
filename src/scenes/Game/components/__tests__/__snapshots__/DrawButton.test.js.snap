@@ -28,7 +28,7 @@ exports[`DrawButton accept or reject button snapshot 1`] = `
 </ButtonGroup>
 `;
 
-exports[`DrawButton cancel button click 1`] = `
+exports[`DrawButton cancel button snapshot 1`] = `
 <Button
   as="button"
   color="red"
@@ -44,7 +44,7 @@ exports[`DrawButton cancel button click 1`] = `
 </Button>
 `;
 
-exports[`DrawButton confirmation button click 1`] = `
+exports[`DrawButton confirmation button snapshot 1`] = `
 <Button
   as="button"
   circular={true}
@@ -62,7 +62,7 @@ exports[`DrawButton confirmation button click 1`] = `
 </Button>
 `;
 
-exports[`DrawButton default button click 1`] = `
+exports[`DrawButton default button snapshot 1`] = `
 <Button
   as="button"
   onClick={[Function]}
