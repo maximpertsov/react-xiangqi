@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TakebackButton accept or reject button snapshot 1`] = `
+<ButtonGroup>
+  <Button
+    as="button"
+    compact={true}
+  >
+    <Icon
+      as="i"
+      name="undo"
+    />
+  </Button>
+  <Button
+    as="button"
+    color="green"
+    onClick={[Function]}
+  >
+    Accept
+  </Button>
+  <Button
+    as="button"
+    color="red"
+    onClick={[Function]}
+  >
+    Reject
+  </Button>
+</ButtonGroup>
+`;
+
+exports[`TakebackButton cancel button snapshot 1`] = `
+<Button
+  as="button"
+  color="red"
+  icon={true}
+  labelPosition="left"
+  onClick={[Function]}
+>
+  <Icon
+    as="i"
+    name="undo"
+  />
+  Cancel
+</Button>
+`;
+
+exports[`TakebackButton default button snapshot 1`] = `
+<Button
+  as="button"
+  onClick={[Function]}
+>
+  <Icon
+    as="i"
+    fitted={true}
+    name="undo"
+  />
+</Button>
+`;
