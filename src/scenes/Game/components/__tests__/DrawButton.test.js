@@ -21,7 +21,7 @@ describe('DrawButton', () => {
   let store = {};
   let spys = {};
 
-  const setup = () => {
+  beforeEach(() => {
     spys.useDispatch = jest.spyOn(redux, 'useDispatch');
     spys.useDispatch.mockReturnValue(store.dispatch);
 
@@ -33,72 +33,80 @@ describe('DrawButton', () => {
 
     spys.getOpponent = jest.spyOn(selectors, 'getOpponent');
     spys.getOpponent.mockReturnValue({ name: 'opponent' });
-  };
+  });
 
   afterEach(() => {
     store.clearActions();
     values(spys).forEach(spy => spy.mockRestore());
   });
 
-  test('default button', () => {
-    store = mockStore({});
-    setup();
-
-    const wrapper = getWrappedComponent(store);
-    expect(wrapper).toMatchSnapshot();
-
-    wrapper.find('Button').simulate('click');
-
-    expect(store.getActions()).toStrictEqual([
-      actions.game.confirmingDraw.set(true),
-    ]);
-
-    jest.runOnlyPendingTimers();
-
-    expect(store.getActions()).toStrictEqual([
-      actions.game.confirmingDraw.set(true),
-      actions.game.confirmingDraw.set(false),
-    ]);
-  });
-
-  test('confirmation button', () => {
-    store = mockStore({ confirmingDraw: true });
-    setup();
-
-    spys.requestDraw = jest.spyOn(draw, 'request');
-    spys.requestDraw.mockReturnValue(() => {});
-
-    const wrapper = getWrappedComponent(store);
-    expect(wrapper).toMatchSnapshot();
-
-    wrapper.find('Button').simulate('click');
-
-    expect(spys.requestDraw).toHaveBeenCalledWith({
-      gameSlug: undefined,
-      username: 'currentPlayer',
+  describe('default button', () => {
+    beforeAll(() => {
+      store = mockStore({});
     });
-    expect(store.getActions()).toStrictEqual([
-      actions.game.confirmingDraw.set(false),
-    ]);
+
+    test('click', () => {
+      const wrapper = getWrappedComponent(store);
+      expect(wrapper).toMatchSnapshot();
+
+      wrapper.find('Button').simulate('click');
+
+      expect(store.getActions()).toStrictEqual([
+        actions.game.confirmingDraw.set(true),
+      ]);
+
+      jest.runOnlyPendingTimers();
+
+      expect(store.getActions()).toStrictEqual([
+        actions.game.confirmingDraw.set(true),
+        actions.game.confirmingDraw.set(false),
+      ]);
+    });
   });
 
-  test('cancel button', () => {
-    store = mockStore({ openDrawOffer: 'currentPlayer' });
-    setup();
+  describe('confirmation button', () => {
+    beforeAll(() => {
+      store = mockStore({ confirmingDraw: true });
+    });
 
-    const wrapper = getWrappedComponent(store);
-    expect(wrapper).toMatchSnapshot();
+    test('click', () => {
+      spys.requestDraw = jest.spyOn(draw, 'request');
+      spys.requestDraw.mockReturnValue(() => {});
 
-    fail('test button press');
+      const wrapper = getWrappedComponent(store);
+      expect(wrapper).toMatchSnapshot();
+
+      wrapper.find('Button').simulate('click');
+
+      expect(spys.requestDraw).toHaveBeenCalledWith({
+        gameSlug: undefined,
+        username: 'currentPlayer',
+      });
+      expect(store.getActions()).toStrictEqual([
+        actions.game.confirmingDraw.set(false),
+      ]);
+    });
   });
 
-  test('accept or reject button', () => {
-    store = mockStore({ openDrawOffer: 'opponent' });
-    setup();
+  describe('cancel button', () => {
+    beforeAll(() => {
+      store = mockStore({ openDrawOffer: 'currentPlayer' });
+    });
 
-    const wrapper = getWrappedComponent(store);
-    expect(wrapper).toMatchSnapshot();
+    test('click', () => {
+      const wrapper = getWrappedComponent(store);
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
 
-    fail('test both button presses');
+  describe('accept or reject button', () => {
+    beforeAll(() => {
+      store = mockStore({ openDrawOffer: 'opponent' });
+    });
+
+    test('click', () => {
+      const wrapper = getWrappedComponent(store);
+      expect(wrapper).toMatchSnapshot();
+    });
   });
 });

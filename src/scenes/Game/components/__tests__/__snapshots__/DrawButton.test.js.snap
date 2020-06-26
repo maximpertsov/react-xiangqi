@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DrawButton accept or reject button 1`] = `
+exports[`DrawButton accept or reject button click 1`] = `
 <ButtonGroup>
   <Button
     as="button"
@@ -28,7 +28,7 @@ exports[`DrawButton accept or reject button 1`] = `
 </ButtonGroup>
 `;
 
-exports[`DrawButton cancel button 1`] = `
+exports[`DrawButton cancel button click 1`] = `
 <Button
   as="button"
   color="red"
@@ -44,7 +44,7 @@ exports[`DrawButton cancel button 1`] = `
 </Button>
 `;
 
-exports[`DrawButton confirmation button 1`] = `
+exports[`DrawButton confirmation button click 1`] = `
 <Button
   as="button"
   circular={true}
@@ -62,7 +62,7 @@ exports[`DrawButton confirmation button 1`] = `
 </Button>
 `;
 
-exports[`DrawButton default button 1`] = `
+exports[`DrawButton default button click 1`] = `
 <Button
   as="button"
   onClick={[Function]}
