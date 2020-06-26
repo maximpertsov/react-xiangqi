@@ -27,26 +27,27 @@ const ResignButton = () => {
     dispatch(actions.game.confirmingResign.set(false));
   };
 
-  if (confirmingResign) {
-    return (
-      <Button
-        circular
-        color="yellow"
-        icon
-        labelPosition="left"
-        onClick={confirmSend}
-      >
-        <Icon fitted name="flag outline" />
-        Confirm?
-      </Button>
-    );
-  }
+  const renderConfirmButton = () => (
+    <Button
+      circular
+      color="yellow"
+      icon
+      labelPosition="left"
+      onClick={confirmSend}
+    >
+      <Icon fitted name="flag outline" />
+      Confirm?
+    </Button>
+  );
 
-  return (
+  const renderButton = () => (
     <Button onClick={send}>
       <Icon fitted name="flag outline" />
     </Button>
   );
+
+  if (confirmingResign) return renderConfirmButton();
+  return renderButton();
 };
 
 export default ResignButton;
