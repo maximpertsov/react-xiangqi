@@ -67,12 +67,11 @@ describe('DrawButton', () => {
   describe('confirmation button', () => {
     beforeAll(() => {
       store = mockStore({ confirmingDraw: true });
+      spys.requestDraw = jest.spyOn(draw, 'request');
+      spys.requestDraw.mockReturnValue(() => {});
     });
 
     test('click', () => {
-      spys.requestDraw = jest.spyOn(draw, 'request');
-      spys.requestDraw.mockReturnValue(() => {});
-
       const wrapper = getWrappedComponent(store);
       expect(wrapper).toMatchSnapshot();
 
@@ -91,11 +90,21 @@ describe('DrawButton', () => {
   describe('cancel button', () => {
     beforeAll(() => {
       store = mockStore({ openDrawOffer: 'currentPlayer' });
+      spys.cancelDraw = jest.spyOn(draw, 'cancel');
+      spys.cancelDraw.mockReturnValue(() => {});
     });
 
     test('click', () => {
       const wrapper = getWrappedComponent(store);
       expect(wrapper).toMatchSnapshot();
+
+      wrapper.find('Button').simulate('click');
+
+      expect(spys.cancelDraw).toHaveBeenCalledWith({
+        gameSlug: undefined,
+        username: 'currentPlayer',
+      });
+      expect(store.getActions()).toStrictEqual([]);
     });
   });
 
@@ -107,6 +116,14 @@ describe('DrawButton', () => {
     test('click', () => {
       const wrapper = getWrappedComponent(store);
       expect(wrapper).toMatchSnapshot();
+
+      wrapper.find('Button').find({ color: 'green' }).simulate('click');
+
+      // expect(spys.cancelDraw).toHaveBeenCalledWith({
+      //   gameSlug: undefined,
+      //   username: 'currentPlayer',
+      // });
+      // expect(store.getActions()).toStrictEqual([]);
     });
   });
 });
