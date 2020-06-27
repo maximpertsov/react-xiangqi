@@ -43,6 +43,16 @@ const rootReducer = combineReducers({
     null,
   ),
   // Game
+  confirmingDraw: handleAction(
+    actions.game.confirmingDraw.set,
+    (state, action) => action.payload,
+    false,
+  ),
+  confirmingResign: handleAction(
+    actions.game.confirmingResign.set,
+    (state, action) => action.payload,
+    false,
+  ),
   player2: handleAction(
     actions.game.player2.set,
     (state, action) => action.payload,

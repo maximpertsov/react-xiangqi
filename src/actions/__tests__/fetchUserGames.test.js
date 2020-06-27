@@ -5,7 +5,6 @@ import fetchUserGames from 'actions/fetchUserGames';
 jest.mock('axios');
 
 describe('fetch user games', () => {
-  // eslint-disable-next-line no-undef
   const store = mockStore({});
 
   test('do nothing if the username is null', async () => {

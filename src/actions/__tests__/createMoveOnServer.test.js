@@ -9,7 +9,6 @@ describe('create move on server', () => {
     jest.restoreAllMocks();
   });
 
-  // eslint-disable-next-line no-undef
   const store = mockStore({});
   const move = { uci: 'a1a2', fen: 'FEN' };
   const username = 'user';

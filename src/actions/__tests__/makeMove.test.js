@@ -2,7 +2,6 @@ import actions from 'actions';
 import makeMove from 'actions/makeMove';
 
 test('make a move', async () => {
-  // eslint-disable-next-line no-undef
   const store = mockStore({});
 
   await store.dispatch(makeMove({ fen: 'FEN1', uci: 'a1a2' }));

@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResignButton confirmation button snapshot 1`] = `
+<Button
+  as="button"
+  circular={true}
+  color="yellow"
+  icon={true}
+  labelPosition="left"
+  onClick={[Function]}
+>
+  <Icon
+    as="i"
+    fitted={true}
+    name="flag outline"
+  />
+  Confirm?
+</Button>
+`;
+
+exports[`ResignButton default button snapshot 1`] = `
+<Button
+  as="button"
+  onClick={[Function]}
+>
+  <Icon
+    as="i"
+    fitted={true}
+    name="flag outline"
+  />
+</Button>
+`;

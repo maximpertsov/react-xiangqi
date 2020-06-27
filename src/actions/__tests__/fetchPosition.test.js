@@ -5,7 +5,6 @@ import fetchPosition from 'actions/fetchPosition';
 jest.mock('axios');
 
 test('fetch move', async () => {
-  // eslint-disable-next-line no-undef
   const store = mockStore({});
   axios.post.mockResolvedValue({
     data: { fen: 'FEN', legalMoves: {}, givesCheck: false },

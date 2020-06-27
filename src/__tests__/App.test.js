@@ -4,7 +4,6 @@ import { render } from 'enzyme';
 import App from 'App';
 
 test('renders without crashing', () => {
-  // eslint-disable-next-line no-undef
   const store = mockStore({ loginForm: {}, games: [] });
 
   const wrapper = render(

@@ -4,7 +4,6 @@ import resign from 'actions/resign';
 jest.mock('axios');
 
 describe('resign', () => {
-  // eslint-disable-next-line no-undef
   const store = mockStore({});
 
   afterEach(() => {

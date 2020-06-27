@@ -2,7 +2,6 @@ import actions from 'actions';
 import animateMove from 'actions/animateMove';
 
 describe('animate a move', () => {
-  // eslint-disable-next-line no-undef
   const store = mockStore({});
   const uci = 'a1b2';
 

@@ -5,7 +5,6 @@ import fetchStartingPosition from 'actions/fetchStartingPosition';
 jest.mock('axios');
 
 test('fetch starting move', async () => {
-  // eslint-disable-next-line no-undef
   const store = mockStore({});
   axios.post.mockResolvedValue({ data: { fen: 'FEN0' } });
 

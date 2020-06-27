@@ -8,7 +8,6 @@ import * as updateLoginForm from 'actions/updateLoginForm';
 jest.mock('axios');
 
 describe('login', () => {
-  // eslint-disable-next-line no-undef
   const store = mockStore({});
   const credentials = {
     username: 'user123',
