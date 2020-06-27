@@ -16,7 +16,6 @@ const Wrapper = styled.div`
   justify-content: space-around;
 `;
 
-// eslint-disable-next-line complexity
 const getGameOverMessage = ({ player2, score2, player1, score1 }) => {
   if (score1 === 1) return `${player1.name} wins!`;
   if (score2 === 1) return `${player2.name} wins!`;
