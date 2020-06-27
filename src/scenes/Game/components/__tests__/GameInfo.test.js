@@ -1,73 +1,108 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { mount } from 'enzyme';
+import * as redux from 'react-redux';
+import { shallow } from 'enzyme';
+import values from 'lodash/values';
+import * as selectors from 'reducers/selectors';
 
 import GameInfo from 'scenes/Game/components/GameInfo';
 
 const defaultState = {
-  animationOffset: [0, 0],
-  gameSlug: 'ABC123',
-  showGame: true,
   player1: { name: 'alice' },
   player2: { name: 'bob' },
-  username: 'alice',
 };
 
-const componentWithStore = (component, state) => (
-  <Provider store={mockStore(state)}>{component}</Provider>
-);
+const getShallowWrappedComponent = store =>
+  shallow(
+    <redux.Provider store={store}>
+      <GameInfo />
+    </redux.Provider>,
+  )
+    .dive()
+    .dive();
 
 describe('GameInfo', () => {
-  test('Your turn', () => {
-    const state = {
-      ...defaultState,
-      moves: [{ fen: 'FEN0 w' }],
-    };
-    const wrapper = mount(componentWithStore(<GameInfo />, state));
-    expect(wrapper.containsMatchingElement(<p>Your turn</p>)).toBeTruthy();
-    wrapper.unmount();
+  let store;
+  let wrapper;
+  let spys = {};
+
+  beforeEach(() => {
+    spys.useSelector = jest.spyOn(redux, 'useSelector');
+    spys.useSelector.mockImplementation(callback => callback(store.getState()));
+
+    spys.getCurrentPlayer = jest.spyOn(selectors, 'getCurrentPlayer');
+    spys.getCurrentPlayer.mockReturnValue({ name: 'alice' });
+
+    wrapper = getShallowWrappedComponent(store);
   });
 
-  test('Waiting for opponent', () => {
-    const state = {
-      ...defaultState,
-      moves: [{ fen: 'FEN0 w' }, { fen: 'FEN1 b' }],
-    };
-    const wrapper = mount(componentWithStore(<GameInfo />, state));
-    expect(
-      wrapper.containsMatchingElement(<p>Waiting for opponent</p>),
-    ).toBeTruthy();
-    wrapper.unmount();
+  afterEach(() => {
+    store.clearActions();
+    values(spys).forEach(spy => spy.mockRestore());
   });
 
-  test('Red wins', () => {
-    const state = {
-      ...defaultState,
-      score1: 1,
-    };
-    const wrapper = mount(componentWithStore(<GameInfo />, state));
-    expect(wrapper.containsMatchingElement(<p>alice wins!</p>)).toBeTruthy();
-    wrapper.unmount();
+  describe('Your turn', () => {
+    beforeAll(() => {
+      store = mockStore({ ...defaultState });
+
+      spys.getNextMovePlayer = jest.spyOn(selectors, 'getNextMovePlayer');
+      spys.getNextMovePlayer.mockImplementation(() => ({ name: 'alice' }));
+    });
+
+    test('snapshot', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
   });
 
-  test('Black wins', () => {
-    const state = {
-      ...defaultState,
-      score2: 1,
-    };
-    const wrapper = mount(componentWithStore(<GameInfo />, state));
-    expect(wrapper.containsMatchingElement(<p>bob wins!</p>)).toBeTruthy();
-    wrapper.unmount();
+  describe('Waiting for opponent', () => {
+    beforeAll(() => {
+      store = mockStore({ ...defaultState });
+
+      spys.getNextMovePlayer = jest.spyOn(selectors, 'getNextMovePlayer');
+      spys.getNextMovePlayer.mockImplementation(() => ({ name: 'bob' }));
+    });
+
+    test('snapshot', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
   });
 
-  test('Draw', () => {
-    const state = {
-      ...defaultState,
-      score1: 0.5,
-      score2: 0.5,
-    };
-    const wrapper = mount(componentWithStore(<GameInfo />, state));
-    expect(wrapper.containsMatchingElement(<p>Draw!</p>)).toBeTruthy();
-    wrapper.unmount();
+  describe('Player 1 (Alice) wins', () => {
+    beforeAll(() => {
+      store = mockStore({
+        ...defaultState,
+        score1: 1,
+      });
+    });
+
+    test('snapshot', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('Player 2 (Bob) wins', () => {
+    beforeAll(() => {
+      store = mockStore({
+        ...defaultState,
+        score2: 1,
+      });
+    });
+
+    test('snapshot', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('Draw', () => {
+    beforeAll(() => {
+      store = mockStore({
+        ...defaultState,
+        score1: 0.5,
+        score2: 0.5,
+      });
+    });
+
+    test('snapshot', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
   });
 });
