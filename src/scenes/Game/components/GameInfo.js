@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { createSelector } from 'reselect';
 import { useSelector } from 'react-redux';
@@ -17,12 +17,7 @@ const Wrapper = styled.div`
 `;
 
 // eslint-disable-next-line complexity
-const getGameOverMessage = ({
-  player2,
-  score2,
-  player1,
-  score1,
-}) => {
+const getGameOverMessage = ({ player2, score2, player1, score1 }) => {
   if (score1 === 1) return `${player1.name} wins!`;
   if (score2 === 1) return `${player2.name} wins!`;
   if (score1 === 0.5 && score2 === 0.5) return 'Draw!';
@@ -80,6 +75,11 @@ const GameInfo = () => {
     mapStateToProps,
     isEqual,
   );
+
+  useEffect(() => {
+    window.document.title = gameOverMessage || gameInProgressMessage;
+  }, [gameInProgressMessage, gameOverMessage]);
+
   return (
     <Wrapper className="GameInfo">
       <p>{gameOverMessage || gameInProgressMessage}</p>
