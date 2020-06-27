@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { createSelector } from 'reselect';
 import { useSelector } from 'react-redux';
@@ -76,9 +76,31 @@ const GameInfo = () => {
     isEqual,
   );
 
+  const notify = useCallback(() => {
+    if (window.document.hasFocus()) return;
+
+    new window.Notification(gameOverMessage || gameInProgressMessage);
+  }, [gameInProgressMessage, gameOverMessage]);
+
   useEffect(() => {
     window.document.title = gameOverMessage || gameInProgressMessage;
-  }, [gameInProgressMessage, gameOverMessage]);
+
+    if (!('Notification' in window)) return;
+
+    switch (window.Notification.permission) {
+      case 'denied':
+        break;
+      case 'granted':
+        notify();
+        break;
+      default:
+        window.Notification.requestPermission(permission => {
+          if (permission !== 'granted') return;
+
+          notify();
+        });
+    }
+  }, [gameInProgressMessage, gameOverMessage, notify]);
 
   return (
     <Wrapper className="GameInfo">
