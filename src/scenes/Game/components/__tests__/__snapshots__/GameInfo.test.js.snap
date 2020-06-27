@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GameInfo Draw snapshot 1`] = `
+<Styled(div)
+  className="GameInfo"
+>
+  <p>
+    Draw!
+  </p>
+</Styled(div)>
+`;
+
+exports[`GameInfo Player 1 (Alice) wins snapshot 1`] = `
+<Styled(div)
+  className="GameInfo"
+>
+  <p>
+    alice wins!
+  </p>
+</Styled(div)>
+`;
+
+exports[`GameInfo Player 2 (Bob) wins snapshot 1`] = `
+<Styled(div)
+  className="GameInfo"
+>
+  <p>
+    bob wins!
+  </p>
+</Styled(div)>
+`;
+
+exports[`GameInfo Waiting for opponent snapshot 1`] = `
+<Styled(div)
+  className="GameInfo"
+>
+  <p>
+    Waiting for opponent
+  </p>
+</Styled(div)>
+`;
+
+exports[`GameInfo Your turn snapshot 1`] = `
+<Styled(div)
+  className="GameInfo"
+>
+  <p>
+    Your turn
+  </p>
+</Styled(div)>
+`;
