@@ -38,14 +38,15 @@ const getGameInProgressMessage = ({
 };
 
 const mapStateToProps = createSelector(
-  state => state.player2,
-  state => state.score2,
-  state => state.player1,
-  state => state.score1,
-  state => state.username,
-  state => getCurrentPlayer(state),
-  state => getNextMovePlayer(state),
-
+  [
+    state => state.player2,
+    state => state.score2,
+    state => state.player1,
+    state => state.score1,
+    state => state.username,
+    state => getCurrentPlayer(state),
+    state => getNextMovePlayer(state),
+  ],
   (
     player2,
     score2,

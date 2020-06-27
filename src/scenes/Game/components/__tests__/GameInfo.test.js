@@ -42,30 +42,26 @@ describe('GameInfo', () => {
 
   describe('Your turn', () => {
     beforeAll(() => {
-      store = mockStore(defaultState);
+      store = mockStore({ ...defaultState });
 
       spys.getNextMovePlayer = jest.spyOn(selectors, 'getNextMovePlayer');
-      spys.getNextMovePlayer.mockReturnValue({ name: 'alice' });
-      console.log("your turn mock set");
+      spys.getNextMovePlayer.mockImplementation(() => ({ name: 'alice' }));
     });
 
     test('snapshot', () => {
-      console.log("your turn test");
       expect(wrapper).toMatchSnapshot();
     });
   });
 
   describe('Waiting for opponent', () => {
     beforeAll(() => {
-      store = mockStore(defaultState);
+      store = mockStore({ ...defaultState });
 
       spys.getNextMovePlayer = jest.spyOn(selectors, 'getNextMovePlayer');
-      spys.getNextMovePlayer.mockReturnValue({ name: 'bob' });
-      console.log("waiting mock");
+      spys.getNextMovePlayer.mockImplementation(() => ({ name: 'bob' }));
     });
 
     test('snapshot', () => {
-      console.log("waiting test");
       expect(wrapper).toMatchSnapshot();
     });
   });
@@ -76,11 +72,9 @@ describe('GameInfo', () => {
         ...defaultState,
         score1: 1,
       });
-      console.log("p1 wins mock");
     });
 
     test('snapshot', () => {
-      console.log("p1 wins test");
       expect(wrapper).toMatchSnapshot();
     });
   });
@@ -91,11 +85,9 @@ describe('GameInfo', () => {
         ...defaultState,
         score2: 1,
       });
-      console.log("p2 wins mock");
     });
 
     test('snapshot', () => {
-      console.log("p2 wins test");
       expect(wrapper).toMatchSnapshot();
     });
   });
@@ -107,11 +99,9 @@ describe('GameInfo', () => {
         score1: 0.5,
         score2: 0.5,
       });
-      console.log("draw mock");
     });
 
     test('snapshot', () => {
-      console.log("draw test");
       expect(wrapper).toMatchSnapshot();
     });
   });
