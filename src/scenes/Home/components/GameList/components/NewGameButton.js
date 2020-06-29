@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Icon } from 'semantic-ui-react';
+import { Button, Icon, Popup } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 
@@ -26,9 +26,32 @@ const NewGameButton = () => {
 
   return (
     <Wrapper>
-      <Button icon fluid onClick={createGame} className="NewGame">
-        <Icon fitted name="plus square outline" />
-      </Button>
+      <Button.Group fluid>
+        <Popup
+          content="Play with red pieces"
+          trigger={
+            <Button icon onClick={createGame} className="NewGame">
+              <Icon color="red" fitted name="plus square outline" />
+            </Button>
+          }
+        />
+        <Popup
+          content="Play with black pieces"
+          trigger={
+            <Button icon onClick={createGame} className="NewGame">
+              <Icon color="black" fitted name="plus square outline" />
+            </Button>
+          }
+        />
+        <Popup
+          content="Play with random pieces"
+          trigger={
+            <Button icon onClick={createGame} className="NewGame">
+              <Icon fitted name="question" />
+            </Button>
+          }
+        />
+      </Button.Group>
     </Wrapper>
   );
 };
