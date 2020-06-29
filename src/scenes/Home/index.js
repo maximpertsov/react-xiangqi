@@ -9,6 +9,7 @@ import Game from 'scenes/Game';
 
 import GameList from './components/GameList';
 import LoginForm from './components/LoginForm';
+import NewGameButton from './components/NewGameButton';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,10 @@ const Home = () => {
           <Header size="large">Play online</Header>
           <LoginForm />
           {username !== null && <GameList />}
+        </Segment>
+        <Segment>
+          <Header size="medium">Create game</Header>
+          <NewGameButton />
         </Segment>
         <Segment>
           <Header size="large">Other modes</Header>

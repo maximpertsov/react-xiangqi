@@ -4,7 +4,6 @@ import { Header } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 
 import GameLink from './components/GameLink';
-import NewGameButton from './components/NewGameButton';
 
 const Wrapper = styled.div`
   border: 1px #ccc solid;
@@ -30,7 +29,6 @@ const GameList = () => {
         {gameSlugs.map(slug => (
           <GameLink key={slug} slug={slug} />
         ))}
-        <NewGameButton />
       </GridWrapper>
     </Wrapper>
   );
