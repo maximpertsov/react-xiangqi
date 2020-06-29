@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Icon, Popup } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
+import { Team } from 'services/logic/constants';
 
 import client from 'services/client';
 
@@ -16,10 +17,10 @@ const NewGameButton = () => {
 
   const username = useSelector(state => state.username);
 
-  const createGame = async () => {
+  const createGame = team => async () => {
     const {
       data: { slug },
-    } = await client.post('game', { player1: username });
+    } = await client.post('game', { player1: username, team });
     dispatch(actions.game.slug.set(slug));
     dispatch(actions.home.showGame.set(true));
   };
@@ -30,7 +31,7 @@ const NewGameButton = () => {
         <Popup
           content="Play with red pieces"
           trigger={
-            <Button icon onClick={createGame} className="NewGame">
+            <Button icon onClick={createGame(Team.RED)} className="NewGame">
               <Icon color="red" fitted name="plus square outline" />
             </Button>
           }
@@ -38,7 +39,7 @@ const NewGameButton = () => {
         <Popup
           content="Play with black pieces"
           trigger={
-            <Button icon onClick={createGame} className="NewGame">
+            <Button icon onClick={createGame(Team.BLACK)} className="NewGame">
               <Icon color="black" fitted name="plus square outline" />
             </Button>
           }
@@ -46,7 +47,7 @@ const NewGameButton = () => {
         <Popup
           content="Play with random pieces"
           trigger={
-            <Button icon onClick={createGame} className="NewGame">
+            <Button icon onClick={createGame()} className="NewGame">
               <Icon fitted name="question" />
             </Button>
           }
