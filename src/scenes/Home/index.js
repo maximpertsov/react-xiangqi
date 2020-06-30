@@ -9,7 +9,7 @@ import Game from 'scenes/Game';
 
 import GameList from './components/GameList';
 import LoginForm from './components/LoginForm';
-import NewGameButton from './components/NewGameButton';
+import NewGameMenu from './components/NewGameMenu';
 import Lobby from './components/Lobby';
 
 const Home = () => {
@@ -31,7 +31,7 @@ const Home = () => {
         </Segment>
         <Segment>
           <Header size="medium">Create game</Header>
-          <NewGameButton />
+          <NewGameMenu />
         </Segment>
         <Segment>
           <Lobby />

@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { Header, Button } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
+import flatMap from 'lodash/flatMap';
 
 const Wrapper = styled.div`
   border: 1px #ccc solid;
@@ -38,17 +39,31 @@ const Lobby = () => {
       );
   }, [dispatch, username]);
 
+  const acceptGameRequest = id => async () => {
+    client.patch(`game/requests/${id}`, {
+      player2: username,
+    });
+  };
+
   return (
     <Wrapper className="Lobby">
       <Header size="medium">Lobby</Header>
       <GridWrapper>
-        {lobbyRequests.map((request, index) => (
-          <GridItemWrapper key={index}>
-            <Button fluid className="GameLink">
-              {request.parameters.team || '?'}
-            </Button>
-          </GridItemWrapper>
-        ))}
+        {flatMap(lobbyRequests, (request, index) => {
+          if (request.player1 === username) return [];
+
+          return [
+            <GridItemWrapper key={index}>
+              <Button
+                onClick={acceptGameRequest(request.id)}
+                fluid
+                className="GameLink"
+              >
+                {`vs ${request.parameters.team || '?'}`}
+              </Button>
+            </GridItemWrapper>,
+          ];
+        })}
       </GridWrapper>
     </Wrapper>
   );

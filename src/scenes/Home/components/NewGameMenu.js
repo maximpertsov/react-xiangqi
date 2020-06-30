@@ -11,10 +11,10 @@ const Wrapper = styled.div`
   padding: 5px;
 `;
 
-const NewGameButton = () => {
+const NewGameMenu = () => {
   const username = useSelector(state => state.username);
 
-  const createGame = team => async () => {
+  const createGameRequest = team => async () => {
     client.post('game/requests', {
       player1: username,
       parameters: { team },
@@ -22,12 +22,12 @@ const NewGameButton = () => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper className="NewGameMenu">
       <Button.Group fluid>
         <Popup
           content="Play with red pieces"
           trigger={
-            <Button icon onClick={createGame(Team.RED)} className="NewGame">
+            <Button icon onClick={createGameRequest(Team.RED)}>
               <Icon color="red" fitted name="plus square outline" />
             </Button>
           }
@@ -35,7 +35,7 @@ const NewGameButton = () => {
         <Popup
           content="Play with black pieces"
           trigger={
-            <Button icon onClick={createGame(Team.BLACK)} className="NewGame">
+            <Button icon onClick={createGameRequest(Team.BLACK)}>
               <Icon color="black" fitted name="plus square outline" />
             </Button>
           }
@@ -43,7 +43,7 @@ const NewGameButton = () => {
         <Popup
           content="Play with random pieces"
           trigger={
-            <Button icon onClick={createGame()} className="NewGame">
+            <Button icon onClick={createGameRequest()}>
               <Icon fitted name="question" />
             </Button>
           }
@@ -53,4 +53,4 @@ const NewGameButton = () => {
   );
 };
 
-export default NewGameButton;
+export default NewGameMenu;
