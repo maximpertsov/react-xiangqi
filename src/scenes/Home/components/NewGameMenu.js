@@ -19,14 +19,14 @@ const NewGameMenu = () => {
   );
 
   const createGameRequest = team => async () => {
-    client.post('game/requests', {
+    client.post('game/request', {
       player1: username,
       parameters: { team },
     });
   };
 
   const cancelGameRequest = id => async () => {
-    client.delete(`game/requests/${id}`);
+    client.delete(`game/request/${id}`);
   };
 
   const renderRequestButtons = () => (

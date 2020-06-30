@@ -34,7 +34,7 @@ const Lobby = () => {
       if (!username) return;
 
       client
-        .get('game/requests')
+        .get('game/request')
         .then(response =>
           dispatch(actions.home.lobbyRequests.set(response.data)),
         );
@@ -44,7 +44,7 @@ const Lobby = () => {
   }, [dispatch, username]);
 
   const acceptGameRequest = id => async () => {
-    client.patch(`game/requests/${id}`, {
+    client.patch(`game/request/${id}`, {
       player2: username,
     });
   };
