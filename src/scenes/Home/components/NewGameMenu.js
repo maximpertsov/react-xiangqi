@@ -5,7 +5,7 @@ import { Team } from 'services/logic/constants';
 
 import client from 'services/client';
 
-import some from 'lodash/some';
+import find from 'lodash/find';
 import styled from '@emotion/styled';
 
 const Wrapper = styled.div`
@@ -14,8 +14,8 @@ const Wrapper = styled.div`
 
 const NewGameMenu = () => {
   const username = useSelector(state => state.username);
-  const hasOwnLobbyRequests = useSelector(state =>
-    some(state.lobbyRequests, { player1: username }),
+  const ownLobbyRequest = useSelector(state =>
+    find(state.lobbyRequests, { player1: username }),
   );
 
   const createGameRequest = team => async () => {
@@ -23,6 +23,10 @@ const NewGameMenu = () => {
       player1: username,
       parameters: { team },
     });
+  };
+
+  const cancelGameRequest = id => async () => {
+    client.delete(`game/requests/${id}`);
   };
 
   const renderRequestButtons = () => (
@@ -54,11 +58,13 @@ const NewGameMenu = () => {
     </Button.Group>
   );
 
-  const renderCancelButton = () => <Button fluid loading />;
+  const renderCancelButton = () => (
+    <Button onClick={cancelGameRequest(ownLobbyRequest.id)} fluid loading />
+  );
 
   return (
     <Wrapper className="NewGameMenu">
-      {hasOwnLobbyRequests ? renderCancelButton() : renderRequestButtons()}
+      {ownLobbyRequest ? renderCancelButton() : renderRequestButtons()}
     </Wrapper>
   );
 };
