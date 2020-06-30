@@ -51,8 +51,7 @@ export const getNextMoveFen = state => {
   return result || state.selectedFen;
 };
 
-export const getNextMoveTeam = ({ moves }) =>
-  fromMoves.getNextMoveTeam(moves);
+export const getNextMoveTeam = ({ moves }) => fromMoves.getNextMoveTeam(moves);
 
 export const getFirstFenWithoutLegalMoves = ({ moves }) =>
   fromMoves.getFirstFenWithoutLegalMoves(moves);
@@ -83,6 +82,7 @@ export const getUserTeam = state => {
   }
 };
 
+// eslint-disable-next-line complexity
 export const getCurrentPlayer = state => {
   if (!state.username) {
     return state.player1 || {};
@@ -94,10 +94,11 @@ export const getCurrentPlayer = state => {
     case Team.BLACK:
       return state.player2;
     default:
-      return {};
+      return state.player1 || {};
   }
 };
 
+// eslint-disable-next-line complexity
 export const getOpponent = state => {
   if (!state.username) {
     return state.player2 || {};
@@ -109,7 +110,7 @@ export const getOpponent = state => {
     case Team.BLACK:
       return state.player1;
     default:
-      return {};
+      return state.player2 || {};
   }
 };
 

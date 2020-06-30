@@ -26,6 +26,11 @@ const rootReducer = combineReducers({
     (state, action) => action.payload,
     [],
   ),
+  lobbyRequests: handleAction(
+    actions.home.lobbyRequests.set,
+    (state, action) => action.payload,
+    [],
+  ),
   gameSlug: handleAction(
     actions.game.slug.set,
     (state, action) => action.payload,
