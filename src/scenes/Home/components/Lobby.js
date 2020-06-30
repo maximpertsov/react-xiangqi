@@ -30,13 +30,17 @@ const Lobby = () => {
   const username = useSelector(state => state.username);
 
   useEffect(() => {
-    if (!username) return;
+    const interval = setInterval(() => {
+      if (!username) return;
 
-    client
-      .get('game/requests')
-      .then(response =>
-        dispatch(actions.home.lobbyRequests.set(response.data)),
-      );
+      client
+        .get('game/requests')
+        .then(response =>
+          dispatch(actions.home.lobbyRequests.set(response.data)),
+        );
+    }, 2000);
+
+    return () => clearInterval(interval);
   }, [dispatch, username]);
 
   const acceptGameRequest = id => async () => {
