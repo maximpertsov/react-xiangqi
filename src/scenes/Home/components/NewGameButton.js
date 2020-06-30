@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Icon, Popup } from 'semantic-ui-react';
-import { useDispatch, useSelector } from 'react-redux';
-import actions from 'actions';
+import { useSelector } from 'react-redux';
 import { Team } from 'services/logic/constants';
 
 import client from 'services/client';
@@ -13,16 +12,13 @@ const Wrapper = styled.div`
 `;
 
 const NewGameButton = () => {
-  const dispatch = useDispatch();
-
   const username = useSelector(state => state.username);
 
   const createGame = team => async () => {
-    const {
-      data: { slug },
-    } = await client.post('game', { player1: username, team });
-    dispatch(actions.game.slug.set(slug));
-    dispatch(actions.home.showGame.set(true));
+    client.post('game/requests', {
+      player1: username,
+      parameters: { team },
+    });
   };
 
   return (

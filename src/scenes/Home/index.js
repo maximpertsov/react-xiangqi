@@ -10,6 +10,7 @@ import Game from 'scenes/Game';
 import GameList from './components/GameList';
 import LoginForm from './components/LoginForm';
 import NewGameButton from './components/NewGameButton';
+import Lobby from './components/Lobby';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ const Home = () => {
         <Segment>
           <Header size="medium">Create game</Header>
           <NewGameButton />
+        </Segment>
+        <Segment>
+          <Lobby />
         </Segment>
         <Segment>
           <Header size="large">Other modes</Header>
