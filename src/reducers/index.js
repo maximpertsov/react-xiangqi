@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
       actions.home.autoMove.set.both,
     ),
     (state, action) => action.payload,
-    ['black'],
+    [],
   ),
   games: handleAction(
     actions.home.games.set,
@@ -40,7 +40,7 @@ const rootReducer = combineReducers({
   showGame: handleAction(
     actions.home.showGame.set,
     (state, action) => action.payload,
-    true,
+    false,
   ),
   username: handleAction(
     actions.home.username.set,
