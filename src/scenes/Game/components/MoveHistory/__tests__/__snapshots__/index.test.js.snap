@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MoveHistory render snapshot 1`] = `
+<Segment
+  clearing={true}
+  tertiary={true}
+>
+  <Styled(div)
+    className="MoveHistory"
+  />
+</Segment>
+`;
