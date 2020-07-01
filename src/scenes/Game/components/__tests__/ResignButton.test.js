@@ -1,21 +1,9 @@
 import React from 'react';
-import * as redux from 'react-redux';
-import { shallow } from 'enzyme';
-import values from 'lodash/values';
 import * as selectors from 'reducers/selectors';
 
 import actions from 'actions';
 import resign from 'actions/resign';
 import ResignButton from 'scenes/Game/components/ResignButton';
-
-const getShallowWrappedComponent = store =>
-  shallow(
-    <redux.Provider store={store}>
-      <ResignButton />
-    </redux.Provider>,
-  )
-    .dive()
-    .dive();
 
 describe('ResignButton', () => {
   let store;
@@ -23,21 +11,17 @@ describe('ResignButton', () => {
   let spys = {};
 
   beforeEach(() => {
-    spys.useDispatch = jest.spyOn(redux, 'useDispatch');
-    spys.useDispatch.mockReturnValue(store.dispatch);
-
-    spys.useSelector = jest.spyOn(redux, 'useSelector');
-    spys.useSelector.mockImplementation(callback => callback(store.getState()));
+    setupReduxSpys(spys, store);
 
     spys.getCurrentPlayer = jest.spyOn(selectors, 'getCurrentPlayer');
     spys.getCurrentPlayer.mockReturnValue({ name: 'currentPlayer' });
 
-    wrapper = getShallowWrappedComponent(store);
+    wrapper = shallowWrappedComponent(<ResignButton />, store);
   });
 
   afterEach(() => {
     store.clearActions();
-    values(spys).forEach(spy => spy.mockRestore());
+    restoreSpys(spys);
   });
 
   describe('default button', () => {

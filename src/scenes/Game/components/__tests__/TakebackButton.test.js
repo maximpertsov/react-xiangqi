@@ -1,20 +1,8 @@
 import React from 'react';
-import * as redux from 'react-redux';
-import { shallow } from 'enzyme';
-import values from 'lodash/values';
 import * as selectors from 'reducers/selectors';
 
 import takeback from 'actions/takeback';
 import TakebackButton from 'scenes/Game/components/TakebackButton';
-
-const getShallowWrappedComponent = store =>
-  shallow(
-    <redux.Provider store={store}>
-      <TakebackButton />
-    </redux.Provider>,
-  )
-    .dive()
-    .dive();
 
 describe('TakebackButton', () => {
   let store;
@@ -22,11 +10,7 @@ describe('TakebackButton', () => {
   let spys = {};
 
   beforeEach(() => {
-    spys.useDispatch = jest.spyOn(redux, 'useDispatch');
-    spys.useDispatch.mockReturnValue(store.dispatch);
-
-    spys.useSelector = jest.spyOn(redux, 'useSelector');
-    spys.useSelector.mockImplementation(callback => callback(store.getState()));
+    setupReduxSpys(spys, store);
 
     spys.getCurrentPlayer = jest.spyOn(selectors, 'getCurrentPlayer');
     spys.getCurrentPlayer.mockReturnValue({ name: 'currentPlayer' });
@@ -34,12 +18,12 @@ describe('TakebackButton', () => {
     spys.getOpponent = jest.spyOn(selectors, 'getOpponent');
     spys.getOpponent.mockReturnValue({ name: 'opponent' });
 
-    wrapper = getShallowWrappedComponent(store);
+    wrapper = shallowWrappedComponent(<TakebackButton />, store);
   });
 
   afterEach(() => {
     store.clearActions();
-    values(spys).forEach(spy => spy.mockRestore());
+    restoreSpys(spys);
   });
 
   describe('default button', () => {
