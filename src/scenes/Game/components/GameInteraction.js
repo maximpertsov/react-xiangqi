@@ -16,6 +16,7 @@ import {
 
 const GameInteraction = () => {
   const dispatch = useDispatch();
+
   const autoMove = useSelector(state => state.autoMove, isEqual);
   const lastMove = useSelector(state => getLastMove(state), isEqual);
   const nextMoveFen = useSelector(state => getNextMoveFen(state), isEqual);

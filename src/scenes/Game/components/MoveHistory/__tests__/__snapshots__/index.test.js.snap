@@ -2,11 +2,38 @@
 
 exports[`MoveHistory render snapshot 1`] = `
 <Segment
-  clearing={true}
   tertiary={true}
 >
-  <Styled(div)
-    className="MoveHistory"
-  />
+  <Styled(div)>
+    <Button
+      as="button"
+      compact={true}
+      icon={true}
+      size="tiny"
+    >
+      <Icon
+        as="i"
+        fitted={true}
+        name="step backward"
+        onClick={[Function]}
+      />
+    </Button>
+    <Styled(div)
+      className="MoveHistory"
+    />
+    <Button
+      as="button"
+      compact={true}
+      icon={true}
+      onClick={[Function]}
+      size="small"
+    >
+      <Icon
+        as="i"
+        fitted={true}
+        name="step forward"
+      />
+    </Button>
+  </Styled(div)>
 </Segment>
 `;
