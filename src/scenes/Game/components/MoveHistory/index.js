@@ -2,12 +2,18 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import { Button, Icon, Segment } from 'semantic-ui-react';
-import { tail, chunk, isEqual } from 'lodash';
 
-// TODO: move to separate class
+import chunk from 'lodash/fp/chunk';
+import flow from 'lodash/fp/flow';
+import isEqual from 'lodash/fp/isEqual';
+import map from 'lodash/fp/map';
+import tail from 'lodash/fp/tail';
+
+import { createSelector } from 'reselect';
+
 import actions from 'actions';
+// TODO: move to separate class
 import { getPreviousMoveFen, getNextMoveFen } from 'reducers';
-
 import { MediaQuery, WidthSize } from 'commonStyles';
 import Move from './components/Move';
 import FullMove from './components/FullMove';
@@ -41,25 +47,39 @@ const MovesWrapper = styled.div`
   overflow: hidden;
 `;
 
+const mapStateToProps = createSelector(
+  [
+    state => state.moves.map(({ fen, uci }, index) => ({ index, fen, uci })),
+    // TODO: move to separate class
+    state => getPreviousMoveFen(state),
+    state => getNextMoveFen(state),
+  ],
+  (movesData, previousMoveFen, nextMoveFen) => ({
+    movesData,
+    previousMoveFen,
+    nextMoveFen,
+  }),
+);
+
 const MoveHistory = () => {
   const dispatch = useDispatch();
 
-  // TODO: move to separate class
-  const previousMoveFen = useSelector(state => getPreviousMoveFen(state));
-  const nextMoveFen = useSelector(state => getNextMoveFen(state), isEqual);
-
-  const moves = useSelector(state => state.moves, isEqual);
-  const moveComponents = moves.map((move, index) => (
-    <Move key={index} uci={move.uci} fen={move.fen} />
-  ));
-  const fullMoves = chunk(tail(moveComponents), 2).map(
-    ([player1Move, player2Move], index) => (
-      <FullMove key={index} ordering={index + 1}>
-        {player1Move}
-        {player2Move}
-      </FullMove>
-    ),
+  const { movesData, previousMoveFen, nextMoveFen } = useSelector(
+    mapStateToProps,
+    isEqual,
   );
+
+  const renderFullMoves = () =>
+    flow(
+      tail,
+      chunk(2),
+      map(([player1MoveData, player2MoveData], index) => (
+        <FullMove key={index} ordering={index + 1}>
+          <Move {...player1MoveData} />
+          <Move {...player2MoveData} />
+        </FullMove>
+      )),
+    )(movesData);
 
   return (
     <Segment tertiary>
@@ -73,7 +93,7 @@ const MoveHistory = () => {
             name="step backward"
           />
         </Button>
-        <MovesWrapper className="MoveHistory">{fullMoves}</MovesWrapper>
+        <MovesWrapper className="MoveHistory">{renderFullMoves()}</MovesWrapper>
         <Button
           onClick={() => dispatch(actions.game.selectedFen.set(nextMoveFen))}
           size="small"
