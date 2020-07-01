@@ -6,10 +6,7 @@ import { tail, chunk, isEqual } from 'lodash';
 
 // TODO: move to separate class
 import actions from 'actions';
-import {
-  getPreviousMoveFen,
-  getNextMoveFen,
-} from 'reducers';
+import { getPreviousMoveFen, getNextMoveFen } from 'reducers';
 
 import { MediaQuery, WidthSize } from 'commonStyles';
 import Move from './components/Move';
