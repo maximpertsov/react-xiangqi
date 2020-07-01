@@ -1,21 +1,9 @@
 import React from 'react';
-import * as redux from 'react-redux';
-import { shallow } from 'enzyme';
-import values from 'lodash/values';
 import * as selectors from 'reducers/selectors';
 
 import actions from 'actions';
 import draw from 'actions/draw';
 import DrawButton from 'scenes/Game/components/DrawButton';
-
-const getShallowWrappedComponent = store =>
-  shallow(
-    <redux.Provider store={store}>
-      <DrawButton />
-    </redux.Provider>,
-  )
-    .dive()
-    .dive();
 
 describe('DrawButton', () => {
   let store;
@@ -23,11 +11,7 @@ describe('DrawButton', () => {
   let spys = {};
 
   beforeEach(() => {
-    spys.useDispatch = jest.spyOn(redux, 'useDispatch');
-    spys.useDispatch.mockReturnValue(store.dispatch);
-
-    spys.useSelector = jest.spyOn(redux, 'useSelector');
-    spys.useSelector.mockImplementation(callback => callback(store.getState()));
+    setupReduxSpys(spys, store);
 
     spys.getCurrentPlayer = jest.spyOn(selectors, 'getCurrentPlayer');
     spys.getCurrentPlayer.mockReturnValue({ name: 'currentPlayer' });
@@ -35,12 +19,12 @@ describe('DrawButton', () => {
     spys.getOpponent = jest.spyOn(selectors, 'getOpponent');
     spys.getOpponent.mockReturnValue({ name: 'opponent' });
 
-    wrapper = getShallowWrappedComponent(store);
+    wrapper = shallowWrappedComponent(<DrawButton />, store);
   });
 
   afterEach(() => {
     store.clearActions();
-    values(spys).forEach(spy => spy.mockRestore());
+    restoreSpys(spys);
   });
 
   describe('default button', () => {

@@ -8,6 +8,9 @@
     "document": false,
     "localStorage": false,
     "mockStore": false,
+    "restoreSpys": false,
+    "setupReduxSpys": false,
+    "shallowWrappedComponent": false,
     "window": false
   },
   "plugins": [
