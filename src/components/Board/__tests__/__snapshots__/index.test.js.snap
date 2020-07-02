@@ -2,7 +2,7 @@
 
 exports[`Board renders without crashing 1`] = `
 <div
-  class="BoardView css-1uxgy54"
+  class="BoardView css-17xz9da"
 >
   <div
     class="SquareView css-8516zs"
