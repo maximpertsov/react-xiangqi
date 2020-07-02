@@ -73,12 +73,14 @@ const MoveHistory = () => {
     flow(
       tail,
       chunk(2),
-      map(([player1MoveData, player2MoveData], index) => (
-        <FullMove key={index} ordering={index + 1}>
-          <Move {...player1MoveData} />
-          <Move {...player2MoveData} />
-        </FullMove>
-      )),
+      map.convert({ cap: false })(
+        ([player1MoveData, player2MoveData], index) => (
+          <FullMove key={index} ordering={index + 1}>
+            <Move {...player1MoveData} />
+            <Move {...player2MoveData} />
+          </FullMove>
+        ),
+      ),
     )(movesData);
 
   return (
