@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Button, Comment, Form, Header } from 'semantic-ui-react';
 import update from 'immutability-helper';
 
-const socket = new window.WebSocket('ws://127.0.0.1:8000/ws/chat/lobby/');
+const socket = new window.WebSocket(process.env.REACT_APP_WS_CHAT_URL);
 
 const Chat = () => {
   const username = useSelector(state => state.username);
