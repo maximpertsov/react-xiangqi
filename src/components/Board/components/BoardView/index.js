@@ -27,11 +27,13 @@ const Wrapper = styled.div`
     grid-template-rows: repeat(10, ${SquareSize.LARGE});
     grid-template-columns: repeat(9, ${SquareSize.LARGE});
   }
+  background-color: #DECFB1;
   background-image: url(${boardImg});
   background-position: top;
   background-repeat: no-repeat;
   background-size: contain;
   display: grid;
+  z-index: 0;
 `;
 
 const BoardView = ({ handleSquareClick }) => {
