@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 import isEqual from 'lodash/isEqual';
-import { Dimmer, Loader, Segment } from 'semantic-ui-react';
+import { Dimmer, Grid, Loader, Segment } from 'semantic-ui-react';
 
 import {
   getCurrentPlayer,
@@ -11,6 +11,7 @@ import {
 } from 'reducers';
 import Board from 'components/Board';
 import GameMenu from 'components/GameMenu';
+import Chat from './Chat';
 import ConfirmMoveMenu from './ConfirmMoveMenu';
 import GameInfo from './GameInfo';
 import MoveHistory from './MoveHistory';
@@ -52,22 +53,37 @@ const GameView = () => {
   );
 
   return (
-    <Dimmer.Dimmable as={Segment} basic blurring dimmed={!hasInitialPlacement}>
-      <Dimmer active={!hasInitialPlacement} page>
-        <Loader>Loading</Loader>
-      </Dimmer>
-      {hasInitialPlacement && (
-        <Wrapper className="Game">
-          <Player {...opponent} />
-          <Board legalMoves />
-          <ConfirmMoveMenu />
-          {!showConfirmMoveMenu && renderActionsMenu()}
-          {!showConfirmMoveMenu && <Player {...currentPlayer} />}
-          {!showConfirmMoveMenu && <GameInfo hasLegalMoves />}
-          {!showConfirmMoveMenu && <MoveHistory />}
-        </Wrapper>
-      )}
-    </Dimmer.Dimmable>
+    <Grid columns={2} divided>
+      <Grid.Row>
+        <Grid.Column>
+          <Chat />
+        </Grid.Column>
+
+        <Grid.Column>
+          <Dimmer.Dimmable
+            as={Segment}
+            basic
+            blurring
+            dimmed={!hasInitialPlacement}
+          >
+            <Dimmer active={!hasInitialPlacement} page>
+              <Loader>Loading</Loader>
+            </Dimmer>
+            {hasInitialPlacement && (
+              <Wrapper className="Game">
+                <Player {...opponent} />
+                <Board legalMoves />
+                <ConfirmMoveMenu />
+                {!showConfirmMoveMenu && renderActionsMenu()}
+                {!showConfirmMoveMenu && <Player {...currentPlayer} />}
+                {!showConfirmMoveMenu && <GameInfo hasLegalMoves />}
+                {!showConfirmMoveMenu && <MoveHistory />}
+              </Wrapper>
+            )}
+          </Dimmer.Dimmable>
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   );
 };
 
