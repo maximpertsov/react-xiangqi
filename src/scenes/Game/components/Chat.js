@@ -32,7 +32,7 @@ const Chat = () => {
 
   useEffect(() => {
     socket.onmessage = event => {
-      const { message } = JSON.parse(event.data);
+      const message = JSON.parse(event.data);
       const newMessages = update(messages, { $push: [message] });
       setMessages(newMessages);
     };
@@ -57,13 +57,11 @@ const Chat = () => {
 
             socket.send(
               JSON.stringify({
-                message: {
-                  avatar: '/images/avatar/small/matt.jpg',
-                  content: {
-                    author: username || 'anonymous',
-                    text: newMessage,
-                    metadata: ['Today at 5:42PM'],
-                  },
+                avatar: '/images/avatar/small/matt.jpg',
+                content: {
+                  author: username || 'anonymous',
+                  text: newMessage,
+                  metadata: ['Today at 5:42PM'],
                 },
               }),
             );
