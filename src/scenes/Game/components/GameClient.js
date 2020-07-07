@@ -28,6 +28,8 @@ const GameClient = () => {
   const username = useSelector(state => state.username);
 
   useEffect(() => {
+    if (!gameSlug) return;
+
     dispatch(fetchGame({ gameSlug }));
   }, [dispatch, gameSlug]);
 
