@@ -49,6 +49,8 @@ const Move = ({ uci, fen }) => {
 
   useEffect(() => {
     if (selectedMove.fen === fen) {
+      if (!ref.current) return;
+
       ref.current.scrollIntoView();
     }
   }, [fen, selectedMove.fen]);
