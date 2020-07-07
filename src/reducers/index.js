@@ -1,6 +1,7 @@
 import actions from 'actions';
 import { combineReducers } from 'redux';
 import { Team } from 'services/logic/constants';
+import update from 'immutability-helper';
 
 import { handleAction, combineActions } from 'redux-actions';
 
@@ -10,6 +11,12 @@ import loginForm from './loginForm';
 import moves from './moves';
 
 const rootReducer = combineReducers({
+  // Messages,
+  messages: handleAction(
+    actions.messages.append,
+    (state, action) => update(state, { $push: [action.payload] }),
+    [],
+  ),
   // Home,
   autoMove: handleAction(
     combineActions(

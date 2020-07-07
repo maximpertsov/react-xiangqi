@@ -1,12 +1,13 @@
-import React, { createContext, useState } from 'react';
-import update from 'immutability-helper';
+import React, { createContext } from 'react';
+import { useDispatch } from 'react-redux';
+import actions from 'actions';
 
 /* eslint-disable react/prop-types */
 const WebSocketProvider = ({ children }) => {
   let socket;
   let provider;
 
-  const [messages, setMessages] = useState([]);
+  const dispatch = useDispatch();
 
   const send = (gameSlug, message) => {
     const payload = {
@@ -21,7 +22,7 @@ const WebSocketProvider = ({ children }) => {
 
     socket.onmessage = event => {
       const message = JSON.parse(event.data);
-      setMessages(update(messages, { $push: [message] }));
+      dispatch(actions.messages.append(message));
     };
 
     provider = { socket, send };
