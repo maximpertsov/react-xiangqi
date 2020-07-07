@@ -25,7 +25,7 @@ const ConfirmMoveMenu = () => {
 
   const confirmMove = useCallback(async () => {
     dispatch(
-      createMoveOnServer({
+      createMoveOnServer(io, {
         gameSlug,
         uci: lastMove.uci,
         fen: lastMove.fen,
@@ -33,7 +33,6 @@ const ConfirmMoveMenu = () => {
       }),
     );
     dispatch(actions.game.showConfirmMoveMenu.set(false));
-    io.send({ gameSlug, type: 'move', username });
   }, [dispatch, gameSlug, lastMove.uci, lastMove.fen, username, io]);
 
   const cancelMove = useCallback(() => {
