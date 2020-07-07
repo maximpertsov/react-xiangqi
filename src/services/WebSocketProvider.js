@@ -1,6 +1,7 @@
-import React, { PropTypes, createContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import update from 'immutability-helper';
 
+/* eslint-disable react/prop-types */
 const WebSocketProvider = ({ children }) => {
   let socket;
   let provider;
@@ -36,7 +37,3 @@ const WebSocketProvider = ({ children }) => {
 export default WebSocketProvider;
 
 export const WebSocketContext = createContext(null);
-
-WebSocketProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
