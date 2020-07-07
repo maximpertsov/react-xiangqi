@@ -11,6 +11,7 @@
     "restoreSpys": false,
     "setupReduxSpys": false,
     "shallowWrappedComponent": false,
+    "WebSocket": false,
     "window": false
   },
   "plugins": [
