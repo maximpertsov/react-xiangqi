@@ -33,7 +33,7 @@ const ConfirmMoveMenu = () => {
       }),
     );
     dispatch(actions.game.showConfirmMoveMenu.set(false));
-    io.send({ text: 'moved' });
+    io.send({ gameSlug, type: 'move', username });
   }, [dispatch, gameSlug, lastMove.uci, lastMove.fen, username, io]);
 
   const cancelMove = useCallback(() => {

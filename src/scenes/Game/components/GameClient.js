@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import isEqual from 'lodash/isEqual';
+import last from 'lodash/last';
 
+import fetchGame from 'actions/fetchGame';
 import fetchStartingPosition from 'actions/fetchStartingPosition';
 import fetchPosition from 'actions/fetchPosition';
 import pollMoves from 'actions/pollMoves';
@@ -21,8 +23,24 @@ const GameClient = () => {
     state => getFirstFenWithoutLegalMoves(state),
     isEqual,
   );
+  const messages = useSelector(state => state.messages, isEqual);
   const updateCount = useSelector(state => state.updateCount);
   const username = useSelector(state => state.username);
+
+  useEffect(() => {
+    dispatch(fetchGame({ gameSlug }));
+  }, [dispatch, gameSlug]);
+
+  useEffect(() => {
+    const lastMessage = last(messages);
+
+    if (!lastMessage) return;
+    if (lastMessage.type !== 'move') return;
+    if (gameSlug !== lastMessage.gameSlug) return;
+    if (username === lastMessage.username) return;
+
+    dispatch(fetchGame({ gameSlug }));
+  }, [dispatch, gameSlug, messages, username]);
 
   useEffect(() => {
     if (gameSlug) return;
@@ -39,18 +57,18 @@ const GameClient = () => {
     dispatch(fetchPosition({ fen: firstFenWithoutLegalMoves }));
   }, [dispatch, firstFenWithoutLegalMoves, gameSlug, hasInitialPlacement]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      dispatch(
-        pollMoves({
-          gameSlug,
-          updateCount,
-          username,
-        }),
-      );
-    }, POLLING_INTERVAL);
-    return () => clearInterval(interval);
-  }, [dispatch, gameSlug, updateCount, username]);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     dispatch(
+  //       pollMoves({
+  //         gameSlug,
+  //         updateCount,
+  //         username,
+  //       }),
+  //     );
+  //   }, POLLING_INTERVAL);
+  //   return () => clearInterval(interval);
+  // }, [dispatch, gameSlug, updateCount, username]);
 
   return null;
 };
