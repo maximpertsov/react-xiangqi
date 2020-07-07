@@ -5,15 +5,11 @@ import actions from 'actions';
 /* eslint-disable react/prop-types */
 const WebSocketProvider = ({ children }) => {
   let socket;
-  let provider;
+  let io;
 
   const dispatch = useDispatch();
 
-  const send = (gameSlug, message) => {
-    const payload = {
-      game: gameSlug,
-      data: message,
-    };
+  const send = payload => {
     socket.send(JSON.stringify(payload));
   };
 
@@ -25,13 +21,11 @@ const WebSocketProvider = ({ children }) => {
       dispatch(actions.messages.append(message));
     };
 
-    provider = { socket, send };
+    io = { socket, send };
   }
 
   return (
-    <WebSocketContext.Provider value={provider}>
-      {children}
-    </WebSocketContext.Provider>
+    <WebSocketContext.Provider value={io}>{children}</WebSocketContext.Provider>
   );
 };
 
