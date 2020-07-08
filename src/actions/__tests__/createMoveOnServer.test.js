@@ -19,7 +19,7 @@ describe('create move on server', () => {
     test('action does not make an API request', async () => {
       const spy = jest.spyOn(axios, 'post');
       await store.dispatch(
-        createMoveOnServer({
+        createMoveOnServer(null, {
           gameSlug,
           uci: move.uci,
           fen: move.fen,
@@ -35,9 +35,10 @@ describe('create move on server', () => {
 
     test('successful request', async () => {
       const spy = jest.spyOn(axios, 'post').mockResolvedValue({ status: 200 });
+      const io = { send: jest.fn() };
 
       await store.dispatch(
-        createMoveOnServer({
+        createMoveOnServer(io, {
           gameSlug,
           uci: move.uci,
           fen: move.fen,
@@ -54,13 +55,15 @@ describe('create move on server', () => {
           player: username,
         },
       });
+      expect(io.send).toHaveBeenCalledTimes(1);
     });
 
     test('failed request', async () => {
-      const spy = jest.spyOn(axios, 'post').mockRejectedValue({ status: 400 });
+      const spy = jest.spyOn(axios, 'post').mockRejectedValue(new Error());
+      const io = { send: jest.fn() };
 
       await store.dispatch(
-        createMoveOnServer({
+        createMoveOnServer(io, {
           gameSlug,
           uci: move.uci,
           fen: move.fen,
@@ -77,7 +80,7 @@ describe('create move on server', () => {
           player: username,
         },
       });
-
+      expect(io.send).toHaveBeenCalledTimes(0);
       expect(store.getActions()).toStrictEqual([
         actions.game.moves.remove(move.fen),
       ]);
