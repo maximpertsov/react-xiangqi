@@ -54,7 +54,8 @@
     "max-len": [
       "error",
       {
-        "code": 80
+        "code": 80,
+        "ignoreUrls": true
       }
     ],
     "no-trailing-spaces": "error",
