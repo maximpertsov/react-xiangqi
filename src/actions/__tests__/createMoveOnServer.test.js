@@ -5,28 +5,31 @@ import actions from 'actions';
 jest.mock('axios');
 
 describe('create move on server', () => {
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
   const store = mockStore({});
   const move = { uci: 'a1a2', fen: 'FEN' };
   const username = 'user';
+  const io = { send: jest.fn() };
+
+  const subject = async gameSlug => {
+    await store.dispatch(
+      createMoveOnServer(io, { gameSlug, username, ...move }),
+    );
+  };
+
+  afterEach(() => {
+    store.clearActions();
+    jest.resetAllMocks();
+  });
 
   describe('not a persisted game', () => {
     const gameSlug = null;
 
     test('action does not make an API request', async () => {
-      const spy = jest.spyOn(axios, 'post');
-      await store.dispatch(
-        createMoveOnServer(null, {
-          gameSlug,
-          uci: move.uci,
-          fen: move.fen,
-          username,
-        }),
-      );
-      expect(spy).toHaveBeenCalledTimes(0);
+      expect.assertions(1);
+
+      await subject(gameSlug);
+
+      expect(axios.post).not.toHaveBeenCalled();
     });
   });
 
@@ -34,19 +37,12 @@ describe('create move on server', () => {
     const gameSlug = 'ABC123';
 
     test('successful request', async () => {
-      const spy = jest.spyOn(axios, 'post').mockResolvedValue({ status: 200 });
-      const io = { send: jest.fn() };
+      expect.assertions(3);
+      axios.post.mockResolvedValue({ status: 200 });
 
-      await store.dispatch(
-        createMoveOnServer(io, {
-          gameSlug,
-          uci: move.uci,
-          fen: move.fen,
-          username,
-        }),
-      );
+      await subject(gameSlug);
 
-      expect(spy).toHaveBeenCalledWith('game/events', {
+      expect(axios.post).toHaveBeenCalledWith('game/events', {
         name: 'move',
         game: gameSlug,
         payload: {
@@ -56,22 +52,16 @@ describe('create move on server', () => {
         },
       });
       expect(io.send).toHaveBeenCalledTimes(1);
+      expect(store.getActions()).toStrictEqual([]);
     });
 
     test('failed request', async () => {
-      const spy = jest.spyOn(axios, 'post').mockRejectedValue(new Error());
-      const io = { send: jest.fn() };
+      expect.assertions(3);
+      axios.post.mockRejectedValue({});
 
-      await store.dispatch(
-        createMoveOnServer(io, {
-          gameSlug,
-          uci: move.uci,
-          fen: move.fen,
-          username,
-        }),
-      );
+      await subject(gameSlug);
 
-      expect(spy).toHaveBeenCalledWith('game/events', {
+      expect(axios.post).toHaveBeenCalledWith('game/events', {
         name: 'move',
         game: gameSlug,
         payload: {

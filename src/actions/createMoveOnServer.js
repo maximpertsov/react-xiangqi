@@ -17,11 +17,13 @@ const createMoveOnServer = (
 ) => async dispatch => {
   if (gameSlug === null) return;
 
-  postMove({ gameSlug, uci, fen, username })
+  return postMove({ gameSlug, uci, fen, username })
     .then(() => {
       io.send({ gameSlug, type: 'move', username });
     })
-    .catch(() => dispatch(actions.game.moves.remove(fen)));
+    .catch(() => {
+      dispatch(actions.game.moves.remove(fen));
+    });
 };
 
 export default createMoveOnServer;
