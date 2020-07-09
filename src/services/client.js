@@ -41,8 +41,6 @@ axios.interceptors.response.use(
   error => Promise.reject(error),
 );
 
-export const poll = ({ gameSlug }) => axios.get(`game/${gameSlug}/poll`);
-
 const client = axios;
 
 export default client;

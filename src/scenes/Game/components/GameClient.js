@@ -7,10 +7,7 @@ import last from 'lodash/last';
 import fetchGame from 'actions/fetchGame';
 import fetchStartingPosition from 'actions/fetchStartingPosition';
 import fetchPosition from 'actions/fetchPosition';
-import pollMoves from 'actions/pollMoves';
 import { getHasInitialPlacement, getFirstFenWithoutLegalMoves } from 'reducers';
-
-const POLLING_INTERVAL = 2500;
 
 const GameClient = () => {
   const dispatch = useDispatch();
@@ -24,7 +21,6 @@ const GameClient = () => {
     isEqual,
   );
   const messages = useSelector(state => state.messages, isEqual);
-  const updateCount = useSelector(state => state.updateCount);
   const username = useSelector(state => state.username);
 
   useEffect(() => {
@@ -58,19 +54,6 @@ const GameClient = () => {
 
     dispatch(fetchPosition({ fen: firstFenWithoutLegalMoves }));
   }, [dispatch, firstFenWithoutLegalMoves, gameSlug, hasInitialPlacement]);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     dispatch(
-  //       pollMoves({
-  //         gameSlug,
-  //         updateCount,
-  //         username,
-  //       }),
-  //     );
-  //   }, POLLING_INTERVAL);
-  //   return () => clearInterval(interval);
-  // }, [dispatch, gameSlug, updateCount, username]);
 
   return null;
 };
