@@ -15,7 +15,6 @@ test.each`
   ${game.selectedFen.set}         | ${'GAME/SELECTED_FEN/SET'}           | ${'FEN'}
   ${game.showConfirmMoveMenu.set} | ${'GAME/SHOW_CONFIRM_MOVE_MENU/SET'} | ${true}
   ${game.slug.set}                | ${'GAME/SLUG/SET'}                   | ${'ABC123'}
-  ${game.updateCount.set}         | ${'GAME/UPDATE_COUNT/SET'}           | ${10}
   ${home.autoMove.set.off}        | ${'HOME/AUTO_MOVE/SET/OFF'}          | ${[]}
   ${home.autoMove.set.red}        | ${'HOME/AUTO_MOVE/SET/RED'}          | ${['red']}
   ${home.autoMove.set.black}      | ${'HOME/AUTO_MOVE/SET/BLACK'}        | ${['black']}

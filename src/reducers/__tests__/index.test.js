@@ -271,24 +271,6 @@ const tables = {
       },
     ],
   ],
-  updateCount: [
-    [
-      'return the default state',
-      {
-        action: {},
-        currentState: undefined,
-        expectedNewState: -1,
-      },
-    ],
-    [
-      'set the update count',
-      {
-        action: actions.game.updateCount.set(3),
-        currentState: -1,
-        expectedNewState: 3,
-      },
-    ],
-  ],
   username: [
     [
       'return the default state',

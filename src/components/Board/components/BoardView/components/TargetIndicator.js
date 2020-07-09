@@ -23,7 +23,7 @@ const TargetEmptyIndicator = styled.div({
 const TargetIndicator = ({ occupied }) =>
   occupied ? <TargetOccupiedIndicator /> : <TargetEmptyIndicator />;
 
-TargetIndicator.displayName = 'TargetIndicator'
+TargetIndicator.displayName = 'TargetIndicator';
 
 TargetIndicator.propTypes = {
   occupied: PropTypes.bool.isRequired,

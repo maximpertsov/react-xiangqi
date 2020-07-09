@@ -6,17 +6,19 @@ jest.mock('axios');
 
 describe('draw', () => {
   const store = mockStore({});
+  const parameters = { gameSlug: 'ABC123', username: 'user1' };
+
+  beforeEach(() => {
+    axios.post.mockResolvedValue({});
+  });
 
   afterEach(() => {
     store.clearActions();
+    jest.resetAllMocks();
   });
 
   test('request', async () => {
-    axios.post.mockResolvedValue({});
-
-    await store.dispatch(
-      draw.request({ gameSlug: 'ABC123', username: 'user1' }),
-    );
+    await store.dispatch(draw.request(parameters));
 
     expect(axios.post).toHaveBeenCalledWith('game/events', {
       game: 'ABC123',
@@ -30,11 +32,7 @@ describe('draw', () => {
   });
 
   test('cancel', async () => {
-    axios.post.mockResolvedValue({});
-
-    await store.dispatch(
-      draw.cancel({ gameSlug: 'ABC123', username: 'user1' }),
-    );
+    await store.dispatch(draw.cancel(parameters));
 
     expect(axios.post).toHaveBeenCalledWith('game/events', {
       game: 'ABC123',
@@ -48,11 +46,7 @@ describe('draw', () => {
   });
 
   test('reject', async () => {
-    axios.post.mockResolvedValue({});
-
-    await store.dispatch(
-      draw.reject({ gameSlug: 'ABC123', username: 'user1' }),
-    );
+    await store.dispatch(draw.reject(parameters));
 
     expect(axios.post).toHaveBeenCalledWith('game/events', {
       game: 'ABC123',
@@ -66,11 +60,7 @@ describe('draw', () => {
   });
 
   test('accept', async () => {
-    axios.post.mockResolvedValue({});
-
-    await store.dispatch(
-      draw.accept({ gameSlug: 'ABC123', username: 'user1' }),
-    );
+    await store.dispatch(draw.accept(parameters));
 
     expect(axios.post).toHaveBeenCalledWith('game/events', {
       game: 'ABC123',

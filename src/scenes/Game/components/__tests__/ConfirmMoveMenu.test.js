@@ -55,7 +55,7 @@ describe('ConfirmMoveMenu', () => {
     // TODO: Test actions with mockStore
 
     // Calls API
-    expect(spy).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith(null, {
       gameSlug: 'ABC123',
       uci: 'a1a2',
       fen: 'FEN1',

@@ -2,6 +2,9 @@ import { createActions } from 'redux-actions';
 import { Team } from 'services/logic/constants';
 
 export default createActions({
+  MESSAGES: {
+    APPEND: undefined,
+  },
   BOARD: {
     ANIMATION_OFFSET: {
       SET: undefined,
