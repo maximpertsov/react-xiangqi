@@ -22,7 +22,7 @@ describe('Lobby', () => {
   });
 
   afterEach(() => {
-    store.getActions();
+    store.clearActions();
     jest.resetAllMocks();
   });
 

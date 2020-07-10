@@ -18,7 +18,7 @@ describe('GameLink', () => {
   });
 
   afterEach(() => {
-    store.getActions();
+    store.clearActions();
     jest.resetAllMocks();
   });
 
