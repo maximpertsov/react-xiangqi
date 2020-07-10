@@ -27,15 +27,13 @@ const Home = () => {
         <Segment>
           <Header size="large">Play online</Header>
           <LoginForm />
-          {username !== null && <GameList />}
+          {username && <GameList />}
         </Segment>
         <Segment>
           <Header size="medium">Create game</Header>
-          <NewGameMenu />
+          {username && <NewGameMenu />}
         </Segment>
-        <Segment>
-          <Lobby />
-        </Segment>
+        <Segment>{username && <Lobby />}</Segment>
         <Segment>
           <Header size="large">Other modes</Header>
           <Button
