@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Icon, Popup } from 'semantic-ui-react';
+import { Button, Header, Icon, Popup } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
@@ -81,6 +81,7 @@ const NewGameMenu = () => {
 
   return (
     <Wrapper className="NewGameMenu">
+      <Header size="medium">Create game</Header>
       {ownLobbyRequest ? renderCancelButton() : renderRequestButtons()}
     </Wrapper>
   );
