@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
 
 import isEqual from 'lodash/isEqual';
 import last from 'lodash/last';
@@ -9,19 +10,28 @@ import fetchStartingPosition from 'actions/fetchStartingPosition';
 import fetchPosition from 'actions/fetchPosition';
 import { getHasInitialPlacement, getFirstFenWithoutLegalMoves } from 'reducers';
 
+const mapStateToProps = createSelector(
+  [state => state],
+
+  state => ({
+    gameSlug: state.gameSlug,
+    hasInitialPlacement: getHasInitialPlacement(state),
+    firstFenWithoutLegalMoves: getFirstFenWithoutLegalMoves(state),
+    messages: state.messages,
+    username: state.username,
+  }),
+);
+
 const GameClient = () => {
   const dispatch = useDispatch();
 
-  const gameSlug = useSelector(state => state.gameSlug);
-  const hasInitialPlacement = useSelector(state =>
-    getHasInitialPlacement(state),
-  );
-  const firstFenWithoutLegalMoves = useSelector(
-    state => getFirstFenWithoutLegalMoves(state),
-    isEqual,
-  );
-  const messages = useSelector(state => state.messages, isEqual);
-  const username = useSelector(state => state.username);
+  const {
+    gameSlug,
+    hasInitialPlacement,
+    firstFenWithoutLegalMoves,
+    messages,
+    username,
+  } = useSelector(mapStateToProps, isEqual);
 
   useEffect(() => {
     if (!gameSlug) return;
