@@ -1,20 +1,36 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import actions from 'actions';
+import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 import LobbyGame from '../LobbyGame';
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useContext: jest.fn(),
+}));
 jest.mock('react-redux');
+jest.mock('axios');
 
 describe('LobbyGame', () => {
   const id = 123;
+  const username = 'alice';
   const parameters = { team: 'red' };
-  const store = mockStore({});
+  const gameSlug = 'abc123';
+  const store = mockStore({ username });
+  const io = { send: jest.fn() };
 
   let wrapper;
 
   beforeEach(() => {
-    useDispatch.mockReturnValue(store.dispatch);
+    useContext.mockReturnValue(io);
+    useSelector.mockImplementation(callback => callback(store.getState()));
+
+    axios.patch.mockResolvedValue({
+      data: {
+        game: gameSlug,
+      },
+    });
+
     wrapper = shallowWrappedComponent(
       <LobbyGame id={id} parameters={parameters} />,
       store,
@@ -30,12 +46,16 @@ describe('LobbyGame', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test.skip('click', () => {
+  test('click', async () => {
+    expect.assertions(2);
     wrapper.find('Button').simulate('click');
 
-    expect(store.getActions()).toStrictEqual([
-      actions.game.slug.set(id),
-      actions.home.showGame.set(true),
-    ]);
+    await expect(axios.patch).toHaveBeenCalledWith(`game/request/${id}`, {
+      player2: username,
+    });
+    expect(io.send).toHaveBeenCalledWith({
+      type: 'joined_lobby_game',
+      game: gameSlug,
+    });
   });
 });
