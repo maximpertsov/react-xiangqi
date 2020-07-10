@@ -43,8 +43,6 @@ const Lobby = () => {
   );
 
   useEffect(() => {
-    if (!username) return;
-
     const lastMessage = last(messages);
 
     if (lastMessage && lastMessage.type !== 'updated_lobby_games') {
