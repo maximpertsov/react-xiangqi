@@ -21,10 +21,14 @@ const LobbyGame = ({ id, parameters }) => {
       .patch(`game/request/${id}`, {
         player2: username,
       })
-      .then(({ data: { game } }) => {
+      .then(({ data: { game, player1, player2 } }) => {
         if (!game) return;
 
-        io.send({ type: 'joined_lobby_game', game });
+        io.send({
+          type: 'joined_lobby_game',
+          game,
+          players: [player1, player2],
+        });
       });
   };
 

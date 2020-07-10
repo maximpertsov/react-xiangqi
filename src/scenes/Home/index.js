@@ -40,11 +40,12 @@ const Home = () => {
   useEffect(() => {
     const lastMessage = last(messages);
 
-    if (lastMessage && lastMessage.type === 'joined_lobby_game') {
-      const { game } = lastMessage;
-      dispatch(actions.game.slug.set(game));
-      dispatch(actions.home.showGame.set(true));
-    }
+    if (!lastMessage) return;
+    if (lastMessage.type !== 'joined_lobby_game') return;
+    if (!lastMessage.players.includes(username)) return;
+
+    dispatch(actions.game.slug.set(lastMessage.game));
+    dispatch(actions.home.showGame.set(true));
   }, [dispatch, messages, username]);
 
   const renderMenu = () => (

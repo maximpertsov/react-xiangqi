@@ -28,6 +28,8 @@ describe('LobbyGame', () => {
     axios.patch.mockResolvedValue({
       data: {
         game: gameSlug,
+        player1: 'bob',
+        player2: username,
       },
     });
 
@@ -56,6 +58,7 @@ describe('LobbyGame', () => {
     expect(io.send).toHaveBeenCalledWith({
       type: 'joined_lobby_game',
       game: gameSlug,
+      players: ['bob', username],
     });
   });
 });
