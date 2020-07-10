@@ -5,6 +5,8 @@ import { Header } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 import flatMap from 'lodash/flatMap';
+import { createSelector } from 'reselect';
+import isEqual from 'lodash/isEqual';
 
 import LobbyGame from './LobbyGame';
 
@@ -21,11 +23,19 @@ const GridWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
 `;
 
+const mapStateToProps = createSelector(
+  [state => state],
+
+  state => ({
+    lobbyRequests: state.lobbyRequests,
+    username: state.username,
+  }),
+);
+
 const Lobby = () => {
   const dispatch = useDispatch();
 
-  const lobbyRequests = useSelector(state => state.lobbyRequests);
-  const username = useSelector(state => state.username);
+  const { lobbyRequests, username } = useSelector(mapStateToProps, isEqual);
 
   useEffect(() => {
     const interval = setInterval(() => {
