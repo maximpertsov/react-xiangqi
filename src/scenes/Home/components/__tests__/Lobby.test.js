@@ -6,7 +6,13 @@ import Lobby from '../Lobby';
 jest.mock('react-redux');
 
 describe('Lobby', () => {
-  const store = mockStore();
+  const store = mockStore({
+    lobbyRequests: [
+      { id: 123, player1: 'bob', parameters: {} },
+      { id: 789, player1: 'alice', parameters: {} },
+    ],
+    username: 'alice',
+  });
 
   let wrapper;
 

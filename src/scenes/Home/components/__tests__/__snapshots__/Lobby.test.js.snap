@@ -9,6 +9,12 @@ exports[`Lobby snapshot 1`] = `
   >
     Lobby
   </Header>
-  <Styled(div) />
+  <Styled(div)>
+    <LobbyGame
+      id={123}
+      key="0"
+      parameters={Object {}}
+    />
+  </Styled(div)>
 </Styled(div)>
 `;
