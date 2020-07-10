@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   padding: 5px;
 `;
 
-const GridWrapper = styled.div`
+const SlugsWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 `;
@@ -36,7 +36,7 @@ const GameList = () => {
   return (
     <Wrapper className="GameList">
       <Header size="medium">Games in play</Header>
-      <GridWrapper>{gameSlugs.map(renderGameLink)}</GridWrapper>
+      <SlugsWrapper>{gameSlugs.map(renderGameLink)}</SlugsWrapper>
     </Wrapper>
   );
 };
