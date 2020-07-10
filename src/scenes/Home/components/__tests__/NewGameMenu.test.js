@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { Team } from 'services/logic/constants';
 
 import NewGameMenu from '../NewGameMenu';
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useContext: jest.fn(),
+}));
 jest.mock('react-redux');
 jest.mock('axios');
 
 describe('NewGameMenu', () => {
   const username = 'alice';
+  const io = { send: jest.fn() };
+
   let store;
   let wrapper;
 
   beforeEach(() => {
+    useContext.mockReturnValue(io);
     useSelector.mockImplementation(callback => callback(store.getState()));
     wrapper = shallowWrappedComponent(<NewGameMenu />, store);
   });
@@ -47,7 +54,7 @@ describe('NewGameMenu', () => {
       ];
 
       test.each(table)('%i', (content, parameters) => {
-        expect.assertions(1);
+        expect.assertions(2);
         const button = wrapper.wrap(
           wrapper
             .find('Popup')
@@ -59,6 +66,10 @@ describe('NewGameMenu', () => {
         expect(axios.post).toHaveBeenCalledWith('game/request', {
           player1: username,
           parameters,
+        });
+        expect(io.send).toHaveBeenCalledWith({
+          type: 'updated_lobby_games',
+          username,
         });
       });
     });
@@ -83,10 +94,14 @@ describe('NewGameMenu', () => {
     });
 
     test('click', () => {
-      expect.assertions(1);
+      expect.assertions(2);
       wrapper.find('Button').simulate('click');
 
       expect(axios.delete).toHaveBeenCalledWith(`game/request/${id}`);
+      expect(io.send).toHaveBeenCalledWith({
+        type: 'updated_lobby_games',
+        username,
+      });
     });
   });
 });

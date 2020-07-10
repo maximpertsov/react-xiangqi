@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Icon, Popup } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -6,6 +6,7 @@ import isEqual from 'lodash/isEqual';
 
 import { Team } from 'services/logic/constants';
 import client from 'services/client';
+import { WebSocketContext } from 'services/WebSocketProvider';
 
 import find from 'lodash/find';
 import styled from '@emotion/styled';
@@ -25,6 +26,8 @@ const mapStateToProps = createSelector(
 );
 
 const NewGameMenu = () => {
+  const io = useContext(WebSocketContext);
+
   const { username, ownLobbyRequest } = useSelector(mapStateToProps, isEqual);
 
   const createGameRequest = team => async () => {
@@ -32,10 +35,12 @@ const NewGameMenu = () => {
       player1: username,
       parameters: { team },
     });
+    io.send({ type: 'updated_lobby_games', username });
   };
 
   const cancelGameRequest = id => async () => {
     client.delete(`game/request/${id}`);
+    io.send({ type: 'updated_lobby_games', username });
   };
 
   const renderRequestButtons = () => (
