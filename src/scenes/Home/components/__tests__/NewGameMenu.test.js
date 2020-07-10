@@ -69,7 +69,7 @@ describe('NewGameMenu', () => {
 
     beforeAll(() => {
       store = mockStore({
-        lobbyGames: [{ id, player1: 'alice', parameters: {} }],
+        lobbyGames: [{ id, player1: username, parameters: {} }],
         username,
       });
     });
