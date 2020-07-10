@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 const NewGameMenu = () => {
   const username = useSelector(state => state.username);
   const ownLobbyRequest = useSelector(state =>
-    find(state.lobbyRequests, { player1: username }),
+    find(state.lobbyGames, { player1: username }),
   );
 
   const createGameRequest = team => async () => {

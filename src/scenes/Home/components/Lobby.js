@@ -27,7 +27,7 @@ const mapStateToProps = createSelector(
   [state => state],
 
   state => ({
-    lobbyRequests: state.lobbyRequests,
+    lobbyGames: state.lobbyGames,
     username: state.username,
   }),
 );
@@ -35,7 +35,7 @@ const mapStateToProps = createSelector(
 const Lobby = () => {
   const dispatch = useDispatch();
 
-  const { lobbyRequests, username } = useSelector(mapStateToProps, isEqual);
+  const { lobbyGames, username } = useSelector(mapStateToProps, isEqual);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,7 +44,7 @@ const Lobby = () => {
       client
         .get('game/request')
         .then(response =>
-          dispatch(actions.home.lobbyRequests.set(response.data)),
+          dispatch(actions.home.lobbyGames.set(response.data)),
         );
     }, 2000);
 
@@ -55,7 +55,7 @@ const Lobby = () => {
     <Wrapper className="Lobby">
       <Header size="medium">Lobby</Header>
       <GridWrapper>
-        {flatMap(lobbyRequests, (request, index) => {
+        {flatMap(lobbyGames, (request, index) => {
           if (request.player1 === username) return [];
 
           return [

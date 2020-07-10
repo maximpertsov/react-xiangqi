@@ -33,8 +33,8 @@ const rootReducer = combineReducers({
     (state, action) => action.payload,
     [],
   ),
-  lobbyRequests: handleAction(
-    actions.home.lobbyRequests.set,
+  lobbyGames: handleAction(
+    actions.home.lobbyGames.set,
     (state, action) => action.payload,
     [],
   ),
