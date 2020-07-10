@@ -4,9 +4,10 @@ import styled from '@emotion/styled';
 import { Header } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
-import flatMap from 'lodash/flatMap';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
+import flatMap from 'lodash/flatMap';
+import last from 'lodash/last';
 
 import LobbyGame from './LobbyGame';
 
@@ -28,6 +29,7 @@ const mapStateToProps = createSelector(
 
   state => ({
     lobbyGames: state.lobbyGames,
+    messages: state.messages,
     username: state.username,
   }),
 );
@@ -35,21 +37,24 @@ const mapStateToProps = createSelector(
 const Lobby = () => {
   const dispatch = useDispatch();
 
-  const { lobbyGames, username } = useSelector(mapStateToProps, isEqual);
+  const { lobbyGames, messages, username } = useSelector(
+    mapStateToProps,
+    isEqual,
+  );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (!username) return;
+    if (!username) return;
 
-      client
-        .get('game/request')
-        .then(response =>
-          dispatch(actions.home.lobbyGames.set(response.data)),
-        );
-    }, 2000);
+    const lastMessage = last(messages);
 
-    return () => clearInterval(interval);
-  }, [dispatch, username]);
+    if (lastMessage && lastMessage.type !== 'updated_lobby_games') {
+      return;
+    }
+
+    client
+      .get('game/request')
+      .then(response => dispatch(actions.home.lobbyGames.set(response.data)));
+  }, [dispatch, messages, username]);
 
   return (
     <Wrapper className="Lobby">

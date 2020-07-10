@@ -30,17 +30,21 @@ const NewGameMenu = () => {
 
   const { username, ownLobbyRequest } = useSelector(mapStateToProps, isEqual);
 
-  const createGameRequest = team => async () => {
-    client.post('game/request', {
-      player1: username,
-      parameters: { team },
-    });
-    io.send({ type: 'updated_lobby_games', username });
+  const createGameRequest = team => () => {
+    client
+      .post('game/request', {
+        player1: username,
+        parameters: { team },
+      })
+      .then(() => {
+        io.send({ type: 'updated_lobby_games' });
+      });
   };
 
-  const cancelGameRequest = id => async () => {
-    client.delete(`game/request/${id}`);
-    io.send({ type: 'updated_lobby_games', username });
+  const cancelGameRequest = id => () => {
+    client.delete(`game/request/${id}`).then(() => {
+      io.send({ type: 'updated_lobby_games' });
+    });
   };
 
   const renderRequestButtons = () => (

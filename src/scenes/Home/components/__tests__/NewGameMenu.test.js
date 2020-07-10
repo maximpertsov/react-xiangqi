@@ -53,7 +53,7 @@ describe('NewGameMenu', () => {
         ['Play with random pieces', { team: undefined }],
       ];
 
-      test.each(table)('%i', (content, parameters) => {
+      test.each(table)('%s', async (content, parameters) => {
         expect.assertions(2);
         const button = wrapper.wrap(
           wrapper
@@ -63,13 +63,12 @@ describe('NewGameMenu', () => {
         );
         button.simulate('click');
 
-        expect(axios.post).toHaveBeenCalledWith('game/request', {
+        await expect(axios.post).toHaveBeenCalledWith('game/request', {
           player1: username,
           parameters,
         });
         expect(io.send).toHaveBeenCalledWith({
           type: 'updated_lobby_games',
-          username,
         });
       });
     });
@@ -93,14 +92,13 @@ describe('NewGameMenu', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
-    test('click', () => {
+    test('click', async () => {
       expect.assertions(2);
       wrapper.find('Button').simulate('click');
 
-      expect(axios.delete).toHaveBeenCalledWith(`game/request/${id}`);
+      await expect(axios.delete).toHaveBeenCalledWith(`game/request/${id}`);
       expect(io.send).toHaveBeenCalledWith({
         type: 'updated_lobby_games',
-        username,
       });
     });
   });
