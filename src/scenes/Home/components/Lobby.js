@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import client from 'services/client';
 import styled from '@emotion/styled';
-import { Header, Button } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 import flatMap from 'lodash/flatMap';
+
+import LobbyGame from './LobbyGame';
 
 const Wrapper = styled.div`
   border: 1px #ccc solid;
@@ -17,10 +19,6 @@ const Wrapper = styled.div`
 const GridWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-`;
-
-const GridItemWrapper = styled.div`
-  padding: 5px;
 `;
 
 const Lobby = () => {
@@ -43,12 +41,6 @@ const Lobby = () => {
     return () => clearInterval(interval);
   }, [dispatch, username]);
 
-  const acceptGameRequest = id => async () => {
-    client.patch(`game/request/${id}`, {
-      player2: username,
-    });
-  };
-
   return (
     <Wrapper className="Lobby">
       <Header size="medium">Lobby</Header>
@@ -57,15 +49,11 @@ const Lobby = () => {
           if (request.player1 === username) return [];
 
           return [
-            <GridItemWrapper key={index}>
-              <Button
-                onClick={acceptGameRequest(request.id)}
-                fluid
-                className="GameLink"
-              >
-                {`vs ${request.parameters.team || '?'}`}
-              </Button>
-            </GridItemWrapper>,
+            <LobbyGame
+              key={index}
+              id={request.id}
+              parameters={request.parameters}
+            />,
           ];
         })}
       </GridWrapper>
