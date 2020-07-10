@@ -16,12 +16,11 @@ const Wrapper = styled.div`
 `;
 
 const mapStateToProps = createSelector(
-  state => state.username,
-  state => state.lobbyGames,
+  [state => state],
 
-  (username, lobbyGames) => ({
-    username,
-    ownLobbyRequest: find(lobbyGames, { player1: username }),
+  state => ({
+    username: state.username,
+    ownLobbyRequest: find(state.lobbyGames, { player1: state.username }),
   }),
 );
 
