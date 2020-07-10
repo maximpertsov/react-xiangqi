@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewGameMenu already made game request snapshot 1`] = `
+<Styled(div)
+  className="NewGameMenu"
+>
+  <Button
+    as="button"
+    fluid={true}
+    loading={true}
+    onClick={[Function]}
+  />
+</Styled(div)>
+`;
+
+exports[`NewGameMenu did not make game request snapshot 1`] = `
+<Styled(div)
+  className="NewGameMenu"
+>
+  <ButtonGroup
+    fluid={true}
+  >
+    <Popup
+      content="Play with red pieces"
+      disabled={false}
+      eventsEnabled={true}
+      offset={0}
+      on={
+        Array [
+          "click",
+          "hover",
+        ]
+      }
+      pinned={false}
+      position="top left"
+      trigger={
+        <Button
+          as="button"
+          icon={true}
+          onClick={[Function]}
+        >
+          <Icon
+            as="i"
+            color="red"
+            fitted={true}
+            name="plus square outline"
+          />
+        </Button>
+      }
+    />
+    <Popup
+      content="Play with black pieces"
+      disabled={false}
+      eventsEnabled={true}
+      offset={0}
+      on={
+        Array [
+          "click",
+          "hover",
+        ]
+      }
+      pinned={false}
+      position="top left"
+      trigger={
+        <Button
+          as="button"
+          icon={true}
+          onClick={[Function]}
+        >
+          <Icon
+            as="i"
+            color="black"
+            fitted={true}
+            name="plus square outline"
+          />
+        </Button>
+      }
+    />
+    <Popup
+      content="Play with random pieces"
+      disabled={false}
+      eventsEnabled={true}
+      offset={0}
+      on={
+        Array [
+          "click",
+          "hover",
+        ]
+      }
+      pinned={false}
+      position="top left"
+      trigger={
+        <Button
+          as="button"
+          icon={true}
+          onClick={[Function]}
+        >
+          <Icon
+            as="i"
+            fitted={true}
+            name="question"
+          />
+        </Button>
+      }
+    />
+  </ButtonGroup>
+</Styled(div)>
+`;
