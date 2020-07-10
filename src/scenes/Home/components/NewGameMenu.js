@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Icon, Popup } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
-import { Team } from 'services/logic/constants';
+import { createSelector } from 'reselect';
+import isEqual from 'lodash/isEqual';
 
+import { Team } from 'services/logic/constants';
 import client from 'services/client';
+import { WebSocketContext } from 'services/WebSocketProvider';
 
 import find from 'lodash/find';
 import styled from '@emotion/styled';
@@ -12,21 +15,36 @@ const Wrapper = styled.div`
   padding: 5px;
 `;
 
-const NewGameMenu = () => {
-  const username = useSelector(state => state.username);
-  const ownLobbyRequest = useSelector(state =>
-    find(state.lobbyRequests, { player1: username }),
-  );
+const mapStateToProps = createSelector(
+  state => state.username,
+  state => state.lobbyGames,
 
-  const createGameRequest = team => async () => {
-    client.post('game/request', {
-      player1: username,
-      parameters: { team },
-    });
+  (username, lobbyGames) => ({
+    username,
+    ownLobbyRequest: find(lobbyGames, { player1: username }),
+  }),
+);
+
+const NewGameMenu = () => {
+  const io = useContext(WebSocketContext);
+
+  const { username, ownLobbyRequest } = useSelector(mapStateToProps, isEqual);
+
+  const createGameRequest = team => () => {
+    client
+      .post('game/request', {
+        player1: username,
+        parameters: { team },
+      })
+      .then(() => {
+        io.send({ type: 'updated_lobby_games' });
+      });
   };
 
-  const cancelGameRequest = id => async () => {
-    client.delete(`game/request/${id}`);
+  const cancelGameRequest = id => () => {
+    client.delete(`game/request/${id}`).then(() => {
+      io.send({ type: 'updated_lobby_games' });
+    });
   };
 
   const renderRequestButtons = () => (

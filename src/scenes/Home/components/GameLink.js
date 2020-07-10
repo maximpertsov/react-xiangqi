@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
@@ -13,10 +13,10 @@ const Wrapper = styled.div`
 const GameLink = ({ slug }) => {
   const dispatch = useDispatch();
 
-  const setThisGameSlug = useCallback(() => {
+  const setThisGameSlug = () => {
     dispatch(actions.game.slug.set(slug));
     dispatch(actions.home.showGame.set(true));
-  }, [dispatch, slug]);
+  };
 
   return (
     <Wrapper>

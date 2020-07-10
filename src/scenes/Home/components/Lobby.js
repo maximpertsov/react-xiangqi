@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
 import client from 'services/client';
 import styled from '@emotion/styled';
-import { Header, Button } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
+import { createSelector } from 'reselect';
+import isEqual from 'lodash/isEqual';
 import flatMap from 'lodash/flatMap';
+import last from 'lodash/last';
+
+import LobbyGame from './LobbyGame';
 
 const Wrapper = styled.div`
   border: 1px #ccc solid;
@@ -19,53 +24,49 @@ const GridWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
 `;
 
-const GridItemWrapper = styled.div`
-  padding: 5px;
-`;
+const mapStateToProps = createSelector(
+  [state => state],
+
+  state => ({
+    lobbyGames: state.lobbyGames,
+    messages: state.messages,
+    username: state.username,
+  }),
+);
 
 const Lobby = () => {
   const dispatch = useDispatch();
 
-  const lobbyRequests = useSelector(state => state.lobbyRequests);
-  const username = useSelector(state => state.username);
+  const { lobbyGames, messages, username } = useSelector(
+    mapStateToProps,
+    isEqual,
+  );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (!username) return;
+    const lastMessage = last(messages);
 
-      client
-        .get('game/request')
-        .then(response =>
-          dispatch(actions.home.lobbyRequests.set(response.data)),
-        );
-    }, 2000);
+    if (lastMessage && lastMessage.type !== 'updated_lobby_games') {
+      return;
+    }
 
-    return () => clearInterval(interval);
-  }, [dispatch, username]);
-
-  const acceptGameRequest = id => async () => {
-    client.patch(`game/request/${id}`, {
-      player2: username,
-    });
-  };
+    client
+      .get('game/request')
+      .then(response => dispatch(actions.home.lobbyGames.set(response.data)));
+  }, [dispatch, messages, username]);
 
   return (
     <Wrapper className="Lobby">
       <Header size="medium">Lobby</Header>
       <GridWrapper>
-        {flatMap(lobbyRequests, (request, index) => {
+        {flatMap(lobbyGames, (request, index) => {
           if (request.player1 === username) return [];
 
           return [
-            <GridItemWrapper key={index}>
-              <Button
-                onClick={acceptGameRequest(request.id)}
-                fluid
-                className="GameLink"
-              >
-                {`vs ${request.parameters.team || '?'}`}
-              </Button>
-            </GridItemWrapper>,
+            <LobbyGame
+              key={index}
+              id={request.id}
+              parameters={request.parameters}
+            />,
           ];
         })}
       </GridWrapper>

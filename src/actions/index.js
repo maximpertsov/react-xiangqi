@@ -73,7 +73,7 @@ export default createActions({
     GAMES: {
       SET: undefined,
     },
-    LOBBY_REQUESTS: {
+    LOBBY_GAMES: {
       SET: undefined,
     },
     LOGIN_FORM: {

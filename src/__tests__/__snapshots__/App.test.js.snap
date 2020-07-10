@@ -18,18 +18,6 @@ exports[`renders without crashing 1`] = `
       <div>
         Welcome undefined
       </div>
-      <div
-        class="GameList css-8bzhik"
-      >
-        <div
-          class="ui medium header"
-        >
-          Games in play
-        </div>
-        <div
-          class="css-1vrdtb6"
-        />
-      </div>
     </div>
     <div
       class="ui segment"
@@ -39,55 +27,10 @@ exports[`renders without crashing 1`] = `
       >
         Create game
       </div>
-      <div
-        class="NewGameMenu css-1hstsbv"
-      >
-        <div
-          class="ui fluid buttons"
-        >
-          <button
-            class="ui icon button"
-          >
-            <i
-              aria-hidden="true"
-              class="red plus square outline fitted icon"
-            />
-          </button>
-          <button
-            class="ui icon button"
-          >
-            <i
-              aria-hidden="true"
-              class="black plus square outline fitted icon"
-            />
-          </button>
-          <button
-            class="ui icon button"
-          >
-            <i
-              aria-hidden="true"
-              class="question fitted icon"
-            />
-          </button>
-        </div>
-      </div>
     </div>
     <div
       class="ui segment"
-    >
-      <div
-        class="Lobby css-8bzhik"
-      >
-        <div
-          class="ui medium header"
-        >
-          Lobby
-        </div>
-        <div
-          class="css-1vrdtb6"
-        />
-      </div>
-    </div>
+    />
     <div
       class="ui segment"
     >

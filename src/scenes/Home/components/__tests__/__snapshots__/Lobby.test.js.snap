@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lobby snapshot 1`] = `
+<Styled(div)
+  className="Lobby"
+>
+  <Header
+    size="medium"
+  >
+    Lobby
+  </Header>
+  <Styled(div)>
+    <LobbyGame
+      id={123}
+      key="0"
+      parameters={Object {}}
+    />
+  </Styled(div)>
+</Styled(div)>
+`;

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GameLink snapshot 1`] = `
+<Styled(div)>
+  <Button
+    as="button"
+    className="GameLink"
+    fluid={true}
+    onClick={[Function]}
+  >
+    abc123
+  </Button>
+</Styled(div)>
+`;

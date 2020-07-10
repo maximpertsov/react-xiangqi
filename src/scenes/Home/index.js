@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
+import isEqual from 'lodash/isEqual';
+import last from 'lodash/last';
 
 import actions from 'actions';
 import fetchUserGames from 'actions/fetchUserGames';
@@ -12,14 +15,38 @@ import LoginForm from './components/LoginForm';
 import NewGameMenu from './components/NewGameMenu';
 import Lobby from './components/Lobby';
 
+const mapStateToProps = createSelector(
+  [state => state],
+
+  state => ({
+    messages: state.messages,
+    showGame: state.showGame,
+    username: state.username,
+  }),
+);
+
 const Home = () => {
   const dispatch = useDispatch();
-  const showGame = useSelector(state => state.showGame);
-  const username = useSelector(state => state.username);
+
+  const { messages, showGame, username } = useSelector(
+    mapStateToProps,
+    isEqual,
+  );
 
   useEffect(() => {
     dispatch(fetchUserGames({ username }));
   }, [dispatch, username]);
+
+  useEffect(() => {
+    const lastMessage = last(messages);
+
+    if (!lastMessage) return;
+    if (lastMessage.type !== 'joined_lobby_game') return;
+    if (!lastMessage.players.includes(username)) return;
+
+    dispatch(actions.game.slug.set(lastMessage.game));
+    dispatch(actions.home.showGame.set(true));
+  }, [dispatch, messages, username]);
 
   const renderMenu = () => (
     <Container textAlign="center">
@@ -27,15 +54,13 @@ const Home = () => {
         <Segment>
           <Header size="large">Play online</Header>
           <LoginForm />
-          {username !== null && <GameList />}
+          {username && <GameList />}
         </Segment>
         <Segment>
           <Header size="medium">Create game</Header>
-          <NewGameMenu />
+          {username && <NewGameMenu />}
         </Segment>
-        <Segment>
-          <Lobby />
-        </Segment>
+        <Segment>{username && <Lobby />}</Segment>
         <Segment>
           <Header size="large">Other modes</Header>
           <Button
