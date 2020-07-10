@@ -1,8 +1,10 @@
 import React from 'react';
 import { Button, Icon, Popup } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
-import { Team } from 'services/logic/constants';
+import { createSelector } from 'reselect';
+import isEqual from 'lodash/isEqual';
 
+import { Team } from 'services/logic/constants';
 import client from 'services/client';
 
 import find from 'lodash/find';
@@ -12,11 +14,18 @@ const Wrapper = styled.div`
   padding: 5px;
 `;
 
+const mapStateToProps = createSelector(
+  state => state.username,
+  state => state.lobbyGames,
+
+  (username, lobbyGames) => ({
+    username,
+    ownLobbyRequest: find(lobbyGames, { player1: username }),
+  }),
+);
+
 const NewGameMenu = () => {
-  const username = useSelector(state => state.username);
-  const ownLobbyRequest = useSelector(state =>
-    find(state.lobbyGames, { player1: username }),
-  );
+  const { username, ownLobbyRequest } = useSelector(mapStateToProps, isEqual);
 
   const createGameRequest = team => async () => {
     client.post('game/request', {
