@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import GameList from '..';
+import GameList from '../GameList';
 
 jest.mock('react-redux');
 

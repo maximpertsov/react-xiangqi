@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 
-import GameLink from './components/GameLink';
+import GameLink from './GameLink';
 
 const Wrapper = styled.div`
   border: 1px #ccc solid;
@@ -21,7 +21,7 @@ const GridWrapper = styled.div`
 `;
 
 const mapStateToProps = createSelector(
-  state => state,
+  [state => state],
 
   state => ({
     gameSlugs: state.games.map(({ slug }) => slug),
