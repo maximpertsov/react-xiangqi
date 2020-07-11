@@ -12,7 +12,16 @@ import find from 'lodash/find';
 import styled from '@emotion/styled';
 
 const Wrapper = styled.div`
+  border: 1px #ccc solid;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 100%;
   padding: 5px;
+`;
+
+const GridWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(${props => props.repeat}, 1fr);
 `;
 
 const mapStateToProps = createSelector(
@@ -47,7 +56,7 @@ const NewGameMenu = () => {
   };
 
   const renderRequestButtons = () => (
-    <Button.Group fluid>
+    <GridWrapper repeat={3}>
       <Popup
         content="Play with red pieces"
         trigger={
@@ -72,11 +81,15 @@ const NewGameMenu = () => {
           </Button>
         }
       />
-    </Button.Group>
+    </GridWrapper>
   );
 
   const renderCancelButton = () => (
-    <Button onClick={cancelGameRequest(ownLobbyRequest.id)} fluid loading />
+    <GridWrapper repeat={1}>
+      <Button onClick={cancelGameRequest(ownLobbyRequest.id)} icon loading>
+        <Icon />
+      </Button>
+    </GridWrapper>
   );
 
   return (

@@ -9,12 +9,20 @@ exports[`NewGameMenu already made game request snapshot 1`] = `
   >
     Create game
   </Header>
-  <Button
-    as="button"
-    fluid={true}
-    loading={true}
-    onClick={[Function]}
-  />
+  <Styled(div)
+    repeat={1}
+  >
+    <Button
+      as="button"
+      icon={true}
+      loading={true}
+      onClick={[Function]}
+    >
+      <Icon
+        as="i"
+      />
+    </Button>
+  </Styled(div)>
 </Styled(div)>
 `;
 
@@ -27,8 +35,8 @@ exports[`NewGameMenu did not make game request snapshot 1`] = `
   >
     Create game
   </Header>
-  <ButtonGroup
-    fluid={true}
+  <Styled(div)
+    repeat={3}
   >
     <Popup
       content="Play with red pieces"
@@ -113,6 +121,6 @@ exports[`NewGameMenu did not make game request snapshot 1`] = `
         </Button>
       }
     />
-  </ButtonGroup>
+  </Styled(div)>
 </Styled(div)>
 `;
