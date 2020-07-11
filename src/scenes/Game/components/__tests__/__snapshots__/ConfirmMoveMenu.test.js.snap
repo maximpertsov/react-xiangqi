@@ -14,7 +14,7 @@ exports[`ConfirmMoveMenu renders without crashing 1`] = `
     Confirm move?
   </div>
   <div
-    class="GameMenu css-kva90l"
+    class="GameMenu css-1rjz4w9"
   >
     <button
       class="ui green button"
