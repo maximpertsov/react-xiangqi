@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
+import isEqual from 'lodash/isEqual';
 
 import { getBottomPlayerIsRed } from 'reducers';
 import { MediaQuery, SquareSize } from 'commonStyles';
@@ -36,9 +38,20 @@ const Wrapper = styled.div`
   z-index: 0;
 `;
 
+const mapStateToProps = createSelector(
+  [state => state],
+
+  state => ({
+    bottomPlayerIsRed: getBottomPlayerIsRed(state),
+    selectedFen: state.selectedFen,
+  }),
+);
+
 const BoardView = ({ handleSquareClick }) => {
-  const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
-  const selectedFen = useSelector(state => state.selectedFen);
+  const { bottomPlayerIsRed, selectedFen } = useSelector(
+    mapStateToProps,
+    isEqual,
+  );
 
   const getSlot = useCallback(
     (slots, i) => (bottomPlayerIsRed ? i : slots.length - i - 1),
