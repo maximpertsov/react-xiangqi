@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
-import { Button, Icon, Segment } from 'semantic-ui-react';
+import { Button, Icon } from 'semantic-ui-react';
 
 import chunk from 'lodash/fp/chunk';
 import flow from 'lodash/fp/flow';
@@ -37,6 +37,7 @@ const Wrapper = styled.div`
   }
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;
+  margin: 1px;
   overflow: hidden;
 `;
 
@@ -84,28 +85,26 @@ const MoveHistory = () => {
     )(movesData);
 
   return (
-    <Segment tertiary>
-      <Wrapper>
-        <Button size="tiny" compact icon>
-          <Icon
-            onClick={() =>
-              dispatch(actions.game.selectedFen.set(previousMoveFen))
-            }
-            fitted
-            name="step backward"
-          />
-        </Button>
-        <MovesWrapper className="MoveHistory">{renderFullMoves()}</MovesWrapper>
-        <Button
-          onClick={() => dispatch(actions.game.selectedFen.set(nextMoveFen))}
-          size="small"
-          compact
-          icon
-        >
-          <Icon fitted name="step forward" />
-        </Button>
-      </Wrapper>
-    </Segment>
+    <Wrapper>
+      <Button size="tiny" compact icon>
+        <Icon
+          onClick={() =>
+            dispatch(actions.game.selectedFen.set(previousMoveFen))
+          }
+          fitted
+          name="step backward"
+        />
+      </Button>
+      <MovesWrapper className="MoveHistory">{renderFullMoves()}</MovesWrapper>
+      <Button
+        onClick={() => dispatch(actions.game.selectedFen.set(nextMoveFen))}
+        size="small"
+        compact
+        icon
+      >
+        <Icon fitted name="step forward" />
+      </Button>
+    </Wrapper>
   );
 };
 

@@ -60,11 +60,15 @@ const GameView = () => {
         <Wrapper className="Game">
           <Player {...opponent} />
           <Board legalMoves />
+          <Player {...currentPlayer} />
+          <GameInfo />
+          {!showConfirmMoveMenu && (
+            <Segment>
+              {renderActionsMenu()}
+              <MoveHistory />
+            </Segment>
+          )}
           <ConfirmMoveMenu />
-          {!showConfirmMoveMenu && renderActionsMenu()}
-          {!showConfirmMoveMenu && <Player {...currentPlayer} />}
-          {!showConfirmMoveMenu && <GameInfo hasLegalMoves />}
-          {!showConfirmMoveMenu && <MoveHistory />}
         </Wrapper>
       )}
     </Dimmer.Dimmable>
