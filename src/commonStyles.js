@@ -11,7 +11,7 @@ const SquarePixels = Object.freeze({
   TINY: 20,
   SMALL: 30,
   MEDIUM: 45,
-  LARGE: 60,
+  LARGE: 55,
 });
 
 export const SquareSize = Object.freeze(
