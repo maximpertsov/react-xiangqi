@@ -4,6 +4,8 @@ import { Button } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 import actions from 'actions';
 
+import BoardView from 'components/Board/components/BoardView';
+
 const GameLink = ({ slug }) => {
   const dispatch = useDispatch();
 
@@ -14,7 +16,7 @@ const GameLink = ({ slug }) => {
 
   return (
     <Button onClick={setThisGameSlug} className="GameLink">
-      {slug}
+      <BoardView />
     </Button>
   );
 };

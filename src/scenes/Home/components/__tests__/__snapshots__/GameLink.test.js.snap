@@ -6,6 +6,6 @@ exports[`GameLink snapshot 1`] = `
   className="GameLink"
   onClick={[Function]}
 >
-  abc123
+  <BoardView />
 </Button>
 `;
