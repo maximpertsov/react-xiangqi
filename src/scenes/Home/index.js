@@ -54,8 +54,12 @@ const Home = () => {
         <Segment>
           <Header size="large">Play online</Header>
           <LoginForm />
-          {username && <GameList />}
         </Segment>
+        {username && (
+          <Segment>
+            <GameList />
+          </Segment>
+        )}
         {username && (
           <Segment>
             <NewGameMenu />

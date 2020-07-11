@@ -8,8 +8,7 @@ import client from 'services/client';
 import { WebSocketContext } from 'services/WebSocketProvider';
 
 const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  padding: 5px;
 `;
 
 const LobbyGame = ({ id, parameters }) => {
