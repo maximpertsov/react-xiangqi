@@ -1,15 +1,10 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import styled from '@emotion/styled';
 import { Button } from 'semantic-ui-react';
 
 import client from 'services/client';
 import { WebSocketContext } from 'services/WebSocketProvider';
-
-const Wrapper = styled.div`
-  padding: 5px;
-`;
 
 const LobbyGame = ({ id, parameters }) => {
   const io = useContext(WebSocketContext);
@@ -32,11 +27,9 @@ const LobbyGame = ({ id, parameters }) => {
   };
 
   return (
-    <Wrapper className="LobbyGame">
-      <Button onClick={joinGame(id)} fluid className="GameLink">
-        {`vs ${parameters.team || '?'}`}
-      </Button>
-    </Wrapper>
+    <Button className="LobbyGame" onClick={joinGame(id)} fluid>
+      {`vs ${parameters.team || '?'}`}
+    </Button>
   );
 };
 
