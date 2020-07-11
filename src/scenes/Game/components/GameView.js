@@ -58,13 +58,13 @@ const GameView = () => {
       </Dimmer>
       {hasInitialPlacement && (
         <Wrapper className="Game">
+          <MoveHistory />
           <Player {...opponent} />
           <Board legalMoves />
           <ConfirmMoveMenu />
           {!showConfirmMoveMenu && renderActionsMenu()}
           {!showConfirmMoveMenu && <Player {...currentPlayer} />}
           {!showConfirmMoveMenu && <GameInfo hasLegalMoves />}
-          {!showConfirmMoveMenu && <MoveHistory />}
         </Wrapper>
       )}
     </Dimmer.Dimmable>
