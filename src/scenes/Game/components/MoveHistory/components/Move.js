@@ -51,7 +51,7 @@ const Move = ({ uci, fen }) => {
     if (selectedMove.fen === fen) {
       if (!ref.current) return;
 
-      ref.current.scrollIntoView();
+      ref.current.scrollIntoViewIfNeeded();
     }
   }, [fen, selectedMove.fen]);
 
