@@ -1,16 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LobbyGame snapshot 1`] = `
-<Styled(div)
+<Button
+  as="button"
   className="LobbyGame"
+  fluid={true}
+  onClick={[Function]}
 >
-  <Button
-    as="button"
-    className="GameLink"
-    fluid={true}
-    onClick={[Function]}
-  >
-    vs red
-  </Button>
-</Styled(div)>
+  vs red
+</Button>
 `;

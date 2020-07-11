@@ -21,6 +21,7 @@ const Wrapper = styled.div`
 
 const GridWrapper = styled.div`
   display: grid;
+  grid-row-gap: 5px;
   grid-template-columns: repeat(3, 1fr);
 `;
 

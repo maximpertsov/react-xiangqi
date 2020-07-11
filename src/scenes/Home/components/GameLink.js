@@ -4,12 +4,6 @@ import { Button } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 import actions from 'actions';
 
-import styled from '@emotion/styled';
-
-const Wrapper = styled.div`
-  padding: 5px;
-`;
-
 const GameLink = ({ slug }) => {
   const dispatch = useDispatch();
 
@@ -19,11 +13,9 @@ const GameLink = ({ slug }) => {
   };
 
   return (
-    <Wrapper>
-      <Button fluid onClick={setThisGameSlug} className="GameLink">
-        {slug}
-      </Button>
-    </Wrapper>
+    <Button onClick={setThisGameSlug} className="GameLink">
+      {slug}
+    </Button>
   );
 };
 

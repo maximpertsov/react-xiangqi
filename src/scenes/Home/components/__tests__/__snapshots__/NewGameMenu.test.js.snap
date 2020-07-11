@@ -4,12 +4,25 @@ exports[`NewGameMenu already made game request snapshot 1`] = `
 <Styled(div)
   className="NewGameMenu"
 >
-  <Button
-    as="button"
-    fluid={true}
-    loading={true}
-    onClick={[Function]}
-  />
+  <Header
+    size="medium"
+  >
+    Create game
+  </Header>
+  <Styled(div)
+    repeat={1}
+  >
+    <Button
+      as="button"
+      icon={true}
+      loading={true}
+      onClick={[Function]}
+    >
+      <Icon
+        as="i"
+      />
+    </Button>
+  </Styled(div)>
 </Styled(div)>
 `;
 
@@ -17,8 +30,13 @@ exports[`NewGameMenu did not make game request snapshot 1`] = `
 <Styled(div)
   className="NewGameMenu"
 >
-  <ButtonGroup
-    fluid={true}
+  <Header
+    size="medium"
+  >
+    Create game
+  </Header>
+  <Styled(div)
+    repeat={3}
   >
     <Popup
       content="Play with red pieces"
@@ -103,6 +121,6 @@ exports[`NewGameMenu did not make game request snapshot 1`] = `
         </Button>
       }
     />
-  </ButtonGroup>
+  </Styled(div)>
 </Styled(div)>
 `;

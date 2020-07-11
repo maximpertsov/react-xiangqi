@@ -54,13 +54,22 @@ const Home = () => {
         <Segment>
           <Header size="large">Play online</Header>
           <LoginForm />
-          {username && <GameList />}
         </Segment>
-        <Segment>
-          <Header size="medium">Create game</Header>
-          {username && <NewGameMenu />}
-        </Segment>
-        <Segment>{username && <Lobby />}</Segment>
+        {username && (
+          <Segment>
+            <GameList />
+          </Segment>
+        )}
+        {username && (
+          <Segment>
+            <NewGameMenu />
+          </Segment>
+        )}
+        {username && (
+          <Segment>
+            <Lobby />
+          </Segment>
+        )}
         <Segment>
           <Header size="large">Other modes</Header>
           <Button

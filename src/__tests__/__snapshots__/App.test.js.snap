@@ -23,18 +23,6 @@ exports[`renders without crashing 1`] = `
       class="ui segment"
     >
       <div
-        class="ui medium header"
-      >
-        Create game
-      </div>
-    </div>
-    <div
-      class="ui segment"
-    />
-    <div
-      class="ui segment"
-    >
-      <div
         class="ui large header"
       >
         Other modes
