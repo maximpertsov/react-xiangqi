@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 
 import styled from '@emotion/styled';
@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import actions from 'actions';
 
+import { SizeContext } from 'SizeProvider';
 import { ALL_PIECES } from 'services/logic/constants';
 import { MediaQuery, SquareSize } from 'commonStyles';
 import getImageByCode from './images';
@@ -51,8 +52,9 @@ const Wrapper = styled.img(props => ({
   zIndex: isMoving(props) ? 100 : 0,
 }));
 
-const Piece = ({ code, moveX, moveY, size, square }) => {
+const Piece = ({ code, moveX, moveY, square }) => {
   const dispatch = useDispatch();
+  const size = useContext(SizeContext);
 
   const [{ opacity }, dragRef] = useDrag({
     item: { type: 'PIECE' },
@@ -81,14 +83,12 @@ Piece.propTypes = {
   code: PropTypes.oneOf(ALL_PIECES).isRequired,
   moveX: PropTypes.number,
   moveY: PropTypes.number,
-  size: PropTypes.oneOf(['fluid', 'tiny', 'small', 'medium', 'large']),
   square: PropTypes.string.isRequired,
 };
 
 Piece.defaultProps = {
   moveX: 0,
   moveY: 0,
-  size: 'fluid',
 };
 
 export default Piece;

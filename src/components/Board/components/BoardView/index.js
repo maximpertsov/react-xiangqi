@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 
+import SizeProvider from 'SizeProvider';
 import { getBottomPlayerIsRed } from 'reducers';
 import { MediaQuery, SquareSize } from 'commonStyles';
 import { decodeFen } from 'services/logic/fen';
@@ -81,7 +82,7 @@ const BoardView = ({ handleSquareClick, size }) => {
 
   return (
     <Wrapper className="BoardView" size={size}>
-      {renderSquares()}
+      <SizeProvider size={size}>{renderSquares()}</SizeProvider>
     </Wrapper>
   );
 };
