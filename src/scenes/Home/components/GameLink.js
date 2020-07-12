@@ -14,13 +14,10 @@ const GameLink = ({ game }) => {
     dispatch(actions.home.showGame.set(true));
   };
 
-  // TODO: pass this to the board view when possible
-  // TODO: also, you might need to pass all of the move data
-  console.log(game.currentMove.fen);
-
+  // TODO: also, you might need to pass all of the move data (uci, etc)
   return (
     <Button onClick={setThisGameSlug} className="GameLink">
-      <BoardView size="tiny" />
+      <BoardView size="tiny" fen={game.currentMove.fen} />
     </Button>
   );
 };
