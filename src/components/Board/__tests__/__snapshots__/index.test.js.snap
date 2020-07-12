@@ -2,14 +2,14 @@
 
 exports[`Board renders without crashing 1`] = `
 <div
-  class="BoardView css-12gv1zx"
+  class="BoardView css-gwm4lo"
 >
   <div
     class="SquareView css-8516zs"
   >
     <img
       alt=""
-      class="Piece r css-2o5377"
+      class="Piece r css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -19,7 +19,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece n css-2o5377"
+      class="Piece n css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -29,7 +29,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece b css-2o5377"
+      class="Piece b css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -39,7 +39,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece a css-2o5377"
+      class="Piece a css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -49,7 +49,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece k css-2o5377"
+      class="Piece k css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -59,7 +59,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece a css-2o5377"
+      class="Piece a css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -69,7 +69,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece b css-2o5377"
+      class="Piece b css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -79,7 +79,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece n css-2o5377"
+      class="Piece n css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -89,291 +89,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece r css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece c css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece c css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece p css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece p css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece p css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece p css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece p css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece P css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece P css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece P css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece P css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece P css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece C css-2o5377"
-      opacity="1"
-      src="[object Object]"
-    />
-  </div>
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  />
-  <div
-    class="SquareView css-8516zs"
-  >
-    <img
-      alt=""
-      class="Piece C css-2o5377"
+      class="Piece r css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -413,7 +129,291 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece R css-2o5377"
+      class="Piece c css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece c css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece p css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece p css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece p css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece p css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece p css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece P css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece P css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece P css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece P css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece P css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece C css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece C css-lipao6"
+      opacity="1"
+      src="[object Object]"
+    />
+  </div>
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  />
+  <div
+    class="SquareView css-8516zs"
+  >
+    <img
+      alt=""
+      class="Piece R css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -423,7 +423,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece N css-2o5377"
+      class="Piece N css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -433,7 +433,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece B css-2o5377"
+      class="Piece B css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -443,7 +443,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece A css-2o5377"
+      class="Piece A css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -453,7 +453,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece K css-2o5377"
+      class="Piece K css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -463,7 +463,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece A css-2o5377"
+      class="Piece A css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -473,7 +473,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece B css-2o5377"
+      class="Piece B css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -483,7 +483,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece N css-2o5377"
+      class="Piece N css-lipao6"
       opacity="1"
       src="[object Object]"
     />
@@ -493,7 +493,7 @@ exports[`Board renders without crashing 1`] = `
   >
     <img
       alt=""
-      class="Piece R css-2o5377"
+      class="Piece R css-lipao6"
       opacity="1"
       src="[object Object]"
     />

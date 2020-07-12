@@ -33,7 +33,7 @@ const transformCSS = props => {
   if (size === 'fluid') {
     return mediaQueryCSS(props);
   }
-  return transformBySizeCSS(SquareSize[size.toUpperCase()]);
+  return transformBySizeCSS(SquareSize[size.toUpperCase()], props);
 };
 
 const Wrapper = styled.img(props => ({
