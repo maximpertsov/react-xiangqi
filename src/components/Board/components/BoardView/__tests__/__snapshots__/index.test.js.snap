@@ -3,6 +3,7 @@
 exports[`BoardView bottom player has black pieces snapshot 1`] = `
 <Styled(div)
   className="BoardView"
+  size="fluid"
 >
   <Square
     handleSquareClick={[Function]}
@@ -460,6 +461,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
 exports[`BoardView bottom player has red pieces snapshot 1`] = `
 <Styled(div)
   className="BoardView"
+  size="fluid"
 >
   <Square
     handleSquareClick={[Function]}

@@ -12,23 +12,28 @@ import { encodeSquare } from 'services/logic/square';
 import Square from './components/Square';
 import boardImg from './assets/board-1000px.svg.png';
 
-const Wrapper = styled.div({
-  [MediaQuery.TINY]: {
-    gridTemplateRows: `repeat(10, ${SquareSize.TINY})`,
-    gridTemplateColumns: `repeat(9, ${SquareSize.TINY})`,
-  },
-  [MediaQuery.SMALL]: {
-    gridTemplateRows: `repeat(10, ${SquareSize.SMALL})`,
-    gridTemplateColumns: `repeat(9, ${SquareSize.SMALL})`,
-  },
-  [MediaQuery.MEDIUM]: {
-    gridTemplateRows: `repeat(10, ${SquareSize.MEDIUM})`,
-    gridTemplateColumns: `repeat(9, ${SquareSize.MEDIUM})`,
-  },
-  [MediaQuery.LARGE]: {
-    gridTemplateRows: `repeat(10, ${SquareSize.LARGE})`,
-    gridTemplateColumns: `repeat(9, ${SquareSize.LARGE})`,
-  },
+const gridRowColumnBySizeCSS = squareSize => ({
+  gridTemplateRows: `repeat(10, ${squareSize})`,
+  gridTemplateColumns: `repeat(9, ${squareSize})`,
+});
+
+const MEDIA_QUERY_CSS = {
+  [MediaQuery.TINY]: gridRowColumnBySizeCSS(SquareSize.TINY),
+  [MediaQuery.SMALL]: gridRowColumnBySizeCSS(SquareSize.SMALL),
+  [MediaQuery.MEDIUM]: gridRowColumnBySizeCSS(SquareSize.MEDIUM),
+  [MediaQuery.LARGE]: gridRowColumnBySizeCSS(SquareSize.LARGE),
+};
+
+const gridRowColumnCSS = ({ size }) => {
+  if (size === 'fluid') {
+    return MEDIA_QUERY_CSS;
+  }
+
+  return gridRowColumnBySizeCSS(Square[size]);
+};
+
+const Wrapper = styled.div(props => ({
+  ...gridRowColumnCSS(props),
   backgroundColor: '#decfb1',
   backgroundImage: `url(${boardImg})`,
   backgroundPosition: 'top',
@@ -36,7 +41,7 @@ const Wrapper = styled.div({
   backgroundSize: 'contain',
   display: 'grid',
   zIndex: 0,
-});
+}));
 
 const mapStateToProps = createSelector(
   [state => state],
@@ -47,7 +52,7 @@ const mapStateToProps = createSelector(
   }),
 );
 
-const BoardView = ({ handleSquareClick }) => {
+const BoardView = ({ handleSquareClick, size }) => {
   const { bottomPlayerIsRed, selectedFen } = useSelector(
     mapStateToProps,
     isEqual,
@@ -75,15 +80,21 @@ const BoardView = ({ handleSquareClick }) => {
     });
   }, [getSlot, handleSquareClick, selectedFen]);
 
-  return <Wrapper className="BoardView">{renderSquares()}</Wrapper>;
+  return (
+    <Wrapper className="BoardView" size={size}>
+      {renderSquares()}
+    </Wrapper>
+  );
 };
 
 BoardView.propTypes = {
   handleSquareClick: PropTypes.func,
+  size: PropTypes.oneOf(['fluid', 'tiny', 'small', 'medium', 'large']),
 };
 
 BoardView.defaultProps = {
   handleSquareClick: () => {},
+  size: 'fluid',
 };
 
 export default BoardView;
