@@ -36,7 +36,7 @@ const transformCSS = props => {
 };
 
 const Wrapper = styled.img(props => ({
-  ...mediaQueryCSS(props),
+  ...transformCSS(props),
   WebkitUserSelect: 'none',
   KhtmlUserSelect: 'none',
   MozUserSelect: 'none',
@@ -51,7 +51,7 @@ const Wrapper = styled.img(props => ({
   zIndex: isMoving(props) ? 100 : 0,
 }));
 
-const Piece = ({ code, moveX, moveY, square }) => {
+const Piece = ({ code, moveX, moveY, size, square }) => {
   const dispatch = useDispatch();
 
   const [{ opacity }, dragRef] = useDrag({
@@ -71,6 +71,7 @@ const Piece = ({ code, moveX, moveY, square }) => {
       moveY={moveY}
       opacity={opacity}
       ref={dragRef}
+      size={size}
       src={getImageByCode(code)}
     />
   );
@@ -80,12 +81,14 @@ Piece.propTypes = {
   code: PropTypes.oneOf(ALL_PIECES).isRequired,
   moveX: PropTypes.number,
   moveY: PropTypes.number,
+  size: PropTypes.oneOf(['fluid', 'tiny', 'small', 'medium', 'large']),
   square: PropTypes.string.isRequired,
 };
 
 Piece.defaultProps = {
   moveX: 0,
   moveY: 0,
+  size: 'fluid',
 };
 
 export default Piece;
