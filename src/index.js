@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { DndProvider } from 'react-dnd';
-import Backend from 'react-dnd-html5-backend';
 import WebSocketProvider from 'services/WebSocketProvider';
 
 import App from './App';
@@ -26,9 +24,7 @@ const store = compose(
 ReactDOM.render(
   <Provider store={store}>
     <WebSocketProvider>
-      <DndProvider backend={Backend}>
-        <App />
-      </DndProvider>
+      <App />
     </WebSocketProvider>
   </Provider>,
   document.getElementById('root'),
