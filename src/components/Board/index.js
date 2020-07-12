@@ -83,7 +83,7 @@ const Board = () => {
 
   return (
     <DndProvider backend={Backend}>
-      <BoardView size="tiny" handleSquareClick={handleSquareClick} />
+      <BoardView handleSquareClick={handleSquareClick} />
     </DndProvider>
   );
 };
