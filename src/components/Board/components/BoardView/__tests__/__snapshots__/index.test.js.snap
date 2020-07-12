@@ -5,362 +5,452 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
   className="BoardView"
 >
   <Square
+    handleSquareClick={[Function]}
     key="i1"
     square="i1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h1"
     square="h1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g1"
     square="g1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f1"
     square="f1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e1"
     square="e1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d1"
     square="d1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c1"
     square="c1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b1"
     square="b1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a1"
     square="a1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i2"
     square="i2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h2"
     square="h2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g2"
     square="g2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f2"
     square="f2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e2"
     square="e2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d2"
     square="d2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c2"
     square="c2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b2"
     square="b2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a2"
     square="a2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i3"
     square="i3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h3"
     square="h3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g3"
     square="g3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f3"
     square="f3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e3"
     square="e3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d3"
     square="d3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c3"
     square="c3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b3"
     square="b3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a3"
     square="a3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i4"
     square="i4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h4"
     square="h4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g4"
     square="g4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f4"
     square="f4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e4"
     square="e4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d4"
     square="d4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c4"
     square="c4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b4"
     square="b4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a4"
     square="a4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i5"
     square="i5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h5"
     square="h5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g5"
     square="g5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f5"
     square="f5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e5"
     square="e5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d5"
     square="d5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c5"
     square="c5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b5"
     square="b5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a5"
     square="a5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i6"
     square="i6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h6"
     square="h6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g6"
     square="g6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f6"
     square="f6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e6"
     square="e6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d6"
     square="d6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c6"
     square="c6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b6"
     square="b6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a6"
     square="a6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i7"
     square="i7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h7"
     square="h7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g7"
     square="g7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f7"
     square="f7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e7"
     square="e7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d7"
     square="d7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c7"
     square="c7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b7"
     square="b7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a7"
     square="a7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i8"
     square="i8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h8"
     square="h8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g8"
     square="g8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f8"
     square="f8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e8"
     square="e8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d8"
     square="d8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c8"
     square="c8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b8"
     square="b8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a8"
     square="a8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i9"
     square="i9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h9"
     square="h9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g9"
     square="g9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f9"
     square="f9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e9"
     square="e9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d9"
     square="d9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c9"
     square="c9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b9"
     square="b9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a9"
     square="a9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i10"
     square="i10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h10"
     square="h10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g10"
     square="g10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f10"
     square="f10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e10"
     square="e10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d10"
     square="d10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c10"
     square="c10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b10"
     square="b10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a10"
     square="a10"
   />
@@ -372,362 +462,452 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
   className="BoardView"
 >
   <Square
+    handleSquareClick={[Function]}
     key="a10"
     square="a10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b10"
     square="b10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c10"
     square="c10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d10"
     square="d10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e10"
     square="e10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f10"
     square="f10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g10"
     square="g10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h10"
     square="h10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i10"
     square="i10"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a9"
     square="a9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b9"
     square="b9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c9"
     square="c9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d9"
     square="d9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e9"
     square="e9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f9"
     square="f9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g9"
     square="g9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h9"
     square="h9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i9"
     square="i9"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a8"
     square="a8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b8"
     square="b8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c8"
     square="c8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d8"
     square="d8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e8"
     square="e8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f8"
     square="f8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g8"
     square="g8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h8"
     square="h8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i8"
     square="i8"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a7"
     square="a7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b7"
     square="b7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c7"
     square="c7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d7"
     square="d7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e7"
     square="e7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f7"
     square="f7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g7"
     square="g7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h7"
     square="h7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i7"
     square="i7"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a6"
     square="a6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b6"
     square="b6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c6"
     square="c6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d6"
     square="d6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e6"
     square="e6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f6"
     square="f6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g6"
     square="g6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h6"
     square="h6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i6"
     square="i6"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a5"
     square="a5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b5"
     square="b5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c5"
     square="c5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d5"
     square="d5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e5"
     square="e5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f5"
     square="f5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g5"
     square="g5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h5"
     square="h5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i5"
     square="i5"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a4"
     square="a4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b4"
     square="b4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c4"
     square="c4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d4"
     square="d4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e4"
     square="e4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f4"
     square="f4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g4"
     square="g4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h4"
     square="h4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i4"
     square="i4"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a3"
     square="a3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b3"
     square="b3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c3"
     square="c3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d3"
     square="d3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e3"
     square="e3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f3"
     square="f3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g3"
     square="g3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h3"
     square="h3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i3"
     square="i3"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a2"
     square="a2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b2"
     square="b2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c2"
     square="c2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d2"
     square="d2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e2"
     square="e2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f2"
     square="f2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g2"
     square="g2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h2"
     square="h2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i2"
     square="i2"
   />
   <Square
+    handleSquareClick={[Function]}
     key="a1"
     square="a1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="b1"
     square="b1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="c1"
     square="c1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="d1"
     square="d1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="e1"
     square="e1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="f1"
     square="f1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="g1"
     square="g1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="h1"
     square="h1"
   />
   <Square
+    handleSquareClick={[Function]}
     key="i1"
     square="i1"
   />

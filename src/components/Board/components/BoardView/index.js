@@ -29,7 +29,7 @@ const Wrapper = styled.div`
     grid-template-rows: repeat(10, ${SquareSize.LARGE});
     grid-template-columns: repeat(9, ${SquareSize.LARGE});
   }
-  background-color: #DECFB1;
+  background-color: #decfb1;
   background-image: url(${boardImg});
   background-position: top;
   background-repeat: no-repeat;
@@ -79,7 +79,11 @@ const BoardView = ({ handleSquareClick }) => {
 };
 
 BoardView.propTypes = {
-  handleSquareClick: PropTypes.func.isRequired,
+  handleSquareClick: PropTypes.func,
+};
+
+BoardView.defaultProps = {
+  handleSquareClick: () => {},
 };
 
 export default BoardView;
