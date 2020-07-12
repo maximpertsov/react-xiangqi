@@ -12,25 +12,39 @@ import getImageByCode from './images';
 
 const isMoving = ({ moveX, moveY }) => moveX !== 0 || moveY !== 0;
 
-const cssTransform = (squareSize, { moveX, moveY }) => {
+const transformBySizeCSS = (squareSize, { moveX, moveY }) => {
   const xTranslate = `calc(${squareSize} * ${moveX})`;
   const yTranslate = `calc(${squareSize} * ${moveY})`;
 
   return `transform: translate(${xTranslate}, ${yTranslate})`;
 };
 
+// const MEDIA_QUERY_CSS = {
+//   [MediaQuery.TINY]: transformBySizeCSS(SquareSize.TINY),
+//   [MediaQuery.SMALL]: transformBySizeCSS(SquareSize.SMALL),
+//   [MediaQuery.MEDIUM]: transformBySizeCSS(SquareSize.MEDIUM),
+//   [MediaQuery.LARGE]: transformBySizeCSS(SquareSize.LARGE),
+// };
+
+// const transformCSS = ({ size }) => {
+//   if (size === 'fluid') {
+//     return MEDIA_QUERY_CSS;
+//   }
+//   return transformBySizeCSS(SquareSize[size.toUpperCase()]);
+// };
+
 const Wrapper = styled.img`
   ${MediaQuery.TINY} {
-    ${props => cssTransform(SquareSize.TINY, props)};
+    ${props => transformBySizeCSS(SquareSize.TINY, props)};
   }
   ${MediaQuery.SMALL} {
-    ${props => cssTransform(SquareSize.SMALL, props)};
+    ${props => transformBySizeCSS(SquareSize.SMALL, props)};
   }
   ${MediaQuery.MEDIUM} {
-    ${props => cssTransform(SquareSize.MEDIUM, props)};
+    ${props => transformBySizeCSS(SquareSize.MEDIUM, props)};
   }
   ${MediaQuery.LARGE} {
-    ${props => cssTransform(SquareSize.LARGE, props)};
+    ${props => transformBySizeCSS(SquareSize.LARGE, props)};
   }
   -webkit-user-select: none;
   -khtml-user-select: none;
