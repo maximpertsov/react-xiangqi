@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,58 +42,41 @@ const Board = () => {
     dispatch(actions.board.selectedSquare.set(null));
   }, [dispatch, selectedFen]);
 
-  const selectedCanCapture = useCallback(
-    square => {
-      if (selectedSquare === null) return false;
-      if (!isOccupied(selectedFen, selectedSquare)) return false;
-      if (!isOccupied(selectedFen, square)) return false;
+  const selectedCanCapture = square => {
+    if (selectedSquare === null) return false;
+    if (!isOccupied(selectedFen, selectedSquare)) return false;
+    if (!isOccupied(selectedFen, square)) return false;
 
-      return !sameTeam(selectedFen, square, selectedSquare);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedFen, selectedSquare],
-  );
+    return !sameTeam(selectedFen, square, selectedSquare);
+  };
 
-  const legalFen = useCallback(
-    uci => get(legalMoves, uci, false),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedFen, selectedSquare],
-  );
+  const legalFen = uci => get(legalMoves, uci, false);
 
-  const handleMove = useCallback(
-    uci => {
-      const fen = legalFen(uci);
-      if (fen) {
-        dispatch(animateMove({ bottomPlayerIsRed, uci }));
-        setTimeout(() => {
-          dispatch(makeMove({ fen, uci }));
-          dispatch(actions.board.animationOffset.clear());
-          dispatch(actions.board.selectedSquare.set(null));
-        }, ANIMATION_DELAY);
-      } else {
+  const handleMove = uci => {
+    const fen = legalFen(uci);
+    if (fen) {
+      dispatch(animateMove({ bottomPlayerIsRed, uci }));
+      setTimeout(() => {
+        dispatch(makeMove({ fen, uci }));
+        dispatch(actions.board.animationOffset.clear());
         dispatch(actions.board.selectedSquare.set(null));
-      }
-    },
-    [bottomPlayerIsRed, dispatch, legalFen],
-  );
+      }, ANIMATION_DELAY);
+    } else {
+      dispatch(actions.board.selectedSquare.set(null));
+    }
+  };
 
-  const handleSquareClick = useCallback(
-    square => () => {
-      if (square === selectedSquare) {
-        dispatch(actions.board.selectedSquare.set(null));
-      } else if (
-        isOccupied(selectedFen, square) &&
-        !selectedCanCapture(square)
-      ) {
-        dispatch(actions.board.selectedSquare.set(square));
-      } else if (selectedSquare !== null) {
-        handleMove(squaresToUci(selectedSquare, square));
-      } else {
-        dispatch(actions.board.selectedSquare.set(null));
-      }
-    },
-    [dispatch, handleMove, selectedCanCapture, selectedFen, selectedSquare],
-  );
+  const handleSquareClick = square => () => {
+    if (square === selectedSquare) {
+      dispatch(actions.board.selectedSquare.set(null));
+    } else if (isOccupied(selectedFen, square) && !selectedCanCapture(square)) {
+      dispatch(actions.board.selectedSquare.set(square));
+    } else if (selectedSquare !== null) {
+      handleMove(squaresToUci(selectedSquare, square));
+    } else {
+      dispatch(actions.board.selectedSquare.set(null));
+    }
+  };
 
   return (
     <DndProvider backend={Backend}>
