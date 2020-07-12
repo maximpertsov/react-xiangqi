@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 
 import SizeProvider from 'SizeProvider';
-import { getBottomPlayerIsRed } from 'reducers';
+import { getBottomPlayerIsRed, getSelectedMove } from 'reducers/selectors';
 import { MediaQuery, SquareSize } from 'commonStyles';
 import { decodeFen } from 'services/logic/fen';
 import { encodeSquare } from 'services/logic/square';
@@ -44,27 +44,28 @@ const Wrapper = styled.div(props => ({
 }));
 
 const mapStateToProps = createSelector(
-  [state => state],
+  state => state,
+  state => getSelectedMove(state),
+  (_, props) => props.move,
 
-  state => ({
+  (state, selectedMove, move) => ({
     bottomPlayerIsRed: getBottomPlayerIsRed(state),
-    selectedFen: state.selectedFen,
+    currentMove: move.fen ? move : selectedMove,
   }),
 );
 
-const BoardView = ({ fen, handleSquareClick, size }) => {
-  const { bottomPlayerIsRed, selectedFen } = useSelector(
-    mapStateToProps,
+const BoardView = ({ move, handleSquareClick, size }) => {
+  const { bottomPlayerIsRed, currentMove } = useSelector(
+    state => mapStateToProps(state, { move }),
     isEqual,
   );
 
   const getSlot = (slots, i) => (bottomPlayerIsRed ? i : slots.length - i - 1);
 
   const renderSquares = () => {
-    const boardFen = fen || selectedFen;
-    if (!boardFen) return;
+    if (!currentMove.fen) return;
 
-    return decodeFen(boardFen).placement.map((_, i, slots) => {
+    return decodeFen(currentMove.fen).placement.map((_, i, slots) => {
       const slot = getSlot(slots, i);
       const square = encodeSquare(slot);
 
@@ -86,14 +87,14 @@ const BoardView = ({ fen, handleSquareClick, size }) => {
 };
 
 BoardView.propTypes = {
-  fen: PropTypes.string,
   handleSquareClick: PropTypes.func,
+  move: PropTypes.shape(),
   size: PropTypes.oneOf(['fluid', 'tiny', 'small', 'medium', 'large']),
 };
 
 BoardView.defaultProps = {
-  fen: null,
   handleSquareClick: () => {},
+  move: {},
   size: 'fluid',
 };
 
