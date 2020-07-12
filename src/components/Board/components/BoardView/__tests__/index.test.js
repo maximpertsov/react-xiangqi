@@ -8,15 +8,19 @@ jest.mock('react-redux');
 jest.mock('reducers/selectors');
 
 describe('BoardView', () => {
-  const selectedFen =
-    'rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2';
+  const move = {
+    fen:
+      'rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2',
+    givesCheck: false,
+    uci: 'g4g5',
+  };
   let store;
   let wrapper;
 
   beforeEach(() => {
-    store = mockStore({ selectedFen });
+    store = mockStore({});
     useSelector.mockImplementation(callback => callback(store.getState()));
-    wrapper = shallowWrappedComponent(<BoardView />, store);
+    wrapper = shallowWrappedComponent(<BoardView move={move} />, store);
   });
 
   afterEach(() => {

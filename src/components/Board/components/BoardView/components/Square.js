@@ -7,7 +7,7 @@ import isEqual from 'lodash/isEqual';
 
 import { activeKing, getPiece, isOccupied } from 'services/logic/fen';
 import { uciToSquares } from 'services/logic/square';
-import { getIsMoving, getSelectedMove, getTargets } from 'reducers';
+import { getIsMoving, getTargets } from 'reducers';
 import SquareView from './SquareView';
 import Piece from './Piece';
 import DropIndicator from './DropIndicator';
@@ -16,29 +16,28 @@ import KingInCheckIndicator from './KingInCheckIndicator';
 import SelectionIndicator from './SelectionIndicator';
 import TargetIndicator from './TargetIndicator';
 
-// TODO: use the fen prop instead selectedMove
-const getPieceCode = ({ selectedMove, square }) => {
-  if (!selectedMove.fen) return;
+const getPieceCode = ({ move, square }) => {
+  if (!move.fen) return;
 
-  return getPiece(selectedMove.fen, square) || undefined;
+  return getPiece(move.fen, square) || undefined;
 };
 
-const getIsOccupied = ({ selectedMove, square }) => {
-  if (!selectedMove.fen) return false;
+const getIsOccupied = ({ move, square }) => {
+  if (!move.fen) return false;
 
-  return isOccupied(selectedMove.fen, square);
+  return isOccupied(move.fen, square);
 };
 
-const getIsInLastMove = ({ selectedMove, square }) => {
-  if (!selectedMove.uci) return false;
+const getIsInLastMove = ({ move, square }) => {
+  if (!move.uci) return false;
 
-  return uciToSquares(selectedMove.uci).includes(square);
+  return uciToSquares(move.uci).includes(square);
 };
 
-const getIsKingInCheck = ({ selectedMove, square }) => {
-  if (!selectedMove.givesCheck) return false;
+const getIsKingInCheck = ({ move, square }) => {
+  if (!move.givesCheck) return false;
 
-  return activeKing(selectedMove.fen) === square;
+  return activeKing(move.fen) === square;
 };
 
 const getIsSelected = ({ isMoving, selectedSquare, square }) => {
@@ -66,24 +65,17 @@ const getAnimationOffset = ({ animationOffset, selectedSquare, square }) => {
 const mapStateToProps = createSelector(
   state => state.animationOffset,
   state => getIsMoving(state),
-  state => getSelectedMove(state),
   state => state.selectedSquare,
   state => getTargets(state),
   (_, props) => props.square,
+  (_, props) => props.move,
 
-  (
-    animationOffset,
-    isMoving,
-    selectedMove,
-    selectedSquare,
-    targets,
-    square,
-  ) => ({
+  (animationOffset, isMoving, selectedSquare, targets, square, move) => ({
     ...getAnimationOffset({ animationOffset, selectedSquare, square }),
-    pieceCode: getPieceCode({ selectedMove, square }),
-    isOccupied: getIsOccupied({ selectedMove, square }),
-    isInLastMove: getIsInLastMove({ selectedMove, square }),
-    isKingInCheck: getIsKingInCheck({ selectedMove, square }),
+    pieceCode: getPieceCode({ move, square }),
+    isOccupied: getIsOccupied({ move, square }),
+    isInLastMove: getIsInLastMove({ move, square }),
+    isKingInCheck: getIsKingInCheck({ move, square }),
     isSelected: getIsSelected({ isMoving, selectedSquare, square }),
     isTargeted: getIsTargeted({ isMoving, targets, square }),
   }),
@@ -91,7 +83,7 @@ const mapStateToProps = createSelector(
 
 // TODO make handle square click an action?
 // eslint-disable-next-line complexity
-const Square = ({ handleSquareClick, square }) => {
+const Square = ({ handleSquareClick, move, square }) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'PIECE',
     drop: () => {
@@ -113,7 +105,7 @@ const Square = ({ handleSquareClick, square }) => {
     isKingInCheck,
     isSelected,
     isTargeted,
-  } = useSelector(state => mapStateToProps(state, { square }), isEqual);
+  } = useSelector(state => mapStateToProps(state, { move, square }), isEqual);
 
   const renderTargetIndicator = () => <TargetIndicator occupied={isOccupied} />;
 
@@ -135,7 +127,12 @@ const Square = ({ handleSquareClick, square }) => {
 
 Square.propTypes = {
   handleSquareClick: PropTypes.func.isRequired,
+  move: PropTypes.shape(),
   square: PropTypes.string.isRequired,
+};
+
+Square.defaultProps = {
+  move: {},
 };
 
 export default Square;

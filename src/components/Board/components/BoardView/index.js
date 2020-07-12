@@ -74,6 +74,7 @@ const BoardView = ({ move, handleSquareClick, size }) => {
           key={square}
           handleSquareClick={handleSquareClick}
           square={square}
+          move={currentMove}
         />
       );
     });
