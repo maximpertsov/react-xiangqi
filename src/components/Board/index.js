@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import { DndProvider } from 'react-dnd';
-import Backend from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import get from 'lodash/get';
@@ -78,11 +76,7 @@ const Board = () => {
     }
   };
 
-  return (
-    <DndProvider backend={Backend}>
-      <BoardView handleSquareClick={handleSquareClick} />
-    </DndProvider>
-  );
+  return <BoardView handleSquareClick={handleSquareClick} />;
 };
 
 export default Board;
