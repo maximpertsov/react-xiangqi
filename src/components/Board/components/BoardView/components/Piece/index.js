@@ -19,19 +19,21 @@ const transformBySizeCSS = (squareSize, { moveX, moveY }) => {
   return `transform: translate(${xTranslate}, ${yTranslate})`;
 };
 
-// const MEDIA_QUERY_CSS = {
-//   [MediaQuery.TINY]: transformBySizeCSS(SquareSize.TINY),
-//   [MediaQuery.SMALL]: transformBySizeCSS(SquareSize.SMALL),
-//   [MediaQuery.MEDIUM]: transformBySizeCSS(SquareSize.MEDIUM),
-//   [MediaQuery.LARGE]: transformBySizeCSS(SquareSize.LARGE),
-// };
+const mediaQueryCSS = props => ({
+  [MediaQuery.TINY]: transformBySizeCSS(SquareSize.TINY, props),
+  [MediaQuery.SMALL]: transformBySizeCSS(SquareSize.SMALL, props),
+  [MediaQuery.MEDIUM]: transformBySizeCSS(SquareSize.MEDIUM, props),
+  [MediaQuery.LARGE]: transformBySizeCSS(SquareSize.LARGE, props),
+});
 
-// const transformCSS = ({ size }) => {
-//   if (size === 'fluid') {
-//     return MEDIA_QUERY_CSS;
-//   }
-//   return transformBySizeCSS(SquareSize[size.toUpperCase()]);
-// };
+const transformCSS = props => {
+  const { size } = props;
+
+  if (size === 'fluid') {
+    return mediaQueryCSS(props);
+  }
+  return transformBySizeCSS(SquareSize[size.toUpperCase()]);
+};
 
 const Wrapper = styled.img`
   ${MediaQuery.TINY} {
