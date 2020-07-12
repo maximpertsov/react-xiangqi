@@ -1,7 +1,7 @@
 import update from 'immutability-helper';
 import { decodeUci } from 'services/logic/square';
 
-export const makeMove = (placement, uci) => {
+export const movePiece = (placement, uci) => {
   const [fromSlot, toSlot] = decodeUci(uci);
 
   return update(

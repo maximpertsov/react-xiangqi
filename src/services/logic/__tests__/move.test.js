@@ -1,6 +1,6 @@
 import flatten from 'lodash/flatten';
 import { decodeFen } from 'services/logic/fen';
-import { makeMove, getMovingPiece, getMovedPiece } from 'services/logic/move';
+import { movePiece, getMovingPiece, getMovedPiece } from 'services/logic/move';
 
 describe('placement moves', () => {
   const uci = 'a10a9';
@@ -22,7 +22,7 @@ describe('placement moves', () => {
       ['R', 'N', 'B', 'A', 'K', 'A', 'B', 'N', 'R'],
     ]);
 
-    expect(makeMove(initialPlacement, uci)).toStrictEqual(expectedPlacement);
+    expect(movePiece(initialPlacement, uci)).toStrictEqual(expectedPlacement);
   });
 
   test('get moving piece', () => {
@@ -30,7 +30,7 @@ describe('placement moves', () => {
   });
 
   test('get moved piece', () => {
-    const nextPlacement = makeMove(initialPlacement, uci);
+    const nextPlacement = movePiece(initialPlacement, uci);
 
     expect(getMovedPiece(nextPlacement, uci)).toBe('r');
   });
