@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
@@ -58,12 +58,9 @@ const BoardView = ({ fen, handleSquareClick, size }) => {
     isEqual,
   );
 
-  const getSlot = useCallback(
-    (slots, i) => (bottomPlayerIsRed ? i : slots.length - i - 1),
-    [bottomPlayerIsRed],
-  );
+  const getSlot = (slots, i) => (bottomPlayerIsRed ? i : slots.length - i - 1);
 
-  const renderSquares = useCallback(() => {
+  const renderSquares = () => {
     const boardFen = fen || selectedFen;
     if (!boardFen) return;
 
@@ -79,7 +76,7 @@ const BoardView = ({ fen, handleSquareClick, size }) => {
         />
       );
     });
-  }, [fen, getSlot, handleSquareClick, selectedFen]);
+  };
 
   return (
     <Wrapper className="BoardView" size={size}>
