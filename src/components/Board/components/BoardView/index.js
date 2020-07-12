@@ -12,31 +12,31 @@ import { encodeSquare } from 'services/logic/square';
 import Square from './components/Square';
 import boardImg from './assets/board-1000px.svg.png';
 
-const Wrapper = styled.div`
-  ${MediaQuery.TINY} {
-    grid-template-rows: repeat(10, ${SquareSize.TINY});
-    grid-template-columns: repeat(9, ${SquareSize.TINY});
-  }
-  ${MediaQuery.SMALL} {
-    grid-template-rows: repeat(10, ${SquareSize.SMALL});
-    grid-template-columns: repeat(9, ${SquareSize.SMALL});
-  }
-  ${MediaQuery.MEDIUM} {
-    grid-template-rows: repeat(10, ${SquareSize.MEDIUM});
-    grid-template-columns: repeat(9, ${SquareSize.MEDIUM});
-  }
-  ${MediaQuery.LARGE} {
-    grid-template-rows: repeat(10, ${SquareSize.LARGE});
-    grid-template-columns: repeat(9, ${SquareSize.LARGE});
-  }
-  background-color: #decfb1;
-  background-image: url(${boardImg});
-  background-position: top;
-  background-repeat: no-repeat;
-  background-size: contain;
-  display: grid;
-  z-index: 0;
-`;
+const Wrapper = styled.div({
+  [MediaQuery.TINY]: {
+    gridTemplateRows: `repeat(10, ${SquareSize.TINY})`,
+    gridTemplateColumns: `repeat(9, ${SquareSize.TINY})`,
+  },
+  [MediaQuery.SMALL]: {
+    gridTemplateRows: `repeat(10, ${SquareSize.SMALL})`,
+    gridTemplateColumns: `repeat(9, ${SquareSize.SMALL})`,
+  },
+  [MediaQuery.MEDIUM]: {
+    gridTemplateRows: `repeat(10, ${SquareSize.MEDIUM})`,
+    gridTemplateColumns: `repeat(9, ${SquareSize.MEDIUM})`,
+  },
+  [MediaQuery.LARGE]: {
+    gridTemplateRows: `repeat(10, ${SquareSize.LARGE})`,
+    gridTemplateColumns: `repeat(9, ${SquareSize.LARGE})`,
+  },
+  backgroundColor: '#decfb1',
+  backgroundImage: `url(${boardImg})`,
+  backgroundPosition: 'top',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'contain',
+  display: 'grid',
+  zIndex: 0,
+});
 
 const mapStateToProps = createSelector(
   [state => state],
