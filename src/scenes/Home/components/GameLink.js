@@ -16,7 +16,7 @@ const GameLink = ({ slug }) => {
 
   return (
     <Button onClick={setThisGameSlug} className="GameLink">
-      <BoardView />
+      <BoardView size="tiny" />
     </Button>
   );
 };

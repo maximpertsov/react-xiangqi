@@ -28,8 +28,7 @@ const gridRowColumnCSS = ({ size }) => {
   if (size === 'fluid') {
     return MEDIA_QUERY_CSS;
   }
-
-  return gridRowColumnBySizeCSS(Square[size]);
+  return gridRowColumnBySizeCSS(SquareSize[size.toUpperCase()]);
 };
 
 const Wrapper = styled.div(props => ({
