@@ -1,14 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GameLink snapshot 1`] = `
-<Button
-  as="button"
-  className="GameLink"
-  onClick={[Function]}
->
-  <BoardView
-    handleSquareClick={[Function]}
-    size="tiny"
-  />
-</Button>
-`;
+exports[`GameLink snapshot 1`] = `undefined`;

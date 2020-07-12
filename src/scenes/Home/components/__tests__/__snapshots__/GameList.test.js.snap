@@ -11,12 +11,20 @@ exports[`GameList snapshot 1`] = `
   </Header>
   <Styled(div)>
     <GameLink
+      game={
+        Object {
+          "slug": "abc123",
+        }
+      }
       key="abc123"
-      slug="abc123"
     />
     <GameLink
+      game={
+        Object {
+          "slug": "zyx987",
+        }
+      }
       key="zyx987"
-      slug="zyx987"
     />
   </Styled(div)>
 </Styled(div)>

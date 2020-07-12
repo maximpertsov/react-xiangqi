@@ -6,13 +6,15 @@ import actions from 'actions';
 
 import BoardView from 'components/Board/components/BoardView';
 
-const GameLink = ({ slug }) => {
+const GameLink = ({ game }) => {
   const dispatch = useDispatch();
 
   const setThisGameSlug = () => {
-    dispatch(actions.game.slug.set(slug));
+    dispatch(actions.game.slug.set(game.slug));
     dispatch(actions.home.showGame.set(true));
   };
+
+  console.log(game.currentMove.fen);
 
   return (
     <Button onClick={setThisGameSlug} className="GameLink">
@@ -22,7 +24,7 @@ const GameLink = ({ slug }) => {
 };
 
 GameLink.propTypes = {
-  slug: PropTypes.string.isRequired,
+  game: PropTypes.shape().isRequired,
 };
 
 export default GameLink;

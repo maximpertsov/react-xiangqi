@@ -52,7 +52,7 @@ const mapStateToProps = createSelector(
   }),
 );
 
-const BoardView = ({ handleSquareClick, size }) => {
+const BoardView = ({ fen, handleSquareClick, size }) => {
   const { bottomPlayerIsRed, selectedFen } = useSelector(
     mapStateToProps,
     isEqual,
@@ -64,9 +64,10 @@ const BoardView = ({ handleSquareClick, size }) => {
   );
 
   const renderSquares = useCallback(() => {
-    if (!selectedFen) return;
+    const boardFen = fen || selectedFen;
+    if (!boardFen) return;
 
-    return decodeFen(selectedFen).placement.map((_, i, slots) => {
+    return decodeFen(boardFen).placement.map((_, i, slots) => {
       const slot = getSlot(slots, i);
       const square = encodeSquare(slot);
 
@@ -78,7 +79,7 @@ const BoardView = ({ handleSquareClick, size }) => {
         />
       );
     });
-  }, [getSlot, handleSquareClick, selectedFen]);
+  }, [fen, getSlot, handleSquareClick, selectedFen]);
 
   return (
     <Wrapper className="BoardView" size={size}>
@@ -88,11 +89,13 @@ const BoardView = ({ handleSquareClick, size }) => {
 };
 
 BoardView.propTypes = {
+  fen: PropTypes.string,
   handleSquareClick: PropTypes.func,
   size: PropTypes.oneOf(['fluid', 'tiny', 'small', 'medium', 'large']),
 };
 
 BoardView.defaultProps = {
+  fen: null,
   handleSquareClick: () => {},
   size: 'fluid',
 };

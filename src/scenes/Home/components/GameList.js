@@ -25,19 +25,19 @@ const mapStateToProps = createSelector(
   [state => state],
 
   state => ({
-    gameSlugs: state.games.map(({ slug }) => slug),
+    games: state.games,
   }),
 );
 
-const renderGameLink = slug => <GameLink key={slug} slug={slug} />;
+const renderGameLink = game => <GameLink key={game.slug} game={game} />;
 
 const GameList = () => {
-  const { gameSlugs } = useSelector(mapStateToProps, isEqual);
+  const { games } = useSelector(mapStateToProps, isEqual);
 
   return (
     <Wrapper className="GameList">
       <Header size="medium">Games in play</Header>
-      <SlugsWrapper>{gameSlugs.map(renderGameLink)}</SlugsWrapper>
+      <SlugsWrapper>{games.map(renderGameLink)}</SlugsWrapper>
     </Wrapper>
   );
 };
