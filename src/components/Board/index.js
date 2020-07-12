@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
 import get from 'lodash/get';
 import isEqual from 'lodash/isEqual';
 
@@ -16,13 +17,26 @@ import BoardView from './components/BoardView';
 
 const ANIMATION_DELAY = 150;
 
+const mapStateToProps = createSelector(
+  [state => state],
+
+  state => ({
+    bottomPlayerIsRed: getBottomPlayerIsRed(state),
+    legalMoves: getLegalMoves(state),
+    selectedFen: state.selectedFen,
+    selectedSquare: state.selectedSquare,
+  }),
+);
+
 const Board = () => {
   const dispatch = useDispatch();
 
-  const bottomPlayerIsRed = useSelector(state => getBottomPlayerIsRed(state));
-  const legalMoves = useSelector(state => getLegalMoves(state), isEqual);
-  const selectedFen = useSelector(state => state.selectedFen);
-  const selectedSquare = useSelector(state => state.selectedSquare);
+  const {
+    bottomPlayerIsRed,
+    legalMoves,
+    selectedFen,
+    selectedSquare,
+  } = useSelector(mapStateToProps, isEqual);
 
   useEffect(() => {
     dispatch(actions.board.selectedSquare.set(null));
