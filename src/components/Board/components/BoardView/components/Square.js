@@ -16,6 +16,7 @@ import KingInCheckIndicator from './KingInCheckIndicator';
 import SelectionIndicator from './SelectionIndicator';
 import TargetIndicator from './TargetIndicator';
 
+// TODO: use the fen prop instead selectedMove
 const getPieceCode = ({ selectedMove, square }) => {
   if (!selectedMove.fen) return;
 
