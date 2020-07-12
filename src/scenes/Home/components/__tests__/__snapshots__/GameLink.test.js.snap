@@ -6,6 +6,9 @@ exports[`GameLink snapshot 1`] = `
   className="GameLink"
   onClick={[Function]}
 >
-  <BoardView />
+  <BoardView
+    handleSquareClick={[Function]}
+    size="tiny"
+  />
 </Button>
 `;
