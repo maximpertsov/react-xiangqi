@@ -6,6 +6,12 @@ exports[`GameLink snapshot 1`] = `
   className="GameLink"
   onClick={[Function]}
 >
+  <Header
+    size="tiny"
+  >
+    vs 
+    bob
+  </Header>
   <BoardView
     handleSquareClick={[Function]}
     move={Object {}}

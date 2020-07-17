@@ -8,7 +8,7 @@ jest.mock('react-redux');
 
 describe('GameLink', () => {
   const slug = 'abc123';
-  const store = mockStore({});
+  const store = mockStore({ username: 'alice' });
 
   let wrapper;
 
@@ -16,7 +16,14 @@ describe('GameLink', () => {
     useDispatch.mockReturnValue(store.dispatch);
     useSelector.mockImplementation(callback => callback(store.getState()));
     wrapper = shallowWrappedComponent(
-      <GameLink game={{ slug, currentMove: {} }} />,
+      <GameLink
+        game={{
+          slug,
+          currentMove: {},
+          player1: { name: 'alice' },
+          player2: { name: 'bob' },
+        }}
+      />,
       store,
     );
   });
