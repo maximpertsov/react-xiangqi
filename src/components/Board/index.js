@@ -76,7 +76,12 @@ const Board = () => {
     }
   };
 
-  return <BoardView handleSquareClick={handleSquareClick} />;
+  return (
+    <BoardView
+      teamBlackPOV={!bottomPlayerIsRed}
+      handleSquareClick={handleSquareClick}
+    />
+  );
 };
 
 export default Board;

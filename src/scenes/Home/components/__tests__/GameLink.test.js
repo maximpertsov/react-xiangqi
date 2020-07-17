@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 
 import GameLink from '../GameLink';
@@ -14,7 +14,11 @@ describe('GameLink', () => {
 
   beforeEach(() => {
     useDispatch.mockReturnValue(store.dispatch);
-    wrapper = shallowWrappedComponent(<GameLink slug={slug} />, store);
+    useSelector.mockImplementation(callback => callback(store.getState()));
+    wrapper = shallowWrappedComponent(
+      <GameLink game={{ slug, currentMove: {} }} />,
+      store,
+    );
   });
 
   afterEach(() => {

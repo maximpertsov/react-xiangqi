@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 
 import SizeProvider from 'SizeProvider';
-import { getBottomPlayerIsRed, getSelectedMove } from 'reducers/selectors';
+import { getSelectedMove } from 'reducers/selectors';
 import { MediaQuery, SquareSize } from 'commonStyles';
 import { decodeFen } from 'services/logic/fen';
 import { encodeSquare } from 'services/logic/square';
@@ -44,23 +44,21 @@ const Wrapper = styled.div(props => ({
 }));
 
 const mapStateToProps = createSelector(
-  state => state,
   state => getSelectedMove(state),
   (_, props) => props.move,
 
-  (state, selectedMove, move) => ({
-    bottomPlayerIsRed: getBottomPlayerIsRed(state),
+  (selectedMove, move) => ({
     currentMove: move.fen ? move : selectedMove,
   }),
 );
 
-const BoardView = ({ move, handleSquareClick, size }) => {
-  const { bottomPlayerIsRed, currentMove } = useSelector(
+const BoardView = ({ teamBlackPOV, handleSquareClick, move, size }) => {
+  const { currentMove } = useSelector(
     state => mapStateToProps(state, { move }),
     isEqual,
   );
 
-  const getSlot = (slots, i) => (bottomPlayerIsRed ? i : slots.length - i - 1);
+  const getSlot = (slots, i) => (teamBlackPOV ? slots.length - i - 1 : i);
 
   const renderSquares = () => {
     if (!currentMove.fen) return;
@@ -88,12 +86,14 @@ const BoardView = ({ move, handleSquareClick, size }) => {
 };
 
 BoardView.propTypes = {
+  teamBlackPOV: PropTypes.bool,
   handleSquareClick: PropTypes.func,
   move: PropTypes.shape(),
   size: PropTypes.oneOf(['fluid', 'tiny', 'small', 'medium', 'large']),
 };
 
 BoardView.defaultProps = {
+  teamBlackPOV: false,
   handleSquareClick: () => {},
   move: {},
   size: 'fluid',
