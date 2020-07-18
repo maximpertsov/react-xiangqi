@@ -2,46 +2,50 @@
 
 exports[`renders without crashing 1`] = `
 <div
-  class="ui center aligned container"
+  class="css-1tf8o67"
 >
   <div
-    class="ui compact segments"
+    class="ui center aligned container"
   >
     <div
-      class="ui segment"
+      class="ui compact segments"
     >
       <div
-        class="ui large header"
+        class="ui segment"
       >
-        Play online
+        <div
+          class="ui large header"
+        >
+          Play online
+        </div>
+        <div>
+          Welcome undefined
+        </div>
       </div>
-      <div>
-        Welcome undefined
-      </div>
-    </div>
-    <div
-      class="ui segment"
-    >
       <div
-        class="ui large header"
+        class="ui segment"
       >
-        Other modes
+        <div
+          class="ui large header"
+        >
+          Other modes
+        </div>
+        <button
+          class="ui button"
+        >
+          Solo play
+        </button>
+        <button
+          class="ui button"
+        >
+          vs CPU
+        </button>
+        <button
+          class="ui button"
+        >
+          CPU vs CPU
+        </button>
       </div>
-      <button
-        class="ui button"
-      >
-        Solo play
-      </button>
-      <button
-        class="ui button"
-      >
-        vs CPU
-      </button>
-      <button
-        class="ui button"
-      >
-        CPU vs CPU
-      </button>
     </div>
   </div>
 </div>

@@ -2,6 +2,8 @@ import React, { createContext } from 'react';
 import { useDispatch } from 'react-redux';
 import actions from 'actions';
 
+export const WebSocketContext = createContext(null);
+
 /* eslint-disable react/prop-types */
 const WebSocketProvider = ({ children }) => {
   let socket;
@@ -30,5 +32,3 @@ const WebSocketProvider = ({ children }) => {
 };
 
 export default WebSocketProvider;
-
-export const WebSocketContext = createContext(null);

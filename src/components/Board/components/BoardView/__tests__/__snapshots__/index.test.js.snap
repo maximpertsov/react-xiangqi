@@ -1,0 +1,2185 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BoardView bottom player has black pieces snapshot 1`] = `
+<Styled(div)
+  className="BoardView"
+  size="fluid"
+>
+  <SizeProvider
+    size="fluid"
+  >
+    <Square
+      handleSquareClick={[Function]}
+      key="i1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a10"
+    />
+  </SizeProvider>
+</Styled(div)>
+`;
+
+exports[`BoardView bottom player has red pieces snapshot 1`] = `
+<Styled(div)
+  className="BoardView"
+  size="fluid"
+>
+  <SizeProvider
+    size="fluid"
+  >
+    <Square
+      handleSquareClick={[Function]}
+      key="a10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i10"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i10"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i9"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i9"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i8"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i8"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i7"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i7"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i6"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i6"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i5"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i5"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i4"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i4"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i3"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i3"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i2"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i2"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="a1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="a1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="b1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="b1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="c1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="c1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="d1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="d1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="e1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="e1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="f1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="f1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="g1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="g1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="h1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="h1"
+    />
+    <Square
+      handleSquareClick={[Function]}
+      key="i1"
+      move={
+        Object {
+          "fen": "rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2",
+          "givesCheck": false,
+          "uci": "g4g5",
+        }
+      }
+      square="i1"
+    />
+  </SizeProvider>
+</Styled(div)>
+`;
