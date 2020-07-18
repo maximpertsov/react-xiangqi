@@ -2,6 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { mount, render } from 'enzyme';
+import { DndProvider } from 'react-dnd';
+import Backend from 'react-dnd-html5-backend';
 
 import { applyMiddleware, createStore, compose } from 'redux';
 import rootReducer from 'reducers';
@@ -27,7 +29,9 @@ const getStore = (overrides = {}) =>
 
 const getBoard = store => (
   <Provider store={store}>
-    <Board />
+    <DndProvider backend={Backend}>
+      <Board />
+    </DndProvider>
   </Provider>
 );
 
