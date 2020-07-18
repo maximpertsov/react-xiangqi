@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getBottomPlayerIsRed } from 'reducers/selectors';
 
 import BoardView from '..';
 
@@ -20,7 +19,6 @@ describe('BoardView', () => {
   beforeEach(() => {
     store = mockStore({});
     useSelector.mockImplementation(callback => callback(store.getState()));
-    wrapper = shallowWrappedComponent(<BoardView move={move} />, store);
   });
 
   afterEach(() => {
@@ -28,8 +26,8 @@ describe('BoardView', () => {
   });
 
   describe('bottom player has red pieces', () => {
-    beforeAll(() => {
-      getBottomPlayerIsRed.mockReturnValue(true);
+    beforeEach(() => {
+      wrapper = shallowWrappedComponent(<BoardView move={move} />, store);
     });
 
     test('snapshot', () => {
@@ -38,8 +36,11 @@ describe('BoardView', () => {
   });
 
   describe('bottom player has black pieces', () => {
-    beforeAll(() => {
-      getBottomPlayerIsRed.mockReturnValue(false);
+    beforeEach(() => {
+      wrapper = shallowWrappedComponent(
+        <BoardView teamBlackPOV move={move} />,
+        store,
+      );
     });
 
     test('snapshot', () => {
