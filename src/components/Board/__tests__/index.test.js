@@ -1,7 +1,7 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { Provider, useSelector, useDispatch } from 'react-redux';
 import thunk from 'redux-thunk';
-import { mount, render } from 'enzyme';
+import { mount } from 'enzyme';
 
 import { applyMiddleware, createStore, compose } from 'redux';
 import rootReducer from 'reducers';
@@ -73,9 +73,20 @@ const expectToBeEmptySquare = (wrapper, square) => {
   expect(node).toHaveLength(0);
 };
 
+jest.mock('react-redux');
+
 describe('Board', () => {
-  test('renders without crashing', () => {
-    const wrapper = render(getBoard(getStore()));
+  let store;
+  let wrapper;
+
+  beforeEach(() => {
+    store = mockStore({});
+    useDispatch.mockReturnValue(store.dispatch);
+    useSelector.mockImplementation(callback => callback(store.getState()));
+    wrapper = shallowWrappedComponent(<Board />, store);
+  });
+
+  test('snapshot', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
