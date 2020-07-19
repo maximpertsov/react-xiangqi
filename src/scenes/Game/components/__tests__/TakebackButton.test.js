@@ -1,39 +1,40 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import takeback from 'actions/takeback';
-import * as selectors from 'reducers/selectors';
+import { getCurrentPlayer, getOpponent } from 'reducers/selectors';
 import TakebackButton from 'scenes/Game/components/TakebackButton';
+
+jest.mock('react-redux');
+jest.mock('actions/takeback');
+jest.mock('reducers/selectors');
 
 describe('TakebackButton', () => {
   let store;
   let wrapper;
-  let spys = {};
 
   beforeEach(() => {
-    setupReduxSpys(spys, store);
+    useDispatch.mockReturnValue(store.dispatch);
+    useSelector.mockImplementation(callback => callback(store.getState()));
+    getCurrentPlayer.mockReturnValue({ name: 'currentPlayer' });
+    getOpponent.mockReturnValue({ name: 'opponent' });
 
-    spys.getCurrentPlayer = jest.spyOn(selectors, 'getCurrentPlayer');
-    spys.getCurrentPlayer.mockReturnValue({ name: 'currentPlayer' });
-
-    spys.getOpponent = jest.spyOn(selectors, 'getOpponent');
-    spys.getOpponent.mockReturnValue({ name: 'opponent' });
+    takeback.request.mockReturnValue(() => {});
+    takeback.reject.mockReturnValue(() => {});
+    takeback.accept.mockReturnValue(() => {});
+    takeback.cancel.mockReturnValue(() => {});
 
     wrapper = shallowWrappedComponent(<TakebackButton />, store);
   });
 
   afterEach(() => {
     store.clearActions();
-    restoreSpys(spys);
+    jest.resetAllMocks();
   });
 
   describe('default button', () => {
     beforeAll(() => {
       store = mockStore({});
-    });
-
-    beforeEach(() => {
-      spys.requestTakeback = jest.spyOn(takeback, 'request');
-      spys.requestTakeback.mockReturnValue(() => {});
     });
 
     test('snapshot', () => {
@@ -43,7 +44,7 @@ describe('TakebackButton', () => {
     test('click', () => {
       wrapper.find('Button').simulate('click');
 
-      expect(spys.requestTakeback).toHaveBeenCalledWith({
+      expect(takeback.request).toHaveBeenCalledWith({
         io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
@@ -57,11 +58,6 @@ describe('TakebackButton', () => {
       store = mockStore({ openTakebackOffer: 'currentPlayer' });
     });
 
-    beforeEach(() => {
-      spys.cancelTakeback = jest.spyOn(takeback, 'cancel');
-      spys.cancelTakeback.mockReturnValue(() => {});
-    });
-
     test('snapshot', () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -69,7 +65,7 @@ describe('TakebackButton', () => {
     test('click', () => {
       wrapper.find('Button').simulate('click');
 
-      expect(spys.cancelTakeback).toHaveBeenCalledWith({
+      expect(takeback.cancel).toHaveBeenCalledWith({
         io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
@@ -83,13 +79,6 @@ describe('TakebackButton', () => {
       store = mockStore({ openTakebackOffer: 'opponent' });
     });
 
-    beforeEach(() => {
-      spys.acceptTakeback = jest.spyOn(takeback, 'accept');
-      spys.acceptTakeback.mockReturnValue(() => {});
-      spys.rejectTakeback = jest.spyOn(takeback, 'reject');
-      spys.rejectTakeback.mockReturnValue(() => {});
-    });
-
     test('snapshot', () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -100,7 +89,7 @@ describe('TakebackButton', () => {
         .find({ color: 'green' })
         .simulate('click');
 
-      expect(spys.acceptTakeback).toHaveBeenCalledWith({
+      expect(takeback.accept).toHaveBeenCalledWith({
         io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
@@ -114,7 +103,7 @@ describe('TakebackButton', () => {
         .find({ color: 'red' })
         .simulate('click');
 
-      expect(spys.rejectTakeback).toHaveBeenCalledWith({
+      expect(takeback.reject).toHaveBeenCalledWith({
         io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
