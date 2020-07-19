@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
 import { Button, Icon } from 'semantic-ui-react';
+import isEqual from 'lodash/isEqual';
 
 import actions from 'actions';
 import draw from 'actions/draw';
@@ -8,14 +10,28 @@ import { getCurrentPlayer, getOpponent } from 'reducers';
 
 const TIME_TO_CONFIRM = 2000;
 
+const mapStateToProps = createSelector(
+  state => state,
+
+  state => ({
+    confirmingDraw: state.confirmingDraw,
+    currentPlayer: getCurrentPlayer(state),
+    gameSlug: state.gameSlug,
+    openDrawOffer: state.openDrawOffer,
+    opponent: getOpponent(state),
+  }),
+);
+
 const DrawButton = () => {
   const dispatch = useDispatch();
 
-  const confirmingDraw = useSelector(state => state.confirmingDraw);
-  const currentPlayer = useSelector(state => getCurrentPlayer(state));
-  const gameSlug = useSelector(state => state.gameSlug);
-  const openDrawOffer = useSelector(state => state.openDrawOffer);
-  const opponent = useSelector(state => getOpponent(state));
+  const {
+    confirmingDraw,
+    currentPlayer,
+    gameSlug,
+    openDrawOffer,
+    opponent,
+  } = useSelector(mapStateToProps, isEqual);
 
   const request = () => {
     dispatch(actions.game.confirmingDraw.set(true));
