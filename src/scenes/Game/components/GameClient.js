@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
@@ -24,7 +24,7 @@ const mapStateToProps = createSelector(
   }),
 );
 
-const FETCH_GAME_ON_MESSAGE_TYPES = [
+const FETCH_GAME_ON_MESSAGE_TYPES_OPPONENT = [
   'move',
   'offered_draw',
   'rejected_draw',
@@ -32,10 +32,16 @@ const FETCH_GAME_ON_MESSAGE_TYPES = [
   'canceled_draw',
   'offered_takeback',
   'rejected_takeback',
-  'accepted_takeback',
   'canceled_takeback',
   'resigned',
 ];
+
+const FETCH_GAME_ON_MESSAGE_TYPES_BOTH_PLAYERS = ['accepted_takeback'];
+
+const FETCH_GAME_ON_MESSAGE_TYPES = [].concat(
+  FETCH_GAME_ON_MESSAGE_TYPES_OPPONENT,
+  FETCH_GAME_ON_MESSAGE_TYPES_BOTH_PLAYERS,
+);
 
 const GameClient = () => {
   const dispatch = useDispatch();
@@ -54,14 +60,22 @@ const GameClient = () => {
     dispatch(fetchGame({ gameSlug }));
   }, [dispatch, gameSlug]);
 
+  const needToFetchGame = useCallback(() => {
+    if (!lastMessage) return false;
+    if (!FETCH_GAME_ON_MESSAGE_TYPES.includes(lastMessage.type)) return false;
+    if (lastMessage.payload.gameSlug !== gameSlug) return false;
+    if (FETCH_GAME_ON_MESSAGE_TYPES_BOTH_PLAYERS.includes(lastMessage.type)) {
+      return true;
+    }
+
+    return lastMessage.payload.username !== username;
+  }, [gameSlug, lastMessage, username]);
+
   useEffect(() => {
-    if (!lastMessage) return;
-    if (!FETCH_GAME_ON_MESSAGE_TYPES.includes(lastMessage.type)) return;
-    if (lastMessage.payload.gameSlug !== gameSlug) return;
-    if (lastMessage.payload.username === username) return;
+    if (!needToFetchGame) return;
 
     dispatch(fetchGame({ gameSlug }));
-  }, [dispatch, gameSlug, lastMessage, username]);
+  }, [dispatch, gameSlug, needToFetchGame]);
 
   useEffect(() => {
     if (gameSlug) return;
