@@ -43,14 +43,15 @@ describe('DrawButton', () => {
     });
 
     test('click', () => {
+      expect.assertions(2);
+      jest.useFakeTimers();
+
       wrapper.find('Button').simulate('click');
 
       expect(store.getActions()).toStrictEqual([
         actions.game.confirmingDraw.set(true),
       ]);
-
       jest.runOnlyPendingTimers();
-
       expect(store.getActions()).toStrictEqual([
         actions.game.confirmingDraw.set(true),
         actions.game.confirmingDraw.set(false),
