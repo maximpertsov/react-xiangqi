@@ -30,7 +30,6 @@ describe('DrawButton', () => {
 
   afterEach(() => {
     store.clearActions();
-    jest.resetAllMocks();
   });
 
   describe('default button', () => {
@@ -44,8 +43,6 @@ describe('DrawButton', () => {
 
     test('click', () => {
       expect.assertions(2);
-      jest.useFakeTimers();
-
       wrapper.find('Button').simulate('click');
 
       expect(store.getActions()).toStrictEqual([
