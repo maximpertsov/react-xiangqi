@@ -5,6 +5,7 @@ jest.mock('axios');
 
 describe('resign', () => {
   const store = mockStore({});
+  const io = { send: jest.fn() };
 
   afterEach(() => {
     store.clearActions();
@@ -14,13 +15,16 @@ describe('resign', () => {
     axios.post.mockResolvedValue({});
 
     await store.dispatch(
-      resign.send({ gameSlug: 'ABC123', username: 'user1' }),
+      resign.send({ io, gameSlug: 'ABC123', username: 'user1' }),
     );
-
     expect(axios.post).toHaveBeenCalledWith('game/events', {
       game: 'ABC123',
       name: 'resigned',
       payload: { username: 'user1' },
+    });
+    expect(io.send).toHaveBeenCalledWith({
+      type: 'resigned',
+      payload: { gameSlug: 'ABC123', username: 'user1' },
     });
   });
 });

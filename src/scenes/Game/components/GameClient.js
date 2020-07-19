@@ -34,6 +34,7 @@ const FETCH_GAME_ON_MESSAGE_TYPES = [
   'rejected_takeback',
   'accepted_takeback',
   'canceled_takeback',
+  'resigned',
 ];
 
 const GameClient = () => {

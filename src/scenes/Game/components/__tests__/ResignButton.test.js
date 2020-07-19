@@ -1,27 +1,32 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import actions from 'actions';
 import resign from 'actions/resign';
-import * as selectors from 'reducers/selectors';
+import { getCurrentPlayer, getOpponent } from 'reducers/selectors';
 import ResignButton from 'scenes/Game/components/ResignButton';
+
+jest.mock('react-redux');
+jest.mock('actions/resign');
+jest.mock('reducers/selectors');
 
 describe('ResignButton', () => {
   let store;
   let wrapper;
-  let spys = {};
 
   beforeEach(() => {
-    setupReduxSpys(spys, store);
+    useDispatch.mockReturnValue(store.dispatch);
+    useSelector.mockImplementation(callback => callback(store.getState()));
+    getCurrentPlayer.mockReturnValue({ name: 'currentPlayer' });
+    getOpponent.mockReturnValue({ name: 'opponent' });
 
-    spys.getCurrentPlayer = jest.spyOn(selectors, 'getCurrentPlayer');
-    spys.getCurrentPlayer.mockReturnValue({ name: 'currentPlayer' });
+    resign.send.mockReturnValue(() => {});
 
     wrapper = shallowWrappedComponent(<ResignButton />, store);
   });
 
   afterEach(() => {
     store.clearActions();
-    restoreSpys(spys);
   });
 
   describe('default button', () => {
@@ -54,11 +59,6 @@ describe('ResignButton', () => {
       store = mockStore({ confirmingResign: true });
     });
 
-    beforeEach(() => {
-      spys.sendResign = jest.spyOn(resign, 'send');
-      spys.sendResign.mockReturnValue(() => {});
-    });
-
     test('snapshot', () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -66,7 +66,8 @@ describe('ResignButton', () => {
     test('click', () => {
       wrapper.find('Button').simulate('click');
 
-      expect(spys.sendResign).toHaveBeenCalledWith({
+      expect(resign.send).toHaveBeenCalledWith({
+        io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
       });
