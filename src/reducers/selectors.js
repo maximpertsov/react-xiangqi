@@ -8,6 +8,7 @@ import get from 'lodash/fp/get';
 
 import isEqual from 'lodash/isEqual';
 import keys from 'lodash/keys';
+import last from 'lodash/last';
 
 import * as fromMoves from './moves';
 import * as fromAnimationOffset from './animationOffset';
@@ -152,5 +153,10 @@ export const getTargets = state => {
 /********************/
 export const getIsMoving = ({ animationOffset }) =>
   fromAnimationOffset.getIsMoving(animationOffset);
+
+/******************/
+/***  Messages  ***/
+/******************/
+export const getLastMessage = ({ messages }) => last(messages);
 
 export default {};

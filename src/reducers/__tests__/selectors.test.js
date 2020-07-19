@@ -8,6 +8,7 @@ import {
   getCurrentPlayer,
   getOpponent,
   getBottomPlayerIsRed,
+  getLastMessage,
 } from 'reducers/selectors';
 
 jest.mock('services/logic/fen');
@@ -101,5 +102,24 @@ describe('players', () => {
     expect(getCurrentPlayer(newState)).toStrictEqual({ name: 'bob' });
     expect(getOpponent(newState)).toStrictEqual({ name: 'alice' });
     expect(getBottomPlayerIsRed(newState)).toBe(false);
+  });
+});
+
+describe('messages', () => {
+  const state = {
+    messages: [
+      {
+        type: 'move',
+      },
+      {
+        type: 'joined_lobby_game',
+      },
+    ],
+  };
+
+  test('last message', () => {
+    expect(getLastMessage(state)).toStrictEqual({
+      type: 'joined_lobby_game',
+    });
   });
 });
