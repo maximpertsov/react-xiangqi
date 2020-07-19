@@ -5,9 +5,9 @@ import styled from '@emotion/styled';
 import { Header } from 'semantic-ui-react';
 import flatMap from 'lodash/flatMap';
 import isEqual from 'lodash/isEqual';
-import last from 'lodash/last';
 
 import actions from 'actions';
+import { getLastMessage } from 'reducers/selectors';
 import client from 'services/client';
 
 import LobbyGame from './LobbyGame';
@@ -30,8 +30,8 @@ const mapStateToProps = createSelector(
   [state => state],
 
   state => ({
+    lastMessage: getLastMessage(state),
     lobbyGames: state.lobbyGames,
-    messages: state.messages,
     username: state.username,
   }),
 );
@@ -39,14 +39,12 @@ const mapStateToProps = createSelector(
 const Lobby = () => {
   const dispatch = useDispatch();
 
-  const { lobbyGames, messages, username } = useSelector(
+  const { lastMessage, lobbyGames, username } = useSelector(
     mapStateToProps,
     isEqual,
   );
 
   useEffect(() => {
-    const lastMessage = last(messages);
-
     if (lastMessage && lastMessage.type !== 'updated_lobby_games') {
       return;
     }
@@ -54,7 +52,7 @@ const Lobby = () => {
     client
       .get('game/request')
       .then(response => dispatch(actions.home.lobbyGames.set(response.data)));
-  }, [dispatch, messages, username]);
+  }, [dispatch, lastMessage, username]);
 
   return (
     <Wrapper className="Lobby">

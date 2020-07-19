@@ -2,12 +2,16 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
-import last from 'lodash/last';
 
 import fetchGame from 'actions/fetchGame';
 import fetchPosition from 'actions/fetchPosition';
 import fetchStartingPosition from 'actions/fetchStartingPosition';
-import { getFirstFenWithoutLegalMoves, getHasInitialPlacement } from 'reducers';
+import {
+  getFirstFenWithoutLegalMoves,
+  getHasInitialPlacement,
+  getLastMessage,
+} from 'reducers/selectors';
+
 
 const mapStateToProps = createSelector(
   [state => state],
@@ -16,7 +20,7 @@ const mapStateToProps = createSelector(
     gameSlug: state.gameSlug,
     hasInitialPlacement: getHasInitialPlacement(state),
     firstFenWithoutLegalMoves: getFirstFenWithoutLegalMoves(state),
-    messages: state.messages,
+    lastMessage: getLastMessage(state),
     username: state.username,
   }),
 );
@@ -28,7 +32,7 @@ const GameClient = () => {
     gameSlug,
     hasInitialPlacement,
     firstFenWithoutLegalMoves,
-    messages,
+    lastMessage,
     username,
   } = useSelector(mapStateToProps, isEqual);
 
@@ -39,15 +43,13 @@ const GameClient = () => {
   }, [dispatch, gameSlug]);
 
   useEffect(() => {
-    const lastMessage = last(messages);
-
     if (!lastMessage) return;
     if (lastMessage.type !== 'move') return;
     if (gameSlug !== lastMessage.gameSlug) return;
     if (username === lastMessage.username) return;
 
     dispatch(fetchGame({ gameSlug }));
-  }, [dispatch, gameSlug, messages, username]);
+  }, [dispatch, gameSlug, lastMessage, username]);
 
   useEffect(() => {
     if (gameSlug) return;
