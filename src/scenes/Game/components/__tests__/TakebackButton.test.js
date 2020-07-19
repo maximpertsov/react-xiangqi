@@ -44,6 +44,7 @@ describe('TakebackButton', () => {
       wrapper.find('Button').simulate('click');
 
       expect(spys.requestTakeback).toHaveBeenCalledWith({
+        io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
       });
@@ -69,6 +70,7 @@ describe('TakebackButton', () => {
       wrapper.find('Button').simulate('click');
 
       expect(spys.cancelTakeback).toHaveBeenCalledWith({
+        io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
       });
@@ -99,6 +101,7 @@ describe('TakebackButton', () => {
         .simulate('click');
 
       expect(spys.acceptTakeback).toHaveBeenCalledWith({
+        io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
       });
@@ -112,6 +115,7 @@ describe('TakebackButton', () => {
         .simulate('click');
 
       expect(spys.rejectTakeback).toHaveBeenCalledWith({
+        io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
       });
