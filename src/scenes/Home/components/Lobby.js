@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
-import client from 'services/client';
+import { useDispatch, useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
 import styled from '@emotion/styled';
 import { Header } from 'semantic-ui-react';
-import { useDispatch, useSelector } from 'react-redux';
-import actions from 'actions';
-import { createSelector } from 'reselect';
-import isEqual from 'lodash/isEqual';
 import flatMap from 'lodash/flatMap';
+import isEqual from 'lodash/isEqual';
 import last from 'lodash/last';
+
+import actions from 'actions';
+import client from 'services/client';
 
 import LobbyGame from './LobbyGame';
 
