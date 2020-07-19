@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react';
-import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
+import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import isEqual from 'lodash/isEqual';
 import last from 'lodash/last';
 
 import actions from 'actions';
 import fetchUserGames from 'actions/fetchUserGames';
-
 import Game from 'scenes/Game';
 
 import GameList from './components/GameList';
+import Lobby from './components/Lobby';
 import LoginForm from './components/LoginForm';
 import NewGameMenu from './components/NewGameMenu';
-import Lobby from './components/Lobby';
 
 const mapStateToProps = createSelector(
   [state => state],

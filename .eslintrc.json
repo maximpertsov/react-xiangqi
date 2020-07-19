@@ -16,7 +16,8 @@
   },
   "plugins": [
     "jest",
-    "react-hooks"
+    "react-hooks",
+    "simple-import-sort"
   ],
   "settings": {
     "import/resolver": {
@@ -99,6 +100,22 @@
     "semi": [
       "error",
       "always"
+    ],
+    "simple-import-sort/sort": [
+      "error",
+      {
+        "groups": [
+          [
+            "^react",
+            "^reselect",
+            "^semantic-ui",
+            "^lodash"
+          ],
+          [
+            "^@?\\w"
+          ]
+        ]
+      }
     ],
     "space-before-function-paren": [
       "error",
