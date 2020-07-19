@@ -38,7 +38,6 @@ const DrawButton = () => {
   const request = () => {
     dispatch(actions.game.confirmingDraw.set(true));
     setTimeout(() => {
-      console.log("Timer elapsed");
       dispatch(actions.game.confirmingDraw.set(false));
     }, TIME_TO_CONFIRM);
   };

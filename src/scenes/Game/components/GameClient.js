@@ -30,6 +30,10 @@ const FETCH_GAME_ON_MESSAGE_TYPES = [
   'rejected_draw',
   'accepted_draw',
   'canceled_draw',
+  'offered_takeback',
+  'rejected_takeback',
+  'accepted_takeback',
+  'canceled_takeback',
 ];
 
 const GameClient = () => {
