@@ -1,30 +1,36 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import actions from 'actions';
 import draw from 'actions/draw';
-import * as selectors from 'reducers/selectors';
+import { getCurrentPlayer, getOpponent } from 'reducers/selectors';
 import DrawButton from 'scenes/Game/components/DrawButton';
+
+jest.mock('react-redux');
+jest.mock('actions/draw');
+jest.mock('reducers/selectors');
 
 describe('DrawButton', () => {
   let store;
   let wrapper;
-  let spys = {};
 
   beforeEach(() => {
-    setupReduxSpys(spys, store);
+    useDispatch.mockReturnValue(store.dispatch);
+    useSelector.mockImplementation(callback => callback(store.getState()));
+    getCurrentPlayer.mockReturnValue({ name: 'currentPlayer' });
+    getOpponent.mockReturnValue({ name: 'opponent' });
 
-    spys.getCurrentPlayer = jest.spyOn(selectors, 'getCurrentPlayer');
-    spys.getCurrentPlayer.mockReturnValue({ name: 'currentPlayer' });
-
-    spys.getOpponent = jest.spyOn(selectors, 'getOpponent');
-    spys.getOpponent.mockReturnValue({ name: 'opponent' });
+    draw.request.mockReturnValue(() => {});
+    draw.reject.mockReturnValue(() => {});
+    draw.accept.mockReturnValue(() => {});
+    draw.cancel.mockReturnValue(() => {});
 
     wrapper = shallowWrappedComponent(<DrawButton />, store);
   });
 
   afterEach(() => {
     store.clearActions();
-    restoreSpys(spys);
+    jest.resetAllMocks();
   });
 
   describe('default button', () => {
@@ -57,11 +63,6 @@ describe('DrawButton', () => {
       store = mockStore({ confirmingDraw: true });
     });
 
-    beforeEach(() => {
-      spys.requestDraw = jest.spyOn(draw, 'request');
-      spys.requestDraw.mockReturnValue(() => {});
-    });
-
     test('snapshot', () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -69,7 +70,7 @@ describe('DrawButton', () => {
     test('click', () => {
       wrapper.find('Button').simulate('click');
 
-      expect(spys.requestDraw).toHaveBeenCalledWith({
+      expect(draw.request).toHaveBeenCalledWith({
         io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
@@ -85,11 +86,6 @@ describe('DrawButton', () => {
       store = mockStore({ openDrawOffer: 'currentPlayer' });
     });
 
-    beforeEach(() => {
-      spys.cancelDraw = jest.spyOn(draw, 'cancel');
-      spys.cancelDraw.mockReturnValue(() => {});
-    });
-
     test('snapshot', () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -97,7 +93,7 @@ describe('DrawButton', () => {
     test('click', () => {
       wrapper.find('Button').simulate('click');
 
-      expect(spys.cancelDraw).toHaveBeenCalledWith({
+      expect(draw.cancel).toHaveBeenCalledWith({
         io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
@@ -111,13 +107,6 @@ describe('DrawButton', () => {
       store = mockStore({ openDrawOffer: 'opponent' });
     });
 
-    beforeEach(() => {
-      spys.acceptDraw = jest.spyOn(draw, 'accept');
-      spys.acceptDraw.mockReturnValue(() => {});
-      spys.rejectDraw = jest.spyOn(draw, 'reject');
-      spys.rejectDraw.mockReturnValue(() => {});
-    });
-
     test('snapshot', () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -128,7 +117,7 @@ describe('DrawButton', () => {
         .find({ color: 'green' })
         .simulate('click');
 
-      expect(spys.acceptDraw).toHaveBeenCalledWith({
+      expect(draw.accept).toHaveBeenCalledWith({
         io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
@@ -142,7 +131,7 @@ describe('DrawButton', () => {
         .find({ color: 'red' })
         .simulate('click');
 
-      expect(spys.rejectDraw).toHaveBeenCalledWith({
+      expect(draw.reject).toHaveBeenCalledWith({
         io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
