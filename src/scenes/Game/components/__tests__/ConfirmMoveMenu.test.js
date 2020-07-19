@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { applyMiddleware, compose,createStore } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
 import * as createMoveOnServer from 'actions/createMoveOnServer';
@@ -54,8 +54,9 @@ describe('ConfirmMoveMenu', () => {
     // TODO: Test actions with mockStore
 
     // Calls API
-    expect(spy).toHaveBeenCalledWith(null, {
+    expect(spy).toHaveBeenCalledWith({
       gameSlug: 'ABC123',
+      io: null,
       uci: 'a1a2',
       fen: 'FEN1',
       username: 'user',

@@ -1,4 +1,3 @@
-
 import actions from 'actions';
 import takeback from 'actions/takeback';
 import axios from 'axios';
@@ -7,6 +6,7 @@ jest.mock('axios');
 
 describe('takeback', () => {
   const store = mockStore({});
+  const io = { send: jest.fn() };
 
   afterEach(() => {
     store.clearActions();
@@ -16,7 +16,7 @@ describe('takeback', () => {
     axios.post.mockResolvedValue({});
 
     await store.dispatch(
-      takeback.request({ gameSlug: 'ABC123', username: 'user1' }),
+      takeback.request({ io, gameSlug: 'ABC123', username: 'user1' }),
     );
 
     expect(axios.post).toHaveBeenCalledWith('game/events', {
@@ -24,7 +24,13 @@ describe('takeback', () => {
       name: 'offered_takeback',
       payload: { username: 'user1' },
     });
-
+    expect(io.send).toHaveBeenCalledWith({
+      type: 'offered_takeback',
+      payload: {
+        gameSlug: 'ABC123',
+        username: 'user1',
+      },
+    });
     expect(store.getActions()).toStrictEqual([
       actions.game.openTakebackOffer.set('user1'),
     ]);
@@ -34,7 +40,7 @@ describe('takeback', () => {
     axios.post.mockResolvedValue({});
 
     await store.dispatch(
-      takeback.cancel({ gameSlug: 'ABC123', username: 'user1' }),
+      takeback.cancel({ io, gameSlug: 'ABC123', username: 'user1' }),
     );
 
     expect(axios.post).toHaveBeenCalledWith('game/events', {
@@ -42,7 +48,13 @@ describe('takeback', () => {
       name: 'canceled_takeback',
       payload: { username: 'user1' },
     });
-
+    expect(io.send).toHaveBeenCalledWith({
+      type: 'canceled_takeback',
+      payload: {
+        gameSlug: 'ABC123',
+        username: 'user1',
+      },
+    });
     expect(store.getActions()).toStrictEqual([
       actions.game.openTakebackOffer.set(null),
     ]);
@@ -52,7 +64,7 @@ describe('takeback', () => {
     axios.post.mockResolvedValue({});
 
     await store.dispatch(
-      takeback.reject({ gameSlug: 'ABC123', username: 'user1' }),
+      takeback.reject({ io, gameSlug: 'ABC123', username: 'user1' }),
     );
 
     expect(axios.post).toHaveBeenCalledWith('game/events', {
@@ -60,7 +72,13 @@ describe('takeback', () => {
       name: 'rejected_takeback',
       payload: { username: 'user1' },
     });
-
+    expect(io.send).toHaveBeenCalledWith({
+      type: 'rejected_takeback',
+      payload: {
+        gameSlug: 'ABC123',
+        username: 'user1',
+      },
+    });
     expect(store.getActions()).toStrictEqual([
       actions.game.openTakebackOffer.set(null),
     ]);
@@ -70,7 +88,7 @@ describe('takeback', () => {
     axios.post.mockResolvedValue({});
 
     await store.dispatch(
-      takeback.accept({ gameSlug: 'ABC123', username: 'user1' }),
+      takeback.accept({ io, gameSlug: 'ABC123', username: 'user1' }),
     );
 
     expect(axios.post).toHaveBeenCalledWith('game/events', {
@@ -78,7 +96,13 @@ describe('takeback', () => {
       name: 'accepted_takeback',
       payload: { username: 'user1' },
     });
-
+    expect(io.send).toHaveBeenCalledWith({
+      type: 'accepted_takeback',
+      payload: {
+        gameSlug: 'ABC123',
+        username: 'user1',
+      },
+    });
     expect(store.getActions()).toStrictEqual([
       actions.game.openTakebackOffer.set(null),
     ]);

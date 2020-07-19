@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Icon } from 'semantic-ui-react';
 
 import takeback from 'actions/takeback';
 import { getCurrentPlayer, getOpponent } from 'reducers';
+import { WebSocketContext } from 'services/WebSocketProvider';
 
 const TakebackButton = () => {
   const dispatch = useDispatch();
+  const io = useContext(WebSocketContext);
 
   const currentPlayer = useSelector(state => getCurrentPlayer(state));
   const gameSlug = useSelector(state => state.gameSlug);
@@ -14,19 +16,19 @@ const TakebackButton = () => {
   const opponent = useSelector(state => getOpponent(state));
 
   const request = () => {
-    dispatch(takeback.request({ gameSlug, username: currentPlayer.name }));
+    dispatch(takeback.request({ io, gameSlug, username: currentPlayer.name }));
   };
 
   const reject = () => {
-    dispatch(takeback.reject({ gameSlug, username: currentPlayer.name }));
+    dispatch(takeback.reject({ io, gameSlug, username: currentPlayer.name }));
   };
 
   const cancel = () => {
-    dispatch(takeback.cancel({ gameSlug, username: currentPlayer.name }));
+    dispatch(takeback.cancel({ io, gameSlug, username: currentPlayer.name }));
   };
 
   const accept = () => {
-    dispatch(takeback.accept({ gameSlug, username: currentPlayer.name }));
+    dispatch(takeback.accept({ io, gameSlug, username: currentPlayer.name }));
   };
 
   const renderButton = () => (

@@ -1,21 +1,39 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
 import { Button, Icon } from 'semantic-ui-react';
+import isEqual from 'lodash/isEqual';
 
 import actions from 'actions';
 import draw from 'actions/draw';
 import { getCurrentPlayer, getOpponent } from 'reducers';
+import { WebSocketContext } from 'services/WebSocketProvider';
 
 const TIME_TO_CONFIRM = 2000;
 
+const mapStateToProps = createSelector(
+  state => state,
+
+  state => ({
+    confirmingDraw: state.confirmingDraw,
+    currentPlayer: getCurrentPlayer(state),
+    gameSlug: state.gameSlug,
+    openDrawOffer: state.openDrawOffer,
+    opponent: getOpponent(state),
+  }),
+);
+
 const DrawButton = () => {
   const dispatch = useDispatch();
+  const io = useContext(WebSocketContext);
 
-  const confirmingDraw = useSelector(state => state.confirmingDraw);
-  const currentPlayer = useSelector(state => getCurrentPlayer(state));
-  const gameSlug = useSelector(state => state.gameSlug);
-  const openDrawOffer = useSelector(state => state.openDrawOffer);
-  const opponent = useSelector(state => getOpponent(state));
+  const {
+    confirmingDraw,
+    currentPlayer,
+    gameSlug,
+    openDrawOffer,
+    opponent,
+  } = useSelector(mapStateToProps, isEqual);
 
   const request = () => {
     dispatch(actions.game.confirmingDraw.set(true));
@@ -25,20 +43,20 @@ const DrawButton = () => {
   };
 
   const confirmRequest = () => {
-    dispatch(draw.request({ gameSlug, username: currentPlayer.name }));
+    dispatch(draw.request({ gameSlug, io, username: currentPlayer.name }));
     dispatch(actions.game.confirmingDraw.set(false));
   };
 
   const reject = () => {
-    dispatch(draw.reject({ gameSlug, username: currentPlayer.name }));
+    dispatch(draw.reject({ gameSlug, io, username: currentPlayer.name }));
   };
 
   const cancel = () => {
-    dispatch(draw.cancel({ gameSlug, username: currentPlayer.name }));
+    dispatch(draw.cancel({ gameSlug, io, username: currentPlayer.name }));
   };
 
   const accept = () => {
-    dispatch(draw.accept({ gameSlug, username: currentPlayer.name }));
+    dispatch(draw.accept({ gameSlug, io, username: currentPlayer.name }));
   };
 
   const renderButton = () => (

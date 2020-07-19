@@ -23,8 +23,9 @@ const ConfirmMoveMenu = () => {
 
   const confirmMove = useCallback(async () => {
     dispatch(
-      createMoveOnServer(io, {
+      createMoveOnServer({
         gameSlug,
+        io,
         uci: lastMove.uci,
         fen: lastMove.fen,
         username,

@@ -11,15 +11,18 @@ const postMove = ({ gameSlug, uci, fen, username }) => {
   return client.post(`game/events`, payload);
 };
 
-const createMoveOnServer = (
+const createMoveOnServer = ({
+  gameSlug,
   io,
-  { gameSlug, uci, fen, username },
-) => async dispatch => {
+  uci,
+  fen,
+  username,
+}) => async dispatch => {
   if (gameSlug === null) return;
 
   return postMove({ gameSlug, uci, fen, username })
     .then(() => {
-      io.send({ gameSlug, type: 'move', username });
+      io.send({ type: 'move', payload: { gameSlug, username } });
     })
     .catch(() => {
       dispatch(actions.game.moves.remove(fen));

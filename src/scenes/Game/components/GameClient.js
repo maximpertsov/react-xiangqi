@@ -1,13 +1,16 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
-import last from 'lodash/last';
 
 import fetchGame from 'actions/fetchGame';
 import fetchPosition from 'actions/fetchPosition';
 import fetchStartingPosition from 'actions/fetchStartingPosition';
-import { getFirstFenWithoutLegalMoves, getHasInitialPlacement } from 'reducers';
+import {
+  getFirstFenWithoutLegalMoves,
+  getHasInitialPlacement,
+  getLastMessage,
+} from 'reducers/selectors';
 
 const mapStateToProps = createSelector(
   [state => state],
@@ -16,9 +19,28 @@ const mapStateToProps = createSelector(
     gameSlug: state.gameSlug,
     hasInitialPlacement: getHasInitialPlacement(state),
     firstFenWithoutLegalMoves: getFirstFenWithoutLegalMoves(state),
-    messages: state.messages,
+    lastMessage: getLastMessage(state),
     username: state.username,
   }),
+);
+
+const FETCH_GAME_ON_MESSAGE_TYPES_OPPONENT = [
+  'move',
+  'offered_draw',
+  'rejected_draw',
+  'accepted_draw',
+  'canceled_draw',
+  'offered_takeback',
+  'rejected_takeback',
+  'canceled_takeback',
+  'resigned',
+];
+
+const FETCH_GAME_ON_MESSAGE_TYPES_BOTH_PLAYERS = ['accepted_takeback'];
+
+const FETCH_GAME_ON_MESSAGE_TYPES = [].concat(
+  FETCH_GAME_ON_MESSAGE_TYPES_OPPONENT,
+  FETCH_GAME_ON_MESSAGE_TYPES_BOTH_PLAYERS,
 );
 
 const GameClient = () => {
@@ -28,7 +50,7 @@ const GameClient = () => {
     gameSlug,
     hasInitialPlacement,
     firstFenWithoutLegalMoves,
-    messages,
+    lastMessage,
     username,
   } = useSelector(mapStateToProps, isEqual);
 
@@ -38,16 +60,22 @@ const GameClient = () => {
     dispatch(fetchGame({ gameSlug }));
   }, [dispatch, gameSlug]);
 
-  useEffect(() => {
-    const lastMessage = last(messages);
+  const needToFetchGame = useCallback(() => {
+    if (!lastMessage) return false;
+    if (!FETCH_GAME_ON_MESSAGE_TYPES.includes(lastMessage.type)) return false;
+    if (lastMessage.payload.gameSlug !== gameSlug) return false;
+    if (FETCH_GAME_ON_MESSAGE_TYPES_BOTH_PLAYERS.includes(lastMessage.type)) {
+      return true;
+    }
 
-    if (!lastMessage) return;
-    if (lastMessage.type !== 'move') return;
-    if (gameSlug !== lastMessage.gameSlug) return;
-    if (username === lastMessage.username) return;
+    return lastMessage.payload.username !== username;
+  }, [gameSlug, lastMessage, username]);
+
+  useEffect(() => {
+    if (!needToFetchGame) return;
 
     dispatch(fetchGame({ gameSlug }));
-  }, [dispatch, gameSlug, messages, username]);
+  }, [dispatch, gameSlug, needToFetchGame]);
 
   useEffect(() => {
     if (gameSlug) return;

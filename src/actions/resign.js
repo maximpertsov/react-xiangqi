@@ -1,18 +1,28 @@
 import client from 'services/client';
 
-const postResignEvent = ({ gameSlug, username }) => {
+const EVENT_TYPE = 'resigned';
+
+const postResignEvent = ({ io, gameSlug, username }) => {
   if (!gameSlug) return;
 
-  const payload = {
-    game: gameSlug,
-    name: 'resigned',
-    payload: { username },
-  };
-  client.post(`game/events`, payload);
+  client
+    .post(`game/events`, {
+      game: gameSlug,
+      name: EVENT_TYPE,
+      payload: { username },
+    })
+    .then(() => {
+      io.send({
+        type: EVENT_TYPE,
+        payload: {
+          gameSlug,
+          username,
+        },
+      });
+    });
 };
 
-const send = ({ gameSlug, username }) => () => {
-  postResignEvent({ gameSlug, username });
-};
+const send = ({ io, gameSlug, username }) => () =>
+  postResignEvent({ io, gameSlug, username });
 
 export default { send };

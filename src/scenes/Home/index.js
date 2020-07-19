@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import isEqual from 'lodash/isEqual';
-import last from 'lodash/last';
 
 import actions from 'actions';
 import fetchUserGames from 'actions/fetchUserGames';
+import { getLastMessage } from 'reducers/selectors';
 import Game from 'scenes/Game';
 
 import GameList from './components/GameList';
@@ -18,7 +18,7 @@ const mapStateToProps = createSelector(
   [state => state],
 
   state => ({
-    messages: state.messages,
+    lastMessage: getLastMessage(state),
     showGame: state.showGame,
     username: state.username,
   }),
@@ -27,7 +27,7 @@ const mapStateToProps = createSelector(
 const Home = () => {
   const dispatch = useDispatch();
 
-  const { messages, showGame, username } = useSelector(
+  const { lastMessage, showGame, username } = useSelector(
     mapStateToProps,
     isEqual,
   );
@@ -37,15 +37,13 @@ const Home = () => {
   }, [dispatch, username]);
 
   useEffect(() => {
-    const lastMessage = last(messages);
-
     if (!lastMessage) return;
     if (lastMessage.type !== 'joined_lobby_game') return;
     if (!lastMessage.players.includes(username)) return;
 
     dispatch(actions.game.slug.set(lastMessage.game));
     dispatch(actions.home.showGame.set(true));
-  }, [dispatch, messages, username]);
+  }, [dispatch, lastMessage, username]);
 
   const renderMenu = () => (
     <Container textAlign="center">
