@@ -12,7 +12,6 @@ import {
   getLastMessage,
 } from 'reducers/selectors';
 
-
 const mapStateToProps = createSelector(
   [state => state],
 
@@ -24,6 +23,14 @@ const mapStateToProps = createSelector(
     username: state.username,
   }),
 );
+
+const FETCH_GAME_ON_MESSAGE_TYPES = [
+  'move',
+  'offered_draw',
+  'rejected_draw',
+  'accepted_draw',
+  'canceled_draw',
+];
 
 const GameClient = () => {
   const dispatch = useDispatch();
@@ -44,9 +51,9 @@ const GameClient = () => {
 
   useEffect(() => {
     if (!lastMessage) return;
-    if (lastMessage.type !== 'move') return;
-    if (gameSlug !== lastMessage.gameSlug) return;
-    if (username === lastMessage.username) return;
+    if (!FETCH_GAME_ON_MESSAGE_TYPES.includes(lastMessage.type)) return;
+    if (lastMessage.payload.gameSlug !== gameSlug) return;
+    if (lastMessage.payload.username === username) return;
 
     dispatch(fetchGame({ gameSlug }));
   }, [dispatch, gameSlug, lastMessage, username]);

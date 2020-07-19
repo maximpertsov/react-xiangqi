@@ -12,7 +12,7 @@ describe('create move on server', () => {
 
   const subject = async gameSlug => {
     await store.dispatch(
-      createMoveOnServer(io, { gameSlug, username, ...move }),
+      createMoveOnServer({ gameSlug, io, username, ...move }),
     );
   };
 
