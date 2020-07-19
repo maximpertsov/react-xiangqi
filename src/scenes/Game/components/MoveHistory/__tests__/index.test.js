@@ -1,4 +1,5 @@
 import React from 'react';
+
 import MoveHistory from 'scenes/Game/components/MoveHistory';
 
 describe('MoveHistory', () => {

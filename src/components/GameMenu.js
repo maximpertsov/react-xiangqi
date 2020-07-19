@@ -1,7 +1,8 @@
 import React, { Children } from 'react';
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
+
 import { MediaQuery, WidthSize } from 'commonStyles';
+import PropTypes from 'prop-types';
 
 const Wrapper = styled.div`
   align-items: center;

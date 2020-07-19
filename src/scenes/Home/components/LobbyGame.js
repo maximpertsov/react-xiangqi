@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 
+import PropTypes from 'prop-types';
 import client from 'services/client';
 import { WebSocketContext } from 'services/WebSocketProvider';
 

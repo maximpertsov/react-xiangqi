@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+
+import PropTypes from 'prop-types';
 
 const Wrapper = styled.div`
   flex: 0 0 auto;

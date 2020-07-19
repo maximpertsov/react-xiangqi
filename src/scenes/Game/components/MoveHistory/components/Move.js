@@ -1,15 +1,14 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-
 import isEqual from 'lodash/isEqual';
 
 import actions from 'actions';
-import { decodeFen } from 'services/logic/fen';
-import { getMovedPiece } from 'services/logic/move';
+import PropTypes from 'prop-types';
 import { getSelectedMove } from 'reducers';
 import { Team } from 'services/logic/constants';
+import { decodeFen } from 'services/logic/fen';
+import { getMovedPiece } from 'services/logic/move';
 
 const Wrapper = styled.span(({ isSelected, piece }) => ({
   color: 'RNBAKCP'.includes(piece) ? Team.RED : Team.BLACK,

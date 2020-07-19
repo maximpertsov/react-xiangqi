@@ -1,8 +1,9 @@
-import actions from 'actions';
-import reducer from 'reducers';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import toPairs from 'lodash/toPairs';
+
+import actions from 'actions';
+import reducer from 'reducers';
 
 const tables = {
   animationOffset: [

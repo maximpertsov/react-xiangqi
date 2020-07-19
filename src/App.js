@@ -1,6 +1,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import 'semantic-ui-css/semantic.min.css';
+
 import React from 'react';
 import styled from '@emotion/styled';
 

@@ -1,4 +1,4 @@
-import { FILE_COUNT, BLACK_PIECES, RED_PIECES } from './constants';
+import { BLACK_PIECES, FILE_COUNT, RED_PIECES } from './constants';
 
 // Board square locators
 export const getSlot = (rank, file) => file + rank * FILE_COUNT;

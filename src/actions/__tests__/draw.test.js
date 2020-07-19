@@ -1,6 +1,6 @@
-import axios from 'axios';
 import actions from 'actions';
 import draw from 'actions/draw';
+import axios from 'axios';
 
 jest.mock('axios');
 

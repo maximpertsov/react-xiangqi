@@ -1,6 +1,6 @@
-import client, { isSuccess } from 'services/client';
 import authenticate from 'actions/authenticate';
 import updateLoginForm from 'actions/updateLoginForm';
+import client, { isSuccess } from 'services/client';
 
 const login = ({ username, password }) => async dispatch => {
   try {

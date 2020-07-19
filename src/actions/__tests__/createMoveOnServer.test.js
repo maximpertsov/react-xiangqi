@@ -1,6 +1,6 @@
-import axios from 'axios';
-import createMoveOnServer from 'actions/createMoveOnServer';
 import actions from 'actions';
+import createMoveOnServer from 'actions/createMoveOnServer';
+import axios from 'axios';
 
 jest.mock('axios');
 

@@ -1,6 +1,7 @@
 import flatten from 'lodash/flatten';
+
 import { decodeFen } from 'services/logic/fen';
-import { movePiece, getMovingPiece, getMovedPiece } from 'services/logic/move';
+import { getMovedPiece,getMovingPiece, movePiece } from 'services/logic/move';
 
 describe('placement moves', () => {
   const uci = 'a10a9';

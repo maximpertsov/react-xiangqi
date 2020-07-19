@@ -1,8 +1,8 @@
 import React from 'react';
-import * as selectors from 'reducers/selectors';
 
 import actions from 'actions';
 import draw from 'actions/draw';
+import * as selectors from 'reducers/selectors';
 import DrawButton from 'scenes/Game/components/DrawButton';
 
 describe('DrawButton', () => {

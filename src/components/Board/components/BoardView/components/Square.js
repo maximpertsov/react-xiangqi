@@ -1,19 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 
+import PropTypes from 'prop-types';
+import { getIsMoving, getTargets } from 'reducers';
 import { activeKing, getPiece, isOccupied } from 'services/logic/fen';
 import { uciToSquares } from 'services/logic/square';
-import { getIsMoving, getTargets } from 'reducers';
-import SquareView from './SquareView';
-import Piece from './Piece';
+
 import DropIndicator from './DropIndicator';
-import LastMoveIndicator from './LastMoveIndicator';
 import KingInCheckIndicator from './KingInCheckIndicator';
+import LastMoveIndicator from './LastMoveIndicator';
+import Piece from './Piece';
 import SelectionIndicator from './SelectionIndicator';
+import SquareView from './SquareView';
 import TargetIndicator from './TargetIndicator';
 
 const getPieceCode = ({ move, square }) => {

@@ -3,10 +3,9 @@ import reducer, {
   getFirstFenWithoutLegalMoves,
   getHasInitialPlacement,
   getLastMove,
-  getSecondToLastMove,
   getNextMoveTeam,
+  getSecondToLastMove,
 } from 'reducers/moves';
-
 import { Team } from 'services/logic/constants';
 
 jest.mock('services/logic/fen');

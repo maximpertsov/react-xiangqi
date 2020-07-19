@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import useEventListener from '@use-it/event-listener';
 import { Button, Icon, Label, Segment } from 'semantic-ui-react';
 
+import useEventListener from '@use-it/event-listener';
 import GameMenu from 'components/GameMenu';
+import PropTypes from 'prop-types';
 
 const ConfirmMenu = ({ label, yesHandler, noHandler, show, disabled }) => {
   useEventListener('keydown', ({ key }) => {

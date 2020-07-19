@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
-
 import isEqual from 'lodash/isEqual';
 import last from 'lodash/last';
 
 import fetchGame from 'actions/fetchGame';
-import fetchStartingPosition from 'actions/fetchStartingPosition';
 import fetchPosition from 'actions/fetchPosition';
-import { getHasInitialPlacement, getFirstFenWithoutLegalMoves } from 'reducers';
+import fetchStartingPosition from 'actions/fetchStartingPosition';
+import { getFirstFenWithoutLegalMoves, getHasInitialPlacement } from 'reducers';
 
 const mapStateToProps = createSelector(
   [state => state],

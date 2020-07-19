@@ -1,11 +1,11 @@
-import axios from 'axios';
-
 import _camelCase from 'lodash/camelCase';
+import fromPairs from 'lodash/fromPairs';
 import inRange from 'lodash/inRange';
 import isArray from 'lodash/isArray';
 import isPlainObject from 'lodash/isPlainObject';
-import fromPairs from 'lodash/fromPairs';
 import toPairs from 'lodash/toPairs';
+
+import axios from 'axios';
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_API_URL;
 axios.defaults.timeout = 1000;

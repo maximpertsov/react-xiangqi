@@ -1,7 +1,7 @@
 import React from 'react';
-import * as selectors from 'reducers/selectors';
 
 import takeback from 'actions/takeback';
+import * as selectors from 'reducers/selectors';
 import TakebackButton from 'scenes/Game/components/TakebackButton';
 
 describe('TakebackButton', () => {

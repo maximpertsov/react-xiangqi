@@ -1,14 +1,13 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import { mount, render } from 'enzyme';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
-
-import { applyMiddleware, createStore, compose } from 'redux';
-import rootReducer from 'reducers';
+import { Provider } from 'react-redux';
+import { applyMiddleware, compose,createStore } from 'redux';
+import thunk from 'redux-thunk';
 
 import Board from 'components/Board';
+import { mount, render } from 'enzyme';
+import rootReducer from 'reducers';
 
 import initialPlacementOnly from './fixtures/initialPlacementOnly.json';
 

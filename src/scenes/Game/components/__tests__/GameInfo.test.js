@@ -1,9 +1,9 @@
 import React from 'react';
 import * as redux from 'react-redux';
-import { shallow } from 'enzyme';
 import values from 'lodash/values';
-import * as selectors from 'reducers/selectors';
 
+import { shallow } from 'enzyme';
+import * as selectors from 'reducers/selectors';
 import GameInfo from 'scenes/Game/components/GameInfo';
 
 const defaultState = {

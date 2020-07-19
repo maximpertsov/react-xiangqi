@@ -1,7 +1,6 @@
-import jwtDecode from 'jwt-decode';
-
 import actions from 'actions';
 import updateLoginForm from 'actions/updateLoginForm';
+import jwtDecode from 'jwt-decode';
 import client, { isSuccess } from 'services/client';
 
 const handleAuthenticationSuccess = (dispatch, { token }) => {

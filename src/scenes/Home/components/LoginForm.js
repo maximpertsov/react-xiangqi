@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Button, Form } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
+import { Button, Form } from 'semantic-ui-react';
 import isEqual from 'lodash/isEqual';
 
 import authenticate from 'actions/authenticate';
