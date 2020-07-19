@@ -108,6 +108,7 @@
           [
             "^react",
             "^reselect",
+            "^@emotion",
             "^semantic-ui",
             "^lodash"
           ],
