@@ -70,6 +70,7 @@ describe('DrawButton', () => {
       wrapper.find('Button').simulate('click');
 
       expect(spys.requestDraw).toHaveBeenCalledWith({
+        io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
       });
@@ -97,6 +98,7 @@ describe('DrawButton', () => {
       wrapper.find('Button').simulate('click');
 
       expect(spys.cancelDraw).toHaveBeenCalledWith({
+        io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
       });
@@ -127,6 +129,7 @@ describe('DrawButton', () => {
         .simulate('click');
 
       expect(spys.acceptDraw).toHaveBeenCalledWith({
+        io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
       });
@@ -140,6 +143,7 @@ describe('DrawButton', () => {
         .simulate('click');
 
       expect(spys.rejectDraw).toHaveBeenCalledWith({
+        io: null,
         gameSlug: undefined,
         username: 'currentPlayer',
       });

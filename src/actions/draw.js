@@ -1,39 +1,48 @@
 import actions from 'actions';
 import client from 'services/client';
 
-const postDrawEvent = ({ event_name, gameSlug, username }) => {
+const postDrawEvent = ({ event_name, gameSlug, io, username }) => {
   if (!gameSlug) return;
 
-  const payload = {
-    game: gameSlug,
-    name: event_name,
-    payload: { username },
-  };
-  client.post(`game/events`, payload);
+  client
+    .post(`game/events`, {
+      game: gameSlug,
+      name: event_name,
+      payload: { username },
+    })
+    .then(() => {
+      io.send({
+        type: event_name,
+        payload: {
+          gameSlug,
+          username,
+        },
+      });
+    });
 };
 
-const request = ({ gameSlug, username }) => dispatch => {
+const request = ({ gameSlug, io, username }) => dispatch => {
   dispatch(actions.game.openDrawOffer.set(username));
 
-  postDrawEvent({ event_name: 'offered_draw', gameSlug, username });
+  return postDrawEvent({ event_name: 'offered_draw', gameSlug, io, username });
 };
 
-const reject = ({ gameSlug, username }) => dispatch => {
+const reject = ({ gameSlug, io, username }) => dispatch => {
   dispatch(actions.game.openDrawOffer.set(null));
 
-  postDrawEvent({ event_name: 'rejected_draw', gameSlug, username });
+  return postDrawEvent({ event_name: 'rejected_draw', gameSlug, io, username });
 };
 
-const cancel = ({ gameSlug, username }) => dispatch => {
+const cancel = ({ gameSlug, io, username }) => dispatch => {
   dispatch(actions.game.openDrawOffer.set(null));
 
-  postDrawEvent({ event_name: 'canceled_draw', gameSlug, username });
+  return postDrawEvent({ event_name: 'canceled_draw', gameSlug, io, username });
 };
 
-const accept = ({ gameSlug, username }) => dispatch => {
+const accept = ({ gameSlug, io, username }) => dispatch => {
   dispatch(actions.game.openDrawOffer.set(null));
 
-  postDrawEvent({ event_name: 'accepted_draw', gameSlug, username });
+  return postDrawEvent({ event_name: 'accepted_draw', gameSlug, io, username });
 };
 
 export default {
