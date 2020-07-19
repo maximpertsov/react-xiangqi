@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import { getHasInitialPlacement } from 'reducers';
 
 import GameClient from './components/GameClient';

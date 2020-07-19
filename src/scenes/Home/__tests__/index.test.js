@@ -1,11 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { applyMiddleware, compose,createStore } from 'redux';
 import thunk from 'redux-thunk';
+
 import { mount } from 'enzyme';
-
-import { applyMiddleware, createStore, compose } from 'redux';
 import rootReducer from 'reducers';
-
 import Home from 'scenes/Home';
 
 const initialState = {

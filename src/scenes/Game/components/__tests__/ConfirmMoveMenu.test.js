@@ -1,12 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { applyMiddleware, compose,createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { mount, render } from 'enzyme';
 
-import { applyMiddleware, createStore, compose } from 'redux';
-import rootReducer from 'reducers';
 import * as createMoveOnServer from 'actions/createMoveOnServer';
-
+import { mount, render } from 'enzyme';
+import rootReducer from 'reducers';
 import ConfirmMoveMenu from 'scenes/Game/components/ConfirmMoveMenu';
 
 const initialState = {

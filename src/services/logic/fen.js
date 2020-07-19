@@ -1,5 +1,6 @@
-import zipObject from 'lodash/zipObject';
 import update from 'lodash/update';
+import zipObject from 'lodash/zipObject';
+
 import { Team } from 'services/logic/constants';
 import { decodeSquare, encodeSquare } from 'services/logic/square';
 import { sameTeam as sameTeamPieces } from 'services/logic/utils';

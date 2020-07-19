@@ -1,10 +1,10 @@
 import {
-  encodeSquare,
-  encodeUci,
-  uciToSquares,
-  squaresToUci,
   decodeSquare,
   decodeUci,
+  encodeSquare,
+  encodeUci,
+  squaresToUci,
+  uciToSquares,
 } from 'services/logic/square';
 
 test('convert square to slot', () => {

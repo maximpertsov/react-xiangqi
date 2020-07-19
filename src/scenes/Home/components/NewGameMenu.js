@@ -1,15 +1,14 @@
 import React, { useContext } from 'react';
-import { Button, Header, Icon, Popup } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
+import styled from '@emotion/styled';
+import { Button, Header, Icon, Popup } from 'semantic-ui-react';
+import find from 'lodash/find';
 import isEqual from 'lodash/isEqual';
 
-import { Team } from 'services/logic/constants';
 import client from 'services/client';
+import { Team } from 'services/logic/constants';
 import { WebSocketContext } from 'services/WebSocketProvider';
-
-import find from 'lodash/find';
-import styled from '@emotion/styled';
 
 const Wrapper = styled.div`
   border: 1px #ccc solid;

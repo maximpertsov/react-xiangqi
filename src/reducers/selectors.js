@@ -1,17 +1,16 @@
-import { Team } from 'services/logic/constants';
-import { uciToSquares } from 'services/logic/square';
-import { moveOrder } from 'services/logic/fen';
-
 import find from 'lodash/fp/find';
 import flow from 'lodash/fp/flow';
 import get from 'lodash/fp/get';
-
 import isEqual from 'lodash/isEqual';
 import keys from 'lodash/keys';
 import last from 'lodash/last';
 
-import * as fromMoves from './moves';
+import { Team } from 'services/logic/constants';
+import { moveOrder } from 'services/logic/fen';
+import { uciToSquares } from 'services/logic/square';
+
 import * as fromAnimationOffset from './animationOffset';
+import * as fromMoves from './moves';
 
 /***************/
 /***  Moves  ***/

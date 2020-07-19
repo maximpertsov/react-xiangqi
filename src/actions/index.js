@@ -1,4 +1,5 @@
 import { createActions } from 'redux-actions';
+
 import { Team } from 'services/logic/constants';
 
 export default createActions({

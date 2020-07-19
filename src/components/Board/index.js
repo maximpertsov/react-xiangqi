@@ -4,9 +4,9 @@ import { createSelector } from 'reselect';
 import get from 'lodash/get';
 import isEqual from 'lodash/isEqual';
 
-import makeMove from 'actions/makeMove';
 import actions from 'actions';
 import animateMove from 'actions/animateMove';
+import makeMove from 'actions/makeMove';
 import { getBottomPlayerIsRed, getLegalMoves } from 'reducers';
 import { isOccupied, sameTeam } from 'services/logic/fen';
 import { squaresToUci } from 'services/logic/square';

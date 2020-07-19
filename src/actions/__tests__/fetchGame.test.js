@@ -1,6 +1,6 @@
-import axios from 'axios';
 import actions from 'actions';
 import fetchGame from 'actions/fetchGame';
+import axios from 'axios';
 
 jest.mock('axios');
 

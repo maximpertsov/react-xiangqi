@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useEventListener from '@use-it/event-listener';
 import isEqual from 'lodash/isEqual';
 import sample from 'lodash/sample';
 import toPairs from 'lodash/toPairs';
 
-import makeMove from 'actions/makeMove';
+import useEventListener from '@use-it/event-listener';
 import actions from 'actions';
+import makeMove from 'actions/makeMove';
 import {
   getLastMove,
-  getPreviousMoveFen,
   getNextMoveFen,
   getNextMoveTeam,
+  getPreviousMoveFen,
 } from 'reducers';
 
 const GameInteraction = () => {

@@ -1,9 +1,9 @@
-import axios from 'axios';
 import values from 'lodash/values';
 
-import login from 'actions/login';
 import * as authenticate from 'actions/authenticate';
+import login from 'actions/login';
 import * as updateLoginForm from 'actions/updateLoginForm';
+import axios from 'axios';
 
 jest.mock('axios');
 

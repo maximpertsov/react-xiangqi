@@ -1,5 +1,5 @@
-import client from 'services/client';
 import actions from 'actions';
+import client from 'services/client';
 
 const fetchStartingPosition = () => async dispatch => {
   const { data } = await client.post('starting-position');

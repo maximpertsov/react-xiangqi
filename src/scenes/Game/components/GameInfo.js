@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
-import styled from '@emotion/styled';
-import { createSelector } from 'reselect';
 import { useSelector } from 'react-redux';
-import { getNextMovePlayer, getCurrentPlayer } from 'reducers';
-
+import { createSelector } from 'reselect';
+import styled from '@emotion/styled';
 import isEqual from 'lodash/isEqual';
 
+import { getCurrentPlayer,getNextMovePlayer } from 'reducers';
 import { Team } from 'services/logic/constants';
 
 const Wrapper = styled.div`

@@ -1,23 +1,24 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
-import isEqual from 'lodash/isEqual';
+import styled from '@emotion/styled';
 import { Dimmer, Loader, Segment } from 'semantic-ui-react';
+import isEqual from 'lodash/isEqual';
 
+import Board from 'components/Board';
+import GameMenu from 'components/GameMenu';
 import {
   getCurrentPlayer,
   getHasInitialPlacement,
   getOpponent,
 } from 'reducers';
-import Board from 'components/Board';
-import GameMenu from 'components/GameMenu';
+
 import ConfirmMoveMenu from './ConfirmMoveMenu';
+import DrawButton from './DrawButton';
 import GameInfo from './GameInfo';
 import MoveHistory from './MoveHistory';
 import Player from './Player';
-import TakebackButton from './TakebackButton';
-import DrawButton from './DrawButton';
 import ResignButton from './ResignButton';
+import TakebackButton from './TakebackButton';
 
 const mapStateToProps = state => ({
   currentPlayer: getCurrentPlayer(state),

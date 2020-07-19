@@ -105,8 +105,10 @@
       "error",
       {
         "groups": [
+          ["^\\u0000"],
           [
             "^react",
+            "^redux",
             "^reselect",
             "^@emotion",
             "^semantic-ui",

@@ -1,5 +1,5 @@
-import client from 'services/client';
 import actions from 'actions';
+import client from 'services/client';
 
 const fetchUserGames = ({ username }) => async dispatch => {
   if (username === null) return;

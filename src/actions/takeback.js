@@ -1,5 +1,5 @@
-import client from 'services/client';
 import actions from 'actions';
+import client from 'services/client';
 
 const postTakebackEvent = ({ event_name, gameSlug, username }) => {
   if (!gameSlug) return;

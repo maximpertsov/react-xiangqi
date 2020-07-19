@@ -1,5 +1,5 @@
-import client from 'services/client';
 import actions from 'actions';
+import client from 'services/client';
 
 const postDrawEvent = ({ event_name, gameSlug, username }) => {
   if (!gameSlug) return;

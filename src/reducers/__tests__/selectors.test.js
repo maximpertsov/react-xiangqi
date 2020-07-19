@@ -1,15 +1,15 @@
-import { Team } from 'services/logic/constants';
 import {
-  getSelectedMove,
-  getPreviousMoveFen,
+  getBottomPlayerIsRed,
+  getCurrentPlayer,
+  getLastMessage,
   getNextMoveFen,
   getNextMovePlayer,
-  getUserTeam,
-  getCurrentPlayer,
   getOpponent,
-  getBottomPlayerIsRed,
-  getLastMessage,
+  getPreviousMoveFen,
+  getSelectedMove,
+  getUserTeam,
 } from 'reducers/selectors';
+import { Team } from 'services/logic/constants';
 
 jest.mock('services/logic/fen');
 

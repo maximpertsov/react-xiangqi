@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from '@emotion/styled';
-import { Header } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
+import styled from '@emotion/styled';
+import { Header } from 'semantic-ui-react';
 import isEqual from 'lodash/isEqual';
 
 import GameLink from './GameLink';

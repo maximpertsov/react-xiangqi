@@ -1,22 +1,21 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
 import styled from '@emotion/styled';
 import { Button, Icon } from 'semantic-ui-react';
-
 import chunk from 'lodash/fp/chunk';
 import flow from 'lodash/fp/flow';
 import isEqual from 'lodash/fp/isEqual';
 import map from 'lodash/fp/map';
 import tail from 'lodash/fp/tail';
 
-import { createSelector } from 'reselect';
-
 import actions from 'actions';
-// TODO: move to separate class
-import { getPreviousMoveFen, getNextMoveFen } from 'reducers';
 import { MediaQuery, WidthSize } from 'commonStyles';
-import Move from './components/Move';
+// TODO: move to separate class
+import { getNextMoveFen,getPreviousMoveFen } from 'reducers';
+
 import FullMove from './components/FullMove';
+import Move from './components/Move';
 
 const Wrapper = styled.div`
   ${MediaQuery.TINY} {

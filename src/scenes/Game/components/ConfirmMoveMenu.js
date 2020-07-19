@@ -1,14 +1,12 @@
 import React, { useCallback, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import isEqual from 'lodash/isEqual';
 
 import actions from 'actions';
 import createMoveOnServer from 'actions/createMoveOnServer';
-import { getLastMove, getSecondToLastMove } from 'reducers';
-
-import isEqual from 'lodash/isEqual';
-import { WebSocketContext } from 'services/WebSocketProvider';
-
 import ConfirmMenu from 'components/ConfirmMenu';
+import { getLastMove, getSecondToLastMove } from 'reducers';
+import { WebSocketContext } from 'services/WebSocketProvider';
 
 const ConfirmMoveMenu = () => {
   const dispatch = useDispatch();

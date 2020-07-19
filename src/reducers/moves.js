@@ -1,5 +1,3 @@
-import update from 'immutability-helper';
-
 import find from 'lodash/fp/find';
 import flow from 'lodash/fp/flow';
 import fromPairs from 'lodash/fp/fromPairs';
@@ -10,9 +8,9 @@ import pick from 'lodash/fp/pick';
 import reject from 'lodash/fp/reject';
 import sortBy from 'lodash/fp/sortBy';
 
-import { activeTeam, moveOrder } from 'services/logic/fen';
-
+import update from 'immutability-helper';
 import { Team } from 'services/logic/constants';
+import { activeTeam, moveOrder } from 'services/logic/fen';
 
 const moveFields = ['fen', 'gameResult', 'givesCheck', 'legalMoves', 'uci'];
 

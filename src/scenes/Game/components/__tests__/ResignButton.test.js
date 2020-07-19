@@ -1,8 +1,8 @@
 import React from 'react';
-import * as selectors from 'reducers/selectors';
 
 import actions from 'actions';
 import resign from 'actions/resign';
+import * as selectors from 'reducers/selectors';
 import ResignButton from 'scenes/Game/components/ResignButton';
 
 describe('ResignButton', () => {

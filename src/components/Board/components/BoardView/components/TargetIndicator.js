@@ -1,7 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+
 import { fillParentElement, SELECTION_COLOR } from 'commonStyles';
+import PropTypes from 'prop-types';
 
 const TargetOccupiedIndicator = styled.div({
   backgroundColor: SELECTION_COLOR,

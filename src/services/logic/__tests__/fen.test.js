@@ -1,14 +1,15 @@
 import flatten from 'lodash/flatten';
+
+import { Team } from 'services/logic/constants';
 import {
-  activeTeam,
   activeKing,
+  activeTeam,
   decodeFen,
   getPiece,
   isOccupied,
   moveOrder,
   sameTeam,
 } from 'services/logic/fen';
-import { Team } from 'services/logic/constants';
 
 describe('fen functions', () => {
   const initialFen =

@@ -1,17 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
+import styled from '@emotion/styled';
 import isEqual from 'lodash/isEqual';
 
-import SizeProvider from 'SizeProvider';
-import { getSelectedMove } from 'reducers/selectors';
 import { MediaQuery, SquareSize } from 'commonStyles';
+import PropTypes from 'prop-types';
+import { getSelectedMove } from 'reducers/selectors';
 import { decodeFen } from 'services/logic/fen';
 import { encodeSquare } from 'services/logic/square';
-import Square from './components/Square';
+import SizeProvider from 'SizeProvider';
+
 import boardImg from './assets/board-1000px.svg.png';
+import Square from './components/Square';
 
 const gridRowColumnBySizeCSS = squareSize => ({
   gridTemplateRows: `repeat(10, ${squareSize})`,

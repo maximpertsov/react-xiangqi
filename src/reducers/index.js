@@ -1,9 +1,9 @@
-import actions from 'actions';
 import { combineReducers } from 'redux';
-import { Team } from 'services/logic/constants';
-import update from 'immutability-helper';
+import { combineActions,handleAction } from 'redux-actions';
 
-import { handleAction, combineActions } from 'redux-actions';
+import actions from 'actions';
+import update from 'immutability-helper';
+import { Team } from 'services/logic/constants';
 
 // Home
 import loginForm from './loginForm';

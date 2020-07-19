@@ -1,10 +1,10 @@
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import values from 'lodash/values';
 
 import actions from 'actions';
 import authenticate from 'actions/authenticate';
 import * as updateLoginForm from 'actions/updateLoginForm';
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 jest.mock('axios');
 jest.mock('jwt-decode');

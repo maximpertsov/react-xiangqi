@@ -1,5 +1,5 @@
-import axios from 'axios';
 import resign from 'actions/resign';
+import axios from 'axios';
 
 jest.mock('axios');
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render } from 'enzyme';
+
 import App from 'App';
+import { render } from 'enzyme';
 
 test('renders without crashing', () => {
   const store = mockStore({ loginForm: {}, games: [] });

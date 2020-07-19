@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
-import { useDispatch } from 'react-redux';
-
-import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
-import actions from 'actions';
+import { useDispatch } from 'react-redux';
+import styled from '@emotion/styled';
 
-import { SizeContext } from 'SizeProvider';
-import { ALL_PIECES } from 'services/logic/constants';
+import actions from 'actions';
 import { MediaQuery, SquareSize } from 'commonStyles';
+import PropTypes from 'prop-types';
+import { ALL_PIECES } from 'services/logic/constants';
+import { SizeContext } from 'SizeProvider';
+
 import getImageByCode from './images';
 
 const isMoving = ({ moveX, moveY }) => moveX !== 0 || moveY !== 0;

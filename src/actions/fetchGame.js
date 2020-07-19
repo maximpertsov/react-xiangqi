@@ -1,7 +1,7 @@
-import client from 'services/client';
-import actions from 'actions';
-
 import last from 'lodash/fp/last';
+
+import actions from 'actions';
+import client from 'services/client';
 
 const getGame = ({ gameSlug }) => client.get(`game/${gameSlug}`);
 

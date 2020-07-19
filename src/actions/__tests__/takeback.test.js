@@ -1,7 +1,7 @@
 
-import axios from 'axios';
 import actions from 'actions';
 import takeback from 'actions/takeback';
+import axios from 'axios';
 
 jest.mock('axios');
 

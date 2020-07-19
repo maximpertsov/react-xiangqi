@@ -1,14 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Button, Header } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
-
-import isEqual from 'lodash/isEqual';
+import { Button, Header } from 'semantic-ui-react';
 import get from 'lodash/get';
+import isEqual from 'lodash/isEqual';
 
-import BoardView from 'components/Board/components/BoardView';
 import actions from 'actions';
+import BoardView from 'components/Board/components/BoardView';
+import PropTypes from 'prop-types';
 import { getOpponent } from 'reducers/selectors';
 
 const mapStateToProps = createSelector(

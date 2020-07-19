@@ -1,9 +1,9 @@
-import React from 'react';
 import 'regenerator-runtime/runtime';
 
+import React from 'react';
 import * as redux from 'react-redux';
-import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import values from 'lodash/values';
 
 import Enzyme, { shallow } from 'enzyme';
