@@ -56,8 +56,7 @@ describe('LobbyGame', () => {
     await expect(axios.patch).toHaveBeenCalledWith(`game/request/${id}`, {
       player2: username,
     });
-    expect(io.send).toHaveBeenCalledWith({
-      type: 'joined_lobby_game',
+    expect(io.send).toHaveBeenCalledWith('joined_lobby_game', {
       game: gameSlug,
       players: ['bob', username],
     });

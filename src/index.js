@@ -3,10 +3,10 @@ import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, compose,createStore } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
-import WebSocketProvider from 'services/WebSocketProvider';
+import { WebSocketProvider } from 'services/websockets';
 
 import App from './App';
 import rootReducer from './reducers';

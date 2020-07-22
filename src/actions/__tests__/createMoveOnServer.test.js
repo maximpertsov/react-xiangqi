@@ -51,7 +51,7 @@ describe('create move on server', () => {
           player: username,
         },
       });
-      expect(io.send).toHaveBeenCalledTimes(1);
+      expect(io.send).toHaveBeenCalledWith('move', { gameSlug, username });
       expect(store.getActions()).toStrictEqual([]);
     });
 
@@ -70,7 +70,7 @@ describe('create move on server', () => {
           player: username,
         },
       });
-      expect(io.send).toHaveBeenCalledTimes(0);
+      expect(io.send).not.toHaveBeenCalled();
       expect(store.getActions()).toStrictEqual([
         actions.game.moves.remove(move.fen),
       ]);

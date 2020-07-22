@@ -5,7 +5,7 @@ import { Button, Icon } from 'semantic-ui-react';
 import actions from 'actions';
 import resign from 'actions/resign';
 import { getCurrentPlayer } from 'reducers';
-import { WebSocketContext } from 'services/WebSocketProvider';
+import { WebSocketContext } from 'services/websockets';
 
 const TIME_TO_CONFIRM = 2000;
 

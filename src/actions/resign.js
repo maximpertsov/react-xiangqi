@@ -12,13 +12,7 @@ const postResignEvent = ({ io, gameSlug, username }) => {
       payload: { username },
     })
     .then(() => {
-      io.send({
-        type: EVENT_TYPE,
-        payload: {
-          gameSlug,
-          username,
-        },
-      });
+      io.send(EVENT_TYPE, { gameSlug, username });
     });
 };
 

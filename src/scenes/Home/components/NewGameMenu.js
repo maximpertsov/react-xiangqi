@@ -8,7 +8,7 @@ import isEqual from 'lodash/isEqual';
 
 import client from 'services/client';
 import { Team } from 'services/logic/constants';
-import { WebSocketContext } from 'services/WebSocketProvider';
+import { WebSocketContext } from 'services/websockets';
 
 const Wrapper = styled.div`
   border: 1px #ccc solid;
@@ -45,13 +45,13 @@ const NewGameMenu = () => {
         parameters: { team },
       })
       .then(() => {
-        io.send({ type: 'updated_lobby_games' });
+        io.send('updated_lobby_games');
       });
   };
 
   const cancelGameRequest = id => () => {
     client.delete(`game/request/${id}`).then(() => {
-      io.send({ type: 'updated_lobby_games' });
+      io.send('updated_lobby_games');
     });
   };
 

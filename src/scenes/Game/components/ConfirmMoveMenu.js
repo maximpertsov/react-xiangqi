@@ -6,7 +6,7 @@ import actions from 'actions';
 import createMoveOnServer from 'actions/createMoveOnServer';
 import ConfirmMenu from 'components/ConfirmMenu';
 import { getLastMove, getSecondToLastMove } from 'reducers';
-import { WebSocketContext } from 'services/WebSocketProvider';
+import { WebSocketContext } from 'services/websockets';
 
 const ConfirmMoveMenu = () => {
   const dispatch = useDispatch();

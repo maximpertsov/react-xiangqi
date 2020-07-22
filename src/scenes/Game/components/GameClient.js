@@ -62,13 +62,15 @@ const GameClient = () => {
 
   const needToFetchGame = useCallback(() => {
     if (!lastMessage) return false;
-    if (!FETCH_GAME_ON_MESSAGE_TYPES.includes(lastMessage.type)) return false;
-    if (lastMessage.payload.gameSlug !== gameSlug) return false;
-    if (FETCH_GAME_ON_MESSAGE_TYPES_BOTH_PLAYERS.includes(lastMessage.type)) {
+    const { type, payload } = lastMessage;
+
+    if (!FETCH_GAME_ON_MESSAGE_TYPES.includes(type)) return false;
+    if (payload.gameSlug !== gameSlug) return false;
+    if (FETCH_GAME_ON_MESSAGE_TYPES_BOTH_PLAYERS.includes(type)) {
       return true;
     }
 
-    return lastMessage.payload.username !== username;
+    return payload.username !== username;
   }, [gameSlug, lastMessage, username]);
 
   useEffect(() => {

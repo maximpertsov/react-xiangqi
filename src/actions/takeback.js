@@ -10,13 +10,7 @@ const postTakebackEvent = ({ io, event_name, gameSlug, username }) => {
     payload: { username },
   };
   client.post(`game/events`, payload).then(() => {
-    io.send({
-      type: event_name,
-      payload: {
-        gameSlug,
-        username,
-      },
-    });
+    io.send(event_name, { gameSlug, username });
   });
 };
 

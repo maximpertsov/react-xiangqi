@@ -38,10 +38,12 @@ const Home = () => {
 
   useEffect(() => {
     if (!lastMessage) return;
-    if (lastMessage.type !== 'joined_lobby_game') return;
-    if (!lastMessage.players.includes(username)) return;
+    const { type, payload } = lastMessage;
 
-    dispatch(actions.game.slug.set(lastMessage.game));
+    if (type !== 'joined_lobby_game') return;
+    if (!payload.players.includes(username)) return;
+
+    dispatch(actions.game.slug.set(payload.game));
     dispatch(actions.home.showGame.set(true));
   }, [dispatch, lastMessage, username]);
 

@@ -24,12 +24,9 @@ describe('takeback', () => {
       name: 'offered_takeback',
       payload: { username: 'user1' },
     });
-    expect(io.send).toHaveBeenCalledWith({
-      type: 'offered_takeback',
-      payload: {
-        gameSlug: 'ABC123',
-        username: 'user1',
-      },
+    expect(io.send).toHaveBeenCalledWith('offered_takeback', {
+      gameSlug: 'ABC123',
+      username: 'user1',
     });
     expect(store.getActions()).toStrictEqual([
       actions.game.openTakebackOffer.set('user1'),
@@ -48,12 +45,9 @@ describe('takeback', () => {
       name: 'canceled_takeback',
       payload: { username: 'user1' },
     });
-    expect(io.send).toHaveBeenCalledWith({
-      type: 'canceled_takeback',
-      payload: {
-        gameSlug: 'ABC123',
-        username: 'user1',
-      },
+    expect(io.send).toHaveBeenCalledWith('canceled_takeback', {
+      gameSlug: 'ABC123',
+      username: 'user1',
     });
     expect(store.getActions()).toStrictEqual([
       actions.game.openTakebackOffer.set(null),
@@ -72,12 +66,9 @@ describe('takeback', () => {
       name: 'rejected_takeback',
       payload: { username: 'user1' },
     });
-    expect(io.send).toHaveBeenCalledWith({
-      type: 'rejected_takeback',
-      payload: {
-        gameSlug: 'ABC123',
-        username: 'user1',
-      },
+    expect(io.send).toHaveBeenCalledWith('rejected_takeback', {
+      gameSlug: 'ABC123',
+      username: 'user1',
     });
     expect(store.getActions()).toStrictEqual([
       actions.game.openTakebackOffer.set(null),
@@ -96,12 +87,9 @@ describe('takeback', () => {
       name: 'accepted_takeback',
       payload: { username: 'user1' },
     });
-    expect(io.send).toHaveBeenCalledWith({
-      type: 'accepted_takeback',
-      payload: {
-        gameSlug: 'ABC123',
-        username: 'user1',
-      },
+    expect(io.send).toHaveBeenCalledWith('accepted_takeback', {
+      gameSlug: 'ABC123',
+      username: 'user1',
     });
     expect(store.getActions()).toStrictEqual([
       actions.game.openTakebackOffer.set(null),

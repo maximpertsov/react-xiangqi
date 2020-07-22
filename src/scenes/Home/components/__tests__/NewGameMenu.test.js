@@ -68,9 +68,7 @@ describe('NewGameMenu', () => {
           player1: username,
           parameters,
         });
-        expect(io.send).toHaveBeenCalledWith({
-          type: 'updated_lobby_games',
-        });
+        expect(io.send).toHaveBeenCalledWith('updated_lobby_games');
       });
     });
   });
@@ -98,9 +96,7 @@ describe('NewGameMenu', () => {
       wrapper.find('Button').simulate('click');
 
       await expect(axios.delete).toHaveBeenCalledWith(`game/request/${id}`);
-      expect(io.send).toHaveBeenCalledWith({
-        type: 'updated_lobby_games',
-      });
+      expect(io.send).toHaveBeenCalledWith('updated_lobby_games');
     });
   });
 });

@@ -4,7 +4,7 @@ import { Button, Icon } from 'semantic-ui-react';
 
 import takeback from 'actions/takeback';
 import { getCurrentPlayer, getOpponent } from 'reducers';
-import { WebSocketContext } from 'services/WebSocketProvider';
+import { WebSocketContext } from 'services/websockets';
 
 const TakebackButton = () => {
   const dispatch = useDispatch();

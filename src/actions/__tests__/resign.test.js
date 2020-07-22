@@ -22,9 +22,9 @@ describe('resign', () => {
       name: 'resigned',
       payload: { username: 'user1' },
     });
-    expect(io.send).toHaveBeenCalledWith({
-      type: 'resigned',
-      payload: { gameSlug: 'ABC123', username: 'user1' },
+    expect(io.send).toHaveBeenCalledWith('resigned', {
+      gameSlug: 'ABC123',
+      username: 'user1',
     });
   });
 });

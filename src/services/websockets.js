@@ -5,15 +5,22 @@ import actions from 'actions';
 
 export const WebSocketContext = createContext(null);
 
+const createMessage = (type, payload) => ({
+  createdAt: new Date(),
+  type,
+  payload,
+});
+
 /* eslint-disable react/prop-types */
-const WebSocketProvider = ({ children }) => {
+export const WebSocketProvider = ({ children }) => {
   let socket;
   let io;
 
   const dispatch = useDispatch();
 
-  const send = payload => {
-    socket.send(JSON.stringify(payload));
+  const send = (type, payload) => {
+    const message = createMessage(type, payload);
+    socket.send(JSON.stringify(message));
   };
 
   if (!socket) {
@@ -32,4 +39,4 @@ const WebSocketProvider = ({ children }) => {
   );
 };
 
-export default WebSocketProvider;
+export default {};

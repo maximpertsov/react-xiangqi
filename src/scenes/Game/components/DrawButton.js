@@ -7,7 +7,7 @@ import isEqual from 'lodash/isEqual';
 import actions from 'actions';
 import draw from 'actions/draw';
 import { getCurrentPlayer, getOpponent } from 'reducers';
-import { WebSocketContext } from 'services/WebSocketProvider';
+import { WebSocketContext } from 'services/websockets';
 
 const TIME_TO_CONFIRM = 2000;
 

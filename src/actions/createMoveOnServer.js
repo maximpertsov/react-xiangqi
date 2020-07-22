@@ -22,7 +22,7 @@ const createMoveOnServer = ({
 
   return postMove({ gameSlug, uci, fen, username })
     .then(() => {
-      io.send({ type: 'move', payload: { gameSlug, username } });
+      io.send('move', { gameSlug, username });
     })
     .catch(() => {
       dispatch(actions.game.moves.remove(fen));

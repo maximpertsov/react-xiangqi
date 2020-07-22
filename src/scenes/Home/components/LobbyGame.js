@@ -4,7 +4,7 @@ import { Button } from 'semantic-ui-react';
 
 import PropTypes from 'prop-types';
 import client from 'services/client';
-import { WebSocketContext } from 'services/WebSocketProvider';
+import { WebSocketContext } from 'services/websockets';
 
 const LobbyGame = ({ id, parameters }) => {
   const io = useContext(WebSocketContext);
@@ -18,11 +18,7 @@ const LobbyGame = ({ id, parameters }) => {
       .then(({ data: { game, player1, player2 } }) => {
         if (!game) return;
 
-        io.send({
-          type: 'joined_lobby_game',
-          game,
-          players: [player1, player2],
-        });
+        io.send('joined_lobby_game', { game, players: [player1, player2] });
       });
   };
 

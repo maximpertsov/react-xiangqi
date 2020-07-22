@@ -11,13 +11,7 @@ const postDrawEvent = ({ event_name, gameSlug, io, username }) => {
       payload: { username },
     })
     .then(() => {
-      io.send({
-        type: event_name,
-        payload: {
-          gameSlug,
-          username,
-        },
-      });
+      io.send(event_name, { gameSlug, username });
     });
 };
 

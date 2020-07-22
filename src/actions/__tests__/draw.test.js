@@ -27,12 +27,9 @@ describe('draw', () => {
       name: 'offered_draw',
       payload: { username: 'user1' },
     });
-    expect(io.send).toHaveBeenCalledWith({
-      type: 'offered_draw',
-      payload: {
-        gameSlug: 'ABC123',
-        username: 'user1',
-      },
+    expect(io.send).toHaveBeenCalledWith('offered_draw', {
+      gameSlug: 'ABC123',
+      username: 'user1',
     });
     expect(store.getActions()).toStrictEqual([
       actions.game.openDrawOffer.set('user1'),
@@ -48,12 +45,9 @@ describe('draw', () => {
       name: 'canceled_draw',
       payload: { username: 'user1' },
     });
-    expect(io.send).toHaveBeenCalledWith({
-      type: 'canceled_draw',
-      payload: {
-        gameSlug: 'ABC123',
-        username: 'user1',
-      },
+    expect(io.send).toHaveBeenCalledWith('canceled_draw', {
+      gameSlug: 'ABC123',
+      username: 'user1',
     });
     expect(store.getActions()).toStrictEqual([
       actions.game.openDrawOffer.set(null),
@@ -69,12 +63,9 @@ describe('draw', () => {
       name: 'rejected_draw',
       payload: { username: 'user1' },
     });
-    expect(io.send).toHaveBeenCalledWith({
-      type: 'rejected_draw',
-      payload: {
-        gameSlug: 'ABC123',
-        username: 'user1',
-      },
+    expect(io.send).toHaveBeenCalledWith('rejected_draw', {
+      gameSlug: 'ABC123',
+      username: 'user1',
     });
     expect(store.getActions()).toStrictEqual([
       actions.game.openDrawOffer.set(null),
@@ -90,12 +81,9 @@ describe('draw', () => {
       name: 'accepted_draw',
       payload: { username: 'user1' },
     });
-    expect(io.send).toHaveBeenCalledWith({
-      type: 'accepted_draw',
-      payload: {
-        gameSlug: 'ABC123',
-        username: 'user1',
-      },
+    expect(io.send).toHaveBeenCalledWith('accepted_draw', {
+      gameSlug: 'ABC123',
+      username: 'user1',
     });
     expect(store.getActions()).toStrictEqual([
       actions.game.openDrawOffer.set(null),
