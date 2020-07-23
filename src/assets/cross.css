@@ -1,0 +1,26 @@
+#cross {
+   width: 100px;
+   height: 100px;
+   position: relative;
+}
+
+#cross:before, #cross:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background: black;
+}
+
+#cross:before {
+  left: 49%;
+  width: 2%;
+  margin-left: 0%;
+  height: 100%;
+}
+
+#cross:after {
+  top: 49%;
+  height: 2%;
+  margin-top: 0%;
+  width: 100%;
+}
