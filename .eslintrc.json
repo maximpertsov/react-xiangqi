@@ -110,6 +110,7 @@
           ],
           [
             "^react",
+            "^prop-types",
             "^redux",
             "^reselect",
             "^@emotion",

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 
-import PropTypes from 'prop-types';
 import { getIsMoving, getTargets } from 'reducers';
 import { activeKing, getPiece, isOccupied } from 'services/logic/fen';
 import { uciToSquares } from 'services/logic/square';

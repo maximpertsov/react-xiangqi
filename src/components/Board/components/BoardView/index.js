@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import styled from '@emotion/styled';
 import isEqual from 'lodash/isEqual';
 
+import a10 from 'assets/square-a10.svg';
 import { MediaQuery, SquareSize } from 'commonStyles';
-import PropTypes from 'prop-types';
 import { getSelectedMove } from 'reducers/selectors';
 import { decodeFen } from 'services/logic/fen';
 import { encodeSquare } from 'services/logic/square';
