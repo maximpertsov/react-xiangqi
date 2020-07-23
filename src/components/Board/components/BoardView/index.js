@@ -15,6 +15,10 @@ import SizeProvider from 'SizeProvider';
 import boardImg from './assets/board-1000px.svg.png';
 import Square from './components/Square';
 
+const squareBG = Object.freeze({
+  a10,
+});
+
 const gridRowColumnBySizeCSS = squareSize => ({
   gridTemplateRows: `repeat(10, ${squareSize})`,
   gridTemplateColumns: `repeat(9, ${squareSize})`,
@@ -37,7 +41,7 @@ const gridRowColumnCSS = ({ size }) => {
 const Wrapper = styled.div(props => ({
   ...gridRowColumnCSS(props),
   backgroundColor: '#decfb1',
-  backgroundImage: `url(${boardImg})`,
+  // backgroundImage: `url(${boardImg})`,
   backgroundPosition: 'top',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'contain',
@@ -72,6 +76,7 @@ const BoardView = ({ teamBlackPOV, handleSquareClick, move, size }) => {
       return (
         <Square
           key={square}
+          bg={squareBG[square]}
           handleSquareClick={handleSquareClick}
           square={square}
           move={currentMove}

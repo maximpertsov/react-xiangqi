@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid" viewBox="0 0 100 100" width="100" height="100">
 <path style="stroke:#000;stroke-width:2px;stroke-linecap:square" d="
-M 25,25 L 50,25
-M 25,25 L 25,50
+M 50,50 L 50,100
+M 50,50 L 100,50
 " />
 </svg>

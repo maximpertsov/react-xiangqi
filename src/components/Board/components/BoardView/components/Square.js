@@ -17,6 +17,15 @@ import SelectionIndicator from './SelectionIndicator';
 import SquareView from './SquareView';
 import TargetIndicator from './TargetIndicator';
 
+import styled from '@emotion/styled';
+
+const Wrapper = styled.div`
+  background-image: url(${props => props.bg});
+  background-position: 'center';
+  background-repeat: 'no-repeat';
+  background-size: 'contain';
+`;
+
 const getPieceCode = ({ move, square }) => {
   if (!move.fen) return;
 
@@ -84,7 +93,7 @@ const mapStateToProps = createSelector(
 
 // TODO make handle square click an action?
 // eslint-disable-next-line complexity
-const Square = ({ handleSquareClick, move, square }) => {
+const Square = ({ bg, handleSquareClick, move, square }) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'PIECE',
     drop: () => {
@@ -115,7 +124,7 @@ const Square = ({ handleSquareClick, move, square }) => {
   );
 
   return (
-    <SquareView handleClick={handleSquareClick(square)} ref={drop}>
+    <SquareView bg={bg} handleClick={handleSquareClick(square)} ref={drop}>
       {isOccupied && renderPiece()}
       {isOver && isTargeted && <DropIndicator />}
       {isInLastMove && <LastMoveIndicator />}
