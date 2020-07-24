@@ -15,6 +15,11 @@ import upBotRight from './assets/square-upper-palace-bottom-right.svg';
 import upTopLeft from './assets/square-upper-palace-top-left.svg';
 import upTopRight from './assets/square-upper-palace-top-right.svg';
 
+import lpBotLeft from './assets/square-lower-palace-bottom-left.svg';
+import lpBotRight from './assets/square-lower-palace-bottom-right.svg';
+import lpTopLeft from './assets/square-lower-palace-top-left.svg';
+import lpTopRight from './assets/square-lower-palace-top-right.svg';
+
 const imageByIndex = Object.freeze([
   [topLeft, top, top, upTopLeft, top, upTopRight, top, top, topRight],
   [left, inner, inner, inner, pCenter, inner, inner, inner, right],
@@ -23,9 +28,9 @@ const imageByIndex = Object.freeze([
   [botLeft, bot, bot, bot, bot, bot, bot, bot, botRight],
   [topLeft, top, top, top, top, top, top, top, topRight],
   [left, inner, inner, inner, inner, inner, inner, inner, right],
-  [left, inner, inner, null, inner, null, inner, inner, right],
+  [left, inner, inner, lpTopLeft, inner, lpTopRight, inner, inner, right],
   [left, inner, inner, inner, pCenter, inner, inner, inner, right],
-  [botLeft, bot, bot, null, bot, null, bot, bot, botRight],
+  [botLeft, bot, bot, lpBotLeft, bot, lpBotRight, bot, bot, botRight],
 ]);
 
 const getImageByIndex = i => flatten(imageByIndex)[i];
