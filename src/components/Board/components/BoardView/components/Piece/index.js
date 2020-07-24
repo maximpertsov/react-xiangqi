@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 import actions from 'actions';
 import { MediaQuery, SquareSize } from 'commonStyles';
-import PropTypes from 'prop-types';
 import { ALL_PIECES } from 'services/logic/constants';
 import { SizeContext } from 'SizeProvider';
 

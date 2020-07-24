@@ -17,15 +17,6 @@ import SelectionIndicator from './SelectionIndicator';
 import SquareView from './SquareView';
 import TargetIndicator from './TargetIndicator';
 
-import styled from '@emotion/styled';
-
-const Wrapper = styled.div`
-  background-image: url(${props => props.bg});
-  background-position: 'center';
-  background-repeat: 'no-repeat';
-  background-size: 'contain';
-`;
-
 const getPieceCode = ({ move, square }) => {
   if (!move.fen) return;
 

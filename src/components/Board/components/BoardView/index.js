@@ -5,19 +5,17 @@ import { createSelector } from 'reselect';
 import styled from '@emotion/styled';
 import isEqual from 'lodash/isEqual';
 
-import a10 from 'assets/square-a10.svg';
 import { MediaQuery, SquareSize } from 'commonStyles';
 import { getSelectedMove } from 'reducers/selectors';
 import { decodeFen } from 'services/logic/fen';
 import { encodeSquare } from 'services/logic/square';
 import SizeProvider from 'SizeProvider';
 
-import boardImg from './assets/board-1000px.svg.png';
+import bgA10 from './assets/square-a10.svg';
+// import boardImg from './assets/board-1000px.svg.png';
 import Square from './components/Square';
 
-const squareBG = Object.freeze({
-  a10,
-});
+const squareBG = Object.freeze([bgA10]);
 
 const gridRowColumnBySizeCSS = squareSize => ({
   gridTemplateRows: `repeat(10, ${squareSize})`,
@@ -76,7 +74,7 @@ const BoardView = ({ teamBlackPOV, handleSquareClick, move, size }) => {
       return (
         <Square
           key={square}
-          bg={squareBG[square]}
+          bg={squareBG[i]}
           handleSquareClick={handleSquareClick}
           square={square}
           move={currentMove}
