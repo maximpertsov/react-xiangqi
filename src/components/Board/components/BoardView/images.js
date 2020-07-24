@@ -1,15 +1,17 @@
-import bgA10 from './assets/square-a10.svg';
-import bgB10 from './assets/square-b10.svg';
+import topLeft from './assets/square-top-left.svg';
+import topRight from './assets/square-top-right.svg';
+import top from './assets/square-top.svg';
 
 const imageByIndex = Object.freeze([
-  bgA10,
-  bgB10,
-  bgB10,
+  topLeft,
+  top,
+  top,
   null,
   null,
   null,
-  null,
-  null,
+  top,
+  top,
+  topRight,
 ]);
 
 const getImageByIndex = i => imageByIndex[i];
