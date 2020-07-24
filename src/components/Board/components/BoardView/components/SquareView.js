@@ -5,9 +5,8 @@ import styled from '@emotion/styled';
 // TODO: try this https://stackoverflow.com/questions/18253449/svg-inside-a-scaling-div
 const Wrapper = styled.div`
   background-image: url(${props => props.bg});
-  background-position: 'left center';
-  background-repeat: 'no-repeat';
-  background-size: 'contain';
+  background-repeat: no-repeat;
+  background-size: contain;
   display: flex;
   justify-content: center;
   margin: 0px;
