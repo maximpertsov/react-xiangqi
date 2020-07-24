@@ -11,11 +11,9 @@ import { decodeFen } from 'services/logic/fen';
 import { encodeSquare } from 'services/logic/square';
 import SizeProvider from 'SizeProvider';
 
-import bgA10 from './assets/square-a10.svg';
 // import boardImg from './assets/board-1000px.svg.png';
 import Square from './components/Square';
-
-const squareBG = Object.freeze([bgA10]);
+import getImageByIndex from './images';
 
 const gridRowColumnBySizeCSS = squareSize => ({
   gridTemplateRows: `repeat(10, ${squareSize})`,
@@ -74,7 +72,7 @@ const BoardView = ({ teamBlackPOV, handleSquareClick, move, size }) => {
       return (
         <Square
           key={square}
-          bg={squareBG[i]}
+          bg={getImageByIndex(i)}
           handleSquareClick={handleSquareClick}
           square={square}
           move={currentMove}
