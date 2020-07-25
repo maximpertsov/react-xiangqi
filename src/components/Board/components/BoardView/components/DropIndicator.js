@@ -13,13 +13,13 @@ const Wrapper = styled.div({
   ...fillParentElement,
 });
 
-const DropIndicator = ({ isOver, isTargeted }) => {
-  return isOver && isTargeted && <Wrapper className="DropIndicator" />;
+const DropIndicator = ({ over, targeted }) => {
+  return over && targeted && <Wrapper className="DropIndicator" />;
 };
 
 DropIndicator.propTypes = {
-  isOver: PropTypes.bool.isRequired,
-  isTargeted: PropTypes.bool.isRequired,
+  over: PropTypes.bool.isRequired,
+  targeted: PropTypes.bool.isRequired,
 };
 
 export default DropIndicator;
