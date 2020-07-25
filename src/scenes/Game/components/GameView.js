@@ -4,9 +4,10 @@ import styled from '@emotion/styled';
 import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import isEqual from 'lodash/isEqual';
 
-import Board from 'components/Board';
+import BoardView from 'components/Board/components/BoardView';
 import GameMenu from 'components/GameMenu';
 import {
+  getBottomPlayerIsRed,
   getCurrentPlayer,
   getHasInitialPlacement,
   getOpponent,
@@ -21,6 +22,7 @@ import ResignButton from './ResignButton';
 import TakebackButton from './TakebackButton';
 
 const mapStateToProps = state => ({
+  bottomPlayerIsRed: getBottomPlayerIsRed(state),
   currentPlayer: getCurrentPlayer(state),
   hasInitialPlacement: getHasInitialPlacement(state),
   opponent: getOpponent(state),
@@ -38,6 +40,7 @@ const Wrapper = styled.div`
 // eslint-disable-next-line complexity
 const GameView = () => {
   const {
+    bottomPlayerIsRed,
     hasInitialPlacement,
     showConfirmMoveMenu,
     currentPlayer,
@@ -60,7 +63,7 @@ const GameView = () => {
       {hasInitialPlacement && (
         <Wrapper className="Game">
           <Player {...opponent} />
-          <Board legalMoves />
+          <BoardView teamBlackPOV={!bottomPlayerIsRed} />
           <Player {...currentPlayer} />
           <GameInfo />
           {!showConfirmMoveMenu && (
