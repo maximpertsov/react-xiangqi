@@ -13,7 +13,6 @@ exports[`GameLink snapshot 1`] = `
     bob
   </Header>
   <BoardView
-    handleSquareClick={[Function]}
     move={Object {}}
     size="tiny"
     teamBlackPOV={false}

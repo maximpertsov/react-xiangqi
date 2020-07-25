@@ -54,7 +54,7 @@ const mapStateToProps = createSelector(
   }),
 );
 
-const BoardView = ({ teamBlackPOV, handleSquareClick, move, size }) => {
+const BoardView = ({ teamBlackPOV, move, size }) => {
   const { currentMove } = useSelector(
     state => mapStateToProps(state, { move }),
     isEqual,
@@ -71,7 +71,7 @@ const BoardView = ({ teamBlackPOV, handleSquareClick, move, size }) => {
 
       return (
         <SquareProvider key={square} square={square} move={currentMove}>
-          <Square key={square} handleSquareClick={handleSquareClick} />
+          <Square key={square} />
         </SquareProvider>
       );
     });
@@ -86,14 +86,12 @@ const BoardView = ({ teamBlackPOV, handleSquareClick, move, size }) => {
 
 BoardView.propTypes = {
   teamBlackPOV: PropTypes.bool,
-  handleSquareClick: PropTypes.func,
   move: PropTypes.shape(),
   size: PropTypes.oneOf(['fluid', 'tiny', 'small', 'medium', 'large']),
 };
 
 BoardView.defaultProps = {
   teamBlackPOV: false,
-  handleSquareClick: () => {},
   move: {},
   size: 'fluid',
 };
