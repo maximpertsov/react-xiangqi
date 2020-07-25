@@ -16,7 +16,7 @@ const Wrapper = styled.div({
 const KingInCheckIndicator = () => {
   const { isKingInCheck } = useSquareContext();
 
-  return isKingInCheck && <Wrapper class="KingInCheckIndicator" />;
+  return isKingInCheck && <Wrapper className="KingInCheckIndicator" />;
 };
 
 export default KingInCheckIndicator;
