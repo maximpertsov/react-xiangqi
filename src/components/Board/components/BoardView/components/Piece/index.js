@@ -1,12 +1,15 @@
 import React, { useContext } from 'react';
 import { useDrag } from 'react-dnd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { createSelector } from 'reselect';
 import styled from '@emotion/styled';
+import isEqual from 'lodash/isEqual';
 
 import actions from 'actions';
 import { MediaQuery, SquareSize } from 'commonStyles';
-import PropTypes from 'prop-types';
-import { ALL_PIECES } from 'services/logic/constants';
+import { SquareContext } from 'contexts/SquareProvider';
+import { getPiece } from 'services/logic/fen';
 import { SizeContext } from 'SizeProvider';
 
 import getImageByCode from './images';
@@ -52,9 +55,42 @@ const Wrapper = styled.img(props => ({
   zIndex: isMoving(props) ? 100 : 0,
 }));
 
-const Piece = ({ code, moveX, moveY, square }) => {
+const getPieceCode = ({ move, square }) => {
+  if (!move.fen) return;
+
+  return getPiece(move.fen, square) || undefined;
+};
+
+const getAnimationOffset = ({ animationOffset, selectedSquare, square }) => {
+  const [offsetX, offsetY] = animationOffset;
+
+  return {
+    moveX: selectedSquare === square ? offsetX : 0,
+    moveY: selectedSquare === square ? offsetY : 0,
+  };
+};
+
+const mapStateToProps = createSelector(
+  state => state.animationOffset,
+  state => state.selectedSquare,
+  (_, props) => props.square,
+  (_, props) => props.move,
+
+  (animationOffset, selectedSquare, square, move) => ({
+    ...getAnimationOffset({ animationOffset, selectedSquare, square }),
+    code: getPieceCode({ move, square }),
+  }),
+);
+
+const Piece = ({ occupied }) => {
   const dispatch = useDispatch();
   const size = useContext(SizeContext);
+  const { move, square } = useContext(SquareContext);
+
+  const { moveX, moveY, code } = useSelector(
+    state => mapStateToProps(state, { move, square }),
+    isEqual,
+  );
 
   const [{ opacity }, dragRef] = useDrag({
     item: { type: 'PIECE' },
@@ -66,29 +102,23 @@ const Piece = ({ code, moveX, moveY, square }) => {
   });
 
   return (
-    <Wrapper
-      alt=""
-      className={`Piece ${code}`}
-      moveX={moveX}
-      moveY={moveY}
-      opacity={opacity}
-      ref={dragRef}
-      size={size}
-      src={getImageByCode(code)}
-    />
+    occupied && (
+      <Wrapper
+        alt=""
+        className={`Piece ${code}`}
+        moveX={moveX}
+        moveY={moveY}
+        opacity={opacity}
+        ref={dragRef}
+        size={size}
+        src={getImageByCode(code)}
+      />
+    )
   );
 };
 
 Piece.propTypes = {
-  code: PropTypes.oneOf(ALL_PIECES).isRequired,
-  moveX: PropTypes.number,
-  moveY: PropTypes.number,
-  square: PropTypes.string.isRequired,
-};
-
-Piece.defaultProps = {
-  moveX: 0,
-  moveY: 0,
+  occupied: PropTypes.bool.isRequired,
 };
 
 export default Piece;

@@ -7,7 +7,7 @@ import isEqual from 'lodash/isEqual';
 
 import { SquareContext } from 'contexts/SquareProvider';
 import { getIsMoving, getTargets } from 'reducers';
-import { getPiece, isOccupied } from 'services/logic/fen';
+import { isOccupied } from 'services/logic/fen';
 import { uciToSquares } from 'services/logic/square';
 
 import DropIndicator from './DropIndicator';
@@ -17,12 +17,6 @@ import Piece from './Piece';
 import SelectionIndicator from './SelectionIndicator';
 import SquareView from './SquareView';
 import TargetIndicator from './TargetIndicator';
-
-const getPieceCode = ({ move, square }) => {
-  if (!move.fen) return;
-
-  return getPiece(move.fen, square) || undefined;
-};
 
 const getIsOccupied = ({ move, square }) => {
   if (!move.fen) return false;
@@ -37,26 +31,13 @@ const getIsTargeted = ({ isMoving, targets, square }) => {
   return targets.some(uci => uciToSquares(uci)[1] === square);
 };
 
-const getAnimationOffset = ({ animationOffset, selectedSquare, square }) => {
-  const [offsetX, offsetY] = animationOffset;
-
-  return {
-    moveX: selectedSquare === square ? offsetX : 0,
-    moveY: selectedSquare === square ? offsetY : 0,
-  };
-};
-
 const mapStateToProps = createSelector(
-  state => state.animationOffset,
   state => getIsMoving(state),
-  state => state.selectedSquare,
   state => getTargets(state),
   (_, props) => props.square,
   (_, props) => props.move,
 
-  (animationOffset, isMoving, selectedSquare, targets, square, move) => ({
-    ...getAnimationOffset({ animationOffset, selectedSquare, square }),
-    pieceCode: getPieceCode({ move, square }),
+  (isMoving, targets, square, move) => ({
     isOccupied: getIsOccupied({ move, square }),
     isTargeted: getIsTargeted({ isMoving, targets, square }),
   }),
@@ -77,18 +58,14 @@ const Square = ({ handleSquareClick }) => {
   });
 
   // Component selectors
-  const { moveX, moveY, pieceCode, isOccupied, isTargeted } = useSelector(
+  const { isOccupied, isTargeted } = useSelector(
     state => mapStateToProps(state, { move, square }),
     isEqual,
   );
 
-  const renderPiece = () => (
-    <Piece code={pieceCode} moveX={moveX} moveY={moveY} square={square} />
-  );
-
   return (
     <SquareView handleClick={handleSquareClick(square)} ref={drop}>
-      {isOccupied && renderPiece()}
+      <Piece occupied={isOccupied} />
       <DropIndicator over={isOver} targeted={isTargeted} />
       <LastMoveIndicator />
       <KingInCheckIndicator />
