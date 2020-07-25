@@ -1,15 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BoardView bottom player has black pieces snapshot 1`] = `
+exports[`Board bottom player has black pieces snapshot 1`] = `
 <Styled(div)
-  className="BoardView"
+  className="Board"
   size="fluid"
 >
   <SizeProvider
     size="fluid"
   >
-    <Square
-      handleSquareClick={[Function]}
+    <SquareProvider
       key="i1"
       move={
         Object {
@@ -19,9 +18,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="i1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h1"
       move={
         Object {
@@ -31,9 +33,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="h1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g1"
       move={
         Object {
@@ -43,9 +48,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="g1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f1"
       move={
         Object {
@@ -55,9 +63,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="f1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e1"
       move={
         Object {
@@ -67,9 +78,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="e1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d1"
       move={
         Object {
@@ -79,9 +93,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="d1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c1"
       move={
         Object {
@@ -91,9 +108,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="c1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b1"
       move={
         Object {
@@ -103,9 +123,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="b1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a1"
       move={
         Object {
@@ -115,9 +138,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="a1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i2"
       move={
         Object {
@@ -127,9 +153,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="i2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h2"
       move={
         Object {
@@ -139,9 +168,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="h2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g2"
       move={
         Object {
@@ -151,9 +183,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="g2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f2"
       move={
         Object {
@@ -163,9 +198,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="f2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e2"
       move={
         Object {
@@ -175,9 +213,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="e2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d2"
       move={
         Object {
@@ -187,9 +228,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="d2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c2"
       move={
         Object {
@@ -199,9 +243,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="c2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b2"
       move={
         Object {
@@ -211,9 +258,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="b2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a2"
       move={
         Object {
@@ -223,9 +273,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="a2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i3"
       move={
         Object {
@@ -235,9 +288,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="i3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h3"
       move={
         Object {
@@ -247,9 +303,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="h3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g3"
       move={
         Object {
@@ -259,9 +318,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="g3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f3"
       move={
         Object {
@@ -271,9 +333,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="f3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e3"
       move={
         Object {
@@ -283,9 +348,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="e3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d3"
       move={
         Object {
@@ -295,9 +363,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="d3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c3"
       move={
         Object {
@@ -307,9 +378,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="c3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b3"
       move={
         Object {
@@ -319,9 +393,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="b3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a3"
       move={
         Object {
@@ -331,9 +408,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="a3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i4"
       move={
         Object {
@@ -343,9 +423,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="i4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h4"
       move={
         Object {
@@ -355,9 +438,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="h4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g4"
       move={
         Object {
@@ -367,9 +453,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="g4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f4"
       move={
         Object {
@@ -379,9 +468,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="f4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e4"
       move={
         Object {
@@ -391,9 +483,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="e4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d4"
       move={
         Object {
@@ -403,9 +498,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="d4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c4"
       move={
         Object {
@@ -415,9 +513,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="c4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b4"
       move={
         Object {
@@ -427,9 +528,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="b4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a4"
       move={
         Object {
@@ -439,9 +543,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="a4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i5"
       move={
         Object {
@@ -451,9 +558,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="i5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h5"
       move={
         Object {
@@ -463,9 +573,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="h5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g5"
       move={
         Object {
@@ -475,9 +588,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="g5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f5"
       move={
         Object {
@@ -487,9 +603,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="f5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e5"
       move={
         Object {
@@ -499,9 +618,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="e5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d5"
       move={
         Object {
@@ -511,9 +633,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="d5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c5"
       move={
         Object {
@@ -523,9 +648,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="c5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b5"
       move={
         Object {
@@ -535,9 +663,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="b5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a5"
       move={
         Object {
@@ -547,9 +678,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="a5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i6"
       move={
         Object {
@@ -559,9 +693,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="i6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h6"
       move={
         Object {
@@ -571,9 +708,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="h6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g6"
       move={
         Object {
@@ -583,9 +723,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="g6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f6"
       move={
         Object {
@@ -595,9 +738,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="f6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e6"
       move={
         Object {
@@ -607,9 +753,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="e6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d6"
       move={
         Object {
@@ -619,9 +768,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="d6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c6"
       move={
         Object {
@@ -631,9 +783,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="c6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b6"
       move={
         Object {
@@ -643,9 +798,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="b6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a6"
       move={
         Object {
@@ -655,9 +813,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="a6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i7"
       move={
         Object {
@@ -667,9 +828,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="i7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h7"
       move={
         Object {
@@ -679,9 +843,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="h7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g7"
       move={
         Object {
@@ -691,9 +858,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="g7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f7"
       move={
         Object {
@@ -703,9 +873,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="f7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e7"
       move={
         Object {
@@ -715,9 +888,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="e7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d7"
       move={
         Object {
@@ -727,9 +903,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="d7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c7"
       move={
         Object {
@@ -739,9 +918,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="c7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b7"
       move={
         Object {
@@ -751,9 +933,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="b7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a7"
       move={
         Object {
@@ -763,9 +948,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="a7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i8"
       move={
         Object {
@@ -775,9 +963,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="i8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h8"
       move={
         Object {
@@ -787,9 +978,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="h8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g8"
       move={
         Object {
@@ -799,9 +993,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="g8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f8"
       move={
         Object {
@@ -811,9 +1008,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="f8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e8"
       move={
         Object {
@@ -823,9 +1023,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="e8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d8"
       move={
         Object {
@@ -835,9 +1038,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="d8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c8"
       move={
         Object {
@@ -847,9 +1053,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="c8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b8"
       move={
         Object {
@@ -859,9 +1068,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="b8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a8"
       move={
         Object {
@@ -871,9 +1083,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="a8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i9"
       move={
         Object {
@@ -883,9 +1098,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="i9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h9"
       move={
         Object {
@@ -895,9 +1113,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="h9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g9"
       move={
         Object {
@@ -907,9 +1128,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="g9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f9"
       move={
         Object {
@@ -919,9 +1143,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="f9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e9"
       move={
         Object {
@@ -931,9 +1158,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="e9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d9"
       move={
         Object {
@@ -943,9 +1173,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="d9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c9"
       move={
         Object {
@@ -955,9 +1188,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="c9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b9"
       move={
         Object {
@@ -967,9 +1203,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="b9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a9"
       move={
         Object {
@@ -979,9 +1218,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="a9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i10"
       move={
         Object {
@@ -991,9 +1233,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="i10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h10"
       move={
         Object {
@@ -1003,9 +1248,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="h10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g10"
       move={
         Object {
@@ -1015,9 +1263,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="g10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f10"
       move={
         Object {
@@ -1027,9 +1278,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="f10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e10"
       move={
         Object {
@@ -1039,9 +1293,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="e10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d10"
       move={
         Object {
@@ -1051,9 +1308,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="d10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c10"
       move={
         Object {
@@ -1063,9 +1323,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="c10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b10"
       move={
         Object {
@@ -1075,9 +1338,12 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="b10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a10"
       move={
         Object {
@@ -1087,21 +1353,24 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
         }
       }
       square="a10"
-    />
+    >
+      <Square
+        key="a10"
+      />
+    </SquareProvider>
   </SizeProvider>
 </Styled(div)>
 `;
 
-exports[`BoardView bottom player has red pieces snapshot 1`] = `
+exports[`Board bottom player has red pieces snapshot 1`] = `
 <Styled(div)
-  className="BoardView"
+  className="Board"
   size="fluid"
 >
   <SizeProvider
     size="fluid"
   >
-    <Square
-      handleSquareClick={[Function]}
+    <SquareProvider
       key="a10"
       move={
         Object {
@@ -1111,9 +1380,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="a10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b10"
       move={
         Object {
@@ -1123,9 +1395,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="b10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c10"
       move={
         Object {
@@ -1135,9 +1410,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="c10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d10"
       move={
         Object {
@@ -1147,9 +1425,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="d10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e10"
       move={
         Object {
@@ -1159,9 +1440,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="e10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f10"
       move={
         Object {
@@ -1171,9 +1455,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="f10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g10"
       move={
         Object {
@@ -1183,9 +1470,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="g10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h10"
       move={
         Object {
@@ -1195,9 +1485,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="h10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i10"
       move={
         Object {
@@ -1207,9 +1500,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="i10"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i10"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a9"
       move={
         Object {
@@ -1219,9 +1515,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="a9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b9"
       move={
         Object {
@@ -1231,9 +1530,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="b9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c9"
       move={
         Object {
@@ -1243,9 +1545,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="c9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d9"
       move={
         Object {
@@ -1255,9 +1560,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="d9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e9"
       move={
         Object {
@@ -1267,9 +1575,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="e9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f9"
       move={
         Object {
@@ -1279,9 +1590,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="f9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g9"
       move={
         Object {
@@ -1291,9 +1605,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="g9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h9"
       move={
         Object {
@@ -1303,9 +1620,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="h9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i9"
       move={
         Object {
@@ -1315,9 +1635,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="i9"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i9"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a8"
       move={
         Object {
@@ -1327,9 +1650,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="a8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b8"
       move={
         Object {
@@ -1339,9 +1665,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="b8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c8"
       move={
         Object {
@@ -1351,9 +1680,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="c8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d8"
       move={
         Object {
@@ -1363,9 +1695,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="d8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e8"
       move={
         Object {
@@ -1375,9 +1710,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="e8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f8"
       move={
         Object {
@@ -1387,9 +1725,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="f8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g8"
       move={
         Object {
@@ -1399,9 +1740,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="g8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h8"
       move={
         Object {
@@ -1411,9 +1755,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="h8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i8"
       move={
         Object {
@@ -1423,9 +1770,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="i8"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i8"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a7"
       move={
         Object {
@@ -1435,9 +1785,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="a7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b7"
       move={
         Object {
@@ -1447,9 +1800,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="b7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c7"
       move={
         Object {
@@ -1459,9 +1815,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="c7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d7"
       move={
         Object {
@@ -1471,9 +1830,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="d7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e7"
       move={
         Object {
@@ -1483,9 +1845,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="e7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f7"
       move={
         Object {
@@ -1495,9 +1860,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="f7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g7"
       move={
         Object {
@@ -1507,9 +1875,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="g7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h7"
       move={
         Object {
@@ -1519,9 +1890,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="h7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i7"
       move={
         Object {
@@ -1531,9 +1905,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="i7"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i7"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a6"
       move={
         Object {
@@ -1543,9 +1920,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="a6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b6"
       move={
         Object {
@@ -1555,9 +1935,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="b6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c6"
       move={
         Object {
@@ -1567,9 +1950,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="c6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d6"
       move={
         Object {
@@ -1579,9 +1965,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="d6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e6"
       move={
         Object {
@@ -1591,9 +1980,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="e6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f6"
       move={
         Object {
@@ -1603,9 +1995,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="f6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g6"
       move={
         Object {
@@ -1615,9 +2010,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="g6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h6"
       move={
         Object {
@@ -1627,9 +2025,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="h6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i6"
       move={
         Object {
@@ -1639,9 +2040,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="i6"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i6"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a5"
       move={
         Object {
@@ -1651,9 +2055,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="a5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b5"
       move={
         Object {
@@ -1663,9 +2070,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="b5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c5"
       move={
         Object {
@@ -1675,9 +2085,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="c5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d5"
       move={
         Object {
@@ -1687,9 +2100,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="d5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e5"
       move={
         Object {
@@ -1699,9 +2115,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="e5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f5"
       move={
         Object {
@@ -1711,9 +2130,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="f5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g5"
       move={
         Object {
@@ -1723,9 +2145,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="g5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h5"
       move={
         Object {
@@ -1735,9 +2160,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="h5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i5"
       move={
         Object {
@@ -1747,9 +2175,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="i5"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i5"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a4"
       move={
         Object {
@@ -1759,9 +2190,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="a4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b4"
       move={
         Object {
@@ -1771,9 +2205,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="b4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c4"
       move={
         Object {
@@ -1783,9 +2220,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="c4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d4"
       move={
         Object {
@@ -1795,9 +2235,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="d4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e4"
       move={
         Object {
@@ -1807,9 +2250,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="e4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f4"
       move={
         Object {
@@ -1819,9 +2265,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="f4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g4"
       move={
         Object {
@@ -1831,9 +2280,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="g4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h4"
       move={
         Object {
@@ -1843,9 +2295,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="h4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i4"
       move={
         Object {
@@ -1855,9 +2310,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="i4"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i4"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a3"
       move={
         Object {
@@ -1867,9 +2325,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="a3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b3"
       move={
         Object {
@@ -1879,9 +2340,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="b3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c3"
       move={
         Object {
@@ -1891,9 +2355,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="c3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d3"
       move={
         Object {
@@ -1903,9 +2370,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="d3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e3"
       move={
         Object {
@@ -1915,9 +2385,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="e3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f3"
       move={
         Object {
@@ -1927,9 +2400,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="f3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g3"
       move={
         Object {
@@ -1939,9 +2415,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="g3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h3"
       move={
         Object {
@@ -1951,9 +2430,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="h3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i3"
       move={
         Object {
@@ -1963,9 +2445,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="i3"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i3"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a2"
       move={
         Object {
@@ -1975,9 +2460,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="a2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b2"
       move={
         Object {
@@ -1987,9 +2475,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="b2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c2"
       move={
         Object {
@@ -1999,9 +2490,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="c2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d2"
       move={
         Object {
@@ -2011,9 +2505,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="d2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e2"
       move={
         Object {
@@ -2023,9 +2520,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="e2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f2"
       move={
         Object {
@@ -2035,9 +2535,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="f2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g2"
       move={
         Object {
@@ -2047,9 +2550,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="g2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h2"
       move={
         Object {
@@ -2059,9 +2565,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="h2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i2"
       move={
         Object {
@@ -2071,9 +2580,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="i2"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="i2"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="a1"
       move={
         Object {
@@ -2083,9 +2595,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="a1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="a1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="b1"
       move={
         Object {
@@ -2095,9 +2610,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="b1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="b1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="c1"
       move={
         Object {
@@ -2107,9 +2625,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="c1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="c1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="d1"
       move={
         Object {
@@ -2119,9 +2640,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="d1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="d1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="e1"
       move={
         Object {
@@ -2131,9 +2655,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="e1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="e1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="f1"
       move={
         Object {
@@ -2143,9 +2670,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="f1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="f1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="g1"
       move={
         Object {
@@ -2155,9 +2685,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="g1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="g1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="h1"
       move={
         Object {
@@ -2167,9 +2700,12 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="h1"
-    />
-    <Square
-      handleSquareClick={[Function]}
+    >
+      <Square
+        key="h1"
+      />
+    </SquareProvider>
+    <SquareProvider
       key="i1"
       move={
         Object {
@@ -2179,7 +2715,11 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
         }
       }
       square="i1"
-    />
+    >
+      <Square
+        key="i1"
+      />
+    </SquareProvider>
   </SizeProvider>
 </Styled(div)>
 `;

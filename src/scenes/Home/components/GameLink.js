@@ -6,7 +6,7 @@ import get from 'lodash/get';
 import isEqual from 'lodash/isEqual';
 
 import actions from 'actions';
-import BoardView from 'components/Board/components/BoardView';
+import Board from 'components/Board';
 import PropTypes from 'prop-types';
 import { getOpponent } from 'reducers/selectors';
 
@@ -36,7 +36,7 @@ const GameLink = ({ game }) => {
   return (
     <Button onClick={setThisGameSlug} className="GameLink">
       <Header size="tiny">vs {opponent.name}</Header>
-      <BoardView
+      <Board
         teamBlackPOV={teamBlackPOV}
         move={game.currentMove}
         size="tiny"

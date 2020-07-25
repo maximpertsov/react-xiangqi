@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import BoardView from '..';
+import Board from '..';
 
 jest.mock('react-redux');
 jest.mock('reducers/selectors');
 
-describe('BoardView', () => {
+describe('Board', () => {
   const move = {
     fen:
       'rnbak1bnr/4a4/1c5c1/p1p1p1p1p/9/2P3P2/P3P3P/1C5C1/9/RNBAKABNR b - - 3 2',
@@ -27,7 +27,7 @@ describe('BoardView', () => {
 
   describe('bottom player has red pieces', () => {
     beforeEach(() => {
-      wrapper = shallowWrappedComponent(<BoardView move={move} />, store);
+      wrapper = shallowWrappedComponent(<Board move={move} />, store);
     });
 
     test('snapshot', () => {
@@ -38,7 +38,7 @@ describe('BoardView', () => {
   describe('bottom player has black pieces', () => {
     beforeEach(() => {
       wrapper = shallowWrappedComponent(
-        <BoardView teamBlackPOV move={move} />,
+        <Board teamBlackPOV move={move} />,
         store,
       );
     });

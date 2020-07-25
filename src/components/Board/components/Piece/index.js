@@ -5,8 +5,7 @@ import styled from '@emotion/styled';
 
 import actions from 'actions';
 import { MediaQuery, SquareSize } from 'commonStyles';
-import PropTypes from 'prop-types';
-import { ALL_PIECES } from 'services/logic/constants';
+import { useSquareContext } from 'contexts/SquareProvider';
 import { SizeContext } from 'SizeProvider';
 
 import getImageByCode from './images';
@@ -52,9 +51,10 @@ const Wrapper = styled.img(props => ({
   zIndex: isMoving(props) ? 100 : 0,
 }));
 
-const Piece = ({ code, moveX, moveY, square }) => {
+const Piece = () => {
   const dispatch = useDispatch();
   const size = useContext(SizeContext);
+  const { isOccupied, moveX, moveY, pieceCode, square } = useSquareContext();
 
   const [{ opacity }, dragRef] = useDrag({
     item: { type: 'PIECE' },
@@ -66,29 +66,19 @@ const Piece = ({ code, moveX, moveY, square }) => {
   });
 
   return (
-    <Wrapper
-      alt=""
-      className={`Piece ${code}`}
-      moveX={moveX}
-      moveY={moveY}
-      opacity={opacity}
-      ref={dragRef}
-      size={size}
-      src={getImageByCode(code)}
-    />
+    isOccupied && (
+      <Wrapper
+        alt=""
+        className={`Piece ${pieceCode}`}
+        moveX={moveX}
+        moveY={moveY}
+        opacity={opacity}
+        ref={dragRef}
+        size={size}
+        src={getImageByCode(pieceCode)}
+      />
+    )
   );
-};
-
-Piece.propTypes = {
-  code: PropTypes.oneOf(ALL_PIECES).isRequired,
-  moveX: PropTypes.number,
-  moveY: PropTypes.number,
-  square: PropTypes.string.isRequired,
-};
-
-Piece.defaultProps = {
-  moveX: 0,
-  moveY: 0,
 };
 
 export default Piece;

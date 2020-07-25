@@ -1,21 +1,14 @@
-import React from 'react';
-import { useDrop } from 'react-dnd';
+import React, { createContext, useContext } from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 
-import PropTypes from 'prop-types';
 import { getIsMoving, getTargets } from 'reducers';
-import { activeKing, getPiece, isOccupied } from 'services/logic/fen';
+import { activeKing, getPiece, isOccupied, sameTeam } from 'services/logic/fen';
 import { uciToSquares } from 'services/logic/square';
 
-import DropIndicator from './DropIndicator';
-import KingInCheckIndicator from './KingInCheckIndicator';
-import LastMoveIndicator from './LastMoveIndicator';
-import Piece from './Piece';
-import SelectionIndicator from './SelectionIndicator';
-import SquareView from './SquareView';
-import TargetIndicator from './TargetIndicator';
+// Derived props
 
 const getPieceCode = ({ move, square }) => {
   if (!move.fen) return;
@@ -63,15 +56,32 @@ const getAnimationOffset = ({ animationOffset, selectedSquare, square }) => {
   };
 };
 
+const getSelectedCanCapture = ({ selectedFen, selectedSquare, square }) => {
+  if (selectedSquare === null) return false;
+  if (!isOccupied(selectedFen, selectedSquare)) return false;
+  if (!isOccupied(selectedFen, square)) return false;
+
+  return !sameTeam(selectedFen, square, selectedSquare);
+};
+
 const mapStateToProps = createSelector(
   state => state.animationOffset,
   state => getIsMoving(state),
+  state => state.selectedFen,
   state => state.selectedSquare,
   state => getTargets(state),
   (_, props) => props.square,
   (_, props) => props.move,
 
-  (animationOffset, isMoving, selectedSquare, targets, square, move) => ({
+  (
+    animationOffset,
+    isMoving,
+    selectedFen,
+    selectedSquare,
+    targets,
+    square,
+    move,
+  ) => ({
     ...getAnimationOffset({ animationOffset, selectedSquare, square }),
     pieceCode: getPieceCode({ move, square }),
     isOccupied: getIsOccupied({ move, square }),
@@ -79,61 +89,41 @@ const mapStateToProps = createSelector(
     isKingInCheck: getIsKingInCheck({ move, square }),
     isSelected: getIsSelected({ isMoving, selectedSquare, square }),
     isTargeted: getIsTargeted({ isMoving, targets, square }),
+    move,
+    square,
+    selectedCanCapture: getSelectedCanCapture({
+      selectedFen,
+      selectedSquare,
+      square,
+    }),
   }),
 );
 
-// TODO make handle square click an action?
-// eslint-disable-next-line complexity
-const Square = ({ handleSquareClick, move, square }) => {
-  const [{ isOver }, drop] = useDrop({
-    accept: 'PIECE',
-    drop: () => {
-      handleSquareClick(square)();
-    },
-    collect: monitor => ({
-      isOver: !!monitor.isOver(),
-      canDrop: !!monitor.canDrop(),
-    }),
-  });
+// Context and Provider
 
-  // Component selectors
-  const {
-    moveX,
-    moveY,
-    pieceCode,
-    isOccupied,
-    isInLastMove,
-    isKingInCheck,
-    isSelected,
-    isTargeted,
-  } = useSelector(state => mapStateToProps(state, { move, square }), isEqual);
+const SquareContext = createContext(null);
 
-  const renderTargetIndicator = () => <TargetIndicator occupied={isOccupied} />;
+export const useSquareContext = () => useContext(SquareContext);
 
-  const renderPiece = () => (
-    <Piece code={pieceCode} moveX={moveX} moveY={moveY} square={square} />
+export const SquareProvider = ({ children, move, square }) => {
+  const props = useSelector(
+    state => mapStateToProps(state, { move, square }),
+    isEqual,
   );
 
   return (
-    <SquareView handleClick={handleSquareClick(square)} ref={drop}>
-      {isOccupied && renderPiece()}
-      {isOver && isTargeted && <DropIndicator />}
-      {isInLastMove && <LastMoveIndicator />}
-      {isKingInCheck && <KingInCheckIndicator />}
-      {isSelected && <SelectionIndicator />}
-      {isTargeted && renderTargetIndicator()}
-    </SquareView>
+    <SquareContext.Provider value={props}>{children}</SquareContext.Provider>
   );
 };
 
-Square.propTypes = {
-  handleSquareClick: PropTypes.func.isRequired,
+SquareProvider.propTypes = {
+  children: PropTypes.node.isRequired,
   move: PropTypes.shape(),
   square: PropTypes.string.isRequired,
 };
 
-Square.defaultProps = {
+SquareProvider.defaultProps = {
   move: {},
 };
 
-export default Square;
+export default {};
