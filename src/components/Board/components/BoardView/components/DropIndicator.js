@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 
 import { fillParentElement } from 'commonStyles';
-import { SquareContext } from 'contexts/SquareProvider';
+import { useSquareContext } from 'contexts/SquareProvider';
 
 const dropColor = 'rgba(255, 255, 153, 0.7)';
 
@@ -14,7 +14,7 @@ const Wrapper = styled.div({
 });
 
 const DropIndicator = () => {
-  const { isTargeted } = useContext(SquareContext);
+  const { isTargeted } = useSquareContext();
 
   return isTargeted && <Wrapper className="DropIndicator" />;
 };

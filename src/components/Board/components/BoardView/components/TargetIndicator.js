@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 
 import { fillParentElement, SELECTION_COLOR } from 'commonStyles';
-import { SquareContext } from 'contexts/SquareProvider';
+import { useSquareContext } from 'contexts/SquareProvider';
 
 const Wrapper = styled.div(props => ({
   backgroundColor: SELECTION_COLOR,
@@ -22,7 +22,7 @@ const Wrapper = styled.div(props => ({
 }));
 
 const TargetIndicator = () => {
-  const { isOccupied, isTargeted } = useContext(SquareContext);
+  const { isOccupied, isTargeted } = useSquareContext();
   return (
     isTargeted && <Wrapper className="TargetIndicator" occupied={isOccupied} />
   );

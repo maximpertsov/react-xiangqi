@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
@@ -80,6 +80,8 @@ const mapStateToProps = createSelector(
 // Context and Provider
 
 export const SquareContext = createContext(null);
+
+export const useSquareContext = () => useContext(SquareContext);
 
 export const SquareProvider = ({ children, move, square }) => {
   const props = useSelector(
