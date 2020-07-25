@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 
 import { getIsMoving, getTargets } from 'reducers';
-import { activeKing, getPiece, isOccupied } from 'services/logic/fen';
+import { activeKing, getPiece, isOccupied, sameTeam } from 'services/logic/fen';
 import { uciToSquares } from 'services/logic/square';
 
 // Derived props
@@ -56,15 +56,32 @@ const getAnimationOffset = ({ animationOffset, selectedSquare, square }) => {
   };
 };
 
+const getSelectedCanCapture = ({ selectedFen, selectedSquare, square }) => {
+  if (selectedSquare === null) return false;
+  if (!isOccupied(selectedFen, selectedSquare)) return false;
+  if (!isOccupied(selectedFen, square)) return false;
+
+  return !sameTeam(selectedFen, square, selectedSquare);
+};
+
 const mapStateToProps = createSelector(
   state => state.animationOffset,
   state => getIsMoving(state),
+  state => state.selectedFen,
   state => state.selectedSquare,
   state => getTargets(state),
   (_, props) => props.square,
   (_, props) => props.move,
 
-  (animationOffset, isMoving, selectedSquare, targets, square, move) => ({
+  (
+    animationOffset,
+    isMoving,
+    selectedFen,
+    selectedSquare,
+    targets,
+    square,
+    move,
+  ) => ({
     ...getAnimationOffset({ animationOffset, selectedSquare, square }),
     pieceCode: getPieceCode({ move, square }),
     isOccupied: getIsOccupied({ move, square }),
@@ -74,6 +91,11 @@ const mapStateToProps = createSelector(
     isTargeted: getIsTargeted({ isMoving, targets, square }),
     move,
     square,
+    selectedCanCapture: getSelectedCanCapture({
+      selectedFen,
+      selectedSquare,
+      square,
+    }),
   }),
 );
 

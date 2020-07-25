@@ -10,7 +10,7 @@ import animateMove from 'actions/animateMove';
 import makeMove from 'actions/makeMove';
 import { useSquareContext } from 'contexts/SquareProvider';
 import { getBottomPlayerIsRed, getLegalMoves } from 'reducers';
-import { isOccupied, sameTeam } from 'services/logic/fen';
+import { isOccupied } from 'services/logic/fen';
 import { squaresToUci } from 'services/logic/square';
 
 import DropIndicator from './DropIndicator';
@@ -37,21 +37,13 @@ const mapStateToProps = createSelector(
 // TODO make handle square click an action?
 const Square = () => {
   const dispatch = useDispatch();
-  const { square } = useSquareContext();
+  const { selectedCanCapture, square } = useSquareContext();
   const {
     bottomPlayerIsRed,
     legalMoves,
     selectedFen,
     selectedSquare,
   } = useSelector(mapStateToProps, isEqual);
-
-  const selectedCanCapture = () => {
-    if (selectedSquare === null) return false;
-    if (!isOccupied(selectedFen, selectedSquare)) return false;
-    if (!isOccupied(selectedFen, square)) return false;
-
-    return !sameTeam(selectedFen, square, selectedSquare);
-  };
 
   const legalFen = uci => get(legalMoves, uci, false);
 
@@ -72,7 +64,7 @@ const Square = () => {
   const handleSquareClick = () => {
     if (square === selectedSquare) {
       dispatch(actions.board.selectedSquare.set(null));
-    } else if (isOccupied(selectedFen, square) && !selectedCanCapture()) {
+    } else if (isOccupied(selectedFen, square) && !selectedCanCapture) {
       dispatch(actions.board.selectedSquare.set(square));
     } else if (selectedSquare !== null) {
       handleMove(squaresToUci(selectedSquare, square));
