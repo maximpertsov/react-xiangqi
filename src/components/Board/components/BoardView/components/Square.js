@@ -82,8 +82,6 @@ const Square = ({ handleSquareClick }) => {
     isEqual,
   );
 
-  const renderTargetIndicator = () => <TargetIndicator occupied={isOccupied} />;
-
   const renderPiece = () => (
     <Piece code={pieceCode} moveX={moveX} moveY={moveY} square={square} />
   );
@@ -95,7 +93,7 @@ const Square = ({ handleSquareClick }) => {
       <LastMoveIndicator />
       <KingInCheckIndicator />
       <SelectionIndicator />
-      {isTargeted && renderTargetIndicator()}
+      <TargetIndicator occupied={isOccupied} targeted={isTargeted} />
     </SquareView>
   );
 };
