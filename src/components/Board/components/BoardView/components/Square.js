@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 
-import PropTypes from 'prop-types';
 import { getIsMoving, getTargets } from 'reducers';
 import { activeKing, getPiece, isOccupied } from 'services/logic/fen';
 import { uciToSquares } from 'services/logic/square';
@@ -27,12 +27,6 @@ const getIsOccupied = ({ move, square }) => {
   if (!move.fen) return false;
 
   return isOccupied(move.fen, square);
-};
-
-const getIsInLastMove = ({ move, square }) => {
-  if (!move.uci) return false;
-
-  return uciToSquares(move.uci).includes(square);
 };
 
 const getIsKingInCheck = ({ move, square }) => {
@@ -75,7 +69,6 @@ const mapStateToProps = createSelector(
     ...getAnimationOffset({ animationOffset, selectedSquare, square }),
     pieceCode: getPieceCode({ move, square }),
     isOccupied: getIsOccupied({ move, square }),
-    isInLastMove: getIsInLastMove({ move, square }),
     isKingInCheck: getIsKingInCheck({ move, square }),
     isSelected: getIsSelected({ isMoving, selectedSquare, square }),
     isTargeted: getIsTargeted({ isMoving, targets, square }),
@@ -102,7 +95,6 @@ const Square = ({ handleSquareClick, move, square }) => {
     moveY,
     pieceCode,
     isOccupied,
-    isInLastMove,
     isKingInCheck,
     isSelected,
     isTargeted,
@@ -118,7 +110,7 @@ const Square = ({ handleSquareClick, move, square }) => {
     <SquareView handleClick={handleSquareClick(square)} ref={drop}>
       {isOccupied && renderPiece()}
       {isOver && isTargeted && <DropIndicator />}
-      {isInLastMove && <LastMoveIndicator />}
+      <LastMoveIndicator move={move} square={square} />
       {isKingInCheck && <KingInCheckIndicator />}
       {isSelected && <SelectionIndicator />}
       {isTargeted && renderTargetIndicator()}
