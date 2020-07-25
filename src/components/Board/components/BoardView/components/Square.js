@@ -103,7 +103,7 @@ const Square = ({ handleSquareClick }) => {
   return (
     <SquareView handleClick={handleSquareClick(square)} ref={drop}>
       {isOccupied && renderPiece()}
-      {isOver && isTargeted && <DropIndicator />}
+      <DropIndicator isOver={isOver} isTargeted={isTargeted} />
       <LastMoveIndicator />
       <KingInCheckIndicator />
       {isSelected && <SelectionIndicator />}
