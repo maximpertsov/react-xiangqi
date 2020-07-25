@@ -63,7 +63,6 @@ const mapStateToProps = createSelector(
 );
 
 // TODO make handle square click an action?
-// eslint-disable-next-line complexity
 const Square = ({ handleSquareClick }) => {
   const { move, square } = useContext(SquareContext);
   const [{ isOver }, drop] = useDrop({
