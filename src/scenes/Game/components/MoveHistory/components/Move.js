@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import isEqual from 'lodash/isEqual';
 
 import actions from 'actions';
-import PropTypes from 'prop-types';
 import { getSelectedMove } from 'reducers';
 import { Team } from 'services/logic/constants';
 import { decodeFen } from 'services/logic/fen';
@@ -54,7 +54,7 @@ const Move = ({ uci, fen }) => {
     }
   }, [fen, selectedMove.fen]);
 
-  if (uci === null) return null;
+  if (uci === null || fen === null) return null;
 
   const piece = getMovedPiece(decodeFen(fen).placement, uci);
 
@@ -72,12 +72,13 @@ const Move = ({ uci, fen }) => {
 };
 
 Move.propTypes = {
-  fen: PropTypes.string.isRequired,
+  fen: PropTypes.string,
   uci: PropTypes.string,
 };
 
 Move.defaultProps = {
   uci: null,
+  fen: null,
 };
 
 export default Move;
