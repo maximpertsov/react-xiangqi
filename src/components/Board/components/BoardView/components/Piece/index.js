@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import styled from '@emotion/styled';
 import isEqual from 'lodash/isEqual';
@@ -82,10 +81,10 @@ const mapStateToProps = createSelector(
   }),
 );
 
-const Piece = ({ occupied }) => {
+const Piece = () => {
   const dispatch = useDispatch();
   const size = useContext(SizeContext);
-  const { move, square } = useContext(SquareContext);
+  const { move, square, isOccupied } = useContext(SquareContext);
 
   const { moveX, moveY, code } = useSelector(
     state => mapStateToProps(state, { move, square }),
@@ -102,7 +101,7 @@ const Piece = ({ occupied }) => {
   });
 
   return (
-    occupied && (
+    isOccupied && (
       <Wrapper
         alt=""
         className={`Piece ${code}`}
@@ -115,10 +114,6 @@ const Piece = ({ occupied }) => {
       />
     )
   );
-};
-
-Piece.propTypes = {
-  occupied: PropTypes.bool.isRequired,
 };
 
 export default Piece;
