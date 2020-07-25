@@ -21,6 +21,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i1"
       />
     </SquareProvider>
     <SquareProvider
@@ -36,6 +37,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h1"
       />
     </SquareProvider>
     <SquareProvider
@@ -51,6 +53,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g1"
       />
     </SquareProvider>
     <SquareProvider
@@ -66,6 +69,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f1"
       />
     </SquareProvider>
     <SquareProvider
@@ -81,6 +85,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e1"
       />
     </SquareProvider>
     <SquareProvider
@@ -96,6 +101,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d1"
       />
     </SquareProvider>
     <SquareProvider
@@ -111,6 +117,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c1"
       />
     </SquareProvider>
     <SquareProvider
@@ -126,6 +133,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b1"
       />
     </SquareProvider>
     <SquareProvider
@@ -141,6 +149,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a1"
       />
     </SquareProvider>
     <SquareProvider
@@ -156,6 +165,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i2"
       />
     </SquareProvider>
     <SquareProvider
@@ -171,6 +181,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h2"
       />
     </SquareProvider>
     <SquareProvider
@@ -186,6 +197,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g2"
       />
     </SquareProvider>
     <SquareProvider
@@ -201,6 +213,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f2"
       />
     </SquareProvider>
     <SquareProvider
@@ -216,6 +229,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e2"
       />
     </SquareProvider>
     <SquareProvider
@@ -231,6 +245,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d2"
       />
     </SquareProvider>
     <SquareProvider
@@ -246,6 +261,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c2"
       />
     </SquareProvider>
     <SquareProvider
@@ -261,6 +277,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b2"
       />
     </SquareProvider>
     <SquareProvider
@@ -276,6 +293,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a2"
       />
     </SquareProvider>
     <SquareProvider
@@ -291,6 +309,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i3"
       />
     </SquareProvider>
     <SquareProvider
@@ -306,6 +325,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h3"
       />
     </SquareProvider>
     <SquareProvider
@@ -321,6 +341,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g3"
       />
     </SquareProvider>
     <SquareProvider
@@ -336,6 +357,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f3"
       />
     </SquareProvider>
     <SquareProvider
@@ -351,6 +373,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e3"
       />
     </SquareProvider>
     <SquareProvider
@@ -366,6 +389,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d3"
       />
     </SquareProvider>
     <SquareProvider
@@ -381,6 +405,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c3"
       />
     </SquareProvider>
     <SquareProvider
@@ -396,6 +421,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b3"
       />
     </SquareProvider>
     <SquareProvider
@@ -411,6 +437,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a3"
       />
     </SquareProvider>
     <SquareProvider
@@ -426,6 +453,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i4"
       />
     </SquareProvider>
     <SquareProvider
@@ -441,6 +469,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h4"
       />
     </SquareProvider>
     <SquareProvider
@@ -456,6 +485,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g4"
       />
     </SquareProvider>
     <SquareProvider
@@ -471,6 +501,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f4"
       />
     </SquareProvider>
     <SquareProvider
@@ -486,6 +517,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e4"
       />
     </SquareProvider>
     <SquareProvider
@@ -501,6 +533,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d4"
       />
     </SquareProvider>
     <SquareProvider
@@ -516,6 +549,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c4"
       />
     </SquareProvider>
     <SquareProvider
@@ -531,6 +565,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b4"
       />
     </SquareProvider>
     <SquareProvider
@@ -546,6 +581,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a4"
       />
     </SquareProvider>
     <SquareProvider
@@ -561,6 +597,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i5"
       />
     </SquareProvider>
     <SquareProvider
@@ -576,6 +613,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h5"
       />
     </SquareProvider>
     <SquareProvider
@@ -591,6 +629,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g5"
       />
     </SquareProvider>
     <SquareProvider
@@ -606,6 +645,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f5"
       />
     </SquareProvider>
     <SquareProvider
@@ -621,6 +661,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e5"
       />
     </SquareProvider>
     <SquareProvider
@@ -636,6 +677,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d5"
       />
     </SquareProvider>
     <SquareProvider
@@ -651,6 +693,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c5"
       />
     </SquareProvider>
     <SquareProvider
@@ -666,6 +709,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b5"
       />
     </SquareProvider>
     <SquareProvider
@@ -681,6 +725,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a5"
       />
     </SquareProvider>
     <SquareProvider
@@ -696,6 +741,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i6"
       />
     </SquareProvider>
     <SquareProvider
@@ -711,6 +757,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h6"
       />
     </SquareProvider>
     <SquareProvider
@@ -726,6 +773,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g6"
       />
     </SquareProvider>
     <SquareProvider
@@ -741,6 +789,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f6"
       />
     </SquareProvider>
     <SquareProvider
@@ -756,6 +805,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e6"
       />
     </SquareProvider>
     <SquareProvider
@@ -771,6 +821,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d6"
       />
     </SquareProvider>
     <SquareProvider
@@ -786,6 +837,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c6"
       />
     </SquareProvider>
     <SquareProvider
@@ -801,6 +853,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b6"
       />
     </SquareProvider>
     <SquareProvider
@@ -816,6 +869,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a6"
       />
     </SquareProvider>
     <SquareProvider
@@ -831,6 +885,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i7"
       />
     </SquareProvider>
     <SquareProvider
@@ -846,6 +901,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h7"
       />
     </SquareProvider>
     <SquareProvider
@@ -861,6 +917,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g7"
       />
     </SquareProvider>
     <SquareProvider
@@ -876,6 +933,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f7"
       />
     </SquareProvider>
     <SquareProvider
@@ -891,6 +949,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e7"
       />
     </SquareProvider>
     <SquareProvider
@@ -906,6 +965,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d7"
       />
     </SquareProvider>
     <SquareProvider
@@ -921,6 +981,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c7"
       />
     </SquareProvider>
     <SquareProvider
@@ -936,6 +997,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b7"
       />
     </SquareProvider>
     <SquareProvider
@@ -951,6 +1013,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a7"
       />
     </SquareProvider>
     <SquareProvider
@@ -966,6 +1029,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i8"
       />
     </SquareProvider>
     <SquareProvider
@@ -981,6 +1045,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h8"
       />
     </SquareProvider>
     <SquareProvider
@@ -996,6 +1061,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1011,6 +1077,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1026,6 +1093,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1041,6 +1109,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1056,6 +1125,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1071,6 +1141,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1086,6 +1157,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1101,6 +1173,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1116,6 +1189,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1131,6 +1205,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1146,6 +1221,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1161,6 +1237,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1176,6 +1253,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1191,6 +1269,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1206,6 +1285,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1221,6 +1301,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1236,6 +1317,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1251,6 +1333,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1266,6 +1349,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1281,6 +1365,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1296,6 +1381,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1311,6 +1397,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1326,6 +1413,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1341,6 +1429,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1356,6 +1445,7 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a10"
       />
     </SquareProvider>
   </SizeProvider>
@@ -1383,6 +1473,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1398,6 +1489,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1413,6 +1505,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1428,6 +1521,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1443,6 +1537,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1458,6 +1553,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1473,6 +1569,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1488,6 +1585,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1503,6 +1601,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i10"
       />
     </SquareProvider>
     <SquareProvider
@@ -1518,6 +1617,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1533,6 +1633,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1548,6 +1649,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1563,6 +1665,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1578,6 +1681,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1593,6 +1697,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1608,6 +1713,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1623,6 +1729,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1638,6 +1745,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i9"
       />
     </SquareProvider>
     <SquareProvider
@@ -1653,6 +1761,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1668,6 +1777,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1683,6 +1793,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1698,6 +1809,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1713,6 +1825,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1728,6 +1841,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1743,6 +1857,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1758,6 +1873,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1773,6 +1889,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i8"
       />
     </SquareProvider>
     <SquareProvider
@@ -1788,6 +1905,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a7"
       />
     </SquareProvider>
     <SquareProvider
@@ -1803,6 +1921,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b7"
       />
     </SquareProvider>
     <SquareProvider
@@ -1818,6 +1937,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c7"
       />
     </SquareProvider>
     <SquareProvider
@@ -1833,6 +1953,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d7"
       />
     </SquareProvider>
     <SquareProvider
@@ -1848,6 +1969,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e7"
       />
     </SquareProvider>
     <SquareProvider
@@ -1863,6 +1985,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f7"
       />
     </SquareProvider>
     <SquareProvider
@@ -1878,6 +2001,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g7"
       />
     </SquareProvider>
     <SquareProvider
@@ -1893,6 +2017,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h7"
       />
     </SquareProvider>
     <SquareProvider
@@ -1908,6 +2033,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i7"
       />
     </SquareProvider>
     <SquareProvider
@@ -1923,6 +2049,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a6"
       />
     </SquareProvider>
     <SquareProvider
@@ -1938,6 +2065,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b6"
       />
     </SquareProvider>
     <SquareProvider
@@ -1953,6 +2081,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c6"
       />
     </SquareProvider>
     <SquareProvider
@@ -1968,6 +2097,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d6"
       />
     </SquareProvider>
     <SquareProvider
@@ -1983,6 +2113,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e6"
       />
     </SquareProvider>
     <SquareProvider
@@ -1998,6 +2129,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f6"
       />
     </SquareProvider>
     <SquareProvider
@@ -2013,6 +2145,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g6"
       />
     </SquareProvider>
     <SquareProvider
@@ -2028,6 +2161,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h6"
       />
     </SquareProvider>
     <SquareProvider
@@ -2043,6 +2177,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i6"
       />
     </SquareProvider>
     <SquareProvider
@@ -2058,6 +2193,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a5"
       />
     </SquareProvider>
     <SquareProvider
@@ -2073,6 +2209,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b5"
       />
     </SquareProvider>
     <SquareProvider
@@ -2088,6 +2225,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c5"
       />
     </SquareProvider>
     <SquareProvider
@@ -2103,6 +2241,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d5"
       />
     </SquareProvider>
     <SquareProvider
@@ -2118,6 +2257,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e5"
       />
     </SquareProvider>
     <SquareProvider
@@ -2133,6 +2273,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f5"
       />
     </SquareProvider>
     <SquareProvider
@@ -2148,6 +2289,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g5"
       />
     </SquareProvider>
     <SquareProvider
@@ -2163,6 +2305,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h5"
       />
     </SquareProvider>
     <SquareProvider
@@ -2178,6 +2321,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i5"
       />
     </SquareProvider>
     <SquareProvider
@@ -2193,6 +2337,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a4"
       />
     </SquareProvider>
     <SquareProvider
@@ -2208,6 +2353,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b4"
       />
     </SquareProvider>
     <SquareProvider
@@ -2223,6 +2369,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c4"
       />
     </SquareProvider>
     <SquareProvider
@@ -2238,6 +2385,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d4"
       />
     </SquareProvider>
     <SquareProvider
@@ -2253,6 +2401,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e4"
       />
     </SquareProvider>
     <SquareProvider
@@ -2268,6 +2417,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f4"
       />
     </SquareProvider>
     <SquareProvider
@@ -2283,6 +2433,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g4"
       />
     </SquareProvider>
     <SquareProvider
@@ -2298,6 +2449,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h4"
       />
     </SquareProvider>
     <SquareProvider
@@ -2313,6 +2465,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i4"
       />
     </SquareProvider>
     <SquareProvider
@@ -2328,6 +2481,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a3"
       />
     </SquareProvider>
     <SquareProvider
@@ -2343,6 +2497,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b3"
       />
     </SquareProvider>
     <SquareProvider
@@ -2358,6 +2513,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c3"
       />
     </SquareProvider>
     <SquareProvider
@@ -2373,6 +2529,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d3"
       />
     </SquareProvider>
     <SquareProvider
@@ -2388,6 +2545,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e3"
       />
     </SquareProvider>
     <SquareProvider
@@ -2403,6 +2561,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f3"
       />
     </SquareProvider>
     <SquareProvider
@@ -2418,6 +2577,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g3"
       />
     </SquareProvider>
     <SquareProvider
@@ -2433,6 +2593,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h3"
       />
     </SquareProvider>
     <SquareProvider
@@ -2448,6 +2609,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i3"
       />
     </SquareProvider>
     <SquareProvider
@@ -2463,6 +2625,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a2"
       />
     </SquareProvider>
     <SquareProvider
@@ -2478,6 +2641,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b2"
       />
     </SquareProvider>
     <SquareProvider
@@ -2493,6 +2657,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c2"
       />
     </SquareProvider>
     <SquareProvider
@@ -2508,6 +2673,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d2"
       />
     </SquareProvider>
     <SquareProvider
@@ -2523,6 +2689,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e2"
       />
     </SquareProvider>
     <SquareProvider
@@ -2538,6 +2705,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f2"
       />
     </SquareProvider>
     <SquareProvider
@@ -2553,6 +2721,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g2"
       />
     </SquareProvider>
     <SquareProvider
@@ -2568,6 +2737,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h2"
       />
     </SquareProvider>
     <SquareProvider
@@ -2583,6 +2753,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i2"
       />
     </SquareProvider>
     <SquareProvider
@@ -2598,6 +2769,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="a1"
       />
     </SquareProvider>
     <SquareProvider
@@ -2613,6 +2785,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="b1"
       />
     </SquareProvider>
     <SquareProvider
@@ -2628,6 +2801,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="c1"
       />
     </SquareProvider>
     <SquareProvider
@@ -2643,6 +2817,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="d1"
       />
     </SquareProvider>
     <SquareProvider
@@ -2658,6 +2833,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="e1"
       />
     </SquareProvider>
     <SquareProvider
@@ -2673,6 +2849,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="f1"
       />
     </SquareProvider>
     <SquareProvider
@@ -2688,6 +2865,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="g1"
       />
     </SquareProvider>
     <SquareProvider
@@ -2703,6 +2881,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="h1"
       />
     </SquareProvider>
     <SquareProvider
@@ -2718,6 +2897,7 @@ exports[`BoardView bottom player has red pieces snapshot 1`] = `
     >
       <Square
         handleSquareClick={[Function]}
+        key="i1"
       />
     </SquareProvider>
   </SizeProvider>

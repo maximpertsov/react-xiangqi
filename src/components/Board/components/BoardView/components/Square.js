@@ -30,12 +30,6 @@ const getIsOccupied = ({ move, square }) => {
   return isOccupied(move.fen, square);
 };
 
-const getIsSelected = ({ isMoving, selectedSquare, square }) => {
-  if (isMoving) return false;
-
-  return selectedSquare === square;
-};
-
 const getIsTargeted = ({ isMoving, targets, square }) => {
   if (isMoving) return false;
 
@@ -64,7 +58,6 @@ const mapStateToProps = createSelector(
     ...getAnimationOffset({ animationOffset, selectedSquare, square }),
     pieceCode: getPieceCode({ move, square }),
     isOccupied: getIsOccupied({ move, square }),
-    isSelected: getIsSelected({ isMoving, selectedSquare, square }),
     isTargeted: getIsTargeted({ isMoving, targets, square }),
   }),
 );
@@ -85,14 +78,10 @@ const Square = ({ handleSquareClick }) => {
   });
 
   // Component selectors
-  const {
-    moveX,
-    moveY,
-    pieceCode,
-    isOccupied,
-    isSelected,
-    isTargeted,
-  } = useSelector(state => mapStateToProps(state, { move, square }), isEqual);
+  const { moveX, moveY, pieceCode, isOccupied, isTargeted } = useSelector(
+    state => mapStateToProps(state, { move, square }),
+    isEqual,
+  );
 
   const renderTargetIndicator = () => <TargetIndicator occupied={isOccupied} />;
 
@@ -106,7 +95,7 @@ const Square = ({ handleSquareClick }) => {
       <DropIndicator isOver={isOver} isTargeted={isTargeted} />
       <LastMoveIndicator />
       <KingInCheckIndicator />
-      {isSelected && <SelectionIndicator />}
+      <SelectionIndicator />
       {isTargeted && renderTargetIndicator()}
     </SquareView>
   );
