@@ -14,7 +14,7 @@ import TargetIndicator from './TargetIndicator';
 
 // TODO make handle square click an action?
 const Square = ({ handleSquareClick }) => {
-  const { isTargeted, square } = useContext(SquareContext);
+  const { square } = useContext(SquareContext);
   const [{ isOver }, drop] = useDrop({
     accept: 'PIECE',
     drop: () => {
@@ -29,7 +29,7 @@ const Square = ({ handleSquareClick }) => {
   return (
     <SquareView handleClick={handleSquareClick(square)} ref={drop}>
       <Piece />
-      <DropIndicator over={isOver} targeted={isTargeted} />
+      {isOver && <DropIndicator />}
       <LastMoveIndicator />
       <KingInCheckIndicator />
       <SelectionIndicator />

@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 
 import { fillParentElement } from 'commonStyles';
+import { SquareContext } from 'contexts/SquareProvider';
 
 const dropColor = 'rgba(255, 255, 153, 0.7)';
 
@@ -13,13 +13,10 @@ const Wrapper = styled.div({
   ...fillParentElement,
 });
 
-const DropIndicator = ({ over, targeted }) => {
-  return over && targeted && <Wrapper className="DropIndicator" />;
-};
+const DropIndicator = () => {
+  const { isTargeted } = useContext(SquareContext);
 
-DropIndicator.propTypes = {
-  over: PropTypes.bool.isRequired,
-  targeted: PropTypes.bool.isRequired,
+  return isTargeted && <Wrapper className="DropIndicator" />;
 };
 
 export default DropIndicator;
