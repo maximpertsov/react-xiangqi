@@ -5,15 +5,39 @@ import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 
 import { getIsMoving, getTargets } from 'reducers';
-import { isOccupied } from 'services/logic/fen';
+import { activeKing, getPiece, isOccupied } from 'services/logic/fen';
 import { uciToSquares } from 'services/logic/square';
 
 // Derived props
+
+const getPieceCode = ({ move, square }) => {
+  if (!move.fen) return;
+
+  return getPiece(move.fen, square) || undefined;
+};
 
 const getIsOccupied = ({ move, square }) => {
   if (!move.fen) return false;
 
   return isOccupied(move.fen, square);
+};
+
+const getIsInLastMove = ({ move, square }) => {
+  if (!move.uci) return false;
+
+  return uciToSquares(move.uci).includes(square);
+};
+
+const getIsKingInCheck = ({ move, square }) => {
+  if (!move.givesCheck) return false;
+
+  return activeKing(move.fen) === square;
+};
+
+const getIsSelected = ({ isMoving, selectedSquare, square }) => {
+  if (isMoving) return false;
+
+  return selectedSquare === square;
 };
 
 const getIsTargeted = ({ isMoving, targets, square }) => {
@@ -23,17 +47,33 @@ const getIsTargeted = ({ isMoving, targets, square }) => {
   return targets.some(uci => uciToSquares(uci)[1] === square);
 };
 
+const getAnimationOffset = ({ animationOffset, selectedSquare, square }) => {
+  const [offsetX, offsetY] = animationOffset;
+
+  return {
+    moveX: selectedSquare === square ? offsetX : 0,
+    moveY: selectedSquare === square ? offsetY : 0,
+  };
+};
+
 const mapStateToProps = createSelector(
+  state => state.animationOffset,
   state => getIsMoving(state),
+  state => state.selectedSquare,
   state => getTargets(state),
   (_, props) => props.square,
   (_, props) => props.move,
 
-  (isMoving, targets, square, move) => ({
-    square,
-    move,
+  (animationOffset, isMoving, selectedSquare, targets, square, move) => ({
+    ...getAnimationOffset({ animationOffset, selectedSquare, square }),
+    pieceCode: getPieceCode({ move, square }),
     isOccupied: getIsOccupied({ move, square }),
+    isInLastMove: getIsInLastMove({ move, square }),
+    isKingInCheck: getIsKingInCheck({ move, square }),
+    isSelected: getIsSelected({ isMoving, selectedSquare, square }),
     isTargeted: getIsTargeted({ isMoving, targets, square }),
+    move,
+    square,
   }),
 );
 
