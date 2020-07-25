@@ -8,9 +8,7 @@ import GameInteraction from './components/GameInteraction';
 import GameView from './components/GameView';
 
 const Game = () => {
-  const hasInitialPlacement = useSelector(state =>
-    getHasInitialPlacement(state),
-  );
+  const hasInitialPlacement = useSelector(getHasInitialPlacement);
 
   return (
     <div>
