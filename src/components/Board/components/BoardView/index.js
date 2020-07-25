@@ -71,7 +71,7 @@ const BoardView = ({ teamBlackPOV, handleSquareClick, move, size }) => {
 
       return (
         <SquareProvider key={square} square={square} move={currentMove}>
-          <Square handleSquareClick={handleSquareClick} />
+          <Square key={square} handleSquareClick={handleSquareClick} />
         </SquareProvider>
       );
     });

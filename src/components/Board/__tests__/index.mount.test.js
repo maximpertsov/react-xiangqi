@@ -62,7 +62,7 @@ const expectSquaresToBeTargeted = (wrapper, squares) => {
 };
 
 const expectSquaresToBeInLastMove = (wrapper, squares) => {
-  const nodes = getSquareNodes(wrapper, squares).find('.LastMoveIndicator');
+  const nodes = getSquareNodes(wrapper, squares).find('LastMoveIndicator');
   expect(nodes).toHaveLength(squares.length);
 };
 
