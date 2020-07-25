@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 
 import { fillParentElement, SELECTION_COLOR } from 'commonStyles';
+import { SquareContext } from 'contexts/SquareProvider';
 
 const Wrapper = styled.div(props => ({
   backgroundColor: SELECTION_COLOR,
@@ -21,12 +21,11 @@ const Wrapper = styled.div(props => ({
     }),
 }));
 
-const TargetIndicator = ({ occupied, targeted }) =>
-  targeted && <Wrapper className="TargetIndicator" occupied={occupied} />;
-
-TargetIndicator.propTypes = {
-  occupied: PropTypes.bool.isRequired,
-  targeted: PropTypes.bool.isRequired,
+const TargetIndicator = () => {
+  const { isOccupied, isTargeted } = useContext(SquareContext);
+  return (
+    isTargeted && <Wrapper className="TargetIndicator" occupied={isOccupied} />
+  );
 };
 
 export default TargetIndicator;

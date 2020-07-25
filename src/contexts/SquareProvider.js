@@ -30,6 +30,8 @@ const mapStateToProps = createSelector(
   (_, props) => props.move,
 
   (isMoving, targets, square, move) => ({
+    square,
+    move,
     isOccupied: getIsOccupied({ move, square }),
     isTargeted: getIsTargeted({ isMoving, targets, square }),
   }),
@@ -40,16 +42,13 @@ const mapStateToProps = createSelector(
 export const SquareContext = createContext(null);
 
 export const SquareProvider = ({ children, move, square }) => {
-  // Component selectors
-  const derivedProps = useSelector(
+  const props = useSelector(
     state => mapStateToProps(state, { move, square }),
     isEqual,
   );
 
   return (
-    <SquareContext.Provider value={{ move, square, ...derivedProps }}>
-      {children}
-    </SquareContext.Provider>
+    <SquareContext.Provider value={props}>{children}</SquareContext.Provider>
   );
 };
 
