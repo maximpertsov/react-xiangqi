@@ -7,7 +7,7 @@ import isEqual from 'lodash/isEqual';
 
 import { SquareContext } from 'contexts/SquareProvider';
 import { getIsMoving, getTargets } from 'reducers';
-import { activeKing, getPiece, isOccupied } from 'services/logic/fen';
+import { getPiece, isOccupied } from 'services/logic/fen';
 import { uciToSquares } from 'services/logic/square';
 
 import DropIndicator from './DropIndicator';
@@ -28,12 +28,6 @@ const getIsOccupied = ({ move, square }) => {
   if (!move.fen) return false;
 
   return isOccupied(move.fen, square);
-};
-
-const getIsKingInCheck = ({ move, square }) => {
-  if (!move.givesCheck) return false;
-
-  return activeKing(move.fen) === square;
 };
 
 const getIsSelected = ({ isMoving, selectedSquare, square }) => {
@@ -70,7 +64,6 @@ const mapStateToProps = createSelector(
     ...getAnimationOffset({ animationOffset, selectedSquare, square }),
     pieceCode: getPieceCode({ move, square }),
     isOccupied: getIsOccupied({ move, square }),
-    isKingInCheck: getIsKingInCheck({ move, square }),
     isSelected: getIsSelected({ isMoving, selectedSquare, square }),
     isTargeted: getIsTargeted({ isMoving, targets, square }),
   }),
@@ -97,7 +90,6 @@ const Square = ({ handleSquareClick }) => {
     moveY,
     pieceCode,
     isOccupied,
-    isKingInCheck,
     isSelected,
     isTargeted,
   } = useSelector(state => mapStateToProps(state, { move, square }), isEqual);
@@ -113,7 +105,7 @@ const Square = ({ handleSquareClick }) => {
       {isOccupied && renderPiece()}
       {isOver && isTargeted && <DropIndicator />}
       <LastMoveIndicator />
-      {isKingInCheck && <KingInCheckIndicator />}
+      <KingInCheckIndicator />
       {isSelected && <SelectionIndicator />}
       {isTargeted && renderTargetIndicator()}
     </SquareView>

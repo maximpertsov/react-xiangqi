@@ -8,8 +8,6 @@ import { fillParentElement } from 'commonStyles';
 import { SquareContext } from 'contexts/SquareProvider';
 import { uciToSquares } from 'services/logic/square';
 
-const LAST_MOVE_COLOR = 'rgba(201,255,229,0.8)';
-
 const getIsInLastMove = ({ move, square }) => {
   if (!move.uci) return false;
 
@@ -24,6 +22,8 @@ const mapStateToProps = createSelector(
     isInLastMove: getIsInLastMove({ move, square }),
   }),
 );
+
+const LAST_MOVE_COLOR = 'rgba(201,255,229,0.8)';
 
 const Wrapper = styled.div({
   backgroundColor: LAST_MOVE_COLOR,
