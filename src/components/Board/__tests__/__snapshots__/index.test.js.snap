@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BoardView bottom player has black pieces snapshot 1`] = `
+exports[`Board bottom player has black pieces snapshot 1`] = `
 <Styled(div)
-  className="BoardView"
+  className="Board"
   size="fluid"
 >
   <SizeProvider
@@ -1362,9 +1362,9 @@ exports[`BoardView bottom player has black pieces snapshot 1`] = `
 </Styled(div)>
 `;
 
-exports[`BoardView bottom player has red pieces snapshot 1`] = `
+exports[`Board bottom player has red pieces snapshot 1`] = `
 <Styled(div)
-  className="BoardView"
+  className="Board"
   size="fluid"
 >
   <SizeProvider

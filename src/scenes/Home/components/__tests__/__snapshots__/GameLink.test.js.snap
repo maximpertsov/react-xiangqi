@@ -12,7 +12,7 @@ exports[`GameLink snapshot 1`] = `
     vs 
     bob
   </Header>
-  <BoardView
+  <Board
     move={Object {}}
     size="tiny"
     teamBlackPOV={false}

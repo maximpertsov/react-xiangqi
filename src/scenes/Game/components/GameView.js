@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import isEqual from 'lodash/isEqual';
 
-import BoardView from 'components/Board/components/BoardView';
+import Board from 'components/Board';
 import GameMenu from 'components/GameMenu';
 import {
   getBottomPlayerIsRed,
@@ -63,7 +63,7 @@ const GameView = () => {
       {hasInitialPlacement && (
         <Wrapper className="Game">
           <Player {...opponent} />
-          <BoardView teamBlackPOV={!bottomPlayerIsRed} />
+          <Board teamBlackPOV={!bottomPlayerIsRed} />
           <Player {...currentPlayer} />
           <GameInfo />
           {!showConfirmMoveMenu && (
