@@ -18,7 +18,11 @@ const SquareView = forwardRef(({ children, handleClick }, ref) => (
 
 SquareView.propTypes = {
   children: PropTypes.node.isRequired,
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func,
+};
+
+SquareView.defaultProps = {
+  handleClick: () => {},
 };
 
 export default SquareView;
