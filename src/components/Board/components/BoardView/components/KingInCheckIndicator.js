@@ -40,7 +40,7 @@ const KingInCheckIndicator = () => {
     isEqual,
   );
 
-  return isKingInCheck && <Wrapper class="kingInCheckIndicator" />;
+  return isKingInCheck && <Wrapper class="KingInCheckIndicator" />;
 };
 
 export default KingInCheckIndicator;

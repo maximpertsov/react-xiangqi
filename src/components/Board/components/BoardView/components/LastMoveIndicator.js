@@ -39,7 +39,7 @@ const LastMoveIndicator = () => {
     state => mapStateToProps(state, { move, square }),
     isEqual,
   );
-  return isInLastMove && <Wrapper className="lastMoveIndicator" />;
+  return isInLastMove && <Wrapper className="LastMoveIndicator" />;
 };
 
 export default LastMoveIndicator;
