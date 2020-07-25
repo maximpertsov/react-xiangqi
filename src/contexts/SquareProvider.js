@@ -79,7 +79,7 @@ const mapStateToProps = createSelector(
 
 // Context and Provider
 
-export const SquareContext = createContext(null);
+const SquareContext = createContext(null);
 
 export const useSquareContext = () => useContext(SquareContext);
 

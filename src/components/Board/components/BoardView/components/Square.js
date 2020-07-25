@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 
-import { SquareContext } from 'contexts/SquareProvider';
+import { useSquareContext } from 'contexts/SquareProvider';
 
 import DropIndicator from './DropIndicator';
 import KingInCheckIndicator from './KingInCheckIndicator';
@@ -14,7 +14,7 @@ import TargetIndicator from './TargetIndicator';
 
 // TODO make handle square click an action?
 const Square = ({ handleSquareClick }) => {
-  const { square } = useContext(SquareContext);
+  const { square } = useSquareContext();
   const [{ isOver }, drop] = useDrop({
     accept: 'PIECE',
     drop: () => {
