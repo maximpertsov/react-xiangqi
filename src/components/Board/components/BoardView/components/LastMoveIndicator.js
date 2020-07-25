@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import styled from '@emotion/styled';
 import isEqual from 'lodash/isEqual';
 
 import { fillParentElement } from 'commonStyles';
+import { SquareContext } from 'contexts/SquareProvider';
 import { uciToSquares } from 'services/logic/square';
 
 const LAST_MOVE_COLOR = 'rgba(201,255,229,0.8)';
@@ -32,21 +32,14 @@ const Wrapper = styled.div({
   ...fillParentElement,
 });
 
-const LastMoveIndicator = ({ move, square }) => {
+const LastMoveIndicator = () => {
+  const { move, square } = useContext(SquareContext);
+
   const { isInLastMove } = useSelector(
     state => mapStateToProps(state, { move, square }),
     isEqual,
   );
   return isInLastMove && <Wrapper className="lastMoveIndicator" />;
-};
-
-LastMoveIndicator.propTypes = {
-  move: PropTypes.shape(),
-  square: PropTypes.string.isRequired,
-};
-
-LastMoveIndicator.defaultProps = {
-  move: {},
 };
 
 export default LastMoveIndicator;

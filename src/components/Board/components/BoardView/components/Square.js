@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDrop } from 'react-dnd';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 
+import { SquareContext } from 'contexts/SquareProvider';
 import { getIsMoving, getTargets } from 'reducers';
 import { activeKing, getPiece, isOccupied } from 'services/logic/fen';
 import { uciToSquares } from 'services/logic/square';
@@ -77,7 +78,8 @@ const mapStateToProps = createSelector(
 
 // TODO make handle square click an action?
 // eslint-disable-next-line complexity
-const Square = ({ handleSquareClick, move, square }) => {
+const Square = ({ handleSquareClick }) => {
+  const { move, square } = useContext(SquareContext);
   const [{ isOver }, drop] = useDrop({
     accept: 'PIECE',
     drop: () => {
@@ -110,7 +112,7 @@ const Square = ({ handleSquareClick, move, square }) => {
     <SquareView handleClick={handleSquareClick(square)} ref={drop}>
       {isOccupied && renderPiece()}
       {isOver && isTargeted && <DropIndicator />}
-      <LastMoveIndicator move={move} square={square} />
+      <LastMoveIndicator />
       {isKingInCheck && <KingInCheckIndicator />}
       {isSelected && <SelectionIndicator />}
       {isTargeted && renderTargetIndicator()}
@@ -120,12 +122,6 @@ const Square = ({ handleSquareClick, move, square }) => {
 
 Square.propTypes = {
   handleSquareClick: PropTypes.func.isRequired,
-  move: PropTypes.shape(),
-  square: PropTypes.string.isRequired,
-};
-
-Square.defaultProps = {
-  move: {},
 };
 
 export default Square;

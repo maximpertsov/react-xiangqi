@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
-import styled from '@emotion/styled';
-
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 
 const Wrapper = styled.div`
   display: flex;

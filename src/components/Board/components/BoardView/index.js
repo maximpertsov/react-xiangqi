@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import styled from '@emotion/styled';
 import isEqual from 'lodash/isEqual';
 
 import { MediaQuery, SquareSize } from 'commonStyles';
-import PropTypes from 'prop-types';
+import { SquareProvider } from 'contexts/SquareProvider';
 import { getSelectedMove } from 'reducers/selectors';
 import { decodeFen } from 'services/logic/fen';
 import { encodeSquare } from 'services/logic/square';
@@ -69,12 +70,9 @@ const BoardView = ({ teamBlackPOV, handleSquareClick, move, size }) => {
       const square = encodeSquare(slot);
 
       return (
-        <Square
-          key={square}
-          handleSquareClick={handleSquareClick}
-          square={square}
-          move={currentMove}
-        />
+        <SquareProvider key={square} square={square} move={currentMove}>
+          <Square handleSquareClick={handleSquareClick} />
+        </SquareProvider>
       );
     });
   };
