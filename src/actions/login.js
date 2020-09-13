@@ -9,7 +9,7 @@ const login = ({ username, password }) => async dispatch => {
     const {
       data: { access, refresh },
     } = await client.post('token', { username, password });
-    const { username: user } = jwtDecode(access);
+    const { user } = jwtDecode(access);
 
     localStorage.setItem('access', access);
     localStorage.setItem('refresh', refresh);

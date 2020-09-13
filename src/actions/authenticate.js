@@ -12,7 +12,7 @@ const authenticate = () => async dispatch => {
 
     if (isSuccess(response)) {
       const { access } = response.data;
-      const { username: user } = jwtDecode(access);
+      const { user } = jwtDecode(access);
 
       localStorage.setItem('access', access);
 
