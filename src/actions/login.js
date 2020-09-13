@@ -1,20 +1,23 @@
-import authenticate from 'actions/authenticate';
+import actions from 'actions';
+import logout from 'actions/logout';
 import updateLoginForm from 'actions/updateLoginForm';
-import client, { isSuccess } from 'services/client';
+import jwtDecode from 'jwt-decode';
+import client from 'services/client';
 
 const login = ({ username, password }) => async dispatch => {
   try {
-    const response = await client.post('token/obtain', {
-      username,
-      password,
-    });
+    const {
+      data: { access, refresh },
+    } = await client.post('token', { username, password });
+    const { user } = jwtDecode(access);
 
-    if (isSuccess(response)) {
-      dispatch(authenticate());
-      dispatch(updateLoginForm({ error: '' }));
-    }
+    localStorage.setItem('access', access);
+    localStorage.setItem('refresh', refresh);
+
+    dispatch(actions.home.username.set(user));
   } catch (error) {
     dispatch(updateLoginForm({ error: 'Login failed' }));
+    dispatch(logout());
   } finally {
     dispatch(updateLoginForm({ username: '', password: '' }));
   }
