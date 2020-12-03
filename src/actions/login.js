@@ -4,7 +4,7 @@ import client, { isSuccess } from 'services/client';
 
 const login = ({ username, password }) => async dispatch => {
   try {
-    const response = await client.post('token/obtain', {
+    const response = await client.post('token', {
       username,
       password,
     });
