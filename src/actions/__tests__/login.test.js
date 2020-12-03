@@ -27,7 +27,7 @@ describe('login', () => {
 
     await store.dispatch(login(credentials));
 
-    expect(axios.post).toHaveBeenCalledWith('token/obtain', credentials);
+    expect(axios.post).toHaveBeenCalledWith('token', credentials);
     expect(spys.authenticate).toHaveBeenCalledWith();
     expect(spys.updateLoginForm).toHaveBeenCalledWith({
       error: '',
@@ -44,7 +44,7 @@ describe('login', () => {
 
     await store.dispatch(login(credentials));
 
-    expect(axios.post).toHaveBeenCalledWith('token/obtain', credentials);
+    expect(axios.post).toHaveBeenCalledWith('token', credentials);
     expect(spys.updateLoginForm).toHaveBeenCalledWith({
       error: 'Login failed',
     });
