@@ -61,9 +61,12 @@ const Square = () => {
     }
   };
 
+  // eslint-disable-next-line complexity
   const handleSquareClick = () => {
     if (square === selectedSquare) {
       dispatch(actions.board.selectedSquare.set(null));
+    } else if (!selectedFen) {
+      return;
     } else if (isOccupied(selectedFen, square) && !selectedCanCapture) {
       dispatch(actions.board.selectedSquare.set(square));
     } else if (selectedSquare !== null) {

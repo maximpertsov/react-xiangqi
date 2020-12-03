@@ -36,6 +36,19 @@ const deepCamelCase = data => {
   return data;
 };
 
+axios.interceptors.request.use(
+  config => {
+    const access = localStorage.getItem('access');
+    if (access) {
+      config.headers.Authorization = `Bearer ${access}`;
+    }
+    return config;
+  },
+  error => {
+    Promise.reject(error);
+  },
+);
+
 axios.interceptors.response.use(
   response => ({ ...response, data: deepCamelCase(response.data) }),
   error => Promise.reject(error),
