@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import actions from 'actions';
 
@@ -17,14 +17,15 @@ export const WebSocketProvider = ({ children }) => {
   let io;
 
   const dispatch = useDispatch();
+  const gameSlug = useSelector(state => state.gameSlug);
 
   const send = (type, payload) => {
     const message = createMessage(type, payload);
     socket.send(JSON.stringify(message));
   };
 
-  if (!socket) {
-    socket = new WebSocket(process.env.REACT_APP_WS_CHAT_URL);
+  if (!socket && gameSlug) {
+    socket = new WebSocket(`${process.env.REACT_APP_WS_CHAT_URL}/${gameSlug}`);
 
     socket.onmessage = event => {
       const message = JSON.parse(event.data);
